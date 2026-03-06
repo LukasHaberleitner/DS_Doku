@@ -1,0 +1,461 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Running the CATDMUBuilder Batch Process</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <a name="ix-running::CATDMUBuilder batch process;batch processes::CATDMUBuilder;utility::CATDMUBuilder batch process">
+ </a>
+ <h1>Running the CATDMUBuilder<br>
+ Batch Process<a name="CATDMUBuilder.BatchInfra"></a> </h1>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32"></p>
+ <table Border="0" CELLSPACING="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="471" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top" height="471" width="545">The CATDMUBuilder is intended to 
+     save DMU loading time by:
+     <ul>
+       <li>Feeding the cache with tessellated data corresponding to given 
+       product&nbsp;structures</li>
+       <li>Creating CATProducts corresponding to these product structures and 
+       storing&nbsp;them on dedicated local directories</li>
+       <li>Using local machine resources when they are not used (night, 
+       week-end)</li>
+     </ul>
+     <p>This capability fills the local cache with all necessary data to avoid 
+     tessellation or&nbsp;access to the PDM cache during interactive loading of given 
+     product structures. This&nbsp;loading will use only the local and release cache.<br>
+     <br>
+     The extracted CATProducts allow the user to quickly load working or 
+     predefined&nbsp;session without mandatory PDM connection while working in 
+     visualization mode.&nbsp;The loading of these CATProducts will benefit from the 
+     cache feeding.&nbsp;<br>
+     <br>
+     The product structure file can be any one of the following:&nbsp; </p>
+     <ul>
+       <li>a product (*.CATProduct)&nbsp;</li>
+       <li>a Dynamic PSN (*.psn)</li>
+       <li>the identifier of an ENOVIA<font size="1">VPM</font> node (*.CATVpm)</li>
+       <li>a Multi-CAD assembly&nbsp;</li>
+       <li>a Navigator 4D file</li>
+       <li>a Clash file (*.xml)&nbsp; Important: The interferences described in 
+       the xml file must point to a VPM V4 product structure and you must be 
+       connected to VPM V4. Interferences described in the xml file pointing to 
+       product structures in file format or to VPM V5 product structures are not 
+       supported.</li>
+     </ul>
+     <p>DLNames are now supported for the CATDMUBuilder batch process.</p>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="38" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/anew.gif" width="32" height="32"></td>
+     <td valign="top" height="38" width="545"><blink>CATDMUBuilder can now 
+     generate <a href="#new_r17">3D XML files</a>.</blink></td>
+   </tr>
+   <tr>
+     <td valign="top" height="67" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td valign="top" height="67" width="545">When using input data that 
+     contains references to a PDM system, it is imperative that you be connected 
+     to that PDM system while the CATDMUBuilder process is running. </td>
+   </tr>
+   <tr>
+     <td valign="top" height="131" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" height="131" width="545">
+		<ul>
+			<li>On Windows, it is always necessary 
+     to specify the<kbd> -env</kbd> and <kbd>-direnv</kbd> options. Note 
+     that, these options should always be specified at the end of the command 
+     line. For more information, see the <i>Infrastructure User's Guide</i>, <i>
+			<a href="page1360.html" target="ds_doc2">Starting a Session on Windows</a></i>.</li>
+			<li>When you build a product using 
+     CATDMUBuilder with a PSN file and the selected instances option, all 
+     documents attached to Parts on the branches of the selected leaves are 
+     taken into account.<br>&nbsp;</li>
+		</ul>
+		</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="405" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top" height="405" width="545">
+     <ol class="task">
+       <li>
+       <p class="task">To retrieve the help information, run the command:</li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <p class="task"><kbd>CATDMUBuilder</kbd> <kbd>-h</kbd> </p>
+       </blockquote>
+     </blockquote>
+     <ol class="task" start="2">
+       <li>
+       <p class="task">To feed data to the cache, run the command:</li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <p class="task"><kbd>CATDMUBuilder</kbd> <kbd>inputlocation</kbd><br>
+         <kbd>[-user user -spwd cryppwd -role role -server srv] [-product dir]</kbd>
+         </p>
+       </blockquote>
+     </blockquote>
+     <ol class="task" start="3">
+       <li>
+       <p class="task">To build the product, run the command:</li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <p><kbd>CATDMUBuilder</kbd> <kbd>inputlocation<br>
+         -product dir -onlyone -nocache</kbd></p>
+       </blockquote>
+     </blockquote>
+     <ol class="task" start="4">
+       <li>
+       <p class="task">To feed the local cache, run the command:</li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <p><kbd>CATDMUBuilder</kbd> <kbd>inputlocation -copycache</kbd></p>
+       </blockquote>
+     </blockquote>
+     <ol class="task" start="5">
+       <li>
+       <p class="task">To force re-calculation, run the command:</li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <p><kbd>CATDMUBuilder</kbd> <kbd>inputlocation -force</kbd></p>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="523" width="32"></td>
+     <td valign="top" height="523" width="545">&nbsp;<p><b>Windows Examples</b></p>
+     <p><kbd>CATDMUBuilder</kbd> <kbd>-h</kbd><br>
+     <kbd>CATDMUBuilder</kbd> <kbd>c:&#092;u&#092;input.txt 
+     -product c:&#092;proddir</kbd></p>
+     <p><b>Unix Examples</b></p>
+     <p class="task">Invoking the CATDMUBuilder help: </p>
+     <blockquote>
+       <p><kbd>CATDMUBuilder</kbd> <kbd>-h </kbd></p>
+     </blockquote>
+     <p>Feeding the cache with tessellated data corresponding to product 
+     structures contained in a directory <kbd>/u/product</kbd></p>
+     <blockquote>
+       <p><kbd>CATDMUBuilder /u/product</kbd></p>
+     </blockquote>
+     <p>Moving CATProducts corresponding to product structures contained in a 
+     distant directory <kbd>/distant/product</kbd>, storing them on a local 
+     directory <kbd>/local/product</kbd> and feeding the local cache:</p>
+     <blockquote>
+       <p><kbd>CATDMUBuilder /distant/product -product /local/product</kbd></p>
+     </blockquote>
+     <p>Feeding the cache with tessellated data corresponding to product 
+     structures contained in a directory <kbd>/u/product</kbd>, which refers to 
+     VPM documents:</p>
+     <blockquote>
+       <p><kbd>CATDMUBuilder /u/product -user XXX -spwd YYY -role VPMDESIGNER&nbsp; 
+       -server ZZZ</kbd></p>
+     </blockquote>
+     <p>&nbsp; </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="441" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" height="441" width="100%">When using CATDMUBuilder in 
+     conjunction with ENOVIA<font size="1">VPM</font>, it is necessary to first 
+     launch the ENOVIA<font size="1">VPM</font> server:
+     <ol class="task">
+       <li>
+       <p class="task">When launched, the CATDMUBuilder will try to execute on 
+       the server side an ENOVIA<font size="1">VPM</font> shell called <kbd>
+       StartVPMBatchFromV5Batch.sh</kbd> . This shell name <b>must not</b> be 
+       changed. This shell <b>must</b> be in the $PATH variable of the ENOVIA<font size="1">VPM</font> 
+       user declared in the mapping (Ex: /V15/vpmadm/code/bin).</li>
+     </ol>
+     <ol class="task" start="2">
+       <li>
+       <p class="task">The <kbd>StartVPMBatchFromV5Batch.sh </kbd>shell has to 
+       be created by the ENOVIA<font size="1">VPM</font> administrator and 
+       should look as follows:</li>
+     </ol>
+     <blockquote>
+       <p><code>!# /bin/ksh<br>
+       if [ -f $HOME/.profile ] ; then<br>
+       . $HOME/.profile<br>
+       fi<br>
+       . /V15/vpmadm/env/VPMWsUser.sh &gt;/tmp/traces 2&gt;&amp;1<br>
+       VX0SERV &gt;&gt;/tmp/traces 2&gt;&amp;1</code><br>
+       <br>
+       </p>
+     </blockquote>
+     <ol class="task" start="3">
+       <li>
+       <p class="task">The following is an example of a command line used for 
+       treating a CATVpm file:</li>
+     </ol>
+     <blockquote>
+       <p><code>CATStartV5.sh -batch &quot;CATDMUBuilder /tmp/CATVPM <br>
+       -db VPMServer -user vpmadm -spwd vpmadm -server server_name <br>
+       -role VPMADMIN -product /tmp&quot;</code></p>
+       <p>where <kbd>server_name</kbd> is the name of the server defined in the 
+       ENOVIA<font size="1">VPM</font> interoperability settings (Tools &nbsp;&gt;&nbsp; 
+       Options &nbsp;&gt;&nbsp; Infrastructure &nbsp;&gt;&nbsp; Product Structure &nbsp;&gt;&nbsp; ENOVIA<font size="1">VPM</font> 
+       tab &nbsp;&gt;&nbsp; click Database Administration icon).<br>
+       </p>
+     </blockquote>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="32" width="32">&nbsp;</td>
+     <td valign="top" height="32" width="545"><b>Arguments</b><p><b>-h</b> : 
+     Help.<br>
+     <b>inputlocation</b> : To define the list of documents to process. It can 
+     be the&nbsp;path of: </p>
+     <ul>
+       <li>a file containing a list of documents. It must contain one path of 
+       document per line.</li>
+       <li>a directory containing documents </li>
+     </ul>
+     <p>Documents of the following types are treated: CATProduct,
+     <a href="#hj-catvpm">CATVpm</a>, psn, xml.<br>
+     <br>
+&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="84" width="32"></td>
+     <td valign="top" height="84" width="545">&nbsp;<p><b>-product</b> <kbd>dir</kbd> 
+     : To extract products and store them in the directory <kbd>dir</kbd>.&nbsp;<br>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="191" width="32"></td>
+     <td valign="top" height="191" width="545"><b>-nocache</b> : To run the 
+     batch without generating cache content. Note: This option has no effect 
+     when the product needs to be built from scratch.<p><b>-copycache</b> : To 
+     copy all cache content from released caches to the local cache.</p>
+     <p><b>-force</b> : To force re-calculation of cache content.</p>
+     <p><b>-onlyone</b> <kbd>dircgr</kbd> : To resolve all links to external 
+     products and save the resulting product locally as one unique product.</p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="253" width="32"></td>
+     <td valign="top" height="253" width="545"><b>-static</b> : To open a psn 
+     file with static option (valid only for psn). By default it is open with 
+     dynamic option.
+     <p><b>-selins</b> : To open a psn file with selected instances (valid only 
+     for psn). By default it is open with all instances. </p>
+     <p><b>-replacebycgr</b> <kbd>dircgr</kbd> : To replace all components by 
+     related cgr copied in the directory <kbd>dircgr</kbd>. </p>
+     <p><b>-activate</b> : To activate all shapes and save the activation state.
+     </p>
+     <p><b>-deactivate</b> : To deactivate all shapes and save the activation 
+     state. </p>
+     <p><b>-prefix</b> <kbd>prefix</kbd> : To save all products with a prefix in 
+     their name.</p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="42" width="32">&nbsp;</td>
+     <td valign="top" height="42" width="545"><b>-db</b>&nbsp;&nbsp;: Input database type: 
+     For processing data stored in a PDM database.<blockquote>
+       <p>For details on using the -db option, see <a href="page5657.html">
+       Accessing Data in a PDM Database</a>.</p>
+     </blockquote>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="66">&nbsp;</td>
+     <td valign="top" height="66"><b>-mp</b> : To enable multi-processing for 
+     product building. Multi-process parameters must be set in : <kbd>
+     <a href="page0741.html">
+     <span style="font-weight: 400">Tools &nbsp;&gt;&nbsp; Options &nbsp;&gt;&nbsp; Digital MockUp &nbsp;&gt;&nbsp; 
+     Multiprocess Settings</span></a></kbd>.<p><b>-timeout</b> :&nbsp; -timeout 
+     time: set the time out. After this time, child processes will be killed, on 
+     the assumption that they've entered a CPU loop. Available with 
+     multi-process mode (-mp) only.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="66">&nbsp;</td>
+     <td valign="top" height="66"><b><blink><br>
+     </blink>- outputformat wrl</b> : To generate a VRML file as output. Note: 
+     In batch mode, as there is no editor, the wrl file will not contain any 
+     viewpoints.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="66">
+     <img border="0" src="b35doc/english/online/icons_C2/common/anew.gif" width="32" height="32"></td>
+     <td valign="top" height="66"><b><blink><a name="new_r17"></a><br>
+     - outputformat 3dxml</blink></b><blink> : To generate a 3dxml file as output.
+     </blink>
+     <p><blink>CATDMUBuilder saves the geometry in the 3D XML format (Exact, 
+     Tessellation, and Compressed Tessellation) currently specified in the user 
+     settings (see the Infrastructure User's Guide, Compatibility, </blink>
+     <blink>
+             <a href="page0893.html">
+             3D XML</a>).</blink></td>
+   </tr>
+   <tr>
+     <td valign="top" height="42" width="32">&nbsp;</td>
+     <td valign="top" height="42" width="545">&nbsp;<p><b>-listcomp</b> : To 
+     list all the components of each product. The directory will contain one 
+     text file per product, the name of which will be the same as the product. 
+     Each file has one component per line. </p>
+     <p><b>-noreplace</b> : During the running of the batch process, it could 
+     happen that a file has to be copied in a directory where it already exists. 
+     Without the noreplace option, the file will be overloaded. With the 
+     noreplace option, the file will not be&nbsp; replaced.</p>
+     <p><b>-savedata</b>: To save referenced data in the product directory (see 
+     -product above).</p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="32" width="32">&nbsp;</td>
+     <td valign="top" height="32" width="545">A user interface is now available 
+     for running the CATDMUBuilder utility.
+     <ol class="task">
+       <li>
+       <p class="task">In the menu bar, select <kbd>Tools &nbsp;&gt;&nbsp; Utility</kbd>.<br>
+       The <kbd>Batch Monitor</kbd> dialog box appears.</li>
+     </ol>
+     <p><img border="1" src="b35doc/english/online/dmnug_c2/images/builder1NLS.gif" width="585" height="285"></p>
+     <ol class="task" start="2">
+       <li>
+       <p class="task">Select the <kbd>CATDMUBuilder</kbd> batch from the 
+       proposed list.</li>
+     </ol>
+     <blockquote>
+       <p>A dialog box will appear in which you can enter the same information 
+       you would otherwise have entered in a line command:</p>
+       <ul>
+         <li>Input documents</li>
+         <li>Treatment: build products, prepare cache or both</li>
+         <li>Product options</li>
+         <li>Cache options</li>
+         <li>VPM options</li>
+         <li>Miscellaneous options (options for dedicated document types)</li>
+       </ul>
+     </blockquote>
+     <p><img border="1" src="b35doc/english/online/dmnug_c2/images/builder2NLS.gif" width="506" height="361"></p>
+     <ol class="task" start="3">
+       <li>
+       <p class="task">Click the <kbd>Save</kbd> button to save all input data 
+       in an XML file for later use</li>
+       <li>
+       <p class="task">Click the <kbd>Run</kbd> button to run the batch job 
+       immediately. </li>
+       <li>
+       <p class="task">In the <kbd>Batch Monitor</kbd> dialog box, click the
+       <kbd>Processes</kbd> tab to monitor the batch job execution.</li>
+     </ol>
+     <p><img border="1" src="b35doc/english/online/dmnug_c2/images/builder3NLS.gif" width="538" height="277"><br>
+     </p>
+     <p>For more information on using the Batch Monitor, see the <i>
+     <a href="page1538.html">Infrastructure 
+     User's Guide, Basic Tasks, Running Batches, Running Batches Using the Batch 
+     Monitor</a></i>.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="382" width="32"></td>
+     <td valign="top" height="382" width="545">&nbsp;<p><b>Diagnostics</b><br>
+     <br>
+     Possible exit status values are:</p>
+     <ul>
+       <li>0: Successful completion.</li>
+       <li>1: Failure due to any of the following:<ul>
+         <li>license not available</li>
+         <li>cache management deactivated</li>
+         <li>missing arguments</li>
+         <li>invalid parameter</li>
+         <li>missing parameter after an option</li>
+         <li>missing input file</li>
+         <li>unable to find a file</li>
+         <li>unable to open an input file</li>
+         <li>bad type of document</li>
+       </ul>
+       </li>
+       <li>2 Processing error.</li>
+       <li>3 Partially processed.</li>
+     </ul>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="167" width="32"></td>
+     <td valign="top" height="167" width="545"><b>Solutions</b>
+     <ul>
+       <li>Exit status = 1: Modify the command line using information contained 
+       in the standard error file.</li>
+       <li>Exit status = 2: Contact you local support.</li>
+       <li>Exit status = 3: Fix the files that cause the problem: their names 
+       are contained in the&nbsp; standard error file. An interactive use of 
+       files may inform about problem.</li>
+     </ul>
+     <p><a name="hj-catvpm"></a><br>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="32" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"><br>
+&nbsp;</td>
+     <td valign="top" height="32" width="545"><b>CATVpm</b><br>
+     <p>The utility can open an ENOVIA<font size="1">VPM</font> assembly 
+     corresponding to all nodes under a given root or a CATProduct stored as 
+     Black-box. This is done using a new type of document <kbd>CATVpm</kbd>. 
+     This document is a text file: </p>
+     <ul>
+       <li>First line: coid</li>
+       <li>Second line: compid</li>
+       <li>Third line: catenv</li>
+       <li>Fourth line: catab (part list or document)</li>
+       <li>Other lines: configuration information (one configuration handler per 
+       line) </li>
+     </ul>
+     <p>Example 1: a simple node<br>
+     3D3D8F8371EA6659<br>
+     3030303030303030<br>
+     VPMENV1<br>
+     PART_LIST </p>
+     <p>Example 2: a simple node with two config handlers<br>
+     3D3D8F8371EA6659<br>
+     3030303030303030<br>
+     VPMENV1<br>
+     PART_LIST<br>
+     CONF1<br>
+     CONF2 </p>
+     <p>Example 3: a Black box<br>
+     3D3D976D89064C32<br>
+     3D3D976D89064C33<br>
+     VPMENV1<br>
+     DOCUMENT</p>
+     <p><br>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2" width="579" height="38">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="aendtask.gif (1477 bytes)" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+ <p>&nbsp; </p>
+
+ </body>
+
+</html>
+

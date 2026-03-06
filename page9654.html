@@ -1,0 +1,241 @@
+<!doctype html >
+<html>
+<head>
+ <meta http-equiv="Content-Language" content="en-us"> 
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+ <meta name="Generator" content="mihGene v1.1">
+ <meta http-equiv="Expires" content="Tue, 04 Dec 1993 21:29:02 GMT">
+ <title>DNBDeviceInterfaces HomePosition (Object)</title>
+<link href="b35doc/english/online/interfaces/_index/cdg.css" rel="stylesheet" type="text/css"> 
+<link rel="Stylesheet" type="text/css" href="b35doc/english/online/interfaces/caav5.css">
+<script language="Javascript" id="jsLinkjs" type="text/javascript" src="b35doc/english/online/interfaces/_index/jslink.js"></script> 
+<script language="Javascript" id="jsFwLinkjs" type="text/javascript" src="b35doc/english/online/interfaces/dnbdeviceinterfaces/jsFwLink.js"></script> 
+<script language="Javascript" id="jsTreejs" type="text/javascript" src="b35doc/english/online/interfaces/_index/jsTree.js"></script>  
+</head>
+<body>
+<header><nav id='topnav'><div id="indexView" class="menu1">	 
+ <a id="multiview" class="onglet" rel="../_index/main.htm" href="page8990.html">All Frameworks</a>   
+ <a id="multiview" class="onglet" rel="../_index/tree.htm" href="page8991.html">Class Hierarchy</a>   
+ <a id="multiview" class="onglet" rel="../DNBDeviceInterfaces.htm" href="page10530.html">This Framework</a>
+<a id="multiview" class="onglet" rel="../_index/HomeIdx.htm" href="page8989.html">Indexes</a>  
+ <a id="multiviewP" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'0')"  >Previous</a>  
+ 	<a id="multiviewN" class="onglet" href="javascript:openLinkNP(getCurrentObjectName(),getCurrentType(),'1')"  >Next</a> 
+ </div></nav><hr/> 
+<script type="text/javascript" > 
+ 	function getCurrentLevel() { 
+ return "";	} 
+	function getCurrentFw() { 
+	return "DNBDeviceInterfaces";	}
+		function getCurrentObjectName() { 
+ 	return "HomePosition"; } 
+	function getCurrentType() { 
+ 	return "interface"; }  
+ </script><h1 class='title1'> HomePosition<font style='font-size:small;'> (Object)</font> </h1> </header><main id='main'> 
+ 
+<script type="text/javascript" > 
+ generatedFatherClass('interface_HomePosition_28339','HomePosition','0');</script>
+<section id='maindesc'>
+<b><i> Interface representing a device's Home Position.</i></b><br>
+
+
+ <br><b>Role</b>: This interface is used to interact with a device's home positions.
+ This includes devices created in using V5 mechanisms or imported from DENEB
+ D5. 
+ <br>A home position is a list of values, each value being associated to
+ each <b>Degrees Of Freedom(DOF)</b> of the device, defining a state for the device
+(The list size matches the number of commands that can be simulated).
+</br>
+<br>
+ With home positions, it is possible to define <b>Tool tips</b>. A
+ <b>Tool tip</b> is a specific device part meant to be in contact with 
+ product(s). User may define some device parts as tool tips so that, when 
+ they are in collision, the clash is ignored. Tool tips are excluded
+ from clash analysis in tools like <b>DPM Body-in-White</b>'s weldgun search.
+</br>
+ 
+ <br>The following code snippet can be used to obtain a home position from a device.
+ <pre>
+   Dim objDevice As BasicDevice
+   set objDevice = CATIA.ActiveDocument.Product.GetTechnologicalObject("BasicDevice")
+   Dim ListOfHomePositions()
+   objDevice.<font color="red">GetHomePositions</font> ListOfHomePositions
+   Dim homePos as HomePosition
+   For Each homePos In ListOfHomePositions
+      ...
+   Next
+ </pre>
+ </br><section id='idxsum'>
+<article id='propidx'  >
+</article><article id='fctdef'  >
+<nav id='idxnav'> <table class='fill'  id='idxtab'><tbody> 
+ <tr><th colspan ='2' >Method Index</th></tr>
+ <tr><td  id='tdleft'>
+    <a href="#GetAssociatedToolTip"><b>GetAssociatedToolTip</b></a>
+</td><td  id='tdright'>  Get the tooltips associated with the home position.
+</td></tr>  <tr><td  id='tdleft'>
+    <a href="#GetDOFValues"><b>GetDOFValues</b></a>
+</td><td  id='tdright'>  Get the DOF values for the home position.
+</td></tr>  <tr><td  id='tdleft'>
+    <a href="#SetAssociatedToolTip"><b>SetAssociatedToolTip</b></a>
+</td><td  id='tdright'>  Set the tool tip associated with the home position.
+</td></tr>  <tr><td  id='tdleft'>
+    <a href="#SetDOFValues"><b>SetDOFValues</b></a>
+</td><td  id='tdright'>  Set the DOF values for the home position.
+</td></tr> </tbody></table></nav>
+</article></section>
+<br class='brsect'/><section id='objdesc'>
+<article id='propdef'  class='defblock'>
+</article><article id='fctdef'  class='defblock'>
+ <h2 class='title2'><a id="Methods" name="Methods"></a>Methods</h2> <br><dl>
+<a id="GetAssociatedToolTip" name="GetAssociatedToolTip"></a><dt class='dtmethod'>
+
+<span class='property'>Sub <span class='objname'>GetAssociatedToolTip</span><span class='signature'>(<script type="text/javascript"> activateLink('CATSafeArrayVariant','CATSafeArrayVariant')</script> <span class='param'>oTipList</span>)</span></span></dt>
+  <dd class='ddmethod'>
+ Get the tooltips associated with the home position.
+ 
+<dl  class='desclist'>
+  <dt> <b>Parameters:</b></dt>
+  <dd>
+    <dl class='paramlist' >
+    <dt><span class='paramitem'> oTipList</span></dt>
+   <dd>   This out parameter contains list of tooltips associated with the home 
+position. The list contains a set of device parts.
+
+ 
+ </ dd>
+</dl></dd>
+  <dt class='example'><b> Example: </b></dt>
+  <dd> <pre class="code">   <pre>
+   <font color="green">' declaration of 1 list of products and 1 home position</font>
+   Dim MyToolTips() As Product
+   Dim MyHomePosition As HomePosition
+
+   <font color="green">' valuation of variables</font>
+   Set MyHomePosition = ...
+
+   <font color="green">' retrieval of tool tips as part of product array</font>
+   MyHomePosition.<font color="red">GetAssociatedToolTip</font>( MyToolTips )
+
+   <font color="green">' start a loop displaying the name of each tool tip</font>
+   For Each toolTip In toolTips
+       <font color="green">'warning: MsgBox is a modal dialog: it requires user interactions!!</font>
+       MsgBox toolTip.PartNumber = ...
+   Next
+   </pre>
+</dl>
+</dd>
+<a id="GetDOFValues" name="GetDOFValues"></a><dt class='dtmethod'>
+
+<span class='property'>Sub <span class='objname'>GetDOFValues</span><span class='signature'>(<script type="text/javascript"> activateLink('CATSafeArrayVariant','CATSafeArrayVariant')</script> <span class='param'>oValues</span>)</span></span></dt>
+  <dd class='ddmethod'>
+ Get the DOF values for the home position.
+ 
+<dl  class='desclist'>
+  <dt> <b>Parameters:</b></dt>
+  <dd>
+    <dl class='paramlist' >
+    <dt><span class='paramitem'> oValues</span></dt>
+   <dd>   This contains a list of the current DOF values.
+   Please note that values are expressed as:
+<ul>
+<li><b>meters</b> for length values</li>
+<li><b>radians</b> for angle values</li>
+</ul>
+   angles in radians.
+ 
+ </ dd>
+</dl></dd>
+  <dt class='example'><b> Example: </b></dt>
+  <dd> <pre class="code">   <pre>
+   Dim objDevice As BasicDevice
+   set objDevice = CATIA.ActiveDocument.Product.GetTechnologicalObject("BasicDevice")
+   Dim ListOfHomePositions() 
+   objDevice.GetHomePositions ListOfHomePositions
+   Dim homePos as HomePosition  
+   <font color="green">'define an empty array to store the values</font>
+   Dim DOFValues ()
+   For Each homePos In ListOfHomePositions
+      homePos.<font color="red">GetDOFValues</font> DOFValues 
+      For i = 0 to ubound (DOFValues)
+         ...
+      Next
+   Next
+   </pre>
+</dl>
+</dd>
+<a id="SetAssociatedToolTip" name="SetAssociatedToolTip"></a><dt class='dtmethod'>
+
+<span class='property'>Sub <span class='objname'>SetAssociatedToolTip</span><span class='signature'>(<script type="text/javascript"> activateLink('CATSafeArrayVariant','CATSafeArrayVariant')</script> <span class='param'>iTipList</span>)</span></span></dt>
+  <dd class='ddmethod'>
+ Set the tool tip associated with the home position.
+ 
+<dl  class='desclist'>
+  <dt> <b>Parameters:</b></dt>
+  <dd>
+    <dl class='paramlist' >
+    <dt><span class='paramitem'> iTipList</span></dt>
+   <dd>   This parameter contains list of associated tooltips (device parts
+ meant to be ignored during clash analysis).
+
+ 
+ </ dd>
+</dl></dd>
+  <dt class='example'><b> Example: </b></dt>
+  <dd> <pre class="code">   <pre>
+   <font color="green">' declaration of 2 products and 1 home position</font>
+   Dim MyPart1 As Product
+   Dim MyPart2 As Product
+   Dim MyHomePosition As HomePosition
+
+   <font color="green">' valuation of variables</font>
+   Set MyPart1 = ...
+   Set MyPart2 = ...
+   Set MyHomePosition = ...
+
+   <font color="green">' defining the tool tips through an array</font>
+   Dim MyToolTips(1) As Product
+   Set MyToolTips(0) = MyPart1
+   Set MyToolTips(1) = MyPart2
+   MyHomePosition.<font color="red">SetAssociatedToolTip</font>( MyToolTips )
+   </pre>
+</dl>
+</dd>
+<a id="SetDOFValues" name="SetDOFValues"></a><dt class='dtmethod'>
+
+<span class='property'>Sub <span class='objname'>SetDOFValues</span><span class='signature'>(<script type="text/javascript"> activateLink('CATSafeArrayVariant','CATSafeArrayVariant')</script> <span class='param'>iValues</span>)</span></span></dt>
+  <dd class='ddmethod'>
+ Set the DOF values for the home position.
+ 
+<dl  class='desclist'>
+  <dt> <b>Parameters:</b></dt>
+  <dd>
+    <dl class='paramlist' >
+    <dt><span class='paramitem'> oValues</span></dt>
+   <dd>   This contains a list of the current DOF values.
+   Please note that values are expressed as:
+<ul>
+<li><b>meters</b> for length values</li>
+<li><b>radians</b> for angle values</li>
+</ul>
+ 
+ </ dd>
+</dl></dd>
+  <dt class='example'><b> Example: </b></dt>
+  <dd> <pre class="code">   <pre>
+   Dim DOFValues (6)
+   For i = 0 to 5
+      <font color="green">'Store value in radians</font>
+      DOFValues(i) = 10 * i * (pi / 180.0)
+   next
+   <font color="green">'Note: to obtain homePos, please refer to example in GetDOFValues</font>
+   homePos.<font color="red">SetDOFValues</font> DOFValues
+   </pre>
+</dl>
+</dd>
+<br></dl>
+</article></section>
+</main><footer><hr/><p><i>Copyright &#169; 1999-2019, Dassault Syst&#232;mes. All rights reserved.</i></p></footer>
+</body>
+</html>
+
+

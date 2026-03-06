@@ -1,0 +1,716 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Connect Checker</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none">
+	<style>
+<!--
+div.Section1
+	{page:Section1;}
+.style1 {
+	color: #666666;
+}
+.auto-style1 {
+	font-size: 16pt;
+	color: #353A90;
+}
+.auto-style2 {
+	color: #000000;
+}
+-->
+</style>
+</head>
+
+ <body>
+
+ <h1>
+     <a name="ConnectChecker"></a>Connect 
+		Checker<a name="hj-Analyzing"></a> <a name="CATCloudQsrHeaderCmd.CATQsrConnectCheckerHdr"></a> &nbsp;<a name="CATStCLADefaultCommandHeader.NewCCKAnalysisHead"></a></h1>
+ <table Border="0" CELLSPACING="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="40">
+     <img src="b35doc/english/online/icons_C2/common/abasic.gif" width="32" height="32"></td>
+     <td rowspan="1" height="40">This section helps you understand the various 
+		CCK types between two curves and/or surfaces. There are five types of 
+		analyses available:<table style="BORDER-COLLAPSE: collapse" borderColor="#111111" cellSpacing="0" cellPadding="5" border="0" valign="top" id="table1">
+		<tr vAlign="top" BORDER="0">
+			<td>
+			<dl>
+				<ul>
+					<li><kbd>G0</kbd>: The continuity in point is considered as 
+					reached if <kbd>G0</kbd> value is inferior to the 
+					geometrical resolution usually equal to 0.001 mm.</li>
+					<li><kbd>G1</kbd>: The continuity in tangency is considered 
+					as reached if <kbd>G1</kbd> value is inferior than 0.01 
+					degree.</li>
+					<li><kbd>G2</kbd>: The continuity in curvature is considered 
+					as reached if <kbd>
+					G2</kbd> value is inferior than 2%.<br>
+					The G2 curvature is defined with:<ul>
+					<li>A <span>standard computation based on a ratio of 
+					curvature: |C1 - C2| / max(C1, C2). The result of this 
+					formula is between 0% and 100%.</span></li>
+					<li>An <span>alternative computation amortized compared to 
+					standard one. The result of this computation is still 
+					between 0 and 100% but it is much smaller than the other 
+					one. It is more significant for large curvature values and 
+					avoid values near 100% when one of element is nearly flat 
+					(curvature value near 0).</span></li>
+				</ul>
+					</li>
+					<li><kbd>G3</kbd>:The continuity in curvature tangency is 
+					considered as reached if <kbd>G3</kbd> value is inferior 
+					than 0.1 degree.</li>
+					<li><kbd>Overlapping</kbd>: The system detects overlapping 
+					curves.</li>
+				</ul>
+			</dl>
+			</td>
+		</tr>
+		</table>
+		</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="40">
+     &nbsp;</td>
+     <td height="40" class="auto-style1">Continuity Options</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="40">
+     &nbsp;</td>
+     <td height="40" class="auto-style1">
+	 <ul>
+		 <li><span class="auto-style2">G1: Displays </span><span>
+		 <span class="auto-style2">values within the range of 0 to 90 degrees 
+		 only. It is available with G1 continuity analysis and for both Full and 
+		 Quick modes. <br>The current G1 values are within the range of 0 to 180 
+		 degrees. There can be a case where two surfaces are tangent but 
+		 superposed, then the value is 180 degrees. Therefore, you have an 
+		 option to choose the interval of G1 values: 0 - 180 deg or 0 - 90 deg 
+		 (if G1 &gt; 90 deg, then G1 = 180 - G1).&nbsp;<br>When you select range 0 &#8211; 90 
+		 degree, the representation of analysis is recomputed. The 
+		 representation of analysis, with &#8220;G1 value&#8221; button ON and OFF is 
+		 different, if result values have value more than 90 degree</span>.</span>&nbsp;&nbsp;
+		 </li>
+		 <li class="auto-style2">G2: Checks for <span>concavity defects for 
+		 surface/surface and surface/curve cases or angle between osculator 
+		 planes for curve/curve case. It is available with G2 continuity 
+		 analysis and for Full mode only. <br>A concavity information is 
+		 provided (0 or 1) for surface/surface and surface/curve cases, or an 
+		 osculator angle for curve/curve case.</span></li>
+		 <li class="auto-style2">Alternative G2: Enables<span> computation of 
+		 alternative G2 values. It is available with G2 continuity and for both 
+		 Full and Quick modes.<o:p> <br></o:p>
+		 When you select this option, the 
+		 computed G2 continuity value is Alternative G2 continuity value. It is 
+		 computed taking into account the gap between curvature values as well 
+		 as curvature values themselves. Indeed, same gap does not have the same 
+		 impact if curvature values are small or large.<br>Alternative G2 
+		 continuity values are amortized and much smaller.</span> <span>They 
+		 remain significant mostly for large curvature values.<br><br>When this 
+		 option is selected, the computed values are much smaller than the 
+		 standard G2 values. Hence, the default re-limitation values are 
+		 different for standard and alternative G2 values.</span><ul>
+			 <li class="auto-style2"><span>Re-limitation 
+		 values for standard G2: [0.5 - 100]</span></li>
+			 <li class="auto-style2"><span>Re-limitation values for 
+		 alternative G2: [0.000005 - 100]</span></li>
+		 </ul>
+		 <span>
+		 <p class="MsoNormal">When this option is not selected, the 
+		 computed G2 continuity value is standard G2 continuity value. It is 
+		 computed taking into account only the gap between the curvature values 
+		 of each element<span style="font-size: 10.5pt; font-family: &quot;Arial&quot;,sans-serif; background: silver; mso-highlight: silver">.</span></p>
+		 </span>&nbsp;</li>
+	 </ul>
+		</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle">
+     &nbsp;</td>
+     <td>
+     <h2>Connect Checker Types</h2>
+		</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     &nbsp;</td>
+     <td>
+		<ul>
+			<li><font color="#666666"><b>Elements</b></font>: 
+			<ul>
+				<li><font color="#666666"><b>Source</b></font>:<span style="background-position: 0 0"> 
+				available in all five types of CCK.</span></li>
+				<li><font color="#666666"><b>Target</b></font>:
+				<span lang="EN-GB">enabled for CCK Type, &#8220;Curve Extremity and 
+				Curve&#8221; and &#8220;Surface Border a</span>nd Surface&#8221; only.</li>
+			</ul>
+			</li>
+			<li><font color="#666666"><b>Filter Types according to pair of 
+			elements</b></font>:
+			<ul>
+				<li>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_StCrvCCKP2.gif" width="24" height="24"><font color="#666666"><b>Curve-Curve 
+		Connection</b></font>: Connection analysis when two curves are selected 
+		as input elements.</li>
+				<li>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_ConnectCheckerP2.gif" width="24" height="24"><font color="#666666"><b> 
+		Surface-Surface Connection</b></font>: Connection analysis when two 
+		surfaces are selected as input elements.</li>
+				<li>
+       <img border="0" src="b35doc/english/online/icons_C2/images/IDB_StSurCrvCCK.gif" width="22" height="22"><font color="#666666"><b> 
+		Surface-Curve Connection</b></font>: Connection analysis when one 
+		surface and one curve are selected as input elements.</li>
+			</ul>
+			</li>
+			<li><font color="#666666"><b>Filter Types according to the 
+			connection mode between two elements</b></font>:<ul>
+			<li><font color="#666666"><b>
+			<img border="0" src="b35doc/english/online/cfyugfss_c2/images/I_CCK_Boundary.gif" width="70" height="20"> 
+			Boundary</b></font><span lang="EN-GB" style="font-size: 8.0pt; font-family: Verdana">:
+				</span>connection analysis between the boundaries of two 
+			elements will be performed.<ul>
+				<li><span lang="en-gb">
+				<a href="page3948.html#Surface-Surface-Boundary">
+				Surface-Surface</a>: CCK between surfaces' borders, type 
+				corresponding to the old Surface Connect Checker.</span></li>
+				<li><span lang="en-gb">
+				<a href="page3949.html#Curve-Curve-Boundary">Curve-Curve</a>: 
+				CCK between curves' extremities, type corresponding to the old 
+				Curve Connect Checker.</span></li>
+			</ul></li>
+			<li><font color="#666666"><b>
+			<img border="0" src="b35doc/english/online/cfyugfss_c2/images/I_CCK_Projection.gif" width="73" height="20"> 
+			Projection</b></font><span lang="EN-GB">: connection analysis 
+			between the boundary of one element and projection of that boundary 
+			on another element will be performed.</span><ul>
+				<li><a href="page3949.html#Curve-Curve-Projection">
+				Curve-Curve</a>: CCK between a curve's extremity and its 
+				projection on a curve.</li>
+				<li><a href="page3948.html#Surface-Surface-Projection">
+				Surface-Surface</a>: CCK between a surface's border and its 
+				projection on a surface.</li>
+				<li>
+				<a href="page3920.html#Checking Connections Between Curves and Surfaces-Projection">
+				Surface-Curve</a>: CCK between a curve's extremity and its 
+				projection on a surface.</li>
+			</ul></li>
+		</ul>
+			</li>
+		</ul>
+		</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td>
+     <p style="margin-top: 10">Open the
+     <a href="b35doc/english/online/cfysm_C2/samples/FreeStyle/FreeStyle_09.CATPart">
+     FreeStyle_09.CATPart</a> document.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     &nbsp;</td>
+     <td>
+     <ol class="task">
+       <li>
+       <p class="task">Select both curves to be analyzed.</li>
+       <li>
+       <p class="task">Click <kbd>Connect Checker Analysis</kbd> 
+       <img border="0" src="b35doc/english/online/cfyugfss_c2/images/connect_checker.gif" width="22" height="22"> 
+		in the <kbd>Shape Analysis</kbd> toolbar.
+		<a name="ix-connect checker"></a></li>
+     </ol>
+     <blockquote>
+       <blockquote>
+		<blockquote>
+			<p>The Connect Checker dialog box is displayed. The Connect Checker 
+			dialog box proposes two layers to switch between the quick and the 
+			full analysis mode:</p>
+			<ul>
+				<li><font color="#666666"><b>Full Analysis </b></font>
+				mode</li>
+				<li><font color="#666666"><b>Quick Analysis </b></font>
+				mode</li>
+			</ul>
+		</blockquote>
+		</blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle">
+     &nbsp;</td>
+     <td>
+		<h2>Full Analysis Mode</h2>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td>
+		The<font color="#666666"><b> Full Analysis </b></font>mode<b><font color="#666666">
+		</font></b>shows information of all connections found. You can control 
+		various options like color scale, comb, envelope and amplitude. </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     </td>
+     <td>
+		<ul>
+			<li><font color="#666666"><b>Display</b></font>:
+			<span style="background-position: 0 0">The full mode is selected, in 
+			this case only one continuity analysis type is performed, the colors 
+			and the range of values are managed in a specific tool: the color 
+			scale. Select </span>any of the two color scale mode:<span style="background-position: 0 0">
+			</span>
+			<ul>
+				<li>
+				<p class="task"><kbd>Limited Color Scale</kbd>: In this mode, a 
+				specific color and a specific threshold are associated to the 
+				continuity type.<p>
+				<img border="0" src="b35doc/english/online/cfyugfss_c2/images/dbconnectcheckercolors_limitedNLS.gif" width="160" height="217"></li>
+				<li>
+				<p class="task"><kbd>Full Color Scale</kbd>: In this mode, only 
+				one type on continuity is performed, therefore a color scale 
+				allows you to work with range of values.<p class="task">
+				<img border="0" src="b35doc/english/online/cfyugfss_c2/images/dbconnectcheckercolorsNLS.gif" width="140" height="337"></p>
+				</li>
+			</ul>
+			<table border="0" id="table3">
+				<tr>
+					<td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+					<td>The color scale dialog box is available only when the<kbd> 
+					Connect Checker Analysis</kbd> 
+       <img border="0" src="b35doc/english/online/cfyugfss_c2/images/connect_checker.gif" width="22" height="22"> 
+					command is active.
+					<ul>
+						<li>If you end the <kbd>Connect Checker Analysis</kbd> 
+       					command, even if the color scale mode is On, the color 
+						scale dialog box is not displayed. </li>
+						<li>If you edit the connect checker and if the color 
+						scale mode is On, the color scale dialog box is 
+						displayed.</li>
+					</ul>
+					</td>
+				</tr>
+			</table>
+			<ul>
+				<li>
+				<p class="task">The <font color="#666666"><b>Auto Min Max</b></font> 
+     			button enables to automatically update the minimum and maximum 
+				values (and consequently all values between) each time they are 
+				modified.</li>
+				<li>
+				<p class="task">You can right-click on a color in the color 
+				scale to display the contextual menu:<p>
+				<img border="0" src="b35doc/english/online/cfyugfss_c2/images/contextualmenu_distanceNLS.gif" vspace="5" width="117" height="78"></li>
+				<li>
+				<p class="task"><kbd>Edit</kbd>: it allows you to modify the 
+				values in the color range to highlight specific areas of the 
+				selected surface. The Color dialog box is displayed allowing you 
+				to modify the color range.</li>
+				<li>
+				<p class="task"><kbd>Unfreeze</kbd>: it allows you to perform a 
+				linear interpolation between non defined colors.&nbsp;The unfreezed 
+				values are no longer highlighted in green.</li>
+				<li>
+				<p class="task"><kbd>No Color</kbd>: it can be used to simplify 
+				the analysis, because it limits the number of displayed colors 
+				in the color scale. In this case, the selected color is hidden, 
+				and the section of the analysis on which that color was applied 
+				takes on the neighboring color.</li>
+				<li>
+				<p class="task">You can also right-click on the value to display 
+				the contextual menu:<p>
+				<img border="0" src="b35doc/english/online/cfyugfss_c2/images/contextualmenu_distance02NLS.gif" vspace="5" width="114" height="54"></li>
+				<li>
+				<p class="task"><kbd>Edit</kbd>: it allows you to modify the 
+				edition values. The Value Edition dialog box is displayed: enter 
+				a new value (negative values are allowed) to redefine the color 
+				scale, or use the slider to position the distance value within 
+				the allowed range, and click OK. The value is then frozen, and 
+				displayed in a green rectangle.</li>
+			</ul>
+			<ul>
+				<li>
+				<p class="task"><kbd>Use Max</kbd>/<kbd>Use Min</kbd> <kbd>
+				<a name="hj-minmax"></a></kbd>: it allows you to evenly 
+				distribute the color/value interpolation between the current 
+				limit values, on the top/bottom values respectively, rather than 
+				keeping it within default values that may not correspond to the 
+				scale of the geometry being analyzed. Therefore, these limit 
+				values are set at a given time, and when the geometry is 
+				modified after setting them, these limit values are not 
+				dynamically updated.<br>The <kbd>Use Max</kbd> contextual item 
+				is only possible if the maximum value is higher or equal to the 
+				medium value. If not, you first need to unfreeze the medium 
+				value. Only the linear interpolation is allowed, meaning that 
+				between two set (or frozen) colors/values, the distribution is 
+				done progressively and evenly.<br>
+				<table style="width: 100%">
+					<tr>
+						<td style="width: 28px">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+						<td><strong>Important:</strong> To access the <kbd>Edit</kbd> 
+						and the <kbd>Unfreeze</kbd> contextual menu for a color 
+						and a value on the color scale, ensure that the <kbd>
+						Auto Min Max</kbd> check box is cleared.</td>
+					</tr>
+				</table>
+				</li>
+			</ul>
+			</li>
+		</ul>
+		</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="65">
+     &nbsp;</td>
+     <td height="65">
+		<ul>
+			<li><font color="#666666"><b>Combo: </b></font>Allows you to switch 
+			between the four predefined discretization coefficients the icon 
+			layout changed to show current discretization level. You can choose 
+			the discretization, that is the numbers of spikes in the comb (check 
+			the <kbd>Comb</kbd> option to see the difference). The number of 
+			spikes corresponds to the number of points used for the computation:<ul>
+				<li><kbd>Fine</kbd>: 45 spikes are displayed</li>
+				<li><kbd>Medium</kbd>: 30 spikes are displayed</li>
+				<li><kbd>Coarse</kbd>: 15 spikes are displayed</li>
+				<li><kbd>Light</kbd>: 5 spikes are displayed.<br>This mode 
+				enables to obtain consistent results with the visualization of 
+				sharp edges.<br>An edge is considered as sharp if its tangency 
+				deviation is higher than 0.5 degree. To only detect tangency 
+				deviations on sharp edges, specify a deviation of 0.5 degree 
+				minimum.<br>To visualize sharp edges, make sure the 
+				<kbd>View &gt; Render Style &gt; Shading with Edges and Hidden Edges</kbd> 
+				option is checked.</li>
+			</ul>
+			</li>
+			<li>From the Connect Checker dialog box, you can choose a number of 
+			visualization and computation options:<ul>
+				<li>the <kbd>comb</kbd>: that is the spikes corresponding to the 
+				distance in each point.</li>
+				<li>the <kbd>envelope</kbd>: that is the curve connecting all 
+				spikes together.</li>
+				<li>the<kbd> Information</kbd>: that is the minimum and maximum 
+				values displayed in the 3D geometry.</li>
+			</ul>
+			</li>
+			<li>The minimum and the maximum computed values are displayed in 
+			color scale. Right-click on the color scale and check the following 
+			three options in the contextual menu:<ul>
+				<li><font color="#666666"><b>Edit</b></font>: Used to define a 
+				color associated to a range of values.</li>
+				<li><font color="#666666"><b>Unfreeze</b></font>: Used to allow 
+				a linear interpolation of colors between two frozen colors.</li>
+				<li><b><font color="#666666">No color</font></b>: Used to hide 
+				the analysis result for a range of values.</li>
+			</ul>
+			</li>
+		</ul>
+		<ul>
+			<li><font color="#666666"><b>Amplitude</b></font>: The Amplitude 
+			Factor allows you to scale the reference by a certain factor 
+			automatically or manually.<ul>
+				<li>
+				<img border="1" src="b35doc/english/online/icons_C2/images/IDB_StScaling.gif" width="22" height="22">
+				<font color="#666666"><b>Auto Scaling</b></font>: Click on this 
+				button to scale the reference automatically.</li>
+				<li>
+				<img border="1" src="b35doc/english/online/icons_C2/images/IDB_StMultiplyTwo.gif" width="22" height="22">
+				<font color="#666666"><b>Multiply by 2</b></font>: Multiply the 
+				scaling factor by 2.</li>
+				<li>
+				<img border="1" src="b35doc/english/online/icons_C2/images/IDB_StDivideTwo.gif" width="22" height="22">
+				<font color="#666666"><b>Divide by 2</b></font>: Divide the 
+				scaling factor by 2.</li>
+			</ul>
+			</li>
+		</ul>
+		<blockquote>
+			<blockquote>
+				<p>The 100 (percent) option depicts the standard level of the 
+				scaling factor on which multiplication or division of scaling 
+				factor can be performed.</p>
+			</blockquote>
+		</blockquote>
+		<ul>
+			<li><b><font color="#666666">Connection </font></b>
+			<ul>
+				<li><b><font color="#666666">Maximum Gap</font></b><span lang="en-gb">:
+				</span><span lang="EN-GB" style="color: black">To get connection 
+				between two input elements, the gap between those two elements 
+				must be less than or equal to Maximum Gap. </span></li>
+				<li><strong><span class="style1">
+				<img border="1" src="b35doc/english/online/icons_C2/images/IDB_StIgnoreFreeEdges.gif" width="22" height="22">
+				Ignore Small Free Edges</span></strong>: Ignores the connections 
+				involving free edges of length less than the maximum gap 
+				specified. <br>
+				Note: You can use this option only for the connections between 
+				the free edges, not for the internal edges of a surface.</li>
+			</ul>
+			</li>
+			<li><b><font color="#666666">Information</font></b>: In the case you 
+			select several types of continuity, the <kbd>Information</kbd> 
+			button is grayed out.<ul>
+				<li>You can check the <kbd>Overlapping<a name="hj-overlapping"></a></kbd> 
+       			button to highlight where, on the common boundary, the two 
+				surfaces overlap. In this case the other analysis types are 
+				deactivated.</li>
+				<li>You can check the <kbd>Information</kbd> 
+       			button to display the minimum and maximum values in the 3D 
+				geometry, or uncheck it to hide the values.<ul>
+					<li><b><font color="#666666">MinInfo</font></b><span style="color: black">:
+					</span>For surfaces, with the ON/OFF of MinInfo button, the 
+					information for Min values will be displayed. </li>
+					<li><b><font color="#666666">MaxInfo</font></b><span style="color: black">:
+					</span>For surfaces, with the ON/OFF of MaxInfo button, the 
+					information for Max values will be displayed. With change in 
+					descritization, observe the change in Max value display in 
+					dialog box and in graphics area. For curves, observe Max 
+					value in graphics and dialog box is similar for each 
+					continuity type.</li>
+				</ul>
+				</li>
+			</ul>
+			</li>
+			<li><b><font color="#666666">Discretization</font></b><span lang="en-gb">:</span>The 
+			combo allows you to switch between the four predefined 
+			discretization coefficients the icon layout changed to show current 
+			discretization level<span style="font-size: 8.0pt; font-family: Verdana">.&nbsp;
+			</span></li>
+			<li><b><font color="#666666">Maximum Deviation</font></b><span lang="en-gb">:</span><span lang="EN-GB" style="color: black">Deviations 
+			are computed for G0, G1, G2, G3 continuity. You can get the 
+			information about Overlap defect and&nbsp; concavity defect.</span></li>
+		</ul>
+		</td>
+   </tr>
+   <tr>
+     <td>
+     &nbsp;</td>
+     <td>
+		<h2>Quick Analysis Mode</h2>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td>
+     The <b><font color="#666666">Quick Analysis</font></b> 
+		mode is the default mode.&nbsp; <span lang="EN-GB" style="color: black">In 
+		Quick mode you have options&nbsp; to view analysis results above specified 
+		deviation. You have a way to change color of analysis representations.
+		</span><br>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td>
+		<p>
+		&nbsp;</p>
+		<p>
+		In this case several continuity types can be performed at the same time, 
+		a color and a threshold is associated to each continuity type. In the 
+		quick analysis mode a specific color, a threshold and a max value (a 
+		numerical feedback of the analysis) are associated to each type.
+		</p>
+		<p>Some continuity types are combinable, the priority order is G0, G1, 
+		G2, G3 and Overlap. However, the overlap type is not combinable. Each 
+		color is editable. 
+		</td>
+   </tr>
+   <tr>
+     <td>
+     &nbsp;</td>
+     <td>
+     <h2>Implicit Mode</h2>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td>
+     No type of pair elements is checked, i.e. no filter is set. In this mode 
+		only the following are performed:<ul>
+		<li>CCK between surfaces' borders, </li>
+		<li>CCK between curves' extremities, </li>
+		<li>CCK between a curve's extremity and its projection on a surface</li>
+		</ul>
+		<p>An implicit mode depends on selected element types:</p>
+		<ul>
+		<li>The first selected element is a surface:<ul>
+			<li>The second selected element is a surface, the connect checker 
+			analysis is the surface connect checker</li>
+			<li>The second selected element is a curve, the connect checker 
+			analysis is the surface-curve connect checker</li>
+		</ul>
+		</li>
+		<li>The first selected element is a 3D curve:<ul>
+			<li>The second selected element is a 3D curve, the connect checker 
+			analysis is the curve connect checker</li>
+			<li>The second selected element is a surface, the connect checker 
+			analysis is the surface-curve connect checker</li>
+		</ul>
+		</li>
+		<li>The selected elements are surfaces edges, a curve connect checker 
+		analysis is performed</li>
+		<li>In case of multi selection, if curves and surfaces are selected, the 
+		surface connect checker is applied on the set of selected surfaces and 
+		the curve connect checker is applied on the set of selected curves.</li>
+		</ul>
+		</td>
+   </tr>
+   <tr>
+     <td>
+     &nbsp;</td>
+     <td>
+     <h2>Explicit Mode</h2>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td>
+     The filters used, i.e. exclusive choice between the types of pair of 
+		elements and choice between the connection modes.<ul>
+		<li>The explicit mode defined through the dialog box:<ul>
+			<li>The surface connect checker is set on, only the surfaces in the 
+			selected elements set are taken account to perform the analysis.</li>
+			<li>The curve connect checker is the current mode, only curves or 
+			surfaces edges in the selected elements are taken in to account.</li>
+			<li>The surface curve connect checker is the current mode, the set 
+			of the selected surfaces and the set of the 3D curves are taken 
+			account to perform the analysis.</li>
+		</ul>
+		</li>
+		</ul>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>
+     <span lang="EN-GB">Connection Analysis will be done only if Projection 
+		result of Source Surface border on Target Surface is of type &#8220;edge&#8221; 
+		only.</span></td>
+   </tr>
+   <tr>
+     <td>
+     &nbsp;</td>
+     <td>
+     <h2>Memory Use</h2>
+		</td>
+   </tr>
+	<tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td>
+     A warning message is displayed in <kbd>Connect Checker</kbd> 
+       command as soon as the current memory use&nbsp; in a session exceeds either 70 
+		percent (the default value) or the limit set by you ( in <b>
+		<font color="#666666">Tools &gt; Options &gt; General &gt; General </font></b>
+		tab, <b><font color="#666666">Memory Warning</font></b>) whichever is 
+		lower. For more information on memory warning setting, refer to <i>
+		Infrastructure User&#8217;s Guide: Customizing Settings: General</i>.<ul>
+		<li>The warning message informs you about how many connections have been 
+		found and created when memory use limit is reached. The warning message 
+		box also gives information about the number of input elements analyzed 
+		from the selection.<br>
+		For example if you have set memory limit as 70% and and 127 connection 
+		has been found out of 150 selected elements, the following warning 
+		message might be displayed depending on connections found and analyzed: <br>
+		Connections found (127) have reached 70 percent of Memory. Analyzed 
+		objects are 87. Connections created are 126.<br>
+		Recommendation: Try to save your data and re-start the session. </li>
+		<li>After the warning message is displayed in the <kbd>Connect Checker</kbd> 
+       	command, further connection analysis is stopped.</li>
+		<li>If some of the inputs have been already analyzed (till the point the 
+		memory use exceeds the given limit), the result of connect analysis is 
+		shown for these input elements. The input elements analyzed, till the 
+		memory use limit, are displayed in <kbd>Connect Checker</kbd> 
+       	dialog box as selection in the <kbd>Elements</kbd> field.</li>
+		<li>The other selected elements for which the connections have not been 
+		found are removed from the connect checker selection.</li>
+		</ul>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td>
+     <h2><a name="hj-matching constraint for analysis"></a>Matching Constraint 
+		for Analysis</h2>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td>
+		<table border="0">
+			<tr>
+				<td>
+				The parent matching constraint node and individual matching 
+				constraints can be selected for connection analysis in the
+				<strong><span class="style1">Connect Checker</span></strong> 
+				command. The constraints can be selected in 3D or from 
+				specification tree.</td>
+			</tr>
+			<tr>
+				<td>
+				<img border="0" src="b35doc/english/online/cfyugfss_c2/images/connectcheckermatchconstraintNLS.gif" width="183" height="77"></td>
+			</tr>
+		</table>
+		<p class="task">Depending on the connection mode 
+		(Surface-Surface/Curve-Curve/Surface-Curve) the match constraints from 
+		the matching parent node (between surface boundaries/curve extremities) 
+		are filtered as inputs for Connect Checker. The matching constraint 
+		created in the following cases is not selected for analysis:</p>
+		<table border="0">
+			<tr>
+				<td>
+				<ul>
+					<li>between the edge of surface and curve,</li>
+					<li>between curve vertex and plane,</li>
+					<li>between curve vertex and vertex in 3D.</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		<p>In such cases the matching constraint is not selectable and the <span style="FONT-WEIGHT: 400"><font color="#000000">
+		forbidden sign is displayed along with the tool tip:</font></span></p>
+		<p><code>Some of the Match Constraints cannot be selected as input 
+		because the type of connection generated <br>
+		by them is not supported by Connect Checker</code><span style="FONT-WEIGHT: 400"><font color="#000000"><code>.</code></font></span></td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>
+     <ul>
+		<li>When a single match constraint is given as input, the elements 
+		constrained by it are considered for analysis.</li>
+		<li>When the match constraint is given as input along with other input 
+		elements or other match constraint, all the input elements of match 
+		constraint are considered for analysis.</li>
+		<li>An internal edge does not influence the connection analysis with 
+		match constraint inputs in connect checker.</li>
+		</ul>
+		</td>
+   </tr>
+   </table>
+ <p align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

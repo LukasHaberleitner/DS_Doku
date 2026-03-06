@@ -1,0 +1,352 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating a Specifications Catalog</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="b">
+</head>
+
+ <body><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top">
+
+ <h1>Creating a Specifications Catalog</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="665">
+   <tr>
+     <td width="32" height="34" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td width="629" valign="top" colspan="2" height="34">This task shows you 
+     how to create a specifications catalog.<a name="ix-specifications::creating a catalog"></a>An 
+     example from the Piping workbench is used here. The process for other 
+     workbenches is the same - simply use the relevant CATfct file and 
+     terminology. For instance, in the Tubing workbench you would use Tubing 
+     Part instead of Piping Part. See also <a href="page14801.html">Creating a 
+     Specifications Catalog</a> in the ENOVIA section.</td>
+   </tr>
+   <tr>
+     <td width="32" height="128" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32">
+     <p><a name="ix-catalog::specifications"></a></td>
+     <td width="629" valign="top" colspan="2" height="128">A
+		<a href="page14739.html">manual procedure</a> for creating a 
+		specifications catalog also exists, but it is recommended that you use 
+		the procedure described here. However, you should not mix the two. Do 
+		not use the manual process to modify a specifications catalog created 
+		using the automated process (which uses the <kbd>Create/Modify Catalog</kbd> 
+		command described below). And vice versa. <i>The sample specifications 
+		catalog included with this application was created using the manual 
+		procedure.</i><p>You should take note of an <kbd>important difference</kbd> 
+		between the two procedures: a specifications catalog that is created 
+		with the <kbd>Create/Modify Catalog</kbd> command described here points to individual 
+		parts. Therefore parts from more than one master catalog can be 
+		included. A specifications catalog that is created with the
+		<a href="page14739.html">manual 
+		procedure</a> points to a master catalog - therefore 
+		only parts from one catalog can be included in it.</p>
+		<p>A specifications 
+     catalog allows you to specify which parts can be used for a certain project 
+     or part of a project. The parts or the main catalog typically contains all 
+     the parts available to you. However, in many circumstances you will only 
+     want to use parts that have certain properties - if you are building a 
+     system for conveying hot gases under pressure, for instance, you will only 
+     want to use pipes and parts that have a certain heat tolerance, are made of 
+     certain materials and have a certain pressure rating. You achieve this by 
+     specifying in the specifications catalog what the properties should be for 
+     the parts you want to use. The specifications catalog will not contain 
+     copies of the parts, but when you place parts using it, you will only be 
+     able to use parts from the main catalog that meet the criteria you have 
+     specified in that specifications catalog.
+     </p>
+     <p>The <a name="asterisk">specifications catalog </a>provides another 
+     important function - it can generate new parts for a project without 
+     increasing the number of parts in the main catalog. This is done because 
+     the specifications catalog can <i>apply a value to an attribute on a part 
+     in the main catalog</i>. <a name="ix-attributes::generic">This attribute
+     </a>is referred to as<a name="ix-generic attribute"> generic attribute</a>. 
+     This can significantly reduce the number of parts you have in your main 
+     catalog. The way it works is like this: say you have four projects in your 
+     company that use pipe made of four different materials. You do not have to 
+     create four main catalogs, or add four pipes to one catalog, each with a 
+     different material defined. Instead what you can do is add one pipe to your 
+     main catalog with the attribute 'materialcode' (or any term you choose) <i>
+     but with no value defined for this attribute</i>. Now, when you create the 
+     attribute filter file (explained in Step 9 below) you list the material you 
+     want for a particular project and put an asterisk after it. The material 
+     you have listed will be defined for the property materialcode. All you have 
+     to do is make four specifications with the four different materials you 
+     need.</p>
+     <p>In addition to specifying the properties of parts, you also have to 
+     associate rules tables. This application incorporates intelligent design 
+     functions. This means that as you design, the application ensures your 
+     designing meets certain criteria. These criteria are established by the 
+     design rules. For instance, the design rules will match the threaded end of 
+     a pipe to the threaded end of a part. (You can override the rules if you 
+     want.) </p>
+     <p>When you use the provided template to create a specifications catalog 
+     you can modify the design rules (see <a href="page14748.html">Modifying 
+     Design Rules</a>) but you cannot add new rules.</td>
+   </tr>
+   <tr>
+     <td width="32" valign="top"><font face="Arial">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></font></td>
+     <td width="18" valign="top"><b><font face="Arial" color="#1C1557">1.</font></b></td>
+     <td width="609" valign="top">Click <kbd>Start - Infrastructure - Catalog 
+     Editor</kbd> to start the Catalog Editor.
+     <p><img border="0" src="b35doc/english/online/ucfug_c2/images/CU0402A_NLS.gif" width="609" height="289"></td>
+   </tr>
+   <tr>
+     <td width="32" valign="top"></td>
+     <td width="18" valign="top"><b><font face="Arial" color="#1C1557">2.</font></b></td>
+     <td width="609" valign="top"><a name="hj-OpenUserDictionary"></a>Open the CATfct file associated with your 
+     application. To do this, click the <kbd>Open User Dictionary</kbd> button
+     <img border="0" src="b35doc/english/online/ucfug_c2/images/buttonopenuserdictionary.gif" width="28" height="28"> to display the 
+     Open User Dictionary dialog box and navigate to the directory where your 
+     CATfct files are. The default location is <kbd>intel_a&#092;resources&#092;graphic</kbd>. 
+     In this example the CATPipingSample.CATfct file will be opened.</td>
+   </tr>
+   <tr>
+     <td width="32" valign="top"><font face="Arial">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></font></td>
+     <td width="627" valign="top" colspan="2">
+     <a name="ix-specifications catalog::default rules">You can</a> add default 
+     rules to your specifications catalog (explained below). These rules appear 
+     in a separate chapter named &quot;Default&quot;. The rules in the Default chapter 
+     will apply to all specifications that you create - <i>if they are not 
+     defined in that specification</i>. When you are placing a part using a 
+     particular specification, the application first determines if relevant 
+     rules are defined under that specification. If they are defined then it 
+     will use those rules. If they are not defined then it will use the rule 
+     under the Default specification. This saves you having to associate rules 
+     for each specification that you create.</td>
+   </tr>
+   <tr>
+     <td width="32" height="21" valign="top"></td>
+     <td width="18" valign="top" height="21"><b>
+     <font face="Arial" color="#1C1557">3.</font></b></td>
+     <td width="609" height="21" valign="top"><a name="hj-AddCatalogTemplate">
+		</a>Click the <kbd>Add Catalog Template</kbd> 
+     button <img border="0" src="b35doc/english/online/ucfug_c2/images/buttoncatalogtemplate.gif" width="28" height="28">. The Add 
+     Catalog Template dialog box displays, listing all CATfct files that are 
+     open. In the image below only one file is open.<p>
+     <img border="0" src="b35doc/english/online/ucfug_c2/images/CU0403C_NLS.gif" width="332" height="282"></td>
+   </tr>
+   <tr>
+     <td width="32" height="21" valign="top"></td>
+     <td width="18" valign="top" height="21"><b>
+     <font face="Arial" color="#1C1557">4.</font></b></td>
+     <td width="609" height="21" valign="top">Select the application (Piping), 
+     and then click on the down arrow in the Template Type field and make your 
+     selection - in this case Material Specification.&nbsp; Enter a name for the 
+     specifications catalog in the Template Name field. <i>If you are creating 
+     default rules you must enter the name Default. </i>Click on the Browser 
+     button next to the Part Type field and make your selection. In this case it 
+     is Piping Part because this is a Piping specifications catalog. Click OK. 
+     The Default chapter and the default design rules display in the 
+     specifications tree.
+     <p><img border="0" src="b35doc/english/online/ucfug_c2/images/CU0403D_NLS.gif" width="237" height="270"></p>
+     <p><i>In applications where you can create both a material specifications 
+     catalog and insulation specifications catalog, there may be differences in 
+     the design rules that appear in each type of catalog.</i> </td>
+   </tr>
+   <tr>
+     <td width="32" height="21" valign="top"></td>
+     <td width="18" valign="top" height="21"><b>
+     <font face="Arial" color="#1C1557">5.</font></b></td>
+     <td width="609" height="21" valign="top"><a name="DDBox">You</a> now need 
+     to associate the actual design rules table (which is how design rules are 
+     defined) to each of the design rules in the specifications tree. Double 
+     click on a rule and then click the <kbd>Add Component</kbd> button
+     <img border="0" src="b35doc/english/online/ucfug_c2/images/buttonaddcomponent.gif" width="28" height="28">. The Description 
+     Definition dialog box displays.
+     <p><img border="0" src="b35doc/english/online/ucfug_c2/images/CU0403E_NLS.gif" width="367" height="251"></td>
+   </tr>
+   <tr>
+     <td width="32" height="21" valign="top"></td>
+     <td width="18" valign="top" height="21"><b>
+     <font face="Arial" color="#1C1557">6.</font></b></td>
+     <td width="609" height="21" valign="top">Click the <kbd>Select Document</kbd> 
+     button. In the File Selection box that displays navigate to the directory 
+     where the design rules tables are. They are CATProduct type files. (From 
+     Release 13 you can link directly to the text tables that define each rule.) 
+     The default directory is <kbd>intel_a&#092;startup&#092;EquipmentandSystems&#092;XXX&#092;Specification</kbd> 
+     (where XXX is your application) and then the specification itself, say 
+     Cs150r. Open the Cs150r directory and select the text file (or table) that 
+     corresponds to the rule that you double-clicked, in this case 
+     BranchingRules. Click Open on the File Selection box and OK on the 
+     Description Definition box. The table will be associated with the rule and 
+     display in the Catalog Editor.
+     <p><img border="0" src="b35doc/english/online/ucfug_c2/images/CU0403F_NLS.gif" width="631" height="88"></p>
+     <p>If you click on the Reference tab you will be able to see the full 
+     directory path.</p>
+     <p>NOTE: If you are working in the ENOVIA database then you cannot link 
+     directly to a text file as explained above. Instead you must link to the 
+     CATProduct containing the design rule. In addition, the text file must be 
+     stored within the CATProduct (using the <kbd>Duplicate in CATIA</kbd> 
+     option). <i>The text file and the CATProduct should not have the same name</i>.</td>
+   </tr>
+   <tr>
+     <td width="32" height="21" valign="top"></td>
+     <td width="18" valign="top" height="21"><b>
+     <font face="Arial" color="#1C1557">7.</font></b></td>
+     <td width="609" height="21" valign="top">Associate all the rules with the 
+     corresponding tables using the procedure described above.</td>
+   </tr>
+   <tr>
+     <td width="32" height="21" valign="top"><font face="Arial">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></font></td>
+     <td width="627" valign="top" height="21" colspan="2">There is a slightly 
+     different process for associating the FunctionalPhysicalMapping tables. If 
+     you associate to the CATProduct then you need to associate with one file. 
+     If you associate with the text files then you will need to associate with 
+     one text file for each function, following the process given above. (From 
+     Release 13 the sample catalog points to text files.) Also, in the 
+     Description Definition dialog box you should make sure to enter the actual 
+     function name in the Name field. For instance, if you are associating the 
+     text table XXX_FunctionPhysical-Branch.txt, the function name for it is 
+     XXXBranchFunc, where XXX is the application, such as Piping.</td>
+   </tr>
+   <tr>
+     <td width="32" height="21" valign="top">&nbsp;</td>
+     <td width="18" valign="top" height="21"><b>
+     <font face="Arial" color="#1C1557">8.</font></b></td>
+     <td width="609" height="21" valign="top">
+     <a name="ix-specifications catalog::adding specifications">After you</a> 
+     have associated the rules you can create one or more specifications. To do 
+     this, select the root chapter and click the <kbd>Add Chapter</kbd> button
+     <img border="0" src="b35doc/english/online/icons_C2/images/I_FdeAddComponentFamilyP2.gif" width="24" height="24">. 
+     Enter a name in the&nbsp; Chapter Definition dialog box.</td>
+   </tr>
+   <tr>
+     <td width="32" height="21" valign="top"></td>
+     <td width="18" valign="top" height="21"><b>
+     <font face="Arial" color="#1C1557">9.</font></b></td>
+     <td width="609" height="21" valign="top">You need to take a couple of 
+     preparatory steps before you begin the process of creating a specifications 
+     catalog.
+     <ul>
+       <li>All the parts you want the catalog to contain must be placed in a 
+       directory (except in the ENOVIA environment - see below).</li>
+       <li>You must create an attribute filter file - in text or Excel format. 
+       The purpose of the file is to identify the parts that you want the 
+       specification catalog to point to. You can place this file in any 
+       location - but you need to navigate to it in the following step. Part of 
+       a file is shown below:</li>
+     </ul>
+     <p><img border="0" src="b35doc/english/online/ucfug_c2/images/CU0403J_NLS.gif" width="699" height="141"></p>
+		<p>The first line contains the properties, or keywords. You can add any 
+       property that is defined for a part.</p>
+		<p>You can add &quot;Min&quot; or &quot;Max&quot; before a property to identify the minimum 
+       or maximum value the catalog should point to. If a part has a property 
+       value outside this range it will not be included.</p>
+		<p>Adding an asterisk in the column heading makes the property generic, 
+       causing the value of the attribute to be used to create new parts during 
+       parts placement. These parts are specific to the project and do not 
+       increase the number of parts in the main catalog. If you add an asterisk 
+       (*) after a property (in the column heading) then the value of that 
+       property in the part will be replaced by the value you enter in this 
+       file. You can also add the asterisk after a particular value. The value 
+       has to be 'character type' - not a figure. So, if you place an asterisk 
+       in the column heading then this behavior will apply to all parts. If you 
+       place it against a particular value, then it will only apply to that 
+       particular part. <a href="#asterisk">The usage</a> is explained at the 
+       beginning of this task.</p>
+		<p>NamingRuleKW: In this column, enter keywords separated by commas. 
+		These keywords determine the part naming convention, as explained below. 
+		Having this column, or defining a keyword, is optional. If you do not 
+		have this column, or have it but do not define a keyword, then the part 
+		will be named using the default behavior below.</p>
+		<ul>
+			<li>Default behavior: If you do not have this column, or a keyword 
+			defined in it, the part name will be created using the values of all 
+			attributes NOT defined in the filter.</li>
+			<li>If you have one or more keywords defined, the part name will 
+			include the values of all those key words PLUS the values of all 
+			attributes NOT defined in the filter. The exception is if you 
+			include the keyword PartNumber in the column. In this case only the 
+			values of keywords defined in the column will be used in the part 
+			name.</li>
+		</ul>
+		<p>You can give the file any name. However, this file name must be used 
+       in the Attribute Filter field of the Create/Modify Catalog dialog box. 
+       The Create/Modify Catalog command uses this file to select only the parts 
+       that meet the filter criteria defined in it.</td>
+   </tr>
+   <tr>
+     <td width="32" height="21" valign="top"><font face="Arial">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></font></td>
+     <td width="627" valign="top" height="21" colspan="2">The value of a part 
+		attribute must be unset before it can be a generic attribute in the 
+		catalog.<p>A family/chapter created using the command <kbd>Add Spec 
+		Family</kbd> cannot be used by the <kbd>Create/Modify 
+     Catalog</kbd> command. Delete the family and recreate it using the <kbd>Add 
+		Application Chapter/Family</kbd> command, or let the <kbd>Create/Modify 
+     Catalog</kbd> command create the necessary families.</td>
+   </tr>
+   <tr>
+     <td width="32" height="21" valign="top"></td>
+     <td width="18" valign="top" height="21"><b>
+     <font face="Arial" color="#1C1557">10.</font></b></td>
+     <td width="609" height="21" valign="top">Click the <kbd>Create/Modify 
+     Catalog</kbd> button <img border="0" src="b35doc/english/online/ucfug_c2/images/buttoncreatecatalog.gif" width="28" height="28">. 
+     The Create/Modify Catalog dialog box displays.<p>
+     <img border="0" src="b35doc/english/online/ucfug_c2/images/CU1302A_NLS.gif" width="676" height="451"></p>
+     <ul>
+       <li>Select the application in which you want to create the catalog by 
+       clicking the down arrow in the Application field.</li>
+       <li>In the Parts Directory field, navigate to the directory where your 
+       parts are.</li>
+       <li>If you want to add specific parts to your catalog then create a parts 
+       list file with a text editor. Enter the names of the parts you want to 
+       add, each name on a separate line. This is also the process used in
+       <a href="page14735.html">modifying a catalog</a>.</li>
+       <li>In the Attribute Filter field navigate to the file you created in 
+       Step 9.</li>
+       <li>If you want to have a log of the process then enter a file name and 
+       location in the Message Log field. The file will be created.</li>
+       <li>Check the Add Components only to Existing Families checkbox if you do 
+       NOT want new families to be created - parts will only be added if a 
+       family exists in the catalog. This should not be checked if you are 
+       creating a new catalog.</li>
+     </ul>
+     <p><kbd>For ENOVIA</kbd></p>
+     <p>If your catalog is in the ENOVIA database then you cannot point to a
+     <kbd>directory</kbd>. You need to use the following procedure. You may can 
+     also use the method for creating <a href="page14801.html">specifications 
+     catalogs</a> described in the ENOVIA section.</p>
+     <ul>
+       <li>In the <kbd>Create/Modify Catalog</kbd> dialog box, for <kbd>
+       Documents</kbd> check the<kbd> ENOVIA base</kbd> option.</li>
+       <li>Create a parts list this file must contain the file names of all 
+       parts to be used. Enter the name and location of this file in the <kbd>
+       Parts List</kbd> field of the <kbd>Create/Modify Catalog</kbd> dialog 
+       box.</li>
+       <li>Enter the name and location of the attribute filter file in the <kbd>
+       Attribute Filter</kbd> field. Creating the file is explained in Step 9 
+       above.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="32" height="21" valign="top"></td>
+     <td width="18" valign="top" height="21"><b>
+     <font face="Arial" color="#1C1557">11.</font></b></td>
+     <td width="609" height="21" valign="top">Click <kbd>OK</kbd> to create the 
+		catalog. Save it when done.<p>This process can be used for one catalog, 
+		or for several sub-catalogs. It is recommended that sub-catalogs be used 
+		when the number of parts exceeds 500.</td>
+   </tr>
+ </table>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ <!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td>
+
+
+
+</td></tr><!--msnavigation--></table></body>
+
+</html>
+

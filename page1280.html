@@ -1,0 +1,399 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml">
+
+ <head>
+ <meta name="MonocodingType" content="2">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Starting ENOVIA Products</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Starting ENOVIA Products</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">
+     The objective of this section is to provide exhaustive reference 
+     information about how to start your ENOVIA product after installation and 
+     deployment.<p>By ENOVIA product we mean:</p>
+     <ul>
+       <li><b>Webtop</b> application: 
+       <strong>LCA Navigator</strong></li>
+       <li><b>Wintop</b> applications: the 
+       <strong>LCA Classic</strong> (VPC product), 3d com Classic, the VPM Navigator client.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h2>Customizing Login Attempts</h2>
+     <p>You can customize the number of login attempts authorized. </p>
+     <p>The system allows a maximum of 7 login attempts for security purposes. 
+     Once the user inputs the wrong password, for example, more than seven 
+     times, the server manager will not allow the user to log in again.</p>
+     <p>Use the environment variable:</p>
+     <p><code>CATSrvLoginMaxAttempt</code></p>
+     <p>to specify a new number of login attempts. You can set this in the <code>
+     runServerManager</code> shell (UNIX) or using the <kbd>Environment 
+     Variables</kbd> button in the <kbd>Advanced</kbd> tab of the <kbd>System</kbd> 
+     control accessed using the <kbd>Control Panel</kbd> (Windows). Example 
+     (UNIX):</p>
+     <p><code>export CATSrvLoginMaxAttempt = 14</code></p>
+     <p>When the maximum number of attempts is reached, the user is blocked for 
+     a length of time. You can customize this time using the environment 
+     variable:</p>
+     <p><code>CATSrvLoginTimeCheck</code></p>
+     <p>to specify the wait time in seconds. Example (UNIX):</p>
+     <p><code>export CATSrvLoginTimeCheck = 3600</code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h2>Starting Webtop Products</h2>
+     <p>Webtop products are started by opening a web browser and entering a URL 
+     to load a html page hosted by a server. Keep in mind that the sequence of 
+     steps for starting your Webtop product differs depending on:</p>
+     <ul>
+       <li>whether you are using an LDAP server or not</li>
+       <li>whether you activated SSO or not.</li>
+     </ul>
+     <p>Furthermore, when you are starting 
+     <strong>LCA Navigator</strong>, you first load the appropriate html page and then you have to 
+     choose a minimum number settings before being able to connect to the 
+     desired data source.</p></td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <h3>Starting <strong>LCA Navigator</strong></h3>
+     
+       
+       
+         
+         <ol>
+           <li>Stop and restart the WAS, and your LDAP server if you are using 
+           LDAP.</li>
+           <li>Make sure that the Orbix daemon is running.</li>
+         
+        
+           <li>In a web browser, type the following 
+     URL:<p><code><b>http:&lt;host_name&gt;.&lt;domain&gt;:&lt;webapp_port&gt;/&lt;rootURI&gt;/html/ENOVIAPortal</b></code></p>
+           <p>Example:</p>
+           <p><code><b>http://loug3dsy.dsy.ds:9080/</b><strong>EnvNameSuffix</strong><b>/html/ENOVIAPortal</b></code></p>
+           <p>If a dialog box like this is displayed:</p>
+           <p>
+           <img border="0" src="b35doc/english/online/basil_c2/images/ENOVIAPortalLogon01_NLS.gif" width="326" height="283"></p>
+    
+           <p>this demonstrates 
+           that LDAP authentication is being requested.</p>
+           <p>Then, the ENOVIA Portal window is displayed like this:</p>
+           <p>
+           <img border="1" src="b35doc/english/online/basil_c2/images/StartENOVIAPortal01_NLS.gif" width="898" height="490"></p>
+           <p>The message:</p>
+           <p><code>No license authorizing command [WorkspaceTree] is active</code></p>
+           <p>means that you must first acquire a license.</p>
+           <p>At this stage, there are several settings that you can specify. 
+           For the purposes of this deployment scenario, we will describe how to 
+           acquire licenses and connect to the  
+     <strong>ENOVIAV5VPM</strong> server to get you 
+           started.<br>
+			<br>
+			<code>http:&lt;host_name&gt;.&lt;domain&gt;:&lt;webapp_port&gt;/&lt;rootURI&gt;/html/CATJadOptions</code></p>
+           <li>Click <kbd>Administrative and Preferences</kbd> 
+           <img border="0" src="b35doc/english/online/basil_c2/images/ButtonAdmin.gif" width="21" height="22"> 
+           in the Main Access area. The <kbd>Administration</kbd> window 
+           appears:<p>
+           <img border="1" src="b35doc/english/online/basil_c2/images/StartENOVIAPortalAdministration01_NLS.gif" width="544" height="136"><br>&nbsp;</p>
+           </li>
+           <li>Expand the <kbd>Administration</kbd> folder:<p>
+           <img border="1" src="b35doc/english/online/basil_c2/images/StartENOVIAPortalAdministration02_NLS.gif" width="546" height="224"><br>&nbsp;</p>
+           </li>
+           <li>In the <kbd>Administration</kbd> page, click <kbd>General</kbd> 
+           folder, then the <kbd>License Group</kbd> icon:<p>
+           <img border="1" src="b35doc/english/online/basil_c2/images/StartENOVIAPortalAdministration06_NLS.gif" width="513" height="337"></p>
+           <p>to display the <kbd>License Group</kbd> tab:</p>
+           <p>
+           <img border="1" src="b35doc/english/online/basil_c2/images/StartENOVIAPortalAdministration07_NLS.gif" width="314" height="120"></p>
+           <p>which lists the software configurations/products installed. In 
+           our example, the EPM and LCM configurations were installed. Note that 
+           in our example, no groups are visible: group licensing has not been 
+           implemented.<br>&nbsp;</p>
+           </li>
+           <li>Select the <kbd>Everybody</kbd> option opposite both licenses (if 
+           you want to use both licenses):<p>
+           <img border="1" src="b35doc/english/online/basil_c2/images/StartENOVIAPortalAdministration08_NLS.gif" width="353" height="92"><br>
+&nbsp;</p></li>
+           <li>Click <kbd>Apply</kbd>.<p>You are now ready to connect 
+           to the  
+     <strong>ENOVIAV5VPM</strong> server.</p></li>
+           <li>Expand the <kbd>Navigator</kbd> folder, then click <kbd>Adapters.</kbd><p>
+           <img border="1" src="b35doc/english/online/basil_c2/images/StartENOVIAPortalAdministration03_NLS.gif" width="545" height="326"><br>&nbsp;</p>
+           </li>
+           <li>Select the <kbd>ENOVIA V5</kbd> tab:<p>
+           <img border="1" src="b35doc/english/online/basil_c2/images/StartENOVIAPortalAdministration04_NLS.gif" width="625" height="308"><br>&nbsp;</li>
+           <li>Select <kbd>Enabled</kbd> and set the <kbd>Server</kbd>, 
+           <kbd>Port</kbd> and <kbd>OS</kbd>:<ul>
+             <li>Server: name of the machine hosting the  
+     <strong>ENOVIAV5VPM</strong> server</li>
+             <li>Port: server port number</li>
+             <li>OS: operating system running on the server (Windows or UNIX).</li>
+           </ul>
+           <p>Then click the <kbd>Validate</kbd> and <kbd>Check</kbd> buttons:</p>
+           <p>
+           <img border="1" src="b35doc/english/online/basil_c2/images/StartENOVIAPortalAdministration05_NLS.gif" width="632" height="316"><br>&nbsp;</li>
+           <li>Click <kbd>Apply.</kbd></li>
+           <li>Exit and reload the the URL and log on again.<p>This time, the 
+           page looks like this:</p>
+           <p>
+           <img border="1" src="b35doc/english/online/basil_c2/images/StartENOVIAPortalAdministration09_NLS.gif" width="827" height="179"><br>
+&nbsp;</p></li>
+           <li>In the <kbd>Source</kbd> list, select <kbd>ENOVIA V5</kbd>.<h3>
+           Method 1: SSO Mode Is Not Activated</h3>
+           <p>
+           If the SSO mode is not activated, the following 
+           dialog box appears prompting you to log on to  
+     <strong>ENOVIAV5VPM</strong>:</p>
+           <p>
+           <img border="0" src="b35doc/english/online/basil_c2/images/StartENOVIAPortalLogon_NLS.gif" width="205" height="137"></p>
+     <p>This userid:</p>
+     <ul>
+       <li>is used to start the 
+       <strong>ENOVIAV5VPM</strong> server process</li>
+       <li>must have the appropriate rights to start this process</li>
+       <li>and does not necessarily have to be the same userid as is declared in 
+       your user repository (LDAP, ...).</li>
+     </ul>
+     <p><b>This userid is typically root on UNIX and must be an administrator userid on Windows</b>.</p>
+           <p>Enter the user and password, then click the <kbd>Connect</kbd> 
+           button.</p>
+           <p>If not, you will not be able to connect to  
+     <strong>ENOVIAV5VPM</strong>. If you 
+           succeed in logging in, the following dialog box appears:</p>
+           <p>
+           <img border="0" src="b35doc/english/online/basil_c2/images/StartENOVIAPortalLogon02_NLS.gif" width="318" height="133"></p>
+           <p>prompting you to choose a role and workbook. You will only be able 
+           to proceed if your userid is also declared in the People and 
+           Organization (P&amp;O) database. </p>
+     <p><b>In a properly defined working deployment, you typically want the P&amp;O username 
+     to be the creator of  
+     <strong>ENOVIAV5VPM</strong> objects, and you also want the P&amp;O username 
+     to match the SSO username declared in your user registry (LDAP directory, ...) 
+     to avoid confusion.</b></p>
+           <p>Click OK to proceed.</p>
+           <h3>Method 2: SSO Mode Is Activated</h3>
+           <p>Neither of the previous two dialog boxes appears because logging 
+           on with LDAP authentication retrieves the credential set providing 
+           all credentials required to access the  
+     <strong>ENOVIAV5VPM</strong> server.</p>
+           <h3>In Both Cases</h3>
+           </li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p>The main access are now looks like this:</p>
+           <p>
+           <img border="1" src="b35doc/english/online/basil_c2/images/StartENOVIAPortalLogon03_NLS.gif" width="568" height="67"></p>
+           <p>You are now connected to the  
+     <strong>ENOVIAV5VPM</strong> server and can start creating ENOVIA objects.</p>
+           <h3>What About the Other Administration Settings?</h3>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p>For a description of the other settings, please refer to <em>Performing 
+           Administration</em> in your <i>
+           <strong>LCA Navigator</strong> 
+           Users Guide</i>.</p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h2>Starting Wintop Products</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32">&nbsp;</td>
+     <td valign="top">
+     <h3>Starting the ENOVIA Client on Windows</h3>
+     <ol>
+       <li>Double-click the
+       <strong>ENOVIAV5VPM</strong> 
+       <strong>VersionNumber</strong> icon on the desktop to start the ENOVIA client:<p>The following 
+       logon panel appears:</p>
+       <p><img border="0" src="b35doc/english/online/basil_c2/images/LCA_ENOVIAPortalLogon01_WindowsNLS.gif" width="363" height="327"></p>
+       <p>The Logon window title reads:</p>
+       <p><code><strong>ENOVIAV5VPM</strong> on &lt;server_name&gt;:&lt;port_number&gt;<br>
+&nbsp;</code></li>
+       <li>Enter the name and password of the 
+       <strong>ENOVIAV5VPM</strong> administrator created 
+       during the installation.<p>During the installation illustrated in this 
+       guide, the <strong>ENOVIAV5VPM</strong> administrator userid was &quot;ses&quot;, so we can only log on 
+       to the ENOVIA Portal using this userid.</p>
+       <p><b>This is the only userid allowing you to log on at the end of the installation: no other userids are created at 
+       installation allowing you to do so.</b></li>
+       <li>Set the Language and Host settings:<p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/LCA_ENOVIAPortalLogon02_WindowsNLS.gif" width="363" height="327"><p>The Host is the name of the computer on which you installed the ENOVIA 
+       server.</p>
+       <p><b>Note:</b> If the port number for the Orbix daemon you configured 
+       when installing the code is different from the default port number 
+       (1570) you must enter the host name as follows:</p>
+       <p><code>server_name:port_number</code></p>
+       <p>In our example, if you configured the Orbix daemon on port number 
+       1590, you would enter:</p>
+       <p><code>jane2dsy:1590</code><br>
+&nbsp;</li>
+       <li>Click Logon.<p>For the moment, ignore the &quot;Check to choose 
+       role at logon&quot; option: the installation sets up a default role and 
+       project.</p>
+       <p>The ENOVIA Portal window appears.</p>
+       <p><img border="0" src="b35doc/english/online/basil_c2/images/LCA_ENOVIAPortalStart01_WindowsNLS.gif" width="700" height="560"><p class="blink">
+		When you successfully log on to ENOVIA, a message is displayed on your screen for a few 
+		seconds about the last successful login attempt with the same user 
+		credentials. 
+		<p class="blink">
+		If you are logging on with your user credentials for the first time, you 
+		can see a message about the current login attempt. For example,<p class="blink">If you log on 
+		for the first time you see the following message:<p class="sm1">
+		<img src="b35doc/english/online/basil_c2/images/CurrentUserMessage.gif"><p class="blink">
+		From the next time, when you log on to ENOVIA successfully you see the 
+		following message:<p class="sm1">
+		<img src="b35doc/english/online/basil_c2/images/successfulloginmessage.gif"><p class="blink">This message disappears after a few 
+		seconds but you can view it again from the ENOVIA Portal Settings window 
+		by clicking <font color="#000000"> <kbd>
+		Context Information</kbd></font> -&nbsp;&nbsp; <kbd>More...</kbd>
+		in the General section.<p class="blink">The messages displayed are 
+		generated by the User Exit method, UEBuildLoginMessage, which is one of 
+		the three User Exit methods triggered during login. The default 
+		implementation has this behavior.<p class="blink">You can implement the 
+		custom interface provided, in which you can customize these three User 
+		Exit methods to implement any business logic of your choice, including 
+		displaying a custom message.<p><br>
+		</li>
+       <li>Click ENOVIA home (highlighted in red) to access the 
+       <strong>ENOVIAV5VPM</strong> functions:<p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/LCA_ENOVIAPortalStart02_WindowsNLS.gif" width="700" height="560"></li>
+     </ol>
+     <h3>Setting Up Vault Properties files on the Client </h3>
+     <p>Before using the client to store ENOVIA documents in the vault, or if 
+     you want to use ENOVIA in conjunction with CATIA V5, you must copy the 
+     following file from your 
+     <strong>ENOVIAV5VPM</strong> server installation: </p>
+     <p><code>server_unload_path\OS\docs\java\VaultClient.properties</code></p>
+     <p>into the following client directory:</p>
+     <p><code>your_client_or_CATIA_unload_path\OS\docs\java</code></p>
+     <p>This properties file also has to be updated to reflect the port and 
+     server where the vault was installed.</p>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     &nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <h3>Starting the ENOVIA Classic Client on UNIX</h3>
+     <p>The principal command you will use is the <i><b>catstart</b></i> 
+     command. </p>
+     <p>This command is used to launch other programs for:</p>
+     <ul>
+       <li>starting a Version 5 session for your product line</li>
+       <li>running Version 5 environment administration tools (catiaenv, 
+       setcatenv, delcatenv, lscatenv, chcatenv, readcatenv)</li>
+       <li>running Version 5 software management tools (CATSoftwareMgt, 
+       DSLicMgt, CATOptionsMgt, ... and the equivalent batch commands).</li>
+     </ul>
+     <p>To do so:</p>
+     <ol>
+       <li>Log on as <strong>either root or end user</strong>.</li>
+       <li>Enter the command:</li>
+     </ol>
+     <blockquote>
+       <p><code><strong>UNIXInstallPath</strong>/OS/code/command/catstart - direnv ~/CATEnv 
+       -env
+       <strong>ENOVIAV5VPMEnvironmentName</strong> -run <b>enoviastart</b></code></p>
+       <p>where &quot;OS&quot; is:</p>
+       <ul>
+         <li>aix_a</li>
+			<li><blink>aix_a64</blink></li>
+       </ul>
+       <p>to start a session using the default global environment created at 
+       installation. </p><h3>enoviastart Command Syntax</h3>
+     <p><kbd>enoviastart [-env environment_name] [-port OrbixPortNumber] [-serv 
+     OrbixHostServer] [-servURLList Server_URL_List]<br>
+&nbsp;</kbd></p>
+     <ul>
+       <li><code><strong>-env</strong></code>: environment name</li>
+       <li><code><strong>-port</strong></code>: port number</li>
+       <li><code><strong>-serv</strong></code>: Orbix host server</li>
+       <li><code><strong>-</strong><b>servURLList</b></code><kbd>
+       </kbd>: references the Loadbalancing.properties file containing the 
+       server URL list (used for Portal load balancing)</li>
+       <li><code><strong>-h</strong></code>: help.</li>
+     </ul>
+       <p>You can also run the command by changing to the directory:</p>
+       <p><code><strong>UNIXInstallPath</strong>/OS/code/command/</code> </p>
+       <p>If you do so, run the command like this:</p>
+       <p><code><b>./catstart -run enoviastart</b></code></p>
+       <p>On AIX, if you attempt to start the 
+       <strong>LCA Classic</strong> with LIBPATH and 
+       LD_LIBRARY_PATH variable values exceeding&nbsp; 950 characters, Java 
+       runtime fails. If this occurs, reset the path to a shorter value.<p>After 
+       running this command, the 
+       <strong>ENOVIAV5VPM</strong> Logon window appears:</p>
+       <p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/LCA_ClientInstallUNIX07NLS.gif" width="362" height="352"></p>
+       <p>
+       The logon window works the same way as on Windows:</p>
+       
+       <li>Enter your user name name and password.<br>
+&nbsp;</li>
+       <li>Select the Language, then the Host name of the remote workstation 
+       hosting the ENOVIA server.<br>
+&nbsp;</li>
+       <li>Click Logon.</li>
+     
+       </blockquote>
+     <h3>Setting Up Vault Properties Files on the Client</h3>
+     <p>Before using the client to store ENOVIA documents in the vault, or if 
+     you want to use ENOVIA in conjunction with CATIA V5, you must copy the 
+     following file from your 
+     <strong>ENOVIAV5VPM</strong> server installation: </p>
+     <p><code><i>your_server_unload_path</i>/$OSDS/docs/java/VaultClient.properties</code></p>
+     <p>into the following client directory:</p>
+     <p><code><i>your_client_or_CATIA_unload_path/</i>$OSDS/docs/java/</code></p>
+     <p>This properties file also has to be updated to reflect the port and 
+     server where the vault was installed</p>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="2" valign="top">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

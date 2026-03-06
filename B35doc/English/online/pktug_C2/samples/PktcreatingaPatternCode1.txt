@@ -1,0 +1,74 @@
+let obj1 (Udf2)
+let obj2 (Udf3)
+
+let p (Point)
+let p2 (Point)
+
+let list (List)
+
+let i (Integer)
+let j (Integer)
+let k (Integer)
+let m (Integer)
+
+let line (Line)
+let line2 (Line)
+
+set list = Points 
+
+i = 1
+k = 1
+m = Config
+For i while i <= list.Size()
+	{
+		j = 1
+		For j while j <= list.Size()
+			{
+				
+				if i < j
+					{
+						set p = list.GetItem(i)
+						set p2 = list.GetItem(j)
+						
+						if m == 0
+							{
+								set obj1 = CreateOrModifyTemplate("PktARMcatalog3|UserFeature2", PartBody , Lines, k)
+								obj1.Point.1 = p
+								obj1.Point.2 = p2
+								obj1.Name = "UdfType1_" + ToString(k)
+								EndModifyTemplate(obj1)
+							}
+							else
+								{
+									set obj2 = CreateOrModifyTemplate("PktARMcatalog3|UserFeature3", PartBody ,Lines,  k)
+									obj2.Point.1 = p
+									obj2.Point.2 = p2
+									obj2.Name = "UdfType2_" + ToString(k)
+									EndModifyTemplate(obj2)
+								}
+								k = k + 1
+								m = 1 - m
+							}
+							j = j +1
+						}
+						i = i+ 1
+					}
+					
+					i = 1
+					
+					if GenerateDatum == True
+						{
+							for i while i <= Lines.Size()
+								{
+									line = CreateOrModifyDatum("Line", PointsBody, Lines2, i)
+									set line2 = Lines.GetItem(i)
+									line = line2
+									line.Color = line2.Color
+									i = i + 1
+								}
+								
+								for i while Lines.Size() > 0
+									{
+										Lines.RemoveItem(1)
+									}
+								}

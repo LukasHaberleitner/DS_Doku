@@ -1,0 +1,189 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Approximation tab</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+</head>
+
+<body>
+
+<h1>Approximation tab<a name="ix-Conversion::Approximation;Approximation"></a></h1>
+<table cellpadding="5" cellspacing="2">
+  <tr>
+    <td valign="top"><img src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+    <td colspan="2" valign="top">The options of this tab allow to compute curve approximation for selected surface edges as well as 
+    any curves, depending on the approximation type set. The approximation has direct influence on the addenda. If, for example, face 
+    edge segments are selected as guides, the approximation allows to reduce the number of segments and thus the postprocessing to 
+    smooth the surface matchings.</td>
+  </tr>
+  <tr>
+    <td valign="top" style="height: 845px"></td>
+    <td valign="top" style="height: 845px">
+    <p>The approximation is computed in two steps:</p>
+    <ol>
+      <li><kbd>Creation of an initial B-Spline</kbd><p>With the first step, for each selected curve is created an initial B-Spline, 
+        defining the parameterization and the number of control points, but not their values. The B-Spline results from the B-Spline 
+        of the curve to be approximated as well as from the minimum and maximum values of the order and the number of segments specified 
+        by the user:</p>
+        <p>Order and number of segments of the B-Spline are taken from the curve to be approximated, if they are within the specified 
+        minimum and maximum ranges. Otherwise, they are increased or reduced to the corresponding minimum or maximum value.</p>
+        <table cellpadding="5">
+          <tr>
+            <td class="code" valign="top"><img src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+            <td class="code">Note: If in the selected geometry G2 discontinuities are found, they are transferred as sharp bends to 
+            the initial B-Spline. In this case, the initial B-Spline may contain more segments than the maximum value specified for 
+            the <a href="#Segmentation">Segmentation</a>.</td>
+          </tr>
+        </table>
+      </li>
+      <li><kbd>Iterations</kbd><p>After the creation of the initial B-Spline, the actual approximation is computed in the second step. 
+        This is realized by a three-step iteration:<br>
+&nbsp;</p>
+        <ul>
+          <li><kbd>Iteration (a)</kbd><p>In the first iteration, the (optimal) values of the control points of the B-Spline are computed 
+            using a Newton method. The control points allow the computation of the maximum deviation between the computed approximation 
+            curve and the original curve. If this value is smaller than the tolerance value specified by the user, the iteration is 
+            terminated successfully.</p>
+          </li>
+          <li><kbd>Iteration (b) + (c)</kbd><p>If the computed deviation is larger than the tolerance specified, the B-Spline will 
+            be modified by increasing order and number of segments, and the iteration (a) is restarted.</p>
+            <p>Independent from the approximation type set, first the order and then the number of segments is increased. This way, 
+            the number of segments of the created curves can be minimized.</p>
+          </li>
+        </ul>
+      </li>
+    </ol>
+    </td>
+    <td valign="top" style="height: 845px">
+    <p align="center"><u>Structure view of the approximation</u><br>
+    <br>
+    <img src="b35doc/english/online/icmug_c2/images/Approximation01NLS.gif" width="560" height="798"></p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">Approximation tab</td>
+    <td valign="top"><img src="b35doc/english/online/icmug_c2/images/dbApproximationTabNLS.png"></td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td colspan="2" valign="top">You can define the following options:
+    <ul class="st">
+      <li><kbd>Automatic</kbd>:&nbsp;
+        <ul class="nd">
+          <li><kbd>ON</kbd>: <kbd>Tolerance G0</kbd>, <kbd>Smoothing</kbd>, <kbd>Order</kbd>, and <kbd>Segmentation</kbd> are 
+            disabled. 
+            Only <kbd>Tolerance G1</kbd> and <kbd>Parametrization</kbd> can be specified.<br>
+            For Order and Segmentation, internally preset values are used.</li>
+          <li><kbd>OFF</kbd>: All options are available and can be modified manually.</li>
+        </ul>
+      </li>
+      <li><kbd>Defaults</kbd>: If this button is selected, all approximation parameters currently available and selected in the corresponding 
+        command are overwritten with default values defined on the <a href="page0955.html">
+        Approximation</a> tab in Tools &gt; Options &gt; Shape &gt; ICEM Shape Design. Afterwards, you can reedit the values, if necessary.<br>
+        <table cellpadding="5">
+          <tr>
+            <td class="code" valign="top"><img src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+            <td class="code">Note: In commands where only V Segmentation can be defined, the V default value is read when selecting
+            <kbd>Defaults</kbd> independently from the link <img src="b35doc/english/online/icmug_c2/images/linking.gif" width="30" height="20"> setting on the Tools &gt; Options Approximation 
+            tab.</td>
+          </tr>
+        </table>
+      </li>
+      <li><kbd><a name="Tolerance"></a>Tolerance</kbd>: The tolerance value defines the accuracy in which the output geometry should 
+        be created.
+        <ul class="nd">
+          <li><kbd>G0</kbd>: With the check button <kbd>G0</kbd> the influence of the G0 tolerance can be controlled as follows:
+            <ul>
+              <li><kbd>ON</kbd>: <br>
+                a) Provided that for <a href="#Order">Order</a> and <a href="#Segmentation">Segmentation</a> the maximum and minimum 
+                values specified allow increasing the order, these values are increased iteratively until the deviation between the 
+                input geometry (or the theoretical results) and the approximation result exceeds the value of the G0 tolerance.<br>
+                b) The value of the G0 tolerance is also available for the computation to create the theoretical results.</li>
+              <li><kbd>OFF</kbd>: The value of the G0 tolerance is now also available for the computation to create the theoretical 
+                results, i. e. the tolerance value can be edited in the text field and thus may also influence the result.</li>
+            </ul>
+          </li>
+          <li><kbd>G1</kbd>: The G1 tolerance is only available in commands, in which angle deviations can occur, e. g.
+            <a href="page8757.html">Advanced Fillet</a>.<br>
+            With the G1 tolerance the maximum angle deviation between final and theoretical result is specified. This shall guarantee 
+            that the angle between final result and selected support does not exceed the value of the G0 tolerance.</li>
+        </ul>
+      </li>
+      <li><kbd><a name="Parametrization"></a>Parametrization</kbd>:
+        <ul class="nd">
+          <li><kbd>Standard</kbd>: No re-parametrization of the result is performed. The parameter flow of the approximation is the 
+            same as that of the input curve. </li>
+          <li><kbd>Adapt</kbd>: Behaves like <kbd>Standard</kbd> if the selected input curve is a space curve.<br>
+            If the selected input curve is a surface curve the parameter flow will be adapted either to the parametrization of the 
+            surface curve&#39;s basic surface&#39;s u- or v-direction.<br>
+            <br>
+            <table>
+              <tr>
+                <td valign="top" class="code"><img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+                <td class="code">Attention!<br>
+                If the curve does not unambiguously run in U or V direction, or if it changes the direction from to V or vice versa,<br>
+                this option will not produce a result!</td>
+              </tr>
+            </table>
+          </li>
+          <li><kbd><a name="ArcLength"></a>Arc Length</kbd>: The curve is re-approximated with a parametrization which is computed 
+            according to the arc length between parametrically equidistant curve points. (The curve arc length between each pair of 
+            equidistant parameters (approximately) has same value.)</li>
+        </ul>
+      </li>
+      <li><kbd><a name="Smooth"></a>Smoothing</kbd>: This option allows the desired compromise between an exact approximation and 
+        a very smooth curve.<br>
+        By using this option the function tries to equally distribute the control points of the resulting geometry.</li>
+      <li><kbd><a name="Order"></a>Order</kbd>:
+        <ul class="nd">
+          <li><kbd>Min.</kbd>: The order of the selected geometry being below this value is increased until it reaches this value.<br>
+            For the approximation the order can be increased until 7 at maximum.</li>
+          <li><kbd>Max.</kbd>: The order of the selected geometry being above this value is reduced until it reaches this value.<br>
+            For the approximation the order cannot exceed this value.</li>
+          <li><kbd>Fix</kbd>: Increase and/or decrease the order of all selected elements until it meets exactly the order specified 
+            here.<br>
+            For the approximation, the order cannot have another value than the specified one.</li>
+          <li><kbd>Inp. (Input)</kbd>: If this method is activated, the patch is computed cell by cell and order-wise. The order in 
+            U and V direction is taken from the generating curves (guides).</li>
+        </ul>
+      </li>
+      <li><kbd><a name="Segmentation"></a>Segmentation</kbd>:
+        <ul class="nd">
+          <li><kbd>Min.</kbd>: Increase the number of segments of the selected geometry which is below this value until it reaches 
+            this value.<br>
+            For the approximation the number of segments can be arbitrarily increased.</li>
+          <li><kbd>Max.</kbd>: The number of segments of the selected geometry being above this value is reduced until it reaches 
+            this value.<br>
+            For the approximation the number of segments cannot exceed this value.</li>
+          <li><kbd>Fix</kbd>: Increase and/or decrease the segmentation of all selected elements until it meets exactly the segmentation 
+            specified here.<br>
+            For the approximation, the number of segments cannot have another value than the specified one.
+            <table cellpadding="5">
+              <tr>
+                <td class="code" valign="top"><img src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+                <td class="code">Note: If in the selected geometry G2 discontinuities are found, they are transferred as sharp bends.<br>
+                In this case, the result may contain more segments than the maximum value specified <kbd>Segmentation</kbd>: <kbd>
+                Max.</kbd> or <kbd>Fix</kbd>.</td>
+              </tr>
+            </table>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    </td>
+  </tr>
+</table>
+<p align="center"><img src="b35doc/english/online/icons_C2/common/aendtask.gif" border="0" width="64" height="32"></p>
+
+</body>
+
+</html>
+

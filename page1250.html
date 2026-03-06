@@ -1,0 +1,290 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta HTTP-EQUIV="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Vault Server and Client Concepts</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Vault Server and Client Concepts</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr valign="top" BORDER="0">
+     <td style="width: 46px">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td width="864">
+     <h2>What Is a Vault?</h2>
+     <p>The vault is the repository in which all ENOVIA V5 documents (CATIA V4 
+     models, CATIA V5 documents, text files, html files, cgr files, etc.) are 
+     saved.</p>
+     <p>The use of the vault offers the following advantages:</p>
+     <ul>
+       <li>optimized data flow: the flow of data over the network is optimized; 
+       documents are not stored in the database because a database is used 
+       mainly for querying operations. If the ENOVIA V5 documents were stored in 
+       a database, access to the documents in the database would be too 
+       complicated, especially in the case of very large documents</li>
+       <li>secured storage: the vault is a set of data repositories (directories 
+       on one or more disks) structured and organized like a database and all 
+       documents in the vault are secured</li>
+       <li>access by non-ENOVIA applications: access data in a vault is possible 
+       by using not only the ENOVIA V5 Life Cycle Applications, but also by 
+       using Version 5 applications involved in interoperability.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" style="width: 46px">&nbsp;</td>
+     <td width="864">
+     <h2>Vault Servers and Clients</h2>
+     <p>The vault is built on a client/server model. On a machine running the 
+     <strong>LCA Classic</strong> client, the vault client is also installed: access to the vault server 
+     is implemented through the vault client mechanism. The vault client is 
+     simply the definition of all the necessary information required by the 
+     client machine to contact the vault server, both parts being separately 
+     managed.</p>
+     <p>Access to the vault server from the vault client is resolved as follows: 
+     through CORBA, the vault client contacts the vault server which listens 
+     (for incoming requests) on the Orbix port specified at installation. The 
+     whole point is to set up on the client side an &quot;Alias&quot; that will describe 
+     the target to be reached:</p>
+     <ul>
+       <li>Orbix service name</li>
+       <li>host name</li>
+       <li>port number.</li>
+     </ul>
+     <h3>Zoom On Vault Server/Client Architecture</h3>
+     <p>The vault client is a thin component enabling an application to access 
+     the vault, and hides the communication from the application.</p>
+     <p>The vault client application requires the vault client properties file. 
+     The vault client process may run on a separate machine from the vault 
+     server, or on the same machine. The vault client application knows how to 
+     connect the vault server by reading the properties in the vault client 
+     properties file (if needed, it can connect several vault servers 
+     simultaneously).</p>
+     <p>Each vault server must have its own database structures, file 
+     repositories and properties file. Vault database setup and&nbsp; repository 
+     management are independent from each other, but are integrated within the 
+     same vault setup tool.</p>
+     <p>Each vault server process may run on a separate workstation, and does 
+     not need to be installed on a machine hosting Version 5 code (except of 
+     course the vault code). The server can deal with multi-processing and can 
+     answer several vault client applications simultaneously. When running, it 
+     keeps a set of database connections open in order to improve performance 
+     and database access.</p>
+     <h3>Which Objects Are Created?</h3>
+     <p>Setting up a vault client and vault server creates the following 
+     objects:</p>
+     <ul>
+       <li>the vault database tables</li>
+       <li>the following files:<br>
+       <br>
+       <code>XXXVaultServer.properties<br>
+       VaultClient.properties</code><br>
+       <code>VaultLocalServerList.properties </code><br>
+       <br>
+       are created, where &quot;XXXVaultServer&quot; is the appropriate name of the vault 
+       server (Orbix service name) in:<p style="margin-top:12.0pt;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+       <code>install_dir/docs/java</code></p>
+       <p style="tab-stops: .25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">For 
+       example, the default vault server name and resulting file are named:
+       <code>ENOVIAVaultServer.properties</code></li>
+       <li>the following files:<br>
+       <br>
+       <code>ENOVIAVaultServer.imp</code><br>
+       <br>
+       are created with the appropriate name (Orbix service name) in:<br>
+       <br>
+       <code>install_dir/startup/orbix/config/Repositories/ImpRep</code></li>
+     </ul>
+     <h3>Standard Vault Server/Client Configuration Example</h3>
+     <p>The following figure illustrates a standard vault installation 
+     configuration:</p>
+     <ul>
+       <li>VaultClientA is the vault client name, with its corresponding 
+       properties file</li>
+       <li>Vault1OrbSrv is the name of the vault server and the Orbix service 
+       name, with its corresponding properties file, database and repository.<br>
+     <img border="1" src="b35doc/english/online/basil_c2/images/LCA_VaultServer02_NLS.gif" align="left" width="490" height="198"></li>
+     </ul>
+     <p align="center">
+     &nbsp;</p>
+     <p>&nbsp;</p>
+     <p>&nbsp;</p>
+     <p>&nbsp;</p>
+     <p>&nbsp;</p>
+     <h3><br>
+&nbsp;How Do I Create a Vault Server and Client?</h3>
+     <p>A vault server can be created on its own without the rest of the 
+     <strong>ENOVIAV5VPM</strong> software, and can be created without having created an associated vault 
+     client previously.</p>
+     <p>If you installed the Vault Administration configuration, the Vault 
+     Server dialog box is displayed instead of the Vault Client Setup dialog 
+     box, and contains two tabs:</p>
+     <ul>
+       <li>Vault Server</li>
+       <li>Vault Client.</li>
+     </ul>
+     <p>You can create the vault server in a number of ways:</p>
+     <ul>
+       <li>from within the installation procedure</li>
+       <li>after installing the 
+       <strong>ENOVIAV5VPM</strong> code by running a command from the 
+       command line to access the vault setup graphic user interface</li>
+       <li>using the corresponding batch tools</li>
+       <li>or manually as explained in <a href="page1246.html">
+       Installing the Vault Server Manually</a>.</li>
+     </ul>
+     <p><b>Note:</b> the vault administration tool does not manage the vault 
+     cache.</td>
+   </tr>
+   <tr>
+     <td valign="top" style="width: 46px">
+     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td width="864">It is quite possible to install the 
+     <strong>ENOVIAV5VPM</strong> code in one 
+     location, and the Vault Server Administration configuration in another 
+     location on the same machine.<p>You MUST NOT attempt to set up this kind of 
+     installation on the same machine. If you need the 
+     <strong>ENOVIAV5VPM</strong> code and vault server 
+     on the same machine, install them both at the same location.</td>
+   </tr>
+   <tr>
+     <td valign="top" style="width: 46px">&nbsp;</td>
+     <td rowspan="1" width="864">
+     <h2>More About Vault Architecture</h2>
+     <h3>Supported Protocols</h3>
+     <p>Several protocols are supported for document transfer:</p>
+     <ul>
+       <li>Corba</li>
+       <li>NFS</li>
+       <li>HTTP.</li>
+     </ul>
+     <h3>Multi-user Document Server</h3>
+     <p>Several applications configured as vault clients can simultaneously 
+     access documents from the vault server.</p>
+     <h3>Security</h3>
+     <p>The vault server process is the only one that has access to the vault 
+     contents.</p>
+     <p>In the file implementation, vault directories do not need to be mounted 
+     on the client workstation (except when using the NFS access or datalink 
+     implementation).</p>
+     <h3>Enhanced scalability: Multi-threaded Vault</h3>
+     <p>The vault server has the ability to serve several users at the same 
+     time.</p>
+     <p>The server will work with a pool of pre-allocated threads:</p>
+     <ul>
+       <li>performance and scalability are predictable</li>
+       <li>the server will not collapse in case of a temporary large amount of 
+       incoming requests</li>
+       <li>the number of threads can be tailored according to the capabilities 
+       of the machine</li>
+     </ul>
+     <p>When all the threads are busy, an incoming request is queued.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td style="width: 46px">&nbsp;</td>
+     <td width="864">
+     <h2><a name="hj-VaultServerLicensing"></a>Vault Server Licensing</h2>
+     <p>When the vault server or vault cache is started, a license request for 
+     the ENOVIA - Vault Administration (VAR) configuration is transmitted to the 
+     license server. Each vault server or vault cache takes one concurrent 
+     VAR license. If either fail to get a license, an error message is written 
+     to the log file and the operation stops.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td style="width: 46px">&nbsp;</td>
+     <td width="864">
+     <h2>PCS Considerations</h2>
+     <h3>On AIX:</h3>
+		<p>For vault server memory settings on AIX with JVM 1.7 and above to support a large 
+     number of simultaneously connected users, we recommend you set the 
+     following options on the java command line in the <code>runENOVVaultServer</code> 
+     shell located in:</p>
+     <p><code>install_dir/code/command directory:</code></p>
+     <p><code>Java parms (in runENOVVaultServer) <br>
+     </code><code>Xmx 1280m<br>
+     Xms 1280m<br>
+     Xss 64k<br>
+     Xmso 64k<br>
+     Xgcpolicy subpool</code></p>
+     <p>So the modified command line looks like:</p>
+     <p><code>exec $JAVA_HOME/bin/java -Xmx1280m -Xms1280m -Xss64k -Xmso64k -Xgcpolicy:subpool 
+     $JAVA_OPT ...</code></p>
+     <p>Moreover, the V5MEM environment variable has to be set to 8:</p>
+     <p><code>V5MEM=8</code><h3>On Windows:</h3>
+		<p class="blink">Only <code>Xmx</code> and <code>Xss</code> parameter can be 
+		customized. Below is the procedure to customize the parameters:<br><ol>
+		<li class="blink">
+		In the vault server installation directory, go to the following 
+		directory:<br><code>
+		win_b64\startup\orbix\config\Repositories\ImpRep<br>
+		</code>You will find one or several <code>.imp</code> files.<br>
+		<br>
+		<strong>Note</strong>:
+		The syntax for the filename is <code>&lt;VaultServerAliasName&gt;.imp</code> for the 
+		vault server.<br>
+		So if the vault server alias name is &quot;ENOVIAVaultServer&quot;, the related file 
+		in the above directory will be <code>ENOVIAVaultServer.imp</code>.<br>
+		<br>
+		<li class="blink">
+		Open the <code>&lt;VaultServerAliasName&gt;.imp</code> file.<br>
+		<li class="blink">
+		To 
+		modify the default <code>Xmx</code> or the default <code>Xss</code> parameter, edit the 
+		<code>-object</code> parameter of the following:<br>
+		<code><br>
+		E:\NoSave\DassaultSystemes\B27\win_b64\code\bin\catstart.exe -env 
+		&quot;ENOVIA_V5_VPM.V5-6R2017.B27&quot; -direnv &quot;E:\NoSave\DassaultSystemes\B27\CATEnv&quot; 
+		-run &quot;VPMVaultStarter.exe&quot; -object &quot;-user aaa -passwd xxxxxxxxxxx 
+		-domain DSONE -PFileName ENOVIAVaultServer.properties -log 
+		\&quot;%USERPROFILE%\ENOVIAVaultServer.log\&quot;&quot;<br></code>
+		<br>
+		as,<br>
+		<br><code>
+		E:\NoSave\DassaultSystemes\B27\win_b64\code\bin\catstart.exe -env 
+		&quot;ENOVIA_V5_VPM.V5-6R2017.B27&quot; -direnv &quot;E:\NoSave\DassaultSystemes\B27\CATEnv&quot; 
+		-run &quot;VPMVaultStarter.exe&quot; -object &quot;-Xmx1024m -user aaa -passwd 
+		xxxxxxxxxxx -domain DSONE -PFileName ENOVIAVaultServer.properties -log 
+		\&quot;%USERPROFILE%\ENOVIAVaultServer.log\&quot;&quot;<br>
+		</code>
+		<li>
+		<span class="blink">Save the modifications in </span> <code>
+		<span class="blink"><code>&lt;VaultServerAliasName&gt;.imp </code></span> </code>
+		<span class="blink">file and restart the vault server.</span><br>
+		<br></ol>
+		</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td style="width: 46px">&nbsp;</td>
+     <td width="864">
+     <h2>Vault Server Configuration</h2>
+		<p>The Vault Server configuration properties file allows server 
+		configuration with the appropriate properties.</p>
+		<p>For detailed vault server properties, refer to
+		<a href="page1246.html#hj-VaultServerSettings">Vault 
+		Server Settings</a>.</td>
+   </tr>
+   <tr>
+     <td colspan="2" width="885" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <table>
+ </table>
+ <table>
+ </table>
+ <table>
+ </table>
+ 
+ </body>
+
+</html>
+

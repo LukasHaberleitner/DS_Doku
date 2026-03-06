@@ -1,0 +1,987 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Customizing Queries, Global Sets and Filters</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none">
+	<style>
+<!--
+ li.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	margin-left:0in; margin-right:0in; margin-top:0in}
+.style1 {
+	display: normal;
+	padding-bottom: 0;
+}
+-->
+</style>
+</head>
+
+ <body>
+
+ <h1>&nbsp;<a name="ix-customizing queries_gs_filters"></a>&nbsp;Customizing Queries, 
+	Global Sets and Filters</h1>
+<p class="task" align="center">
+     <a href="#hj-customizing queries">Customizing Queries</a><br>
+     <a href="#hj-customizing gs">Customizing Global Sets</a><br>
+     <a href="#hj-customizing searchnode">Customizing Filters</a><br>
+&nbsp;</p>
+ <table border="0" width="100%" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" id="table31">
+	<tr>
+     <td width="4%" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" title="ascenari.gif (1364 bytes)" width="32" height="32"></td>
+     <td width="96%">
+     <h3><a name="ix-define custom query"></a>How to Define Custom Queries, 
+		Global Sets and Filters</h3>
+		<p class="task">All custom queries, global sets and filters are added to a single xml file, <strong>
+		CATReconcileCustomize.xml</strong>.&nbsp;</p>
+		<p class="task">&nbsp;<code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>
+		&lt;configuration&gt;<br>
+		&nbsp;&nbsp;&nbsp;
+		&lt;criterionList&gt;<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;!-- declaration of 
+		customized queries here -&nbsp;&gt;&nbsp;<br>
+		&nbsp;&nbsp;&nbsp;
+		&lt;/criterionList&gt;</code></p>
+		<p class="task"><code>&nbsp;&nbsp;&nbsp;
+		&lt;globalSetList keepOldGS=&quot;false&quot;&gt;<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;!-- declaration of 
+		customized global sets here -&nbsp;&gt;&nbsp;<br>
+		&nbsp;&nbsp;&nbsp;
+		&lt;/globalSetList&gt;</code></p>
+		<p class="task"><code>&nbsp;&nbsp;&nbsp;
+		&lt;searchNodeFilterList&gt;<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;!-- declaration of 
+		customized SearchNode filters here -&nbsp;&gt;&nbsp;<br>
+		&nbsp;&nbsp;&nbsp;
+		&lt;/searchNodeFilterList&gt;<br>
+		&lt;/configuration&gt;</code></p>
+		<p class="task">The environment variable <strong>$CATReconcilePath
+		</strong>specifies the path where the CATReconcileCustomize.xml file is 
+		located.&nbsp; The following command can be used to set your 
+		environment: <br>
+		<font FACE="Helv" SIZE="3"><code>chcatenv -e $CATDefaultEnvironment -a 
+		user -var &quot;CATReconcilePath=../ReconciliatorCustom<br>
+		</code>F</font>or more information on setting your environment please 
+		refer to the CATIA Installation and Deployment Guide&gt; 
+		Customizing your Environment on Windows or Customizing your Environment 
+		on UNIX.&nbsp;</p>
+		</td>
+   </tr>
+ </table>
+
+<h2 align="left">Customizing Queries<a name="hj-customizing queries"></a>&nbsp;</h2>
+ <table border="0" width="100%" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" id="table1">
+   <tr>
+     <td width="4%" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td width="96%">
+     <p class="task">Queries are used to map objects loaded in CATIA to objects existing in the 
+		VPDM.&nbsp; Three queries are provided for mapping objects to ENOVIA V5 VPM:&nbsp; 
+		Easy Query, Query Document by Part Id and Mapping Objects using Query.&nbsp; 
+		Two queries are provided for mapping objects to ENOVIA<font size="1">VPM:&nbsp;
+		</font>Simple Query and Intermediate Query.&nbsp; Custom queries can be 
+		defined based on any of the standard queries.&nbsp; Custom queries can 
+		define the parameters that make up the query and/or 
+		supply default 
+		values for the query parameters.&nbsp; The following steps summarize how 
+		the custom query works:</p>
+		<table border="0" style="border-collapse: collapse" width="100%" id="table27">
+			<tr>
+				<td>
+				<img border="0" src="b35doc/english/online/wpeug_c2/images/customQueryNLS.gif" width="663" height="388"></td>
+			</tr>
+		</table>
+		<p class="task"><br>
+&nbsp;</p>
+		<ul class="task">
+			<font FACE="Helv" SIZE="3">
+			<li>
+			<p class="task">The In.xsl file converts the standard query xml to 
+			the custom query xml </li>
+			<li>
+			<p class="task">The query panel is displayed based on the parameters 
+			specified in the custom query xml.</li>
+			<li>
+			<p class="task">The user establishes their query criteria in the query panel and clicks the Ok button of the query panel.</li>
+			<li>
+			<p class="task">The custom query xml stream is generated by the 
+			system based on the query panel.</li>
+			<li>
+			<p class="task">The Out.xsl file converts 
+			the custom query xml to the standard query xml which can be 
+			read by the system to return the desired query results.</li>
+		</ul>
+		<p class="task">To produce a custom query you will need to:</p>
+		<ul class="task">
+			<li>
+			<p class="task">Understand the <a href="#envvariable">xml</a> for 
+			the standard query you want to customize.</li>
+			<li>
+			<p class="task">Create the <a href="#in_xslt">In xslt</a> file </li>
+			<li>
+			<p class="task">Create the <a href="#out_xslt">Out xslt</a> file</li>
+			<li>
+			<p class="task"><a href="#ix-define custom query">Define</a> the 
+			custom query name</li>
+		</ul>
+		<p class="task">&nbsp;</font></td>
+   </tr>
+	<tr>
+     <td width="4%" valign="top">
+     &nbsp;</td>
+     <td width="96%">
+	<p class="task">In the CATReconcileCustomize.xml file, each custom 
+		query will define, at a minimum, the query name, the standard query on 
+		which it is based and the xslt (Extensible Stylesheet Language 
+		Transformations) files (<a href="#ix-defining in xslt">In/Out</a>). </p>
+	<h4>Example of a Custom Query definition</h4>
+		<p class="task">This sample CATReconcileCustomize.xml file defines three custom queries:&nbsp; UserCriterion_1, 
+		UserCriterion_2, UserCriterion_3.&nbsp; All are based on the Query by 
+		Object Id standard query.&nbsp; All specify the same In/Out xslt files:&nbsp; 
+		UserCriterionIn.xsl and UserCriterionOut.xsl. </p>
+		<p class="task"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>
+		&lt;configuration&gt;<br>
+		&lt;criterionList&gt;<br>
+		&lt;criterion name=&quot;UserCriterion_1&quot; environment=&quot;ENOVIA5&quot; father=&quot;Query 
+		by_object Id&quot; <br>
+		order=&quot;1&quot; In=&quot;UserCriterionIn.xsl&quot; Out=&quot;UserCriterionOut.xsl&quot;/&gt;<br>
+		&lt;criterion name=&quot;UserCriterion_2&quot; environment=&quot;ENOVIA5&quot; father=&quot;Query 
+		by_object Id&quot; <br>
+		order=&quot;2&quot; In=&quot;UserCriterionIn.xsl&quot; Out=&quot;UserCriterionOut.xsl&quot;/&gt;<br>
+		&lt;criterion name=&quot;UserCriterion_3&quot; environment=&quot;ENOVIA5&quot; father=&quot;Query 
+		by_object Id&quot; <br>
+		order=&quot;3&quot; In=&quot;UserCriterionIn.xsl&quot; Out=&quot;UserCriterionOut.xsl&quot;/&gt;<br>
+		&lt;/criterionList&gt;<br>
+		&lt;/configuration&gt;</code></p>
+ <table border="0" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0" id="table13">
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <p style="margin-top: 10; margin-bottom: 10" class="task">&nbsp;The 
+		following table details the structure of the query definition in the&nbsp; CATReconcileCustomize xml file:</td>
+   </tr>
+ </table>
+ <table border="0" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0" id="table14">
+   <tr>
+     <td valign="top">
+     <table style="border-collapse: collapse; border-left-width: 0; border-top-width: 0; border-bottom-width: 0" cellspacing="0" bordercolordark="#353A90" cellpadding="0" width="100%" bordercolorlight="#353A90" border="1" id="table15">
+       <tr>
+         <td class="code"><font color="#353A90"><b>XML Node</b></font></td>
+         <td class="code" width="734"><font color="#353A90"><b>Attribute</b></font></td>
+         <td class="code" width="734"><font color="#353A90"><b>Definition</b></font></td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code2">
+         configuration</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         classpath</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         Specifies the java $CLASSPATH for the xslt conversion</td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" height="35" class="code">
+         criterionList</td>
+         <td bgcolor="#f7e7c6" height="35" class="code" width="734">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" height="35" class="code" width="734">
+         &nbsp;</td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code2">
+         <p class="task">criterion</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         name</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         Displays the name of the custom query</td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code">
+         <p class="task">&nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         environment</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         VPDM environment applicable for this query.&nbsp; Setting this value 
+			will automatically set the correct VPDM when this query is chosen.&nbsp; Values:&nbsp; VPM1 
+			(for ENOVIA<font size="1">VPM)</font>, 
+			ENOVIA5 (for ENOVIA V5 VPM)</td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1; border-bottom: 1px solid #353A90" bordercolor="#111199" class="code2">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" style="border-bottom-color: #353A90; border-bottom-width: 1" class="code2" width="734">
+         father</td>
+         <td bgcolor="#f7e7c6" style="border-bottom-color: #353A90; border-bottom-width: 1" class="code2" width="734">
+         Name of the query on which the custom query is based.&nbsp; Values: 
+			Simple Query, Intermediate Query, Easy Query, Query Document by Part Id, Query by object 
+			Id</td>
+       </tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code">
+         <p class="task">&nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         order</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         Enables the criteria to be displayed in the specified order in the user 
+			interface.</td>
+       </tr>
+		<tr>
+         <td bgcolor="#f7e7c6" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1; border-bottom: 1px solid #353A90" bordercolor="#111199" class="code2">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" style="border-bottom-color: #353A90; border-bottom-width: 1" class="code2" width="734">
+         In</td>
+         <td bgcolor="#f7e7c6" style="border-bottom-color: #353A90; border-bottom-width: 1" class="code2" width="734">
+         Name of the xslt file used to transform the standard (father) query's 
+			xml file into a new xml that describes the customized query.&nbsp; 
+			Only the transformed xml file can be used to display the query in 
+			the list of queries.&nbsp; The absolute path must be specified if 
+			the files are not in the same directory as CATReconcileCustomize.xml.&nbsp; 
+			May be specified using DLName.</td>
+       </tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code">
+         <p class="task">&nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         Out</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+		<p class="task">Name of the xslt file used after the user inputs their 
+		search criteria and executes the search. The Out xslt 
+		file is used to transform the customized query into one that can be used 
+		by the query.&nbsp; The absolute path must be specified if the files are 
+		not in the same directory as CATReconcileCustomize.xml.&nbsp; May be 
+		specified using DLName.</p>
+			</td>
+       	</tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+ 	<p class="task">&nbsp;</p>
+		<h3><a name="ix-adding custom query to global set"></a>How to Use a Custom Query in the Global Query Global Set</h3>
+	<p class="task">The custom queries you develop can be incorporated in the
+	<a href="page15125.html">Global Query global set</a> by editing the xml 
+	that describes the parameters of this global set.&nbsp; To do this, modify 
+	the following file located in:</p>
+	<p class="task">&nbsp; UNIX:&nbsp; &lt;unload_dir&gt;/&lt;os&gt;_a/reffiles/SuppChain</p>
+	<p class="task">&nbsp; MS-Windows:&nbsp; &lt;unload_dir&gt;\&lt;os&gt;_a\reffiles\SuppChain</p>
+	<p class="task">For ENOVIA V5 VPM:&nbsp; 
+	CATPDMAutoRulesValuator_GlobalQueryXSMLForm_ENOVIAV5.xml</p>
+	<p class="task">For ENOVIA VPM V4:&nbsp; 
+	CATPDMAutoRulesValuator_GlobalQueryXMLForm_VPM1.xml</p>
+		<p class="task">Add a line for each custom query in the <code>
+		queryName </code>section of the xml definition as follows (in this 
+		example, the custom query <strong>UserCriterion_1 </strong>is added to 
+		the list of standard queries):<p class="task"><code>&lt;ParametersList&gt;<br>
+	&lt;Parameter Name=&quot;queryName&quot; Type=&quot;String&quot;<br>
+	Alias=&quot;%CATPDMReconcileAutoRules:queryName%&quot; Mandatory=&quot;Yes&quot;&gt;<br>
+	&lt;DefaultValuesList&gt;<br>
+	&lt;DefaultValue&gt;%EV5PDMCriterion:EV5.ByName%&lt;/DefaultValue&gt;<br>
+	&lt;DefaultValue&gt;%EV5PDMCriterion:EV5.PartByName%&lt;/DefaultValue&gt;<br>
+	&lt;DefaultValue&gt;%EV5PDMCriterion:EV5.EasyName%&lt;/DefaultValue&gt;<br>
+	<strong>&lt;DefaultValue&gt;UserCriterion_1&lt;/DefaultValue&gt;</strong><br>
+	&lt;/DefaultValuesList&gt;<br>
+	&lt;CurrentValue&gt;%EV5PDMCriterion:EV5.ByName%&lt;/CurrentValue&gt;<br>
+	&lt;/Parameter&gt;<br>
+	... <br>
+	&lt;/ParametersList&gt;</code> 
+	<p class="task">&nbsp;<h3><a name="ix-defining in xslt"></a>Defining the 
+	In/Out XSLT Files</h3>
+	<p class="task">Each of the standard queries is defined by an xml file which 
+	describes all the available attributes for the query. When you are mapping 
+	objects in the reconciliator and you select a particular query (for example, 
+	Easy Query) the xml file defining all the attributes is used to create the 
+	query displayed.</td>
+   </tr>
+	<tr>
+     <td width="4%" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/tips.gif" title="ascenari.gif (1364 bytes)" width="32" height="32"></td>
+     <td width="96%">
+ <p class="task"><a name="envvariable"></a>To assist you in defining your own custom queries,&nbsp;the environment variable REC_Display_CustomCriterion=1 
+	can be set to display (in standard output) the xml for any query in the reconciliator. </p>
+ <table border="0" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0" id="table22">
+   <tr>
+     <td valign="top">
+     <p style="margin-top: 10; margin-bottom: 10" class="task">&nbsp;The following 
+		table details the structure of the query xml file</td>
+   </tr>
+ </table>
+ <table border="0" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0" id="table23">
+   <tr>
+     <td valign="top">
+     <table style="border-collapse: collapse; border-left-width: 0; border-top-width: 0; border-bottom-width: 0" cellspacing="0" bordercolordark="#353A90" cellpadding="0" width="100%" bordercolorlight="#353A90" border="1" id="table24">
+       <tr>
+         <td class="code"><font color="#353A90"><b>XML Node</b></font></td>
+         <td class="code" width="734"><font color="#353A90"><b>Attribute</b></font></td>
+         <td class="code" width="734"><font color="#353A90"><b>Definition</b></font></td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code2">
+         Parameter List</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         Root of the xml document</td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" height="37" class="code">
+         Parameter</td>
+         <td bgcolor="#f7e7c6" height="37" class="code" width="734">
+         Name</td>
+         <td bgcolor="#f7e7c6" height="37" class="code" width="734">
+         Query parameter identifier</td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code2">
+         <p class="task">&nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         Type</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         Attribute type (i.e. String)</td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code">
+         <p class="task">&nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         Alias</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         Query paramter display name</td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1; border-bottom: 1px solid #353A90" bordercolor="#111199" class="code2">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" style="border-bottom-color: #353A90; border-bottom-width: 1" class="code2" width="734">
+         Shown</td>
+         <td bgcolor="#f7e7c6" style="border-bottom-color: #353A90; border-bottom-width: 1" class="code2" width="734">
+         Indicates if the query parameter is to be displayed.&nbsp; Values: 
+			Yes/No</td>
+       </tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code">
+         <p class="task">&nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         Mandatory</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         Indicates if the query paramter must be defined. Values:&nbsp; Yes/No</td>
+       </tr>
+		<tr>
+         <td bgcolor="#f7e7c6" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1; border-bottom: 1px solid #353A90" bordercolor="#111199" class="code2">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" style="border-bottom-color: #353A90; border-bottom-width: 1" class="code2" width="734">
+         Sensitive</td>
+         <td bgcolor="#f7e7c6" style="border-bottom-color: #353A90; border-bottom-width: 1" class="code2" width="734">
+         Indicates if updating the query parameter will result in the check 
+			process.&nbsp; Values:&nbsp; Yes/No</td>
+       </tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code">
+         <p class="task">&nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         AccessMode</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+		<p class="task">Indicates if how the values can be accessed. Values: 
+		ReadWrite/ReadOnly</p>
+			</td>
+       	</tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code2">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         Template</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         Values:&nbsp; Yes/No</td>
+       </tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code">
+         <p class="task">&nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         AccessMode</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+		<p class="task">Indicates if how the values can be accessed. Values: 
+		ReadWrite/Read</p>
+			</td>
+       	</tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code2">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         Multi-valuated</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         Indicates if the query parameter allows multiple values.&nbsp; Values:&nbsp; 
+			Yes/No</td>
+       </tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code">
+         <p class="task">&nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         DefaultListExtensible</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+		<p class="task">Indicates if the query parameter has authorized values 
+		(i.e. a drop-down list of possible values is shown). If yes then the 
+		DefaultValuesList is used to populate the the list of authorized 
+		values). Values:&nbsp; Yes/No</p>
+			</td>
+       	</tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code2">
+         DefaultValuesList</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         Used to define a list of authorized values</td>
+       </tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code">
+         <p class="task">DefaultValue</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+		<p class="task">Authorized value for a paramter</p>
+			</td>
+       	</tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code2">
+         CurrentValue</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         Current value for the parameter</td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+ 	<p class="task">To create a custom query, you will need to create two xslt 
+	files</p>
+	<ul>
+		<li>
+		<p class="task"><a name="in_xslt"></a>The <strong>In xslt</strong> file transforms the 
+		standard query xml into a new custom query xml. The new custom query xml 
+		file is used to display the custom query when it has been chosen by the 
+		user. <br>
+		Example:&nbsp; The In xslt file,
+		<a href="b35doc/english/online/wpeug_c2/samples/C_Qry_By_Obj_ID_In_xsl.txt">Custom_Query_By_Object_ID_In.xsl</a>, 
+		can be used to modify the Query By Object ID query from</p>
+		<table border="0" style="border-collapse: collapse" width="100%" id="table25">
+			<tr>
+				<td>
+				<img border="1" src="b35doc/english/online/wpeug_c2/images/query_objectid02NLS.png" width="318" height="157"></td>
+			</tr>
+		</table>
+		<p>to</p>
+		<table border="0" style="border-collapse: collapse" width="100%" id="table26">
+			<tr>
+				<td>
+				<img border="1" src="b35doc/english/online/wpeug_c2/images/query_objectid_customNLS.gif" width="341" height="153"></td>
+			</tr>
+		</table>
+		<p class="task">The standard query has been customized in the following 
+		ways:</p>
+		<ul>
+			<li>
+			<p class="task"><kbd>Type</kbd> is a drop-down list in the dialog 
+			box with the values: Document, CATPart, CATProduct and Model</p>
+			</li>
+			<li>
+			<p class="task"><kbd>Supplier</kbd> is a new read only field that 
+			contains the default value: Supplier 1.</p></li>
+			<li>
+			<p class="task">
+			<span style="font-size: 12.0pt; font-family: Times New Roman"><kbd>
+			Prefix </kbd>&nbsp;replaces the <kbd>Search String</kbd> field.&nbsp; 
+			It is used to input a prefix to the search string.&nbsp; This field 
+			has a&nbsp; default value:&nbsp; Rec_.</span></p></li>
+			<li>
+			<p class="task"><font size="3">
+			<span style="font-family: Times New Roman"><kbd>Part ID</kbd> is a 
+			new field used to input the search string</span></font></p></li>
+		</ul>
+		</li>
+		<li>
+		<p class="task"><a name="out_xslt"></a>The <strong>Out xslt </strong>file is used (after the user inputs their 
+		criteria into the query dialog and applies the query) to transform the 
+		custom query xml into the xml file of the chosen standard query so it 
+		can be used by the system to retrieve the query results.  <br>
+		Example:&nbsp; The Out xslt file,
+		<a href="b35doc/english/online/wpeug_c2/samples/C_Qry_By_Obj_ID_Out_xsl.txt">Custom_Query_By_Object_ID_Out.xsl</a>, not only transforms the 
+		custom query back into the standard one which can be used by the sytem 
+		to execute the query, it also concatenates the Prefix and Part ID fields 
+		and uses this value as the Search String. </p></li>
+	</ul>
+ 	<h3>&nbsp;</h3>
+		</td>
+   </tr>
+	</table>
+
+<h2 align="left">Customizing Global Sets<a name="hj-customizing gs"></a>&nbsp;</h2>
+ <table border="0" width="100%" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" id="table30">
+   <tr>
+     <td width="4%" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td width="96%">
+     <p class="task"><a href="page15125.html">Global Sets</a> are pre-defined rules that allow you to 
+		automate the process of defining reconciliation rules.&nbsp; You can 
+		customize global sets by inheriting existing (base product) global sets 
+		and fixing some of their input values.&nbsp; </p>
+		<p class="task">Global Sets are customized similar to the way queries 
+		are customized, i.e. they are defined in the CATReconcileCustomize.xml <br>
+&nbsp;</p>
+		<h4>Example of a Custom Global Set definition</h4>
+		<p class="task"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>
+		&lt;configuration&gt;<br>
+		&lt;globalSetList&gt;<br>
+		&lt;globalSet name=&quot;Easy Query&quot; environment=&quot;ENOVIA5&quot;
+		order=&quot;1&quot; show=&quot;Yes&quot; globalSetImpl=&quot;CATPDMAutoRulesValuator_GlobalQuery&quot; 
+		globalSetForm=&quot;default&quot;/&gt;<br>
+		&lt;gsParam name=&quot;queryName&quot;&gt;Easy Query&lt;/gsParam&gt;</code></p>
+		<p class="task"><code>&lt;/globalSet&gt;<br>
+		&lt;/globalSetList&gt;<br>
+		&lt;/configuration&gt;</code></p>
+		<p class="task">The following table details global set definition in the&nbsp; 
+		xml file</p>
+     <table style="border-collapse: collapse; border-left-width: 0; border-top-width: 0; border-bottom-width: 0" cellspacing="0" bordercolordark="#353A90" cellpadding="0" width="100%" bordercolorlight="#353A90" border="1" id="table33">
+       <tr>
+         <td class="code"><font color="#353A90"><b>XML Node</b></font></td>
+         <td class="code" width="734"><font color="#353A90"><b>Attribute</b></font></td>
+         <td class="code" width="734"><font color="#353A90"><b>Definition</b></font></td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code2">
+         configuration</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         classpath</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         Specifies the java $CLASSPATH for the xslt conversion</td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" height="35" class="code">
+         globalSetList</td>
+         <td bgcolor="#f7e7c6" height="35" class="code" width="734">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" height="35" class="code" width="734">
+         &nbsp;</td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code2">
+         <p class="task">globalSet</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         name</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         the name of the custom global set</td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code">
+         <p class="task">&nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         environment</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         VPDM environment applicable for this query.&nbsp; Setting this value 
+			will automatically set the correct VPDM when this query is chosen.&nbsp; Values:&nbsp; VPM1 
+			(for ENOVIA<font size="1">VPM)</font>, 
+			ENOVIA5 (for ENOVIA V5 VPM), ANY (all available environments)</td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1; border-bottom: 1px solid #353A90" bordercolor="#111199" class="code2">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" style="border-bottom-color: #353A90; border-bottom-width: 1" class="code2" width="734">
+         show</td>
+         <td bgcolor="#f7e7c6" style="border-bottom-color: #353A90; border-bottom-width: 1" class="code2" width="734">
+         attribute means to add the global set in the user interface display.&nbsp; 
+			If the global set is not shown, then it is only available from 
+			batch.</td>
+       </tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code">
+         <p class="task">&nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         order</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         Enables the global set to be displayed in the specified order in the user 
+			interface.</td>
+       </tr>
+		<tr>
+         <td bgcolor="#f7e7c6" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1; border-bottom: 1px solid #353A90" bordercolor="#111199" class="code2">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" style="border-bottom-color: #353A90; border-bottom-width: 1" class="code2" width="734">
+         globalSetImpl</td>
+         <td bgcolor="#f7e7c6" style="border-bottom-color: #353A90; border-bottom-width: 1" class="code2" width="734">
+         the name of the global set to inherit from</td>
+       </tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code">
+         <p class="task">&nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         gsParam</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+		used to specify (fix) global set parameters.&nbsp; The parameters listed will 
+		be displayed as read-only.&nbsp; See the table below for available input 
+		parameters for each global set.&nbsp; </td>
+       	</tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code2">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         globalSetForm</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+		used to refer to an XMLForm file if you want to use a form panel other 
+		than the default.&nbsp; Possible values are &quot;default&quot; (to use the same 
+		as the inherited global set) or &quot;none&quot; (if no panel should be 
+		displayed).</td>
+       	</tr>
+     </table>
+     <p>The following table details available input parameters for each global set:</p>
+		<table border="1" id="table34">
+				<tr>
+						<td class="code">Global Set</td>
+						<td class="code">Parameter</td>
+						<td class="code">Meaning</td>
+						<td class="code">Values</td>
+				</tr>
+				<tr>
+						<td class="code2">CATPDMAutoRulesValuator_AllAtNew<br>
+&nbsp;</td>
+						<td class="code2">forceNew</td>
+						<td class="code2">force even on mapped objects</td>
+						<td class="code2">YES (or TRUE)<br>
+						NO (or FALSE)<p>NO is the default.</td>
+				</tr>
+				<tr>
+						<td class="code">CATPDMAutoRulesValuator_GlobalQuery<br>
+&nbsp;</td>
+						<td class="code">queryName</td>
+						<td class="code">query name</td>
+						<td class="code">Name of query (as displayed in the reconciliater 
+						panel)</td>
+				</tr>
+				<tr>
+						<td class="code">&nbsp;</td>
+						<td class="code">skipWhenMapped</td>
+						<td class="code">skip or not already mapped objects</td>
+						<td class="code">YES (or TRUE)<br>
+						NO (or FALSE)<p>NO is the default.</td>
+				</tr>
+				<tr>
+						<td class="code">&nbsp;</td>
+						<td class="code">implicitRule</td>
+						<td class="code">the rule of all objects that are mapped is set to
+			<kbd>Overwrite</kbd> and all objects that are not mapped is set to
+			<kbd>New</kbd>.</td>
+						<td class="code">YES (or TRUE)<br>
+						NO (or FALSE)<p>YES is the default.</td>
+				</tr>
+				<tr>
+						<td class="code2">CATPDMAutoRulesValuator_GlobalEnv</td>
+						<td class="code2">vpdm</td>
+						<td class="code2">environment name to set on all objects</td>
+						<td class="code2">&nbsp;</td>
+				</tr>
+				<tr>
+						<td class="code2">&nbsp;</td>
+						<td class="code2">structure</td>
+						<td class="code2">exposition (storage) mode is structure exposed</td>
+						<td class="code2">YES (or TRUE)<br>
+						NO (or FALSE)<p>YES is the default</td>
+				</tr>
+				<tr>
+						<td class="code2">CATPDMAutoRulesValuator_AllAtOverWrite</td>
+						<td class="code2">forceOverwrite</td>
+						<td class="code2">force overwrite even on mapped objects</td>
+						<td class="code2">YES (or TRUE)<br>
+						NO (or FALSE)<p>NO is the default.</td>
+				</tr>
+				<tr>
+						<td class="code">CATPDMAutoRulesValuator_AllAtNewVersion</td>
+						<td class="code">forceNewVersion</td>
+						<td class="code">all objects, even those with rules already defined 
+						on them, will be set to New Version, <kbd>&nbsp;</kbd>if 
+						possible.</td>
+						<td class="code">YES (or TRUE)<br>
+						NO (or FALSE)<p>NO is the default.</td>
+				</tr>
+				<tr>
+						<td class="code">&nbsp;</td>
+						<td class="code">onlyOnDocuments</td>
+						<td class="code">version only part version of the CATPart documents</td>
+						<td class="code">YES (or TRUE)<br>
+						NO (or FALSE)<p>NO is the default.</td>
+				</tr>
+				<tr>
+						<td class="code2">CATPDMAutoRulesValuator_ResetAll</td>
+						<td class="code2">reset</td>
+						<td class="code2">reset all object mapping and/or rules.</td>
+						<td class="code2">OnlyRules<br>
+						RuleAndMapping</td>
+				</tr>
+				<tr>
+						<td class="code">CATPDMAutoRulesValuator_AllAtReload</td>
+						<td class="code">forceReload</td>
+						<td class="code">force reload even on mapped objects</td>
+						<td class="code">YES (or TRUE)<br>
+						NO (or FALSE)<p>NO is the default.</td>
+				</tr>
+				<tr>
+						<td class="code2">CATPDMAutoRulesValuator_AllAtNewRevision</td>
+						<td class="code2">forceNewRevision</td>
+						<td class="code2">force new revision even on mapped objects</td>
+						<td class="code2">YES (or TRUE)<br>
+						NO (or FALSE)<p>NO is the default.</td>
+				</tr>
+				<tr>
+						<td class="code">CATPDMAutoRulesValuator_AllAtKeepExternal</td>
+						<td class="code">forceKeepExternal</td>
+						<td class="code">force keep external even on mapped objects</td>
+						<td class="code">YES (or TRUE)<br>
+						NO (or FALSE)<p>NO is the default.</td>
+				</tr>
+				<tr>
+						<td class="code2">CATPDMAutoRulesValuator_VPDMMapping</td>
+						<td class="code2">queryNameForPRC</td>
+						<td class="code2">query name to use to map the PRC</td>
+						<td class="code2">name of query (as displayed in Reconciliator 
+						interface)</td>
+				</tr>
+				<tr>
+						<td class="code2">&nbsp;</td>
+						<td class="code2">implicitRule</td>
+						<td class="code2">apply implicit rule after query</td>
+						<td class="code2">YES (or TRUE)<br>
+						NO (or FALSE)<p>YES is the default</td>
+				</tr>
+		</table>
+     </td>
+   </tr>
+   <tr>
+     <td width="4%" valign="top">
+     &nbsp;</td>
+     <td width="96%">
+
+<h2 align="left">Customizing Filters<a name="hj-customizing searchnode"></a>&nbsp;</h2>
+ <table border="0" width="100%" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" id="table38">
+   <tr>
+     <td width="4%" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td width="96%">
+     <p class="task"><a href="page15126.html">SearchNode filters</a> are used 
+		to select a subset of objects (locate objects) to run a global set on.&nbsp; You can 
+		customize searchNode filters by inheriting existing (base product) 
+		filters 
+		and fixing some of their input values.&nbsp; </p>
+		<p class="task">SearchNode filters are customized similar to the way queries 
+		and global sets 
+		are customized, i.e. they are defined in the CATReconcileCustomize.xml <br>
+&nbsp;</p>
+		<h4>Example of a Custom SearchNode filter definition</h4>
+		<p class="task"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>
+		&lt;configuration&gt;<br>
+		&lt;searchNodeFilterList&gt;<br>
+		&lt;searchNodeFilter name=&quot;SelectAllDocuments&quot; show=&quot;Yes&quot; 
+		filteringForm=&quot;none&quot; filteringImpl=&quot;SearchNode&quot;&gt;<br>
+		&lt;filterParam name=&quot;TYPE&quot;&gt;ANYDOC&lt;/filterParam&gt;</code></p>
+		<p class="task"><code>&lt;/searchNodeFilter&gt;<br>
+		&lt;/searchNodeFilterList&gt;<br>
+		&lt;/configuration&gt;</code></p>
+		<p class="task">The following table details global set definition in the&nbsp; 
+		xml file</p>
+     <table style="border-collapse: collapse; border-left-width: 0; border-top-width: 0; border-bottom-width: 0" cellspacing="0" bordercolordark="#353A90" cellpadding="0" width="100%" bordercolorlight="#353A90" border="1" id="table39">
+       <tr>
+         <td class="code"><font color="#353A90"><b>XML Node</b></font></td>
+         <td class="code" width="734"><font color="#353A90"><b>Attribute</b></font></td>
+         <td class="code" width="734"><font color="#353A90"><b>Definition</b></font></td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code2">
+         configuration</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         classpath</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         Specifies the java $CLASSPATH for the xslt conversion</td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" height="35" class="code">
+         searchNodeFilterList</td>
+         <td bgcolor="#f7e7c6" height="35" class="code" width="734">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" height="35" class="code" width="734">
+         &nbsp;</td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code2">
+         <p class="task">searchNodeFilter</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         name</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         the name of the custom filter</td>
+       </tr>
+       <tr>
+         <td bgcolor="#f7e7c6" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1; border-bottom: 1px solid #353A90" bordercolor="#111199" class="code">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" style="border-bottom-color: #353A90; border-bottom-width: 1" class="code" width="734">
+         show</td>
+         <td bgcolor="#f7e7c6" style="border-bottom-color: #353A90; border-bottom-width: 1" class="code" width="734">
+         attribute means to add the filter in the user interface 
+			display.&nbsp; If the filter is not shown, then it is only available from 
+			batch.</td>
+       </tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code2">
+         <p class="task">&nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         order</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         Enables the filter to be displayed in the specified order in the user 
+			interface.</td>
+       </tr>
+		<tr>
+         <td bgcolor="#f7e7c6" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1; border-bottom: 1px solid #353A90" bordercolor="#111199" class="code">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" style="border-bottom-color: #353A90; border-bottom-width: 1" class="code" width="734">
+         filteringImpl</td>
+         <td bgcolor="#f7e7c6" style="border-bottom-color: #353A90; border-bottom-width: 1" class="code" width="734">
+         the type of filter to inherit from</td>
+       </tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code2">
+         <p class="task">&nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+         filterParam</td>
+         <td bgcolor="#f7e7c6" class="code2" width="734">
+		used to specify (fix) filter parameters.&nbsp; The parameters listed will 
+		be displayed as read-only.&nbsp; See the table below for available input 
+		parameters for each filter.&nbsp; </td>
+       	</tr>
+		<tr>
+         <td bgcolor="#f7e7c6" bordercolor="#111199" class="code">
+         &nbsp;</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+         filteringForm</td>
+         <td bgcolor="#f7e7c6" class="code" width="734">
+		used to refer to an XMLForm file if you want to use a form panel other 
+		than the default.&nbsp; Possible values are &quot;default&quot; (to use the same 
+		as the inherited global set) or &quot;none&quot; (if no panel should be 
+		displayed).</td>
+       	</tr>
+     </table>
+     <p>The following table details available input parameters:</p>
+		<table border="1" id="table2" cellspacing="0" cellpadding="0" bordercolor="#FFFFFF">
+				<tr>
+						<td class="code"><b>SearchNode Filter Inputs</b></td>
+						<td class="code"><b>Availability</b></td>
+						<td class="code"><b>Signification</b></td>
+						<td class="code"><b>Values</b></td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>Type</b></td>
+						<td bgcolor="#F2F2F2">&nbsp;</td>
+						<td bgcolor="#F2F2F2">The Scm object type</td>
+						<td bgcolor="#F2F2F2">ANY, PART, ANYDOC, DOC, PROXYDOC</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>DOCTYPE</b></td>
+						<td bgcolor="#F2F2F2">Only available if TYPE is ANYDOC, 
+						DOC or PROXYDOC</td>
+						<td bgcolor="#F2F2F2">The extension of document</td>
+						<td bgcolor="#F2F2F2">Any string (reg exp)</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>SUBTREE</b></td>
+						<td bgcolor="#F2F2F2"></td>
+						<td bgcolor="#F2F2F2">Name of the Scm object considered as root of the 
+						tree</td>
+						<td bgcolor="#F2F2F2">Any string</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>NAME</b></td>
+						<td bgcolor="#F2F2F2"></td>
+						<td bgcolor="#F2F2F2">Name of Scm object</td>
+						<td bgcolor="#F2F2F2">Any string (reg exp)</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>FILENAME</b></td>
+						<td bgcolor="#F2F2F2">Only available if TYPE is ANYDOC, 
+						DOC or PROXYDOC</td>
+						<td bgcolor="#F2F2F2">Name of document file </td>
+						<td bgcolor="#F2F2F2">Any string (reg exp)</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>STATE</b></td>
+						<td bgcolor="#F2F2F2">&nbsp;</td>
+						<td bgcolor="#F2F2F2">Status (Mapped/Not mapped)</td>
+						<td bgcolor="#F2F2F2">ANY, MAPPED, NOTMAPPED</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>MODE</b></td>
+						<td bgcolor="#F2F2F2">&nbsp;</td>
+						<td bgcolor="#F2F2F2">Exposition mode</td>
+						<td bgcolor="#F2F2F2">ANY, PUBEXP, STRUCTEXP</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>%ATTRNAME%</b></td>
+						<td bgcolor="#F2F2F2">&nbsp;</td>
+						<td bgcolor="#F2F2F2">Attr Name and Value. Based on 
+						RegExp.<br>
+						%ATTRNAME% token to be replaced by real display name (NLS) 
+						of the attribute (for instance &#8220;Part Version&#8221;)</td>
+						<td bgcolor="#F2F2F2">Any string (reg exp)</td>
+				</tr>
+				</table>
+		<p>Filter 
+		algorithm locates all the objects of the Reconcile Session that 
+		corresponds to the criteria given in the list below:<ul>
+			<li><kbd>Type</kbd><span class="style1">&nbsp;Criterion: Corresponds to the type of the object to 
+			locate. The value is <kbd>ANY</kbd>, if the criterion is not set. 
+			Similarly, for Part Version the value is <kbd>PART</kbd>, for 
+			documents <kbd>ANYDOC</kbd>, for document loaded in memory <kbd>DOC</kbd> 
+			and for document pointed through broken links the value is <kbd>
+			PROXYDOC</kbd></span>.</li>
+			
+			<li><kbd>DOCTYPE</kbd> Criterion: For filtering of document 
+			extension, the values set are <kbd>ANYDOC</kbd>, <kbd>DOC</kbd> or
+			<kbd>PROXYDOC</kbd>. If the value is ANY, all the document 
+			extensions are accepted. </li>
+			
+			<li><kbd>MODE</kbd>Criterion: Corresponds to the exposition of the object to 
+			locate. The value is either <kbd>STRUCTEXP</kbd> or <kbd>PUBEXP</kbd> and 
+			<kbd>ANY</kbd>, if the 
+			criterion is not set.</li>
+			
+			<li><kbd>State</kbd> Criterion: Corresponds to the status of 
+			the object to locate. The value is <kbd>ANY</kbd>, if the criterion 
+			is not set. Similarly, for objects only mapped to a PDM object, the 
+			value is <kbd>MAPPED</kbd> and for only unmapped objects the value 
+			is <kbd>NOTMAPPED</kbd>.</li>
+			
+			<li><kbd>Name</kbd> Criterion: Corresponds to the name of the 
+			object as it appears in CATIA view.</li>
+			
+			<li><kbd>Attribute</kbd>Condition: Corresponds to the 
+			condition on attributes of the ScmObject.&nbsp; Attribute refers to 
+			CV5 attributes and for mapped objects PLM attributes.</li>
+			</ul>
+     </td>
+   </tr>
+	</table>
+
+ 		</td>
+   </tr>
+	<tr>
+     <td width="4%" valign="top">&nbsp;</td>
+     <td width="96%">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="ascenari.gif (1364 bytes)" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+
+

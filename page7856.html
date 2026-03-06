@@ -1,0 +1,608 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+ <title>Sweep 3D</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Sweep 3D<a name="ix-commands::Sweep 3D;solid meshing methods::sweep;3D meshing methods::sweep"></a></h1>
+ <table BORDER="0" cellspacing="1">
+   <tr>
+     <td VALIGN="top" align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>
+     <p class="task"><a name="CATMSHCommandHeader.Sweep3D"></a>This task will 
+     show you how to&nbsp;mesh a solid part by generating hexahedron (HE8 and HE20) 
+     and wedge (WE6 and WE15) elements from surface meshes.<p class="task">The sweep 3D provides volume mesh (Linear Hexahedron, 
+     Parabolic Hexahedron, Linear Pentahedron or Parabolic Pentahedron - refer to the <cite>Finite Element Reference Guide</cite>) 
+     from a surface mesh.<p class="task">
+		<span style="background-position: 0 0">When possible, neighboring 
+		lateral and top meshes are captured to provide a solid mesh without 
+		interference.</span></td>
+   </tr>
+   <tr>
+     <td VALIGN="top" align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td>
+     <ul>
+		<li>This functionality is only available with the <b>FEM Solid 
+     (FMD)</b> product.</li>
+		<li>To generate a sweep mesh, the volume must be assimilated to 
+     a prism with a top and a bottom.</li>
+		<li>A surface mesh must exist and can be associated or not to 
+       a geometry.<br>If the surface mesh is associated to a geometry, this geometry can be 
+       either a surface or a set of connected faces.</li>
+		<li>To prepare the geometry for a hexahedral meshing, it is highly
+   	   recommended to use the <kbd>Split</kbd> command of the <cite>Generative Shape Design</cite> workbench.<br>To know more, refer to 
+		<cite>Generative Shape Design and Optimizer 
+		User's Guide: Basic Tasks: Performing Operations on Shape Geometry: 
+		Splitting Geometry</cite>.</li>
+		</ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td>
+     <p class="task">Open the&nbsp;<a href="b35doc/english/online/fmsug_c2/samples/Sample25.CATAnalysis">Sample25.CATAnalysis</a> 
+       document from the samples directory.<br>In this particular example, a surface mesh has been already created.</td>
+   </tr>
+   <tr>
+     <td VALIGN="top" align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td VALIGN="top">
+     <ol class="task">
+       <li>
+       <p class="task">Click <kbd>Sweep 3D</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_MshSweep3DP2.gif" width="24" height="24"> 
+       in the <kbd>Meshing Methods</kbd> toolbar.</p>
+       <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber1">
+         <tr>
+           <td valign="top">
+           <p class="task">The Sweep 3D dialog box appears.</p>
+           <h3>Geometry tab</h3>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/fmsug_c2/images/dbsweep3d01NLS.gif" width="274" height="371"></p>
+           <ul>
+             <li><kbd>Sweep Limits</kbd>:
+             <ul>
+               <li><kbd>Bottom</kbd>: lets you select the mesh surface from 
+               which the sweep mesh will be generated.<br>
+               Multi-selection of faces is available.</li>
+               <li><kbd>Face Selector</kbd> button
+               <img border="0" src="b35doc/english/online/fmsug_c2/images/bmpselection.gif" width="28" height="28">: 
+               for more details, refer to
+               <a href="page3303.html#hj-face">
+               Filtering Geometries</a>.</li>
+               <li><kbd>Top</kbd>: lets you select the target domain.<br>
+               Multi-selection of faces is available.</li>
+             </ul>
+             </li>
+             <li><kbd>Guides Parameters</kbd>: guides are lines that constrain 
+				the solid mesh between bottom and top faces.<ul>
+               <li><kbd>Angle</kbd>: lets you specify the tolerance angle 
+               between two curves to 
+               compute the guides.<br>
+               The angle parameter represents the maximum discontinuity between 
+               curves.<br>
+               The default value is given by the normal to the <kbd>Bottom</kbd> 
+               from the first vertex of the candidate curve.</li>
+               <li><kbd>Guides</kbd>: gives you the number of computed guides.</li>
+             </ul>
+             </li>
+             <li><kbd>Compute</kbd>: lets launch the computation to find the 
+             guides.</li>
+             <li><kbd>Remove</kbd>: lets you remove the results of the guides 
+             computation.</li>
+             <li><kbd>Impose Guides </kbd>
+               <img border="0" src="b35doc/english/online/fmsug_c2/images/bimposeguide.gif" width="28" height="28">: 
+             lets you select one or several edges that you want to include into 
+             the guide computation.<br>
+             If you click this button, the Impose Guide dialog box appears.<table border="0" cellspacing="1" id="table4">
+               <tr>
+                 <td colspan="2">
+           <img border="0" src="b35doc/english/online/fmsug_c2/images/dbimposeguideNLS.gif" width="199" height="98"></td>
+               </tr>
+               <tr>
+                 <td valign="top" align="center">
+                     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                     <td valign="top">
+                     <p class="task">It is strongly recommended to use 
+                     the <kbd>Hide/Show</kbd> command to select edges.</td>
+               </tr>
+             </table>
+             </li>
+             <li><kbd>Exclude Guides </kbd>
+               <img border="0" src="b35doc/english/online/fmsug_c2/images/bexcludeguide.gif" width="28" height="28">: 
+             lets you select one or several edges that you want to exclude from 
+             the guide computation.<br>
+             If you click this button, the Exclude Guide dialog box appears.<table border="0" cellspacing="1" id="table5">
+               <tr>
+                 <td colspan="2">
+           <img border="0" src="b35doc/english/online/fmsug_c2/images/dbexcludeguideNLS.gif" width="199" height="98"></td>
+               </tr>
+               <tr>
+                 <td valign="top" align="center">
+                     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                     <td valign="top">
+                     <p class="task">It is strongly recommended to use 
+                     the <kbd>Hide/Show</kbd> command to select edges.</td>
+               </tr>
+             </table>
+             </li>
+           </ul>
+           <h3>Mesh tab</h3>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/fmsug_c2/images/dbsweep3d03NLS.gif" width="273" height="371"></p>
+           <ul>
+             <li><kbd>Element type</kbd>:
+             <ul>
+               <li><kbd>Linear</kbd>: lets you generate linear elements (HE8 or 
+               WE6 elements).</li>
+               <li><kbd>Parabolic</kbd>: lets you generate parabolic elements 
+               (HE20 or WE15 elements).
+               <div align="left">
+                 <table border="0" cellspacing="1" id="AutoNumber14">
+                   <tr>
+                     <td valign="top" align="center">
+                     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                     <td valign="top">
+                     <p class="task">You cannot generate parabolic elements if 
+                     the surface mesh part has been built with linear elements.</td>
+                   </tr>
+                 </table>
+               </div>
+               </li>
+             </ul>
+             </li>
+             <li><kbd>Smoothing</kbd>:
+             <ul>
+               <li><kbd>Internal and top mesh</kbd>: lets you increase the mesh 
+				quality if needed (note that can be time consuming).</li>
+             </ul>
+             </li>
+             <li><kbd>Distribution</kbd>:<ul>
+               <li><kbd>Type</kbd>:<ul>
+                 <li><kbd>Uniform</kbd>: the distance between all the 
+                 distributed nodes will be the same.</li>
+                 <li><kbd>Arithmetic</kbd>: the distance between the distributed 
+                 nodes will be defined by an arithmetical distribution.</li>
+                 <li><kbd>Geometric</kbd>: the distance between the distributed 
+                 nodes will be defined by a geometrical distribution.</li>
+               </ul>
+               </li>
+               <li><kbd>Layers number</kbd>: lets you specify the number of 
+               layers you want.<br>
+               This value determines the sweep mesh size.<br>
+               The
+               <img border="0" src="b35doc/english/online/fmsug_c2/images/blayers.gif" align="bottom" width="26" height="26"> 
+               button lets you initialize the <kbd>Layers number</kbd> field 
+               with a number of edges equal to the number of edges found by mesh 
+               capture along the guides.</li>
+               <li><kbd>Size ratio</kbd>: lets you specify the common difference 
+               value for an <kbd>Arithmetic</kbd> distribution or the common 
+               ratio value for a <kbd>Geometric</kbd> distribution.<div align="left">
+                 <table border="0" cellspacing="1" id="AutoNumber13">
+                   <tr>
+                     <td>
+                     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                     <td>
+                     <p class="task">This option is only available if you 
+                     selected <kbd>Arithmetic</kbd> or <kbd>Geometric</kbd> as
+                     <kbd>Distribution Type</kbd> option.</td>
+                   </tr>
+                 </table>
+               </div>
+               </li>
+               <li><kbd>Symmetry</kbd>: lets you specify if the distribution 
+               should be symmetric or not.<div align="left">
+                 <table border="0" cellspacing="1" id="AutoNumber12">
+                   <tr>
+                     <td>
+                     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                     <td valign="top">
+                     <p class="task">This option is only available if you 
+                     selected <kbd>Arithmetic</kbd> or <kbd>Geometric</kbd> as
+                     <kbd>Distribution Type</kbd> option.</td>
+                   </tr>
+                 </table>
+               </div>
+               </li>
+             </ul>
+             </li>
+             <li><kbd>Capture</kbd>: lets you capture updated bottom, top and lateral meshes to create the solid mesh.<ul>
+               <li><kbd>Tolerance</kbd>: lets you specify the tolerance value of 
+				capture which is the maximum distance 
+               for mesh capture.</li>
+               <li>Mesh Part Selector
+               <img border="0" src="b35doc/english/online/fmsug_c2/images/bmpselection.gif" align="bottom" width="28" height="28">: 
+               to know more, refer to
+               <a href="page3305.html">
+               Filtering Mesh Parts</a>.</li>
+               <li><kbd>Initialize</kbd>: lets you automatically initialize the tolerance value of 
+				capture. <br>
+				The tolerance is initialized with a ratio of the smallest size 
+				of element edges among all updated mesh parts.</li>
+				<li><kbd>Preview</kbd>: 
+				lets you visualize the captured mesh and generate a report about 
+				captured faces in the Capture Check dialog box. <br>
+               To know more, refer to the <a href="#hj-check">
+				description</a> of 
+               the Capture Check dialog box.</li>
+             </ul>
+             </li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Select the body.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" id="AutoNumber3">
+           <tr>
+             <td valign="top">
+             <table border="0" cellspacing="1" id="table1">
+             <tr>
+               <td>
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+               <td>
+               <p class="task">You can only select 3D geometries belonging to 
+               the default <kbd>PartBody</kbd>.</td>
+             </tr>
+           </table>
+             <p class="task">In this particular example, select <kbd>Volume 
+             Sweep.1</kbd> in the specification tree or directly on the 
+             geometry:</p>
+             <p class="task">
+             <img border="0" src="b35doc/english/online/fmsug_c2/images/sweep01.gif" width="454" height="173"></p>
+             <p class="task">As soon as you have selected the body, the <kbd>Bottom</kbd> 
+             field is activated in the Geometry tab of the Sweep 3D dialog box and the <kbd>Tools 
+             Palette</kbd> toolbar appears.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Select a face as <kbd>Bottom</kbd>.</p>
+		<table border="0" cellspacing="1" id="table16">
+                 <tr>
+                   <td align="center" valign="top">
+                   <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                   <td>
+                   <ul>
+					<li>This face may be meshed or in the neighboring of a mesh 
+					part.</li>
+					<li>Multi-selection is available. To do this, select in 
+					sequence several faces of the same surface.</li>
+					</ul>
+					</td>
+                 </tr>
+               </table>
+		<div align="left">
+			<table border="0" cellspacing="1" id="AutoNumber4">
+				<tr>
+					<td valign="top">
+					<p class="task">In this particular example, select the face as shown below:
+					</p>
+					<p class="task">
+					<img border="0" src="b35doc/english/online/fmsug_c2/images/sweep02.gif" width="454" height="170"></td>
+				</tr>
+			</table></div>
+       </li>
+       <li>
+       <p class="task">Activate the <kbd>Top</kbd> field.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" id="AutoNumber6">
+           <tr>
+             <td valign="top">
+             <p class="task">To do this, select the <kbd>Top</kbd> field as 
+             shown below:</p>
+             <p class="task">
+             <img border="1" src="b35doc/english/online/fmsug_c2/images/dbsweep3d04NLS.gif" width="217" height="75"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Select a face as <kbd>Top</kbd>.</p>
+		<table border="0" cellspacing="1" id="table12">
+                 <tr>
+                   <td align="center" valign="top">
+                   <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                   <td>
+                   <ul>
+					<li>This face may be meshed or in the 
+					neighboring of a mesh part. </li>
+					<li>Multi-selection is available. To do this, 
+					select in sequence several faces of the same surface.</li>
+					</ul>
+					</td>
+                 </tr>
+               </table>
+       <div align="left">
+         <table border="0" cellspacing="1" id="AutoNumber5">
+           <tr>
+             <td valign="top">
+             <p class="task">In this particular example, select the face as 
+				shown below:</p>
+             <p class="task">
+             <img border="0" src="b35doc/english/online/fmsug_c2/images/sweep03.gif" width="454" height="162"></p>
+             <p class="task">The <kbd>Compute</kbd> button is now available in 
+             the Sweep 3D dialog box.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Enter <kbd>45deg</kbd> as <kbd>Angle</kbd> value.</li>
+       <li>
+       <p class="task">Click <kbd>Compute</kbd>.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" id="AutoNumber2">
+           <tr>
+             <td valign="top">
+             <ul>
+				<li>Guides are computed and are yellow-highlighted. 
+				A red arrow shows the orientation of the guide.</li>
+				<li>The geometry has been automatically hidden.</li>
+				<li>Blue lines represent lines of the geometry 
+				ignored as guides with the given angle.</li>
+				</ul>
+             <p class="task">
+             <img border="0" src="b35doc/english/online/fmsug_c2/images/sweep05.gif" width="457" height="168"></p>
+				<p class="task">The Sweep 3D dialog box displays the number of 
+				computed guides:</p>
+             <p class="task">
+             <img border="1" src="b35doc/english/online/fmsug_c2/images/dbsweep3d05NLS.gif" width="217" height="107"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Select the <kbd>Mesh</kbd> tab and modify the mesh 
+       parameters as shown below:</p>
+       <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber15">
+         <tr>
+           <td>
+           <ul>
+			<li>Select <kbd>Linear</kbd> as <kbd>Element Type</kbd>.</li>
+			<li>Clear the <kbd>Internal and top mesh</kbd> check 
+             box.</li>
+			<li>Select <kbd>Uniform</kbd> as <kbd>Distribution</kbd> 
+             option.</li>
+			<li>Enter <kbd>7</kbd> as <kbd>Layers number</kbd> 
+             value.</li>
+			<li>Enter <kbd>1mm</kbd> as <kbd>Tolerance</kbd> value.</li>
+			</ul>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Click <kbd>Apply</kbd> in the Sweep 3D dialog box.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" id="AutoNumber8">
+           <tr>
+             <td valign="top">
+             <p class="task">The sweep mesh is generated with the specified mesh 
+             parameters.</p>
+             <p class="task">
+             <img border="0" src="b35doc/english/online/fmsug_c2/images/sweep06.gif" width="456" height="170"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Modify the mesh parameters:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" id="AutoNumber9">
+           <tr>
+             <td valign="top">
+             <ul>
+				<li>
+				Select <kbd>Arithmetic</kbd> as <kbd>Distribution</kbd> 
+               option.</li>
+				<li>
+				Enter <kbd>12</kbd> as <kbd>Layers number</kbd> 
+               value.</li>
+				<li>
+				Enter <kbd>4</kbd> as <kbd>Size ratio</kbd> value.</li>
+				<li>
+				Select the <kbd>Symmetry</kbd> check box.</li>
+				</ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Click <kbd>Initialize.<br>
+		</kbd>A new value is initialized in the Tolerance box. </p>
+       </li>
+		<li>
+       <p class="task">Click <kbd>Preview</kbd>.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" id="AutoNumber11">
+           <tr>
+             <td valign="top">
+             <p class="task">The captured elements to create the solid mesh are 
+				previewed. </p>
+				<p class="task">
+             <img border="0" src="b35doc/english/online/fmsug_c2/images/sweep08.gif" width="455" height="172"></p>
+				<p class="task">In this example:</p>
+				<ul>
+					<li>Elements of bottom and top meshes are valid 
+					for creating the solid mesh. They are green-highlighted.</li>
+					<li>Elements from the lateral mesh are ignored 
+					for creating the solid mesh. They are yellow-highlighted.<br>
+&nbsp;</li>
+				</ul>
+				<p class="task"><a name="hj-check"></a>The Capture Check dialog box also appears</p>
+             <p class="task">
+             <img border="0" src="b35doc/english/online/fmsug_c2/images/dbcapturecheckNLS.gif" width="133" height="128"></p>
+				<p class="task">
+             displaying the analysis of the faces of captured meshes, as 
+				follows:</p>
+             <ul>
+               <li>
+               <p class="task"><kbd>Valid</kbd>: gives you the number of 
+               captured faces that are taken into account by the sweep mesher.</li>
+               <li>
+               <p class="task"><kbd>Ignored</kbd>: gives you the number of 
+				captured faces that are not taken into account by the sweep 
+				mesher.</li>
+               <li>
+               <p class="task"><kbd>Invalid</kbd>: gives you the number of 
+				captured faces that are not taken into account by the sweep 
+				mesher, but are mandatory because associated to the bottom face 
+				of the geometry. In that case, the solid mesh cannot be created.<br>
+&nbsp;</li>
+             </ul>
+             <table border="0" cellspacing="1" id="table10">
+                 <tr>
+                   <td align="center" valign="top">
+                   <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                   <td>
+                   <p class="task">To be taken into account by the sweep mesher: 
+					<ul>
+						<li>The capture of a mesh must be successful 
+						and be associated to a whole face of the geometry. </li>
+						<li>The captured top mesh must be 
+						topologically identical to the captured bottom mesh.</li>
+						<li>A captured lateral mesh must have been 
+						previously built with a mapped method.</li>
+						<li>A captured lateral mesh must have a 
+						number of edges equal to the number of layers along the 
+						guides.<br>
+						You can use the
+						<img border="0" src="b35doc/english/online/fmsug_c2/images/blayers.gif" align="bottom" width="26" height="26"> 
+						button in the Sweep 3D dialog box to fit the number of 
+						layers.</li>
+						</ul>
+					</td>
+                 </tr>
+               </table>
+               </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd> in the Capture Check dialog box.</li>
+		<li>
+		<p class="task">Click 
+						the 
+						<img border="0" src="b35doc/english/online/fmsug_c2/images/blayers.gif" align="bottom" width="26" height="26"> 
+						button in the <kbd>Mesh</kbd> tab of the Sweep 3D dialog box.<table border="0" cellspacing="1" id="table15">
+			<tr>
+				<td>
+				<p class="task">The Layers number is updated and fits with the number of edges of the 
+		captured meshes along the guides.</td>
+			</tr>
+		</table>
+			</li>
+		<li>
+		<p class="task">Click <kbd>Preview</kbd>.<table border="0" cellspacing="1" id="table14">
+			<tr>
+				<td>
+				<p class="task">All faces of captured meshes are valid in the preview and in the Capture 
+		Check dialog box.</td>
+			</tr>
+		</table>
+			</li>
+		<li>
+		<p class="task">Click <kbd>OK</kbd> in the Capture Check dialog box.</li>
+		<li>
+		<p class="task">Click <kbd>Apply</kbd>.<table border="0" cellspacing="1" id="table1">
+			<tr>
+				<td>
+				<p class="task">The sweep mesh is updated.</p>
+				<p class="task">
+				<img border="0" src="b35doc/english/online/fmsug_c2/images/sweep07.gif" width="458" height="171"></td>
+			</tr>
+		</table></li>
+		<li>
+		<p class="task">Select the <kbd>Geometry</kbd> tab.</p></li>
+		<li>
+		<p class="task">Click <kbd>Exclude Guides</kbd>
+		<img border="0" src="b35doc/english/online/fmsug_c2/images/bexcludeguide.gif" width="28" height="28">.</p>
+		<table border="0" cellspacing="1" id="table2">
+			<tr>
+				<td>
+				<p class="task">The Exclude Guides dialog box appears.</td>
+			</tr>
+		</table></li>
+		<li>
+		<p class="task">Select the edge you want to exclude from the guide 
+       computation.</p>
+		<table border="0" cellspacing="1" id="table3">
+			<tr>
+				<td>
+				<p class="task">In this particular example, select the edge as 
+           shown below:</p>
+				<p class="task">
+				<img border="0" src="b35doc/english/online/fmsug_c2/images/sweep09.gif" width="458" height="168"></p>
+				<p class="task">The  
+           Exclude Guide dialog box is updated.</p>
+				<p class="task">
+				<img border="0" src="b35doc/english/online/fmsug_c2/images/dbexcludeguide02NLS.gif" width="199" height="98"></td>
+			</tr>
+		</table></li>
+		<li>
+		<p class="task">Click <kbd>OK</kbd> in the Exclude Guide dialog 
+       box.</p></li>
+		<li>
+		<p class="task">Click <kbd>Apply</kbd>.</p>
+		<div align="left">
+			<table border="0" cellspacing="1" id="AutoNumber10">
+				<tr>
+					<td valign="top">
+					<p class="task">The sweep mesh is updated.<br>
+					The mesh does not follow the excluded edge represented by a 
+					blue dashed line.</p>
+					<p class="task">
+					<img border="0" src="b35doc/english/online/fmsug_c2/images/sweep10.gif" width="457" height="169"></td>
+				</tr>
+			</table></div></li>
+		<li>
+		<p class="task">Click <kbd>OK</kbd>.<table border="0" cellspacing="1" id="table13">
+			<tr>
+				<td>
+				<p class="task">A <kbd>Sweep 3D Mesh.1</kbd> mesh part 
+		with <kbd>Geometry Specifications.1</kbd> is created in the specification 
+		tree:<p class="task">
+		<img border="0" src="b35doc/english/online/fmsug_c2/images/stsweep3d01NLS.gif" width="241" height="176"></td>
+			</tr>
+		</table>
+			</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td VALIGN="top" align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/tips.gif" hspace="0" width="32" height="32"></td>
+     <td VALIGN="top">
+     <p class="task">After meshing using the Sweep 3D mesher, you can check 
+     interferences using the <kbd>Intersections / Interferences</kbd> command
+     <img border="0" src="b35doc/english/online/icons_C2/images/I_MshInterferenceP2.gif" width="24" height="24">.<br>
+     To know more about interferences, refer to <a href="page7870.html">
+     Checking Intersections and Interferences</a>.</td>
+   </tr>
+ </table>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

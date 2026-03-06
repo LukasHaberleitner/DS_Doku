@@ -1,0 +1,190 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Distributing the Software To a Client Using the RCMD Command</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Distributing the Software To a Client Using the RCMD Command</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td><a name="ix-distributing code on Windows::to a client using RCMD"></a>
+     This task explains an alternative to the previous scenario: how to use the 
+     RCMD command, which is part of the Resource Kit for your Windows platform, 
+     for distributing the software from a source computer to a client computer 
+     inside the same domain.<p align="center">
+     <img border="0" src="b35doc/english/online/basil_c2/images/DistributeRCMD_NLS.gif" width="601" height="314"></p>
+     <p align="left">Note that the default installation path can be:</p>
+     <p align="left"><code>
+     C:\Program Files\Dassault Systemes\B31</code> (64-bit code 
+		on Windows, x64 Edition)<br>
+       </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td rowspan="1">The Resource Kit must be installed on both the source 
+     computer (&quot;ravel&quot; in our example) and the client computer (&quot;chopin&quot; in our 
+     example).<p>Furthermore, for the RCMD command to operate, the RCMDSVC 
+     service must be started beforehand on the client computer. This involves 
+     installing a Remote Command server on each client computer, then starting 
+     the Remote Command server. For more information, refer to the following 
+     Windows online help topic: RCMD.EXE: Remote Command Service.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td>When setting up the server you can:
+     <ul>
+       <li>copy all the software into the same folder (as illustrated above)</li>
+       <li>or, given that the software is distributed on several media ( 1, 2 
+       ...), copy the contents of each media into a separate folder for each 
+	   media, 
+       making sure that the name of each folder corresponds to the media number ( 
+       1, 2 ...) etc.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td rowspan="1">The software supplied by Microsoft in the Windows 
+     Workstation Resource Kit is not officially supported. Microsoft (and 
+     Dassault Systemes) do not guarantee the performance of the Windows 
+     Workstation Resource Kit tools, response times for answering questions, or 
+     bug fixes to the tools. The software (including instructions for its use 
+     and printed and online documentation) is provided &quot;AS IS&quot; without warranty 
+     of any kind.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td rowspan="1"><b>1.</b> Log onto the source computer using an account 
+     with <strong>Domain Administrator </strong>privileges.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td><b>2.</b> Copy the Version 5 software into a folder on the source 
+     computer, and share the folder.<p>For example, the folder name could be
+     <code>My_CATIAV5_Folder</code> ,and you could share the folder using the 
+     name &quot;CATIA&quot;.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td><b>3.</b> Select <code>Start&nbsp;&gt;&nbsp;Programs&nbsp;&gt;&nbsp;Windows Resource Kit&nbsp;&gt;&nbsp;Tools</code>.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td><b>4.</b> Double-click the <code>Network Management Tools </code>
+     control<code>, </code>then the <code>Remote Command Service </code>control<code>.</code><p>
+     A Command Prompt window is opened and you are now located in the directory, 
+     for example on Windows:</p>
+     <p><code>C:\Program&nbsp;Files\Resource Kit\rcmd</code></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td><b>5.</b> Connect to the remote client computer using the command:<p>
+     <code>rcmd \\remote_computer</code></p>
+     <p>where &quot;remote_computer&quot; is the name of the remote computer.</p>
+     <p>In our example, the command would be:</p>
+     <p><code>rcmd \\chopin</code></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td><b>6.</b> Once you are connected to the remote computer, map a drive on 
+     the remote computer to the shared folder on the source computer.<p>To do 
+     so, enter the command:<code><a name="ix-net use command"></a><a name="ix-commands::net use"></a></code></p>
+     <p><code>net&nbsp;use&nbsp;drive:&nbsp;\\<em>Source_computer</em>\<i>SharedDirName</i>&nbsp;<em>DomainAdminPwd</em>&nbsp;/user:<em>DomainName</em>\<em>DomainAdminUserName</em></code>
+     </p>
+     <p>where:</p>
+     <ul>
+       <li><code>drive</code> is the drive letter used to map to the shared 
+       folder</li>
+       <li><code>Source_computer</code> is the source computer from which you 
+       are performing the installation, and on which the shared folder 
+       containing the Version 5 software is located</li>
+       <li><code>SharedDirName</code> is the share name of the folder containing 
+       the Version 5 software</li>
+       <li><code><em>DomainAdminPwd</em></code> is the domain administrator 
+       password</li>
+       <li><code><em>DomainName</em></code> is the domain name</li>
+       <li><code><em>DomainAdminUserName</em></code> is the domain administrator 
+       username.</li>
+     </ul>
+     <p>In our example, the command would be for example:</p>
+     <p><code>net&nbsp;use&nbsp;M:&nbsp;<em><span style="font-style: normal">\</span></em>\<em style="font-style: normal">ravel</em><span style="font-style: normal"><em>\</em></span>CATIA&nbsp;<em style="font-style: normal">admin</em>&nbsp;/user:<em style="font-style: normal">MyDomain</em><span style="font-style: normal"><em>\</em></span><em style="font-style: normal">root</em></code></p>
+     <p>This command maps the M: device (the device must be available) on the 
+     remote computer &quot;chopin&quot; to the shared folder &quot;CATIA&quot; on the source 
+     computer &quot;ravel&quot;, using the domain administrator password &quot;admin&quot;. Note 
+     that the domain name is &quot;MyDomain&quot; and the domain administrator username is 
+     &quot;root&quot;.</p>
+     <p>To check that the map has been successfully performed, enter the 
+     command:</p>
+     <p><code>net&nbsp;use</code></p>
+     <p>which will list the mapped resources like this:</p>
+     <p><code>Status&nbsp;&nbsp; Local&nbsp;&nbsp; Remote&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     Network</code></p>
+     <p><code><em style="font-style: normal">OK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     M:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \\ravel\CATIA&nbsp;&nbsp;&nbsp; Microsoft 
+     Windows Network</em></code></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td>For more information about the <kbd>net use</kbd> command, refer to the 
+     Windows online help system.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td><b>7.</b> Install the Version 5 software.<p>For example, running the 
+     following command will install the DP2 and MD2 configurations (and the 
+     corresponding nodelock licenses) for the CATIA product line into the 
+     following location, for example on Windows:</p>
+     <p><code>StartB -u &quot;C:\Program Files\Dassault Systemes\B31&quot; -newdir -l 
+     &quot;DP2.slt MD2.slt&quot; -lic E:\CATIAV5_Licenses\MYCONFIG.LIC</code></p>
+     <p>into the following location on the remote computer:</p>
+     <p><code>C:\Program Files\Dassault Systemes\B31</code></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td><b>8.</b> Unmap the drive on the remote computer by running the 
+     command:<p><code>net&nbsp;use&nbsp;M:&nbsp;/delete</code> </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td>For detailed information about the <code>StartB</code> command, refer 
+     to <a href="page1222.html">Installing in Batch Mode</a>.<p>Note that appending the &quot;-exe&quot; option to the StartB command 
+     does not launch a session at the end of the installation on the remote 
+     computer.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+     <td rowspan="1">You can also use the System Management Server (SMS), part 
+     of the Windows BackOffice suite. SMS includes desktop management and 
+     software distribution that significantly automates the task of upgrading 
+     software on client computers.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="2" rowspan="1" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+
+ </body>
+
+</html>
+

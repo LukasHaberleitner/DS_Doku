@@ -1,0 +1,619 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Batch Utility to Compute Manufacturing Context</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+.shape {behavior:url(#default#VML);}
+.style2 {
+	text-align: center;
+}
+.style9 {
+	color: #353A90;
+}
+.style10 {
+	font-size: 13pt;
+	color: #353A90;
+}
+.style11 {
+	font-size: 13pt;
+}
+.style12 {
+	color: #000000;
+}
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>
+	<img border="0" src="b35doc/english/online/icons_C2/common/anew.gif" width="32" height="32"> 
+	Batch Utility to Compute Manufacturing Context</h1>
+ <table border="0" cellspacing="3" cellpadding="3">
+   <tr>
+     <td valign="top" style="width: 12px">
+		<img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">
+     <p style="margin-bottom: 1em">The standalone DLMMfgContextSolver program 
+		helps to compute manufacturing context (filtered-including Volume based 
+		filtered/non-filtered, volumetric context and save the 
+		computed contexts to manufacturing hub. The DLMMfgContextSolver program needs a license of V5 Process 
+		Context Builder (PCR) for execution.<p style="margin-bottom: 1em">The solver  
+		provide options to compute the manufacturing context in the scope of a parent process 
+		or parent product. This option reduces the computation time and hence 
+		improves the performance as the search is limited within the scope of the 
+		parent process/product.<p style="margin-bottom: 1em">The solver batch 
+		utility is a client of the Manufacturing Hub server and can be executed 
+		from the command prompt.</td>
+   </tr>
+   <tr>
+     <td valign="top" style="width: 12px; height: 6642px;"></td>
+     <td valign="top" style="height: 6642px">
+		<h2><a name="Inputs">Inputs to Compute Context</a></h2>
+		<p>The solver needs a set of inputs (through command line) to 
+		successfully compute the Context. The input arguments should be</p>
+		<ul>
+			<li>The XML file containing the parameters for the context computation.</li>
+			<li>Manufacturing Hub username and password of the user for computing the 
+		context. The user account have read/write permission to the process node 
+		on which the context detailing is to be saved. The process node is 
+		specified in the input XML file as Reference Process. See
+			<a href="#SyntaxforStartingtheSolver">Syntax for Starting the Solver</a></li>
+		</ul>
+		<h3><a name="SyntaxforStartingtheSolver">Syntax for Starting the Solver</a></h3>
+		<p>To launch the solver using the CATSTART utility, use the syntax below 
+		as an example:</p>
+		<p>&lt;V5 Installation directory &gt;\intel_a\code\bin\CATSTART.exe -run 
+		&quot;DLMMfgContextSolver.exe -file &lt;absolute path to the input xml file&gt; 
+		-username &lt;manufacturing hub user name&gt; -password &lt;manufacturing hub 
+		password&gt;&quot; -&lt;V5 environment name&gt; -direnv &quot;C:\Documents and 
+		Settings\User Folder\Application Data\DassaultSystemes\CATEnv&quot; </p>
+		<h3><a name="CapabilitiesofXMLFile">Capabilities of XML File</a></h3>
+		<p>The input XML file has the capability to define the type of context 
+		to be computed. A detailed list of capabilities is given below:</p>
+		<p>ReferenceProcessID: This is the OID of the process on which the 
+		context needs to be stored. This is a mandatory element.</p>
+		<p>Comment: This is an optional element where you can add comments. The 
+		comments are persisted in the MHub database in the same object where the 
+		context information is persisted (i.e. in the blob). The clients can 
+		provide the capability to read this comment and display it.</p>
+			
+			<ol>
+				<li value="1"><kbd>ManufacturingContext</kbd>: This is an optional element, 
+				which instructs the solver to compute the Manufacturing Context. 
+				If this element is not specified, the existing Manufacturing 
+				Context (if any) stored on the Reference Process will be 
+				retained as it is.<ol>
+					<li><strong>Option</strong>: The &quot;Option&quot; attribute is a mandatory element 
+					that specifies whether to compute a new context, retain, or 
+					delete the previously saved Manufacturing Context. Valid 
+					Values are:<ul>
+						<li><strong><em>ComputeContext</em></strong> - Query the database to compute the 
+						context considering the inputs. A query of the context 
+						will automatically replace the existing Manufacturing 
+						Context (if any) stored on the Reference Process with 
+						the newly computed context.</li>
+						<li><strong><em>DeleteContext</em></strong> - If this is specified, it is assumed 
+						that you do not want to compute the Manufacturing 
+						Context and the intention is to permanently remove the 
+						existing Manufacturing Context (if any) stored on the 
+						Reference Process. Any other inputs specified will be 
+						ignored.</li>
+						<li><strong><em>RetainContext</em></strong> - If this is specified, it is assumed 
+						that you do not want to update the existing 
+						Manufacturing Context (if any) stored on the Reference 
+						Process. Any other inputs specified will be ignored </li>
+					</ul>
+					</li>
+					<li><strong>RootProcessID</strong>: RootProcessID is a mandatory element. It 
+					instructs the solver to compute the Manufacturing Context 
+					with respect to the Root Process specified.</li>
+					<li><strong>RootProductID</strong>: This is an optional element. This is 
+					mandatory only if you wishes to include products in the 
+					context computation. It instructs the solver to compute the 
+					Manufacturing Context with respect to the Root Product 
+					specified. This element will reduce the time to compute the 
+					context.</li>
+					<li><strong>RootResourceID:</strong> This is an optional element. This is 
+					mandatory only if you wishes to include resources in the 
+					context computation. It instructs the solver to compute the 
+					Manufacturing Context with respect to the Root Resource 
+					specified. This element will reduce the time to compute the 
+					context. </li>
+				</ol>
+				</li>
+				<ol>
+					<li value="5"><strong>ProcessRelation/RelationName</strong>: RelationName is 
+					used to specify the relation that is used to compute the 
+					Manufacturing Context. Valid values are: 
+					process_mustprecede_process and process_runsbefore_process.</li>
+					<li><strong>ProductRelation/RelationName</strong>: RelationName is used to 
+					specify the relation that is used to compute the 
+					Manufacturing Context. Valid values are: proc_processes_prod, 
+					proc_creates_prod, proc_firstprocesses_prod, and 
+					proc_removes_prod. Any combination of relations can be 
+					specified (between one and four). Specifying only proc_removes_product 
+					will cause the solver to ignore the Manufacturing Context 
+					computation for products.</li>
+					<li><strong>ResourceRelation/RelationName</strong>: This is used to specify 
+					the Relation that is used to compute the Manufacturing 
+					Context. Valid values are: process_attaches_resource and 
+					process_detaches_resource.&nbsp; Any combination of relations can 
+					be specified. Specifying only process_detaches_resource will 
+					cause the solver to ignore the Manufacturing Context 
+					computation for resources. &nbsp; If none of the relations are 
+					specified, the solver will ignore the Manufacturing Context 
+					computation. An error will be reported in the Log file 
+					generated.</li>
+					<li><strong>BoundingBoxCoordinates</strong>: &quot;BoundingBoxCoordinates&quot;&nbsp; is an 
+					optional element for the Manufacturing Context. The values 
+					for the six parameters of the bounding box will be used to 
+					filter the computed Manufacturing Context within the 
+					specified volume. The bounding box values should be 
+					specified in world (absolute) co-ordinates.</li>
+					<li><strong>BoundaryOperator</strong>: BoundryOperator specifies the mode of 
+					filtering the ManufacturingContext.&nbsp; This element is 
+					mandatory if the BoundingBoxCoordinates are defined. Valid 
+					Values are: FullyIn and PartlyIn.</li>
+					<li><strong>Filters</strong>: &quot;Filters&quot; is an optional element. Filters are 
+					applicable only for context computation and is not a 
+					mechanism for creating multiple contexts, one per filter set 
+					(i.e: multiple Manufacturing contexts per different filter 
+					set is not supported). The following filters are supported:<br>
+					<ul>
+						<li>ProcessFilter (string as well as Calculation Model)</li>
+						<li>ProductFilter (string as well as Calculation Model)</li>
+						<li>ResourceFilter (string as well as Calculation Model)</li>
+						<li>Date Effectivity (along with effectivity mode)</li>
+						<li>Line Number filter</li>
+						<li>Label filter</li>
+						<li>Planning State Filter (owner and other)</li>
+						<li>Process extended effectivity (filter string as well 
+						as Calculation Model)</li>
+						<li>Product extended effectivity (filter string as well 
+						as Calculation Model) </li>
+						<li>Resource extended effectivity (filter string as well 
+						as Calculation Model), Please refer to the
+						<a href="#Filters">Filters in VolumetricContext</a>.
+						</li>
+					</ul>
+					</li>
+				</ol>
+		</ol>
+		<ol>
+				<ol>
+					<li value="11"><strong>ExpirationDate</strong>:The &quot;ExpirationDate&quot; attribute 
+					is an optional attribute that specifies the last date the 
+					context must be computed. After midnight localtime of this 
+					date, the solver will ignore the request to compute the 
+					Manufacturing Context. Valid Values are: Any date in the 
+					format &quot;YYYY-MM-DD&quot;. For example, &quot;2008-12-28&quot; represents 
+					December 28, 2008. </li>
+				</ol>
+		</ol>
+		<ol>
+			<li value="2"><kbd>Volumetric Context</kbd>: This is an optional element, 
+			which instructs the solver to compute the Volumetric Context. If 
+			this element is not specified, the existing Volumetric Context (if 
+			any) stored on the Reference Process will be retained as it is.
+			<ol>
+				<li><strong>Option</strong>: The Option attribute is a mandatory element that 
+				specifies whether to compute a new context, retain, or delete 
+				the previously saved volumetric context. Valid values are:<ul>
+					<li><em><strong>ComputeContext</strong> </em>- Query the database to compute the 
+					context considering the inputs. A query of the context will 
+					automatically replace the existing Volumetric Context (if 
+					any) stored on the Reference Process with the newly computed 
+					context.</li>
+					<li><em><strong>DeleteContext</strong></em> - If this is specified, it is assumed that 
+					you do not want to compute the Volumetric Context and the 
+					intention is to permanently remove the existing Volumetric 
+					Context (if any) stored on the Reference Process. Any other 
+					inputs specified will be ignored.</li>
+					<li><strong><em>RetainContext </em></strong>- If this is specified, it is assumed that 
+					you do not want to update the existing Volumetric Context 
+					(if any) stored on the Reference Process. Any other inputs 
+					specified will be ignored.</li>
+				</ul>
+				</li>
+				<li><strong>BoundingBoxCoordinates</strong>: All six bounding box values (Xmin, 
+				Xmax, Ymin, Ymax, Zmin, and Zmax) are mandatory if the 
+				Volumetric Context element is defined. The values for the six 
+				parameters of the bounding box will be used to compute the 
+				Volumetric Context. If the bounding box values are not specified 
+				in the Volumetric Context computation will be ignored. The 
+				bounding box values should be specified in absolute 
+				co-ordinates.</li><li><strong>BoundaryOperator</strong>: BoundryOperator 
+				specifies the mode of computing the Volumetric Context. This 
+				element is mandatory if the BoundingBoxCoordinates are defined. 
+				Valid values are: FullyIn and PartlyIn.<li><a name="Filters">
+				<strong>Filters</strong></a>: Filters is 
+				an optional element. Filters are applicable only for context 
+				computation and is not a mechanism for creating multiple 
+				contexts, one per filter set (i.e: multiple volumetric contexts 
+				per different filter set is not supported). Filters are applied 
+				only to the products, since the context is computed on the 
+				products. The following filters are supported:<br>
+				<ul>
+					<li>ProductFilter (string as well as Calculation Model)</li>
+					<li>Date Effectivity (along with effectivity mode)</li>
+					<li>Line Number filter</li>
+					<li>Label Filter</li>
+					<li>Planning State Filter (owner and other)</li>
+					<li>Product extended effectivity (filter string as well as 
+					Calculation Model)</li>
+					<li>
+					<p><strong>Example of specifying the filter values in the Input XML file</strong>:</p>
+		<ul>
+			
+				<li><strong>Date Effectivity Filter</strong><br>
+				&lt;StartDateEfffectivityFilter&gt;03/02/2009&lt;/StartDateEfffectivityFilter&gt;<br>
+				<br>
+				&lt;EndDateEfffectivityFilter&gt;03/05/2009&lt;/EndDateEfffectivityFilter&gt;<br>
+				<br>
+				&lt;EfffectivityFilter Mode&gt;Mode Value&lt;/EfffectivityFilterMode&gt;<br>
+				<br>
+				For Effectivity Filter Mode, one of the following rule values 
+				can be supplied:<ul>
+					<li>Give the objects whose begin and end dates contains the 
+					begin and end date filter values. The rule value is 1.</li>
+					<li>Give the object whose begin and end dates are within the 
+					begin and end dates filter values. The rule value is 2.</li>
+					<li>Give the object whose begin date value is lesser than 
+					the begin date filter value and the end date value on the 
+					object is contained within the begin and end date filter 
+					values. The rule value is 4.</li>
+					<li>Give the object whose begin date value is contained 
+					within the begin and end date filter values and the end date 
+					value on the object is greater than the end date filter 
+					value. The rule value is 8.</li>
+					<li>Give the object whose begin and end dates exactly match 
+					with that of the begin and end date filter values. The rule 
+					value is 16. The combination of the above said rules can 
+					also be used. For example: If you wants the combination 
+					of rule A and C, then the value of 5 should be passed.<br>
+					If you have not specified any value for this filter, then a 
+					default value of 31 (combination of all rules) will be used.
+					</li>
+				</ul>
+				</li>
+				<li><strong>Extended Effectivity Filter:</strong><br>
+				<kbd>CASE1</kbd>: Extended Effectivity Product Filter (when only 
+				filter string is applied)<br>
+				Filter String can be logical combination of Line Numbers, 
+				SA-Codes, and Label Filters.<br>
+				&lt;ProductExtendedEffectivityFilter&gt;R(110)&amp;XXX Token&lt;/ProductExtendedEffectivityFilter&gt;<br>
+				&lt;ProductExtendedEffectivityFilterCalcModelID&gt;&lt;/ProductExtendedEffectivityFilterCalcModelID&gt;<br>
+				<br>
+				<kbd>CASE2</kbd>: Extended Effectivity Product Filter (when only 
+				Calculation Model is applied)<br>
+				&lt;ProductExtendedEffectivityFilter&gt;&lt;/ProductExtendedEffectivityFilter&gt;<br>
+				&lt;ProductExtendedEffectivityFilterCalcModelID&gt;Calc.Model1,0&lt;/ProductExtendedEffectivityFilterCalcModelID&gt;<br>
+				<br>
+				<kbd>CASE3</kbd>:Extended Effectivity Product Filter (when 
+				Filter String and Calculation Model are both applied)<br>
+				&lt;ProductExtendedEffectivityFilter&gt;R(110)&amp;XXX|Token1&lt;ProductExtendedEffectivityFilter&gt;<br>
+				&lt;ProductExtendedEffectivityFilterCalcModelID&gt; Calc.Model1,0&lt;/ProductExtendedEffectivityFilterCalcModelID&gt;&nbsp; 
+				&nbsp; </li>
+				<li><strong>Product Component Filter</strong>:<br>
+				<kbd>CASE1</kbd>: Product Filter (when only filter string is 
+				applied)<br>
+				&lt;Product Filter&gt;Token1,Token2&lt;/ProductFilter&gt;<br>
+				&lt;ProductFilterCalcModelID&gt;&lt;/ProductFilterCalcModelID&gt;.<br>
+				<br>
+				<kbd>CASE2</kbd>: Product Filter (when only calculation model is 
+				applied)<br>
+				&lt;Product Filter&gt;&lt;/Product Filter&gt;<br>
+				&lt;ProductFilterCalcModelID&gt;Calc. Model1,,0&lt;/ProductFilterCalcModelID&gt;
+				<li><strong>Label Filter</strong><br>
+				&lt;Label Filter&gt;XXX,YYY&lt;/Label Filter&gt;<li><strong>Line Number Filter</strong><br>
+				&lt;LineNumberFilter&gt;1,3,510,20berFilter&lt;/LineNumberFilter&gt;<li>
+				<strong>Planning State Filter</strong><br>
+				&lt;PlanningStateOwnerFilterID&gt;ID of Planning State ID of Planning 
+				State&lt;/PlanningStateOwnerFilterID&gt;<br>
+				&lt;PlanningStateOtherFilterID&gt;ID of Planning State ID of Planning 
+				State&lt;/PlanningStateOtherFilterID&gt;</ul>
+			
+					</li>
+				</ul>
+			</ol>
+			</li>
+			<li><strong>ExpirationDate</strong>: The 
+				ExpirationDate attribute is an optional attribute that specifies 
+				the last date the context must be computed. After midnight 
+				localtime of this date, the solver will ignore the request to 
+				compute the VolumetricContext. Valid values are: Any date in the 
+				format (YYYY-MM-DD).
+		</ol>
+			
+			<h2>Solver Working Mode</h2>
+		<p>The solver reads the input file, process the parameters, computes the 
+		context, and saves a context detailing on the Reference Process. The 
+		input XML file has the capability to request the solver to compute the 
+		Volumetric Context and/or the Manufacturing Context. Both contexts can 
+		be computed either in maximum configuration mode or for a specific 
+		configuration. Since the input parameter file has the option to compute 
+		either Volumetric Context or Manufacturing Context, you can decide what 
+		type of context needs to be computed. In the event one of the contexts 
+		was previously computed but not at a later time, the default behavior of 
+		the solver is to retain the existing context.</p>
+		<p>The solver saves the context every time it is computed. The context 
+		will be saved as a context detailing on the Reference Process. The 
+		Context blob will have the result of the Volumetric Context (if it was 
+		computed) and the Manufacturing Context (if it was computed). If a 
+		Bounding Box is specified for the Manufacturing Context, then the volume 
+		filtered Manufacturing Context will be saved in the blob. A reference 
+		process can contain only one context detailing at a given time. The 
+		Context detailing will not contain any configuration information. If the 
+		context is computed in maximum configuration mode, it is the 
+		responsibility of individual clients that consume the context to 
+		configure the context information per the configuration filters the user 
+		applies while using the clients. </p>
+			<h3>Context Detailing Data</h3>
+			<p>The Context data is saved to the Manufacturing Hub as a context 
+			detailing on the reference process object. The following data is 
+			persisted in the context detailing:</p>
+			<ul>
+				<li>Volumetric Context</li>
+				<li>Manufacturing Context</li>
+				<li>The Envelope contain all the parameters specified in the 
+				Input XML file. This envelope information is purely for 
+				reference purposes. Envelope information contains, when (date 
+				and time) the context was computed, the user who computed the 
+				context, comments, other parameters such as filters applied 
+				during computation, volume box applied, the reference process 
+				and product against which the context was computed, the process 
+				relations used to traverse the process graph, and other rules ( 
+				fully-in, partly-in bounding box etc.) For any given process, 
+				only one context detailing will be stored in the Manufacturing 
+				Hub database. It is up to individual applications that consume 
+				the context to show the context information in that application 
+				desired format. </li>
+			</ul>
+			<p>The solver will ignore the request to compute the Context (both 
+			Volumetric and Manufacturing) if the reference process is in 
+			ReadOnly for the Manufacturing Hub user, in which case the log file 
+			will be recorded with the reason for ignoring the context 
+			computation.</p>
+			<p>The solver will store the Manufacturing Context information in 
+			the database as a &quot;flat list&quot; of objects. </p>
+			<h3>Relation Supported by Manufacturing Context</h3>
+			<p>The Manufacturing Context support the following process to 
+			product relations:</p>
+			<ul>
+				<li>Process creates Product (PCP)</li>
+				<li>Process first processes Product (PFPP)</li>
+				<li>Process processes Product (PPP)</li>
+				<li>Process removes Product (PRP)</li>
+			</ul>
+			<p>The input XML file specify the type of relations to consider for 
+			the context computation. All Products associated to Processes using 
+			PCP, PFPP, and PPP will be added to the Manufacturing Context 
+			(assembly buildup), while Products associated to the Processes using 
+			PRP will be removed from the Manufacturing Context.</p>
+			<p>The Manufacturing Context supports the following process to 
+			resource relations:</p>
+			<ul>
+				<li>&nbsp;Process attaches resource (PAR)</li>
+				<li>Process detaches resource (PDR) </li>
+			</ul>
+			<p>The input XML file should explicitly specify the type of 
+			relations to consider for the context computation. All resources 
+			associated to Processes using PAR will be added to the Manufacturing 
+			Context (assembly buildup), while resources associated to the 
+			Processes using PDR will be removed from the Manufacturing Context.&nbsp;&nbsp; </p>
+			<p>The Process tree is traversed using the following 
+			Process-to-Process relations:</p>
+			<ul>
+				<li>Process must precede Process</li>
+				<li>Process runs before Process</li>
+			</ul>
+			<p>The input XML file should specify the types of relations for 
+			Process traversal.</p>
+			<h3>Rules to Compute Manufacturing Context</h3>
+			<p>The rules for computing Manufacturing Context are specified 
+			below.</p>
+		<p>For the sake of exposition:</p>
+			<ul>
+				<li>The relations PCP, PFPP, PPP, and PAR are considered to 
+				integrate products/resources to the manufacturing context, and 
+				hence are referred to as integrating relations. The 
+				corresponding Processes are referred to as integrating 
+				processes.</li>
+				<li>The relation PRP and PDR removes products from the assembly, 
+				and hence are referred to as removing relations.</li>
+		</ul>
+		<ol>
+			<li>The state of a object is integrated (and hence belongs to the 
+			manufacturing context), if:<ul>
+				<li>At least one predecessor process is linked with the object 
+				via an integrating relation (PCP, PFPP, PPP, or PAR), and no 
+				other predecessor process is linked with the object via a 
+				removing relation. For example, see Prod11 in below figure.</li>
+				<li>&nbsp;The object is linked with some predecessor processes 
+				via both integrating and removing relations. Further, there 
+				exists at least one integrating process for each removing 
+				process, such that the integrating process is a successor of the 
+				removing process. For example, see Prod121 in below Figure.</li>
+			</ul>
+			</li>
+		</ol>
+			<p>
+			<img src="b35doc/english/online/cfyugmfghub_c2/images/wnIntegratedRelationNLS.gif" width="395" height="250"></p>
+			<ol>
+				<li value="2">The state of a object is removed (and hence does 
+				not belong to the manufacturing context), if:<ul>
+					<li>&nbsp;at least one predecessor process is linked with 
+					the object via a removing relation, and no other predecessor 
+					process is linked with the object via an integrating 
+					relation. For example, see Prod13 in below Figure.</li>
+					<li>&nbsp;The object is linked with some predecessor 
+					processes via both integrating and removing relations 
+					Further, there exists at least one removing process for each 
+					integrating process, such that the removing process is a 
+					successor of the integrating process. For example, see 
+					Prod141 in below Figure. </li>
+				</ul>
+				</li>
+		</ol>
+			<p>
+			<img src="b35doc/english/online/cfyugmfghub_c2/images/wnRemoveRelationNLS.gif" width="694" height="448"></p>
+			<ol>
+				<li value="3">The state of a object is undefined (and hence does 
+				not belong to the manufacturing context), if the object is 
+				linked with predecessor processes via both integrating and 
+				removing relations. Further, the last integrating process and 
+				the last removing process are concurrent processes. For example, 
+				see Prod15 in below Figure.</li>
+		</ol>
+			<p>
+			<img src="b35doc/english/online/cfyugmfghub_c2/images/wnUndefinedRelationNLS.gif" width="767" height="406"></p>
+			<ol>
+				<li value="4">The state of a object is untouched (and hence does 
+				not belong to the manufacturing context), if the object is not 
+				linked with any predecessor processes (via integrate or remove 
+				relations). For example, see Prod16 in below Figure. </li>
+		</ol>
+			<p class="MsoNormal">
+			<img src="b35doc/english/online/cfyugmfghub_c2/images/wnUntouchedRelationNLS.gif" width="751" height="515"></p>
+			<h3>Context Computation Log File</h3>
+			<p>A log-file is generated during the context computation. The 
+			log-file is stored in the ContextSolverLog directory in the CATTemp 
+			directory. This log-file is in addition to the DELMIA Manufacturing 
+			Hub Server side logs. The log file includes the following 
+			properties:</p>
+			<ol>
+				<li>
+				<p>The log file name will contain the time which represents the 
+				time when the Context Solver was invoked and also the machine 
+				name on which the Context Solver was invoked.</p>
+				</li>
+				<li>
+				<p>The log file name will contain the OID of the Reference 
+				Process<br>
+				Example: 
+				ContextSolver_yearmonthdater_time_referenceProcessID.txt<br>
+						In case the OID of the referenceProcess specified in the 
+				XML file is invalid, then the log file name will not contain it.</p>
+				</li>
+			</ol>
+			<ol>
+				<li value="3">
+				<p>The log file will contain entries detailing the input file, 
+				the database user, the reference process, the time when the 
+				context solver successfully computed the context (Planning and 
+				Manufacturing), and the number of objects in each computed 
+				context. 			
+				</p>
+				</li>
+				<li>
+				<p>The log file will contain error messages encountered during 
+				the execution of the batch solver relating to object licenses, 
+				availability, and validity of inputs of the inputs to the 
+				solver, context computation, saving of the context detailing 
+				etc.</p>
+				</li>
+			</ol>
+			<h3>Assigning Manufacturing Assemblies and Manufacturing Kits to Manufacturing Context</h3>
+		<p>To assign Manufacturing Assemblies and Manufacturing Kits in the 
+		computed manufacturing context, see <a href="page4462.html">
+		Assigning Manufacturing Assemblies and Manufacturing Kits to Manufacturing Context</a>.</p>
+		<h3>Limitations</h3>
+			<ol>
+				<li>Resources may be included in the Volumetric Context 
+				computation if they have valid Bounding Boxes specified for them 
+				in the Manufacturing Hub.</li>
+				<li>A specific process can have only one Volumetric Context and 
+				Manufacturing Context in the database. In the database, both 
+				contexts are stored in a single object (Blob).</li>
+				<li>When defining the volume filter for the Volumetric context 
+				and the Manufacturing Context, only the Fully In and Partly In 
+				filtering modes are supported.</li>
+				<li>Attribute filters are not supported to filter the 
+				Manufacturing Context.</li>
+				<li>The Process structure should obey Hierarchical Order 
+				Constraints. When one process precedes another, then all 
+				children of the first process implicitly precede all children of 
+				the other.</li>
+				<li>Precedence constraints can only be defined at the same level 
+				between processes. The solver will ignore precedence constraints 
+				between children processes.</li>
+				<li>A child process can be contained by only one parent process.</li>
+				<li>Specifying the reference process and product is applicable 
+				only for the computation of the manufacturing context and does 
+				not apply to volumetric context.</li>
+				<li>The Manufacturing Context computation will consider only 
+				those processes that are either direct or indirect predecessors 
+				to the reference process, and that are within the defined root 
+				process.<br>
+				To save a context detailing on a reference process which is 
+				under Change Management Control, certain changes have to be made 
+				in the Manufacturing Hub server configuration. You can find more 
+				information in DPE server manual &quot;EH to MH V5&quot; in the chapter 
+				&#8220;Altering Settings&#8221; under section &#8220;Customization Settings for 
+				Planning Context&quot;. </li>
+			</ol>
+			   
+ 
+ 
+ 		<p><span class="style10">Computing the </span> <blink class="style11">
+		<a href="page4460.html" class="style9">
+		Manufacturing Context</a></blink><span class="style10"> using the batch 
+		solver</span></p>
+		<p><br>When computing the Manufacturing Context using the batch solver, 
+		the positions are considered by specifying an optional input in the 
+		input XML for the batch solver. This new input tag <ProductResourcePosition> 
+		can have two possible values which are mutually exclusive:</p>
+		<p>
+		<ProductResourcePosition> 
+		<br>
+		1) ManufacturingPosition<br>2) 3DStatePosition</p>
+		<p>
+		<ProductResourcePosition> 
+		<br>Specify &quot;ManufacturingPosition&quot; as the value for this input if you 
+		want the simulation/manufacturing positions to be considered while 
+		computing the Manufacturing Context. When the batch computed context is 
+		loaded in V5, the product/resources are loaded in their 
+		simulation/manufacturing positions. To populate the 
+		simulation/manufacturing position for the product/resources in the 
+		Manufacturing Hub, you have to use the&nbsp; <span class="style9"> <blink>
+		<a href="page4994.html">
+		<span class="style12">Publish Position</span></a></blink></span> 
+		command. This command publish the absolute position of the unexposed 
+		parts relative to its parent exposed product. Hence during the load of 
+		the Manufacturing Context, the positions of the unexposed parts can also 
+		be set as per the information retrieved from the Manufacturing Hub. &nbsp;</p>
+		<p>
+		<ProductResourcePosition> 
+		<br>Specify &quot;3DStatePosition&quot; as the value for this input if you want 
+		the 3D States and positions to be considered while computing the 
+		Manufacturing Context. To populate the position information for the 
+		product/resources in the Manufacturing Hub, you have to use the&nbsp;
+		<blink>
+		<a href="page4998.html">
+		<span class="style12">3D State/position</span></a></blink>
+		model to create states and positions for the products/resources and save 
+		them back to the Manufacturing Hub</p>
+			   
+ 
+ 
+ </td>
+   </table>
+
+<p class="style2"><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+ 
+ </body>
+
+</html>
+

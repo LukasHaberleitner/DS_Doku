@@ -1,0 +1,800 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Running the PrintBatch</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+ <style type="text/css">
+.auto-style1 {
+	border-collapse: collapse;
+}
+.auto-style2 {
+	font-weight: bold;
+	color: #666666;
+}
+</style>
+</head>
+
+ <body>
+
+ <h1>Running the PrintBatch</h1>
+ <p align="center"><a name="CATPrintBatch.Utility"></a>
+ <a name="ix-printing::in batch mode"></a>
+	<a name="ix-CATUTIL command;commands::CATUTIL"></a></p>
+ <div align="center">
+   <center>
+   <table Border="0" CELLSPACING="1" valign="top" width="99%" height="1">
+     <tr valign="top" BORDER="0">
+       <td valign="top" height="64" width="3%">
+       <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+       <td rowspan="1" valign="top" height="64" width="95%">This task describes how to use 
+       the <kbd>Print Batch</kbd> in order to print documents without running 
+       V5.&nbsp;<br>
+       These documents may be V5 files (such as .CATProduct, .CATPart 
+       documents, etc.), raster files (bmp, tiff, etc.), vector files (CGM, 
+       HPGL, HPGL2) and V4 models.</td>
+     </tr>
+     <tr>
+       <td valign="top" height="168" width="3%">&nbsp;</td>
+       <td valign="top" height="168" width="95%"><a name="hj-top"></a>This scenario explains 
+       how to:<ul>
+         <li><a href="#hj-batch interface from command line">Access the batch 
+         interface from the command line</a></li>
+         <li><a href="#hj-batch interface from batch monitor">Access the batch 
+         interface from the Batch Monitor</a></li>
+         <li><a href="#hj-define batch parameters">Define the batch parameters</a></li>
+         <li><a href="#hj-editing xml file">Edit the XML file containing the 
+         batch parameters</a></li>
+         <li><a href="page1538.html#hj-directbatch">Run the batch directly 
+         from the Batch Monitor</a>.</li>
+         <li><a href="page1538.html#hj-batch from command line">Run the batch from the command line</a>.</li>
+       </ul>
+       </td>
+     </tr>
+     <tr valign="top" BORDER="0">
+       <td valign="top" height="168" width="3%">&nbsp;</td>
+       <td valign="top" height="168" width="95%"><font face="Verdana">Provided that you have 
+       a graphic board (on Windows) or an X server (on UNIX), the rendering 
+       style (i.e. &quot;Shading&quot;, &quot;Shading with Edges&quot;, etc.) can be taken into 
+       account when printing in batch mode. To do so, you need to set the 
+       following variable as shown below:</font><font FACE="Arial"><p>
+       <font face="Verdana"><code>set PRINT_BATCH_WITH_GRAPHIC_CARD=1</code>&nbsp; 
+       (on Windows)</font></p>
+       <p><font face="Verdana">or</font></p>
+       <p><font face="Verdana"><code>export PRINT_BATCH_WITH_GRAPHIC_CARD=1
+       </code>&nbsp;(on UNIX).</font></font></td>
+     </tr>
+     <tr valign="top" BORDER="0">
+       <td valign="top" height="155" width="3%">
+       <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+       <td valign="top" height="155" width="95%">
+		<ul>
+			<li>You cannot print in batch mode a document 
+			with a scale that does not correspond to the session scale. If you try to do so, some geometrical data will not be 
+			loaded, and the printing process will fail without displaying any error 
+			message.</li>
+			<li>Regarding remote printing, note that loading and printing 
+			processes are done by the remote computer and therefore, the scale of the document must correspond to the scale 
+			session of the remote computer. For instance, to print a <kbd>Small 
+			Scale</kbd> document in remote mode, the remote computer must be in a 
+			<kbd>Small 
+			Scale</kbd> session (i.e. <kbd>Small Scale</kbd> option 
+		selected in <kbd>Tools &gt; Options &gt; General &gt; Parameters and Measures &gt; 
+		Scale</kbd>). <br>
+			This implies that when you are in a local <kbd>Standard Scale</kbd> 
+			session, you can print in remote mode a <kbd>Small Scale</kbd> 
+			document on the remote computer if the remote scale is in a <kbd>Small 
+			Scale</kbd> 
+			session. Moreover, no error message is displayed if the scales of 
+			the local/remote computers do not fit, or if the scale of the document and 
+			the remote scale session do not fit. In that case, the printing 
+			process fails.</li>
+		</ul>
+		</td>
+     </tr>
+     <tr valign="top" BORDER="0">
+       <td valign="middle" height="57" width="3%">&nbsp;</td>
+       <td valign="middle" height="57" width="95%">
+       <h2><a name="hj-batch interface from command line"></a>Accessing the 
+       batch interface from the command line</h2>
+       </td>
+     </tr>
+     <tr valign="top" BORDER="0">
+       <td valign="top" height="425" width="3%">
+       <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+       <td rowspan="1" valign="top" height="425" width="95%">
+       <ol class="task">
+         <li>
+         <p class="task">Open an MS-DOS Window.</li>
+         <li>
+         <p class="task">Access the following folder:</p>
+         <div align="left">
+           <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+             <tr>
+               <td><code>C:&#092;Program&nbsp;Files&#092;Dassault&nbsp;Systemes&#092;Bn&#092;intel_a&#092;code&#092;bin&nbsp;
+               </code>(on Windows)<p>or</p>
+               <p><code>/usr/DassaultSystemes/Bn/OS_a/code/command/&nbsp; </code>
+               (on UNIX)</p>
+               <p>(where <code>n</code> is the current release number)</td>
+             </tr>
+           </table>
+         </div>
+         </li>
+         <li value="3">
+         <p class="task"><a name="ix-PrintBatch utility;utilities::PrintBatch">
+         </a>Enter the command:</p>
+         <div align="left">
+           <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2" height="185">
+             <tr>
+               <td height="113"><b><span style="font-weight: 400"><code>CATUTIL 
+               -Name PrintBatch&nbsp;</code></span></b><code> </code>(on Windows)<p>
+               or </p>
+               <p class="task"><code>./catstart -run &quot;CATUTIL -Name PrintBatch&quot;&nbsp;
+               </code>(on UNIX)</p>
+               <p>The <kbd>Print Batch</kbd> opens (click the thumbnail to 
+				enlarge the picture):</td>
+             </tr>
+             <tr>
+               <td height="67">
+         <img border="2" src="b35doc/english/online/basug_c2/images/dbbatchprinting01NLS_small.gif" title="Click to enlarge this image" width="100" height="59"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script></td>
+             </tr>
+           </table>
+         </div>
+         </li>
+       </ol>
+       </td>
+     </tr>
+     <tr>
+       <td valign="middle" height="1" width="3%"></td>
+       <td valign="middle" height="1" width="95%">
+       <p align="right"><a href="#hj-top">
+       <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></td>
+     </tr>
+     <tr>
+       <td valign="middle" height="44" width="3%">&nbsp;</td>
+       <td valign="middle" height="44" width="95%">
+       <h2><a name="hj-batch interface from batch monitor"></a>Accessing the 
+       batch interface from the Batch Monitor</h2>
+       </td>
+     </tr>
+     <tr>
+       <td valign="middle" height="52" bgcolor="#FFFFFF" width="3%">&nbsp;</td>
+       <td valign="middle" height="52" width="95%">You can also access the print batch 
+       interface using the <kbd>Batch Monitor</kbd> in a Version 5 session. In 
+       that case, some additional options are available to you.</td>
+     </tr>
+     <tr>
+       <td valign="top" height="69" bgcolor="#FFFFFF" width="3%">
+       <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+       <td valign="middle" height="69" width="95%">
+       <ol class="task">
+         <li>
+         <p class="task">Access the <kbd>Batch Monitor</kbd> interface, either
+               <a href="page1538.html#hj-batch monitor from command line">from 
+               the command line</a>, or
+               <a href="page1538.html#hj-Batch Monitor from Version 5">from a 
+               Version 5 session</a>.</p>
+         <div align="left">
+           <table border="0" cellpadding="0" style="height: 44;" bordercolor="#111111" id="AutoNumber16" class="auto-style1">
+             <tr>
+               <td height="33">
+               <p class="task">The <kbd>Batch Monitor</kbd> opens.</td>
+             </tr>
+             </table>
+         </div>
+         </li>
+         <li>
+         <p class="task">Double-click <kbd>PrintBatch</kbd> from the list.</p>
+         <div align="left">
+           <table border="0" cellpadding="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber17" height="122" width="100%">
+             <tr>
+               <td height="25">The <kbd>PrintBatch</kbd> opens (click the thumbnail to 
+				enlarge the picture):</td>
+             </tr>
+             <tr>
+               <td height="65">
+				<img border="2" src="b35doc/english/online/basug_c2/images/dbbatchprinting12NLS_small.gif" title="Click to enlarge this image" width="100" height="61"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script></td>
+             </tr>
+             <tr>
+               <td height="32">When accessing the <kbd>
+		PrintBatch</kbd> from the <kbd>Batch Monitor</kbd>, some additional options 
+		are available:</td>
+             </tr>
+             <tr>
+               <td height="32">
+       <h4>Remote mode</h4>
+       <p><a name="hj-remote print"></a>You can choose to run 
+       the batch locally, or on a remote computer by selecting the appropriate 
+       option:</p>
+       <ul>
+         <li>
+         <p class="task"><kbd>Run Local</kbd>: default option. When selected, 
+         the batch is run in local on your local computer</li>
+         <li>
+         <p class="task"><kbd>Run Remote</kbd>: select this option then indicate 
+         the name of the remote computer on which the batch will be run. The 
+         remote computer uses the printers set up on your local computer.
+         Note that:<ul>
+           <li>
+           <p class="task">When using Windows printers, you can run the batch in 
+           remote mode on Windows computers only</li>
+           <li>
+           <p class="task">When using 3DPLM printers, you can run the batch in 
+           remote mode either on UNIX or on Windows computers.</li>
+         </ul>
+         </li>
+       </ul>
+       <p class="task">For more information, refer to <a target="ds_doc2" href="page1538.html#hj-RemoteMode">
+       Running Batches in Remote Mode</a>.</td>
+             </tr>
+             <tr>
+               <td height="32">
+       <h4>Licensing</h4>
+       <p class="task"><a name="hj-licensing"></a>You also have the ability to 
+       select a license by clicking 
+       <a target="ds_doc2" href="page1538.html#hj-licensing setup">
+       <span style="font-weight: 400">Licensing Setup...</span></a>.</td>
+             </tr>
+             <tr>
+               <td height="32">
+       <h4>Getting contextual help</h4>
+       <p class="task">The batch-specific online documentation can be accessed 
+       directly from the <kbd>PrintBatch</kbd> interface by clicking
+       <img border="0" src="b35doc/english/online/basug_c2/images/whatsthis02.gif" width="17" height="15"> in the top-right corner (on 
+       Windows) or <kbd>Help</kbd> (on UNIX).</td>
+             </tr>
+           </table>
+         </div>
+         </li>
+       </ol>
+       </td>
+     </tr>
+     <tr>
+       <td height="25" valign="top" colspan="2">
+       <p align="center">
+       <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+     </tr>
+     <tr>
+       <td valign="middle" height="1" width="3%"></td>
+       <td valign="middle" height="1" width="95%">
+       <p align="right"><a href="#hj-top">
+       <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></td>
+     </tr>
+     <tr valign="middle" BORDER="0">
+       <td height="64" width="3%">&nbsp;</td>
+       <td height="64" width="95%">
+       <h2><a name="hj-define batch parameters"></a>Defining the batch 
+       parameters</h2>
+       </td>
+     </tr>
+     <tr valign="top" BORDER="0">
+       <td height="33" width="3%">&nbsp;</td>
+       <td height="45" width="95%">In this scenario, we assume that the batch 
+		interface has been accessed from the <kbd>Batch Monitor</kbd> the batch 
+		parameters to define are identical when you access the batch from 
+		the command line.</td>
+     </tr>
+     <tr valign="top" BORDER="0">
+       <td height="50" width="3%">
+       <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+       <td height="50" width="95%">
+       <ol class="task">
+         <li>
+         <p class="task">Select a printer using the list displayed next to <kbd>
+         Printer Name</kbd>. This list lets you filter the list of printers 
+         displayed to the right. You can choose either:</p>
+         <div align="left">
+           <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3" height="120" width="912">
+             <tr>
+               <td height="77">
+               <ul>
+                 <li>
+                 <p class="task"><kbd>General</kbd>: default mode. All the 
+                 printers you have set up are displayed in the printer list to 
+                 the right</li>
+                 <li>
+                 <p class="task">A printer group you defined in the <kbd>
+                 Printers</kbd> tab. In that case, only the printers included in 
+                 the selected group are displayed in the printer list.</li>
+               </ul>
+               </td>
+             </tr>
+             <tr>
+               <td height="31">You can also select the <kbd>Print to file</kbd> 
+               check box and enter the name of a file.
+               Refer to <a href="page1451.html">Printing to a File</a> for 
+               more information.</td>
+             </tr>
+           </table>
+         </div>
+         </li>
+         <li value="2">
+         <p class="task">To set up your printer, click <kbd>Properties...</kbd> 
+         to open the printer properties dialog box. The look of the dialog box 
+         changes according to the driver. Modify the desired parameters then 
+         click <kbd>OK</kbd> to validate.<table border="0" id="table10" height="36" width="909">
+			<tr>
+				<td>If the driver is provided by Dassault Syst&#232;mes, 
+         clicking <kbd>Properties...</kbd> displays the <kbd>Printer Properties</kbd> 
+         dialog box described in <a href="page1315.html">Adding a Printer</a>.</td>
+			</tr>
+			</table>
+			</li>
+         <li value="3">
+			<p class="task">Click the <kbd>Add a document</kbd>
+			<img border="0" src="b35doc/english/online/icons_C2/images/I_OpenP2.gif" width="24" height="24"> 
+         button then navigate to the files you want to print then click <kbd>Open</kbd> to validate.</p>
+			<div align="left">
+				<table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4" height="1000" width="100%">
+					<tr>
+						<td height="45"><blink><a name="hj-CATDrawing filter">
+						</a></blink>The <kbd>File Selection</kbd> box lets you access your 
+               			.CATDrawing documents more easily. To do so, select <kbd>CATIADrawing</kbd> in the 
+						<kbd>Files of type</kbd> box so that 
+               only .CATDrawing documents are displayed.</td>
+					</tr>
+					<tr>
+						<td height="38">Note that if you set the DLName environment as 
+               &quot;Current&quot; in <kbd>Tools &gt; Options &gt; General &gt; Document</kbd>, the 
+               usual <kbd>File Selection</kbd> dialog box is replaced by the 
+               following one dedicated to the DLName environment:</td>
+					</tr>
+					<tr>
+						<td height="343">
+						<img border="0" src="b35doc/english/online/basug_c2/images/dbbatchprinting10NLS.gif" width="425" height="339"></td>
+					</tr>
+					<tr>
+						<td height="158">The DLName document environment lets you restrict 
+               the access to specific folders referenced by logical names 
+               referred to as &quot;DLNames&quot;&nbsp;(each folder is assigned a logical 
+               name).<br>In this mode, the different file opening and saving commands only 
+               allow end users to access documents in directories referenced by 
+               DLNames.<p>The <kbd>File Selection</kbd> dialog box displayed 
+               above lets you navigate to the DLName where the parameter file 
+               to be used is stored. You can also search for DLNames using a 
+               specific interface by clicking the
+               			<img border="0" src="b35doc/english/online/icons_C2/images/small/IDB_DLNameSearch.gif" width="16" height="16"> 
+               icon. For detailed information about this dialog box, refer to
+						<a target="ds_doc2" href="page0913.html#hj-DLNameIntegration">Document</a>.</p>
+						<p>Click <kbd>OK</kbd> when finished selecting your documents.</td>
+					</tr>
+					<tr>
+						<td height="37">The selected file names are displayed along with 
+               their path, parameters and printer:</td>
+					</tr>
+					<tr>
+						<td height="212">
+						<img border="1" src="b35doc/english/online/basug_c2/images/dbbatchprinting06NLS.gif" width="515" height="201"></td>
+					</tr>
+					<tr>
+						<td height="159">When at least one file is selected in the list, 
+               some icons are activated to let you modify the printing order:<ul>
+							<li>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MoveUpP2.gif" width="24" height="24"> 
+                 moves a file up in the list</li>
+							<li>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MoveDownP2.gif" width="24" height="24"> 
+                 moves a file down in the list</li>
+							<li>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_EraseP2.gif" width="24" height="24"> 
+                 deletes a file from the list.</li>
+						</ul></td>
+					</tr>
+				</table></div></li>
+			<li value="4">
+			<p class="task"><a name="hj-Print Parameter Dialog"></a>Click <kbd>Default Printing Parameters</kbd> to define the parameters used by 
+         default for all printed documents in the <kbd>Printing Parameters</kbd> 
+         	dialog box:</p>
+			<div align="left">
+				<table border="0" cellspacing="1" style="border-collapse: collapse; height: 439px; width: 1415px;" bordercolor="#111111" id="AutoNumber5">
+					<tr>
+						<td style="width: 1561px; height: 258px;">
+						<img border="0" src="b35doc/english/online/basug_c2/images/dbbatchprinting02NLS.gif" width="630" height="306"></td>
+					</tr>
+					<tr>
+						<td style="height: 25px; width: 1561px">The <kbd>Layout</kbd> tab lets you define the 
+               page orientation, the image size and position, etc. and is 
+               identical to the
+               			tab available in the
+               			<a target="ds_doc2" href="page1450.html#hj-position and size">Print</a> 
+						dialog box.</td>
+					</tr>
+					<tr>
+						<td height="43" >Note: In case of 
+						several prints, the <kbd>Fit </kbd> i<span class="auto-style2">n 
+						page</span> option might lead to 
+						different scales. Therefore, the <kbd>Scale</kbd> box is 
+						hidden because it is not relevant.</td>
+					</tr>
+				</table></div></li>
+			<li value="5">
+			<p class="task">Click <kbd>Page Setup...</kbd> to open the 
+			<a href="page1450.html#hj-page setup">Page 
+         Setup</a> dialog box. However, if you select the <kbd>Use image format</kbd> 
+					option, note that the behavior is different when printing in 
+			batch mode:<table border="0" id="table15" height="1116" width="100%">
+				<tr>
+					<td style="height: 53px"><ul>
+						<li>If you print a document other than a .CATDrawing or 
+						.model document, selecting the <kbd>Use image format</kbd> 
+						option displays the printer's default paper format:</li>
+					</ul>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<blockquote>
+							<img border="0" src="b35doc/english/online/basug_c2/images/dbbatchprinting11NLS.gif" width="335" height="199"></blockquote>
+					</td>
+				</tr>
+				<tr>
+					<td height="42">
+						<ul>
+							<li>If you print a .CATDrawing or .model document, 
+							selecting the <kbd>Use image format</kbd> 
+							option displays <kbd>User</kbd> in the <kbd>Form Name</kbd> 
+							box (with a warning for the dimensions) if the 
+							format is not supported by the printer:</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<td height="42">
+						<blockquote>
+							<p>
+							<img border="0" src="b35doc/english/online/basug_c2/images/dbbatchprinting14NLS.gif" width="335" height="199"></p>
+						</blockquote>
+					</td>
+				</tr>
+				<tr>
+					<td height="42">
+						<blockquote>
+							<p>Or, displays the appropriate format with the 
+							corresponding dimensions if the format is supported 
+							by the printer:</p>
+						</blockquote>
+					</td>
+				</tr>
+				<tr>
+					<td height="42">
+						<blockquote>
+							<p>
+							<img border="0" src="b35doc/english/online/basug_c2/images/dbbatchprinting13NLS.gif" width="335" height="199"></p>
+						</blockquote>
+					</td>
+				</tr>
+				<tr>
+					<td height="42">
+						<ul>
+							<li>If you print in a document other than a Version 
+							5 document, selecting the <kbd>Use image format</kbd> 
+							option displays the printer's default paper format 
+							in the <kbd>Form Name</kbd> box:</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<td height="42">
+						<blockquote>
+							<p>
+							<img border="0" src="b35doc/english/online/basug_c2/images/dbbatchprinting11NLS.gif" width="335" height="199"></p>
+						</blockquote>
+					</td>
+				</tr>
+				<tr>
+					<td height="62" valign="top">
+						<ul>
+							<li><font FACE="Verdana" SIZE="2">If you are in 
+							Default Printing Parameters, selecting the </font>
+							<font FACE="Verdana" SIZE="2" COLOR="#5f5f5f"><b>Use 
+							image format</b></font><font FACE="Verdana" SIZE="2"> 
+							option always displays the printer's default paper 
+							format because no document is associated with these 
+							parameters.</font></li>
+						</ul>
+					</td>
+				</tr>
+			</table>
+			</li>
+			<li value="6">
+			<p class="task">Click <kbd>Options...</kbd> to access the 
+			<a href="page1450.html#hj-options">Options</a> dialog box.</p>
+			<div align="left">
+				<table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber6" height="788" width="1179">
+					<tr>
+						<td height="40">The <kbd>Printing Parameters</kbd> dialog box 
+               also enables you to define the visualization mode used for 
+               printing by selecting the desired mode from a list in the <kbd>Visualization</kbd> tab:</td>
+					</tr>
+					<tr>
+						<td height="40">
+						<img border="0" src="b35doc/english/online/basug_c2/images/dbbatchprinting03NLS.gif" width="630" height="306"></td>
+					</tr>
+					<tr>
+						<td height="61">
+						In non-standard scale mode (i.e. when <kbd>Small Scale</kbd> 
+						is selected in the
+						<a href="page0927.html">Scale</a> tab), you cannot print a document with a 
+						vector rendering. The only supported rendering mode is 
+						the <kbd>Shading</kbd> raster mode. Therefore, when you 
+						access the Printing Parameters dialog box, the rendering 
+						mode is forced to <kbd>Shading</kbd>.</td>
+					</tr>
+					<tr>
+						<td height="31">If you are printing .CATDrawing documents, you can 
+               access the <kbd>Multi-Documents</kbd> tab:<br></td>
+					</tr>
+					<tr>
+						<td height="40">
+						<img border="0" src="b35doc/english/online/basug_c2/images/dbbatchprinting08NLS.gif" width="630" height="306"></td>
+					</tr>
+					<tr>
+						<td height="86">
+						<ul>
+							<li>In the Range area, indicate whether you want to print 
+							<kbd>All sheets</kbd> or only the <kbd>Active sheet</kbd> by 
+                 selecting the appropriate option</li>
+							<li>Select the <kbd>Clip to sheet format</kbd> check box if you 
+                 want the drawing representation to be clipped to the sheet 
+                 format</li>
+							<li>Select the <kbd>Print detail sheet</kbd> check box if you 
+                 intend to print sheets of type &quot;detail&quot;. </li>
+						</ul></td>
+					</tr>
+				</table></div></li>
+			<li value="7">
+			<p class="task">If you want to use parameters which are different from 
+         the default ones for a specific file, right-click the file from the 
+         list then select <kbd>Parameters...</kbd> to open the <kbd>Parameters</kbd> 
+         dialog box:</p>
+			<div align="left">
+				<table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber7" height="1458" width="1179">
+					<tr>
+						<td height="138" colspan="2" width="1175">
+						<img border="0" src="b35doc/english/online/basug_c2/images/dbbatchprinting05NLS.gif" width="569" height="131"></td>
+					</tr>
+					<tr>
+						<td height="76" colspan="2" width="1175">This dialog box enables 
+               you to apply parameters other than the default one proposed by 
+               selecting another printer, another orientation and so on. <br>
+						<kbd>Printing Parameters</kbd> gives you access to the 
+               above-detailed <a href="#hj-Print Parameter Dialog">Printing 
+               Parameters</a> dialog box except for the <kbd>Visualization</kbd> 
+               and <kbd>MultiDocuments</kbd> tabs which gives you access to more 
+               parameters:&nbsp;<a name="hj-sheet number"></a></td>
+					</tr>
+					<tr>
+						<td height="48" colspan="2" width="1175">In the <kbd>Visualization</kbd> 
+               tab, you can click <kbd>Layer Filter...</kbd>&nbsp; to open the
+               			<kbd>Visualization Filters</kbd> dialog box which lets you edit 
+               or create visualization filters:</td>
+					</tr>
+					<tr>
+						<td height="247" colspan="2" width="1175">
+						<img border="0" src="b35doc/english/online/basug_c2/images/dbbatchprinting07NLS.gif" width="418" height="245"></td>
+					</tr>
+					<tr>
+						<td height="68" colspan="2" width="1175">The default current 
+               filter &quot;All visible&quot; is applied automatically: it lets you see 
+               all the contents of the document. This filter cannot be deleted. 
+						Note also that document filters will not be loaded in 
+						the <kbd>Print Batch</kbd>.<br>Refer to 
+						<a href="page1546.html">Using Visualization Filters</a> 
+               for detailed information.</td>
+					</tr>
+					<tr>
+						<td height="307" colspan="2" width="1175">
+						<img border="0" src="b35doc/english/online/basug_c2/images/dbbatchprinting04NLS.gif" width="629" height="305"></td>
+					</tr>
+					<tr>
+						<td height="89" colspan="2" width="1175">When printing .CATDrawing 
+               documents, you can print a given number/range of sheets by 
+               clicking S<kbd>heet Numbers</kbd> then:<ul>
+							<li>Enter the corresponding sheet numbers in the field below</li>
+							<li>Click <kbd>Sheets...</kbd> to open the <kbd>Image Selection</kbd> 
+                 dialog box which lets you select the sheets to be 
+                 printed. </li>
+						</ul></td>
+					</tr>
+					<tr>
+						<td height="68" colspan="2" width="1175"><blink>
+						<a name="hj-model documents"></a></blink>You can now use the 
+						<kbd>MultiDocuments</kbd> tab to print the drafting of Version 4 
+               models. <br>To do so, select <kbd>Sheet Numbers</kbd> then enter the numbers 
+               of the workspaces to be printed in the box below.<br>You can also click 
+						<kbd>Sheets...</kbd> then select the desired 
+               workspaces in the <kbd>Image Selection</kbd> dialog box:</td>
+					</tr>
+					<tr>
+						<td height="175" colspan="2" width="1175">
+						<img border="0" src="b35doc/english/online/basug_c2/images/dbbatchprinting09NLS.gif" width="280" height="169"></td>
+					</tr>
+					<tr>
+						<td height="85" colspan="2" width="1175">By default, all the 
+               documents are selected but you can deselect the documents you do 
+               not want to print by clicking their name in the list. <kbd>Reset</kbd> 
+               lets you re-select all the elements displayed, if needed.<p>Click
+               			<kbd>OK</kbd> to validate your selection and close the window.</td>
+					</tr>
+					<tr>
+						<td height="55" colspan="2" width="1175">When the parameters have 
+               been modified, the status of the customized file changes from 
+               &quot;Default&quot; to &quot;Customized&quot; in the <kbd>Parameter</kbd> column and 
+               the printer name (if different from the default printer) is displayed 
+               in the <kbd>Printer</kbd> column.</td>
+					</tr>
+					<tr>
+						<td height="89" width="14" valign="top">
+						<img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+						<td height="89" width="1140" valign="top">
+						<ul>
+							<li>You can reset 
+               the customized parameters to the default parameters by 
+               right-clicking the desired file from the list then selecting <kbd>Reset Parameters</kbd>. In that case, the status of the file 
+               changes from <kbd>Customized</kbd> to <kbd>Default</kbd>.</li>
+							<li>You can preview the files to be printed by 
+               right-clicking a file from the list then selecting <kbd>Preview</kbd>.&nbsp;However, 
+               note that you will not be able to use zooming commands for 
+               .CATDrawing, .CATProduct and .CATPart documents.</li>
+						</ul></td>
+					</tr>
+				</table></div></li>
+			<li value="8">
+			<p class="task">If you want the corresponding .CATScript file to be 
+         saved in a specific location, click <kbd>CATScript Generation...</kbd>. 
+         A CATScript window displaying the contents of the CATScript file: click
+         	<kbd>Save As...</kbd> then indicate the name and location of the file 
+         before clicking <kbd>Save</kbd> to validate.<br>By default, the .CATScript file is saved in a temporary folder.</p>
+			</li>
+			<li value="9">
+			<p class="task">Click <kbd>Run</kbd> to print the selected documents 
+         then <kbd>Cancel</kbd> to close the <kbd>PrintBatch</kbd> window.<table border="0" id="table6" width="1266">
+				<tr>
+					<td bgcolor="#E0E0E0">
+					<p style="margin-top: 6; margin-bottom: 6">Running a batch 
+               printing using <kbd>PrintBatch</kbd> generates 
+               an XML file named &quot;BatchParameters&quot; suffixed with the hour at 
+				which the batch was run (for instance, 
+				&quot;BatchParameters_14.41.25.xml&quot; to indicate that the batch was 
+				run at 14.21.25 PM) and saved in a temporary 
+               folder by default. To save this file under another name and in 
+               another location, click <kbd>Save</kbd> (or <kbd>Print Batch Parameters 
+               Saving...</kbd> if you accessed the <kbd>PrintBatch</kbd> from 
+					the command line)</p>
+					<p style="margin-top: 6; margin-bottom: 6">The generated XML file 
+               can be edited manually. Refer to <a href="#hj-editing xml file">Editing the XML file</a> for more information.</td>
+				</tr>
+			</table></li>
+       	<li>
+         <p class="task">To display information on the batch execution, access the 
+		<a href="page1538.html#hj-progress">Processes</a> tab in the <kbd>Batch 
+       Monitor</kbd> window (click the thumbnail below to enlarge the picture):<table border="0" id="table13">
+			<tr>
+				<td height="56">
+             <img border="2" src="b35doc/english/online/basug_c2/images/batchmonitor06NLS_small.gif" title="Click to enlarge this image" width="100" height="45"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script></td>
+			</tr>
+			</table>
+			</li>
+			<li>
+			<p class="task">To display the <a href="page1538.html#hj-results">results</a> of the batch execution, access the
+			<kbd>Processes</kbd> 
+		tab then double-click the line corresponding to the batch you have just 
+		run (or right-click it and select
+		<kbd>Results</kbd>):</p>
+			<table border="0" id="table14" height="311">
+				<tr>
+					<td>
+             <img border="0" src="b35doc/english/online/basug_c2/images/batchmonitor07NLS.gif" width="477" height="304"></td>
+				</tr>
+			</table>
+			</li>
+			<li>
+			<p class="task">To read the <a href="page1538.html#hj-output">reports</a> 
+			generated by the batch execution, access the folder <code>c:\temp\batchID</code> 
+       (on Windows) or <code>/temp/batchID</code> (on UNIX).</li>
+       </ol>
+       </td>
+     </tr>
+     <tr>
+       <td valign="top" height="37" colspan="2">
+       <p align="center">
+       <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+     </tr>
+		<tr>
+       <td valign="middle" height="1" width="3%"></td>
+       <td valign="middle" height="1" width="95%">
+       <p align="right"><a href="#hj-top">
+       <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></td>
+     </tr>
+		<tr>
+       <td valign="top" height="54" width="3%">&nbsp;</td>
+       <td valign="top" height="54" width="95%">
+       <h2><a name="hj-editing xml file"></a>Editing the XML file containing the 
+       batch parameters</h2>
+       </td>
+     </tr>
+		<tr>
+       <td valign="top" height="34" width="3%">&nbsp;</td>
+       <td valign="top" height="34" width="95%">
+       <blockquote>
+         <p>You can also define your print parameters directly in the 
+         &quot;PrintBatchParameters.xml&quot; file using your favorite text editor. <br>
+         Click the thumbnail below to see an example of XML file:</p>
+       </blockquote>
+       </td>
+     </tr>
+		<tr>
+       <td valign="top" height="34" width="3%">&nbsp;</td>
+       <td valign="top" height="34" width="95%">
+       <blockquote>
+         <p style="height: 58px">
+         <img border="2" src="b35doc/english/online/basug_c2/images/parameters.gif" title="Click to enlarge this image" width="100" height="83"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script></p>
+       </blockquote>
+       </td>
+     </tr>
+		<tr>
+       <td height="1" bgcolor="#FFFFFF" width="3%">&nbsp;</td>
+       <td valign="top" height="1" width="95%">
+       <blockquote>
+         <p><a name="hj-xml file"></a>Should you need to modify the name of the 
+         printer to be used, this can be done very easily in the XML file by 
+         indicating the new printer name in the &lt;PRINT_OUTPUT_PRINTER&gt; 
+         parameter:&nbsp; </p>
+       </blockquote>
+       </td>
+     </tr>
+		<tr>
+       <td valign="top" height="8" bgcolor="#FFFFFF" width="3%">&nbsp;</td>
+       <td valign="top" height="8" width="95%">
+       <blockquote>
+         <p><img border="1" src="b35doc/english/online/basug_c2/images/print_parameters02.gif" width="488" height="110"></p>
+       </blockquote>
+       </td>
+     </tr>
+		<tr>
+       <td valign="top" height="34" bgcolor="#FFFFFF" width="3%">&nbsp;</td>
+       <td valign="top" height="34" width="95%">
+       <blockquote>
+         <p>If you are printing CATDrawing documents, you can edit the sheet 
+         name and number in &lt;PRINT_VISU_IMAGE_NAME&gt; and &lt;PRINT_VISU_IMAGE_NUM&gt; 
+         respectively:</p>
+       </blockquote>
+       </td>
+     </tr>
+		<tr>
+       <td valign="top" height="7" bgcolor="#FFFFFF" width="3%">&nbsp;</td>
+       <td valign="top" height="7" width="95%">
+       <blockquote>
+         <p><img border="1" src="b35doc/english/online/basug_c2/images/print_parameters03.gif" width="487" height="123"></p>
+       </blockquote>
+       </td>
+     </tr>
+		<tr>
+       <td valign="top" height="33" colspan="2">
+       <p align="center">
+       <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+     </tr>
+		<tr>
+       <td valign="middle" height="1" width="3%"></td>
+       <td valign="middle" height="1" width="95%">
+       <p align="right"><a href="#hj-top">
+       <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></td>
+     </tr>
+		</table>
+   </center>
+ </div>
+
+ </body>
+
+</html>
+

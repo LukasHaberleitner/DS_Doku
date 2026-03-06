@@ -1,0 +1,469 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Knowledgeware Rule-based Clash</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1><a name="hj-top"></a>Knowledgeware Rule-based Clash<a name="ix-clash::knowledgeware rule-based clash;knowledgeware::rule-based clash"></a></h1>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32"></p>
+ <div align="left">
+   <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+     <tr>
+       <td valign="top">
+       <img border="0" src="b35doc/english/online/icons_C2/common/abasic.gif" width="32" height="32"></td>
+       <td colspan="2" valign="top" style="padding-bottom: 10">
+       Clash rules written using knowledgeware capabilities can 
+       be used in a standalone clash process or in an <a href="#hj-enovia">
+       ENOVIA LCA</a> clash process, ensuring clash analyses take corporate 
+       practices into account.<p>Clash rules written to perform interference 
+		checking rely on the <code>
+		DefineInterferenceComputation</code> function.<br>
+		The mechanism works as follows: </p>
+		<p>The rule enables calling the <code>DefineInterferenceComputation</code> 
+		function, which in return launches the interference calculation.</td>
+     </tr>
+     <tr>
+       <td valign="top">
+       <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+       <td valign="top" colspan="2">
+       <p class="task">This task shows you how to apply clash rules in 
+       interactive interference analysis. This involves the following procedures 
+       described hereafter:<br>
+&nbsp;</p>
+       <ul>
+         <li>
+         <p class="task"><a href="#hj-writeclashrule">Writing Clash Rules Using 
+         Knowledge Expert</a></li>
+			<li>
+         <p class="task">
+			
+			<a href="page4955.html" name="hj-new">Optimizing Knowledge 
+			Rule-Based Clash</a></li>
+         <li>
+         <p class="task"><a href="#hj-runclashanalysis">Running Interference 
+         Analysis Using the Clash command</a></li>
+         <li>
+         <p class="task"><a href="#hj-macro">Generating Clash Rules Using a 
+         Macro</a></li>
+         <li>
+         <p class="task"><a href="#hj-enovia">Knowledgeware Rule-based Clash &amp; 
+         ENOVIA LCA</a></li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td valign="top">
+       <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+       <td valign="top" colspan="2" style="padding-bottom: 10">
+       <p class="task">Two samples are provided in <code>online/cfysm_*X2/samples</code>:
+       <br>
+&nbsp;</p>
+       <ul>
+         <li>
+         <p class="task">Knowledge_Rule-based_Clash.CATProduct (contains 
+         alternate shapes)</li>
+         <li>
+         <p class="task">Rule_for_Interference.CATProduct (contains a rule).</li>
+       </ul>
+       <p class="task">Two samples are provided in <code>online/spaug_*X2/samples</code>:
+       <br>
+&nbsp;</p>
+       <ul>
+         <li>
+         <p class="task">SPE1Rules.xls</li>
+         <li>
+         <p class="task">macro1_clashrules.txt</li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td valign="top" colspan="2">
+       <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+       <td valign="top">
+       <h2><a name="hj-writeclashrule"></a>Writing 
+		Clash Rules Using 
+         Knowledge Expert</h2>
+       <p>Before you begin, make sure you have selected the required packages.&nbsp;</p>
+       <ol class="task">
+         <li>
+         <p class="task">To customize Knowledgeware settings: </p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+           <tr>
+             <td>
+             <ul>
+               <li>
+               <p class="task">Select <kbd>Tools &gt; Options... </kbd>command<kbd>.<br>
+               </kbd>The <kbd>Options</kbd> dialog box is displayed.</li>
+               <li>
+               <p class="task">Select<kbd> General &gt; Parameters and Measure</kbd>&nbsp;and 
+               click the <kbd>Knowledge Environment</kbd> tab</li>
+               <li>
+               <p class="task">Select the <kbd>Load extended language libraries
+               </kbd>check box</li>
+               <li>
+               <p class="task">Load the SpaITFCheckMethod package</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <p class="task">
+             <img border="1" src="b35doc/english/online/spaug_c2/images/dboptionsknowledge01NLS.gif" width="292" height="215"></td>
+           </tr>
+           <tr>
+             <td>You need to restart CATIA for this setting to be taken into 
+             account.<br>
+             A warning message is prompts you to do so.</td>
+           </tr>
+         </table>
+         </li>
+         <li>
+         <p class="task">To customize Product Structure settings:</p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+           <tr>
+             <td>
+             <ul>
+               <li>
+               <p class="task">Select the <kbd>Infrastructure</kbd> category, 
+               then the <kbd>Product Structure</kbd> sub-category, and click the
+               <kbd>Tree Customization</kbd> tab:</li>
+               <li>
+               <p class="task">Activate both <kbd>Parameters</kbd> and <kbd>
+               Relations</kbd> options (the Constraints option is set to Yes by 
+               default) clicking the Activate button</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <p class="task">
+             <img border="1" src="b35doc/english/online/spaug_c2/images/dboptionsproduct01NLS.gif" width="339" height="199"></p>
+             <p class="task">You are now ready to write your rule.</td>
+           </tr>
+         </table>
+         </li>
+         <li>
+         <p class="task">Select <kbd>Knowledgeware &gt; Knowledge Expert</kbd> from 
+         the <kbd>Start</kbd> menu to switch to the Knowledge Expert workbench.</li>
+         <li>
+         <p class="task">Click <kbd>Expert Rule</kbd> <kbd>
+         <img border="0" src="b35doc/english/online/spaug_c2/images/KwxWKRules.gif" width="28" height="29"></kbd>.The <kbd>Rule Editor
+         </kbd>dialog box appears.</p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4">
+           <tr>
+             <td>
+             <p class="task"><img border="0" src="b35doc/english/online/spaug_c2/images/dbruleeditor01NLS.gif" width="238" height="186"></td>
+           </tr>
+         </table>
+         </li>
+         <li>
+         <p class="task">(Optional) Modify the default rule name and comments.<br>
+         In our example, the rule name is: CATKWERule.3</li>
+         <li>
+         <p class="task">Click <kbd>OK</kbd> when done. The <kbd>Rule Editor
+         </kbd>appears.</p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5">
+           <tr>
+             <td>
+             <p class="task"><img border="1" src="b35doc/english/online/spaug_c2/images/dbruleeditor02NLS.gif" width="287" height="157"></td>
+           </tr>
+           </table>
+         </li>
+         <li>
+         <p class="task">Write your rule. Here is a clash rule example below:
+         </p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber6">
+           <tr>
+             <td colspan="2">
+             <p class="task"><img border="1" src="b35doc/english/online/spaug_c2/images/dbruleeditor03NLS.gif" width="302" height="192"></td>
+           </tr>
+           <tr>
+           <td colspan="2" width="630">
+           <p class="task">Let's zoom on the clash rule example: </p>
+           <p class="task"><kbd><br>
+           if (p1 != p2)&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <br>
+           {<br>
+           </kbd>&nbsp;&nbsp; <kbd>DefineInterferenceComputation (p1, p2,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+           &quot;Clearance&quot;, 70mm,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+           &quot;WRAPPING&quot;,&quot;Shape 1&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+           ThisRule);<br>
+           }</kbd></td>
+         	</tr>
+			<tr>
+           <td valign="top" width="32">
+           &nbsp;</td>
+           <td width="597">
+           &nbsp;</td>
+         	</tr>
+			<tr>
+           <td valign="top" width="32">
+           <p class="task">
+           <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+           <td width="597">
+           <p class="task"><kbd>P1 </kbd>and<kbd> P2 </kbd>correspond to 
+           identifiers used within this rule.</p>
+           <p class="task">The arguments used in this rule are:</p>
+           <ul>
+             <li>
+             <p class="task"><kbd>P1 </kbd>(object type 1)</li>
+             <li>
+             <p class="task"><kbd>P2</kbd> (object type 2)</li>
+             <li>
+             <p class="task"><kbd>Clearance </kbd>(type of calculation), </p>
+             <p class="task">the values for this type can be:<ul>
+               <li>
+               <p class="task">&quot;Clash&quot; (clash + contact checking)</li>
+               <li>
+               <p class="task">&quot;Clash_only&quot; (clash checking only)</li>
+               <li>
+               <p class="task">&quot;Clearance&quot; (clearance checking&nbsp; with the 
+               clearance value defined)</li>
+               <li>
+               <p class="task">&quot;Authorized_penetration&quot; (authorized penetration 
+               checking with the clearance value)</li>
+             </ul>
+             </li>
+             <li>
+             <p class="task"><kbd>70mm </kbd>(clearance value)</li>
+             <li>
+             <p class="task"><kbd>WRAPPING </kbd>(name of the shape object type 
+             1)</li>
+             <li>
+             <p class="task"><kbd>Shape 1 </kbd>(name of the shape object type 
+             2)</li>
+           </ul>
+           </td>
+         	</tr>
+           <tr>
+             <td>
+             <p class="task">
+             <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+             <td>
+             <p class="task">For more information about expert rules, see the <i>
+             Knowledge Expert User's Guide</i>.</td>
+           </tr>
+         </table>
+         </li>
+         <li>
+         <p class="task">Click <kbd>Apply</kbd> to check rule syntax.</li>
+         <li>
+         <p class="task">Click <kbd>Ok</kbd> to add the expert rule to the 
+         document</li>
+         <li>
+         <p class="task">Click the <kbd>Update</kbd> icon to solve the rule 
+         base. If needed, update the document.</li>
+         <li>
+         <p class="task">Save your clash rule in the CATProduct document.</p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+           <tr>
+             <td valign="top">
+             <p class="task">
+             <img border="0" src="b35doc/english/online/icons_C2/common/amethod.gif" align="top" width="32" height="32"></td>
+             <td>
+             <p class="task">Clash rules must be saved in a separate CATProduct 
+             document from the one in which you will run your interference 
+             analysis. </p>
+             <p class="task">You can save more than one rule in the CATProduct 
+             document. If you do so, do not forget to give rules a priority in 
+             the Rule Editor dialog box. When running your interference 
+             analysis, rule priority is taken into account and if pairs of 
+             products and shapes satisfy more than one rule, the results of the 
+             rule with the highest priority only are output.</td>
+           </tr>
+         </table>
+         </li>
+       </ol>
+       <h2><a name="hj-runclashanalysis">Running Interference 
+         Analysis Using the Clash command</a><a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" title="Top" align="right" width="25" height="17"></a></h2>
+       <ol class="task">
+         <li value="12">
+         <p class="task">Identify the location of the document containing the 
+         clash rules: </p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber8" height="192">
+           <tr>
+             <td height="68">
+             <ul>
+               <li>
+               <p class="task">Select<kbd> Tools &gt; Options &gt; Digital Mockup &gt; 
+               DMU Space Analysis</kbd>.</li>
+               <li>
+               <p class="task">Click the <kbd>DMU Clash - Rule</kbd> tab.</li>
+               <li>
+               <p class="task">Enter the full path for the CATProduct containing 
+               the clash rules.</li>
+               <li>
+               <p class="task">Click <kbd>OK</kbd> when done.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td height="92">
+             <p class="task">
+             <img border="1" src="b35doc/english/online/spaug_c2/images/dboptionsclashrule01NLS.gif" width="502" height="79"></td>
+           </tr>
+           <tr>
+             <td height="32">
+             <p class="task">Reminder: A sample document, 
+             Rule_for_Interference.CATProduct, containing rules is provided in 
+             the DMU Space Analysis samples folder<code> online/cfysm_*X2/samples</code></td>
+           </tr>
+         </table>
+         </li>
+         <li>
+         <p class="task">Open the sample document containing alternate shapes:
+         <a href="b35doc/english/online/cfysm_C2/samples/Knowledge_Rule-based_Clash.CATProduct">
+         Knowledge_Rule-based_Clash.CATProduct</a>.</li>
+         <li>
+         <p class="task">Select <kbd>Insert &gt; Clash</kbd> from the menu bar or 
+         click <kbd>Clash</kbd>
+         <img border="0" src="b35doc/english/online/icons_C2/images/I_ClashP2.gif" align="middle" width="24" height="24"> 
+         in <kbd>DMU Space Analysis</kbd> toolbar. The <kbd>Check Clash</kbd> 
+         dialog box appears.</li>
+         <li>
+         <p class="task">Activate the first Type drop-down list box and select 
+         Clash rule.</li>
+         <li>
+         <p class="task">Activate the second Type drop-down list box and select 
+         the computation type.</li>
+         <li>
+         <p class="task">Select the products to check for interference, for 
+         example the trigger and the lock.</p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber9">
+           <tr>
+             <td>
+             <p class="task"><img border="0" src="b35doc/english/online/spaug_c2/images/dbcheckclash26NLS.gif" width="515" height="157"></td>
+           </tr>
+         </table>
+         </li>
+         <li>
+         <p class="task">Click <kbd>Apply</kbd>. The <kbd>Check Clash </kbd>
+         dialog box expands to show the results. The dialog box identifies the 
+         interferences detected and shows which shapes of which products 
+         interfere.<br>
+&nbsp;</p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber10">
+           <tr>
+             <td colspan="2">
+             <p class="task"><img border="1" src="b35doc/english/online/spaug_c2/images/dbcheckclash24NLS.gif" width="507" height="269"></td>
+           </tr>
+           <tr>
+             <td>
+             <p class="task">
+             <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+             <td>
+             <p class="task"><b><kbd>Note</kbd></b><kbd>: </kbd>Since you can 
+             only view the results of one product-shape combination at any one 
+             time, <kbd>List by Product</kbd> and <kbd>Matrix</kbd> tabs are not 
+             available.</td>
+           </tr>
+         </table>
+         </li>
+         <li>
+         <p class="task">Scroll to the right in the List by Conflict tab. The 
+         expert rule is also named.</p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber11">
+           <tr>
+             <td height="84">
+             <p class="task"><img border="1" src="b35doc/english/online/spaug_c2/images/dbcheckclash25NLS.gif" width="465" height="81"></td>
+           </tr>
+           <tr>
+             <td height="16">
+             <p class="task">A Preview window showing shapes in conflict also 
+             appears.</td>
+           </tr>
+           <tr>
+             <td height="368">
+             <p class="task"><img border="1" src="b35doc/english/online/spaug_c2/images/dbpreview10NLS.gif" width="268" height="355"></td>
+           </tr>
+         </table>
+         </li>
+       </ol>
+       <h2><a name="hj-macro"></a>Generating Clash Rules Using a Macro<a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" title="Top" align="right" width="25" height="17"></a></h2>
+       <p class="task">You can take advantage of a macro to automate the clash 
+       rule creation from an Excel file.</p>
+       <p class="task">The following example will help you to work this out:<br>
+&nbsp;</p>
+       <ul>
+         <li>
+         <p class="task"><a href="b35doc/english/online/spaug_c2/samples/macro1_clashrules.txt">
+         macro1_clashrules.txt</a> (macro to be edited accordingly, see extract 
+         below:)<br>
+&nbsp;</li>
+       </ul>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber13">
+         <tr>
+           <td>
+           <p class="task"><img border="0" src="b35doc/english/online/spaug_c2/images/macroclashrules.gif" width="666" height="238"></td>
+         </tr>
+       </table>
+       <ul>
+         <li>
+         <p class="task"><a href="b35doc/english/online/spaug_c2/samples/SPE1Rules.xls">SPE1Rules.xls</a> 
+         (reference file from which the macro will extract the data to generate 
+         the clash rules in a CATProduct document).<br>
+&nbsp;</li>
+       </ul>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber12">
+         <tr>
+           <td>
+           <p class="task"><img border="0" src="b35doc/english/online/spaug_c2/images/sperule_xls.gif" width="802" height="312"></td>
+         </tr>
+       </table>
+       <p class="task">Run the macro by selecting <kbd>Tools&nbsp;&gt;&nbsp;Macro&nbsp;&gt;&nbsp;Macros...</kbd>, 
+       selecting the macro, and clicking Run.</p>
+       <p class="task">For more information, refer to Running and Editing Macros 
+       in the <i>Infrastructure User's Guide</i></p>
+       <h2><a name="hj-enovia"></a>Knowledgeware Rule-based Clash &amp; ENOVIA V5<a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" title="Top" align="right" width="25" height="17"></a></h2>
+       <p class="task">The results of the rule-based clash can be compared to 
+       results already stored in
+       <a href="page15683.html">
+       ENOVIA V5</a> and new results can be saved back into the ENOVIA LCA 
+       database. Storing results in ENOVIA V5 saves both the shape and rule 
+       names. </p>
+       <p class="task">To do so, do not forget to select the Retrieve 
+       Information From PDM check box in the DMU Clash tab (<kbd>Tools &gt; 
+       Options..., Digital Mockup &gt; DMU Space Analysis</kbd>).</td>
+     </tr>
+     <tr>
+       <td valign="top" style="padding-bottom: 10" colspan="2">&nbsp;</td>
+       <td valign="top" style="padding-bottom: 10">For more information on:<ul>
+         <li>
+         <p class="task">Managing representations, see the <i>Product Structure 
+         User's Guide</i>.</li>
+         <li>
+         <p class="task">the Clash command, see <a href="page13594.html">
+         Interference Checking &amp; Analysis</a>.</li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td valign="top" colspan="3" style="padding-bottom: 10">
+       <p align="center">
+       <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+     </tr>
+   </table>
+ </div>
+ <h2 align="left"><font color="#282187">&nbsp;</font></h2>
+ <table>
+ </table>
+
+ </body>
+
+</html>
+

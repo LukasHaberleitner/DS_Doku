@@ -1,0 +1,329 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Recess Turning Operations</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style type="text/css">
+.style2 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+ </head>
+
+ <body>
+
+ <h1><a NAME="Recessing"></a>Recess Turning Operations</h1>
+ <a name="ix-Recess Turning operation"></a>
+ <a name="ix-Recess Turning parameter:Attack Distance"></a>
+ <a name="ix-Recess Turning parameter:Axial Depth of Cut"></a>
+ <a name="ix-Recess Turning parameter:Axial part offset"></a>
+ <a name="ix-Recess Turning parameter:Stock offset"></a>
+ <a name="ix-Recess Turning parameter:Gouging Safety Angle"></a>
+ <a name="ix-Recess Turning parameter:Lead-in"></a>
+ <a name="ix-Recess Turning parameter:Leading Safety Angle"></a>
+ <a name="ix-Recess Turning parameter:Lift-off"></a>
+ <a name="ix-Recess Turning parameter:Machining Direction"></a>
+ <a name="ix-Recess Turning parameter:Machining Tolerance"></a>
+ <a name="ix-Recess Turning parameter:Maximum Depth of Cut"></a>
+ <a name="ix-Recess Turning parameter:Part Contouring"></a>
+ <a name="ix-Recess Turning parameter:Plunge"></a>
+ <a name="ix-Recess Turning parameter:Radial Depth of Cut"></a>
+ <a name="ix-Recess Turning parameter:Radial part offset"></a>
+ <a name="ix-Recess Turning parameter:Part offset"></a>
+ <a name="ix-Recess Turning parameter:Trailing Safety Angle"></a>
+ <a name="ix-Recess Turning parameter:Under Spindle Axis Machining"></a>
+ <p>The information in this section will help you create and edit <kbd>Recess Turning</kbd> 
+ operations in your manufacturing program. </p>
+ <p><a name="ix-One Way Recess Turning;Recess Turning mode:One Way"></a>
+ <a name="ix-Zig Zag Recess Turning;Recess Turning mode:Zig Zag"></a>
+ <a name="ix-Parallel Contour Recess Turning;Recess Turning mode:Parallel Contour">
+ </a><a NAME="pgfId=1071821"></a>The Recess Turning operation allows you to 
+ machine a recess by means of a One Way, Zig Zag, or Parallel Contour tool 
+ motion.&nbsp; </p>
+ <p><img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-19.gif" width="563" height="330"> </p>
+ <p>You can specify:</p>
+ <ul>
+   <li>external, internal, frontal, or inclined machining according to the type 
+   of area to machine</li>
+   <li>various approach and retract path types</li>
+   <li>various lead-in and lift-off options with specific feedrates</li>
+   <li>part contouring</li>
+   <li>tool output point change.</li>
+ </ul>
+ <p>The following topics are dealt with in the paragraphs below:</p>
+ <ul>
+   <li><a href="#tools">Tooling</a></li>
+   <li><a href="#pgfId=54172">Geometry</a></li>
+   <li><a href="#pgfId=54289">Machining Strategy Parameters</a></li>
+   <li><a href="#FandSRecessing">Feeds and Speeds</a></li>
+   <li><a href="#21158">Tool Compensation</a></li>
+   <li><a href="#pgfId=1088330">Macros</a>.</li>
+ </ul>
+ <table border="0">
+   <tr>
+     <td style="width: 808px">
+     <h3><a name="tools"></a>Tooling for Recess Turning</h3>
+     <p>The following tooling may be used: </p>
+     <ul>
+       <li>External and Internal insert-holders with all insert types except 
+       groove and thread.&nbsp;</li>
+       <li>Internal, External, and Frontal Groove insert-holders with groove and trigon inserts.<br>
+       Refer to <a target="_blank" href="page11208.html">Trigon Insert Used on 
+       a Groove Insert-holder</a> for more information about this tooling 
+       configuration.</li>
+     </ul>
+     <p>Note that the following attributes may influence machining (they are 
+     located on the Insert-holder's Technology tab):</p>
+     <ul>
+       <li>Gouging angle</li>
+       <li>Trailing angle</li>
+       <li>Leading angle</li>
+       <li>Max Recessing Depth</li>
+       <li>Max Cutting Depth</li>
+       <li>Max Boring Depth.</li>
+     </ul>
+     <p>These attributes take tooling accessibility into account and may reduce 
+     the machined area.<br>
+     However, you can use the <b>Insert-Holder Constraints</b> option on the 
+     operation editor to either ignore or apply these tooling attributes. You 
+     can replay the operation to verify the influence of these attributes on the 
+     generated tool path.</p>
+     <p>Note that the <b>Insert-Holder Constraints </b>setting does not 
+     influence the <a href="#GSafetyAngle">Gouging Safety Angle</a> or the
+     <a href="#SafetyAngles">Leading and Trailing Safety Angles</a> defined in 
+     the operation editor.</p>
+     <h3><a NAME="pgfId=54172"></a>Geometry for Recess Turning</h3>
+     <p>Part and Stock profiles are required. They can be specified as follows:</p>
+     <a name="ix-contextual command::By Curve;By Curve contextual command"></a>
+     <a name="ix-contextual command::Sectioning;Sectioning contextual command">
+     </a>
+     <ul>
+       <li>select edges either directly or after selecting the <b>By Curve</b> 
+       contextual command. In this case the
+       <a href="page11480.html#EdgeSelToolbar" target="ds_doc2">
+       Edge Selection toolbar</a> appears to help you specify the guiding 
+       contour.</li>
+       <li>select the <b>Sectioning</b> contextual command. Please refer to
+       <a href="page4937.html" target="ds_doc2">
+       Sectioning</a> for details of how to use this capability.<br>
+       Please note that the sectioning selection method is not associative.</li>
+     </ul>
+     <h4><a NAME="pgfId=1044675"></a><a NAME="50653"></a>Orientation for Recess 
+     Turning</h4>
+     <p><a name="ix-Recess Turning parameter:Orientation"></a>
+     <a NAME="pgfId=54178"></a>The following <a NAME="marker=1107397"></a>
+     <a name="ix-Internal Recess Turning"></a>
+     <a name="ix-External Recess Turning"></a>
+     <a name="ix-Frontal Recess Turning"></a>
+     <a name="ix-Inclined Recess Turning"></a><b>Orientations</b> are proposed: 
+     internal, external, frontal and inclined. </p>
+     <p><a NAME="pgfId=1050158"></a>The selected Orientation defines the type of 
+     geometric relimitation to be done between the stock and part geometry in 
+     order to determine the area to machine. <a NAME="pgfId=1052496"></a>For an 
+     inclined orientation you must specify the <a NAME="marker=1100847"></a>
+     <a name="ix-Recess Turning parameter:Angle of Incline"></a><b>Angle of 
+     Incline</b>. </p>
+     <h4><a NAME="pgfId=1051798"></a><a NAME="65182"></a>Part and Stock Offsets 
+     for Recess Turning</h4>
+     <ul>
+       <li><b>Stock offset</b>, which is defined perpendicular to the stock 
+       profile</li>
+       <li><b>Part offset</b>, which is defined perpendicular to the part 
+       profile.</li>
+       <li><b>Axial part offset</b> </li>
+       <li><b>Radial part offset</b>.</li>
+     </ul>
+     <p><a NAME="pgfId=54285"></a>Offsets can be positive or negative with any 
+     absolute value. <a NAME="pgfId=54287"></a>The global offset applied to the 
+     part profile is the resulting value of the normal, axial and radial 
+     offsets. </p>
+     <h3><a NAME="pgfId=54289"></a>Machining Strategy Parameters for Recess 
+     Turning</h3>
+     <h4><a NAME="pgfId=1077081"></a><a NAME="27443"></a>Path Definition for 
+     Recess Turning</h4>
+     <ul>
+       <li><b>Recess Turning Mode: One Way, Zig Zag or Parallel Contour</b></li>
+       <li><b>Max Depth of Cut</b><br>
+       This option is used to specify the maximum distance between passes.<br>
+       <b>Axial</b> and <b>Radial Depth of Cut</b><br>
+       These options are used to specify the maximum axial and radial distances 
+       between passes for Parallel Contour mode.</li>
+       <li><b>Machining Tolerance</b></li>
+       <li><b>Machining Direction</b> <br>
+       For Zig Zag tool motion, you must specify a first cutting direction as 
+       follows:
+       <ul>
+         <li>To or From Head Stock for Internal and External machining</li>
+         <li>To or From Spindle for Frontal machining</li>
+         <li>To Right or Left of Recess for Inclined machining</li>
+       </ul>
+       <p>When a part profile has multiple recesses (that is, a non-convex 
+       profile along the cutting direction), only the first recess along the 
+       specified direction is machined.</li>
+       <li><b><a name="SafetyAngles"></a>Leading </b>and<b> Trailing Safety 
+       Angles</b> for One way and Parallel Contour modes<br>
+       The insert geometry is taken into account to avoid collision by reducing 
+       the maximum slope on which the tool can machine. The&nbsp;Leading and Trailing 
+       Safety Angles allow you to further reduce this slope. <br>
+       <br>
+       Leading and trailing angles can also be defined on the insert-holder to 
+       define the maximum slope on which machining can be done. In this case and 
+       if the<b> Insert-Holder Constraints </b>setting is applied (<a href="#tools">see 
+       above</a>), the angles that reduce the slope the most will be taken into 
+       account.</li>
+       <li><b><a name="GSafetyAngle"></a>Gouging Safety Angle</b> (for Zig Zag 
+       mode only)<br>
+       Angles of the insert are taken into account to avoid collision by 
+       reducing the maximum slope on which the tool can machine. The Gouging 
+       Safety Angle allows you to further reduce this slope. <br>
+       <br>
+       Note that a gouging angle can also be defined on the insert-holder to 
+       define the maximum slope on which the tool can machine. In this case and 
+       if the<b> Insert-Holder Constraints </b>setting is applied (<a href="#tools">see 
+       above</a>), the angle that reduces the slope the most will be taken into 
+       account.</li>
+       <li><b>Under Spindle Axis Machining</b><br>
+       For Frontal or Inclined machining, this option allows you to request 
+       machining under the spindle axis.</li>
+       <li><b>Part Contouring</b><br>
+       You can specify if contouring is required by means of the proposed 
+       check box.<br>
+       The part profile is followed at the end of Recess Turning. This is done 
+       by machining down the sides of the recess in order to clear the profile.</li>
+     </ul>
+     <p><img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-18.gif" width="500" height="300">
+     </p>
+     <h4><a NAME="pgfId=1089749"></a><a NAME="15554"></a>Lead-in, Lift-off and 
+     Attack for Recess Turning</h4>
+     <ul>
+       <li><b>Lead-in Distance</b><br>
+       Defined with respect to the cutting direction. It takes the stock profile 
+       and stock clearance into account. The tool is in RAPID mode before this 
+       distance.</li>
+       <li><b>Attack Distance</b><br>
+       Defined with respect to the cutting direction and the stock profile with 
+       a stock clearance.</li>
+       <li><b>Angle and Distance before Plunge</b><br>
+       Define the plunge vector before each new pass with respect to the cutting 
+       direction.</li>
+       <li><b>Lift-off Distance</b> and <b>Lift-off Angle</b><br>
+       Define the lift-off vector at the end of the last pass with respect to 
+       the cutting direction. The figure below shows the effect of a positive 
+       lift-off angle (external machining is assumed).</li>
+     </ul>
+     <blockquote>
+       <p>&nbsp;<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-34.gif" width="302" height="231"></p>
+     </blockquote>
+     <h3><a name="ix-Recess Turning parameter:Feeds and Speeds"></a>
+     <a name="FandSRecessing"></a>Feeds and Speeds for Recess Turning</h3>
+     <p><a NAME="pgfId=1034563"></a><a NAME="marker=1080025"></a>Speed unit can 
+     be set to: </p>
+     <ul>
+       <li>Angular: spindle speed in revolutions per minute</li>
+       <li>Linear: constant cutting speed in units per minute</li>
+     </ul>
+     <p><a NAME="pgfId=1043029"></a>then you can give a Machining Speed value.
+     </p>
+		<p>You can also set a Maximum spindle speed value for the 
+		operation (by default, this value is the same as the Maximum spindle 
+		speed set on the Part Operation).</p>
+     <p align="left">The following feedrates can be set to either Angular units 
+		(length per revolution) or Linear units (length per minute):</p>
+     <ul>
+       <li>Machining feedrate</li>
+       <li>Lead-in feedrate, which is applied during the lead-in and attack 
+       distance.</li>
+       <li>Lift-off feedrate</li>
+       <li>Contouring feedrate</li>
+       <li>Plunge feedrate</li>
+		<li>Air cutting feedrate</li>
+     </ul>
+     <p>Feedrates are also available for air cutting trajectories such as 
+     macro motions and path transitions. </p>
+		<p>Note that RAPID feedrate can be replaced by Air cutting feedrate in tool 
+     trajectories (except in macros) by selecting the check box in the <kbd>Feed and 
+     Speeds </kbd>tab page
+     <img border="1" src="b35doc/english/online/lmgug_c2/images/TabFeedG.gif" align="middle" width="36" height="22">.</p>
+		<p>
+		<img src="b35doc/english/online/lmgug_c2/images/AirCutting01.gif" width="363" height="76" class="style2"></p>
+		<p>You can select <kbd>Air Cutting feed-rate</kbd> as Linear (feed per 
+		minute) or Angular (feed per revolution). When you select it as Angular the 
+		unit is set to mm_turn, the unit is set to mm_mn for Linear.</p>
+		<p>The changes in unit of <kbd>Air cutting feed-rate</kbd>, are also reflected in APT 
+		file output. Calculated cycle time in Properties dialog box of MO also 
+		get changed. There are changes in total time and machining time on tool 
+		path replay dialog box.</p>
+     <p><a NAME="pgfId=1088325"></a><a NAME="marker=1108102"></a>Dwell setting 
+     indicates whether the tool dwell at the end of each path is to be set in 
+     seconds or a number of spindle revolutions.</p>
+     <p>Please note that decimal values can be used for the number of 
+     revolutions. For example, when machining big parts that have a large 
+     volume, it can be useful to specify a dwell using a value of less than one 
+     revolution (0.25, for example).</p>
+     <h5><a NAME="pgfId=1091077"></a><a NAME="32617"></a>Example of one-way 
+     Recess Turning. Note that Trailing angle is defined on the tool.
+     <a NAME="pgfId=1091078"></a>&nbsp;</h5>
+     <p>In the figure below the tool motion is as follows:</p>
+     <ul>
+       <li>approach in RAPID mode</li>
+       <li>lead-in at the first recess pass and plunge approach for other passes</li>
+       <li>plunge at plunge feedrate</li>
+       <li>machine at machining feedrate</li>
+       <li>contouring at contouring feedrate</li>
+       <li>lift-off at last recess pass at lift-off feedrate.</li>
+     </ul>
+     <blockquote>
+       <p>
+       <img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-20.gif" width="500" height="359"></p>
+     </blockquote>
+     <h3><a NAME="21158"></a>
+     <a name="ix-Recess Turning parameter:Tool Compensation"></a>Tool 
+     Compensation for Recess Turning</h3>
+     <p><a NAME="pgfId=1088328"></a>You can select a<b> tool compensation number</b> 
+     corresponding to the desired tool output point. Note that the usable 
+     compensation numbers are defined on the tool assembly linked to the 
+     machining operation. <a NAME="pgfId=1088329"></a>If you do not select a 
+     tool compensation number, the output point corresponding to type P9 will be 
+     used by default.</p>
+     <p><a NAME="pgfId=1063515"></a>Note that the change of output point is 
+     managed automatically if you set the <a NAME="marker=1108130"></a>
+     <a name="ix-Recess Turning parameter:Change Output Point"></a><b>Change 
+     Output Point</b> option. <a NAME="pgfId=1069907"></a></p>
+     <p>If the output point is consistent with the flank of the recess to be 
+     machined, the output point is changed when the other flank of the recess is 
+     machined.</p>
+     <p>At the end of the operation, the output point is the same as it was at 
+     the start of the operation. <a NAME="pgfId=1069911"></a>See
+     <a href="page11196.html">Changing the Output Point</a> for more 
+     information.</p>
+     <h3><a NAME="pgfId=1088330"></a>Approach, Retract and Linking Macros for 
+     Recess Turning</h3>
+     <p><a NAME="pgfId=1096026"></a>The following <a NAME="marker=1096024"></a>
+     Approach and <a NAME="marker=1096025"></a>Retract macro modes are proposed: 
+     Direct, Axial-radial, Radial-axial, and Build by user.
+     <a NAME="pgfId=1096027"></a>The selected macro type (Approach or Retract) 
+     defines the tool motion before or after machining. </p><p>Various feedrates are 
+     available for the approach and retract motions (RAPID, lead-in, lift-off, 
+     and so on). Local feedrates can be set to either Angular units (length per revolution) or Linear units (length per minute).</p>
+     <p>Linking macros, which comprise retract and approach motion can also be 
+     used on Recess Turning operations.<br>
+     Approach and retract motions of Linking macros are interruptible. It can be 
+     useful to interrupt an operation when the foreseeable lifetime of the 
+     insert is not long enough to complete the machining.</p>
+     <p>See
+     <a href="page11368.html" target="_blank">
+     Define Macros on a Turning Operation</a> for more information.</td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

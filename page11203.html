@@ -1,0 +1,423 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+	<head>
+	<meta name="MonocodingType" content="0">
+	<meta name="MonocodingFlag" content="C2D2">
+	<meta http-equiv="Content-Language" content="en-us">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Groove Finish Turning Operations</title>
+	<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+	<meta name="ProgId" content="FrontPage.Editor.Document">
+	<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+	<style type="text/css">
+.style2 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+	</head>
+
+	<body>
+
+	<h1><a name="Groove Finishing"></a>Groove Finish Turning Operations</h1>
+	<a name="ix-Groove Finish Turning operation"></a>
+	<a name="ix-Groove Finish Turning parameter:Axial part offset"></a>
+	<a name="ix-Groove Finish Turning parameter:Offset"></a>
+	<a name="ix-Groove Finish Turning parameter:Contouring for Outside Corners">
+	</a><a name="ix-Groove Finish Turning parameter:End Limit"></a>
+	<a name="ix-Groove Finish Turning parameter:End Limit Offset"></a>
+	<a name="ix-Groove Finish Turning parameter:Machining Direction"></a>
+	<a name="ix-Groove Finish Turning parameter:Machining Tolerance"></a>
+	<a name="ix-Groove Finish Turning parameter:Orientation"></a>
+	<a name="ix-Groove Finish Turning parameter:Overlap"></a>
+	<a name="ix-Groove Finish Turning parameter:Radial part offset"></a>
+	<a name="ix-Groove Finish Turning parameter:Start Limit"></a>
+	<a name="ix-Groove Finish Turning parameter:Start Limit Offset"></a>
+	<a name="ix-Groove Finish Turning parameter:Part offset"></a>
+	<a name="ix-Groove Finish Turning parameter:Under Spindle Axis Machining">
+	</a><p>The information in this section will help you create and edit <kbd>Groove 
+	Finish Turning</kbd> operations in your manufacturing program. </p>
+	<p><a name="pgfId=55188"></a>The <kbd>Groove Finish Turning</kbd> operation allows you 
+	to finish a groove by means of downward profile following.
+	<a name="pgfId=55190"></a>You can specify: </p>
+	<ul>
+		<li>the type of machining according to the orientation of the groove profile 
+		to be machined</li>
+		<li>relimitation of the profile by start and end elements</li>
+		<li>various approach and retract path types</li>
+		<li>linear and circular lead-in and lift-off options with specific feedrates</li>
+		<li>various corner processing options with specific feedrates</li>
+		<li>local feedrates for individual elements of the machined profile</li>
+		<li>tool output point change</li>
+		<li>cutter compensation.</li>
+	</ul>
+	<p>The following topics are dealt with in the paragraphs below:</p>
+	<ul>
+		<li><a href="#tools">Tooling</a></li>
+		<li><a href="#pgfId=55227">Geometry</a></li>
+		<li><a href="#pgfId=1053364">Machining Strategy Parameters</a></li>
+		<li><a href="#FandSGrooveFinish">Feeds and Speeds</a></li>
+		<li><a href="#pgfId=1053814">Tool Compensation</a></li>
+		<li><a href="#pgfId=1094409">Macros</a>.</li>
+	</ul>
+	<h3><a name="tools"></a>Tooling for Groove Finish Turning </h3>
+	<p>The following tooling may be used: </p>
+	<ul>
+		<li>Internal, External, and Frontal Groove insert-holders with groove and trigon inserts.<br>
+		Refer to <a target="_blank" href="page11208.html">Trigon Insert Used on 
+		a Groove Insert-holder</a> for more information about this tooling configuration.</li>
+		<li>External and Internal insert-holders with round inserts.</li>
+	</ul>
+	<p>Note that the following attributes may influence machining (they are located 
+	on the <kbd>Insert-holder&#39;s Technology</kbd> tab):</p>
+	<ul>
+		<li>Gouging angle</li>
+		<li>Trailing angle</li>
+		<li>Leading angle</li>
+		<li>Max Recessing Depth</li>
+		<li>Max Cutting Depth</li>
+		<li>Max Boring Depth.</li>
+	</ul>
+	<p>These attributes take tooling accessibility into account and may reduce the 
+	machined area.<br>
+	However, you can use the <b>Insert-Holder Constraints</b> option on the operation 
+	editor to either ignore or apply these attributes. You can replay the operation 
+	to verify the influence of these attributes on the generated tool path.</p>
+	<h3><a name="pgfId=55227"></a>Geometry for Groove Finish Turning</h3>
+	<p>The Part profile (that is, the groove finish profile) is required. It can 
+	be specified as follows:</p>
+	<a name="ix-contextual command::By Curve;By Curve contextual command"></a>
+	<a name="ix-contextual command::Sectioning;Sectioning contextual command">
+	</a><ul>
+		<li>select edges either directly or after selecting the <b>By Curve</b> 
+		contextual command. In this case the
+		<a href="page11480.html#EdgeSelToolbar" target="ds_doc2">
+		Edge Selection toolbar</a> appears to help you specify the guiding contour.</li>
+		<li>select the <b>Sectioning</b> contextual command. Please refer to
+		<a href="page4937.html" target="ds_doc2">
+		Sectioning</a> for details of how to use this capability.<br>
+		Please note that the sectioning selection method is not associative.</li>
+	</ul>
+	<p><b>Start Limit</b>: None / In / On / Out<br>
+	This option allows you to specify a point, line, curve or face as the start 
+	element of the groove finish profile. The position of the start of machining 
+	is also defined with respect to this element. If a face is specified, the start 
+	element is the intersection of the face and the working plane. If needed, the 
+	profile may be extrapolated to the start element.</p>
+	<p><b>In / On / Out</b>: allows you to specify the Go-Go type positioning of 
+	the tool with respect to the start element. Go-Go type positioning of tool in 
+	general positions the tool based on its radius and tool compensation number. 
+	This means positioning will vary for different tool insert geometries with respect 
+	to the limit and there is possibility of tool going beyond limit even with IN 
+	option. The On option is always used for a point type start element.</p>
+	<p><b>End Limit</b>: None / In / On / Out<br>
+	This option allows you to specify a point, line, curve or face as the end element 
+	of the groove finish profile. If a face is specified, the end element is the 
+	intersection of the face and the working plane. The position of the end of machining 
+	is also defined with respect to this element. If needed, the profile may be 
+	extrapolated to the end element.</p>
+	<p><b>In / On / Out</b>: allows you to specify the Go-Go type positioning of 
+	the tool with respect to the end element. Go-Go type positioning of tool in 
+	general positions the tool based on its radius and tool compensation number. 
+	This means positioning will vary for different tool insert geometries with respect 
+	to the limit and there is possibility of tool going beyond limit even with IN 
+	option. The On option is always used for a point type start element.</p>
+	<p>Note: To avoid collisions of tool with Limit geometry or unwanted machining 
+	beyond limits with IN option, either define limits with suitable offset value 
+	or include Limit geometry as part element (this is better wherever applicable) 
+	and avoid limit definition.</p>
+	<p><b>Relimiting the area to machine by means of limit elements</b></p>
+	<p>If you specify a point, it is projected onto the part profile. <br>
+	A line through the projected point parallel to the radial axis delimits the 
+	area to machine.</p>
+	<p>If you specify a line, its intersection with the part profile is calculated 
+	(if necessary, the line is extrapolated). <br>
+	A line through the intersection point parallel to the radial axis delimits the 
+	area to machine.</p>
+	<p>If you specify a curve, its intersection with the part profile is calculated 
+	(if necessary, the curve is extrapolated using the tangent at the curve extremity).
+	<br>
+	A line through the intersection point parallel to the radial axis delimits the 
+	area to machine.</p>
+	<h4><a name="pgfId=1045108"></a><a name="41491"></a>Orientation for Groove Finish 
+	Turning</h4>
+	<a name="ix-Internal Groove Finish Turning"></a>
+	<a name="ix-External Groove Finish Turning"></a>
+	<a name="ix-Frontal Groove Finish Turning"></a>
+	<a name="ix-Inclined Groove Finish Turning"></a><ul>
+		<li><b>Orientation</b>: Internal / External / Frontal / Other<br>
+		This option allows you to define the orientation of the groove to be machined.</li>
+	</ul>
+	<blockquote>
+			<p><a name="pgfId=1054212"></a>When Orientation is set to Other, you 
+			must specify the
+			<a name="ix-Groove Finish Turning parameter:Angle of Incline"></a>
+			<b>Angle of Incline</b>. </p>
+	</blockquote>
+	<h4><a name="pgfId=1052951"></a><a name="99214"></a>Corner Processing for Groove 
+	Finish Turning </h4>
+	<p><a name="pgfId=1057745"></a>
+	<a name="ix-Groove Finish Turning parameter:Corner Processing"></a>The following 
+	options allow you to define how corners of the profile are to be machined:</p>
+	<ul>
+		<li>Follow profile: no corners are to be machined along the profile</li>
+		<li>Chamfer: only 90 degree corners of the profile are chamfered</li>
+		<li>Rounded: all corners of the profile are rounded.</li>
+	</ul>
+	<p><a name="pgfId=1054911"></a><a name="marker=1109453"></a>Corner processing 
+	is proposed for <b>Entry, Exit </b>and<b> Other corners</b>.</p>
+	<ul>
+		<li>Chamfer Length if Other corner processing mode is Chamfer.</li>
+		<li>Corner Radius if Other corner processing mode is Rounded.</li>
+		<li>Entry Corner Chamfer Length on first flank of groove when Entry corner 
+		processing mode is Chamfer</li>
+		<li>Entry Corner Radius on first flank of groove when Entry corner processing 
+		mode is Corner</li>
+		<li>Entry Corner Angle on first flank of groove when Entry corner processing 
+		mode is Corner</li>
+		<li>Exit Corner Chamfer Length on last flank of groove when Exit corner 
+		processing mode is Chamfer</li>
+		<li>Exit Corner Radius on last flank of groove when Exit corner processing 
+		mode is Corner</li>
+		<li>Exit Corner Angle on last flank of groove when Exit corner processing 
+		mode is Corner.</li>
+	</ul>
+	<p>The Entry/Exit corners are determined according to the specified
+	<a href="#machdir">machining direction</a> and not by the tool motion. <i>Entry 
+	Corner</i> means the first corner on the Part profile in the specified machining 
+	direction and <i>Exit Corner</i> means the last corner on the Part profile in 
+	the specified machining direction. </p>
+	<h4><a name="pgfId=55410"></a><a name="98334"></a>Part Offsets for Groove Finish 
+	Turning</h4>
+	<ul>
+		<li><b>Part offset</b>, which is defined perpendicular to the part profile.</li>
+		<li><b>Axial part offset.</b></li>
+		<li><b>Radial part offset</b>.</li>
+	</ul>
+	<ul>
+		<li><b>Start limit offset</b>: distance with respect to the start element 
+		(only if start element is a line or a curve, and when In or Out is set for 
+		start element positioning).</li>
+		<li><b>End limit offset</b>: distance with respect to the end element (only 
+		if end element is a line or a curve, and when In or Out is set for end element 
+		positioning).</li>
+	</ul>
+	<blockquote>
+			<p>Offsets can be positive or negative with any absolute value. The 
+			global offset applied to the part profile is the resulting value of 
+			the normal, axial and radial offsets. In addition to these global offsets, 
+			local values can be applied to segments, curves and arcs of the part 
+			profile.</p>
+	</blockquote>
+	<h3><a name="pgfId=1053364"></a>Machining Strategy Parameters for Groove Finish 
+	Turning</h3>
+	<h4><a name="pgfId=1071576"></a><a name="47629"></a>Path Definition for Groove 
+	Finish Turning</h4>
+	<ul>
+		<li><b><a name="machdir"></a>Machining Direction</b><br>
+		You can specify the machining direction by means of: <ul>
+			<li>To or From Head for Internal and External machining</li>
+			<li>To or From Spindle for Frontal machining</li>
+			<li>Right or Left of Groove for machining an inclined groove.</li>
+		</ul>
+		</li>
+	</ul>
+	<blockquote>
+			<p><a name="pgfId=1071581"></a>If start and end elements are defined 
+			that are in conflict with the machining direction, then these elements 
+			will be reversed automatically. </p>
+	</blockquote>
+	<ul>
+		<li><b>Clearance<br>
+		</b>This value defines the clearance to be applied to the next flank after 
+		the first machined flank. The bottom of the groove will be machined up to 
+		the position defined by this clearance value. <p>Note that for operations 
+		with Orientation set to <kbd>Other</kbd>, the clearance value is not applied 
+		for grooves with an inclined groove bottom.<br>
+		<img border="1" src="b35doc/english/online/lmgug_c2/images/InclinedGooveBottom.gif" width="255" height="175"></p>
+		</li>
+		<li><b>Overlap<br>
+		</b>Amount of machining overlap at the bottom of the groove.</li>
+	</ul>
+	<blockquote>
+			<p><a name="R18GrooveBottomConditions"></a>Note: The sum of the Clearance 
+			and the Overlap should be less than or equal to the groove bottom width. 
+			Otherwise a warning message is issued.<br>
+			The groove bottom width is the horizontal bottom of the groove, or the 
+			length of the bottom element of the groove where there is no vertical 
+			component. For a circular groove, the groove bottom width is zero.
+			</p>
+	</blockquote>
+	<ul>
+		<li><b>Under Spindle Axis Machining</b><br>
+		When finishing in frontal mode, this option allows you to request machining 
+		under the spindle axis.</li>
+		<li><b>Contouring for Outside Corners</b>: Angular / Circular<br>
+		Allows you to define whether contouring of corners is to be angular or circular. 
+		Note that the part profile is respected in this case.</li>
+		<li><b>Machining Tolerance</b> for following the groove finish profile.</li>
+	</ul>
+	<h4><a name="pgfId=1071585"></a><a name="54906"></a>Lead-in for Groove Finish 
+	Turning</h4>
+	<a name="ix-Groove Finish Turning parameter:Lead-in"></a><ul>
+		<li><b>First Flank Lead-in: Linear / Circular</b></li>
+	</ul>
+	<blockquote>
+			<p><a name="pgfId=1071587"></a>Defines the type of lead-in at lead-in 
+			feedrate on the first flank of the groove. </p>
+			<ul>
+				<li>Linear: lead-in up to the point where first flank machining 
+				starts is defined by means of the <b>first lead-in distance</b> 
+				and <b>first lead-in angle</b> parameters.</li>
+				<li>Circular: lead-in is circular and tangent to the point where 
+				first flank machining starts. It is defined by means of the <b>first 
+				lead-in radius</b> and <b>first lead-in angle</b> parameters.</li>
+			</ul>
+			<p>Note that the first lead-in angle is defined with respect to the 
+			normal to the cutting direction. The figure below shows the effect of 
+			a positive first lead-in<b> </b>angle (external machining is assumed).</p>
+			<p>
+			<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-36.gif" width="265" height="272"></p>
+	</blockquote>
+	<ul>
+		<li><b>Last Flank Lead-in: Linear / Circular</b>&nbsp; <br>
+		Defines the type of lead-in at lead-in feedrate on the last flank of the 
+		groove. <ul>
+			<li>&nbsp; Linear: lead-in up to the point where last flank machining 
+			starts is defined by means of the <b>last lead-in distance</b> and<b> 
+			last lead-in angle</b> parameters. </li>
+			<li>Circular: lead-in is circular and tangent to the point where last 
+			flank machining starts. It is defined by means of the <b>last lead-in 
+			radius</b> and <b>last lead-in angle</b> parameters.</li>
+		</ul>
+		<p>Note that the last lead-in angle is defined with respect to the normal 
+		to the cutting direction. The figure below shows the effect of a positive 
+		last lead-in<b> </b>angle (external machining is assumed).</p>
+		<p>
+		<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-38.gif" width="320" height="266"></p>
+		</li>
+		<li><b>Other Flank Lead-in: Linear / Circular</b><br>
+		For a groove that has multiple recesses, this option defines the type of 
+		lead-in required to machine flanks other than the first and last flanks.</li>
+	</ul>
+	<blockquote>
+			<ul>
+				<li><b>Other Lead-in Distance</b> on other flanks of the groove 
+				when other flank lead-in type is Linear</li>
+				<li><b>Other Lead-in Angle</b> on other flanks of the groove when 
+				other flank lead-in type is Linear or Circular</li>
+				<li><b>Other Lead-in Radius</b> on other flanks of the groove when 
+				other flank lead-in type is Circular.</li>
+			</ul>
+			<p>&nbsp;Note that the other lead-in angle is defined with respect to 
+			the cutting direction.</p>
+	</blockquote>
+	<h4><a name="pgfId=1071613"></a><a name="55904"></a>Lift-off for Groove Finish 
+	Turning</h4>
+	<a name="ix-Groove Finish Turning parameter:Lift-off"></a><ul>
+		<li><b>Lift-off Type: Linear / Circular</b></li>
+	</ul>
+	<blockquote>
+			<p><a name="pgfId=1071602"></a>Defines the type of lift-off from the 
+			groove at lift-off feedrate. </p>
+			<ul>
+				<li><b>Lift-off Distance</b> when lift-off type is Linear.</li>
+				<li><b>Lift-off Angle</b> when lift-off type is Linear or Circular.</li>
+				<li><b>Lift-off Radius</b> when lift-off type is Circular.</li>
+			</ul>
+			<p>Note that the lift-off angle is defined with respect to the normal 
+			to the cutting direction. The figure below shows the effect of a positive 
+			lift-off<b> </b>angle (external machining is assumed).</p>
+			<p>
+			<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-37.gif" width="257" height="252"></p>
+	</blockquote>
+	<p><a name="pgfId=1071595"></a><a name="F1@CYC71"></a>The example below shows 
+	Linear lead-in and Circular lift-off for Groove Finish Turning.</p>
+	<p><img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-26.gif" width="600" height="489">
+	</p>
+	<h3><a name="FandSGrooveFinish"></a>Feeds and Speeds for Groove Finish Turning</h3>
+	<p><a name="ix-Groove Finish Turning parameter:Feeds and Speeds"></a>
+	<a name="pgfId=1034563"></a><a name="marker=1080025"></a>Speed unit can be set 
+	to: </p>
+	<ul>
+		<li>Angular: spindle speed in revolutions per minute</li>
+		<li>Linear: constant cutting speed in units per minute</li>
+	</ul>
+	<p><a name="pgfId=1043029"></a>then you can give a Machining Speed value.
+	</p>
+	<p>You can also set a Maximum spindle speed value for the operation 
+	(by default, this value is the same as the Maximum spindle speed set on the 
+	Part Operation).</p>
+	<p align="left">The following feedrates can be set to either Angular units (length 
+	per revolution) or Linear units (length per minute):</p>
+	<ul>
+		<li><b>Machining feedrate</b></li>
+		<li><b>Chamfering feedrate</b> for machining chamfers or corners</li>
+		<li><b>Lift-off feedrate</b></li>
+		<li><b>Lead-in feedrate</b></li>
+		<li><b>Air cutting feedrate</b></li>
+	</ul>
+	<p>In addition to these global feedrates, local feedrates can be applied to 
+	segments, curves and arcs of the part profile.</p>
+	<p>Feedrates are also available for air cutting trajectories such as 
+	macro motions and path transitions. <br>
+	Note that RAPID feedrate can be replaced by Air cutting feedrate in tool trajectories 
+	(except in macros) by selecting the check box in the <kbd>Feed and Speeds
+	</kbd>tab page
+	<img border="1" src="b35doc/english/online/lmgug_c2/images/TabFeedG.gif" align="middle" width="36" height="22">.</p>
+		<p>
+		<img src="b35doc/english/online/lmgug_c2/images/AirCutting01.gif" width="363" height="76" class="style2"></p>
+		<p>You can select <kbd>Air Cutting feed-rate</kbd> as Linear (feed per 
+		minute) or Angular (feed per revolution). When you select it as Angular the 
+		unit is set to mm_turn, the unit is set to mm_mn for Linear.</p>
+		<p>The changes in unit of <kbd>Air cutting feed-rate</kbd>, are also reflected in APT 
+		file output. Calculated cycle time in Properties dialog box of MO also 
+		get changed. There are changes in total time and machining time on tool 
+		path replay dialog box.</p>
+	<h3><a name="pgfId=1053814"></a><a name="25428"></a>Tool Compensation for Groove 
+	Finish Turning </h3>
+	<p><a name="ix-Groove Finish Turning parameter:Tool Compensation"></a>
+	<a name="pgfId=1063655"></a>You can select a <b>tool compensation number </b>
+	corresponding to the desired tool output point. Note that the usable compensation 
+	numbers are defined on the tool assembly linked to the machining operation.
+	<a name="pgfId=1063656"></a>If you do not select a tool compensation number, 
+	the output point corresponding to type P9 will be used by default. </p>
+	<p><a name="pgfId=1103851"></a><a name="marker=1108238"></a>
+	<a name="ix-Groove Finish Turning parameter:CUTCOM"></a><b>CUTCOM (Cutter Compensation)</b>: 
+	None / On / Reverse<br>
+	If this option is set to On or Reverse, the NC output will include CUTCOM instructions 
+	in approach and retract paths for cutter compensation.</p>
+	<ul>
+		<li>On: CUTCOM/RIGHT instruction generated if tool is to the right of the 
+		tool path and CUTCOM/LEFT if tool is to the left of the tool path.</li>
+		<li>Reverse: CUTCOM/RIGHT instruction generated if tool is to the left of 
+		the tool path and CUTCOM/LEFT if tool is to the right of the tool path.</li>
+	</ul>
+	<p><a name="pgfId=1103857"></a>See <a href="page11195.html">Cutter Compensation 
+	with Finish Operations</a> for more information.&nbsp; </p>
+	<p><a name="pgfId=1063657"></a>Note that the change of output point is managed 
+	automatically if you have set the <a name="marker=1108239"></a>
+	<a name="ix-Groove Finish Turning parameter:Change Output Point"></a><b>Change 
+	Output Point</b> option. <a name="pgfId=1103844"></a>If the output point is 
+	consistent with the flank of the groove to be machined, the output point is 
+	changed when the other flank of the groove is machined. At the end of the operation, 
+	the output point is the same as it was at the start of the operation.
+	<a name="pgfId=1071282"></a>See<a href="page11196.html"> Changing the Output 
+	Point</a> for more information.</p>
+	<h3><a name="pgfId=1094409"></a>Approach and Retract Macros for Groove Finishing</h3>
+	<p><a name="pgfId=1097969"></a>The following <a name="marker=1097967"></a>Approach 
+	and <a name="marker=1097968"></a>Retract macros are proposed: Direct, Axial-radial, 
+	Radial-axial, and Build by user.<br>
+	<a name="pgfId=1097970"></a>The selected macro type (Approach or Retract) defines 
+	the tool motion before or after machining. </p>
+	<p>Various feedrates are available for the approach and retract motions (RAPID, 
+	lead-in, lift-off, and so on). Local feedrates can be set to either Angular 
+	units (length per revolution) or Linear units (length per minute).</p>
+	<p>See
+	<a href="page11368.html" target="_blank">
+	Define Macros on a Turning Operation</a> for more information.</p>
+
+	</body>
+
+</html>
+

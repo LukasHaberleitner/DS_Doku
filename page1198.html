@@ -1,0 +1,86 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="2">
+ <meta name="MonocodingFlag" content="L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Setting Up Forward and Reverse Proxies</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>
+ Setting Up Forward and Reverse Proxies</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" id="table1">
+   <tr>
+     <td valign="top" width="35"><img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top" width="100%">As far as the server network is concerned, no additional configuration 
+     is needed since the port 80, dedicated to the HTTP protocol by standard, 
+     can be used. However, this is not mandatory and any other port can be used, 
+     provided it is open on the firewall. On this server-side, both direct and 
+     tunneled connections are allowed with the same Orbix daemon. All servers 
+     and clients lying inside the firewall can connect to all other servers 
+     without tunneling.
+     <p>Network security, and especially user 
+     authentication, is still managed by the corporate firewall and/or HTTP 
+     proxy server, that enforce rules controlling which client can connect to 
+     which server on which port. In particular, the tunnel client process is 
+     able to handle authentication challenges from the HTTP proxy server (only 
+     base-64 &quot;Basic&quot; authentication is currently supported).</p>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="35">&nbsp;</td>
+     <td valign="top" width="100%">The HTTP and HTTPS (SSL) Tunneling solutions 
+     can be totally integrated in a traditional Web-oriented network 
+     infrastructure. On the server side, this kind of network infrastructure is 
+     generally composed of a De-Militarized Zone (DMZ), protected by a first 
+     firewall, that hosts servers (Web servers, DNS servers, ...) directly 
+     accessible from the Internet. Then a second firewall protects the internal 
+     network that hosts back-end servers accessible only from the DMZ. Generally 
+     only HTTP port 80 and HTTPS port 443 will be open on the firewalls, hence 
+     the need for tunneling non HTTP traffic.<p>As far as Web servers are 
+     concerned, in many cases the Web server itself is not present in the DMZ 
+     but is located in the internal network and is represented in the DMZ by a 
+     Reverse Proxy server. A Reverse Proxy server is the server-side equivalent 
+     of a Proxy server: its role is to represent the server from the client 
+     point of view just like the Proxy server represents the client from the 
+     server point of view. This kind of infrastructure is much more secure and 
+     allows features such as load balancing.</p>
+     <p>We will base all the following deployment on the most common and general 
+     Web-oriented network infrastructure that may exist on a site wishing to 
+     share its servers with the external network. Here is a logical 
+     representation of this assumed network topology:</p>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/LCA_HTTPTunnelTopology01_NLS.gif" width="616" height="463"></p>
+     <p>As can be seen, we consider three different network domains: the 
+     external domain of the client applications, the domain of the DMZ (hosting 
+     a Reverse Proxy server in particular), and the internal domain of the 
+     server applications. The internal domain cannot be seen from the external 
+     domain, only the DMZ domain can. Notice that on the client side, a Proxy 
+     server can be deployed but its role does not change the preceding 
+     considerations about the network. It is just an optional representative of 
+     a client host. We suppose also that each domain comes with its own Domain 
+     Name Service (DNS) allowing to locate a network host in this domain from 
+     its fully qualified domain name (FQDN).</p>
+     <p>The Reverse Proxy server can be secured or not, that is, be listening on 
+     open port 80 and/or 443. If it is secured, SSL protocol requires that it 
+     has a valid certificate to be presented to the SSL clients for acceptance. 
+     The Reverse Proxy server can in turn connect to the back-end servers using 
+     secure protocol or not. In the first case, the back-end servers must have a 
+     valid certificate to be presented to the Reverse Proxy server for 
+     acceptance. Though this kind of configuration is supported by the current 
+     SSL Tunneling solution, we will not deal with it in our example. We will 
+     make the simple assumption that the Reverse Proxy server connects to the 
+     back-end servers using open HTTP port 80. This avoids managing SSL 
+     intricacies on the back end, performance overhead, and so on.<p>&nbsp;<p>&nbsp;<p>&nbsp;</td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

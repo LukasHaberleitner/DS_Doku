@@ -1,0 +1,178 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+  <head>
+  <meta name="MonocodingType" content="0">
+  <meta name="MonocodingFlag" content="D2">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Language" content="en-us">
+  <title>About Resource Simulation</title>
+  <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta name="Microsoft Border" content="none, default">
+</head>
+
+ 
+  <h1>
+      &nbsp;<a name="DNBSimCmdHeader.DELMSimResourceSimulationHdr"></a>About Resource Simulation<a name="ix-commands::Resource Simulation;Resource Simulation command"></a>
+	<a name="ix-about:resource simulation"></a></h1>
+  <table border="0" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td valign="top">
+      <img border="0" src="b35doc/english/online/icons_C2/common/abasic.gif" width="32" height="32"></td>
+      <td valign="top">The <kbd>Resource Simulation </kbd>
+         <img border="0" src="b35doc/english/online/icons_C2/images/I_DNBSimResourceSimulationP2.gif" width="24" height="24"> 
+		command's basic functions (e.g., the VCR-like buttons) function 
+		identically to those of
+        <kbd>Process Simulation</kbd> <img border="0" src="b35doc/english/online/icons_C2/images/I_DNBSimProcessSimulationP2.gif" width="24" height="24">.&nbsp; 
+		However, the purpose of <kbd>Resource Simulation </kbd>
+         <img border="0" src="b35doc/english/online/icons_C2/images/I_DNBSimResourceSimulationP2.gif" width="24" height="24"> 
+		differs from that of
+        <kbd>Process Simulation</kbd> <img border="0" src="b35doc/english/online/icons_C2/images/I_DNBSimProcessSimulationP2.gif" width="24" height="24">, 
+		and this page describes those differences.</td>
+    </tr>
+    <tr>
+      <td valign="top"></td>
+      <td valign="top">There are two different ways to use <kbd>Resource 
+		Simulation </kbd>
+         <img border="0" src="b35doc/english/online/icons_C2/images/I_DNBSimResourceSimulationP2.gif" width="24" height="24">:<ul>
+		<li>If you <a href="#hj-first">select the command first</a>, the whole 
+		resource world (i.e. the whole hierarchy of the processes present in the 
+		resource tree) is included in the simulation. </li>
+		<li>If you <a href="#hj-resfirst">select the resource first</a>, 
+		before clicking <kbd>Resource Simulation </kbd>
+		<img border="0" src="b35doc/english/online/icons_C2/images/I_DNBSimResourceSimulationP2.gif" width="24" height="24">,&nbsp; 
+		only the selected resource&#8217;s behavior (as well as the behavior of all 
+		its children) is simulated. This simulation occurs in the context of the 
+		whole world, i.e., all events that occurred before that resource&#8217;s 
+		behaviors begin are first simulated in the background (without 
+		graphics), in order for the world to be at the state where the previous 
+		resources left off. Then the selected resource&#8217;s behaviors are 
+		simulated, in addition to everything else that runs in parallel with 
+		them.</li>
+		</ul>
+		<p>Although this command is not intended to simulate individual 
+		activities under a resource behavior, you can run the command by 
+		selecting an individual activity first, also. In that case, <kbd>Resource Simulation 
+		</kbd>
+		<img border="0" src="b35doc/english/online/icons_C2/images/I_DNBSimResourceSimulationP2.gif" width="24" height="24"> 
+		tries to find the closest ancestor of the preselected activity that: </p>
+		<ul>
+			<li>is a logical resource and </li>
+			<li>has a valid Resource Behavior. </li>
+		</ul>
+		<p>If no ancestor can be found to match this criteria, the root resource 
+		is simulated.</td>
+    </tr>
+    <tr>
+      <td valign="top">
+      &nbsp;</td>
+      <td valign="top">
+		<h2>When You Select Resource Simulation First<a name="hj-first"></a></h2>
+		</td>
+    </tr>
+    <tr>
+      <td valign="top">
+      &nbsp;</td>
+      <td valign="top">Starting with the root resource within the PPR tree's 
+		resource list, all the behaviors of the resources, and their child 
+		resources are included in the simulation.&nbsp; The behaviors of 
+		different resources are not linked with timing constraints However, the 
+		physical activity of a resource behavior (known as a Task Specification 
+		Activity or TSA) may have links 
+		underneath the resource behaviors.&nbsp; Possible links are:<ul>
+		<li>precedence constraints</li>
+		<li>synchronization links (i.e., start/start and end/end links). </li>
+		</ul>
+		<p>These are taken into account during the simulation. The TSAs 
+		belonging to the same behavior are linked through&nbsp; control flow 
+		links. Also, the starting time sets for different TSAs are obeyed by 
+		the simulation, as long as the sets do not conflict with other time 
+		constraints defined for the given TSA. </p>
+		<p>In the absence of such links, all behaviors run in parallel, even if 
+		the behaviors are across multiple levels in the resource hierarchy.</p>
+		<p>When the TSAs under different behaviors are linked with precedence 
+		constrains or synchronization constraints, this determines the sequence 
+		of execution across behaviors. For example, suppose there are two 
+		stations: Station 1, and Station 2, and their child resource behaviors, 
+		Station1Behavior, and Station2Behavior.&nbsp; Each station behavior 
+		includes a load and unload activity. If there is a precedence constraint 
+		between Unload1 (under Station1Behavior) and Load2 (under 
+		Station2Behavior), it is honored during the simulation, and therefore 
+		Station1Behavior and Station2Behavior do not run in parallel.</td>
+    </tr>
+    <tr>
+      <td valign="top">
+      &nbsp;</td>
+      <td valign="top">
+		<h3>Physical Resources</h3>
+		</td>
+    </tr>
+    <tr>
+      <td valign="top">
+      &nbsp;</td>
+      <td valign="top">If a robot/physical resource appears in the resource 
+		hierarchy, but is not assigned to any TSAs, then its tasks are not 
+		simulated as part of simulating its parent resource behavior. </td>
+    </tr>
+    <tr>
+      <td valign="top">
+      &nbsp;</td>
+      <td valign="top">If a TSA has a robot task assigned to it, then the 
+		simulation simulates the active robot task for that assignment and 
+		ignores any child activities of the TSA itself. This is consistent with 
+		and identical to how simulation treats robot tasks assigned to process 
+		activities in the process tree.</td>
+    </tr>
+    <tr>
+      <td valign="top">
+      &nbsp;</td>
+      <td valign="top">
+		<h2>When You Select a Resource First<a name="hj-resfirst"></a></h2>
+		</td>
+    </tr>
+    <tr>
+      <td valign="top">
+      &nbsp;</td>
+      <td valign="top">
+      When a logical resource is pre-selected, the logical resource&#8217;s behavior 
+		and/or its child behaviors are simulated (if resource behavior is 
+		absent then only child behaviors are simulated). However, the whole 
+		resource world as described in the previous section is included behind 
+		the scenes. This is for the purpose of updating the world to the state 
+		at which it would be at the beginning of the selected resource&#8217;s 
+		behavior/process. This is referred to as simulating the selected resource 
+		in the context of the whole resource hierarchy.
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">
+      &nbsp;</td>
+      <td>If activities have precedence constraints, the precedence constraints 
+      are observable in the simulation.</td>
+    </tr>
+    <tr>
+      <td valign="top">
+      &nbsp;</td>
+      <td>
+		<h3>3D States or Initial Conditions</h3>
+		</td>
+    </tr>
+    <tr>
+      <td valign="top">
+      &nbsp;</td>
+      <td>If 3D states or initial conditions are defined on individual TSAs, they 
+		are applied by the simulation engine at the beginning or end of the TSA 
+		itself</td>
+    </tr>
+    </table>
+  <center>
+  <p align="center">&nbsp;
+  </p>
+  </center>
+
+  </body>
+</html>
+
+

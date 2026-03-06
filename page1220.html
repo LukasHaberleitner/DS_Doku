@@ -1,0 +1,932 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Detailed Scenario Illustrating Concatenation and Inheritance Mechanisms
+ </title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Detailed Scenario Illustrating Concatenation and Inheritance 
+ Mechanisms</h1>
+ <table Border="0" CELLSPACING="0" valign="top">
+   <tr valign="top" BORDER="0">
+     <td valign="top" align="left"></td>
+     <td valign="top">This section contains a lengthy but comprehensive scenario 
+     illustrating how the setting concatenation and inheritance mechanism works.
+     <p>The scenario involves one end user and two administration levels, 
+     explains what happens when both administrators successively set, explicitly 
+     modify, lock and unlock settings, and describes the impact on the end user 
+     inheriting these settings and who in turn explicitly modifies and resets 
+     settings.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" align="left">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td valign="top">We assume before reading this scenario that you are 
+     already familiar with the following concepts:
+     <ul>
+       <li>basic settings concatenation and inheritance mechanisms</li>
+       <li>resetting settings</li>
+       <li>locking and unlocking settings.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" align="left">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top">The scenario presents a list of tables containing settings 
+     visible to or specified by Administrators 0 and 1, and visible to or 
+     specified by the User.
+     <p><b>Legend</b></p>
+     <p>Black: unlocked values inherited from the higher administration level, 
+     or from software defaults</p>
+     <p><font color="#0000FF"><b>Blue</b></font>: explicitly modified values</p>
+     <p><font color="#FF6633"><b>Orange</b></font>: values locked by the current 
+     administrator</p>
+     <p><font color="#FF0000"><b>Red</b></font>: inherited locked values</p>
+     <p>(X, Y, Z) this expression represents the state of the setting where:</p>
+     <ul>
+       <li>X represents the administration level where the value has been set:<ul>
+         <li>0 or 1 (meaning Admin 0 or Admin 1): specifies the level where the 
+         setting has been set in the administration concatenation. &quot;0&quot; means 
+         that the highest level administrator has set this setting.</li>
+         <li>D means Default value: this means that no one has set this setting 
+         and thus the value is the code default value.</li>
+       </ul>
+       </li>
+       <li>Y represents the administration level where the setting has been 
+       locked:<ul>
+         <li>0 or 1 (meaning Admin 0 or Admin 1): specifies the level where the 
+         setting has been locked in the administration concatenation. 0 means 
+         that the administrator of highest level has locked this setting. The 
+         level X and Y can be different. In this case, we have necessary X &lt;= Y.
+         </li>
+         <li>U is for Unlocked meaning that the parameter has not been locked</li>
+       </ul>
+       </li>
+       <li>Z specifies if the parameter has been explicitly modified at the 
+       current level by the logged user (or administrator):<ul>
+         <li>T for TRUE meaning that the value has been explicitly modified and 
+         thus is not inherited</li>
+         <li>F for FALSE meaning that the current value of the setting is 
+         inherited from an administrator.</li>
+       </ul>
+       </li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" align="left">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top"><b>1.</b> The initial status of the settings after 
+     installation is:<br>
+     <br>
+     <table border="1">
+       <tr>
+         <td><b>Setting</b><b><br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center">a1 (D, U, F)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center">a1 (D, U, F)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center">a1 (D, U, F)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+     </table>
+     <p>The settings visible to Admin 0, Admin 1 and User are identical: they 
+     are the default values provided by the software.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" align="left"></td>
+     <td valign="top"><b>2.</b> Admin 0 explicitly changes Setting 1 to value 
+     b1:<br>
+     <br>
+     <table border="1">
+       <tr>
+         <td><b>Setting</b><b><br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1 </td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#0000FF"><b>b1 </b></font>(D, U, T)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center">b1 (D, U, F)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center">b1 (D, U, F)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+     </table>
+     <p>Admin 1 and User inherit the value b1.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" align="left"></td>
+     <td valign="top"><b>3. </b>User explicitly changes Setting 2 to value b2:<br>
+     <br>
+     <table border="1">
+       <tr>
+         <td><b>Setting</b><b><br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#0000FF"><b>b1 </b></font>(D, U, T)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center">b1 (D, U, F)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center">b1 (D, U, F)</td>
+         <td align="center"><font color="#0000FF"><b>b2 </b></font>(D, U, T)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+     </table>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left"></td>
+     <td valign="top"><b>4. </b>Admin 1 explicitly changes Setting 2 to value c2 
+     and Setting 3 to value b3:<br>
+     <br>
+     <table border="1">
+       <tr>
+         <td><b>Setting</b><b><br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#0000FF"><b>b1 </b></font>(D, U, T)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center">b1 (0, U, F)</td>
+         <td align="center"><font color="#0000FF"><b>c2 </b></font>(D, U, T)</td>
+         <td align="center"><font color="#0000FF"><b>b3 </b></font>(D, U, T)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center">b1 (0, U, F)</td>
+         <td align="center"><font color="#0000FF"><b>b2 </b></font>(1, U, T)</td>
+         <td align="center">b3 (1, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+     </table>
+     <p>When the User starts a session, because the User has not yet explicitly 
+     modified Setting 3, the User inherits directly the new value b3. However, 
+     as the user has already explicitly modified Setting 2, the modification of 
+     Setting 2 made earlier by Admin 1 is not visible.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left"></td>
+     <td valign="top"><b>5</b><b>. </b>The User then resets the settings:<br>
+     <br>
+     <table border="1">
+       <tr>
+         <td><b>Setting</b><b><br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#0000FF"><b>b1 </b></font>(D, U, T)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center">b1 (0, U, F)</td>
+         <td align="center"><font color="#0000FF"><b>c2 </b></font>(D, U, T)</td>
+         <td align="center"><font color="#0000FF"><b>b3 </b></font>(D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center">b1 (0, U, F)</td>
+         <td align="center">c2 (1, U, F)</td>
+         <td align="center">b3 (1, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+     </table>
+     <p>After the reset, the User immediately sees that the value of Setting 1 
+     is imposed by Admin 0, whereas the values of Settings 2 and 3 are imposed 
+     by Admin 1. The main difference is that, for Setting 2, the User now 
+     inherits the value c2.<br>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left"></td>
+     <td valign="top"><b><a name="hj-Step6"></a>6</b><b>. </b>The User 
+     explicitly changes Setting 2 to value d2 and Setting 4 to value b4:<br>
+     <br>
+     <table border="1">
+       <tr>
+         <td><b>Setting</b><b><br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#0000FF"><b>b1 </b></font>(D, U, T)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center">b1 (0, U, F)</td>
+         <td align="center"><font color="#0000FF"><b>c2 </b></font>(D, U, T)</td>
+         <td align="center"><font color="#0000FF"><b>b3 </b></font>(D, U, T)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center">b1 (0, U, F)</td>
+         <td align="center"><font color="#0000FF"><b>d2 </b></font>(1, U, T)</td>
+         <td align="center">b3 (1, U, F)</td>
+         <td align="center"><font color="#0000FF"><b>b4 </b></font>(D, U, T)</td>
+       </tr>
+     </table>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left"></td>
+     <td valign="top"><b>7</b><b>. </b>Admin 1 locks Settings 1 and 2:<br>
+     <br>
+     <table border="1">
+       <tr>
+         <td><b>Setting</b><b><br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#0000FF"><b>b1 </b></font>(D, U, T)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center"><font color="#FF6633"><b>b</b></font><b><font color="#FF6633">1
+         </font></b>(0, L, F)</td>
+         <td align="center"><b><font color="#FF6633">c2 </font></b>(D, L, T)</td>
+         <td align="center"><font color="#0000FF"><b>b3 </b></font>(D, U, T)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center"><font color="#FF0000"><b>b</b></font><b><font color="#FF0000">1
+         </font></b>(0, 1, F)</td>
+         <td align="center"><b><font color="#FF0000">c2 </font></b>(1, 1, F)</td>
+         <td align="center">b3 (1, U, F)</td>
+         <td align="center"><font color="#0000FF"><b>b4 </b></font>(D, U, T)</td>
+       </tr>
+     </table>
+     <p>The User now inherits the values of Settings 1 and 2 directly: the 
+     values are locked so they cannot be modified.</p>
+     <p>Note that the value locked for the Setting 1 is directly inherited from 
+     the Admin 0. The lock and value can be set at different administration 
+     levels.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top"><b><a name="hj-Step8"></a>8. </b>Admin 1 unlocks Setting 1 and explicitly changes 
+     the value to d1:<br>
+&nbsp;<table border="1" id="table1">
+       <tr>
+         <td><b>Setting<br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#0000FF"><b>b1 </b></font>(D, U, T)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center"><b><font color="#0000FF">d1 </font></b>(0, U, T)</td>
+         <td align="center"><b><font color="#FF6633">c2 </font></b>(D, L, T)</td>
+         <td align="center"><font color="#0000FF"><b>b3 </b></font>(D, U, T)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center">d1 (1, U, F)</td>
+         <td align="center"><b><font color="#FF0000">c2 </font></b>(1, 1, F)</td>
+         <td align="center">b3 (1, U, F)</td>
+         <td align="center"><font color="#0000FF"><b>b4 </b></font>(D, U, T)</td>
+       </tr>
+     </table>
+     <p>Because the User has not yet explicitly changed (and therefore has not 
+     saved) Setting 1 before Admin 1 locked it earlier, the User now inherits 
+     the new value d1 from Admin 1 when the setting is unlocked.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top"><b><a name="hj-Step9"></a>9. </b>Admin 1 unlocks Setting 2 and explicitly changes 
+     the value to e2:<br>
+&nbsp;<table border="1" id="table2">
+       <tr>
+         <td><b>Setting<br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#0000FF"><b>b1 </b></font>(D, U, T)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center"><b><font color="#0000FF">d1 </font></b>(0, U, T)</td>
+         <td align="center"><font color="#0000FF"><b>e2 </b></font>(D, U, T)</td>
+         <td align="center"><font color="#0000FF"><b>b3 </b></font>(D, U, T)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center">d1 (1, U, F)</td>
+         <td align="center"><font color="#0000FF"><b>d2 </b></font>(1, U, T)</td>
+         <td align="center">b3 (1, U, F)</td>
+         <td align="center"><font color="#0000FF"><b>b4 </b></font>(D, U, T)</td>
+       </tr>
+     </table>
+     <p>Earlier in the scenario (<a href="#hj-Step6">step 6</a>), the User had 
+     already explicitly changed the value of Setting 2 to d2 before Admin 1 
+     locked it. This value was saved. Consequently, because the lock is no 
+     longer present, the User does not inherit the new value e2 from Admin 1 (as 
+     in <a href="#hj-Step8">step 8</a>).</p>
+     <p>In this case, once the setting has been unlocked, the User retrieves the 
+     value set in <a href="#hj-Step6">step 6</a>, i.e. d2.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top"><b>10. </b>Admin 1 sets Setting1 to c1 and Setting 2 to c2 
+     again and&nbsp; locks them:<br>
+&nbsp;<table border="1" id="table3">
+       <tr>
+         <td><b>Setting<br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#0000FF"><b>b1 </b></font>(D, U, T)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center"><b><font color="#FF6633">c1 </font></b>(0, L, F)</td>
+         <td align="center"><b><font color="#FF6633">c2 </font></b>(D, L, T)</td>
+         <td align="center"><font color="#0000FF"><b>b3 </b></font>(D, U, T)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center"><b><font color="#FF0000">c1 </font></b>(0, 1, F)</td>
+         <td align="center"><b><font color="#FF0000">c2 </font></b>(1, 1, F)</td>
+         <td align="center">b3 (1, U, F)</td>
+         <td align="center"><b><font color="#0000FF">b4</font></b> (D, U, T)</td>
+       </tr>
+     </table>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top"><b><a name="hj-Step11"></a>11.&nbsp; </b>The User resets:<br>
+&nbsp;<table border="1" id="table4">
+       <tr>
+         <td><b>Setting<br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#0000FF"><b>b1 </b></font>(D, U, T)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center"><b><font color="#FF6633">c1 </font></b>(0, L, F)</td>
+         <td align="center"><b><font color="#FF6633">c2 </font></b>(D, L, T)</td>
+         <td align="center"><font color="#0000FF"><b>b3 </b></font>(D, U, T)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center"><b><font color="#FF0000">c1 </font></b>(0, 1, F)</td>
+         <td align="center"><b><font color="#FF0000">c2 </font></b>(1, 1, F)</td>
+         <td align="center">b3 (1, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+     </table>
+     <br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top"><b>12. </b>Admin 1 unlocks Setting 1 and explicitly 
+     changes the value to d1, and unlocks Setting 2 and explicitly changes the 
+     value to e2:<br>
+&nbsp;<table border="1" id="table5">
+       <tr>
+         <td><b>Setting<br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#0000FF"><b>b1 </b></font>(D, U, T)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center"><b><font color="#0000FF">d1 </font></b>(0, U, T)</td>
+         <td align="center"><font color="#0000FF"><b>e2 </b></font>(D, U, T)</td>
+         <td align="center"><font color="#0000FF"><b>b3 </b></font>(D, U, T)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center">d1 (1, U, F)</td>
+         <td align="center">e2 (1, U, F)</td>
+         <td align="center">b3 (1, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+     </table>
+     <p>It is important here to note the difference with <a href="#hj-Step9">
+     step 9</a>. The user reset the setting in <a href="#hj-Step11">step 11</a>, 
+     and has also lost all modifications, therefore the d2 value of the Setting 
+     2 is lost and is not restored.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top"><b>13. </b>The User now explicitly changes the values of 
+     all four settings like this:<br>
+&nbsp;<ul>
+       <li>Setting 1 is changed to e1</li>
+       <li>Setting 2 is changed to f2</li>
+       <li>Setting 3 is changed to c3</li>
+       <li>Setting 4 is changed to b4</li>
+     </ul>
+     <p>&nbsp;</p>
+     <table border="1" id="table6">
+       <tr>
+         <td><b>Setting<br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#0000FF"><b>b1 </b></font>(D, U, T)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center">a3 (D, U, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center"><b><font color="#0000FF">d1 </font></b>(0, U, T)</td>
+         <td align="center"><font color="#0000FF"><b>e2 </b></font>(D, U, T)</td>
+         <td align="center"><font color="#0000FF"><b>b3 </b></font>(D, U, T)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center"><font color="#0000FF"><b>e1 </b></font>(1, U, T)</td>
+         <td align="center"><font color="#0000FF"><b>f2 </b></font>(1, U, T)</td>
+         <td align="center"><font color="#0000FF"><b>c3 </b></font>(1, U, T)</td>
+         <td align="center"><font color="#0000FF"><b>b4 </b></font>(D, U, T)</td>
+       </tr>
+     </table>
+     <p>Both Admin 1 and the User now inherit the locks and values of Settings 1 
+     and 3, which can no longer be modified.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top"><b>15. </b>Admin 0 resets:<br>
+&nbsp;<table border="1" id="table7">
+       <tr>
+         <td><b>Setting<br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#FF6633"><b>a1 </b></font>(D, L, F)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center"><font color="#FF6633"><b>a3 </b></font>(D, L, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center"><font color="#FF0000"><b>a</b></font><b><font color="#FF0000">1
+         </font></b>(D, 0, F)</td>
+         <td align="center"><font color="#0000FF"><b>e2 </b></font>(D, U, T)</td>
+         <td align="center"><b><font color="#FF0000">a3 </font></b>(D, 0, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center"><font color="#FF0000"><b>a1 </b></font>(D, 0, F)</td>
+         <td align="center"><font color="#0000FF"><b>f2 </b></font>(1, U, T)</td>
+         <td align="center"><font color="#FF0000"><b>a3 </b></font>(D, 0, F)</td>
+         <td align="center"><font color="#0000FF"><b>b4 </b></font>(D, U, T)</td>
+       </tr>
+     </table>
+     <p>The locks are not removed by the reset, which works only on the values. 
+     Thus the two locks on Setting1 and 2 remain unchanged. The default value of 
+     Setting 1 is however restored.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top"><b>16. </b>The User finally resets the settings:<br>
+&nbsp;<table border="1" id="table8">
+       <tr>
+         <td><b>Setting<br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#FF6633"><b>a1 </b></font>(D, L, F)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center"><font color="#FF6633"><b>a3 </b></font>(D, L, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center"><font color="#FF0000"><b>a</b></font><b><font color="#FF0000">1
+         </font></b>(D, 0, F)</td>
+         <td align="center"><font color="#0000FF"><b>e2 </b></font>(D, U, T)</td>
+         <td align="center"><b><font color="#FF0000">a3 </font></b>(D, 0, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center"><font color="#FF0000"><b>a1 </b></font>(D, 0, F)</td>
+         <td align="center">e2<b><font color="#0000FF"> </font></b>(1, U, F)</td>
+         <td align="center"><font color="#FF0000"><b>a3 </b></font>(D, 0, F)</td>
+         <td align="center">a4<font color="#0000FF"><b> </b></font>(D, U, F)</td>
+       </tr>
+     </table>
+     <p>The value of Setting 2 is now e2, and the value of Setting 4 is now back 
+     to a4.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top"><b>17. </b>Admin 1 sets Setting 4 to b4:<br>
+&nbsp;<table border="1" id="table9">
+       <tr>
+         <td><b>Setting<br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#FF6633"><b>a1 </b></font>(D, L, F)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center"><font color="#FF6633"><b>a3 </b></font>(D, L, F)</td>
+         <td align="center">a4 (D, U, F)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center"><font color="#FF0000"><b>a</b></font><b><font color="#FF0000">1
+         </font></b>(D, 0, F)</td>
+         <td align="center"><font color="#0000FF"><b>e2 </b></font>(D, U, T)</td>
+         <td align="center"><b><font color="#FF0000">a3 </font></b>(D, 0, F)</td>
+         <td align="center"><font color="#0000FF"><b>b4</b></font> (D, U, T)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center"><font color="#FF0000"><b>a1 </b></font>(D, 0, F)</td>
+         <td align="center">e2<b><font color="#0000FF"> </font></b>(1, U, F)</td>
+         <td align="center"><font color="#FF0000"><b>a3 </b></font>(D, 0, F)</td>
+         <td align="center">a4<font color="#0000FF"><b> </b></font>(1, U, F)</td>
+       </tr>
+     </table>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top"><b>18. </b>Admin 0 sets Setting 4 to c4:<br>
+&nbsp;<table border="1" id="table10">
+       <tr>
+         <td><b>Setting<br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#FF6633"><b>a1 </b></font>(D, L, F)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center"><font color="#FF6633"><b>a3 </b></font>(D, L, F)</td>
+         <td align="center"><font color="#0000FF"><b>c4</b></font> (D, U, T)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center"><font color="#FF0000"><b>a</b></font><b><font color="#FF0000">1
+         </font></b>(D, 0, F)</td>
+         <td align="center"><font color="#0000FF"><b>e2 </b></font>(D, U, T)</td>
+         <td align="center"><b><font color="#FF0000">a3 </font></b>(D, 0, F)</td>
+         <td align="center"><font color="#0000FF"><b>b4</b></font> (0, U, T)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center"><font color="#FF0000"><b>a1 </b></font>(D, 0, F)</td>
+         <td align="center">e2<b><font color="#0000FF"> </font></b>(1, U, F)</td>
+         <td align="center"><font color="#FF0000"><b>a3 </b></font>(D, 0, F)</td>
+         <td align="center">a4<font color="#0000FF"><b> </b></font>(1, U, F)</td>
+       </tr>
+     </table>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top"><b>19. </b>Admin 0 locks Setting 4:<br>
+&nbsp;<table border="1" id="table11">
+       <tr>
+         <td><b>Setting<br>
+         /Level</b></td>
+         <td align="center"><b>Setting 1</b></td>
+         <td align="center"><b>Setting 2</b></td>
+         <td align="center"><b>Setting 3</b></td>
+         <td align="center"><b>Setting 4</b></td>
+       </tr>
+       <tr>
+         <td><b>Default</b></td>
+         <td align="center">a1</td>
+         <td align="center">a2</td>
+         <td align="center">a3</td>
+         <td align="center">a4</td>
+       </tr>
+       <tr>
+         <td><b>Admin 0</b></td>
+         <td align="center"><font color="#FF6633"><b>a1 </b></font>(D, L, F)</td>
+         <td align="center">a2 (D, U, F)</td>
+         <td align="center"><font color="#FF6633"><b>a3 </b></font>(D, L, F)</td>
+         <td align="center"><font color="#FF6633"><b>c4</b></font> (D, L, T)</td>
+       </tr>
+       <tr>
+         <td><b>Admin 1</b></td>
+         <td align="center"><font color="#FF0000"><b>a</b></font><b><font color="#FF0000">1
+         </font></b>(D, 0, F)</td>
+         <td align="center"><font color="#0000FF"><b>e2 </b></font>(D, U, T)</td>
+         <td align="center"><b><font color="#FF0000">a3 </font></b>(D, 0, F)</td>
+         <td align="center"><font color="#FF0000"><b>c4</b></font> (0, 0, F)</td>
+       </tr>
+       <tr>
+         <td><b>User</b></td>
+         <td align="center"><font color="#FF0000"><b>a1 </b></font>(D, 0, F)</td>
+         <td align="center">e2<b><font color="#0000FF"> </font></b>(1, U, F)</td>
+         <td align="center"><font color="#FF0000"><b>a3 </b></font>(D, 0, F)</td>
+         <td align="center"><font color="#FF0000"><b>c4</b></font><font color="#0000FF"><b>
+         </b></font>(0, 0, F)</td>
+       </tr>
+     </table>
+     <p>&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" align="left" colspan="2">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+
+ </body>
+
+</html>
+

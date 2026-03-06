@@ -1,0 +1,114 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Support of DMU Batches: Using the TEAM PDM URL Command</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+
+<meta name="Microsoft Theme" content="none, default">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Support of DMU Batches: Using the TEAM PDM URL Command </h1>
+ <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1" height="79">
+   <tr>
+     <td width="4%" valign="top" height="117">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td width="96%" height="117">DMU batch processes<a name="ix-DMU batch process"></a> 
+     such as CATDMUUtility, CATDMUBuilder etc., support documents stored in 
+     SmarTeam.
+     <p>The CATDMUUtility is a batch process enabling the generation of&nbsp; 
+     cgr, 3dmap, hcg, and wrl formats from a CATIA file stored in a SmarTeam database. The CATDMUBuilder creates CATProducts corresponding to 
+     product stored in SmarTeam and stores&nbsp;them on dedicated local directories</p>
+     <p>To run a DMU batch process, you need an input parameter that corresponds 
+     to the location of a SmarTeam document. To retrieve this 
+     TeamPDM URL, you first need to use the TEAM PDM URL command.</p>
+     <p>This task assumes that the system administrator has added the TEAM PDM 
+     URL command via SmarTeam Script Maintenance. For details, see
+     <a href="page14054.html">Support of DMU Batches (Creating the TEAM PDM URL 
+     Command)</a>.</td>
+   </tr>
+   <tr>
+     <td width="4%" valign="top" height="39">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="96%" height="39">
+     <h2>Retrieving the Document's Identifier </h2>
+     <p>The first step of the process consists of retrieving the identifier of 
+     the input document that needs to be processed with a DMU batch.</p>
+     <ol class="task">
+       <li>
+       <p class="task">Launch SmarTeam.</li>
+       <li>
+       <p class="task">Search for the CATIA document you want to convert with 
+       the DMU batch.</li>
+       <li>
+       <p class="task">Right-click the document and select <kbd>User Defined 
+       Tools &gt; TEAM PDM URL</kbd>.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber6">
+         <tr>
+           <td width="100%"><img border="1" src="b35doc/english/online/td1ug_c2/images/bt175NLS.gif" width="272" height="219"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task" align="center" style="text-align: left">Retrieve the 
+       information displayed.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber3">
+         <tr>
+           <td width="100%"><img border="0" src="b35doc/english/online/td1ug_c2/images/bt176NLS.gif" width="444" height="84"></td>
+         </tr>
+       </table>
+       <p class="task" align="center" style="text-align: left">The URL is always 
+       as follows:</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber5">
+         <tr>
+           <td width="100%"><span style="font-size:11.0pt"><code>
+           TeamPDM://DBExtractor?CLASSID.EQ. xxx.AND.OBJECTID.EQ. xxx.AND.Vers.EQ.1</code></span></td>
+         </tr>
+       </table>
+       <p class="task" align="center" style="text-align: left">The numbers 
+       corresponding to the document &#034;class id&#034; and &#034;object id&#034; are the only 
+       values you can modify. <br>
+       The output document is located on the File system and can be integrated 
+       in SmarTeam using the CATIA CAI Automation APIs.</li>
+     </ol>
+     <h2>Launching the DMU Batch</h2>
+     <p>Once the identifier of the input document has been retrieved, you can 
+     use the DMU batch you want.</p>
+     <ol class="task">
+       <li>
+       <p class="task">Launch the DMU batch using CATStart.<br>
+       For more information on how to launch the DMU batch, see the DMU 
+       Navigator Version 5 User's Guide.</li>
+       <li>
+       <p class="task">Use <kbd>TeamPDMURL </kbd>as the input parameter along 
+       with the <b><kbd>&#045;id</kbd></b><kbd> </kbd>option and <b><kbd>&#045;db TeamPDM</kbd></b>. 
+       For example:</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber4">
+         <tr>
+           <td width="100%">
+			<blink><code>
+           CATDMUUtility -id &quot;TeamPDM://DBExtractor?CLASSID.EQ. 99.AND.OBJECTID.EQ. 2512.AND.Vers.EQ.1&quot; 
+			-cgr -cache -db TeamPDM -server none -user joe</code></blink></td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+ </table>
+ <p align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

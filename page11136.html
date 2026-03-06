@@ -1,0 +1,290 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Optimizing the Evaluation of a Knowledge Expert Rule Base</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1>Optimizing the Evaluation of Knowledge Expert Rule Bases <a name="top"></a>&nbsp;<a name="ix-methodology"></a>
+<a name="ix-optimization"></a>&nbsp;<a name="ix-rule optimization"></a></h1>
+<p>This topic is designed to show you how to improve performances when working with 
+Knowledge Expert rules in large models.</p>
+<h2>Methodology</h2>
+<p>The proposed solutions to improve performances are the following:</p>
+<ul>
+	<li><a href="#Decrease the number of times the rules are parsed">Decrease the 
+	number of times the rules are solved</a></li>
+	<li><a href="#Change the way you use the And or Or condition">Change the way 
+	you use the And or Or condition</a></li>
+	<li><a href="#Use attributes instead of the GetAttribute method">Use attributes 
+	instead of the GetAttribute method</a></li>
+	<li><a href="#Use the Knowledge Expert language">Use the Knowledge Expert language</a></li>
+	<li><a href="#Use less variables as possible">Use less variables as possible</a></li>
+	<li><a href="#Use CAA to launch the solve">Use CAA to launch the solve</a></li>
+	<li><a href="#Use_Manual_Update_when_working_with_complex_Rule_Bases">Use Manual 
+	Update when working with complex Rule Bases</a></li>
+	<li><a href="#Make_sure_you_want_to_run_the_Rule_Base">Make sure you want to 
+	run the Rule Base</a></li>
+	<li><a href="#Handling Conditions">Handling Conditions With One Type</a></li>
+</ul>
+<p><a href="#top">
+<img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></p>
+<h3>Decrease the number of times the rules are solved<a name="Decrease the number of times the rules are parsed"></a></h3>
+<p>To do so, it is highly recommended to use the <code>
+<a href="page11122.html">&gt;</a></code> operator when working with 2 identical 
+types. </p>
+<div align="left">
+	<table border="0" cellpadding="2" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+		<tr>
+			<td width="36%" valign="top" bgcolor="#F2F2F2">
+			<font face="Arial" size="3"><code>WireA : Wire;WireB : Wire<br>
+			if (Elec_DistanceCommon(WireA,WireB) &gt; 100mm)<br>
+			Message (&quot;Problem&quot;)</code></font></td>
+			<td width="64%" valign="top">Not recommended: In the example opposite, 
+			the same type (wire) is used twice to compute the distance between two 
+			wires :<p>we go through the rule n&#178; 
+			times, n being the number of wires in the document. We have three wires 
+			(wire1,wire2, and wire3), so the following combinations are possible: 
+			wire1/wire1, wire1/wire2, wire1/wire3, wire2/wire1, wire2/wire2, wire2/wire3, 
+			wire3/wire1, wire3/wire2, wire3/wire3. The rule goes through each combination.
+			</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="36%" valign="top">&nbsp;</td>
+			<td width="64%" valign="top">&nbsp;</td>
+		</tr>
+		<tr>
+			<td width="36%" valign="top" bgcolor="#F2F2F2">
+			<font face="Arial" size="3"><code>WireA : Wire;WireB : Wire</code><p>
+			<code>if (WireA&gt;WireB AND Elec_DistanceCommon(WireA,WireB) &gt; 100mm) 
+			Message (&quot;Problem&quot;)</code></p>
+			<p></font></p>
+			</td>
+			<td width="64%" valign="top">Recommended: The combination wire1/wire1 
+			is not useful to compute the distance, and the distance between wire1/wire2, 
+			and wire2/wire1 is identical. The only way to optimize the rule is to 
+			add the following statement:&nbsp; WireA&gt;WireB (see opposite.) The rule 
+			is then solved n*(n+1)/2 times.<font face="Arial" size="3"><p>Warning: 
+			The weight of each variable cannot be foreseen. In the example, WireA 
+			is superior to WireB. With 3 wires (wire1, wire2, and wire3), it is 
+			impossible to know in advance if wire1 &gt; wire2 or if wire2 &gt;wire1. It 
+			is a a way to eliminate combinations that are not interesting.
+			</font></p>
+			</td>
+		</tr>
+	</table>
+</div>
+<p align="right"><a href="#top">
+<img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></p>
+<h3><a name="Change the way you use the And or Or condition">Change the way you 
+use the And or Or condition</a></h3>
+<p>When using the logical operators And/ Or in a condition, make sure that the condition 
+is structured as follows:</p>
+<ul>
+	<li>Attribute</li>
+	<li>Methods or functions that are not time-consuming (HasAttribute or GetAttributeString)</li>
+	<li>Methods that are time consuming (like Electrical functions for example.)</li>
+</ul>
+<font face="Arial" size="3">
+<p>And Condition: In the example below, we use the <code>Elec_DistanceCommon</code> 
+function, which is very time-consuming. So, before using this function, we use conditions 
+that will eliminate some cases: if one of the wires is not blue, the other conditions 
+(<code>WireB.Elec_Color == &quot;red&quot; AND Elec_DistanceCommon(WireA,WireB) &gt; 100mm</code>) 
+will not be examined.</p>
+<div align="left">
+	<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+		<tr>
+			<td width="100%" bgcolor="#F2F2F2"><font face="Arial" size="3">
+			<code>WireA : Wire; WireB : Wire</code><p><code>if (WireA.Elec_Color 
+			== &quot;blue&quot; AND WireB.Elec_Color == &quot;red&quot; AND Elec_DistanceCommon(WireA,WireB) 
+			&gt; 100mm)</code></p>
+			<p><code>Message(&quot;Problem&quot;)</code></font></p>
+			</td>
+		</tr>
+	</table>
+</div>
+<p>Or Condition: In the example below, if one of the wires is blue, the message 
+is fired without evaluating the other conditions, that is to say <code>Elec_DistanceCommon</code> 
+which is time-consuming.</p>
+<p>&nbsp;</p>
+<div align="left">
+	<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+		<tr>
+			<td width="100%" bgcolor="#F2F2F2"><font face="Arial" size="3">
+			<code>WireA : Wire; WireB : Wire</code><p><code>if (WireA.Elec_Color 
+			== &quot;blue&quot; OR WireB.Elec_Color == &quot;red&quot; OR Elec_DistanceCommon(WireA,WireB) 
+			&gt; 10mm)</code></p>
+			<p><code>Message(&quot;Problem&quot;)</code></font></p>
+			</td>
+		</tr>
+	</table>
+</div>
+</font>
+<p align="right"><a href="#top">
+<img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></p>
+<h3><a name="Use attributes instead of the GetAttribute method">Use attributes instead 
+of the GetAttribute method</a></h3>
+<font face="Helv" size="2">
+<p>It is strongly recommended to use attributes instead of using the GetAttribute 
+method.</p>
+<p>So, instead of writing: </p>
+<div align="left">
+	<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber6">
+		<tr>
+			<td width="100%" bgcolor="#F2F2F2"><font face="Helv" size="2"><code>
+			P:Part<br>
+			if P&nbsp;&gt;&nbsp;GetAttributeString(&quot;PartNumber&quot;) == &quot;Part.1&quot;<br>
+			Message(&quot;Probleme&quot;)</code></font></td>
+		</tr>
+	</table>
+</div>
+<p>Write:</p>
+<div align="left">
+	<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber6">
+		<tr>
+			<td width="100%" bgcolor="#F2F2F2"><font face="Helv" size="2"><code>
+			P:Part<br>
+			if P.PartNumber == &quot;Part.1&quot;<br>
+			Message(&quot;Probleme&quot;)</code></font></td>
+		</tr>
+	</table>
+</div>
+</font>
+<p>&nbsp;</p>
+<p align="right"><a href="#top">
+<img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></p>
+<h3><a name="Use the Knowledge Expert language">Use the Knowledge Expert language</a></h3>
+<p>When creating rules, use the Knowledge Expert language. Its scope is limited 
+because it allows the use of the
+<a href="page4292.html">If...then 
+keywords</a> only, but only in this case the process time will be optimized. <br>
+Therefore avoid using the following constructs:</p>
+<ul>
+	<li>else</li>
+	<li>for</li>
+	<li>let</li>
+	<li>set</li>
+	<li>while</li>
+</ul>
+<p align="right"><a href="#top">
+<img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></p>
+<h3><a name="Use less variables as possible">Use less variables as possible</a></h3>
+<p>It is recommended to use at most 2 variables. A possible workaround consists 
+in finding the second object using the first one.</p>
+<font face="Arial" size="3">
+<p>For example, when working with electrical applications, we may use two objects, 
+the bundle and the wire. The following rule is valid:</p>
+<div align="left">
+	<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4">
+		<tr>
+			<td width="100%" bgcolor="#F2F2F2"><font face="Arial" size="3">
+			<code>Bundle : BundleSegment ; Wire : Wire</code><p><code>if (Bundle&nbsp;&gt;&nbsp;GetAttributeBoolean(&quot;HEAT_RESISTANT&quot;) 
+			== FALSE AND Wire.Owner == Bundle AND Wire&nbsp;&gt;&nbsp;GetAttributeBoolean(&quot;HEAT_RESISTANT&quot;) 
+			== FALSE)</code></p>
+			<p><code>Message(&quot;Problem &quot;)</code></font></p>
+			</td>
+		</tr>
+	</table>
+</div>
+<p>But this rule is not optimized. This is especially true if you have many bundles 
+and wires. The rule below is optimized, the rule is solved a limited number of times:</p>
+<div align="left">
+	<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5">
+		<tr>
+			<td width="100%" bgcolor="#F2F2F2"><font face="Arial" size="3">
+			<code>Bundle : BundleSegment </code>
+			<p><code>if (Bundle&nbsp;&gt;&nbsp;GetAttributeBoolean(&quot;HEAT_RESISTANT&quot;) == FALSE 
+			AND Bundle &nbsp;&gt;&nbsp; Query(&quot;X:Wire&quot;, &quot;X&nbsp;&gt;&nbsp;GetAttributeBoolean(&#39;HEAT_RESISTANT&#39;) 
+			== FALSE&quot;)&nbsp;&gt;&nbsp;Size() &gt;1)</code></p>
+			<p><code>Message(&quot;Problem &quot;)</code></font></p>
+			</td>
+		</tr>
+	</table>
+</div>
+</font>
+<p align="right"><a href="#top">
+<img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></p>
+<h3><a name="Use CAA to launch the solve">Use CAA to launch the solve</a></h3>
+<p>To reduce the process time, if you know the objects that you want to work on, 
+use CAA to provide the solver with instances.</p>
+<p align="right"><a href="#top">
+<img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></p>
+<h3 align="left">
+<a name="Use_Manual_Update_when_working_with_complex_Rule_Bases">Use Manual Update 
+when working with complex Rule Bases</a></h3>
+<p align="left">Prefer Manual Update instead of Automatic Update when working in 
+a Part context. Using the Automatic Update increases the global computation time 
+when using a complex Rule Base. </p>
+<p align="left">You can manually update a Rule Base by:</p>
+<ul>
+	<li>
+	<p align="left">either Right-clicking the rule base and selecting <kbd>RuleBase 
+	Object &gt;&nbsp; Manual Complete Solve</kbd></p>
+	</li>
+	<li>
+	<p align="left">or Right-clicking the rule base and selecting <kbd>RuleBase 
+	Object &gt; Manual Optimized Solve</kbd></p>
+	</li>
+</ul>
+<h3 align="left"><a href="#top">
+<img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h3>
+<h3 align="left"><a name="Make_sure_you_want_to_run_the_Rule_Base">Make sure you 
+want to run the Rule Base</a></h3>
+<p>A Rule base runs globally on a whole document. i.e. a Rule Base takes into account 
+the whole document and not a single modified item.</p>
+<h3 align="left">Handling Conditions With One Type<a name="Handling Conditions"></a> <a href="#top">
+<img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h3>
+<p>If in the body of a rule or of a check, there are only conditions (after the 
+If keyword) with one type, it is more efficient to create several rules with one 
+type in the &#8220;For all&#8221; field.</p>
+<font face="Arial" size="3">
+<div align="left">
+	<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="table1">
+		<tr>
+			<td width="100%" bgcolor="#F2F2F2"><code>S:Shell;H:Hole<br>
+			<br>
+			If (H.Activity == true)<br>
+			<br>
+			Message(&#8220;All holes are activated&#8221;)<br>
+			<br>
+			If (S.Activity == true)<br>
+			<br>
+			Message(&#8220;All shells are activated&#8221;)<br>
+			<br>
+			You must write two rules :<br>
+			<br>
+			H:Hole<br>
+			<br>
+			If (H.Activity == true)<br>
+			<br>
+			Message(&#8220;All holes are activated&#8221;)<br>
+			<br>
+			And<br>
+			<br>
+			S:Shell<br>
+			<br>
+			If (S.Activity == true)<br>
+			<br>
+			Message(&#8220;All shells are activated&#8221;)<br>
+&nbsp;</code></td>
+		</tr>
+	</table>
+</div>
+</font>
+<p>&nbsp;</p>
+
+</body>
+
+</html>
+

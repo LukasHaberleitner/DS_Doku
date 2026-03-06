@@ -1,0 +1,282 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Using Work In Progress (WIP) Assembly</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Theme" content="none, default">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Using Work In Progress (WIP) Assembly<a name="ix-Work In Progress (WIP)"></a></h1>
+ <div align="center">
+   <center>
+   <table border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" height="132">
+     <tr>
+       <td width="100%" height="132">
+       <p align="center">
+       This section contains the following tasks:
+       <p align="center">
+       </td>
+     </tr>
+   </table>
+   </center>
+ </div>
+
+ <table border="0" valign="top" width="988" cellpadding="0" style="border-collapse: collapse" bordercolor="#111111">
+   <tr valign="top" border="0">
+     <td valign="top" width="40">
+     <img border="0" src="b35doc/english/online/icons_C2/common/abasic.gif" width="32" height="32"></td>
+     <td width="948">WIP is a User Defined Product Structure containing 
+		selective sub-elements of Main Assembly and its necessary context.<p>The WIP 
+		is a CATIA Product, which is a collection of sub assemblies from the 
+		main assembly. You can use the WIP panel to create WIP and select the 
+		documents and Open modes of your choice.</p>
+		<p>You can add or insert your sub-assemblies in the following two modes:</p>
+		<ul>
+			<li><kbd>Design Representation</kbd>: In this mode, the actual 
+			document gets copied to work directory and gets inserted under newly 
+			created WIP product. The load mode of these documents is dependent 
+			on the CATIA CACHE mode.</li>
+			<li><kbd>Light Representation</kbd>: In this mode, the CGR 
+			(Representation) of the document gets copied to the work directory 
+			and gets linked to a newly created CATIA Internal Component, under 
+			newly created WIP product.</li>
+		</ul>
+		<p>The mode of opening of the document under the WIP product is governed 
+		by CATIA load modes. For example: If CATIA CACHE mode is <kbd>OFF</kbd>, the 
+		documents which are meant to open in <kbd>Design Mode</kbd> will be opened in
+		<kbd>CATIA 
+		Design mode</kbd>, else they will be loaded in <kbd>CACHE</kbd> mode, if
+		<kbd>CATIA</kbd> <kbd>cache</kbd> is 
+		<kbd>ON</kbd>.<p>Go through the following table to understand this 
+		behavior:<table border="1" width="85%" bordercolorlight="#000000" bordercolor="#000000">
+		<tr>
+			<td class="code" id="#E0E0E0"><kbd>WIP Open Mode</kbd></td>
+			<td class="code" id="#E0E0E0"><kbd>CATIA CACHE Mode</kbd></td>
+			<td class="code" id="#E0E0E0"><kbd>Files Copied to Work</kbd></td>
+			<td width="187" class="code" id="#E0E0E0"><kbd>Document Opened As</kbd></td>
+		</tr>
+		<tr>
+			<td>Design Representation</td>
+			<td>OFF</td>
+			<td>Actual Documents (CATProduct, CATPart)</td>
+			<td width="187">CATIA Design</td>
+		</tr>
+		<tr>
+			<td>Design Representation&nbsp; </td>
+			<td>ON </td>
+			<td>Actual Documents (CATProduct, CATPart)</td>
+			<td width="187">CATIA Cache</td>
+		</tr>
+		<tr>
+			<td>Light Representation </td>
+			<td>OFF </td>
+			<td>CGR </td>
+			<td width="187">CGR</td>
+		</tr>
+		<tr>
+			<td>Light Representation </td>
+			<td>ON </td>
+			<td>CGR </td>
+			<td width="187">CGR</td>
+		</tr>
+		</table>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top" width="40">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo_custo.gif" width="32" height="32"></td>
+     <td width="948">
+		<h3>Activating the saving of instance information in the database</h3>
+		<p>Each document, in Design or Light representation, is loaded in the 
+		WIP according to its position in the main assembly. You need to activate 
+		the following settings to store the instance position in SmarTeam during 
+		the regular SmarTeam/Save capabilities <blink>and make the Life Cycle 
+		operations support them:</blink><br>
+		<br>
+		<code>
+CATIA.SaveInstanceData=TRUE</code>
+<br>
+		<blink><code>isSupportSatellitesInLC=TRUE</code></blink>
+<br>
+		<br>
+		Go to <kbd>Program</kbd> <kbd>Files</kbd> &gt; <kbd>SMARTEAM</kbd> &gt; <kbd>
+		Administrative</kbd> <kbd>Tools</kbd> &gt; <kbd>SMARTEAM</kbd> <kbd>System</kbd>
+		<kbd>Configuration</kbd> <kbd>Editor</kbd> and change the settings <code>CATIA.SaveInstanceData</code> 
+		and <blink><code>isSupportSatellitesInLC</code></blink> to true. For more information, see <i>SmarTeam-Editor 
+		Administration Guide.</i><br>
+		If these settings are not activated and instance information is not stored in SmarTeam 
+		database, WIP creations is not possible for such documents.</td>
+   </tr>
+ 	<tr>
+     <td valign="top" width="40">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td width="948">
+     <ul>
+		<li>WIP creation is possible only for Checked In or Released documents.</li>
+		<li>Although the original assembly is in Checked Out state, the WIP commands 
+		are allowed on all Checked In revisions of original assembly. </li>
+		<li>You can apply WIP commands on the children of original assembly 
+		which are in Checked In or Released state, even though the latest 
+		revision of some of the children is in Checked Out state. 
+		<ul>
+		<li>For all the WIP commands while the Work directory is 
+				shared among users, if you set or Switch to Design Representation mode on a 
+		child whose
+					latest revision is in Checked Out state, the following 
+					warning message appears for file 
+					overwrite: <code><br>
+		Warning No: 02324 File '<i>(Document name)</i>' 
+					of checked out object '<i>(Document name)</i> <br>
+					Checked Out' already exists in folder 'C:\Documents and 
+					Settings\UserName\My <br>
+					Documents\SmarTeam\Work\'. It cannot be replaced by object '<i>(Document 
+					name)</i> Checked in file</code>. <br>
+		Click <kbd>Continue</kbd> 
+					to perform the particular command.</li>
+		<li>While applying the WIP commands on a Checked In document which has 
+		its corresponding latest revisions in Checked Out state, a warning 
+		message appears. The warning message informs that the latest revision of 
+		the document is in Checked Out state and whether you want to continue 
+		the operation. Click <kbd>Continue</kbd> 
+					to perform the particular command.<br>
+		<br>
+		To understand this behavior, refer to the following table:<br>&nbsp;<table border="1" width="90%" bordercolorlight="#000000" bordercolor="#000000">
+			<tr>
+				<td class="code" id="#E0E0E0" width="140"><kbd>Command</kbd></td>
+				<td class="code" id="#E0E0E0" width="349"><kbd>Work directory is 
+				shared among users</kbd></td>
+				<td class="code" id="#E0E0E0"><kbd>Work Directory is Not shared</kbd></td>
+			</tr>
+			<tr>
+				<td class="code1" id="#F2F2F2" bordercolordark="#000000" width="140">
+				<kbd>Create WIP</kbd></td>
+				<td class="code1" id="#F2F2F2" bordercolordark="#000000" width="349">
+				<ul>
+					<li>WIP creation is possible with both Design and Light Open mode for 
+					children.</li>
+					<li>Position matrices will be of the Checked In documents as 
+					stored in Selected Original Assembly.</li>
+				</ul></td>
+				<td class="code1" id="#F2F2F2" bordercolordark="#000000" valign="top">
+				<ul>
+					<li>WIP creation is possible with both Design and Light Open mode for 
+					children.</li>
+					<li>Position matrices will be of the Checked In documents as 
+					stored in Selected Original Assembly.</li>
+				</ul></td>
+			</tr>
+			<tr>
+				<td class="code1" id="#F2F2F2" width="140"><kbd>Insert Component 
+				</kbd></td>
+				<td class="code1" id="#F2F2F2" width="349">
+				<ul>
+					<li>For Light Representation, Light representation of 
+					selected Checked In revision of child is inserted under WIP.</li>
+					<li>For Design Representation, the Design representation of 
+					Checked Out revision of child is inserted under WIP.</li>
+				</ul></td>
+				<td class="code1" id="#F2F2F2">
+				<ul>
+					<li>In Both cases, Light or Design Representations of selected Checked In 
+					revision of child is inserted under WIP.</li>
+				</ul></td>
+			</tr>
+			<tr>
+				<td class="code1" id="#F2F2F2" width="140"><kbd>Switch to ...</kbd></td>
+				<td class="code1" id="#F2F2F2" width="349">
+				<ul>
+					<li>For Switch To Light representation, Light representation 
+					of Checked In or Released revision of child on which WIP 
+					created is 
+					inserted under WIP.</li>
+					<li>For Switch To Design Representation, the Design 
+					representation of Checked Out revision of child is inserted 
+					under WIP.</li>
+				</ul></td>
+				<td class="code1" id="#F2F2F2" valign="top">
+				<ul>
+					<li>In Both cases, Design or Light Representations of 
+					selected Checked In revision is switched to another mode 
+					with the same revision on which WIP is created.</li>
+				</ul></td>
+			</tr>
+			<tr>
+				<td class="code1" id="#F2F2F2" width="140"><kbd>Refresh Rep</kbd></td>
+				<td class="code1" id="#F2F2F2" width="349" valign="top">
+				<ul>
+					<li>Light Representations of documents, whose latest revision is 
+					in checked out state, are refreshed to their latest public 
+					revision. (i.e. Latest Checked In or Released revision).</li>
+				</ul></td>
+				<td class="code1" id="#F2F2F2">
+				<ul>
+					<li>Light Representations of documents, whose latest revision is 
+					in checked out state, are refreshed to their latest public 
+					revision (i.e. Latest Checked In or Released revision).</li>
+				</ul></td>
+			</tr>
+			<tr>
+				<td class="code1" id="#F2F2F2" width="140"><kbd>Synchronize</kbd></td>
+				<td class="code1" id="#F2F2F2" width="349" valign="top">
+				<ul>
+					<li>On Synchronize, for Design Representations of documents, 
+					whose latest revision is in checked out state, the Design Representation of Checked Out 
+					revision of child appears in the session.</li>
+					<li>Light Representations of documents, whose latest 
+					revision is in checked out state, are synchronized to their 
+					latest public revision. (i.e. Latest Checked In or Released 
+					revision).</li>
+				</ul></td>
+				<td class="code1" id="#F2F2F2">
+				<ul>
+					<li>Light and Design Representations of documents, whose latest revision is 
+					in checked out state, are synchronized to their latest 
+					public revision (i.e. Latest Checked In or Released 
+					revision).</li>
+				</ul></td>
+			</tr>
+		</table></li>
+		</ul>
+		</li>
+		<li>You need to open CATIA Editor and connect to SmarTeam before 
+		creating WIP from SmarTeam.</li>
+		<li>SmarTeam must be configured in order to let CATIA SmarTeam/Save 
+		command generate the CGR representations for CATIA Product and CATIA 
+		Part. This setting is the default on the PLMDB database. In case CGR 
+		documents are not generated or can&#8217;t be found in the SmarTeam database, 
+		an error message will be displayed on CATIA side, and command will 
+		abort.</li>
+		<li>If an assembly is opened in CATIA cache mode and WIP is created 
+		which has same sub assembly in either light or design Representation, an 
+		error message will not be seen and WIP will be created with this 
+		assembly under it.</li>
+		<li>If the user tries to launch WIP on already Checked-Out Assembly, 
+		following error message will appear before the display of WIP creation 
+		dialog and the process will abort: <code>The following document/s or their 
+		latest revisions are Checked Out. (<i>Document Names)</i> All the latest 
+		documents and their revisions should be in Check-In or Release state.</code></li>
+		<li>If CATIA is not registered or not launched following error will be 
+		displayed: <code>CATIA Application is either not registered or launched. 
+		Please register/launch CATIA application, connect to SmarTeam and 
+		re-launch the command.</code></li>
+		<li>If CATIA is not connected to ST following error will be displayed:<code> 
+		CATIA Application is not connected to SmarTeam. Please connect to 
+		SmarTeam and re-launch the command.</code></li>
+		</ul>
+		</td>
+   </tr>
+ </table>
+ 
+ </body>
+
+</html>
+

@@ -1,0 +1,336 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+  <head>
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <title>Drawing Production Settings</title>
+  <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta name="Microsoft Border" content="b">
+</head>
+
+  <body><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top">
+
+  <h1>Drawing Production Settings</h1>
+  <table cellSpacing="0" width="100%" border="0" valign="top" height="3883">
+    <tr vAlign="top" BORDER="0">
+      <td width="36" height="32">
+      <img src="b35doc/english/online/icons_C2/common/atarget.gif" border="0" width="32" height="32"></td>
+      <td vAlign="top" width="962" colSpan="2" height="32">This task shows you 
+      how to change the settings that affect the appearance of your 2-D drawing.</td>
+    </tr>
+    <tr vAlign="top" BORDER="0">
+      <td width="36" height="80">
+      <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"><p>
+      <a name="ix-generative view style"></a></td>
+      <td vAlign="top" width="962" colSpan="2" height="80">Unlike earlier 
+      versions, the appearance of the 2-D drawings that you generate is now 
+      controlled by settings in a file in XML format. You need to use a text 
+      editor to open this file and change the settings. (Do not make changes to 
+      the original file.)<p>You can generate drawings with the default settings. 
+      You only need to change the default settings if you want to customize your 
+      settings. This task explains how to find the appropriate XML file, and how 
+      to modify its contents.</p>
+      <p>Before you can use this process, you need to set Options as follows:</p>
+      <p>From the menu bar, select <kbd>Tools - Options - Mechanical Design - 
+      Drafting</kbd>. </p>
+      <p>Select the <kbd>Administration</kbd> tab and under <kbd>Generative View 
+      Style</kbd>, uncheck the option<kbd> Prevent Generative View Style Usage</kbd>.</td>
+    </tr>
+    <tr>
+      <td vAlign="top" width="36" height="108">
+      <img src="b35doc/english/online/icons_C2/common/ascenari.gif" border="0" width="32" height="32">
+      <p><a name="ix-drawing production::settings"></a></td>
+      <td vAlign="top" width="35" height="108"><font color="#1c1557"><strong>1.</strong></font></td>
+      <td vAlign="top" height="108">The default file provided with this 
+      application is called <kbd>EquipmentAndSystems-3-DLayout.xml</kbd>.
+      <p>This file is located in the directory <kbd>...intel_a\resources\standard\generativeparameters\samples</kbd>.</p>
+      <p>Copy the default XML file from the <kbd>samples</kbd> directory, and 
+      place the copy in the <kbd>generativeparameters</kbd> directory.</td>
+    </tr>
+    <tr>
+      <td vAlign="top" width="36" height="108">&nbsp;</td>
+      <td vAlign="top" width="35" height="108">
+      <strong>2</strong><font color="#1c1557" face="Arial, Arial, Helvetica"><strong>.</strong></font></td>
+      <td vAlign="top" height="108">The first part of the file, between the 
+      lines <kbd>Drafting application parameters</kbd> and <kbd>End of Drafting 
+      parameters</kbd>, refers to options in the Drafting application. These 
+      are:<p><kbd>AxisLines, CenterLines, Fillets, HiddenLines, Threads, 
+      3DPoints, Wireframe, Using3DColors, Using3DSpec</kbd>.</p>
+      <p>The possible values for all of these (except <kbd>Fillets</kbd>) are
+      <kbd>Yes</kbd> or <kbd>No</kbd>. </p>
+      <p>For <kbd>Fillets</kbd>, the values are: <kbd>none, boundaries, 
+      symbolic, original edges, projected original edges</kbd>.</p>
+      <p>The Drawing Production function uses the Drafting application to 
+      generate 2-D drawings. (A fuller explanation can be found in Drafting 
+      documentation.)</td>
+    </tr>
+    <tr>
+      <td vAlign="top" width="36" height="108">&nbsp;</td>
+      <td vAlign="top" width="35" height="108"><strong>
+      <font face="Arial, Arial, Helvetica" color="#1C1557">3</font></strong><font color="#1c1557" face="Arial, Arial, Helvetica"><strong>.</strong></font></td>
+      <td vAlign="top" height="108">The remainder of the file is organized by 
+      application. Each application is contained within the headings <kbd>Start 
+      Application xxx</kbd> and <kbd>End Application xxx</kbd>. Each application 
+      contains settings that are common to all the graphic representations.<p>
+      Additionally, each application can have its own specific settings. You can 
+		create up to 20 graphic representations for each application. These 
+      graphic representations are identified as GR_1 (no leading zero) through GR_20. </td>
+    </tr>
+    <tr>
+      <td vAlign="top" width="36" height="108">&nbsp;</td>
+      <td vAlign="top" width="35" height="108">
+      <font color="#1c1557" face="Arial, Arial, Helvetica"><strong>4.</strong></font></td>
+      <td vAlign="top" height="108">The file also contains the following ATS_properties that enable you to generate text from 3-D attributes.<ul>
+        <li><kbd>ATS_AutoPosition</kbd>: <kbd>Yes</kbd> positions the text 
+        anchor point at the edge of the 2-D box surrounding the generated 2-D 
+        geometry. <kbd>No</kbd> positions the text anchor point <font SIZE="2">
+        at the approximate center of the 2-D geometry (center of the first 
+        segment for multi-segment pipes).</font></li>
+        <li><kbd>ATS _CharacterOffset</kbd>: <font SIZE="2">The number of 
+        characters to offset the text anchor point.</font><font SIZE="2"></font></li>
+        <li><kbd>ATS_1 </kbd>through <kbd>ATS_40</kbd>: Requests to generate 
+        text corresponding to the attributes on the 3-D object. Possible values 
+        are the Keywords in the catalog <kbd>XXXPartsAnnotations.catalog </kbd>
+        (where <kbd>XXX </kbd>represents the application, such as Piping or 
+        Tubing), and is located in the following directory:</li>
+      </ul>
+      <p><kbd>...intel_a\startup\EquipmentandSystems\(discipline)\(application)\DrawingCatalogs</kbd></td>
+    </tr>
+    <tr>
+      <td vAlign="top" width="36" height="108">&nbsp;</td>
+      <td vAlign="top" width="35" height="108">
+      <font color="#1c1557" face="Arial, Arial, Helvetica"><strong>5.</strong></font></td>
+      <td vAlign="top" height="108">The settings common to all the graphic 
+      representations are:<ul>
+        <li><kbd>Visible</kbd>: <kbd>Yes</kbd> means the part will be generated 
+        in the drawing. <kbd>No</kbd> means it will not be generated.</li>
+        <li><kbd>Color</kbd>: The RGB value of the color of the generated part. 
+		If the RGB color is set to an invalid value (R&lt;0 or G&lt;0 or B&lt;0), then 
+		the color will be inherited from the 3D object regardless of the <kbd>
+		3Dinheritance</kbd> values.</li>
+        <li><kbd>LineType</kbd>: The value indicating the line type of the 
+        generated part. If the LineType value is invalid (LineType&lt;1), then the 
+		LineType value will be inherited from the 3D object regardless of the
+		<kbd>3Dinheritance</kbd> values.</li>
+        <li><kbd>EndStyleSymbol</kbd>: <kbd>Yes</kbd> means an end style symbol 
+        will be displayed in the drawing for each Piping part that has an end 
+        style.</li>
+        <li><kbd>FabricationBreakSymbol</kbd>: <kbd>Yes</kbd> means a symbol 
+        will display at the ends of each spool.</li>
+        <li><kbd>CornerBendPoint</kbd>: When set to <kbd>Yes</kbd>, the 
+        intersection of adjacent Pipe or Tube segments will display a point.</li>
+        <li><kbd>CenterofGravitySymbol</kbd>: When set to <kbd>Yes</kbd>, a 
+        symbol is displayed at a part's center of gravity (Equipment only).</li>
+		<li><kbd>Insulation</kbd>: When set to <kbd>Yes</kbd>, insulation is 
+		included in the graphic representation of the generated part.</li>
+		<li><kbd>InsulationLineThickness</kbd>: Applies to light parts only. If 
+		the value is invalid (&lt;1), then it inherits the value from the base 
+		part.</li>
+		<li><kbd>ViewSpecificSymbols</kbd>: When set to <kbd>Yes</kbd>, a 
+		view-specific 3-D symbol displays at the connectors of the generated part. 
+		Additionally, rolling pipe indicators display where appropriate.</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td vAlign="top" width="36" height="108">&nbsp;</td>
+      <td vAlign="top" width="35" height="108"><strong>
+      <font face="Arial, Arial, Helvetica" color="#1C1557">6.</font></strong>
+      </td>
+      <td vAlign="top" height="108">Settings for individual graphic 
+      representations are as follows:<ul>
+        <li>Graphic representation: Parameters are GR_1 (no leading zero) 
+		through GR_20. Values 
+        include <kbd>Layout, Single</kbd>, <kbd>Double</kbd>, <kbd>Envelope</kbd>. 
+        If you do not want a representation to display, enter extra characters 
+        after the setting to turn off the display. For example, <kbd>Double_No</kbd>. 
+        or <kbd>LayoutXY</kbd>.</li>
+        <li><kbd>MaxNominalSize</kbd>: A part larger than this value will not be 
+        generated in the 2-D drawing. No entry means there is no limit.</li>
+        <li><kbd>MinNominalSize</kbd>: A part smaller than this value will not 
+        be generated in the 2-D drawing. No entry means there is no limit.</li>
+        <li><kbd>LineGapping</kbd>: <kbd>Yes</kbd> means line gapping will 
+        display. Applies only to Single graphic representation.</li>
+        <li><kbd>LineGappingValue</kbd>: The length of a gap in a line at a 
+        point where it is crossed by another line, in millimeters. Applies only 
+        to Single graphic representation.</li>
+        <li><kbd>CenterLines</kbd>: Yes means a center line will display 
+        Available only for Pipes and Tubes with a Double graphic representation.</li>
+        <li><kbd>CenterLinesExtensionLength</kbd>: The length by which a center 
+        line will extend beyond a Pipe/Tube.</li>
+		<li><kbd>CenterLinesFilter</kbd>: Applies to HVAC objects only. The 
+		default value is <kbd>All</kbd> - which means nothing is filtered out. 
+		If the value is <kbd>Round</kbd>, then center lines are generated only 
+		for round HVAC cross sections. If the value is <kbd>NonRound</kbd>, then 
+		center lines are generated only for all HVAC cross sections that are not 
+		round.</li>
+        <li><kbd>LineType</kbd>: The value indicating the line type (for 
+        instance, 1 = solid line). You can define a different line type for each 
+        graphic representation within an application. This setting overrides the 
+        LineType setting common to all graphic representations (explained 
+		above). If both the common LineType, and this LineType values are 
+		invalid (&lt;1) then the LineType value will be taken from the 3D object, 
+		regardless of the <kbd>3Dinheritance</kbd> values.</li>
+        <li><kbd>LineThickness</kbd>: The value indicating the thickness of the 
+        line. You can define a different line thickness for each graphic 
+        representation within an application. If the LineThickness value is 
+		invalid (&lt;1), then the LineThickness value will be inherited from the 3D 
+		object regardless of the <kbd>3Dinheritance</kbd> values.</li>
+      </ul>
+      <p>Settings for individual graphic representations are preceded by the 
+      identifier GR_1_ through GR_20_ (with no leading zero). For instance:<ul>
+		<li>To set a LineType for a 
+      GR_9_ graphic representation, use <font SIZE="2"><kbd>GR_9_LineType</kbd></font>.</li>
+		<li>To set a LineType for a 
+      GR_20_ graphic representation, use <font SIZE="2"><kbd>GR_20_LineType</kbd></font>.</li>
+		</ul>
+		</td>
+    </tr>
+	<tr>
+      <td vAlign="top" width="36" height="108">&nbsp;</td>
+      <td vAlign="top" width="35" height="108"><strong>
+      <font face="Arial, Arial, Helvetica" color="#1C1557">7.</font></strong>
+      </td>
+      <td vAlign="top" height="108">You can generate runs and lofts in 2-D as single-line, 
+		double-line, same as 3-D, or no display.<p>The sample file containing 
+		the GVS parameters is called <kbd>ES_PreliminaryLayout.xml</kbd>.
+      This file is located in the directory <kbd>...intel_a\resources\standard\generativeparameters\samples</kbd>.</p>
+		<p>The following are the GVS parameters pertaining to runs and lofts:</p>
+		<ul>
+        <li><kbd>DisplayMode</kbd>: Possible values are <kbd>NoDisplay</kbd>,
+		<kbd>Single</kbd>, <kbd>Double</kbd>, <kbd>SameAs3D</kbd></li>
+      </ul>
+		<p>The following are the GVS parameters pertaining to runs only:</p>
+		<ul>
+        <li><kbd>GapDistance</kbd>: The length of a gap in a line at a point 
+		where it is crossed by another line, in millimeters. Applies only to 
+		single-line gapping. Zero indicates no gapping.</li>
+      </ul>
+		<p>To make use of these GVS parameters, add the following from the 
+		sample file (<kbd>ES_PreliminaryLayout.xml</kbd>) to your customized GVS 
+		file:</p>
+		<pre><span style="font-size: 9pt">&lt;!-- ******************************************************************** -&nbsp;&gt;&nbsp;
+&lt;!-- * START EQUIPMENT &amp; SYSTEMS ENUM DEFINITIONS -&nbsp;&gt;&nbsp;
+&lt;!-- * (These DEFINITIONS must precede their use - DO NOT EDIT) -&nbsp;&gt;&nbsp;
+&lt;!-- ******************************************************************** -&nbsp;&gt;&nbsp;
+&lt;std:enumdef name=&quot;ES_DisplayModes&quot;&gt;
+&lt;std:strval&gt;NoDisplay&lt;/std:strval&gt;
+
+&lt;std:strval&gt;Single&lt;/std:strval&gt;
+
+&lt;std:strval&gt;Double&lt;/std:strval&gt;
+
+&lt;std:strval&gt;SameAs3D&lt;/std:strval&gt;
+&lt;/std:enumdef&gt;
+&lt;!-- ******************************************************************** -&nbsp;&gt;&nbsp;
+&lt;!-- * END EQUIPMENT &amp; SYSTEMS ENUM DEFINITIONS -&nbsp;&gt;&nbsp;
+&lt;!-- ******************************************************************** -&nbsp;&gt;&nbsp;
+
+&lt;!-- ******************************************************************** -&nbsp;&gt;&nbsp;
+&lt;!-- * START APPLICATION - E&amp;S PRELIMINARY LAYOUT -&nbsp;&gt;&nbsp;
+&lt;!-- ******************************************************************** -&nbsp;&gt;&nbsp;
+&lt;std:node name=&quot;ES_PreliminaryLayout&quot;&gt;
+
+&lt;!-- ********* OBJECT = RUN ****************************************** -&nbsp;&gt;&nbsp;
+&lt;std:node name=&quot;Run&quot;&gt;
+
+&lt;!-- ********* DisplayMode -&nbsp;&gt;&nbsp;
+&lt;std:node name=&quot;DisplayMode&quot;&gt;
+&lt;std:enumval name=&quot;ES_DisplayModes&quot;&gt;SameAs3D&lt;/std:enumval&gt;
+&lt;/std:node&gt;
+
+&lt;!-- ********* Single Line Gap Distance (mm) -&nbsp;&gt;&nbsp;
+&lt;std:node name=&quot;GapDistance&quot;&gt;
+&lt;std:floatval&gt;101.6&lt;/std:floatval&gt;
+&lt;/std:node&gt;</span></pre>
+		<pre><span style="font-size: 9pt">
+&lt;!-- ********* OBJECT = LOFT ****************************************** -&nbsp;&gt;&nbsp;
+&lt;std:node name=&quot;Loft&quot;&gt;
+
+&lt;!-- ********* DisplayMode -&nbsp;&gt;&nbsp;
+&lt;std:node name=&quot;DisplayMode&quot;&gt;
+&lt;std:enumval name=&quot;ES_DisplayModes&quot;&gt;SameAs3D&lt;/std:enumval&gt;
+&lt;/std:node&gt;
+
+&lt;/std:node&gt;
+&lt;/std:node&gt;
+&lt;!-- ******************************************************************** -&nbsp;&gt;&nbsp;
+&lt;!-- * END APPLICATION - E&amp;S PRELIMINARY LAYOUT -&nbsp;&gt;&nbsp;
+&lt;!-- ******************************************************************** -&nbsp;&gt;&nbsp;
+&lt;/std:node&gt;
+&lt;!-- ********************************************************************** -&nbsp;&gt;&nbsp;
+&lt;!-- * END GVS CUSTOMIZATION -&nbsp;&gt;&nbsp;
+&lt;!-- ********************************************************************** -&nbsp;&gt;&nbsp;</span></pre>
+		</td>
+    </tr>
+    
+    <tr>
+      <td vAlign="top" width="36" height="403"><a name="ix-end styles"></a></td>
+      <td vAlign="top" width="35" height="403"><font color="#1c1557" face="arial, Arial, Helvetica"><b>
+		8.</b></font></td>
+      <td vAlign="top" width="927" height="403">Some 2-D endstyle graphics are 
+      included with the Piping application. If you need more graphics, you need 
+      to create them.
+      <p>The catalog where Piping endstyles are stored is called <kbd>
+      Piping2DSymbols-Customization.Catalog</kbd>, and is in the following 
+      directory:</p>
+      <p><kbd>...intel_a\startup\EquipmentandSystems\Piping\Piping Design\DrawingCatalogs</kbd></p>
+      <p>You need to place all endstyle graphics in the file <kbd>
+      Piping2DSymbols-Customization.CATDrawing</kbd>, located in the same 
+      directory, and then link a graphic name in the catalog to the actual 
+      graphic.&nbsp;</p>
+      <p>When you create a new endstyle (or modify an existing one), you must 
+      enter the correct size in the <kbd>EndDiameter</kbd> column of the 
+      catalog. Samples included with the application are sized at 25.4 mm, which 
+      is the actual size of the detail. This size is important because it is 
+      used to scale the endstyle to the size of the component to which it is 
+      attached. All endstyles provided with this application, except butt weld, 
+      can be scaled. <i>The vertical dimension of your detail will be 
+      interpreted as the end diameter</i>. Therefore, the value you enter in the 
+      EndDiameter column should reflect this.</p>
+      <p><img border="0" src="b35doc/english/online/ucfug_c2/images/AT1601C_NLS.gif" width="283" height="149"></td>
+    </tr>
+    
+    <tr>
+      <td vAlign="top" width="36" height="103">
+      <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+      <td vAlign="top" width="35" height="103">&nbsp;</td>
+      <td vAlign="top" width="927" height="103">Note: In case of Compartment and 
+		Access, certain changes are required in the catalog file for displaying 
+		the annotations properly.<p>The catalog where annotations are stored is called
+		<kbd>Annotation-3D.catalog</kbd>, and is in the following 
+      directory:</p>
+      <p><kbd>...intel_a\startup\EquipmentandSystems\MultiDiscipline\ComponentCatalogs</kbd></p>
+      <p>You need to place annotations in the file <kbd>Annotation-3D.CATDrawing</kbd>, located in the same 
+      directory, and then each entry in the catalog should be linked to 
+		corresponding entry in the CATDrawing file.&nbsp;In case there are 
+		sub-categories for a particular type of object in the Compartment and 
+		Access; Chapters and Families should be created in the catalog file with 
+		the same hierarchy.</p>
+		<p>For example, boundaries can be of three type: Floor, Top and Wall. 
+		Now, if common annotations are desired for all types of boundaries, a 
+		family Boundary should be created under CompartmentAndAccess chapter.<br>
+		<img border="0" src="b35doc/english/online/ucfug_c2/images/AT1601B_NLS.png"></p>
+		<p>However, if different types of boundaries should display different 
+		annotations, corresponding families should be created under a new 
+		chapter by the name Boundary containing the family Floor, for example.<br>
+		<img border="0" src="b35doc/english/online/ucfug_c2/images/AT1601A_NLS.png" width="556" height="179"></p></td>
+    </tr>
+    <tr>
+      <td width="1954" colSpan="3" height="37">
+      <p align="center">
+      <img src="b35doc/english/online/icons_C2/common/aendtask.gif" border="0" width="64" height="32"></td>
+    </tr>
+  </table>
+
+  <!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td>
+
+
+
+</td></tr><!--msnavigation--></table></body>
+
+</html>
+

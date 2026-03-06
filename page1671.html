@@ -1,0 +1,221 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/HTML; charset=iso-8859-1">
+ <title>VBScript Behavior</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="docCompliance" content="v 0.9; Tue Oct 18 10:20:44 2005">
+ <meta name="Microsoft Border" content="none, default">
+ </head>
+
+ <body>
+
+ <h1>VBScript Behavior: Data Sheet <a name="ix-behavior::VBScript"></a>
+ <a name="ix-implementation behaviors::VBScript behavior"></a>
+ <a name="ix-commands::VBScript Behavior"></a>&nbsp;<a name="ix-VBScript behavior"></a>
+ <a name="ix-vba"></a></h1>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/ap3_title.gif" width="152" height="32"></p>
+ <center>
+ <table border="1" cellpadding="4" bordercolor="#111111" cellspacing="0">
+   <tr>
+     <td bgcolor="#F2F2F2"><font color="#000080">Accessing this behavior</font></td>
+     <td valign="top">This behavior can be accessed by clicking the VBScript 
+     Behavior icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_VBScriptImplementationP2.gif" width="24" height="24">) 
+     in the Implementation toolbar.</td>
+   </tr>
+   <tr>
+     <td valign="top" bgcolor="#F2F2F2"><font color="#000080">Describing this 
+     behavior</font></td>
+     <td valign="top">This behavior is designed to run a VBScript (or catvbs 
+     files) or to reference a VBA project to call a specified sub located in a 
+     specified module. The behavior and the type can be arguments of the macro, 
+     thus enabling you to use BKT automation interfaces (used to manage 
+     arguments) directly on the behavior.<div align="left">
+       <table border="0" cellpadding="2" id="AutoNumber1">
+         <tr>
+           <td>
+           <ul>
+             <li>VB Script: The behavior can be passed as an argument for 
+             Scripts (VB and VBA scripts) enabling you to retrieve the VBScript 
+             behavior inputs. The extended object is also passed as a second 
+             argument. These 2 arguments are optional. You can call a function 
+             that takes no arguments, only 1 (in this case it will always be the 
+             behavior), or 2 arguments (the behavior and the extended object.) 
+             You can also specify the routine name to call. By default, if no 
+             routine is specified, the CATMain is launched.</li>
+           </ul>
+           </td>
+         </tr>
+         <tr>
+           <td>
+           <ul>
+             <li>VBA: You can reference an external catvba file, and specify the 
+             module name and the routine to run. As for VB Script, the behavior 
+             itself and the extended object can be optional arguments for the 
+             called routine.</li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+     </div>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" bgcolor="#F2F2F2"><font color="#000080">EXAMPLE </font>
+     </td>
+     <td valign="top">You will find below a VB sample that illustrates how the 
+     use of the 2 arguments simplifies VB/VBA coding.<div align="left">
+       <table border="0" cellpadding="4" cellspacing="4" id="AutoNumber3">
+         <tr>
+           <td valign="top" bordercolor="#F0F0F0" bgcolor="#E0E0E0"><code>Sub 
+           CATMain(Beh, ExtObj )<br>
+           <br>
+           'The VB Script Behavior is directly accessible<br>
+           Set AttOnBeh = Beh.GetOutput(&quot;AttonBehVB&quot;) <kbd>
+           <font color="#FF0000">(1)</font></kbd><br>
+           <br>
+           'We get the list of parameters on the Extended object<br>
+           'i.e attribute on technological type and Product/Part parameters<br>
+           Set ExtObjParameters = ExtObj.Parameters<br>
+           Dim ParamOnType<br>
+           Set ParamOnType = ExtObjParameters.Item(&quot;AttOnType&quot;) <kbd>
+           <font color="#FF0000">(2)</font></kbd><br>
+           <br>
+           'The value of the type attribute is displayed<br>
+           MsgBox &quot;Value Att. on Type&quot; &amp; ParamOnType.Value<br>
+           'The value of the behavior attribute is displayed<br>
+           MsgBox &quot;value Att. On Behavior: &quot; &amp; AttOnBeh.Value<br>
+           <br>
+           Beh.PutOutput &quot;AttonBehVB&quot;, ParamOnType<br>
+           'The value of the behavior attribute is displayed taking into account 
+           the type value<br>
+           MsgBox &quot;Value AttOnBeh after valuation: &quot; &amp; AttOnBeh.Value<br>
+           <br>
+           End Sub</code></td>
+           <td valign="top">
+           <ul>
+             <li><font color="#FF0000"><kbd>(1)<code> </code></kbd></font>Output 
+             attribute of the behavior.</li>
+             <li><font color="#FF0000"><kbd>(2)<code> </code></kbd></font>Type 
+             attribute.</li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+     </div>
+     <div align="left">
+       <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber4">
+         <tr>
+           <td valign="top">
+           <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+           <td valign="top">&nbsp;In VBA, you must specify the inputs type. The 
+           prototype of CATMain is: <code>Sub CATMain(Beh As behavior, ExtObj As 
+           Object).</code></td>
+         </tr>
+       </table>
+     </div>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" bgcolor="#F2F2F2"><font color="#000080">Using this 
+     Behavior Interface</font></td>
+     <td valign="top">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/bktug_c2/images/bktVBScript1NLS.gif" width="422" height="439"></p>
+     <p>&nbsp; </p>
+     <div align="left">
+       <table border="1" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+         <tr>
+           <td bgcolor="#F0F0F0"><font color="#000080">Name</font>:</td>
+           <td>Name attributed to the behavior.</td>
+         </tr>
+         <tr>
+           <td bgcolor="#F0F0F0"><font color="#000080">Comment</font>:</td>
+           <td>Comment attributed to the behavior.</td>
+         </tr>
+       </table>
+     </div>
+     <div align="center">
+       <table border="1" cellpadding="4" cellspacing="1">
+         <tr>
+           <td valign="top" bgcolor="#F0F0F0" rowspan="2"><font color="#000080">
+           Language:</font></td>
+           <td valign="top" bgcolor="#FFFFFF"><kbd>VB Script</kbd>: Reference a 
+           .CATScript or a .catvbs file. The macro file must be stored in the
+           <code>&lt;CATKnowledgePath&gt;knowledgeResources\automation</code> 
+           directory. </td>
+         </tr>
+         <tr>
+           <td valign="top" bgcolor="#FFFFFF"><kbd>VBA</kbd>: Reference an 
+           external catvba file.</td>
+         </tr>
+         <tr>
+           <td valign="top" bgcolor="#F0F0F0" rowspan="3"><font color="#000080">
+           Macro Name</font></td>
+           <td valign="top" bgcolor="#FFFFFF">Enter the name of the file that 
+           you want to use.</td>
+         </tr>
+         <tr>
+           <td valign="top" bgcolor="#FFFFFF">Click
+           <img border="0" src="b35doc/english/online/bktug_c2/images/bktBrowseButton.gif" width="24" height="19"> 
+           to select a file.</td>
+         </tr>
+         <tr>
+           <td valign="top" bgcolor="#FFFFFF">Click <kbd>Edit</kbd> to launch 
+           the VB/VBA editor. If a file name is already specified in the Library 
+           Name input, the editor opens the corresponding file.</td>
+         </tr>
+         <tr>
+           <td valign="top" bgcolor="#F0F0F0"><font color="#000080">Module Name</font></td>
+           <td valign="top" bgcolor="#FFFFFF">Enter the module name. This is 
+           available in VBA mode only. The input is a script file name, 
+           *.CATScript, *.catvbs, *.catvba. If no Module is specified, the 
+           behavior cannot be operated.</td>
+         </tr>
+         <tr>
+           <td valign="top" bgcolor="#F0F0F0"><font color="#000080">Routine Name</font>
+           </td>
+           <td valign="top" bgcolor="#FFFFFF">Enter the name of the routine to 
+           launch. By default, if no routine name is specified, the CATMain of 
+           the specified module is called.<br>
+           2 arguments can be provided to the called routine: The behavior 
+           itself (equivalent of this object) and the extended object. <br>
+           With the Script Behavior itself as an argument, you can directly 
+           access the behavior in your macro, allowing you to call BKT 
+           automation methods to valuate and retrieve behaviors parameters. </td>
+         </tr>
+         <tr>
+           <td valign="top" bgcolor="#F0F0F0"><font color="#000080">Defined 
+           inputs and parameters</font></td>
+           <td valign="top" bgcolor="#FFFFFF">Click <kbd>Add</kbd>/<kbd>Modify</kbd>/<kbd>Delete</kbd> 
+           to define/modify/delete the inputs and the parameters that will be 
+           retrieved using the exposed automation methods. </td>
+         </tr>
+       </table>
+     </div>
+     <div align="center">
+       <table border="0" cellpadding="4" cellspacing="1">
+         <tr>
+           <td valign="top">
+           <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+           <td valign="top">The selected&nbsp; file must be located in &lt;<code>CATKnowledgePath&gt;\knowledgeResources\automation</code> 
+           and in &lt;<code>CATStartupPath</code>&gt; for upward compatibility. Enter 
+           the VBScript file name only.&nbsp;</td>
+         </tr>
+       </table>
+     </div>
+     </td>
+   </tr>
+ </table>
+ </center>
+
+ </body>
+
+</html>
+

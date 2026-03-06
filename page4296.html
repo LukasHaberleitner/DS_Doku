@@ -1,0 +1,160 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Search Functions</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Search Functions <a name="top"></a>&nbsp;</h1>
+ <h2><a name="CATKnowledge.Query"></a>Query <a name="ix-Query function"></a>&nbsp;<a name="Query"></a></h2>
+ <table border="0" width="99%">
+   <tr>
+     <td width="100%" valign="top"><b>List&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Query</b><span style="font-size: 10.0pt; line-height: 115%; font-family: Verdana,sans-serif; color: black">(type 
+		: String, condition : String) : List</span><br>
+     Function used to search for the features located below the feature to which 
+     it applies and that verifies the specified expression.<span style="font-size: 10.0pt; line-height: 115%; font-family: Verdana,sans-serif; color: black">The 
+		objects found are added</span> to the list.&nbsp;<br>
+     In the example below, the result of the search will return the holes of 
+     PartBody whose diameters are greater than 50mm.<br>
+     <font color="#000080">Example:</font> 
+     List.1=PartBody.Query(&quot;Hole&quot;,&quot;x.Diameter&gt;50mm&quot;)&nbsp;(Note that the expression 
+     can be empty.)<br>
+     Where:
+     <ul>
+       <li>List.1 is the name of the list on which the calculation will be 
+       performed.</li>
+       <li>PartBody is the body on which the search will be carried out</li>
+       <li>Hole is the Type of the searched feature.</li>
+       <li>x.Diameter&gt;50mm is the expression.</li>
+     </ul>
+     <div align="left">
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber2">
+         <tr>
+           <td width="5%" valign="top">
+           <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+           <td width="95%" valign="top"><font FACE="Verdana">In an assembly 
+           context, if you perform a query on a type deriving from the type 
+           Product or on a type assigned to a product (like electrical types for 
+           example), the query will return more items than expected because all 
+           the product instances (even those that are not visible) are returned 
+           as well as their references. </font></td>
+         </tr>
+       </table>
+     </div>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></p>
+ <h2>Find<a name="CATKnowledge.Find"></a><a name="Find"> </a></h2>
+ <table border="0" width="99%">
+   <tr>
+     <td width="100%" valign="top"><b>Feature&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Find (type: String, expression: 
+     String, Down : Boolean): Undefined type<br>
+     </b>Function used to find an object that is either a child or a parent, 
+     that is of a given type, and that fulfills a condition. It stops when it 
+     finds the first object.
+     <p>Where:<br>
+     The argument <code>Down</code> asks if you are interested in the children 
+     or the fathers:</p>
+     <ul>
+       <li>When going up, the scan stops at the document border.
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber7">
+           <tr>
+             <td>
+             <ul>
+               <li>Starting from a mechanical feature, it stops at the 
+               PartFeature.</li>
+             </ul>
+             <ul>
+               <li>Starting from an product instance, it does not go upper than 
+               the product that owns it.</li>
+             </ul>
+             <ul>
+               <li>Starting from a product reference, it means nothing.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ul>
+     <ul>
+       <li>When going down, all the children in the tree are scanned and in the 
+       case of a product, it crosses the instance/reference border.</li>
+     </ul>
+     <p><font color="#000080">Example:</font> </p>
+     <div align="left">
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber5">
+         <tr>
+           <td width="18%" valign="top">
+           <img border="1" src="b35doc/english/online/cfyugkwr_c2/images/accesssearch.gif" width="140" height="180"></td>
+           <td width="82%" valign="top">
+           <div align="left">
+             <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber6">
+               <tr>
+                 <td width="100%" bgcolor="#F2F2F2"><code>Part&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Find(&quot;x.Height &gt; 
+                 20mm&quot;, &quot;Pad&quot;, true)</code></td>
+               </tr>
+             </table>
+           </div>
+           <p>&nbsp;</td>
+         </tr>
+       </table>
+     </div>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></p>
+ <h2 align="left">Access<a name="CATKnowledge.Access"></a>
+ <a name="CATKnowledge.AccessResource"></a>&nbsp;<a name="Access"></a></h2>
+ <table border="0" width="99%">
+   <tr>
+     <td width="100%" valign="top"><b>Feature&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Access (path: String, type : 
+     String) : UndefinedType </b><br>
+     Function used to return an object from a path. In this case, you know the 
+     location of what you are looking for.<p><font color="#000080">Example:</font>
+     </p>
+     <div align="left">
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber8">
+         <tr>
+           <td width="16%" valign="top">
+           <img border="1" src="b35doc/english/online/cfyugkwr_c2/images/accesssearch.gif" width="140" height="180"></td>
+           <td width="84%" valign="top">
+           <div align="left">
+             <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber9">
+               <tr>
+                 <td width="100%"><code>Part&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Access(&quot;PartBody\\Pad.1&quot;, &quot;Pad&quot;)</code></td>
+               </tr>
+             </table>
+           </div>
+           <p>Where: </p>
+           <p>&#034;PartBody.1\\Pad.1&quot; 
+             is the path.</p>
+           <p>Note that the separator is &quot;\\&quot;.</p>
+           <p>&nbsp;</p>
+           <p>&nbsp;</td>
+         </tr>
+       </table>
+     </div>
+     </td>
+   </tr>
+ </table>
+ <p align="right"><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></p>
+
+ </body>
+
+</html>
+

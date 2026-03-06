@@ -1,0 +1,989 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Running the Downward Compatibility Batch</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Running the Downward Compatibility Batch</h1>
+ <p align="center"><a name="CATDownwardCompatibility.Utility"></a>
+ <a name="ix-downward compatibility"></a>
+	<a name="ix-CATUTIL command;commands::CATUTIL"></a></p>
+ <table Border="0" valign="top" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="134" width="36">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32">
+     </td>
+     <td height="134" width="1359" valign="top">
+     <p align="left">This task shows you how to use the <kbd>Downward Compatibility</kbd> 
+		batch. This batch provides downward compatibility 
+     between the most recent release (including service packs) down to V5R6, 
+     which means that <font color="#000000">Version 5 data can be reused from 
+     one release to another.</font></p>
+     <p align="left"><font color="#000000">You can process file documents, 
+     CATIA-type documents stored in ENOVIA LCA and, only when working on UNIX, 
+     CATIA-type documents stored in ENOVIA<font size="1">VPM</font>.<br>
+     However, b</font>ear in mind that appropriate licenses are required to be 
+     able to access documents in ENOVIA LCA and ENOVIA<font size="1">VPM</font>. 
+     For instance, if you do not have the license required for using VPM 
+     Navigator, you will not be able to select the <kbd>ENOVIA LCA</kbd> type.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="121" width="36">&nbsp;</td>
+     <td height="121" width="1359" valign="top">This scenario explains how to:<ul>
+       <li><a href="#hj-accessing interface">Access the Downward Compatibility 
+       interface from the command line</a></li>
+		<li><a href="#hj-accessing interface">Access the Downward Compatibility 
+       interface from the Batch Monitor</a></li>
+       <li><a href="#hj-batch parameters">Define the batch parameters</a></li>
+       <li><a href="page1538.html#hj-directbatch">Run the batch directly from the Batch Monitor</a></li>
+       <li><a href="#hj-command line">Run the batch from the command line</a>.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="53" width="36">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td height="53" width="1359" valign="middle">Bear in mind that downward 
+     compatibility is relevant for .CATPart documents only.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="123" width="36">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td height="123" width="100%" valign="top">
+     <ul>
+       <li><font color="#000000">If you select a CATPart document, the PartBody is 
+     copied and pasted <a href="page1428.html#hj-solid objects">
+     AsResultWithLink</a> to the target document. Note that only the first 
+		PartBody in the specification tree is processed because the </font> <kbd>Downward 
+       Compatibility</kbd> batch is not<font color="#000000"> appropriate for 
+		CATParts with multiple bodies. In case of a CATPart with multiple 
+		bodies, each body must be copied into a single CATPart: these CATParts 
+		will be processed as separate documents. For other solutions, contact 
+		your on-site administrator.<br>
+     Open Bodies are not converted as a whole. Only the feature defined as an 
+     external view in the <kbd>Generative Shape Design</kbd> workbench is copied 
+     and pasted <a href="page1428.html#hj-surfacic objects">AsResultWithLink</a> 
+     to the target document. This also means that even if a Generative Shape 
+     Design feature is created directly under a part body, the feature will not 
+     be converted.</font></li>
+       <li>When working with a document generated with the <kbd>Downward 
+       Compatibility</kbd> batch, it is recommended to deactivate <kbd>Folder of 
+       the pointing document</kbd> in the Linked Document Localization area of 
+       the <kbd>Tools &gt; Options &gt; General &gt; Document</kbd> tab to avoid 
+       conflicts with the original document.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="50" width="36">&nbsp;</td>
+     <td height="50" width="1359" valign="top">
+     <h2><a name="hj-accessing interface"></a>Accessing the Downward 
+     Compatibility interface from the command line</h2>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" width="36">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32">
+     </td>
+     <td width="1359" valign="top" align="left">
+     <ol class="task">
+       <li>
+       <p class="task">Open an MS-DOS Window.</li>
+       <li>
+       <p class="task">Change to the default folder in which you installed the 
+       product.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4" height="268" width="100%">
+           <tr>
+             <td height="265">The default folder is:<p><code>C:&#092;Program&nbsp;Files&#092;Dassault&nbsp;Systemes&#092;Bn&#092;intel_a&#092;code&#092;bin&nbsp;
+             </code>(on Windows)</p>
+             <p>or<br>
+&nbsp;</p>
+             <p class="task"><code>/usr/DassaultSystemes/Bn/OS_a/code/command/&nbsp;
+             </code>(on UNIX)</p>
+             <p>(where <code>n</code> is the current release number)</p>
+             <p>Before running the batch, make sure that your environment is 
+             correctly set up:</p>
+             <ul>
+               <li>On Windows, the batch environment is installed during Version 
+               5 installation.</li>
+               <li>On UNIX, you have to set up this environment before running a 
+               session. For more information, refer to <a href="page1361.html">
+               Starting a Session on UNIX</a>.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="3">
+       <p class="task">Enter the following command:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5" height="512">
+           <tr>
+             <td height="69"><b>
+             <a name="ix-CATUIDownwardCompatibility utility;utilities::CATUIDownwardCompatibility">
+             </a></b><code>CNEXT -batch -e CATUIDownwardCompatibility</code>
+             <p>The <kbd>CATIA V5 Downward Compatibility Batch</kbd> window 
+             opens:</td>
+           </tr>
+           <tr>
+             <td height="437">
+             <img border="0" src="b35doc/english/online/basug_c2/images/compatibilitybatch01NLS.gif" width="642" height="437"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="60" width="36">&nbsp;</td>
+     <td height="60" width="1359" valign="top">
+     <h2><a name="hj-access interface from Batch Monitor"></a>Accessing the batch interface from the Batch Monitor</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="48" width="36">&nbsp;</td>
+     <td height="48" width="1359" valign="top">
+     You can also access the print batch 
+       interface using the <kbd>Batch Monitor</kbd> in a Version 5 session. In 
+       that case, some additional options are available to you.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="968" width="36">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="968" width="1359" valign="top">
+     <ol class="task">
+		<li>
+		<p class="task">Access the <kbd>Batch Monitor</kbd> interface, either
+               <a href="page1538.html#hj-batch monitor from command line">from 
+               the command line</a>, or
+               <a href="page1538.html#hj-Batch Monitor from Version 5">from a 
+               Version 5 session</a>.</p>
+         <div align="left">
+           <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="table6" height="434">
+             <tr>
+               <td height="33">
+               <p class="task">The <kbd>Batch Monitor</kbd> opens:</td>
+             </tr>
+             <tr>
+               <td height="401">
+               <img border="0" src="b35doc/english/online/basug_c2/images/batchmonitor01NLS.gif" width="658" height="396"></td>
+             </tr>
+           </table>
+         </div>
+         </li>
+         <li>
+         <p class="task">Double-click <kbd>DownwardCompatibility</kbd> from the list.</p>
+         <div align="left">
+           <table border="0" cellpadding="0" style="border-collapse: collapse" bordercolor="#111111" id="table7" height="122" width="100%">
+             <tr>
+               <td height="26">The <kbd>DownwardCompatibility</kbd> window opens (click the thumbnail to 
+				enlarge the picture):</td>
+             </tr>
+             <tr>
+               <td height="66">
+				<img border="2" src="b35doc/english/online/basug_c2/images/compatibilitybatch04NLS_s.gif" title="Click to enlarge this image" width="100" height="60">
+             <script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script>	</td>
+             </tr>
+             <tr>
+               <td height="30">When running the <kbd>DownwardCompatibility</kbd> 
+				batch from the <kbd>Batch Monitor</kbd>, some additional options 
+		are available:</td>
+             </tr>
+             <tr>
+               <td height="32">
+       <h4>Remote mode</h4>
+       <p><a name="hj-remote print"></a>You can choose to run 
+       the batch locally, or on a remote computer by selecting the appropriate 
+       option:</p>
+       <ul>
+         <li>
+         <p class="task"><kbd>Run Local</kbd>: default option. When selected, 
+         the batch is run in local on your local computer.</li>
+         <li>
+         <p class="task"><kbd>Run Remote</kbd>: select this option then indicate 
+         the name of the remote computer on which the batch will be run. The 
+         remote computer uses the printers set up on your local computer.
+         Note that:<ul>
+           <li>
+           <p class="task">When using Windows printers, you can run the batch in 
+           remote mode on Windows computers only</li>
+           <li>
+           <p class="task">When using 3D PLM printers, you can run the batch in 
+           remote mode either on UNIX or on Windows computers.</li>
+         </ul>
+         </li>
+       </ul>
+       <p class="task">For more information, refer to <a target="ds_doc2" href="page1538.html#hj-RemoteMode">
+       Running Batches in Remote Mode</a>.</td>
+             </tr>
+             <tr>
+               <td height="32">
+       <h4>Licensing</h4>
+       <p class="task"><a name="hj-licensing"></a>You also have the ability to 
+       select a license by clicking 
+       <a target="ds_doc2" href="page1538.html#hj-licensing setup">
+       <span style="font-weight: 400">Licensing Setup...</span></a>.</td>
+             </tr>
+             <tr>
+               <td height="32">
+       <h4>Getting contextual help</h4>
+       <p class="task">The batch-specific online documentation can be accessed 
+       directly from the batch interface by clicking
+       <img border="0" src="b35doc/english/online/basug_c2/images/whatsthis02.gif" width="17" height="15"> in the top-right corner (on 
+       Windows) or <kbd>Help</kbd> (on UNIX).</td>
+             </tr>
+           </table>
+         </div>
+         </li>
+       </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="35" width="36">&nbsp;</td>
+     <td height="35" width="100%">
+     <p align="center">
+       <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+   <tr>
+     <td valign="top" height="52" width="36">&nbsp;</td>
+     <td height="52" width="1359">
+     <h2><a name="hj-batch parameters"></a>Defining the batch parameters</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="43" width="36">&nbsp;</td>
+     <td height="43" width="1359">In this scenario, we assume that the <kbd>
+     Downward Compatibility Batch</kbd> interface has been accessed from the 
+		command line.</td>
+   </tr>
+   <tr>
+     <td height="47" width="36" bgcolor="#FFFFFF">&nbsp;</td>
+     <td height="47" width="1359" valign="top" align="left">
+     <h3>Selected Operation</h3>
+     </td>
+   </tr>
+   <tr>
+     <td height="86" width="36" bgcolor="#FFFFFF">&nbsp;</td>
+     <td height="86" width="1359" valign="top" align="left">
+     <img border="1" src="b35doc/english/online/basug_c2/images/compatibilitybatch09NLS.gif" width="501" height="49"></td>
+   </tr>
+   <tr>
+     <td valign="top" height="5520" width="36">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="5520" width="1359" valign="top" align="left">
+     <ol class="task">
+       <li>
+       <p class="task">Select the action to be performed from the list (where 
+       you see &quot;Convert&quot; right now):</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber6" height="1344" width="100%">
+           <tr>
+             <td height="122" colspan="2" width="100%">
+             <h5>Convert </h5>
+             <p>Converts a document into a format which can be read on the 
+             target release.<br>
+             For each selected document, the Report informs you about the 
+             process (i.e. converted or not) and the result (i.e. success or 
+             failure).&nbsp;</p>
+             <p>Note that there are particular cases when selecting the 
+             documents to be converted:</td>
+           </tr>
+           <tr>
+             <td height="300" colspan="2" width="100%"><b>Case 1</b><p>The 
+             document to be converted is already a conversion of another 
+             document. In that case, it is recommended to select rather the 
+             father document than the converted document to avoid the conversion 
+             of a converted document:</p>
+             <ul>
+               <li>If the father document is accessible and readable, the 
+               selection of the child document cannot be performed. A pop-up 
+               warning is displayed to prompt you to select the father document 
+               instead.</li>
+             </ul>
+             <blockquote>
+               <p>You cannot force the conversion of the child document, unless 
+               the father document is removed or renamed.</p>
+             </blockquote>
+             <ul>
+               <li>If the father document can be neither accessed nor read 
+               (release posterior to the execution release), a pop-up warning 
+               informs you that the document is already a converted document.</li>
+             </ul>
+             <blockquote>
+               <p>However, the selection is accepted and the document will be 
+               considered as any other document. The converted document will 
+               then point to the father document and not to the original 
+               document.<br>
+               In the <kbd>Report</kbd> window, you will be informed that the 
+               document is already a converted document and the status of the 
+               father document (name, availability and minimum release to be 
+               read) will be indicated.</p>
+             </blockquote>
+             </td>
+           </tr>
+           <tr>
+             <td height="115" colspan="2" width="100%"><b>Case 2 </b><br>
+&nbsp;<ul>
+               <li>If the pointed document cannot be found (or has&nbsp;been 
+               removed), it is displayed as being selected.&nbsp;<br>
+               The Report window informs you that the document cannot be 
+               accessed.</li>
+               <li>If a selected or pointed document is not readable in the 
+               execution release, it is selected. The <kbd>Report</kbd> window 
+               informs you that the document is unreadable and gives you the 
+               minimum release to read the document.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td height="87" colspan="2" width="100%">In case a selected 
+             document cannot be converted, a pop-up warning is displayed to 
+             explain why the conversion cannot be performed. You just have to 
+             re-select the document in the Document Selection area then click
+             <img border="0" src="b35doc/english/online/icons_C2/images/I_EraseP2.gif" width="24" height="24">. 
+             The selected document and all its related files will be removed 
+             from the list, provided that these related files are not linked to 
+             another document. </td>
+           </tr>
+           <tr>
+             <td height="143" colspan="2" width="100%">
+             <h5>Synchronize</h5>
+             <p>Synchronizes a document. This action is relevant for converted 
+             documents whose original documents have been modified.<br>
+             Selecting this option deactivates the incompatible fields which are
+             <kbd>Target Directory</kbd> (since documents are written in the 
+             same location after synchronization) and the field indicating the 
+             target version.<br>
+             For each selected document, the <kbd>Report</kbd> window gives you 
+             information about the process (i.e. synchronized or not) and the 
+             result (i.e. success or failure).&nbsp;</p>
+             <p>Note that there are particular cases when selecting documents to 
+             be synchronized:</td>
+           </tr>
+           <tr>
+             <td height="100" colspan="2" width="100%"><b>Case 1</b><p>The 
+             document to be synchronized is not a converted image of another 
+             document: in that case, a pop-up warning is displayed to indicate 
+             that the selection cannot be performed.</td>
+           </tr>
+           <tr>
+             <td height="183" colspan="2" width="100%"><b>Case 2</b><p>The 
+             document to be converted is already a converted image:</p>
+             <ul>
+               <li>If the father document is accessible and readable,&nbsp;the 
+               selection can be performed. The father&nbsp;document is not displayed 
+               in the list of pointed documents.</li>
+               <li>If the father document is not accessible, the&nbsp;selection 
+               cannot be performed and a pop-up<br>
+               warning is displayed.</li>
+             </ul>
+             <p>All pointed documents (except the father document) are displayed 
+             in the list of documents to be synchronized, whether they are 
+             converted images, accessible, readable in the execution release or 
+             not. The <kbd>Report</kbd> window indicates the status of each 
+             document.</td>
+           </tr>
+           <tr>
+             <td height="97" colspan="2" width="100%">
+             <h5>Info </h5>
+             <p>Provides general information about the document.<br>
+             Selecting this option deactivates the incompatible boxes which are
+             <kbd>Target Directory</kbd> (no document is written when the <kbd>
+             Info</kbd> check box is selected) and the box indicating the target 
+             version.</td>
+           </tr>
+           <tr>
+             <td height="128" colspan="2" width="100%">For each document to be 
+             converted, the report indicates<ul>
+               <li>The minimum release version enabling the document to be read 
+               without any conversion</li>
+               <li>If the document is already a converted image:
+               <ul>
+                 <li>The name of the father document along with its availability</li>
+                 <li>The minimum release version for reading the father document 
+                 without conversion.</li>
+               </ul>
+               </li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td height="58" width="18">
+             <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+             <td height="58" width="100%">When swapping from one action to 
+             another, do not forget that the selected documents must comply to 
+             the selection rules of the new action.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="2">
+       <p class="task">Select the CATIA V5 release to which the documents will 
+       be converted: CATIAV5R6, CATIAV5R7, CATIAV5R8, and so on.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber7" height="30">
+           <tr>
+             <td height="27">This list can be accessed in <kbd>Convert</kbd> 
+             action only, otherwise it is grayed out.</td>
+           </tr>
+           <tr>
+             <td height="27">
+             <h3>Document Selection</h3>
+             </td>
+           </tr>
+           <tr>
+             <td height="27">
+             <img border="1" src="b35doc/english/online/basug_c2/images/dbdatalifecycle16NLS.gif" width="522" height="234"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="3">
+       <p class="task"><a name="hj-ergonomy"></a>Use the <kbd>Document Location</kbd> 
+       list to select the type of documents to be processed: either <kbd>File</kbd>,
+       <kbd>ENOVIA</kbd><font size="1"><kbd>VPM</kbd></font> or <kbd>ENOVIA LCA</kbd>.</li>
+       <li value="4">
+       <p class="task">Still in the Document Selection area, click
+       	<img border="0" src="b35doc/english/online/icons_C2/images/misc/CATDucDir.gif" width="24" height="24"> 
+       to 
+       select the documents to be converted. Each document type is associated to 
+       a specific search interface (click the thumbnails to enlarge the 
+		pictures):</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber8" height="197" width="100%">
+           <tr>
+             <td height="85">
+             <h5>File</h5>
+             <p>When searching for File documents with the <kbd>Convert</kbd> or
+             <kbd>Synchronize</kbd> action selected, the search is performed via 
+             the <kbd>File Selection</kbd> dialog box:</td>
+           </tr>
+           <tr>
+             <td height="67">
+             <img border="2" src="b35doc/english/online/basug_c2/images/dbdatalifecycle11NLS_small.gif" title="Click to enlarge this image" width=100 height=63>
+             <script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js"></script></td>
+           </tr>
+           <tr>
+             <td height="46">If the <kbd>Info</kbd> action is selected, the <kbd>
+             File Selection</kbd> dialog box slightly differs because this 
+             action does not require as many data as the <kbd>Convert</kbd> 
+             action:</td>
+           </tr>
+           <tr>
+             <td height="46">
+             <img border="2" src="b35doc/english/online/basug_c2/images/compatibilitybatch14NLS_small.gif" title="Click to enlarge this image" width="100" height="30">
+             <script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script>	</td>
+           </tr>
+           <tr>
+             <td height="36">For detailed information on this dialog box, refer 
+             to <a href="page1540.html">Searching for File Documents</a>.</td>
+           </tr>
+           <tr>
+             <td height="36">
+             <h5>ENOVIA V5 VPM</h5>
+             <p>When searching for ENOVIA V5 VPM documents, the search is performed 
+             via the <kbd>Search Documents in ENOVIA V5 VPM</kbd> dialog box:</td>
+           </tr>
+           <tr>
+             <td height="36">
+             <img border="2" src="b35doc/english/online/basug_c2/images/dbdatalifecycle27NLS_small.gif" title="Click to enlarge this image" width="100" height="98">
+             <script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script>	</td>
+           </tr>
+           <tr>
+             <td height="36">For detailed information on this dialog box, refer 
+             to <a href="page1541.html">Searching for Documents in ENOVIA V5 
+				VPM</a>.</td>
+           </tr>
+           <tr>
+             <td height="36">
+             <h5>ENOVIA<font size="1">VPM</font> (UNIX only)</h5>
+             <p>When searching for ENOVIA<font size="1">VPM</font> documents, 
+             the search is performed via the <kbd>Search Documents in ENOVIAVPM</kbd> 
+             dialog box:</td>
+           </tr>
+           <tr>
+             <td height="36">
+             <img border="2" src="b35doc/english/online/basug_c2/images/dbdatalifecycle03NLS_small.gif" title="Click to enlarge this image" width="100" height="62">
+             <script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script>	</td>
+           </tr>
+           <tr>
+             <td height="36">For detailed information on this dialog box, refer 
+             to <a target="ds_doc2" href="page1539.html">Searching for 
+             Documents in ENOVIA<font size="1">VPM</font></a>.</td>
+           </tr>
+           <tr>
+             <td height="36">This scenario takes the <kbd>File</kbd> document 
+             location as an example.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="5">
+       <p class="task">Enter your search criteria in the search dialog box.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber9" height="137" width="100%">
+           <tr>
+             <td height="30">
+             <p class="task">When the documents are selected, their names are 
+             displayed in the <kbd>Name</kbd> list as shown below:</td>
+           </tr>
+           <tr>
+             <td height="30">
+             <img border="1" src="b35doc/english/online/basug_c2/images/compatibilitybatch10NLS.gif" width="548" height="212"></td>
+           </tr>
+           <tr>
+             <td height="30">
+             <p class="task">When working with File documents, note that the 
+             former <kbd>Pointed document</kbd> option allowing to convert all 
+             the documents pointed to by the document to be converted has been 
+             replaced by the <kbd>Select pointed documents</kbd> option 
+             available in the <kbd>File Selection</kbd> dialog box.</td>
+           </tr>
+           <tr>
+             <td height="30">
+             <p class="task"><a name="hj-main scenario"></a>If you change your 
+             mind afterwards and decide not to process one or several documents 
+             displayed in the Name list, select them (you can use the 
+             multi-selection) then click
+             <img border="0" src="b35doc/english/online/icons_C2/images/I_EraseP2.gif" width="24" height="24"> 
+             to remove the documents from the list.<br>
+             As long as no document is selected, the button is grayed out.</td>
+           </tr>
+           <tr>
+             <td height="30">
+             <h3>Output</h3>
+             </td>
+           </tr>
+           <tr>
+             <td height="134">
+             <img border="1" src="b35doc/english/online/basug_c2/images/compatibilitybatch11NLS.gif" width="626" height="124"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">In the <kbd>Target Directory</kbd> box, key in the output 
+       directory or DLName or, click
+       	<img border="0" src="b35doc/english/online/icons_C2/images/misc/CATDucDir.gif" width="24" height="24"> 
+       to 
+       navigate through the file tree to the desired directory.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber10" height="39" width="100%">
+           <tr>
+             <td height="36">This box is mandatory and is initialized with the current or temporary 
+       directory by default.</td>
+           </tr>
+           <tr>
+             <td height="36"><a name="hj-DLName chooser"></a>If you set the DLName environment as &quot;Current&quot; in
+             <kbd>Tools &gt; Options &gt; General &gt; Document</kbd> tab, the usual <kbd>
+             File Selection</kbd> dialog box is replaced by the following one:</td>
+           </tr>
+           <tr>
+             <td height="36">
+             <img border="0" src="b35doc/english/online/basug_c2/images/dbdatalifecycle32NLS.gif" width="234" height="307"></td>
+           </tr>
+           <tr>
+             <td height="36">The DLName document environment lets you restrict 
+             the access to specific folders referenced by logical names referred 
+             to as &quot;DLNames&quot;&nbsp;(each folder is assigned a logical name).<br>
+             In this mode, the different file opening and saving commands only 
+             allow end users to access documents in directories referenced by 
+             DLNames.<p>DLNames are identified by the string <code>CATDLN://</code>, 
+             for instance &quot;CATDLN://DLNAME3&quot;.</p>
+             <p>Use the <kbd>Look in:</kbd> list to select the root DLName in 
+             which you want to navigate. The sub-folders (if any) stored in the 
+             selected root DLName are then displayed in the DLName list below 
+             and you can choose a DLName in list: the selected DLName is 
+             displayed in the &quot;Selected DLName&quot; field and will be set as the 
+             target directory.<br>
+             Note that once you are in a sub-folder, you can re-access the upper 
+             level by clicking
+               <img border="0" src="b35doc/english/online/icons_C2/images/small/IDB_DLNameUp.gif" width="16" height="16">.</p>
+             <p>You can also click
+               <img border="0" src="b35doc/english/online/icons_C2/images/small/IDB_DLNameSearch.gif" width="16" height="16"> 
+             to access the
+             <a href="page0913.html#hj-DLName search">
+             Search Results</a> dialog box which lets you search for DLNames 
+             using a specific interface.</p>
+             <p>Once you have found the desired DLName, click <kbd>OK</kbd> to 
+             validate.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Enter the name of report in the <kbd>Report Name</kbd> 
+       box. </p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber11" height="564" width="100%">
+           <tr>
+             <td height="33">
+             By default, the report is named &quot;GlobalResults&quot;:</td>
+           </tr>
+           <tr>
+             <td height="450">
+             <img border="0" src="b35doc/english/online/basug_c2/images/compatibilitybatch03NLS.gif" width="642" height="437"></td>
+           </tr>
+           <tr>
+             <td height="77">
+             For each processed document, the batch creates a 
+             document report in the target directory. By default, the name of 
+             the report is the name of the document suffixed with &quot;.htm&quot;. You 
+             can change this default name by suffixing the document report name 
+             with the string of your choice. To do so, enter the string to be 
+             added at the end of the name in the <kbd>Append String to Document 
+             Report</kbd> box.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Click <b><kbd>Execute</kbd></b> to run the batch. </p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber12" height="804" width="100%">
+           <tr>
+             <td height="46">If of the above boxes is not correctly filled, the 
+				command is grayed out.</td>
+           </tr>
+           <tr>
+             <td height="46">The completion is indicated by the progress bar at 
+             the bottom of the dialog box (when no batch is running, the 
+             progress bar is identified as &quot;Inactive&quot;):</td>
+           </tr>
+           <tr>
+             <td height="85">
+             <img border="1" src="b35doc/english/online/basug_c2/images/compatibilitybatch15NLS.gif" width="517" height="67"></td>
+           </tr>
+           <tr>
+             <td height="46">Note that when you access the <kbd>Downward 
+             Compatibility Batch</kbd> interface via the <kbd>Batch Monitor</kbd>, 
+             there is no progress bar.<p>Once the conversion is over, the <kbd>
+             Report</kbd> window opens.&nbsp;</td>
+           </tr>
+           <tr>
+             <td height="46">
+             <img border="0" src="b35doc/english/online/basug_c2/images/compatibilitybatch02NLS.gif" width="400" height="375"></td>
+           </tr>
+           <tr>
+             <td height="234">The report indicates if each of the selected 
+             documents has been processed or not along with the result (success 
+             or failure).<br>
+             The report contains only text and cannot reference images, URL 
+             links, etc.<p>At the end of the report, one of the following return 
+             codes will be displayed:</p>
+             <ul>
+               <li>ReturnCode = 0&nbsp;&nbsp;<b> <img border="0" src="b35doc/english/online/basug_c2/images/redarrow.gif" width="13" height="13">&nbsp;
+               </b>the batch ended successfully</li>
+               <li>ReturnCode = 4&nbsp;&nbsp; <b>
+               <img border="0" src="b35doc/english/online/basug_c2/images/redarrow.gif" width="13" height="13">&nbsp; </b>at least one 
+               document could not be processed</li>
+               <li>ReturnCode = 8&nbsp;&nbsp; <b>
+               <img border="0" src="b35doc/english/online/basug_c2/images/redarrow.gif" width="13" height="13">&nbsp;</b> the batch 
+               aborted.</li>
+             </ul>
+             <p>To save the report, click the <b><kbd>Save As Text</kbd></b> 
+             button.</p>
+             <p>In case you want to modify your conversion parameters, you must 
+             close the <kbd>Report</kbd> window first then run the batch once 
+             again.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="9">
+       <p class="task">Exit the <kbd>Report</kbd> window by clicking the cross 
+       in the top right corner or <kbd>OK</kbd>.</li>
+       <li value="10">
+       <p class="task">To display an HTML version of the report, click <kbd>Open HTML Report</kbd>
+       	<img border="0" src="b35doc/english/online/icons_C2/images/misc/CATDucOpenReport.gif" width="24" height="24">. This button is activated 
+       only once a report has been generated, otherwise it is grayed out.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber13" width="100%">
+           <tr>
+             <td height="320">
+             <img border="1" src="b35doc/english/online/basug_c2/images/compatibilitybatch12NLS.gif" width="614" height="307"></td>
+           </tr>
+           <tr>
+             <td height="44">However, you can still use the former method to 
+             visualize the report, i.e. open the HTML file from the directory in 
+             which it has been saved.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="middle" height="48" width="36">&nbsp;</td>
+     <td valign="middle" height="48" width="1359">
+     <p align="center">
+       <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+   <tr>
+     <td valign="middle" height="66" width="36">&nbsp;</td>
+     <td valign="middle" height="66" width="1359">
+     <h2><font color="#282187"><a name="hj-command line"></a>Running the batch 
+     from the command line</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="middle" height="79" width="36">&nbsp;</td>
+     <td valign="middle" height="79" width="1359">
+     <ul>
+		<li><a href="#hj-CATDownwardCompatibility">Using 
+		CATDownwardCompatibility</a></li>
+		<li><a href="page1538.html#hj-CATBatchStarter">Using CATBatchStarter</a></li>
+		<li><a href="page1538.html#hj-CATUTIL">Using CATUTIL</a>.</li>
+		</ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="middle" height="55" width="36">&nbsp;</td>
+     <td valign="middle" height="55" width="1359">
+     <h3><a name="hj-CATDownwardCompatibility"></a>Using 
+		CATDownwardCompatibility</h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="38" width="36">&nbsp;</td>
+     <td height="38" width="1359" valign="top" align="left">This scenario shows 
+     you how to run the <kbd>Downward Compatibility</kbd> batch without 
+		accessing the batch interface through the <kbd>CATDownwardCompatibility</kbd> 
+		command.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="1973" width="36">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32">
+     </td>
+     <td height="1973" width="1359" valign="top" align="left">
+     <ol class="task">
+       <li>
+       <p class="task">Open an MS-DOS Window.</li>
+       <li>
+       <p class="task">Change to the default folder in which you installed the 
+       product.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber14" width="100%">
+           <tr>
+             <td width="100%">The default folder is:<p><code>C:&#092;Program&nbsp;Files&#092;Dassault&nbsp;Systemes&#092;Bn&#092;intel_a&#092;code&#092;bin&nbsp;
+             </code>(on Windows)</p>
+             <p>or<br>
+&nbsp;</p>
+             <p class="task"><code>/usr/DassaultSystemes/Bn/OS_a/code/command/&nbsp;
+             </code>(on UNIX)</p>
+             <p>(where &quot;n&quot; is the current release number)</p>
+             <p>Before running the batch, make sure that your environment is 
+             correctly set up:</p>
+             <ul>
+               <li>On Windows, the batch environment is installed during Version 
+               5 installation</li>
+               <li>On UNIX, you have to set up this environment before running a 
+               session. For more information, refer to <a href="page1361.html">
+               Starting a Session on UNIX</a>.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="3">
+       <p class="task">Enter the following command:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber15">
+           <tr>
+             <td><b>
+             <a name="ix-CATDownwardCompatibility utility;utilities::CATDownwardCompatibility">
+             </a></b><code>CATDownwardCompatibility -arg<br>
+             </code><i><b><br>
+             </b></i>CATDownwardCompatibility [-h / -id inputDirectory [-if 
+             inputfile/-il inputlist] -od outputDirectory -action 
+             [Convert/Synchro/Info] -version CATIAV5R<i>n</i> -report 
+             reportFile.txt]<p>Authorized arguments are detailed below:</td>
+           </tr>
+           <tr>
+             <td>
+             <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-style: solid; border-width: 1; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1" bordercolor="#E0E0E0" width="90%" id="AutoNumber3" height="1521">
+               <tr>
+                 <td width="11%" height="35" bgcolor="#E0E0E0"><b>Argument</b></td>
+                 <td width="87%" height="35" bgcolor="#E0E0E0"><b>Description</b></td>
+               </tr>
+               <tr>
+                 <td width="11%" height="27" bgcolor="#F2F2F2">-h</td>
+                 <td width="87%" height="27" bgcolor="#F2F2F2">Online help</td>
+               </tr>
+               <tr>
+                 <td width="11%" height="402">&nbsp;</td>
+                 <td width="87%" height="402">Writes in the standard output the 
+                 list of valid arguments.<p><code>CATDownwardCompatibility [-h / 
+                 -id inputDirectory [-if inputfile /<br>
+                 -il inputlist] -od outputDirectory -report reportFile<br>
+&nbsp;</code></p>
+                 <ul>
+                   <li>-h: help</li>
+                   <li>-id: input directory or 
+                   DLNAME</li>
+                   <li>-if: input file containing a 
+                   list of documents to process</li>
+                   <li>-il: input list of documents 
+                   to process. (-if or -il argument is mandatory</li>
+                   <li>-action: this argument is 
+                   mandatory. Requests an action such as<ul>
+                     <li>&quot;Convert&quot;: converts a 
+                     document to a document readable in the version defined in 
+                     -version argument</li>
+                     <li>Synchro&quot;: synchronizes a 
+                     converted document with the original file</li>
+                     <li>Info&quot;: gives information 
+                     on the selected members.</li>
+                   </ul>
+                   </li>
+                   <li>-version: targeted Version 5 
+                   version is mandatory for &quot;Convert&quot;&nbsp;action (not used in 
+                   &quot;Synchro&quot; and &quot;Info&quot; action modes)</li>
+                   <li>-od: output directory or 
+                   DLNAME is mandatory for &quot;Convert&quot; action (not used in 
+                   &quot;Synchro&quot; and &quot;Info&quot; action modes)</li>
+                   <li>-report: report file name.</li>
+                 </ul>
+                 </td>
+               </tr>
+               <tr>
+                 <td width="11%" height="26" bgcolor="#F2F2F2">-id</td>
+                 <td width="87%" height="26" bgcolor="#F2F2F2">Input Directory</td>
+               </tr>
+               <tr>
+                 <td width="11%" height="87">&nbsp;</td>
+                 <td width="87%" height="87">Defines the path name or the DLNAME 
+                 containing the documents to process.
+                 <p>This argument is optional. It is useful if all the documents 
+                 are extracted from the same directory.</td>
+               </tr>
+               <tr>
+                 <td width="11%" height="25" bgcolor="#F2F2F2">-if</td>
+                 <td width="87%" height="25" bgcolor="#F2F2F2">Selection 
+                 Criterion</td>
+               </tr>
+               <tr>
+                 <td width="11%" height="139">&nbsp;</td>
+                 <td width="87%" height="139">Input file containing a list of 
+                 documents to process with the appropriate file name extension.<br>
+                 If a document is a concatenation of path (or DLNAME) and name, 
+                 the input directory is ignored.
+                 <p>At least one of the (-id/-if) arguments is mandatory, 
+                 (-id/-if) arguments can be defined several times. </p>
+                 <p>The batch aborts if no selection criterion is defined.</td>
+               </tr>
+               <tr>
+                 <td width="11%" height="26" bgcolor="#F2F2F2">-il</td>
+                 <td width="87%" height="26" bgcolor="#F2F2F2">Selection 
+                 Criterion</td>
+               </tr>
+               <tr>
+                 <td width="11%" height="141">&nbsp;</td>
+                 <td width="87%" height="141">Input list of documents to process 
+                 with the appropriate file name extension.<br>
+                 If a document is a concatenation of path (or DLNAME) and name, 
+                 the input directory is ignored.<p>At least one of the (-id/-if) 
+                 arguments is mandatory, (-id/-if) arguments can be defined 
+                 several times. </p>
+                 <p>The batch aborts if no selection criterion is defined.</td>
+               </tr>
+               <tr>
+                 <td width="11%" height="26" bgcolor="#F2F2F2">-od</td>
+                 <td width="87%" height="26" bgcolor="#F2F2F2">Output Directory</td>
+               </tr>
+               <tr>
+                 <td width="11%" height="85">&nbsp;</td>
+                 <td width="87%" height="85">Defines the pathname or the DLNAME 
+                 where the converted documents are written.<p>This argument is 
+                 mandatory for &quot;Convert&quot; action. The batch aborts if no output 
+                 directory is defined.</td>
+               </tr>
+               <tr>
+                 <td width="11%" height="27" bgcolor="#F2F2F2">-action</td>
+                 <td width="87%" height="27" bgcolor="#F2F2F2">Requested Action</td>
+               </tr>
+               <tr>
+                 <td width="11%" height="149">&nbsp;</td>
+                 <td width="87%" height="149">The action can be:<ul>
+                   <li>&quot;Convert&quot;: Converts a document into a format which can be 
+                   read on the target release</li>
+                   <li>&quot;Synchro&quot;: Synchronizes a converted document with the 
+                   original file</li>
+                   <li>&quot;Info&quot;: Gives information on the selected members.</li>
+                 </ul>
+                 <p>This argument is mandatory. The batch aborts if no action is 
+                 defined.</td>
+               </tr>
+               <tr>
+                 <td width="11%" height="28" bgcolor="#F2F2F2">-version</td>
+                 <td width="87%" height="28" bgcolor="#F2F2F2">Targeted CATIA 
+                 version for the &quot;Convert&quot; action </td>
+               </tr>
+               <tr>
+                 <td width="11%" height="64">&nbsp;</td>
+                 <td width="87%" height="64">This argument is mandatory for 
+                 &quot;Convert&quot; action. The batch aborts if no version is defined.</td>
+               </tr>
+               <tr>
+                 <td width="11%" height="27" bgcolor="#F2F2F2">-report</td>
+                 <td width="87%" height="27" bgcolor="#F2F2F2">Report Filename</td>
+               </tr>
+               <tr>
+                 <td width="11%" height="223">&nbsp;</td>
+                 <td width="87%" height="223">Lets you save the &quot;report&quot; in the 
+                 desired file and directory. This report provides the following 
+                 information on the processed documents:<ul>
+                   <li>Name of the processed document</li>
+                   <li>Corresponding return code:<ul>
+                     <li>ReturnCode = 0&nbsp;&nbsp;&nbsp; the batch ended 
+                     successfully</li>
+                     <li>ReturnCode = 4&nbsp;&nbsp;&nbsp; at least one document 
+                     could not be processed</li>
+                     <li>ReturnCode = 8&nbsp;&nbsp;&nbsp; the batch aborted.</li>
+                   </ul>
+                   </li>
+                 </ul>
+                 <p>The report file can be a concatenation of path (or DLNAME) 
+                 and name. It is automatically suffixed with &quot;.txt&quot;. </p>
+                 <p>This argument is optional. If no report file is defined, the 
+                 report is written in the standard output.</td>
+               </tr>
+             </table>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="35" width="100%" colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

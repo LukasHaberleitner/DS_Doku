@@ -1,0 +1,1303 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+  <head>
+  <meta name="MonocodingType" content="0">
+  <meta name="MonocodingFlag" content="C2">
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <title>Mapping File Syntax</title>
+  <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  </head>
+
+  <body>
+
+  <h1>Mapping File Syntax<a name="ix-syntax of the mapping property file;mapping file syntax"></a><a name="hj-top"></a></h1>
+  <table border="0" cellspacing="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+    <tr>
+      <td align="center" valign="top">
+      <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+      <td>
+      <p class="task">The mapping property lets you apply in one shot finite 
+      element properties to all the elements of a part (1D elements, 2D elements 
+      or 3D elements). </p>
+      <p class="task">The identification of each element and the associated property 
+      characteristics are listed in an XML (Extensible Markup Language) file. This 
+      file must respect a particular syntax and format. <br>
+      Each time the property is updated (using the <kbd>Compute</kbd> command) the 
+      whole file is parsed and the properties are applied to elements.</p>
+      <p class="task">Two approaches are proposed for the element identification:</p>
+      <ul>
+		<li>an associative identification based on mesh part names, 
+        group names and geometrical feature names,</li>
+		<li>a spatial identification based on the coordinates of the 
+        geometrical center of each element.<br>To identify the element coordinates, you can use the 
+		<kbd>Generate Mapping 
+        File</kbd> contextual menu.<br>For more details about this contextual menu, refer to
+        <a href="page7249.html">Generating a Mapping File</a>.</li>
+		</ul>
+      <p class="task">You can use both approaches in the same XML file.</p>
+      <p class="task">To know more about finite element properties, refer to the
+      <a href="page7563.html" target="ds_doc2">
+      Physical Properties</a> chapter in the <cite>Finite Element Reference Guide</cite>.</p>
+      </td>
+      <td align="center" valign="top">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">
+      <img border="0" src="b35doc/english/online/estug_c2/images/icon_EST.gif" width="32" height="32"></td>
+      <td>
+      <p class="task">Only available with 
+      the <b>ELFINI Structural Analysis (EST)</b> product.</p>
+      </td>
+      <td align="center" valign="top">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">
+      <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+      <td>
+      <ul>
+		<li>The syntax and the format of the xml files will comply with 
+        the &quot;Extensible Markup Language (XML) 1.0 (Third Edition)&quot; rules as published 
+        in the World Wide Web Consortium (W3C). <br>For more details, refer to http://www.w3.org/TR/2004/REC-xml-20040204/.</li>
+		<li>Only analysis <kbd>User Material</kbd> can be referenced 
+        in the XML file.<br>For more details about analysis user material, refer to
+        <a href="page7167.html">Creating User Material</a>.</li>
+		</ul>
+      </td>
+      <td align="center" valign="top">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">
+      <img src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+      <td>
+      <h2><a name="hj-mandatoryelem"></a>Mandatory Elements of the XML Mapping File</h2>
+      <p class="task">You can find here the mandatory elements for the mapping file.</p>
+      <p class="task">
+      <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile01.gif" width="558" height="98"></p>
+      <p class="task">where:</p>
+      <ul>
+        <li>
+        <p class="task">the first line is necessary at the beginning of the file.</p>
+        </li>
+      </ul>
+      <div align="left">
+        <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber19">
+          <tr>
+            <td align="center" valign="top">
+            <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+            <td>
+            <p class="task">Make sure that encoding format of the XML file is the
+            <kbd>UTF-8</kbd>.<br>
+            To do this:</p>
+            <ol class="task" type="a">
+              <li>
+              <p class="task">Open the XML file in a text editor.</p>
+              </li>
+              <li>
+              <p class="task">Select <kbd>File &gt; Save As...</kbd>.</p>
+              </li>
+              <li>
+              <p class="task">Select <kbd>UTF-8</kbd> from the <kbd>Encoding</kbd> 
+              list.</p>
+              </li>
+              <li>
+              <p class="task">Click <kbd>Save</kbd>.</p>
+              </li>
+            </ol>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <ul>
+        <li>
+        <p class="task"><kbd>ListOfProperties</kbd> is the XML root element.<br>
+        It contains all the other elements corresponding to the properties, units 
+        and default values.</p>
+        </li>
+        <li>
+        <p class="task">The <kbd>PropertyMappingRules.xsd</kbd> file contains the 
+        description of the mapping file elements.<br>
+        Any difference between the xml file syntax and the <kbd>.xsd</kbd> description 
+        (spelling error, missing mandatory attribute, ...) generates an error 
+        message when you launch an update or a computation.</p>
+		<table border="0" cellspacing="1" id="table2">
+			<tr>
+				<td>
+              <p class="task">You can find here an example of error message that 
+              appears when you launch a <kbd>Mesh only</kbd> computation:</p>
+              <p class="task">
+              <img border="0" src="b35doc/english/online/estug_c2/images/errormapping01NLS.gif" width="442" height="165"></p>
+              <p class="task">In this case, the XML file contains a spelling error 
+              (on the <kbd>MEMBRANE</kbd> keyword).</p></td>
+			</tr>
+		</table>
+		<p class="task">The decimal point used in the XML file depends on the 
+		regional settings of your operating system. It can be either a full stop or a 
+		comma (for example: 0.001 or 0,001). No other symbol is supported.<br>
+		A warning message is displayed when you launch a <kbd>Mesh Only</kbd> 
+		computation if the decimal point used in the XML file does not 
+		correspond to the regional settings of your operating system.<br>
+		Moreover, the syntax of the .xsd file name also depends on the regional 
+		settings of your operating system:</p>
+      <ul>
+        <li>If the chosen decimal point is a full stop, the .xsd 
+		file name must be: <kbd>PropertyMappingRules.xsd</kbd></li>
+		<li>If the chosen decimal point is comma, the .xsd file name 
+		must be: <kbd>PropertyMappingRules-fr.xsd</kbd></li>
+      </ul>
+        </li>
+      </ul>
+      </td>
+      <td align="center" valign="top">
+      <h2><a href="#hj-top">
+      <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h2>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">&nbsp;</td>
+      <td>
+      <h2><a name="hj-globalparam"></a>Global Parameters</h2>
+      <p class="task">You can find here the global parameters (tolerance, default 
+      axis and units) you must specify in the XML file.</p>
+      <p class="task">
+      <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile02.gif" width="465" height="36"></p>
+      <p class="task">where:</p>
+      <ul>
+        <li>
+        <p class="task"><kbd>DEFAULT_VALUES</kbd>: lets you set the tolerance value 
+        and a default axis system.</p>
+        <ul>
+          <li>
+          <p class="task"><kbd>TOL</kbd> is the default tolerance value that will 
+          be used in the spatial identification of elements. You have to fix this 
+          value.<br>
+          For more details, refer to the <a href="#hj-tolerance">tolerance description</a> 
+          in the Spatial Identification paragraph. <br>
+          The authorized syntax for values is: <kbd>5</kbd>, <kbd>-5</kbd>, <kbd>
+          0.5</kbd>, <kbd>-0.5</kbd>, <kbd>.5</kbd>, <kbd>-.5</kbd>, <kbd>1e5</kbd>,
+          <kbd>-1e5</kbd>, <kbd>1e-5</kbd>, <kbd>-1e-5</kbd>.<br>
+          The <kbd>5.</kbd> syntax is not valid in the XML file.</p>
+          </li>
+          <li>
+          <p class="task"><kbd>AXIS</kbd> is the default axis system that is kept 
+          as reference axis system for the spatial identification of elements.<br>
+          This axis system must be orthonormal.<br>
+          You have to specify the default axis system using the axis coordinates 
+          or the name of the axis system (given in the specification tree). <br>
+          For example:</p>
+          <ul>
+            <li>
+            <p class="task"><kbd>0;0;0;1;0;0;0;1;0</kbd>: the three first values 
+            are the origin coordinates, the next three values are the X-axis coordinates 
+            and the last three values are the Y-axis coordinates.</p>
+            </li>
+            <li>
+            <p class="task"><kbd>Axis Systems\Axis.1</kbd>: the axis must belong 
+            to the part you referenced.</p>
+            <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5">
+              <tr>
+                <td align="center" valign="top">
+                <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                <td>
+                <p class="task">Do not use the <kbd>\</kbd> character in the name 
+                of the axis system. This character can only be used to define the 
+                path of the axis system.</p>
+                </td>
+              </tr>
+            </table>
+            </li>
+          </ul>
+          </li>
+        </ul>
+        </li>
+        <li>
+        <p class="task"><kbd>UNITS</kbd>: lets you set the units of length and angle 
+        value in the XML file.<br>
+        Note that the syntax of the units will be the same as specified in the
+        <kbd>Tools - Options - Parameters and Measure - Units</kbd> tab.</p>
+        <ul>
+          <li>
+          <p class="task"><kbd>LENGTH</kbd>: lets you specify the length unit you 
+          will use in the XML file.</p>
+          </li>
+          <li>
+          <p class="task"><kbd>ANGLE</kbd>: lets you specify the angle unit you 
+          will use in the XML file.<br>
+&nbsp;</p>
+          </li>
+        </ul>
+        </li>
+      </ul>
+      </td>
+      <td align="center" valign="top">
+      <h2><a href="#hj-top">
+      <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h2>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">&nbsp;</td>
+      <td>
+      <h2><a name="hj-elementid"></a>Element Identification</h2>
+      <p class="task">Two approaches are available:</p>
+      <ul>
+        <li>Spatial identification.</li>
+        <li>Associative identification.</li>
+      </ul>
+      <p class="task">You can mix both identification approaches in the same XML 
+      file. </p>
+		<p class="task">You can also attribute a 
+		user number to an 
+		element by using the <kbd>USER_NUM</kbd> attribute. This user number is 
+		an optional attribute that you can use in both identifications.<br>
+		<code>&lt;X=&quot;0.005&quot; Y=&quot;-0.03&quot; Z=&quot;0&quot; USER_NUM=&quot;12&quot;&gt;</code><br>
+		If several elements are found, the user number is assigned sequentially 
+		to these elements starting with the specified value. If an element is 
+		assigned to different user numbers, only the last specified is taken 
+		into account.</p>
+      <h3>Spatial Identification</h3>
+      <p class="task">The spatial identification lets you capture elements on which 
+      you will apply a property (using the element coordinates) and define properties 
+      for orphan meshes.</p>
+      <p class="task">
+      <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile03.gif" width="190" height="19"></p>
+      <p class="task">where:</p>
+      <ul>
+        <li>
+        <p class="task"><kbd>X</kbd>, <kbd>Y</kbd> and <kbd>Z</kbd> are the three 
+        coordinates of the element.</p>
+        </li>
+      </ul>
+      <p class="task">You can use the <kbd>Generate Mapping File</kbd> contextual menu to identify 
+      the element coordinates.<br>
+      For more details, refer to <a href="page7249.html">Generating Mapping File</a>.</p>
+      <p class="task">You can also define a tolerance as optional attribute:</p>
+      <ul>
+        <li>
+        <p class="task"><a name="hj-tolerance"></a><kbd>TOL</kbd>: the tolerance 
+        value allows you to capture the element that is the closest to the specified 
+        coordinates in the given tolerance.<br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile29.gif" width="101" height="22"><br>
+        If you do not add this optional attribute, the tolerance defined in the
+        <a href="#hj-globalparam">global parameters</a> will be taken into account.</p>
+        </li>
+      </ul>
+      </td>
+      <td align="center" valign="top">
+      <h2><a href="#hj-top">
+      <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h2>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">
+      <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="0" width="32" height="32"></td>
+      <td>
+              <p class="task">If no element is found, a warning message appears 
+              when you launch an update or a computation.<br>
+              This is an example of the displayed warning message:</p>
+              <p class="task">
+              <img border="0" src="b35doc/english/online/estug_c2/images/warningmapping01NLS.gif" width="513" height="221"></p>
+      <p class="task">
+      &nbsp;</p>
+      </td>
+      <td align="center" valign="top">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">&nbsp;</td>
+      <td>
+      <h3>Associative Identification</h3>
+      <p class="task">The associative identification lets you capture elements on 
+      which you will apply properties using the following criteria:</p>
+      <ul>
+        <li>
+        <p class="task"><kbd>BELONG_TO</kbd>: </p>
+        <ul>
+          <li>
+          <p class="task"><kbd>BELONG_TO_MP</kbd>: lets you select elements that 
+          belong to a specified mesh part <br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile20.gif" width="246" height="21"></p>
+          </li>
+          <li>
+          <p class="task"><kbd>BELONG_TO_GROUP</kbd>: lets you select elements that 
+          belong to a specified group <br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile22.gif" width="273" height="21"></p>
+          <div align="left">
+            <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber7">
+              <tr>
+                <td align="center" valign="top">
+                <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                <td valign="top">
+                <p class="task">You can use groups created under the <kbd>Groups</kbd> set 
+				(only geometrical groups and groups by boundary) or groups created under a mesh part 
+				(geometrical groups, groups by neighborhood and groups by 
+				boundary). See <a href="page7172.html">Groups</a>.</p>
+                <ul>
+                  <li>
+                  <p>For groups created under the <kbd>Groups</kbd> 
+                  set, you just have to give the name of the group (for example:
+                  <kbd>&quot;Line Group.2&quot;</kbd>, <kbd>&quot;Surface Group by Boundary.1&quot;</kbd>).</p>
+                  </li>
+                  <li>
+                  <p>For groups created under a mesh part, you have 
+                  to specify the name of the parent mesh part (for example: <kbd>
+                  &quot;Surface Mesh.1\Line Group.2&quot;</kbd>, <kbd>&quot;Surface Mesh.2\Surface 
+                  Group by Boundary.1&quot;</kbd>).</p>
+                  </li>
+                </ul>
+                </td>
+              </tr>
+            </table>
+          </div>
+          </li>
+          <li>
+          <p class="task"><kbd>BELONG_TO_GEOM</kbd>: lets you select elements that 
+          belong to a specified geometry, a geometrical set, multi-output 
+			features (for example: join defined in the <cite>Part Design</cite> 
+			workbench) or a publication:<br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile23.gif" width="260" height="21"></p>
+          <div align="left">
+            <table border="0" cellspacing="1" id="AutoNumber10">
+              <tr>
+                <td align="center" valign="top">
+                <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                <td>
+                <ul>
+					<li>This keyword is not available for the definition of a solid property.</li>
+					<li>To identify geometries, use the specification tree path 
+					as follow: from the parent part down to 
+					the geometry you want to identify, write the name of each 
+					feature except the parent part and separate each feature 
+					with the <kbd>\</kbd> 
+					character.
+					Do not use the <kbd>\</kbd> character in geometry names.<br>
+					In the following example: <br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile61.gif" width="138" height="150"><br>
+					<kbd>Surface.1</kbd> is identified as follow: <code>
+					BELONG_TO_GEOM=&quot;Geometrical Set.1\Surface.1&quot;</code> </li>
+					<li>In the geometry identification with geometrical sets, 
+					elements are taken into account only if their dimension is 
+					compatible with the required property. Examples: <br>
+					<code>SHELL BELONG_TO_GEOM=&quot;Geomtrical Set.1&quot;</code> applies 
+					a shell property only to the 2D elements of <kbd>Geometrical 
+					Set.1</kbd>.<br>
+					<code>BEAM BELONG_TO_GEOM=&quot;Geomtrical Set.1&quot;</code> applies 
+					a beam property only to the 1D elements of <kbd>Geometrical 
+					Set.1</kbd>.</li>
+					<li>To identify publications, use 
+					the following syntax: <kbd><br>
+					BELONG_TO_GEOM=&quot;Publication:name_of_the_publication&quot;</kbd><br>
+					For example:<br>
+					<code>&lt;SHELL BELONG_TO_GEOM=&quot;Publication:Face&quot; TH=&quot;0.55&quot; 
+					MAT=&quot;User Material.1&quot;/&gt;</code></li>
+				</ul>
+                </td>
+              </tr>
+            </table>
+          </div>
+          </li>
+        </ul>
+        </li>
+        <li>
+        <p class="task"><kbd>SHARE_WITH</kbd>: this criterion is used to filter 
+        the result of a <kbd>BELONG_TO</kbd> identification.<br>
+        You cannot use the <kbd>SHARE_WITH</kbd> criterion as single associative 
+        identification.</p>
+        <ul>
+          <li>
+          <p class="task"><kbd>SHARE_WITH_MP</kbd>: lets you filter elements that 
+          share at least one node with a specified mesh part <br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile25.gif" width="326" height="22"></p>
+          </li>
+          <li>
+          <p class="task"><kbd>SHARE_WITH_GROUP</kbd>: lets you filter elements 
+          that share at least one node with a specified group <br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile26.gif" width="285" height="21"></p>
+          <div align="left">
+            <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber8">
+              <tr>
+                <td align="center" valign="top">
+                <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                <td>
+                <p class="task">You can use groups created under the <kbd>Groups</kbd> set 
+				(only geometrical groups and groups by boundary) or groups created under a mesh part 
+				(geometrical groups, groups by neighborhood and groups by 
+				boundary). See <a href="page7172.html">Groups</a>.</p>
+                <ul>
+					<li>For groups belonging to the <kbd>Groups</kbd> 
+                  set, you just have to give the name of the group (for example:
+                  	<kbd>&quot;Line Group.2&quot;</kbd>, <kbd>&quot;Surface Group by Boundary.1&quot;</kbd>).</li>
+					<li>For groups created under a mesh part, you have 
+                  to specify the name of the parent mesh part (for example: <kbd>&quot;Surface Mesh.1\Line Group.2&quot;</kbd>, 
+					<kbd>&quot;Surface Mesh.2\Surface 
+                  Group by Boundary.1&quot;</kbd>).</li>
+				</ul>
+                </td>
+              </tr>
+            </table>
+          </div>
+          </li>
+          <li>
+          <p class="task"><kbd>SHARE_WITH_GEOM</kbd>: lets you filter elements that 
+          share at least one node with a specified geometry, a geometrical set, 
+			multi-output features (for example: join defined in the <cite>Part 
+			Design</cite> workbench) or a publication:<br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile24.gif" width="268" height="22"></p>
+          <div align="left">
+            <table border="0" cellspacing="1" id="table3">
+              <tr>
+                <td align="center" valign="top">
+                <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                <td>
+                <ul>
+					<li>To identify geometries, use the specification tree path 
+					as follow: from the parent part down to 
+					the geometry you want to identify, write the name of each 
+					feature except the parent part and separate each feature 
+					with the <kbd>\</kbd> 
+					character.
+					Do not use the <kbd>\</kbd> character in geometry names.<br>
+					In the following example: <br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile61.gif" width="138" height="150"><br>
+					<kbd>Surface.1</kbd> is identified as follow: <code>
+					BELONG_TO_GEOM=&quot;Geometrical Set.1\Surface.1&quot;</code> </li>
+					<li>In the geometry identification with geometrical sets, 
+					elements are taken into account only if their dimension is 
+					compatible with the required property. Examples: <br>
+					<code>SHELL BELONG_TO_GEOM=&quot;Geomtrical Set.1&quot;</code> applies 
+					a shell property only to the 2D elements of <kbd>Geometrical 
+					Set.1</kbd>.<br>
+					<code>BEAM BELONG_TO_GEOM=&quot;Geomtrical Set.1&quot;</code> applies 
+					a beam property only to the 1D elements of <kbd>Geometrical 
+					Set.1</kbd>.</li>
+					<li>To identify publications, use 
+					the following syntax: <kbd><br>
+					BELONG_TO_GEOM=&quot;Publication:name_of_the_publication&quot;</kbd><br>For example:<br>
+					<code>&lt;SHELL BELONG_TO_GEOM=&quot;Publication:Face&quot; TH=&quot;0.55&quot; 
+					MAT=&quot;User Material.1&quot;/&gt;</code></li>
+					</ul>
+					</td>
+              </tr>
+            </table>
+          </div>
+          </li>
+        </ul>
+        </li>
+      </ul>
+      <p class="task">For finite elements on which you want to apply the 
+		same property with the same characteristics, you can use identification 
+		by intersection or identification by union, but you cannot mix the both 
+		identifications in the same keyword.</p>
+		<h4>Identification by Intersection</h4>
+		<p class="task">You can use intersection of geometries or 
+		groups to identify finite elements inside the same keyword by separating 
+		geometries, mesh parts or groups using the <kbd>;</kbd> symbol (no space 
+		around the <kbd>;</kbd> symbol). The 
+		result of the selection is the intersection of all the selected 
+		geometries or groups.</p>
+		<p class="task">
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile50.gif" width="375" height="21"></p>
+		<p class="task">
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile53.gif" width="393" height="21"></p>
+		<p class="task">
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile55.gif" width="519" height="21"></p>
+		<p class="task">
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile54.gif" width="404" height="21"></p>
+		<p class="task">
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile21.gif" width="386" height="21"></p>
+		<p class="task">
+          You can also use the intersection by combining the <kbd>BELONG_TO</kbd> and <kbd>SHARE_WITH</kbd> keywords to refine your selection.
+        	This combination is possible if each keyword appears only once per 
+			XML line. The result of the selection is the intersection of each 
+			keyword results. </p>
+		<ul>
+			<li>First example:<br>
+			<img border="1" src="b35doc/english/online/estug_c2/images/mappingfile56.gif" width="633" height="21"><br>means that you will first capture elements that belong to the intersection 
+        of <kbd>Fill.1</kbd> and <kbd>Fill.2</kbd> geometries and then, filter the 
+        captured elements with elements that share at least one node with the
+        	<kbd>Line Group.2</kbd> group.<br>
+&nbsp;</li>
+			<li>Second example: consider the <kbd>Fill.1</kbd> geometry meshed with four 
+		frames (<kbd>F1</kbd>, <kbd>F2</kbd>, <kbd>F3</kbd> and <kbd>F4</kbd>) 
+		as constraints, and with the automatic capture mode.<br>
+		<img src="b35doc/english/online/estug_c2/images/mappingfile60.gif" width="317" height="214"><br>
+		<code>&lt;SHELL BELONG_TO_GEOM=&quot;Fill.1&quot; SHARE_WITH_GEOM=&quot;F1;F2;F3;F4&quot; 
+		TH=&quot;0.1&quot; MAT=&quot;User Material.1&quot;/&gt;</code> <br>means than 
+		a shell property will be applied to elements that belong to the <kbd>Fill.1</kbd> geometry, and 
+		that share 
+		nodes with the frames <kbd>F1</kbd>, <kbd>F2</kbd>, <kbd>F3</kbd> and
+		<kbd>F4</kbd>. <kbd>E1</kbd> is the only element that satisfy those 
+		conditions.</li>
+		</ul>
+		<h4>Identification by Union</h4>
+		<p class="task">You can use union of geometries, mesh parts or 
+		groups to identify finite elements. To do this, you have to separate 
+		geometries, mesh parts or groups using the <kbd>+</kbd> symbol &nbsp;(you 
+		can add a 
+		space around the <kbd>+</kbd> symbol). The 
+		result of the selection is the union of all the selected geometries, 
+		mesh parts or groups.</p>
+		<p class="task">The union is possible only for the <kbd>
+		BELONG_TO_GEOM</kbd>, <kbd>BELONG_TO_MP</kbd> and <kbd>BELONG_TO_GROUP</kbd> 
+		keywords.</p>
+		<p class="task"><code>&lt;SHELL BELONG_TO_GEOM=&quot;PartBody\Fill.1+PartBody\Fill.2&quot; 
+		TH=0.55&quot; MAT=&quot;User Material.1&quot;/&gt;</code></p>
+		<p class="task">This is equivalent to the two following lines:</p>
+		<p class="task"><code>&lt;SHELL BELONG_TO_GEOM=&quot;PartBody\Fill.1&quot; 
+		TH=0.55&quot; MAT=&quot;User Material.1&quot;/&gt;<br>
+		&lt;SHELL BELONG_TO_GEOM=&quot;PartBody\Fill.2&quot; TH=0.55&quot; MAT=&quot;User Material.1&quot;/&gt;</code></p>
+      </td>
+      <td align="center" valign="top">
+      <h3><a href="#hj-top">
+      <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h3>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">
+      <img src="b35doc/english/online/icons_C2/common/tips.gif" hspace="0" width="32" height="32"></td>
+      <td>
+      <ul>
+		<li>Use the spatial identification when more than one element 
+        is bounded by four geometries.</li>
+		<li>If no element is found with the associative identification 
+      (using the <kbd>BELONG_TO</kbd> and <kbd>SHARE_WITH</kbd> criteria), a 
+		warning message appears when you launch an update or a computation.</li>
+		</ul>
+      </td>
+      <td align="center" valign="top">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">&nbsp;</td>
+      <td>
+      <h2><a name="hj-property"></a>Properties Definition</h2>
+      <p class="task">You have to associate a property to an element.</p>
+      <ul>
+        <li>1D properties:<ul>
+          <li><a href="#hj-beam">beam</a></li>
+          <li><a href="#hj-variablebeam">variable beam</a></li>
+          <li><a href="#hj-bar">bar</a></li>
+        </ul>
+        </li>
+        <li>2D properties:
+        <ul>
+          <li><a href="#hj-shellmembshear">shell</a></li>
+          <li><a href="#hj-shellmembshear">membrane</a></li>
+          <li><a href="#hj-shellmembshear">shear panel</a></li>
+          <li><a href="#hj-inhomogcomposite">inhomogeneous composite</a></li>
+          <li><a href="#hj-homogcomposite">homogeneous composite</a></li>
+        </ul>
+        </li>
+        <li>3D properties:<ul>
+          <li><a href="#hj-solid">solid</a> </li>
+        </ul>
+        </li>
+      </ul>
+      </td>
+      <td align="center" valign="top">
+      <h2><a href="#hj-top">
+      <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h2>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">&nbsp;</td>
+      <td>
+      <h3><a name="hj-beam"></a>Beam Property</h3>
+      <p class="task">In addition to the <a href="#hj-elementid">element identification</a>, 
+      you have to specify mandatory attributes:</p>
+      <ul>
+        <li>
+        <p class="task"><kbd>BEAM</kbd> </p>
+        </li>
+        <li>
+        <p class="task"><kbd>MAT</kbd>: lets you specify the material associated 
+        to the beam property. <br>
+        You must reference an analysis <kbd>User Material</kbd>.<br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile06.gif" width="162" height="19"></p>
+        </li>
+        <li>
+        <p class="task"><kbd>AREA</kbd>: lets you specify the area of the cross 
+        section.<br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile04.gif" width="90" height="17"></p>
+        </li>
+        <li>
+        <p class="task"><kbd>INERTIA</kbd>: lets you specify the three components 
+        of the inertia matrix of the beam, expressed in the principal axis of the 
+        beam (<kbd>Ixx</kbd>, <kbd>Iyy</kbd>, <kbd>Izz</kbd>). <br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile05.gif" width="115" height="20"></p>
+        </li>
+        <li>
+        <p class="task">Orientation: lets you choose between three types of 
+		orientation. The orientation algorithm is the same as in the 1D Property 
+		definition.To know more, refer to
+		<a href="page7148.html#hj-options">Creating 1D Property</a>.</p>
+        <ul>
+          <li>
+          <p class="task"><kbd>ORIENTATION_VECTOR</kbd>: you have to specify the 
+          vector coordinates expressed in the default axis system or the 
+			path of a line feature.<br>
+			
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile58.gif" width="237" height="19">
+			
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile57.gif" width="294" height="18"></p>
+          </li>
+			<li>
+			<p class="task"><kbd>ORIENTATION_POINT</kbd>: you have to specify the 
+          point coordinates expressed in the default axis system or the 
+			path of a point feature.<br>
+			<img border="1" src="b35doc/english/online/estug_c2/images/mappingfile27.gif" width="200" height="21">
+			<img border="1" src="b35doc/english/online/estug_c2/images/mappingfile59.gif" width="287" height="21"></p>
+			</li>
+			<li>
+			<p class="task"><kbd>ORIENTATION_SURFACE</kbd>: you have to specify the 
+          path of the surface.<br>
+			<img border="1" src="b35doc/english/online/estug_c2/images/mappingfile28.gif" width="330" height="22"></p>
+			</li>
+        </ul>
+        </li>
+      </ul>
+      <p class="task">You can also define optional attributes:</p>
+      <ul>
+        <li>
+        <p class="task"><kbd>SHEAR_CENTER</kbd>: lets you specify the y-coordinate 
+        (<kbd>Cy</kbd>) and the z-coordinate (<kbd>Cz</kbd>) of the shear center 
+        in the section axis, centered at the center of gravity of the section.<br>
+        If you do not specify this optional attribute, the default coordinates of 
+        the shear center is (<kbd>0;0</kbd>).<br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile09.gif" width="151" height="22"></p>
+        </li>
+        <li>
+        <p class="task"><kbd>SHEAR_RATIO_XY</kbd>: lets you specify the ratio of 
+        the Y shear area over the cross-sectional area.<br>
+        If you do not specify this optional attribute, the default value is <kbd>
+		0</kbd>:<br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile07.gif" width="152" height="22"></p>
+        </li>
+        <li>
+        <p class="task"><kbd>SHEAR_RATIO_XZ</kbd>: lets you specify the ratio of 
+        the Z shear area over the cross-sectional area.<br>
+        If you do not specify this optional attribute, the default value is <kbd>
+		0</kbd>:<br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile08.gif" width="152" height="22"></p>
+        </li>
+        <li>
+        <p class="task"><kbd>OFFSET</kbd>: lets you specify the offset values at 
+		each end of the beam. <br>
+        The three first values are the components of the offset vector for the start 
+        node of the beam and the last three values are the components of the offset 
+        vector for the end node of the beam. This vector is defined in the local 
+		axis of the beam.<br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile14.gif" width="156" height="21"></p>
+        </li>
+        <li>
+        <p class="task"><kbd>DOF_START</kbd>: you have to specify if you want to 
+        release or not degrees of freedom of the start node of the element.<br>
+        If you want to release the first translation and the second rotation degrees 
+        of freedom, the attribute value will be:<kbd><br>
+        </kbd>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile30.gif" width="184" height="21"><br>
+        The value is <kbd>0</kbd> if you want to release a degree of freedom.</p>
+        </li>
+        <li>
+        <p class="task"><kbd>DOF_END</kbd>: you have to specify if you want to release 
+        or not degrees of freedom of the end node of the element.<br>
+        If you want to release the third translation and the third rotation degrees 
+        of freedom, the attribute value will be:<br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile31.gif" width="166" height="21"><br>
+        The value is <kbd>0</kbd> if you want to release a degree of freedom.<br>
+&nbsp;</p>
+        </li>
+      </ul>
+      <p class="task">Then, a beam property applied to a particular element is described 
+      in the XML mapping file as shown below:</p>
+      <p class="task">
+      <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile52.gif" width="443" height="37"></p>
+      </td>
+      <td align="center" valign="top">
+      <h3><a href="#hj-property">
+      <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h3>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">&nbsp;</td>
+      <td>
+      <h3><a name="hj-variablebeam"></a>Variable Beam Property</h3>
+      <p class="task">In addition to the <a href="#hj-elementid">element identification</a>, 
+      you have to specify mandatory attributes:</p>
+      <ul>
+        <li>
+        <p class="task"><kbd>BEAM_V</kbd> </p>
+        </li>
+        <li>
+        <p class="task"><kbd>MAT</kbd>: lets you specify the material associated 
+        to the beam property. <br>
+        You must reference an analysis <kbd>User Material</kbd>.</p>
+        </li>
+        <li>
+        <p class="task"><kbd>AREA</kbd>: lets you specify the area of the cross 
+        section.<br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile46.gif" width="127" height="20"></p>
+        </li>
+        <li>
+        <p class="task"><kbd>INERTIA</kbd>: (six values) lets you specify the six 
+        components of the inertia matrix of the beam, expressed in the principal 
+        axis of the beam (<kbd>Ixx1</kbd>, <kbd>Iyy1</kbd>, <kbd>Izz1</kbd>,
+        <kbd>Ixx2</kbd>, <kbd>Iyy2</kbd>, <kbd>Izz2</kbd>). <br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile13.gif" width="156" height="22"></p>
+        </li>
+        <li>
+        <p class="task">Orientation: lets you choose between three types of 
+		orientation. The orientation algorithm is the same as in the 1D Property 
+		definition. To know more, refer to
+		<a href="page7148.html#hj-options">Creating 1D Property</a>.</p>
+        <ul>
+          <li>
+          <p class="task"><kbd>ORIENTATION_VECTOR</kbd>: you have to specify the 
+			vector coordinates expressed in the default axis system or the 
+			path of a line feature.<br>
+			
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile58.gif" width="237" height="19">
+			
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile57.gif" width="294" height="18"></p>
+          </li>
+          <li>
+          <p class="task"><kbd>ORIENTATION_POINT</kbd>: you have to specify the 
+			point coordinates expressed in the default axis system or the 
+			path of a point feature.<br>
+			<img border="1" src="b35doc/english/online/estug_c2/images/mappingfile27.gif" width="200" height="21">
+			<img border="1" src="b35doc/english/online/estug_c2/images/mappingfile59.gif" width="287" height="21"></p>
+          </li>
+          <li>
+          <p class="task"><kbd>ORIENTATION_SURFACE</kbd>: you have to specify the 
+          path of the surface.<br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile28.gif" width="330" height="22"></p>
+          </li>
+        </ul>
+        </li>
+      </ul>
+      <p class="task">You can also define optional attributes (you can refer to beam property for 
+      more details): </p>
+      <ul>
+        <li>
+        <p class="task"><kbd>OFFSET</kbd>:&nbsp; lets you specify the offset 
+		values at each end of the beam.<br>
+        The three first values are the components of the offset vector for the 
+		start node of the beam and the last three values are the components of 
+		the offset vector for the end node of the variable beam. This vector is 
+		defined in the local axis of the beam.<br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile14.gif" width="156" height="21"></p>
+        </li>
+        <li>
+        <p class="task"><kbd>SHEAR_RATIO_XY</kbd>: lets you specify the ratio of 
+        the Y shear area over the cross-sectional area (one value for each node).<br>
+        If you do not specify this optional attribute, the default value is <kbd>
+		(0;0)</kbd>:<br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile39.gif" width="169" height="20"></p>
+        </li>
+        <li>
+        <p class="task"><kbd>SHEAR_RATIO_XZ</kbd>: lets you specify the ratio of 
+        the Z shear area over the cross-sectional area (one value for each node).<br>
+        If you do not specify this optional attribute, the default value is <kbd>
+		(0;0)</kbd>:<br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile40.gif" width="166" height="20"></p>
+        </li>
+        <li>
+        <p class="task"><kbd>DOF_START</kbd>: you have to specify if you want to 
+        release or not degrees of freedom of the start node of the element.<br>
+        If you want to release the first translation and the second rotation degrees 
+        of freedom, the attribute value will be:<kbd><br>
+        </kbd>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile30.gif" width="184" height="21"><br>
+        The value is <kbd>0</kbd> if you want to release a degree of freedom.</p>
+        </li>
+        <li>
+        <p class="task"><kbd>DOF_END</kbd>: you have to specify if you want to release 
+        or not degrees of freedom of the end node of the element.<br>
+        If you want to release the third translation and the third rotation 
+		degrees of freedom, the attribute value will be:<br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile31.gif" width="166" height="21"><br>
+        The value is <kbd>0</kbd> if you want to release a degree of freedom.<br>
+&nbsp;</p>
+        </li>
+      </ul>
+      <table border="0" cellspacing="1" id="table1">
+        <tr>
+          <td align="center" valign="top">
+      <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="0" width="32" height="32"></td>
+          <td>
+          <p class="task">In case of multi-selection of elements (associative 
+			identification), a linear interpolation of values is made between 
+			the start and end elements for the <kbd>AREA</kbd>, <kbd>INERTIA</kbd>,
+			<kbd>SHEAR_RATIO_XY</kbd> and <kbd>SHEAR_RATIO_XZ</kbd> attributes.</td>
+        </tr>
+      </table>
+      <p class="task">Then, a variable beam property applied to a particular element 
+      is described in the XML mapping file as shown below:</p>
+      <p class="task">
+      <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile33.gif" width="542" height="36"></p>
+      </td>
+      <td align="center" valign="top">
+      <h3><a href="#hj-property">
+      <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h3>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">
+              <img src="b35doc/english/online/icons_C2/common/tips.gif" hspace="0" width="32" height="32"></td>
+      <td>
+      <p class="task">In case of Beam Property and Variable Beam Property:</p>
+      <ul>
+        <li>
+        <p class="task"><kbd>OFFSET</kbd> attribute<br>
+		If several elements are found during the associative identification, a 
+		linear interpolation is made to make the offset characteristic variable.<br>
+		You can also use the spatial identification of elements and define 
+		offset values for each element to make the offset characteristic 
+		variable.</p>
+        </li>
+        <li>
+        <p class="task"><kbd>DOF_START</kbd> and <kbd>DOF_END</kbd> attributes<br>
+		If several elements are found during the associative identification, all 
+		the nodes between the start node and the end node are fixed.</p>
+        </li>
+      	<li>
+		<p class="task">To find the <kbd>Start</kbd> node and the <kbd>End</kbd> 
+              node, you can visualize the implicit orientation of 1D elements imposed 
+              by the mesh part. <br>
+              To do this, generate a <kbd>Local axis symbol</kbd> image under the
+              <kbd>Nodes and Elements</kbd> set. <br>
+              The X-direction determines the <kbd>Start</kbd> node and the <kbd>
+              End</kbd> node as shown below:</p>
+		<table border="0" cellspacing="1" id="table6">
+			<tr>
+				<td>
+              <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile49NLS.gif" width="227" height="72"></td>
+			</tr>
+		</table>
+		</li>
+      </ul>
+      </td>
+      <td align="center" valign="top">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">&nbsp;</td>
+      <td>
+      <h3><a name="hj-bar"></a>Bar Property</h3>
+      <p class="task">In addition to the <a href="#hj-elementid">element identification</a>, 
+      you have to specify mandatory attributes:</p>
+      <ul>
+        <li>
+        <p class="task"><kbd>BAR</kbd> </p>
+        </li>
+        <li>
+        <p class="task"><kbd>MAT</kbd>: lets you specify the material associated 
+        to the beam property. <br>
+        You must reference an analysis <kbd>User Material</kbd>.<br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile06.gif" width="162" height="19"></p>
+        </li>
+        <li>
+        <p class="task"><kbd>AREA</kbd>: lets you specify the area of the cross 
+        section.<br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile04.gif" width="90" height="17"><br>
+&nbsp;</p>
+        </li>
+      </ul>
+      <p class="task">Then, a bar property applied to a particular element is described 
+      in the XML mapping file as shown below:</p>
+      <p class="task">
+      <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile32.gif" width="501" height="21"></p>
+      </td>
+      <td align="center" valign="top">
+      <h3><a href="#hj-property">
+      <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h3>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">
+      <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="0" width="32" height="32"></td>
+      <td>
+      <p class="task">Element physical types can be automatically changed 
+		when you import the XML mapping file and launch a computation. For 
+		example: if you apply a beam property to a bar element, the element 
+		physical type is automatically changed to beam when you launch the 
+		computation.<br>
+		A warning is displayed when you perform a <kbd>Mesh Only</kbd> 
+		computation.</p>
+      </td>
+      <td align="center" valign="top">
+      <h3>&nbsp;</h3>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">&nbsp;</td>
+      <td>
+      <h3><a name="hj-shellmembshear"></a>Shell, Membrane and Shear Panel Properties</h3>
+      <p class="task">In addition to the <a href="#hj-elementid">element identification</a>, 
+      you have to specify mandatory attributes:</p>
+      <ul>
+        <li>
+        <p class="task">the 2D property</p>
+        <ul>
+          <li>
+          <p class="task"><kbd>SHELL</kbd> </p>
+          </li>
+          <li>
+          <p class="task"><kbd>MEMBRANE</kbd> </p>
+          </li>
+          <li>
+          <p class="task"><kbd>SHEAR_PANEL</kbd> </p>
+          </li>
+        </ul>
+        </li>
+        <li>
+        <p class="task"><kbd>MAT</kbd>: lets you specify the material associated 
+        to the beam property. <br>
+        You must reference an analysis <kbd>User Material</kbd>.</p>
+        </li>
+        <li>
+        <p class="task"><kbd>TH</kbd>: lets you specify the thickness.<br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile34.gif" width="81" height="20"><br>
+        The thickness value must be strictly positive.<br>
+&nbsp;</p>
+        </li>
+      </ul>
+      <p class="task">You can also define an optional attribute:</p>
+		<ul>
+			<li>
+			<p class="task"><kbd>SURFACE_OFFSET</kbd>: lets you specify a
+			<a href="page7147.html#hj-offset">thickness offset</a>. The 
+			offset direction is the normal direction of the finite element.<br>
+			If this 
+			attribute is not specified, no offset is applied.<br>
+			<code>SURFACE_OFFSET=&quot;0.1&quot;</code></p></li>
+		</ul>
+      <p class="task">Then, a shell property applied to a particular element is 
+      described in the XML mapping file as shown below:</p>
+      <p class="task">
+      <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile19.gif" width="513" height="21"></p>
+      <p class="task">A membrane property applied to a particular element is described 
+      in the XML mapping file as shown below:</p>
+      <p class="task">
+      <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile35.gif" width="547" height="21"></p>
+      <p class="task">A shear panel property applied to a particular element is 
+      described in the XML mapping file as shown below:</p>
+      <p class="task">
+      <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile36.gif" width="560" height="22"></p>
+      </td>
+      <td align="center" valign="top">
+      <h3><a href="#hj-property">
+      <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h3>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">
+      <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="0" width="32" height="32"></td>
+      <td>
+      <p class="task">Shear panel properties are only available with linear 
+		quadrangle element (QD4). Membrane property is automatically 
+		applied to any 2D elements other than linear quadrangle elements (QD4) 
+		when you import the XML mapping file, even if you have defined a shear 
+		panel property in the XML mapping file. <br>
+		A warning is displayed when you perform a <kbd>Mesh Only</kbd> 
+		computation.</p>
+      </td>
+      <td align="center" valign="top">
+      <h3>&nbsp;</h3>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">&nbsp;</td>
+      <td>
+      <h3><a name="hj-inhomogcomposite"></a>Inhomogeneous Composite Properties</h3>
+      <p class="task">Inhomogeneous composite properties correspond to a
+      <a href="page7165.html">Composite Property</a> with a ply approach.</p>
+      <p class="task">In addition to the <a href="#hj-elementid">element identification</a>, 
+      you have to specify mandatory attributes:</p>
+      <ul>
+        <li>
+        <p class="task">the inhomogeneous composite property</p>
+        <ul>
+          <li>
+          <p class="task"><kbd>COMPOSITE_SHELL</kbd> </p>
+          </li>
+          <li>
+          <p class="task"><kbd>COMPOSITE_MEMBRANE</kbd> </p>
+          </li>
+          <li>
+          <p class="task"><kbd>COMPOSITE_SHEAR_PANEL</kbd> </p>
+          </li>
+        </ul>
+        </li>
+        <li>
+        <p class="task"><kbd>LAMINA</kbd>: <br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile10.gif" width="506" height="20"><br>
+        where:</p>
+        <ul>
+          <li>
+          <p class="task"><kbd>MAT</kbd>: is the material associated to the beam 
+          property.<br>
+          This attribute is required.</p>
+          </li>
+          <li>
+          <p class="task"><kbd>ANGLE</kbd>: is the angle of each lamina.<br>
+          This attribute is required.<br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile44.gif" width="85" height="22"></p>
+          </li>
+          <li>
+          <p class="task"><kbd>TH</kbd>: is the thickness of each lamina.<br>
+          This attribute is optional if the <kbd>Cured thickness</kbd> value has 
+          been already set in the Properties dialog box (double-click a user material 
+          to open the Properties dialog box and select the <kbd>Composite</kbd> 
+          tab).<br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile34.gif" width="81" height="20"></p>
+          </li>
+          <li>
+          <p class="task"><kbd>POSITION</kbd>: lets you define several layers with 
+          the same characteristics but with a specific order.<br>
+          This attribute is required.<br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile43.gif" width="140" height="22"></p>
+          </li>
+        </ul>
+        </li>
+      </ul>
+      <p class="task"><br>
+      You can also define optional attributes:</p>
+      <ul>
+        <li>
+        <p class="task"><kbd>SURFACE_OFFSET</kbd>: lets you specify a
+			<a href="page7147.html#hj-offset">thickness offset</a> (only 
+		available for <kbd>COMPOSITE_SHELL</kbd>). The 
+			offset direction is the normal direction of the finite element. If a 
+		composite axis is defined, the offset direction is given by the Z-axis 
+		of this local composite axis.<br>
+			If this 
+			attribute is not specified, no offset is applied.</p>
+        </li>
+		<li>
+        <p class="task"><kbd>REF_ANGLE</kbd>: lets you introduce an 
+		offset in the angle definition for each element. You can then vary all 
+		the angles by entering only one value in 
+		the local axis of the finite element.</p>
+        </li>
+		<li>
+        <p class="task"><kbd>COMPOSITE_AXIS</kbd>: <br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile12.gif" width="356" height="22"><br>
+        If this optional attribute is not specified, the default axis system is 
+        the one defined in the <a href="#hj-globalparam">global parameters</a> (at 
+        the beginning of the XML file).</p>
+        </li>
+      </ul>
+          <div align="left">
+            <table border="0" cellspacing="1" id="table4">
+              <tr>
+                <td align="center" valign="top">
+                <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                <td>
+                <ul>
+					<li><kbd>REF_ANGLE</kbd> and <kbd>COMPOSITE_AXIS</kbd> keywords are not compatible. If the both 
+				keywords are defined in the same line, <kbd>COMPOSITE_AXIS</kbd> 
+				characteristics will be ignored when you import the XML mapping 
+				file.</li>
+					</ul>
+				</td>
+              </tr>
+            </table>
+          </div>
+          <p class="task">Then, an inhomogeneous composite shell property applied to 
+      a particular element is described in the XML mapping file as shown below:</p>
+      <p class="task">
+      <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile37.gif" width="528" height="123"></p>
+      <p class="task">Or if several lamina has the same characteristics but with 
+      specific order:</p>
+      <p class="task">
+      <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile48.gif" width="583" height="87"></p>
+      </td>
+      <td align="center" valign="top">
+      <h3><a href="#hj-property">
+      <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h3>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">&nbsp;</td>
+      <td>
+      <h3><a name="hj-homogcomposite"></a>Homogeneous Composite Properties</h3>
+      <p class="task">Homogeneous composite properties correspond to a
+      <a href="page7165.html">Composite Property</a> with a zone approach.</p>
+      <p class="task">In addition to the <a href="#hj-elementid">element identification</a>, 
+      you have to specify mandatory attributes:</p>
+      <ul>
+        <li>
+        <p class="task">the homogeneous composite property</p>
+        <ul>
+          <li>
+          <p class="task"><kbd>COMPOSITE_SHELL_H</kbd> </p>
+          </li>
+          <li>
+          <p class="task"><kbd>COMPOSITE_MEMBRANE_H</kbd> </p>
+          </li>
+          <li>
+          <p class="task"><kbd>COMPOSITE_SHEAR_PANEL_H</kbd> </p>
+          </li>
+        </ul>
+        </li>
+        <li>
+        <p class="task"><kbd>LAMINA</kbd>: <br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile10.gif" width="506" height="20"><br>
+        where:</p>
+        <ul>
+          <li>
+          <p class="task"><kbd>MAT</kbd>: is the material associated to the beam 
+          property.<br>
+          This attribute is required.</p>
+          </li>
+          <li>
+          <p class="task"><kbd>ANGLE</kbd>: is the angle of each lamina.<br>
+          This attribute is required.<br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile44.gif" width="85" height="22"></p>
+          </li>
+          <li>
+          <p class="task"><kbd>TH</kbd>: is the thickness of each lamina.<br>
+          This attribute is optional if the <kbd>Cured thickness</kbd> value has 
+          been already set in the Properties dialog box (double-click a user material 
+          to open the Properties dialog box and select the <kbd>Composite</kbd> 
+          tab).<br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile34.gif" width="81" height="20"></p>
+          </li>
+        </ul>
+        <ul>
+          <li>
+          <p class="task"><kbd>MULTIPLICATION_FACTOR</kbd>: lets you define several 
+          layers with the same characteristics.<br>
+          This attribute is optional if the associated value is equal to <kbd>1</kbd>.<br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile42.gif" width="210" height="22"></p>
+          </li>
+        </ul>
+        </li>
+      </ul>
+      <p class="task"><br>
+      You can also define optional attributes:</p>
+      <ul>
+        <li>
+        <p class="task"><kbd>SURFACE_OFFSET</kbd>: lets you specify a
+			<a href="page7147.html#hj-offset">thickness offset</a> (only available for <kbd>COMPOSITE_SHELL_H</kbd>). The 
+			offset direction is the normal direction of the finite element. If a 
+		composite axis is defined, the offset direction is given by the Z-axis 
+		of this local composite axis.<br>
+			If this 
+			attribute is not specified, no offset is applied.</p>
+        </li>
+		<li>
+        <p class="task"><kbd>REF_ANGLE</kbd>: lets you introduce an 
+		offset in the angle definition for each element. You can then vary all 
+		the angles by entering only one value in 
+		the local axis of the finite element.</p>
+        </li>
+		<li>
+        <p class="task"><kbd>COMPOSITE_AXIS</kbd>: <br>
+        <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile12.gif" width="356" height="22"><br>
+        If this optional attribute is not specified, the default axis system is 
+        the one defined in the <a href="#hj-globalparam">global parameters</a> (at 
+        the beginning of the XML file).</p>
+        </li>
+      </ul>
+          <div align="left">
+            <table border="0" cellspacing="1" id="table5">
+              <tr>
+                <td align="center" valign="top">
+                <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                <td>
+                <p class="task"><kbd>REF_ANGLE</kbd> and <kbd>
+				COMPOSITE_AXIS</kbd> keywords are not compatible. If the both 
+				keywords are defined in the same line, <kbd>COMPOSITE_AXIS</kbd> 
+				characteristics will be ignored when you import the XML mapping 
+				file.</td>
+              </tr>
+            </table>
+          </div>
+          <p class="task">Then, an homogeneous composite membrane property applied to 
+      a particular element is described in the XML mapping file as shown below:</p>
+      <p class="task">
+      <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile38.gif" width="442" height="103"></p>
+      <p class="task">An homogeneous composite shear panel property applied to a 
+      particular element (with a multiplication factor) is described in the XML 
+      mapping file as shown below:</p>
+      <p class="task">
+      <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile41.gif" width="633" height="71"></p>
+      </td>
+      <td align="center" valign="top">
+      <h3><a href="#hj-property">
+      <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h3>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="center">&nbsp;</td>
+      <td>
+      <h3><a name="hj-solid"></a>Solid Property</h3>
+      <p class="task">In addition to the <a href="#hj-elementid">element identification</a>, 
+      you have to specify mandatory attributes:</p>
+      <ul>
+        <li>
+        <p class="task"><kbd>SOLID</kbd> </p>
+        </li>
+        <li>
+        <p class="task"><kbd>MAT</kbd>: lets you specify the material associated 
+        to the beam property. <br>
+        You must reference an analysis <kbd>User Material</kbd>.</p>
+        </li>
+      </ul>
+      <div align="left">
+        <table border="0" cellspacing="1" id="AutoNumber9">
+          <tr>
+            <td>
+            <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+            <td>
+            <p class="task">The <kbd>BELONG_TO_GEOM</kbd> identification is not 
+            available for solid property definition. </p>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <p class="task">You can also define optional attributes:</p>
+      <ul>
+        <li>
+        <p class="task"><kbd>AXIS</kbd>: lets you specify an axis system to 
+		orient the orthotropic material.<br>
+		The X, Y and Z coordinates are not transformed by this axis system. 
+		Those coordinates are interpreted in the global axis system in the XML 
+		file.</p>
+        </li>
+        <li>
+        <p class="task"><kbd>AXIS_TYPE</kbd>: lets you specify the axis system type 
+        (Cartesian, Cylindrical or Spherical).</p>
+        <ul>
+          <li>
+          <p class="task"><kbd>CARTESIAN</kbd>: <br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile16.gif" width="181" height="20"></p>
+          </li>
+          <li>
+          <p class="task"><kbd>CYLINDER</kbd>: <br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile17.gif" width="196" height="20"></p>
+          </li>
+          <li>
+          <p class="task"><kbd>SPHERICAL</kbd>:<br>
+          <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile51.gif" width="182" height="22"></p>
+          </li>
+        </ul>
+        </li>
+      </ul>
+      <p class="task">Then, a solid property applied to a particular element is 
+      described in the XML mapping file as shown below:</p>
+      <p class="task">
+      <img border="1" src="b35doc/english/online/estug_c2/images/mappingfile45.gif" width="624" height="34"></p>
+      </td>
+      <td align="center" valign="top">
+      <h3><a href="#hj-property">
+      <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h3>
+      </td>
+    </tr>
+  </table>
+  <p align="center"><img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+  </body>
+
+</html>
+

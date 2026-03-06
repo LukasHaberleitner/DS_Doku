@@ -1,0 +1,224 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Encrypting a Password for Accessing Data in a PDM Database</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <a name="ix-encrypting:password"></a>
+ <h1>Encrypting a Password for Accessing Data in a PDM Database
+ </h1>
+ <p align="center">&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr>
+     <td valign="top" height="56">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">The following code enables you to encrypt a password for 
+     access to PDM databases during the use of the CATDMUUtility and the 
+     CATDMUUtility2d.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="3151">&nbsp;</td>
+     <td valign="top">To encrypt a password, you must implement the <b>
+     CATIUExitCrypt</b> interface, which contains the following two methods:<p>
+     virtual HRESULT <b>Code</b> ( const void *iBuffer, size_t iLen, void 
+     **CodedBuffer, size_t *oCodedLen)=0;</p>
+     <blockquote>
+       <p>Code a given buffer.&nbsp;</p>
+       <ul>
+         <li>param iBuffer: Input Buffer to be coded&nbsp;</li>
+         <li>param iLen Length of the input buffer&nbsp;</li>
+         <li>param oCodedBuffer Output Buffer. It must be allocated by the 
+         method Code</li>
+         <li>param oCodedLen Length of the output buffer&nbsp;</li>
+         <li>return S_OK E_FAIL if the&nbsp; coding is not successful</li>
+       </ul>
+     </blockquote>
+     <p>virtual HRESULT <b>Decode</b> (const void *iCodedBuffer, size_t 
+     iCodedLen, void **DecodedBuffer, size_t *oDecodedLen)=0;</p>
+     <blockquote>
+       <p>Decode a given Buffer.&nbsp;</p>
+       <ul>
+         <li>param iCodedBuffer Input Buffer to be decoded&nbsp;</li>
+         <li>param iCodedLen Length of the input buffer&nbsp;</li>
+         <li>param oDecodedBuffer Output Buffer. It must be allocated by the 
+         method Decode</li>
+         <li>param oDecodedLen Length of the output buffer&nbsp;</li>
+         <li>return S_OK E_FAIL if the decoding is not successful</li>
+       </ul>
+       <p>&nbsp;</p>
+     </blockquote>
+     <p>Example:</p>
+     <p><font size="2"><code><br>
+     // <b>CATDDF_UExitCrypt.cpp</b><br>
+     #include &quot;CATDDF_UExitCrypt.h&quot;</code></font></p>
+     <p><font size="2"><code>//#include &lt;iostream.h&gt;</code></font></p>
+     <p><font size="2"><code>#include &lt;stdlib.h&gt;</code></font></p>
+     <p><font size="2"><code>#include &quot;CATErrorDef.h&quot;<br>
+     #include &quot;CATError.h&quot;</code></font></p>
+     <p><font size="2"><code>CATImplementClass(CATDDF_UExitCrypt, DataExtension, 
+     CATBaseUnknown, CATUExitCrypt);</code></font></p>
+     <p><font size="2"><code>// Tie the implementation to its interface<br>
+     // ---------------------------------------<br>
+     #include &quot;TIE_CATIUExitCrypt.h&quot;<br>
+     TIE_CATIUExitCrypt(CATDDF_UExitCrypt);</code></font></p>
+     <p><font size="2"><code>
+     //-----------------------------------------------------------------------------<br>
+     CATDDF_UExitCrypt::CATDDF_UExitCrypt(): CATBaseUnknown()<br>
+     {<br>
+     }</code></font></p>
+     <p><font size="2"><code>
+     //-----------------------------------------------------------------------------<br>
+     CATDDF_UExitCrypt::~CATDDF_UExitCrypt()<br>
+     {<br>
+     }</code></font></p>
+     <p><font size="2"><code>
+     //-----------------------------------------------------------------------------<br>
+     HRESULT CATDDF_UExitCrypt::Code(const void * iDecodedBuffer, size_t 
+     iDecodedLen, void ** oCodedBuffer, size_t * oCodedLen)<br>
+     {<br>
+     HRESULT HR = CATReturnFailure;<br>
+     </code></font></p>
+     <p><font size="2"><code>HR = Decode(iDecodedBuffer, iDecodedLen, 
+     oCodedBuffer, oCodedLen);<br>
+     </code></font></p>
+     <p><font size="2"><code>return HR;<br>
+     }</code></font></p>
+     <p><font size="2"><code>
+     //-----------------------------------------------------------------------------<br>
+     HRESULT CATDDF_UExitCrypt::Decode(const void * iCodedBuffer, size_t 
+     iCodedLen, void ** oDecodedBuffer, size_t * oDecodedLen)<br>
+     {<br>
+     HRESULT HR = CATReturnFailure;<br>
+     </code></font></p>
+     <p><font size="2"><code>*oDecodedLen = iCodedLen;<br>
+     char ** pDecoded = new char * [iCodedLen];<br>
+     *pDecoded = strdup((char *) iCodedBuffer);<br>
+     int iMid = (iCodedLen-1)/2;<br>
+     int iStart1 = 0;<br>
+     int iStart2 = (iCodedLen-1)-iMid;<br>
+     strncpy((*pDecoded)+iStart1, (char *) iCodedBuffer+iStart2, iMid);<br>
+     strncpy((*pDecoded)+iStart2, (char *) iCodedBuffer+iStart1, iMid);<br>
+     *oDecodedBuffer = (void *) *pDecoded;<br>
+     </code></font></p>
+     <p><font size="2"><code>HR = CATReturnSuccess;<br>
+     </code></font></p>
+     <p><font size="2"><code>return HR;<br>
+     }</code></font></p>
+     <p>&nbsp;</p>
+     <p>&nbsp;</p>
+     <p><font size="2"><code><br>
+     // <b>CATDDF_UExitCrypt.h</b><br>
+     #ifndef CATDDF_UExitCrypt_H<br>
+     #define CATDDF_UExitCrypt_H</code></font></p>
+     <p><font size="2"><code>#include &quot;CATBaseUnknown.h&quot;</code></font></p>
+     <p><font size="2"><code>#include &quot;CATIUExitCrypt.h&quot;</code></font></p>
+     <p><font size="2"><code>#include &quot;CATErrorDef.h&quot;<br>
+     #include &lt;stdlib.h&gt;</code></font></p>
+     <p><font size="2"><code>
+     //-----------------------------------------------------------------------</code></font></p>
+     <p><font size="2"><code>/**<br>
+     * Provide implementation for a CATUExitCrypt.<br>
+     * &lt;br&gt;<br>
+     * It implements the interfaces :<br>
+     * &lt;ol&gt;<br>
+     * &lt;li&gt;@see NavigatorInterfaces.CATIUExitCrypt<br>
+     * &lt;/ol&gt;<br>
+     */<br>
+     class CATDDF_UExitCrypt: public CATBaseUnknown<br>
+     {<br>
+     CATDeclareClass;</code></font></p>
+     <p><font size="2"><code>public:</code></font></p>
+     <p><font size="2"><code>// Standard constructors and destructors for an 
+     implementation class<br>
+     // -----------------------------------------------------------------<br>
+     CATDDF_UExitCrypt ();<br>
+     virtual ~CATDDF_UExitCrypt ();</code></font></p>
+     <p><font size="2"><code>/**<br>
+     * Implements a function from an interface.<br>
+     * @see CATIUExitCrypt#Code<br>
+     */<br>
+     HRESULT Code (const void * iDecodedBuffer, size_t iDecodedLen, void ** 
+     oCodedBuffer, size_t * oCodedLen);</code></font></p>
+     <p><font size="2"><code>/**<br>
+     * Implements a function from an interface.<br>
+     * @see CATIUExitCrypt#Decode<br>
+     */<br>
+     HRESULT Decode (const void * iCodedBuffer, size_t iCodedLen, void ** 
+     oDecodedBuffer, size_t * oDecodedLen);<br>
+     <br>
+     </code></font></p>
+     <p><font size="2"><code>private:<br>
+     // The copy constructor and the equal operator must not be implemented<br>
+     // -------------------------------------------------------------------<br>
+     CATDDF_UExitCrypt (CATDDF_UExitCrypt &amp;);<br>
+     CATDDF_UExitCrypt&amp; operator=(CATDDF_UExitCrypt&amp;);<br>
+     };</code></font></p>
+     <p><font size="2"><code>#endif<br>
+     </code></font></p>
+     <p><b>Note</b>: You must update the dictionary before launching 
+     CATDMUUtility:</p>
+     <ul>
+       <li>In the directory $Framework&#092;CNext&#092;code&#092;dictionary, you'll find the 
+       dictionary file, e.g. <kbd>NavigatorDataFlow.dic</kbd></li>
+       <li>Add the following line to this file:&nbsp;<br>
+       <kbd>CATUExitCrypt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CATIUExitCrypt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+       libCATDDFUserExit<br>
+       </kbd>where <kbd>libCATDDFUserExit </kbd>is the library that contains the 
+       compiled form of <font size="2"><code><br>
+       CATDDF_UExitCrypt.cpp</code></font><kbd> </kbd>and <font size="2"><code>
+       CATDDF_UExitCrypt.h</code></font></li>
+     </ul>
+     <p>&nbsp;</p>
+     <font FACE="Arial" SIZE="2" COLOR="#000000">
+     <p><b>Note</b>: You must modify the Imakefile of CATDDFUserExit.m by adding
+     <kbd>SystemUUID</kbd> in the&nbsp;</font><font SIZE="2" COLOR="#000000"> 
+     LINK_WITH statement.</font></p>
+     <font FACE="Courier" SIZE="2" COLOR="#000000">
+     <blockquote>
+       <p>Example:</p>
+       </font>
+       <p><font face="Arial" size="2"><code><font COLOR="#000000"># COPYRIGHT 
+       DASSAULT SYSTEMES 2002<br>
+       #======================================================================<br>
+       </font><font COLOR="#000000" face="Arial">BUILT_OBJECT_TYPE=SHARED 
+       LIBRARY<br>
+       </font><font COLOR="#000000">LINK_WITH = </font></code></font>
+       <font FACE="Arial" SIZE="2" COLOR="#000000"><kbd><b>SystemUUID</b></kbd> 
+       &nbsp;</font><font face="Arial" size="2"><code><b><font COLOR="#ff0000"><br>
+       </font></b><font COLOR="#000000"># System dependant variables<br>
+       #<br>
+       OS = AIX<br>
+       #<br>
+       OS = HP-UX<br>
+       #<br>
+       OS = IRIX<br>
+       #<br>
+       OS = SunOS<br>
+       #<br>
+       OS = Windows_NT</font></code></font></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td height="45" colspan="2" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+ <p><br>
+ </p>
+
+ </body>
+
+</html>
+
+

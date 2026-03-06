@@ -1,0 +1,180 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Deploying CATIA Instant Collaborative Design into IBM WebSphere 
+ Application Server</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Deploying CATIA Instant Collaborative Design in IBM 
+ WebSphere Application Server</h1>
+ <table style="BORDER-COLLAPSE: collapse" cellSpacing="0" cellPadding="0" width="100%" border="0">
+   <tr>
+     <td vAlign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td vAlign="top">CATIA Instant Collaborative Design (CD1) is a corequisite 
+     product involved in collaborative design. CD1 is empowered by ENOVIA.<p>CD1 
+     works in client/server mode only and in order to work in client/server mode 
+     requires both WebSphere and 
+     <strong>ENOVIAV5VPM</strong>.</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td vAlign="top">Refer to <a href="page1296.html">Integrating Instant 
+     Collaboration into IBM WebSphere Application Server </a>for information 
+     about software prerequisites.</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td vAlign="top">
+     <h2>Setting Up CATIA Instant Collaborative Design</h2>
+     <p>This is how CATIA Instant Collaborative Design, 
+     <strong>ENOVIAV5VPM</strong>, Sametime and 
+     WebSphere work together:</p>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/WAScd1presentation1NLS.gif" width="478" height="394"></p>
+     <p>The CATIA Instant Collaborative Design application is based on a 3-layer 
+     system:</p>
+     <ul>
+       <li>Storage layer: The first layer is made up of the ENOVIA Vault Server 
+       (1) and of the <strong>ENOVIAV5VPM</strong> Server (2). The physical data (briefcases 
+       created by the users) are stored in the ENOVIA vault (1).<br>
+       Sharing data (design collaboration data, and workspaces, data concerning 
+       which briefcase belongs to which workspace) are stored in the 
+       <strong>ENOVIAV5VPM</strong> 
+       database (2). </li>
+       <li>Communicating layer: The second layer made up of the WebSphere (3) 
+       and the Domino (4) servers, enables the ENOVIA Vault Server (1), and the 
+       <strong>ENOVIAV5VPM</strong> Server (2) to communicate with CATIA (5). Websphere is 
+       dedicated to collaboration, whereas the Domino server is dedicated to 
+       connectivity.</li>
+       <li>Design layer: The last layer made up of CATIA (5) enables the user to 
+       design.</li>
+     </ul>
+     <p>To set up CATIA Instant Collaborative Design:</p>
+     <ol>
+       <li>Install CATIA Instant Collaborative Design on the CATIA client.</li>
+       <li>Install WAS on the server.</li>
+       <li>Install the the 
+       <strong>ENOVIAV5VPM</strong> runtime view on the server:<ul>
+         <li>Media: <strong>ENOVIAV5VPM</strong></li>
+         <li>Configuration: VDS<br>
+&nbsp;</li>
+       </ul>
+       </li>
+       <li>Go the following directory, for example on UNIX:<br>
+       <br>
+       <code>$install_path/$os/code/dictionary</code><br>
+       <br>
+       edit the following file:<br>
+       <br>
+       <code>VPMAdmin.adm</code><br>
+       <br>
+       and remove the comments preceding and following each of the lines 
+       containing the COLLABWS declarations.</li>
+       <li>Go to the following directory, for example on UNIX:<br>
+       <br>
+       <code>$install_path/$os/code/bin</code><br>
+       <br>
+       and reload the application using the following command:<br>
+       <br>
+       <code>catstart -run LoadAdmin</code><br>
+       <br>
+       followed by the full path to the VPMAdmin.adm file you just modified, 
+       like this:<br>
+       <br>
+       <code>catstart -run LoadAdmin &lt;path to vpmadm.adm&gt;/vpmadm.adm</code><br>
+&nbsp;</li>
+       <li>Copy from another vault, the file:<br>
+       <br>
+       <code>VaultClient.properties</code><br>
+       <br>
+       to:<br>
+       <br>
+       <code>$install_path/$os/docs/java</code><br>
+       <br>
+       in the <strong>ENOVIAV5VPM</strong> runtime view you are going to deploy in the WAS.<br>
+&nbsp;</li>
+       <li>Deploy the runtime view in the WAS, and follow all the necessary 
+       steps described elsewhere in this guide.</li>
+       <li><font face="Verdana">Start the </font>WebSphere Application Server if 
+       it is not already started.</li>
+       <li>In a web browser, type the following URL:<p><code><b>http:&lt;host_name&gt;.&lt;domain&gt;:&lt;webapp_port&gt;/&lt;rootURI&gt;/html/CollaborationConfig
+       </b></code></p>
+       <p>For example:</p>
+       <p><code><b>http://loug3dsy.dsy.ds:9080/</b><strong>EnvNameSuffix</strong><b>/html/CollaborationConfig </b>
+       </code></p>
+       <p>The Web browser displays the following Server Administration page:<br>
+       <br>
+       <img border="1" src="b35doc/english/online/basil_c2/images/WASCD1ServicesAdmin03_NLS.gif" width="710" height="154"><br>
+&nbsp;</li>
+       <li>Check the <kbd>Enable Enovia server option</kbd>, and provide the 
+       name of the machine hosting the server and the port number. The objective 
+       is to test communications with the 
+       <strong>ENOVIAV5VPM</strong> server.</li>
+       <li>Click <kbd>Go to test Server page</kbd>:<br>
+       <br>
+       <img border="1" src="b35doc/english/online/basil_c2/images/WASCD1ServicesAdmin04_NLS.gif" width="712" height="65"><br>
+&nbsp;</li>
+       <li>Click <kbd>test Web Services</kbd>:<br>
+       <br>
+       <img border="1" src="b35doc/english/online/basil_c2/images/WASCD1ServicesAdmin05_NLS.gif" width="713" height="67"><br>
+&nbsp;</li>
+       <li>Click <kbd>Next</kbd>:<br>
+       <br>
+       <img border="1" src="b35doc/english/online/basil_c2/images/WASCD1ServicesAdmin06_NLS.gif" width="712" height="103"><br>
+&nbsp;</li>
+       <li>Provide your 
+       <strong>ENOVIAV5VPM</strong> login and password, then click <kbd>Connect</kbd>:<br>
+       <br>
+       <img border="1" src="b35doc/english/online/basil_c2/images/WASCD1ServicesAdmin07_NLS.gif" width="712" height="343"><br>
+&nbsp;</li>
+       <li>Click <kbd>Next</kbd>:<br>
+       <br>
+       <img border="1" src="b35doc/english/online/basil_c2/images/WASCD1ServicesAdmin08_NLS.gif" width="712" height="164"><br>
+&nbsp;</li>
+       <li>To test the creation of a workspace in 
+       <strong>ENOVIAV5VPM</strong>, fill in the dialog box, 
+       then click <kbd>Create Workspace</kbd>:<br>
+       <br>
+       <img border="1" src="b35doc/english/online/basil_c2/images/WASCD1ServicesAdmin09_NLS.gif" width="712" height="448"><br>
+&nbsp;</li>
+       <li>Click <kbd>Next</kbd>:<br>
+       <br>
+       <img border="1" src="b35doc/english/online/basil_c2/images/WASCD1ServicesAdmin10_NLS.gif" width="712" height="416"><br>
+       <br>
+&nbsp;</li>
+       <li>Click <kbd>Test vault connection</kbd>:<br>
+       <br>
+       <img border="1" src="b35doc/english/online/basil_c2/images/WASCD1ServicesAdmin12_NLS.gif" width="666" height="90"><br>
+&nbsp;</li>
+       <li>Click <kbd>Create briefcase</kbd>:<br>
+       <br>
+       <img border="0" src="b35doc/english/online/basil_c2/images/WASCD1ServicesAdmin11_NLS.gif" width="712" height="411"><br>
+       <br>
+       The configuration is completed. You can now exit the web browser.<br>
+&nbsp;</li>
+       <li>Restart the WAS.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td vAlign="top" colSpan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" border="0" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

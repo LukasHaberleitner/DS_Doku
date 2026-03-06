@@ -1,0 +1,167 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Rules and Recommendations</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+ </head>
+
+ <body>
+
+ <h1>Rules and Recommendations </h1>
+ <div align="left">
+   <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse">
+     <tr>
+       <td width="33" valign="top">
+       <img border="0" src="b35doc/english/online/icons_C2/common/amethod.gif" width="32" height="32"></td>
+       <td valign="top" style="padding-bottom: 10">This section lists the rules 
+       and recommendations to remember when creating catalog slots, endcuts and 
+       small assemblies.</td>
+     </tr>
+     <tr>
+       <td width="33" valign="top">&nbsp;</td>
+       <td valign="top" style="padding-bottom: 10">
+       <h3>General</h3>
+       <ul>
+         <li>Always explicitly define points and never use implicit points, for 
+         example those at the ends of lines.</li>
+         <li>Wherever possible, make selections in the specification tree. </li>
+       </ul>
+       <h3>Oriented Planes and Lines</h3>
+       <ul>
+         <li>Never invert the orientation of a plane without first checking 
+         whether or not the plane has children.<br>
+         In general, plane orientation must be known. This applies in particular 
+         to planes tangent to surfaces, planes offset or parallel to oriented 
+         planes, planes at an angle or normal to an oriented plane if the axis 
+         of rotation is a line of known direction.</li>
+         <li>Instantiate user feature <kbd>SurfaceOrientation.CATPart</kbd> to 
+         force plane orientation.</li>
+         <li>Always work with oriented lines, especially when used as axes of 
+         rotation. When creating lines via the Intersection command, instantiate 
+         user feature <kbd>CurveOrientation.CATPart</kbd> to force line 
+         orientation.<br>
+         <br>
+         User features are to be found in folder <br>
+         <code>
+         ..\OS\startup\EquipmentAndSystems\StructureDetailDesign\SampleData</code><kbd><span style="font-weight: 400">.</span></kbd></li>
+       </ul>
+       <h3>Input Geometry</h3>
+       <ul>
+         <li>Do not use input geometry in knowledgeware rules or formula [F(x)]. 
+         If you need to do so, duplicate the surfaces using Offset
+         <img border="0" src="b35doc/english/online/icons_C2/images/I_OffsetGeometryP2.gif" align="middle" width="24" height="24"> 
+         (0 offset) or Extract
+         <img border="0" src="b35doc/english/online/icons_C2/images/I_ExtractP2.gif" align="middle" width="24" height="24"> 
+         commands and reference duplicated geometry in the rule or formula.</li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td width="33" valign="top">&nbsp;</td>
+       <td valign="top" style="padding-bottom: 10">
+       <h3><a name="hj-wnr12"></a>Taking Advantage of Shape Section Parameters
+       </h3>
+       <p><span lang="en-us">Using</span> main geometric characteristics of 
+       shape sections rather than creating appropriate input geometry is 
+       recommended. This simplifies the definition of the catalog template and 
+       reduces data size of both the template definition and the features you 
+       place.</p>
+       <p>The following shape section parameters can be <span lang="en-us">
+       employed</span>:</p>
+       <ul>
+         <li>D: shape height</li>
+         <li>Bf: Flange width</li>
+         <li>Tf: flange thickness</li>
+         <li>Tw: web thickness</li>
+         <li>Radius1</li>
+         <li>Radius2</li>
+         <li>Slope</li>
+       </ul>
+       <p>To include section parameters in your template definition, you must:</p>
+       <ul>
+         <li>Create a knowledgeware parameter of the desired type and named as 
+         below</li>
+       </ul>
+       <blockquote>
+         <p>Shape<i>n</i>_(name of section parameter)<br>
+         where <i>n</i> is a number identifying the numbre of parts to be 
+         selected by the user when instantiating the feature.</p>
+         <p>For example, Shape1_Bf</p>
+       </blockquote>
+       <ul>
+         <li>Create a knowledgeware formula [F(x)] that uses the parameter you 
+         defined.</li>
+       </ul>
+       <p>Shape section parameters are then accessed directly when the user 
+       instantiates the feature.</td>
+     </tr>
+     <tr>
+       <td width="33" valign="top">&nbsp;</td>
+       <td valign="top" style="padding-bottom: 10">
+       <h3>Sketching</h3>
+       <ul>
+         <li>Always sketch using the Sketch with Absolute Axis definition
+         <img border="0" src="b35doc/english/online/icons_C2/images/I_SketchPositioningP2.gif" align="middle" width="24" height="24"> 
+         command:</li>
+       </ul>
+       <blockquote>
+         <ol>
+           <li>Set the sketch support type to Positioned and select a plane of 
+           known orientation as Reference.<br>
+           <img border="0" src="b35doc/english/online/cfyugsr1_c2/images/dbsketch03NLS.gif" width="234" height="69"></li>
+           <li>Set the origin type to Projection point and select a stable 
+           geometric point. Do not select a vertex.<br>
+           <img border="0" src="b35doc/english/online/cfyugsr1_c2/images/dbsketch02NLS.gif" width="221" height="41"></li>
+           <li>Set the orientation type to Parallel to line and select an 
+           oriented line.<br>
+           <img border="0" src="b35doc/english/online/cfyugsr1_c2/images/dbsketch01NLS.gif" width="228" height="38"></li>
+         </ol>
+       </blockquote>
+       <ul>
+         <li>Never set distance constraints in the Sketcher. To dimension 
+         distances, create offset planes in the Wireframe and Surface Design 
+         workbench, then set coincidence constraints based on these planes in 
+         the Sketcher.</li>
+         <li>Avoid creating circles constrained in tangency. Defining as much as 
+         possible using the Wireframe and Surface Design workbench is 
+         recommended.<br>
+         <img border="0" src="b35doc/english/online/cfyugsr1_c2/images/gasketchUDF.gif" width="229" height="154"></li>
+       </ul>
+       <h3><font color="#282187">Creating Slots, Endcuts and Small Assemblies</font></h3>
+       <ul>
+         <li>Always reference input geometry and never part document planes.</li>
+         <li>Aways select input surfaces and not surfaces of starter model 
+         plates and shapes.</li>
+         <li>Always ensure that the geometric entities are properly ordered, for 
+         example an intersection of two lines must be placed after the two 
+         lines. Use the Reorder command if necessary.</li>
+         <li>For slots and endcuts, always reference at least one entity of the 
+         plate or shape that will contain the feature.</li>
+         <li>For endcuts, ensure that Split cutting planes are oriented with 
+         respect to geometric elements. </li>
+         <li>For endcuts, ensure that the first Part Design feature (pocket, 
+         split, etc.) describing the endcut is the active feature. Select this 
+         component first when creating the template.</li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td valign="top" colspan="2">
+       <p align="center">
+       <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+     </tr>
+   </table>
+ </div>
+ <p align="center">&nbsp; </p>
+
+ </body>
+
+</html>
+

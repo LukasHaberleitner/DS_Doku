@@ -1,0 +1,466 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head><meta name="MonocodingType" content="0"></meta>
+	  <meta name="MonocodingFlag" content="C2"></meta>
+	  <meta http-equiv="Content-Language" content="en-us"></meta>
+	  <meta name="GENERATOR" content="Microsoft FrontPage 6.0"></meta>
+	  <meta name="ProgId" content="FrontPage.Editor.Document"></meta>
+  	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	  <title>Creating a Connection Behavior</title>
+          <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+          
+	 </head><body onload="newPage('pt02ch05s03.html');" ondblclick="newSelection();" bgcolor="#FFFFFF" text="#000000" vlink="#FF5113" alink="#004D48" link="#004D48" class="TEXT"><div class="sect1" id="ath-gen-fem-prop-connectbehav">
+    <a name="ath-gen-fem-prop-connectbehav"></a>
+
+    <div class="titlepage">
+      
+
+      <div class="title">
+        <h3>Creating a Connection
+        Behavior</h3>
+      </div>
+    </div>
+
+    <p>You can define a set of data that describe how contacting
+    surfaces will interact; for example, the coefficients that
+    define friction during contact. This set of data is called a
+    connection behavior. One connection behavior can be referred to
+    by many different contact connection properties.</p>
+
+    <p>Mechanical and thermal connection behaviors are available in
+    Nonlinear Structural Analysis and Thermal Analysis,
+    respectively. The data defined by a mechanical connection
+    behavior include the tangential behavior and the normal
+    behavior. The data defined by a thermal connection behavior
+    include the conductive heat transfer between the contact
+    surfaces.</p>
+
+    <p class="indent"><b><img src="b35doc/english/online/anlug_c2/images/ABQ_I_ConnectionBehavior.gif"></img><a href="page0455.html#ath-gen-fem-prop-mechconnectbehav">Creating a
+    Mechanical Connection Behavior</a></b>:&nbsp;Defines
+    nondefault mechanical behavior for a contact connection.</p>
+
+    <p class="indent"><b><img src="b35doc/english/online/anlug_c2/images/ABQ_I_ThermConnectionBehavior.gif"></img><a href="page0455.html#ath-gen-fem-prop-thermalconnectbehav">Creating
+    a Thermal Connection Behavior</a></b>:&nbsp;Defines nondefault
+    thermal behavior for a contact connection.</p>
+
+    <div class="sect2" id="ath-gen-fem-prop-mechconnectbehav">
+      <a name="ath-gen-fem-prop-mechconnectbehav"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Creating a Mechanical
+          Connection Behavior</h3>
+        </div>
+      </div>
+
+      <p><a name="CATCommandHeader.ABQInteractionPropertyHdr"></a>The default behavior for a mechanical contact connection
+      consists of a frictionless relationship in the tangential
+      direction and a &#8220;hard&#8221; contact relationship in
+      the normal direction, in which no penetration of the secondary
+      nodes into the main surface is allowed and no tensile
+      stress is transferred across the interface. In addition, the
+      classical Lagrangian method is used to enforce the contact
+      constraints in the normal direction; for this method you can
+      use the hard contact relationship, or you can define a
+      &#8220;softened&#8221; contact relationship in the normal
+      direction in which the contact pressure is either an
+      exponential or piecewise linear (tabular) function of the
+      clearance between the surfaces. Alternatively, you can
+      enforce constraints using the augmented Lagrange multiplier
+      method or the penalty contact method; both of these methods
+      require hard contact. You can specify a contact stiffness for
+      either the augmented Lagrange method or the penalty contact
+      method.</p>
+
+      <p>You can choose from several forms of friction for the
+      contact behavior in the tangential direction. The following
+      friction types are available:</p>
+
+      <ul type="disc"><li>
+          <p>Frictionless (default)</p>
+        </li>
+
+        <li>
+          <p>Penalty</p>
+        </li>
+
+        <li>
+          <p>Rough</p>
+        </li>
+
+        <li>
+          <p>User-defined</p>
+        </li>
+
+        <li>
+          <p>Static-kinetic exponential decay</p>
+        </li>
+      </ul><p>Penalty friction limits motion between the surfaces to an
+      elastic slip within a defined distance. Rough friction
+      prevents any motion between the contact surfaces.
+      User-defined friction allows you to prescribe the time
+      variation of the friction coefficient in a user subroutine,
+      which is sometimes preferable when the time history of the
+      magnitude is complex. Static-kinetic exponential decay
+      provides for an exponential decay of the friction coefficient
+      from a static value to a kinetic value.</p>
+
+      <p>You must define a mechanical connection behavior to
+      describe nondefault behavior for a contact pair. See <a href="page0424.html#ath-gen-asm-int-contact-pair">Contact Pairs</a> for
+      information on assigning a connection behavior to a contact
+      connection. You describe and assign mechanical connection
+      behaviors in the Nonlinear Structural Analysis workbench.</p>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to define a mechanical connection
+      behavior.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Click the Mechanical Connection Behavior icon
+            <img src="b35doc/english/online/anlug_c2/images/ABQ_I_ConnectionBehavior.gif"></img>.</p>
+
+            <p>The <span class="guitext"><b class="guititle">Mechanical Connection Behavior</b></span>
+            dialog box appears, and a Mechanical Connection
+            Behavior object appears in the specification tree under
+            a Nonlinear and Thermal Properties feature.</p>
+          </li>
+
+          <li>
+            <p>You can change the connection behavior identifier by
+            editing the <span class="guitext"><b class="guilabel">Name</b></span> field. This name will be
+            used in the specification tree.</p>
+          </li>
+
+          <li>
+            <p>Enter a description for the connection behavior in
+            the <span class="guitext"><b class="guilabel">Description</b></span> field.</p>
+          </li>
+
+          <li>
+            <p>Specify the tangential behavior for the interaction
+            by choosing the default <span class="guitext"><b class="guilabel">Frictionless</b></span> behavior or by
+            selecting one of the following friction methods:</p>
+
+            <div class="indent" id="d0">
+              <p><b>Penalty</b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose this method and click <img src="b35doc/english/online/anlug_c2/images/I_BcEditGreen.png"></img> to open the
+                <span class="guitext"><b class="guititle">Penalty
+                Friction</b></span> dialog box. In the <span class="guitext"><b class="guilabel">Friction</b></span>
+                tab, enter the friction coefficient. You can also
+                include data based on the slip rate, contact
+                pressure, or temperature. In the <span class="guitext"><b class="guilabel">Shear
+                Stress</b></span> tab, you can specify a shear
+                stress limit or keep the default unlimited shear
+                stress. In the <span class="guitext"><b class="guilabel">Elastic Slip</b></span> tab, you can
+                specify the maximum elastic slip as a fraction of
+                the characteristic surface dimension or as an
+                absolute distance.</p>
+              </div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b>Rough</b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose this method to prevent any motion between
+                the contact surfaces by specifying an infinite
+                coefficient of friction.</p>
+              </div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b>User-Defined</b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose this method if you want to define a
+                nonuniform variation of the friction coefficient in
+                user subroutine <tt class="computeroutput">FRIC</tt>. For more information,
+                see <a href="page0490.html">Using User
+                Subroutines</a>.</p>
+              </div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b>Static-Kinetic Exponential Decay</b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose this method and click <img src="b35doc/english/online/anlug_c2/images/I_BcEditGreen.png"></img> to open the
+                <span class="guitext"><b class="guilabel">Static-Kinetic Exponential
+                Decay</b></span> dialog box. Enter the static,
+                kinetic, and decay coefficients that the solver
+                will use to calculate the exponentially decaying
+                friction coefficient.</p>
+
+                <p>Experimental data show that the friction
+                coefficient that opposes the initiation of slipping
+                from a sticking condition is different from the
+                friction coefficient that opposes established
+                slipping. The former is typically referred to as
+                the &#8220;static&#8221; friction coefficient,
+                and the latter is referred to as the
+                &#8220;kinetic&#8221; friction coefficient. The
+                solver assumes that the friction coefficient decays
+                exponentially from the static value to the kinetic
+                value, where the rate of decay is a function of the
+                decay coefficient.</p>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <p>If you choose the default classical Lagrange
+            multiplier method, you can specify the contact
+            pressure-overclosure relationship used to define the
+            contact model.</p>
+
+            <div class="indent" id="d0">
+              <p><b>Hard Contact</b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose <span class="guitext"><b class="guilabel">Hard Contact</b></span> to use the
+                default &#8220;hard&#8221; contact
+                pressure-overclosure relationship.</p>
+
+                <p>By default, the &#8220;hard&#8221; contact
+                relationship allows separation of the two surfaces
+                after contact has been established. Toggle off
+                <span class="guitext"><b class="guilabel">Allow
+                separation after contact</b></span> to prevent the
+                two surfaces from separating once they have come
+                into contact.</p>
+              </div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b>Exponential</b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose <span class="guitext"><b class="guilabel">Exponential</b></span> to define a
+                &#8220;softened&#8221; contact
+                pressure-overclosure relationship with an
+                exponential law for the classical Lagrange
+                multiplier constraint enforcement method. Specify
+                the clearance at zero contact pressure and the
+                contact pressure at zero clearance.</p>
+
+                <p>In this relationship the surfaces begin to
+                transmit contact pressure once the clearance
+                between them, measured in the contact (normal)
+                direction, reduces to the clearance at zero
+                pressure. The contact pressure transmitted between
+                the surfaces then increases exponentially as the
+                clearance continues to diminish.</p>
+              </div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b>Tabular</b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose <span class="guitext"><b class="guilabel">Tabular</b></span> to define a
+                &#8220;softened&#8221; contact
+                pressure-overclosure relationship in tabular form
+                for the classical Lagrange multiplier constraint
+                enforcement method. Specify data pairs of pressure
+                versus overclosure (where overclosure corresponds
+                to negative clearance). You must specify the data
+                as an increasing function of pressure and
+                overclosure.</p>
+
+                <p>In this relationship the surfaces transmit
+                contact pressure when the overclosure between them,
+                measured in the contact (normal) direction, is
+                greater than the overclosure at zero pressure. For
+                overclosures greater than the last one you specify,
+                the pressure-overclosure relationship is
+                extrapolated based on the last slope computed from
+                the user-specified data.</p>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <p>From the <span class="guitext"><b class="guilabel">Constraint enforcement method</b></span>
+            field, select the method that will be used to enforce
+            contact constraints.</p>
+
+            <div class="indent" id="d0">
+              <p><b>Default</b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose <span class="guitext"><b class="guilabel">Default</b></span> to enforce
+                constraints using a contact pressure-overclosure
+                relationship. This option is available only for the
+                default &#8220;hard&#8221; contact
+                pressure-overclosure relationship.</p>
+              </div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b>Augmented Lagrange (Standard)</b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose <span class="guitext"><b class="guilabel">Augmented Lagrange (Standard)</b></span>
+                to enforce constraints using the augmented Lagrange
+                contact constraint enforcement method instead of
+                the default classical Lagrange multiplier
+                method.</p>
+              </div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b>Penalty (Standard)</b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose <span class="guitext"><b class="guilabel">Penalty (Standard)</b></span> to enforce
+                contact constraints using the penalty method.</p>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <p>If you selected the <span class="guitext"><b class="guilabel">Augmented Lagrange (Standard)</b></span> or
+            the <span class="guitext"><b class="guilabel">Penalty
+            (Standard)</b></span> constraint enforcement method,
+            enter data to define the contact behavior:</p>
+
+            <div class="procedure" id="d0">
+              <ol type="a"><li>
+                  <p>Toggle off <span class="guitext"><b class="guilabel">Allow separation after
+                  contact</b></span> if you want to prevent
+                  surfaces from separating once they have come into
+                  contact.</p>
+                </li>
+
+                <li>
+                  <p>Specify the contact stiffness in the
+                  <span class="guitext"><b class="guilabel">Contact
+                  stiffness</b></span> options.</p>
+
+                  <ul type="disc"><li>
+                      <p>Choose <span class="guitext"><b class="guilabel">Use default</b></span> to
+                      calculate the penalty contact stiffness
+                      automatically.</p>
+                    </li>
+
+                    <li>
+                      <p>Choose <span class="guitext"><b class="guilabel">Specify</b></span> to enter a
+                      custom value for the penalty contact
+                      stiffness, and enter a positive value for the
+                      contact penalty stiffness.</p>
+                    </li>
+                  </ul></li>
+
+                <li>
+                  <p>Specify a factor by which to multiply the
+                  chosen penalty stiffness in the <span class="guitext"><b class="guilabel">Stiffness scale
+                  factor</b></span> field.</p>
+                </li>
+
+                <li>
+                  <p>Specify the <span class="guitext"><b class="guilabel">Clearance at which contact pressure is
+                  zero</b></span>. The default value is 0.</p>
+                </li>
+              </ol></div>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">OK</b></span> in the <span class="guitext"><b class="guititle">Mechanical Connection
+            Behavior</b></span> dialog box.</p>
+          </li>
+        </ol></div><span id="ath-gen-fem-prop-mechconnectbehav"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div>
+
+    <div class="sect2" id="ath-gen-fem-prop-thermalconnectbehav">
+      <a name="ath-gen-fem-prop-thermalconnectbehav"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Creating a Thermal
+          Connection Behavior</h3>
+        </div>
+      </div>
+
+      <p><a name="CATCommandHeader.ABQThermalConnBehaviorHdr"></a>The conductive heat transfer between two surfaces is
+      proportional to the temperature difference between the
+      surfaces and the conductance across the gap between the
+      surfaces. The default behavior for a thermal contact
+      connection is a conductance value of zero, representing a
+      perfectly insulated surface. See <a href="page0424.html#ath-gen-asm-int-contact-pair">Contact Pairs</a> for
+      information on assigning a connection behavior to a contact
+      connection to describe nondefault behavior.</p>
+
+      <p>Thermal connection behaviors are assigned in the Thermal
+      Analysis workbench.</p>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to define a thermal connection
+      behavior.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Click the Thermal Connection Behavior icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_ThermConnectionBehavior.gif"></img>.</p>
+
+            <p>The <span class="guitext"><b class="guititle">Thermal Connection Behavior</b></span>
+            dialog box appears. The data table for the conductance
+            will appear in the bottom half of the dialog box. In
+            addition, a Thermal Connection Behavior object appears
+            in the specification tree under a Nonlinear and Thermal
+            Properties feature.</p>
+          </li>
+
+          <li>
+            <p>You can change the connection behavior identifier by
+            editing the <span class="guitext"><b class="guilabel">Name</b></span> field. This name will be
+            used in the specification tree.</p>
+          </li>
+
+          <li>
+            <p>Enter a description for the connection behavior in
+            the <span class="guitext"><b class="guilabel">Description</b></span> field.</p>
+          </li>
+
+          <li>
+            <p>Enter values for the clearance distance between the
+            surfaces and the corresponding conductance in the data
+            table cells. You must start with a clearance of 0.0 and
+            the corresponding conductance when the surfaces are
+            touching. You must end with a conductance of 0.0 and
+            the corresponding clearance at which no conduction
+            takes place. You must enter at least two rows of data,
+            and the clearance values must be unique.</p>
+          </li>
+
+          <li>
+            <p>To add or delete table rows, click <span class="guitext"><b class="guibutton">Add</b></span> or
+            <span class="guitext"><b class="guibutton">Delete</b></span> below the data table.</p>
+          </li>
+
+          <li>
+            <p>To import clearance and conductance data from a
+            file, click the Folder icon <img src="b35doc/english/online/anlug_c2/images/afc-folder.png"></img>, and select a text file.</p>
+          </li>
+
+          <li>
+            <p>To specify temperature-dependent data for the
+            conductance, toggle on <span class="guitext"><b class="guilabel">Use temperature-dependent
+            data</b></span>.</p>
+
+            <p>An <span class="guitext"><b class="guilabel">Avg.
+            Temperature</b></span> column will appear in the data
+            table in which you can enter the average temperature of
+            the two surfaces.</p>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">OK</b></span> in the <span class="guitext"><b class="guititle">Thermal Connection
+            Behavior</b></span> dialog box.</p>
+          </li>
+        </ol></div><span id="ath-gen-fem-prop-thermalconnectbehav"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div><span id="ath-gen-fem-prop-connectbehav"></span>
+  </div></body></html>
+

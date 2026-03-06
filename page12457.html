@@ -1,0 +1,138 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2L2">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Using Process Results in Another Process</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Using Process Results in Another Process<a name="ix-using process results in another process"></a>
+	<a name="ix-commands::Feed by Another Process;Feed by Another Process command">
+	</a></h1>
+ <div align="left">
+   <table border="0" cellspacing="3" cellpadding="3" width="100%">
+     <tr>
+       <td valign="top"><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+       <td valign="top">This procedure explains how to use the results of a another process that have been 
+       stored in a file.<br>
+&nbsp;</td>
+     </tr>
+     <tr>
+       <td valign="top"><img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+       <td valign="top">Both the <i>process to be fed </i>and the <i>process that those results are to be 
+       fed to </i>must be displayed on the screen.<br>
+&nbsp;</td>
+     </tr>
+     <tr>
+       <td valign="top"><img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+       <td valign="top">
+		<ol class="task">
+			<li>
+			<p class="task">From the menu bar, select <kbd>Insert> Feed by Another Process</kbd>.</li>
+			<li>
+			<p class="task">Select the main process node of the process to be fed.</p>
+			</li>
+			<li>
+			<p class="task">In the second open process document, select an activity to which results must be 
+       fed.</li>
+		</ol>
+		</td>
+     </tr>
+     <tr>
+       <td valign="top"><img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+       <td valign="top">
+       <p style="margin-bottom: 1em">Note that for the results to be properly fed, the first process (i.e., the one 
+       being fed) must have been run through Process Verification. Therefore, 
+		use this functionality only in 
+       conjunction with another DPM-based application.</td>
+     </tr>
+     <tr>
+       <td valign="top">&nbsp;</td>
+       <td valign="top">
+       <h2>A Typical Scenario</h2>
+       <p>In a typical scenario, one process document could be related to Station1, and another to Station2. In the 
+       document for Station1, a product is imported into the ProductList of the PPR Tree. This product is comprised of 
+       parts A, B, C, D and E.</p>
+       <h4>Setting the Proper Options</h4>
+       <p>The process library used in both cases has LoadOperation type activities. When this library was created, the 
+       properties dialog on this operation type was opened and the <kbd>
+		Associated operator</kbd> is set to <kbd>Union</kbd>, as shown 
+       below:</p>
+       <p>
+		<img src="b35doc/english/online/prpug_c2/images/dbPropertiesFeedByNLS.jpg" width="562" height="591"></p>
+       <p>The Union operator will allow Process Verification to calculate results of Operations by taking the total of 
+       what comes in and what is assigned.</p>
+       <h4>Creating and Sequencing Activities Prior to Verification</h4>
+       <p>In the first process document, three activities are created and sequenced. To the first operation, we assign 
+       Part A to the second operation, we assign Part B, to the third, we assign Part C.</p>
+       <p style="margin-bottom: 1em">As the verification runs, it internally calculates the output of the first 
+       operation as being A, the output of the second operation as being A+B, and the output of the third operation as 
+       being A+B+C. These results are also internally stored on the top node operation (which is hidden to the user).&nbsp;</p>
+       <ul>
+         <li><i>Note:&nbsp;</i><br>
+         If the operation had the DEFAULT operator, then the result of first operation would have been A, the result of 
+         the second would have been B, and the result of the third operation would have been C.</li>
+       </ul>
+       <p>If the first process document only contains these three operations, then he overall process result is A+B+C.</p>
+       <h4>Feeding Station 2 with the Results from Station 1</h4>
+       <p>In this example scenario, the work to be done on Station2 is the continuation of the work done on Station1. 
+       This means that Station2 will work on top of the results of Station1, and add to that result. This is the intent 
+       of the Feed By Another Process functionality.</p>
+       <p>In the Station2 process document, the same product needs to be imported in the ProductList, then an operation 
+       can be created. Results can be fed to any new operation in that document. (However, before this is done, the user 
+       must make sure that process verification has been run on the process for Station1).&nbsp;</p>
+       <p>Select the operation, and then the top process node in the first process. The results of the Station1 process 
+       will appear under the item node of the operation.</p>
+       <h4>In Conclusion</h4>
+       <p style="margin-bottom: 1em">This scenario is a simplified example with only two stations. Consider that there 
+       are over 70 such stations in assembling/welding a car. Having 70 processes in a V5 session is excessive, 
+       therefore this capability allows a Process Engineer to open Stations 69 and 70 and understand exactly what parts 
+       have been assembled previously.</td>
+     </tr>
+     <tr>
+       <td valign="top"><img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+       <td valign="top">
+       <h2><a name="Feed by Another Process when V5 is used in a PPR Hub context">Feed by Another Process when V5 is 
+       used in a PPR Hub context</a></h2>
+       </td>
+     </tr>
+     <tr>
+       <td valign="top"></td>
+       <td valign="top">When DPM Process and Resource Definition is used in a PPR Hub context, the Feed by 
+       Another Process command becomes disabled. Therefore, it is not possible to create a Feed by Another Process 
+       relationship when Process and Resource Definition is used with processes that have been imported from the PPR 
+       Hub. However, Process and Resource Definition does recognize this relationship when it has been created in 
+       Process Engineer and imported to V5 via the PPR Hub, and is able to provide visual indication of the relation and 
+       use it.
+       <p>When a process feeds its output into another process, a product flow link is established between the two. The 
+       output from former process is imported into Process and Resource Definition as Input Items to the next process, 
+       and is displayed in the Input Items folder of the PPR Tree.&nbsp;</p>
+       <p style="margin-bottom: 1em">In V5, the user can query the source process that provided the fed items to the 
+       current activity. The fed product data will be loaded and visualized when a target (fed) process is imported from 
+       PPR Hub into V5. The fed product data is loaded despite the fact that the source (feeder) process is not imported 
+       into V5.<br>
+       <br>
+       When performing Process Verification of the target (fed) process, the fed product data is properly taken into 
+       account. The internal &quot;Result calculation&quot; function will correctly generate an Output for the activity which has 
+       an incoming feed link.&nbsp;</td>
+     </tr>
+   </table>
+ </div>
+ <p align="center">&nbsp;<img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="aendtask.gif (1477 bytes)" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

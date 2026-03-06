@@ -1,0 +1,315 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+ <meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+ <title>Reference Information</title>
+ <meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 6.0">
+ <meta NAME="ProgId" CONTENT="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Reference Information</h1>
+ <table BORDER="0" CELLSPACING="0" VALIGN="top" cellpadding="0" style="border-collapse: collapse" bordercolor="#111111">
+   <tr VALIGN="top" BORDER="0">
+     <td ALIGN="center">
+     <p class="task">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td VALIGN="middle">
+     <p class="task">This section gives general information about the V4 to V5 
+     electrical migration.</p>
+     <p class="task">To know more about V5 devices, refer to <cite>Electrical 
+     Library User's Guide</cite>.</td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td colspan="2">
+     <h2>V4 to V5 Document Structure</h2>
+     </td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td ALIGN="center">&nbsp;</td>
+     <td VALIGN="middle">
+     <p STYLE="margin-top: 12; margin-bottom: 12">The V4 MASTER workspace 
+     becomes the main V5 CATProduct document while:</p>
+     <ul>
+       <li>Each geometrical SET becomes a CATPart,</li>
+       <li>Each DETAIL workspace becomes a CATPart,</li>
+       <li>Each GBN becomes a product or a component depending on the
+       <a href="page3813.html#hj-migrationGBN">migration mode option</a> 
+       selected,</li>
+       <li>Depending on the <a href="page3813.html#hj-option">selected 
+       option</a>:<ul>
+         <li>Each BNS becomes a CATPart, if <kbd>Bundle segments</kbd> is chosen</li>
+         <li>All the BNSs of a GBN are stored in the same CATPart, if <kbd>
+         Multi-branchable document</kbd> is chosen.</li>
+       </ul>
+       </li>
+     </ul>
+     <p>The root document is a CATProduct named: &lt;V4 Model Name&gt;.CATProduct.</p>
+     <p>The V5 documents created by migration of V4 electrical models are named 
+     as follows:</p>
+     <blockquote>
+       <p><code>&lt;Name of the model&gt;_&lt;CATIA V4 Detail Identifier&gt;</code><br>
+       for example: <code>TEST_MODEL1_ECP1.CATPart</code></p>
+     </blockquote>
+     <p>The CATPart documents resulting of DETAIL workspaces are instantiated as 
+     many times as there are DITTOS in the main document.<br>
+     In this V4 model, the SIC comes from a V4 library: each SIC instance 
+     (DITTO) has the same reference (DETAIL).<br>
+     In V5, the same structure is created: each connector is an instance of the 
+     CATPart.</p>
+     <p>If a device has been created in V4, using more than one ditto to define 
+     its geometry, a CATPart will be created for each original detail.</p>
+     <hr></td>
+   </tr>
+   <tr>
+     <td colspan="2">
+     <h2>Library Migration</h2>
+     </td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+     <td>Even though the electrical applications use catalogs, the migration 
+     batch migrates only the components in the models, not in the libraries. 
+     However it is possible to store the devices migrated from V4 model to a V5 
+     catalog.<br>
+     Refer to <a href="page3816.html#hj-library">How to migrate a V4 
+     library</a>.<p class="task"><b>Note</b> that it is recommended to limit the 
+     number of V4 devices to one hundred per model.</p>
+     <hr></td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td colspan="2">
+     <h2>Simultaneous Device Migration<a name="hj-samedev"></a></h2>
+     </td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td>&nbsp;</td>
+     <td>When migrating several models at a time, if they contain the same 
+     device, a CATPart will be generated for each V5 document (i.e. two models 
+     using the same SIC will be migrated as two V5 documents with two CATPart 
+     documents).<hr></td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td colspan="2">
+     <h2>Known Restrictions</h2>
+     </td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td ALIGN="center">
+     <p class="task">
+     <img src="b35doc/english/online/icons_C2/common/areference.gif" hspace="0" width="32" height="32"></td>
+     <td ROWSPAN="1" VALIGN="middle">
+     <h4>About Bundle Segment Migration</h4>
+     <ul>
+       <li>
+       <p STYLE="margin-bottom: 0">The rectangular section BNS is migrated as a 
+       circular section bundle segment.</li>
+     </ul>
+     <ul>
+       <li>
+       <p STYLE="margin-bottom: 0">The V4 BNS created in BEND mode ends in a 
+       slightly different shape:</p>
+       <table border="0" cellspacing="1" id="AutoNumber13">
+         <tr>
+           <td><img border="0" src="b35doc/english/online/cfyugelec_c2/images/elec_bendradius.gif" width="548" height="210"></td>
+         </tr>
+         <tr>
+           <td>The V4 BNS is shown in yellow, the corresponding V5 bundle 
+           segment is shown in red.</td>
+         </tr>
+       </table>
+       </li>
+     </ul>
+     <ul>
+       <li>
+       <p STYLE="margin-bottom: 0">The bundle segment shape in general might be 
+       different because of the algorithm differences.<br>
+       The number of points on which the curve is built also is different: the 
+       supports in CATIA V4 use three points while only two are used in CATIA 
+       V5.</li>
+       <li>
+       <p STYLE="margin-bottom: 0"><a name="hj-twisted"></a>If the V4 BNS bend 
+       radius is smaller than the V4 BNS diameter, the bend radius value taken 
+       into account will be equal to the diameter. However, under certain 
+       circumstances, you may have a message informing you that the migration of 
+       such bundle segments leads to a &quot;twisted configuration&quot;. The resulting V5 
+       bundle segments have an unusable geometry.<br>
+       Bypass: In this case, modify the radius or the bend radius to be able to 
+       create the rib.</li>
+     </ul>
+     <h4>About Device Migration<a name="hj-completing"></a></h4>
+     <p class="task">Once the migration is performed, the following 
+     modifications have to be done manually to get the correct device behavior:</p>
+     <ul>
+       <li>
+       <h5 STYLE="margin-bottom: 0">Single Insert Connector</h5>
+       <ul>
+         <li>
+         <p STYLE="margin-bottom: 0">On V5 single insert connectors, the <kbd>
+         Representation</kbd> of the connector connection point and the <kbd>
+         Contact</kbd> constraint correspond to the migrated point of the CPP of 
+         the V4 SIC.</p>
+         <table border="0" cellpadding="1" cellspacing="1" id="AutoNumber14">
+           <tr>
+             <td>
+             <p class="task"><kbd>Coincidence</kbd> and <kbd>Orientation</kbd> 
+             constraints must be added, using Electrical Library.</td>
+           </tr>
+           <tr>
+             <td>
+             <p class="task">
+             <img border="0" src="b35doc/english/online/cfyugelec_c2/images/connectorconnectionpointNLS.gif" width="222" height="210"></td>
+           </tr>
+         </table>
+         </li>
+         <li>
+         <p STYLE="margin-bottom: 0">To connect a single insert connector to an 
+         equipment or a connector shell, a cavity connection point must be added 
+         to the single insert connector, using Electrical Library.</p>
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber15">
+           <tr>
+             <td>
+             <p class="task">
+             <img border="0" src="b35doc/english/online/cfyugelec_c2/images/cavityconnectionpointNLS.gif" width="222" height="210"></td>
+           </tr>
+         </table>
+         </li>
+       </ul>
+       </li>
+       <li>
+       <h5 STYLE="margin-bottom: 0">Equipment</h5>
+       <ul>
+         <li>
+         <p STYLE="margin-bottom: 0">To connect a connector or connector shell 
+         to an equipment, a cavity must be added to the equipment for each 
+         connector or connector shell, using Electrical Library.</p>
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber16">
+           <tr>
+             <td>
+             <p class="task"><img border="0" src="b35doc/english/online/cfyugelec_c2/images/cavityNLS.gif" width="200" height="210"></td>
+           </tr>
+         </table>
+         </li>
+         <li>
+         <p STYLE="margin-bottom: 0">To connect an equipment to a mounting 
+         equipment, a cavity connection point must be added to the mounting 
+         equipment, using Electrical Library.</p>
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber17">
+           <tr>
+             <td>
+             <p class="task">
+             <img border="0" src="b35doc/english/online/cfyugelec_c2/images/cavityconnectionpointNLS.gif" width="222" height="210"></td>
+           </tr>
+         </table>
+         </li>
+       </ul>
+       </li>
+       <li>
+       <h5 STYLE="margin-bottom: 0">Connector Shell</h5>
+       <ul>
+         <li>
+         <p STYLE="margin-bottom: 0">To connect a connector to a connector 
+         shell, a cavity must be added to the connector shell for each 
+         connector, using Electrical Library.</p>
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber18">
+           <tr>
+             <td>
+             <p class="task"><img border="0" src="b35doc/english/online/cfyugelec_c2/images/cavityNLS.gif" width="200" height="210"></td>
+           </tr>
+         </table>
+         </li>
+         <li>
+         <p STYLE="margin-bottom: 0">To connect a connector shell to a mounting 
+         equipment or an equipment, a cavity connection point must be added to 
+         the mounting equipment or the equipment for each connector shell, using 
+         Electrical Library.</p>
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber19">
+           <tr>
+             <td>
+             <p class="task">
+             <img border="0" src="b35doc/english/online/cfyugelec_c2/images/cavityconnectionpointNLS.gif" width="222" height="210"></td>
+           </tr>
+         </table>
+         </li>
+       </ul>
+       </li>
+       <li>
+       <h5>Terminal Block</h5>
+       <ul>
+         <li>To connect a terminal block a mounting equipment or an item of 
+         equipment, a cavity connection point must be added to the terminal 
+         block using Electrical Library.<div align="left">
+           <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber20">
+             <tr>
+               <td><img border="0" src="b35doc/english/online/cfyugelec_c2/images/cavityconnectionpointNLS.gif" width="222" height="210"></td>
+             </tr>
+           </table>
+         </div>
+         </li>
+       </ul>
+       </li>
+     </ul>
+     <h4>About Support Migration</h4>
+     <ul>
+       <li>
+       <p STYLE="margin-bottom: 0">Multi-section supports are supported. However 
+       supports with multi-directional sections do not exist in CATIA V5. As a 
+       consequence, only the first created section will be linked to a bundle 
+       segment as well as all other sections that have the same direction.<br>
+       The bundle segments using other support section direction in the original 
+       V4 model are not linked to the support in the V5 document.</li>
+     </ul>
+     <h4 STYLE="margin-bottom: 0">About Session Migration<a name="hj-session"></a></h4>
+     <p STYLE="margin-bottom: 0" class="task">For the time being, the V4 
+     sessions (.session) are not migrated.<br>
+     This evolution is under development.</p>
+     <hr></td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td colspan="2">
+     <h2>Interoperability with ENOVIA V5</h2>
+     </td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td ALIGN="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo_custo.gif" width="32" height="32"></td>
+     <td VALIGN="middle">In the context of ENOVIA V5, you must first clear the
+     <kbd>Use root context in assembly</kbd> check box, which is located in the
+     <kbd>Part Infrastructure &gt; General &gt; External References</kbd> frame. If 
+     not, the links will be created to the root of the assembly and it will not 
+     be possible to save the geometrical bundle in ENOVIA.<br>
+     <img border="0" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" width="13" height="13"> 
+     By default, this option is selected.<table border="0" cellpadding="1" cellspacing="1">
+       <tr>
+         <td width="42" height="120" background="../icons_C2/common/bg_custo.gif">
+         <p align="center">
+         <img border="0" src="b35doc/english/online/icons_C2/home/homelogoprt.gif" width="32" height="32"></td>
+         <td>
+         <p class="task"><img border="1" src="b35doc/english/online/cfyugelec_c2/images/elec_migration07NLS.gif" width="580" height="149"></td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr>
+     <td ALIGN="center" colspan="2"><hr></td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" hspace="0" width="32" height="32"></td>
+     <td>For more information, refer to the <cite>V4 Integration Documentation</cite> 
+     - User Tasks - Converting CATIA Version 4 Models into CATIA Version 5 in 
+     Batch Mode.</td>
+   </tr>
+ </table>
+ <table BORDER="0" CELLSPACING="1" VALIGN="top">
+ </table>
+
+ </body>
+
+</html>
+

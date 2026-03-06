@@ -1,0 +1,129 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating a NLS User Feature</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="docCompliance" content="v 0.9; Thu Oct 13 09:35:18 2005">
+<meta name="Microsoft Theme" content="none">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Creating a NLS User Feature
+ <a name="ix-methodology::creating a nls user feature"></a></h1>
+ <p>This topic provides you with instructions concerning the creation of NLS 
+ User Features. To get an example, see
+ <a href="page4584.html">Creating and 
+ Instantiating a NLS User Feature (UDF)</a>. </p>
+ <table border="0" cellpadding="8" cellspacing="8">
+   <tr>
+     <td valign="top">The created CATNls file:<ul>
+       <li>Must be stored in the installation directory in the resources&#092;msgcatalog 
+       directory.</li>
+       <li>Must have the following name: CATType<i>TypeName</i>.CATNls. If the 
+       type name is Wheel, the CATNls name will be: CATTypeWheel.CATNls.</li>
+       <li>Must be structured as follows (Note that the role corresponds to the 
+       role assigned to each input in the Inputs tab of the User Feature 
+       Definition window):
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber6">
+           <tr>
+             <td>
+             <ul>
+               <li>Role1=&quot;NlsRole&quot;;</li>
+               <li>Role2=&quot;NlsRole&quot;; ... </li>
+               <li>Optionally for an NLS error message: UpdateErrorMessage = 
+               &quot;Message&quot;;</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ul>
+     <p>Please find below the example of a .CATGscript file and its 
+     corresponding .CATNLS file.</p>
+     <div align="left">
+       <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber7">
+         <tr>
+           <td valign="top" bgcolor="#F0F0F0"><code>GSDPackage isa 
+           Package<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CATWheel isa SkinFeature<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NLSName = 
+           UserFeature1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fill = 0 , 
+           Type : Feature ;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; `Main result` 
+           = 0 , Type : Feature <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NLSName 
+           :`Main result` ;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#FF0000">Point</font> = 0 , Type : Feature ;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#FF0000">Plane</font> = 0 , Type : Feature ;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#FF0000">Configuration</font> = 0 , Type : String ;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#FF0000">Distance</font> = 0 , Type : LENGTH ;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <font color="#FF0000">Radius</font> = 0 , Type : LENGTH ;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</code></td>
+           <td valign="top">In the .CATGscript opposite, the
+           <font color="#FF0000">Point</font>, the <font color="#FF0000">Plane</font>, 
+           the <font color="#FF0000">Configuration</font>, the
+           <font color="#FF0000">Distance</font>, and the <font color="#FF0000">
+           Radius</font> are the inputs of the User Feature. These inputs will 
+           be required when instantiating the User Feature. Note that these 
+           inputs can be the roles you assigned to the inputs.</td>
+         </tr>
+         <tr>
+           <td colspan="2">&nbsp;</td>
+         </tr>
+         <tr>
+           <td valign="top" bgcolor="#F0F0F0"><code>Point =
+           <font color="#FF0000">&quot;</font>Input point<font color="#FF0000">&quot;;</font><br>
+           Plane = <font color="#FF0000">&quot;</font>Support<font color="#FF0000">&quot;;</font><br>
+           Configuration = <font color="#FF0000">&quot;</font>Distance configuration<font color="#FF0000">&quot;;</font><br>
+           Configuration.Item1=<font color="#FF0000">&quot;</font>Short<font color="#FF0000">&quot;;</font>
+           <br>
+           Configuration.Item2=<font color="#FF0000">&quot;</font>Normal<font color="#FF0000">&quot;;</font><br>
+           Configuration.Item3=<font color="#FF0000">&quot;</font>Long<font color="#FF0000">&quot;;</font><br>
+           Distance = <font color="#FF0000">&quot;</font>Wheel distance<font color="#FF0000">&quot;;</font><br>
+           Radius = <font color="#FF0000">&quot;</font>Wheel radius<font color="#FF0000">&quot;;</font><br>
+           Fill = <font color="#FF0000">&quot;</font>Fill<font color="#FF0000">&quot;;</font><br>
+           //For the Nls message of update error<br>
+           UpdateErrorMessage = &quot; UPDATE ERROR MESSAGE IN ENGLISH&quot;</code></td>
+           <td valign="top">The inputs of the .CATGscript file are 
+           listed in the opposite cell along with their NLS names: Point = 
+           &quot;Input Point&quot;.<p>Note that:</p>
+           <ul>
+             <li>Inputs names must not contain blank spaces.</li>
+             <li>All NLS names are indicated between quotes<font color="#FF0000"> 
+             &quot;&quot;</font> and are separated by <font color="#FF0000">;</font>.</li>
+             <li>It is possible to add an error message that will be launched if 
+             an update error occurs.</li>
+             <li>The name of the file is: CATTypeCATWheel.CATNls </li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+     </div>
+     </td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+
+ </body>
+
+</html>
+

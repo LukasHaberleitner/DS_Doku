@@ -1,0 +1,556 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head><meta name="MonocodingType" content="0"></meta>
+	  <meta name="MonocodingFlag" content="C2"></meta>
+	  <meta http-equiv="Content-Language" content="en-us"></meta>
+	  <meta name="GENERATOR" content="Microsoft FrontPage 6.0"></meta>
+	  <meta name="ProgId" content="FrontPage.Editor.Document"></meta>
+  	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	  <title>Structural Analysis Steps</title>
+          <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+          
+	 </head><body onload="newPage('pt03ch09s01.html');" ondblclick="newSelection();" bgcolor="#FFFFFF" text="#000000" vlink="#FF5113" alink="#004D48" link="#004D48" class="TEXT"><div class="sect1" id="ath-gen-env-gen-steps-mch">
+    <a name="ath-gen-env-gen-steps-mch"></a>
+
+    <div class="titlepage">
+      
+
+      <div class="title">
+        <h3>Structural Analysis Steps</h3>
+      </div>
+    </div>
+
+    <p>An analysis case is a template (a set of objects sets) for
+    defining environmental actions on a given system. A Nonlinear
+    Structural Analysis case consists of a Simulation History,
+    which can contain one or more steps. Each step represents a
+    period of time in the simulation history and is associated with
+    a specific analysis procedure. In the Nonlinear Structural
+    Analysis workbench you can define the following types of
+    steps:</p>
+
+    <p class="indent"><b><img src="b35doc/english/online/anlug_c2/images/ABQ_I_GeneralStaticStep.gif"></img><a href="page0444.html#ath-gen-env-gen-anl-insertstaticstep-mch">Inserting
+    a New General Static Step</a></b>:&nbsp;Generates a General
+    Static step in a Nonlinear Structural case. A General Static
+    step is included by default when you create a Nonlinear
+    Structural case.</p>
+
+    <p class="indent"><b><img src="b35doc/english/online/anlug_c2/images/ABQ_I_FrequencyStep.gif"></img><a href="page0444.html#ath-gen-env-gen-anl-insertfreqstep-mch">Inserting
+    a New Frequency Step</a></b>:&nbsp;Generates a Frequency step
+    in a Nonlinear Structural case.</p>
+
+    <div class="sect2" id="ath-gen-env-gen-anl-insertstaticstep-mch">
+      <a name="ath-gen-env-gen-anl-insertstaticstep-mch"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Inserting a New General
+          Static Step</h3>
+        </div>
+      </div>
+
+      <p><a name="CATCommandHeader.ABAQUSGeneralStaticStepHdr"></a>Inserting a general static step within the Simulation
+      History indicates that a static solution procedure should be
+      used for the computation of the system response to applied
+      static or quasi-static time varying loads under given
+      constraints. You can create environmental specifications (for
+      example, boundary conditions and loads) within the step.
+      General static steps are available only in a Nonlinear
+      Structural case. They can be defined in new analysis cases or
+      in analysis cases that contain other general static steps;
+      they cannot be defined in analysis cases that contain heat
+      transfer steps. However, analysis documents can contain
+      additional cases with heat transfer steps. Sequentially
+      coupled thermal-stress analyses, in which the
+      stress/displacement solution is dependent on a temperature
+      field but there is no inverse dependency, can be performed by
+      reading the temperature solution from a heat transfer
+      analysis case into a stress analysis case as a predefined
+      field. See <a href="page0453.html#ath-gen-fem-analysissteps-restrictions">
+      Step Sequence Restrictions</a> for more
+      information. Nonlinear Structural Analysis creates a General
+      Static step by default for a new Nonlinear Structural
+      case.</p>
+
+      <p>By default, geometrically nonlinear effects are considered
+      for general static steps. See <a href="page0453.html#ath-gen-fem-analysissteps-nlgeom">
+      Accounting for Nonlinear Geometric
+      Effects</a> for more information.</p>
+
+      <p>The solver divides a step into increments so that it can
+      follow the nonlinear solution path. Typically, you suggest
+      the size of the first increment, and you allow the solver to
+      choose the size of the subsequent increments automatically.
+      This approach ensures that nonlinear problems are solved
+      easily and efficiently. At the end of each increment the
+      structure is in (approximate) equilibrium and results are
+      available for writing to the output database file.
+      Alternatively, you can specify a fixed increment size that
+      will be used throughout the step. The latter approach is
+      recommended only if you have considerable experience with a
+      particular analysis case.</p>
+
+      <p>The ratio of the initial time increment to the total step
+      time specifies the proportion of load applied in the first
+      increment. The default initial increment size is the same as
+      the total time period for the step. As a result, the solver
+      applies all of the loads defined in the step in the first
+      increment; if the problem is linear or mildly nonlinear, the
+      solver will converge to a solution in a single increment. In
+      contrast, if your model is highly nonlinear, the solver must
+      reduce the increment size repeatedly in an attempt to
+      converge to a solution. You can minimize the time spent
+      reducing the increment size by providing a reasonable initial
+      increment size; for most analyses an initial increment size
+      that is 5% to 10% of the total step time is sufficient. This
+      value will be modified as required if automatic
+      incrementation is used or will be used as the constant time
+      increment if fixed time incrementation is used.</p>
+
+      <div style="margin-left: 0.5in; margin-right: 0.5in;" class="note">
+        <p><b class="title"><a name="d0e13513">Note:&nbsp;</a></b>
+        You can change the default loading behavior to apply all
+        the loads instantaneously at the beginning of the step
+        instead of gradually applying the loads during the step.
+        However, instantaneous loading may prevent the solver from
+        reaching a converged solution for models with significant
+        nonlinearity since reducing the increment size will no
+        longer correspond to a reduction in the applied loads.</p>
+      </div>
+
+      <p>In some geometrically nonlinear analyses, local
+      instabilities may occur (e.g., surface wrinkling, material
+      instability, or local buckling). If the problem is expected
+      to be unstable, you can choose the automatic stabilization
+      method available in the solver, in which damping is applied
+      throughout the model to prevent instantaneous buckling or
+      collapse.</p>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to insert a new General Static
+      step in a Nonlinear Structural case.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Select <b><span class="guitext"><b class="guimenu">Start</b></span>&gt;<span class="guitext"><b class="guisubmenu">Analysis &amp;
+            Simulation</b></span>&gt;<span class="guitext"><b class="guimenuitem">Nonlinear Structural
+            Analysis</b></span></b> from the menu bar to enter the
+            Nonlinear Structural Analysis workbench.</p>
+          </li>
+
+          <li>
+            <p>From the <span class="guitext"><b class="guilabel">New Analysis Case</b></span> dialog box,
+            select <span class="guitext"><b class="guilabel">Nonlinear Structural Case</b></span>.</p>
+
+            <p>Nonlinear Structural Analysis creates a General
+            Static step by default for a new Nonlinear Structural
+            case.</p>
+          </li>
+
+          <li>
+            <p>To create an additional General Static step, do
+            either of the following:</p>
+
+            <ul type="disc"><li>
+                <p>To append a new General Static step to the end
+                of the Simulation History, click the General Static
+                Step icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_GeneralStaticStep.gif"></img>.</p>
+
+                <div style="margin-left: 0.5in; margin-right: 0.5in;" class="tip">
+                  <p><img border="0" src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32" style="vertical-align: middle"></img><b>Tip:</b> Alternatively, you
+                  can select <b><span class="guitext"><b class="guimenu">Insert</b></span>&gt;<span class="guitext"><b class="guimenuitem">General Static
+                  Step</b></span></b> from the menu bar.</p>
+                </div>
+              </li>
+
+              <li>
+                <p>To insert a new General Static step between two
+                existing steps in the Simulation History,
+                right-click the step object in the specification
+                tree after which you want to create the new step,
+                then select <b><span class="guitext"><b class="guimenu">Insert Step Below</b></span>&gt;<span class="guitext"><b class="guimenuitem">General Static Step</b></span></b>
+                from the menu that appears.</p>
+              </li>
+            </ul>The <span class="guitext"><b class="guititle">General Static Step</b></span> dialog box
+            appears, and a new Static Step objects set appears in
+            the specification tree under the Simulation History
+            objects set for the current analysis case.
+          </li>
+
+          <li>
+            <p>You can change the step identifier by editing the
+            <span class="guitext"><b class="guilabel">Step
+            name</b></span> field. This name will be used in the
+            specification tree.</p>
+          </li>
+
+          <li>
+            <p>Enter a description for the step in the <span class="guitext"><b class="guilabel">Step
+            description</b></span> field.</p>
+          </li>
+
+          <li>
+            <p>If necessary, do the following to modify the
+            <span class="guitext"><b class="guilabel">Basic Step
+            Data</b></span>:</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Edit the <span class="guitext"><b class="guilabel">Step time</b></span> field to specify
+                  a value for the total time period of the
+                  step.</p>
+                </li>
+
+                <li>
+                  <p>Specify whether nonlinear geometric effects
+                  should be accounted for in the step by selecting
+                  <span class="guitext"><b class="guilabel">Off</b></span> or <span class="guitext"><b class="guilabel">On</b></span> for
+                  <span class="guitext"><b class="guilabel">Nonlinear geometry</b></span>. (The
+                  default value is <span class="guitext"><b class="guilabel">On</b></span>.) See <a href="page0453.html#ath-gen-fem-analysissteps-nlgeom">
+                  Accounting for
+                  Nonlinear Geometric Effects</a>
+                  for more information.</p>
+                </li>
+              </ol></div>
+          </li>
+
+          <li>
+            <p>If necessary, do the following to modify the
+            <span class="guitext"><b class="guilabel">Incrementation Controls</b></span>:</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Select the <span class="guitext"><b class="guilabel">Incrementation type</b></span>:
+                  <span class="guitext"><b class="guilabel">Automatic</b></span> or <span class="guitext"><b class="guilabel">Fixed</b></span>.
+                  Automatic incrementation means that the solver
+                  will select increment sizes based on
+                  computational efficiency. Fixed incrementation
+                  means that you specify a fixed increment size;
+                  this option is recommended only if you have
+                  considerable experience with a particular
+                  analysis case.</p>
+                </li>
+
+                <li>
+                  <p>Enter a value for the <span class="guitext"><b class="guilabel">Maximum number of
+                  increments</b></span>. The default number of
+                  increments for a step is 100; if significant
+                  nonlinearity is present in the simulation, the
+                  analysis may require many more increments. If the
+                  solver needs more increments than the specified
+                  upper limit to complete the step, it will
+                  terminate the analysis with an error message.</p>
+                </li>
+
+                <li>
+                  <p>Enter a value for the <span class="guitext"><b class="guilabel">Initial increment
+                  size</b></span>. The ratio of the initial time
+                  increment to the total step time specifies the
+                  proportion of load applied in the first
+                  increment. The default initial increment size is
+                  the same as the total time period for the step.
+                  As a result, the solver applies all of the loads
+                  defined in the step in the first increment; if
+                  the problem is linear or mildly nonlinear, the
+                  solver will converge to a solution in a single
+                  increment. In contrast, if your model is highly
+                  nonlinear, the solver must reduce the increment
+                  size repeatedly in an attempt to converge to a
+                  solution. You can minimize the time spent
+                  reducing the increment size by providing a
+                  reasonable initial increment size; for most
+                  analyses an initial increment size that is 5% to
+                  10% of the total step time is sufficient. This
+                  value will be modified as required if automatic
+                  incrementation is used or will be used as the
+                  constant time increment if fixed time
+                  incrementation is used.</p>
+                </li>
+
+                <li>
+                  <p>Enter a value for the <span class="guitext"><b class="guilabel">Minimum increment
+                  size</b></span>. This parameter is used only for
+                  automatic time incrementation. The analysis will
+                  terminate if excessive cutbacks caused by
+                  convergence problems reduce the increment size
+                  below the minimum value.</p>
+                </li>
+
+                <li>
+                  <p>Enter a value for the <span class="guitext"><b class="guilabel">Maximum increment
+                  size</b></span>. This parameter is used only for
+                  automatic time incrementation. By default, there
+                  is no upper limit on the increment size, other
+                  than the total step time. Depending on your
+                  simulation, you may want to specify a different
+                  maximum allowable increment size. For example, if
+                  you know that your simulation may have trouble
+                  obtaining a solution if too large a load
+                  increment is applied, perhaps because the model
+                  may undergo plastic deformation, you may want to
+                  decrease the maximum increment size.</p>
+                </li>
+              </ol></div>
+          </li>
+
+          <li>
+            <p>If necessary, do the following to modify the
+            <span class="guitext"><b class="guilabel">Stabilization
+            Controls</b></span>:</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Click <span class="guitext"><b class="guibutton">More</b></span> to access additional
+                  step options.</p>
+                </li>
+
+                <li>
+                  <p>Select <span class="guitext"><b class="guilabel">Use stabilization</b></span> to use
+                  automatic stabilization if the problem is
+                  expected to be unstable due to instabilities
+                  caused by localized buckling behavior or by
+                  material instability. Such instabilities are
+                  especially significant when no time-dependent
+                  behavior exists in the material modeling. the
+                  solver can apply damping throughout the model in
+                  such a way that the viscous forces introduced are
+                  sufficiently large to prevent instantaneous
+                  buckling or collapse but small enough not to
+                  affect the behavior significantly while the
+                  problem is stable.</p>
+                </li>
+
+                <li>
+                  <p>Select the <span class="guitext"><b class="guilabel">Stabilization method</b></span>:
+                  <span class="guitext"><b class="guilabel">Dissipate Energy Fraction</b></span>
+                  or <span class="guitext"><b class="guilabel">Damping Factor</b></span>.</p>
+
+                  <p>With the <span class="guitext"><b class="guilabel">Dissipate Energy Fraction</b></span>
+                  method, the solver chooses the damping factor
+                  such that the dissipated energy during the step
+                  is a small fraction of the change in strain
+                  energy during the step.</p>
+
+                  <p>Alternatively, you can specify the damping
+                  factor directly if you choose the <span class="guitext"><b class="guilabel">Damping
+                  Factor</b></span> method. The damping factor
+                  method is intended for advanced users. You should
+                  define the damping factor directly only in cases
+                  where a certain value is known to be effective in
+                  analyses similar to the current analysis
+                  case.</p>
+                </li>
+
+                <li>
+                  <p>Edit the <span class="guitext"><b class="guilabel">Stabilization factor</b></span> field
+                  to specify a value for the stabilization factor
+                  (either the dissipated energy fraction or the
+                  damping factor, depending on the stabilization
+                  method chosen).</p>
+                </li>
+              </ol></div>
+          </li>
+
+          <li>
+            <p>If necessary, do the following to modify the
+            <span class="guitext"><b class="guilabel">Default load
+            variation with time</b></span>:</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Click <span class="guitext"><b class="guibutton">More</b></span> to access additional
+                  step options.</p>
+                </li>
+
+                <li>
+                  <p>Select <span class="guitext"><b class="guilabel">Instantaneous</b></span> to apply all
+                  the loads at the start of the step.</p>
+                </li>
+
+                <li>
+                  <p>Select <span class="guitext"><b class="guilabel">Ramp linearly over step</b></span> (if
+                  it is not already selected) to apply the loads
+                  incrementally over the step.</p>
+                </li>
+              </ol></div>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">OK</b></span> when you have finished
+            defining the step.</p>
+
+            <p>The Static Step objects set contains a default Field
+            Output Request object in a Field Output Requests
+            objects set. See <a href="page0454.html">Requesting
+            Results</a> for more information.</p>
+          </li>
+        </ol></div><span id="ath-gen-env-gen-anl-insertstaticstep-mch"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div>
+
+    <div class="sect2" id="ath-gen-env-gen-anl-insertfreqstep-mch">
+      <a name="ath-gen-env-gen-anl-insertfreqstep-mch"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Inserting a New Frequency
+          Step</h3>
+        </div>
+      </div>
+
+      <p><a name="CATCommandHeader.ABAQUSFrequencyStepHdr"></a>Inserting a frequency step within the Simulation History
+      indicates that an eigenvalue extraction procedure should be
+      used for the computation of the system natural frequencies
+      and corresponding mode shapes. If the frequency step is the
+      first step in the analysis, initial conditions (for example,
+      temperature) form the base state for the analysis. Otherwise,
+      the base state is the current state at the end of the
+      previous general static step. In a frequency step you can
+      apply a clamp boundary condition or a displacement boundary
+      condition with selected degrees of freedom set to zero; all
+      other boundary conditions and all loads are ignored.
+      Frequency steps are available only in a Nonlinear Structural
+      case. They can be defined in new cases or in cases that
+      contain other general static steps. Frequency steps cannot be
+      defined in a Thermal case. See <a href="page0453.html#ath-gen-fem-analysissteps-restrictions">
+      Step Sequence Restrictions</a> for more
+      information.</p>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to insert a new Frequency step in
+      a Nonlinear Structural case.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Select <b><span class="guitext"><b class="guimenu">Start</b></span>&gt;<span class="guitext"><b class="guisubmenu">Analysis &amp;
+            Simulation</b></span>&gt;<span class="guitext"><b class="guimenuitem">Nonlinear Structural
+            Analysis</b></span></b> from the menu bar to enter the
+            Nonlinear Structural Analysis workbench.</p>
+          </li>
+
+          <li>
+            <p>From the <span class="guitext"><b class="guilabel">New Analysis Case</b></span> dialog box,
+            select <span class="guitext"><b class="guilabel">Nonlinear Structural Case</b></span>.</p>
+          </li>
+
+          <li>
+            <p>To create an additional Frequency step, do either of
+            the following:</p>
+
+            <ul type="disc"><li>
+                <p>To append a new Frequency step to the end of the
+                Simulation History, click the Frequency Step icon
+                <img src="b35doc/english/online/anlug_c2/images/ABQ_I_FrequencyStep.gif"></img>.</p>
+
+                <div style="margin-left: 0.5in; margin-right: 0.5in;" class="tip">
+                  <p> Alternatively, you
+                  can select <b><span class="guitext"><b class="guimenu">Insert</b></span>&gt;<span class="guitext"><b class="guimenuitem">Frequency
+                  Step</b></span></b> from the menu bar.</p>
+                </div>
+              </li>
+
+              <li>
+                <p>To insert a new Frequency step between two
+                existing steps in the Simulation History,
+                right-click the step object in the specification
+                tree after which you want to create the new step,
+                then select <b><span class="guitext"><b class="guimenu">Insert Step Below</b></span>&gt;<span class="guitext"><b class="guimenuitem">Frequency Step</b></span></b> from
+                the menu that appears.</p>
+              </li>
+            </ul>The <span class="guitext"><b class="guititle">Frequency Step</b></span> dialog box
+            appears, and a Frequency Step objects set appears in
+            the specification tree under the Simulation History
+            objects set for the current Nonlinear Structural case.
+          </li>
+
+          <li>
+            <p>You can change the step identifier by editing the
+            <span class="guitext"><b class="guilabel">Step
+            name</b></span> field. This name will be used in the
+            specification tree.</p>
+          </li>
+
+          <li>
+            <p>Enter a description for the step in the <span class="guitext"><b class="guilabel">Step
+            description</b></span> field.</p>
+          </li>
+
+          <li>
+            <p>Choose the <span class="guitext"><b class="guilabel">Number of modes requested</b></span>:</p>
+
+            <ul type="disc"><li>
+                <p>Choose <span class="guitext"><b class="guilabel">All</b></span> to request all modes
+                within the specified frequency range.</p>
+              </li>
+
+              <li>
+                <p>Choose <span class="guitext"><b class="guilabel">Value</b></span> to enter a value for
+                the number of modes requested. Enter the value in
+                the field provided.</p>
+              </li>
+            </ul></li>
+
+          <li>
+            <p>Enter the minimum and maximum frequencies of
+            interest (Hz). The two values specify a frequency range
+            within which the solver will calculate eigenvalues.
+            Unless you request all modes, you must specify the
+            maximum frequency value. Otherwise, there is no minimum
+            or maximum frequency, and the solver calculates the
+            first ten modes.</p>
+          </li>
+
+          <li>
+            <p>If desired, toggle on <span class="guitext"><b class="guilabel">Frequency
+            shift</b></span> and enter a value for the shift point
+            (Hz<sup>2</sup>). The eigenvalues closest to this point
+            will be extracted.</p>
+          </li>
+
+          <li>
+            <p>Toggle on <span class="guitext"><b class="guilabel">Use SIM Architecture</b></span> to activate
+            the high performance, mode-based linear dynamic
+            analysis capability. If the eigenmodes that are
+            extracted in this step will be used for subsequent
+            mode-based or subspace-based steady-state dynamic
+            procedures, the SIM-based capability offers improved
+            efficiency for large models with minimal output
+            requests.</p>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">OK</b></span> when you have finished
+            defining the step.</p>
+          </li>
+        </ol></div>
+
+      <p>The Frequency objects set contains a default Field Output
+      Request object in a Field Output Requests objects set. See
+      <a href="page0454.html">Requesting Results</a> for more
+      information. You cannot request history output for a
+      frequency step. However, several whole model history output
+      variables are generated by default:</p>
+
+      <ul type="disc"><li>
+          <p>Eigenfrequency</p>
+        </li>
+
+        <li>
+          <p>Eigenvalue</p>
+        </li>
+
+        <li>
+          <p>Effective mass</p>
+        </li>
+
+        <li>
+          <p>Generalized mass</p>
+        </li>
+
+        <li>
+          <p>Participation factor</p>
+        </li>
+      </ul><span id="ath-gen-env-gen-anl-insertfreqstep-mch"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div><span id="ath-gen-env-gen-steps-mch"></span>
+  </div></body></html>
+

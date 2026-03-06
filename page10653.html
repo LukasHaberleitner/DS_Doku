@@ -1,0 +1,523 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Converting V4 AUXVIEW2 Views to V5 Generative Drafting Views in Batch 
+	Mode
+	</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>
+ <a name="ix-AUXVIEW2:convert in batch mode;V4 Draw to V5 CATDrawing::convert in batch mode;batch:convert V4 AUXVIEW2 Views to V5 Generative Drafting Views in Batch Mode">
+ </a><font face="Verdana, Helvetica, sans-serif">Converting V4 AUXVIEW2 Views to 
+ V5 Generative Drafting Views in Batch Mode</font></h1>
+ <table border="0" cellspacing="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" height="4193" Width="0">
+   <tr valign="top" border="0">
+     <td valign="top" height="32"><font face="Verdana, Helvetica, sans-serif">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></font></td>
+     <td height="32"><font face="Verdana, Helvetica, sans-serif">This task shows 
+     you how to convert CATIA Version 4 AUXVIEW2 views to CATIA Version 5 
+     Generative Drafting views with full 2D/3D associativity (i.e. AS SPEC 
+     migration).</font></td>
+   </tr>
+   <tr>
+     <td valign="top" height="117"><font face="Verdana, Helvetica, sans-serif">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="18" height="18">
+     </font>
+     <p>&nbsp;</td>
+     <td height="117">
+     <h4><font color="#282187"><a name="hj-AUXVIEW2 standard parameters"></a>
+     <font face="Verdana, Helvetica, sans-serif">About AUXVIEW2 
+     Defaults</font></font></h4>
+     <p><font face="Verdana, Helvetica, sans-serif">In AUXVIEW2 DEFAULT, a 
+     number of dress-up parameters on specific elements (clipping edges, cut 
+     edges, breakout limit) are pre-defined. Refer to </font>
+     <a href="page10668.html">Managing AUXVIEW2 Defaults for Migration</a><font face="Verdana, Helvetica, sans-serif"> 
+     for information on what you need to do <b>before</b> migrating AUXVIEW2 
+     views from V4 to V5 to ensure that your migration results will be 
+     equivalent to your AUXVIEW2 defaults.</font></td>
+   </tr>
+   <tr>
+     <td valign="top" height="500"><font face="Verdana, Helvetica, sans-serif">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="18" height="18"></font></td>
+     <td height="500">
+     <h4><font color="#282187" face="Verdana, Helvetica, sans-serif">
+     About AUXVIEW2 view conversion in batch mode</font></h4>
+     <p><font face="Verdana, Helvetica, sans-serif">There are a few things you 
+     need to remember when converting AUXVIEW2 views in batch mode:</font></p>
+     <ul>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 6">
+       <font face="Verdana, Helvetica, sans-serif"><u>V4 SPACE models must be 
+       converted before DRAW models</u> in order to ensure associativity between 
+       the V5 CATProduct/ CATPart and CATDrawing documents. You can either 
+       convert V4 SPACE models in a session, and then convert DRAW models in a 
+       later session, or you can convert both V4 SPACE and DRAW models during 
+       the same migration session.&nbsp;For the purpose of this scenario, you will 
+       learn how to convert the models during the same session.</font></li>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 6">
+       <font face="Verdana, Helvetica, sans-serif">When converting both SPACE 
+       and DRAW models during the same session, pay attention to the order in 
+       which you select the documents to convert: <u>the SPACE models must be 
+       listed first in the Migration Batch dialog box, before the DRAW models</u>. 
+       This ensures that they are converted first.</font></li>
+     </ul>
+     <p style="margin-top: 0; margin-bottom: 6">
+     <font face="Verdana, Helvetica, sans-serif">SPACE models will be migrated 
+     first and converted to CATPart and/or CATProduct document(s). The 
+     CATDrawing is generated from the CATPart or from the CATProduct. The 
+     various possibilities are listed in the table below:</font></p>
+     <div align="center">
+       <center>
+       <table border="0" cellpadding="6" cellspacing="0">
+         <tr>
+           <td class="code" bgcolor="#CCCCCC">
+           <font face="Verdana, Helvetica, sans-serif"><b>In the case of...</b></font></td>
+           <td class="code" bgcolor="#CCCCCC">
+           <font face="Verdana, Helvetica, sans-serif"><b>The SPACE element(s) 
+           is(are) migrated first and converted to...</b></font></td>
+           <td class="code" bgcolor="#CCCCCC">
+           <font face="Verdana, Helvetica, sans-serif"><b>The CATDrawing is then 
+           generated from...</b></font></td>
+         </tr>
+         <tr>
+           <td bgcolor="#F2F2F2"><font face="Verdana, Helvetica, sans-serif">V4 
+           SPACE and DRAW elements contained in the same model</font></td>
+           <td bgcolor="#F2F2F2"><font face="Verdana, Helvetica, sans-serif">A 
+           CATPart or CATProduct document</font></td>
+           <td bgcolor="#F2F2F2"><font face="Verdana, Helvetica, sans-serif">
+           This CATPart or CATProduct</font></td>
+         </tr>
+         <tr>
+           <td bgcolor="#F2F2F2"><font face="Verdana, Helvetica, sans-serif">A 
+           V4 DRAW model linked to a single SPACE model</font></td>
+           <td bgcolor="#F2F2F2"><font face="Verdana, Helvetica, sans-serif">A 
+           CATPart or CATProduct document</font></td>
+           <td bgcolor="#F2F2F2"><font face="Verdana, Helvetica, sans-serif">
+           This CATPart or CATProduct</font></td>
+         </tr>
+         <tr>
+           <td bgcolor="#F2F2F2"><font face="Verdana, Helvetica, sans-serif">V4 
+           DRAW model linked to several SPACE models</font></td>
+           <td bgcolor="#F2F2F2"><font face="Verdana, Helvetica, sans-serif">
+           CATPart documents; a CATProduct document containing these CATPart 
+           documents is also created automatically&nbsp;</font></td>
+           <td bgcolor="#F2F2F2"><font face="Verdana, Helvetica, sans-serif">The 
+           CATProduct&nbsp;<br>
+           (and not from the CATPart documents)</font></td>
+         </tr>
+       </table>
+       </center>
+     </div>
+     <p><font face="Verdana, Helvetica, sans-serif">For more information on 
+     converting SPACE data and on batch migration, see </font>
+     <a href="page10616.html">Converting 
+CATIA Version 4 Models into CATIA Version 5&nbsp;with the PLMV4ToV5Migration Batch</a><font face="Verdana, Helvetica, sans-serif">. 
+     For more information on AS SPEC migration of AUXVIEW2 views, see </font>
+     <a href="page10607.html">Migration of AUXVIEW2 views</a><font face="Verdana, Helvetica, sans-serif">.</font></td>
+   </tr>
+   <tr>
+     <td valign="top" height="102"><font face="Verdana, Helvetica, sans-serif">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></font></td>
+     <td rowspan="1" height="102"><font face="Verdana, Helvetica, sans-serif">
+     You will practice with three V4 SPACE documents: </font>
+     <a href="b35doc/english/online/intug_c2/samples/CUBE-0-100.model">CUBE-0-100.model</a><font face="Verdana, Helvetica, sans-serif">,
+     </font><a href="b35doc/english/online/intug_c2/samples/CYLINDRE.model">CYLINDRE.model</a><font face="Verdana, Helvetica, sans-serif"> 
+     and </font><a href="b35doc/english/online/intug_c2/samples/SPHERE.model">SPHERE.model</a><font face="Verdana, Helvetica, sans-serif">, 
+     and with a V4 DRAW document: </font>
+     <a href="b35doc/english/online/intug_c2/samples/DRAW-CUBE-CYL-SPHERE.model">DRAW-CUBE-CYL-SPHERE.model</a><font face="Verdana, Helvetica, sans-serif">.
+     </font>
+     <p><font face="Verdana, Helvetica, sans-serif">Go to </font><kbd>
+     <font face="Verdana, Helvetica, sans-serif">Tools &nbsp;&gt;&nbsp; Options &nbsp;&gt;&nbsp; General &nbsp;&gt;&nbsp; 
+     Compatibility</font></kbd><font face="Verdana, Helvetica, sans-serif">, and 
+     click the </font><kbd><font face="Verdana, Helvetica, sans-serif">V4 Data 
+     Reading</font></kbd><font face="Verdana, Helvetica, sans-serif"> tab. Make 
+     sure the </font><kbd><font face="Verdana, Helvetica, sans-serif">Open in 
+     Light Mode: 2D data are not taken into account</font></kbd><font face="Verdana, Helvetica, sans-serif"> 
+     option is unselected. Additionally, select the </font><kbd>
+     <font face="Verdana, Helvetica, sans-serif">Convert SPACE and DRAW</font></kbd><font face="Verdana, Helvetica, sans-serif"> 
+     conversion mode and the </font><kbd>
+     <font face="Verdana, Helvetica, sans-serif">As SPEC</font></kbd><font face="Verdana, Helvetica, sans-serif"> 
+     format.&nbsp;</font></td>
+   </tr>
+   <tr>
+     <td valign="top" height="86"><font face="Verdana, Helvetica, sans-serif">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="18" height="18"></font></td>
+     <td rowspan="1" height="86"><font face="Verdana, Helvetica, sans-serif">
+     Before launching the batch tool, you have to make sure that your 
+     environment is correctly set up.</font><p>
+     <font face="Verdana, Helvetica, sans-serif">On NT, the Batch environment is 
+     installed during CATIA's installation. On UNIX, you have to set up this 
+     environment before starting the session. For more information about this, 
+     see </font>
+     <a href="page1361.html" target="ds_doc2">
+     Starting a session on UNIX</a><font face="Verdana, Helvetica, sans-serif"> 
+     in the <cite>Infrastructure User's Guide</cite>.</font></td>
+   </tr>
+   <tr>
+     <td valign="top" height="210">
+     <p align="center"><font face="Verdana, Helvetica, sans-serif">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></font></td>
+     <td valign="top" align="left" height="210">
+     <ol class="task">
+       <li>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">Launch the 
+       Migration Batch by entering the appropriate command, depending on whether 
+       you are on UNIX or on NT:</font></li>
+     </ol>
+     <ul>
+       <li><font face="Verdana, Helvetica, sans-serif">On UNIX, enter:&nbsp;<br>
+       <font color="#000000" size="3"><i>catstart -run &quot;CNEXT -batch -e 
+       CATV4ToV5Migration&quot;</i></font></font></li>
+       <li><font face="Verdana, Helvetica, sans-serif">
+       <font color="#000000" size="3">On Windows, enter:<br>
+       </font><i>CNEXT -batch -e CATV4ToV5Migration</i></font></li>
+     </ul>
+     <ol class="task" start="2">
+       <li>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">Click the
+       </font><kbd><font face="Verdana, Helvetica, sans-serif">Browse File</font></kbd><font face="Verdana, Helvetica, sans-serif"> 
+       button to launch the File Selection dialog box.&nbsp;</font></li>
+       <li>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">Select the V4 
+       SPACE documents: </font><a href="b35doc/english/online/intug_c2/samples/CUBE-0-100.model">
+       CUBE-0-100.model</a><font face="Verdana, Helvetica, sans-serif">, </font>
+       <a href="b35doc/english/online/intug_c2/samples/CYLINDRE.model">CYLINDRE.model</a><font face="Verdana, Helvetica, sans-serif"> 
+       and </font><a href="b35doc/english/online/intug_c2/samples/SPHERE.model">SPHERE.model</a><font face="Verdana, Helvetica, sans-serif">, 
+       and click </font><kbd><font face="Verdana, Helvetica, sans-serif">Open</font></kbd><font face="Verdana, Helvetica, sans-serif">.</font></p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber2">
+         <tr>
+           <td width="100%"><font face="Verdana, Helvetica, sans-serif">
+           <img border="0" src="b35doc/english/online/intug_c2/images/ConvertAuxview2ViewsBatchMode01NLS.gif" align="left" width="180" height="72"></font></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">Click the
+       </font><kbd><font face="Verdana, Helvetica, sans-serif">Browse File</font></kbd><font face="Verdana, Helvetica, sans-serif"> 
+       button to launch the File Selection dialog box again.</font></li>
+       <li>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">This time, 
+       select the V4 DRAW document: </font>
+       <a href="b35doc/english/online/intug_c2/samples/DRAW-CUBE-CYL-SPHERE.model">DRAW-CUBE-CYL-SPHERE.model</a><font face="Verdana, Helvetica, sans-serif">, 
+       and click </font><kbd><font face="Verdana, Helvetica, sans-serif">Open</font></kbd><font face="Verdana, Helvetica, sans-serif">.</font></p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber4">
+         <tr>
+           <td width="100%"><font face="Verdana, Helvetica, sans-serif">
+           <img border="0" src="b35doc/english/online/intug_c2/images/ConvertAuxview2ViewsBatchMode02NLS.gif" align="left" width="184" height="71"></font></td>
+         </tr>
+       </table>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">The SPACE 
+       models are listed before the DRAW model in the Migration Batch dialog 
+       box.&nbsp; </font></p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber3">
+         <tr>
+           <td width="100%"><font face="Verdana, Helvetica, sans-serif">
+           <img border="0" src="b35doc/english/online/intug_c2/images/ConvertAuxview2ViewsBatchMode03NLS.gif" width="453" height="607"></font></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">Optionally, 
+       click the </font><kbd><font face="Verdana, Helvetica, sans-serif">Options</font></kbd><font face="Verdana, Helvetica, sans-serif"> 
+       button to define your batch options. On the </font><kbd>
+       <font face="Verdana, Helvetica, sans-serif">Migration Batch</font></kbd><font face="Verdana, Helvetica, sans-serif"> 
+       tab, you can select a .CATDrawing document in the </font><kbd>
+       <font face="Verdana, Helvetica, sans-serif">Initial Drawing path</font></kbd><font face="Verdana, Helvetica, sans-serif"> 
+       field: this drawing will serve as a template, and the standard used by 
+       this document will be used during the migration. If you leave this field 
+       blank, the standard used by default during the migration will be the last 
+       one you used when creating a drawing.</font></li>
+       <li>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">Optionally, 
+       click the browse button <img border="0" src="b35doc/english/online/intug_c2/images/Pointsbutton.gif" width="27" height="19"> 
+       next to the </font><kbd><font face="Verdana, Helvetica, sans-serif">
+       Target Directory</font></kbd><font face="Verdana, Helvetica, sans-serif"> 
+       field to specify the name of the directory in which the data will be 
+       created (by default the data are created in the directory which contains 
+       the first selected V4 document).</font></li>
+       <li>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">Perform 
+       Specification Check on the V4 documents. For more information, see </font>
+       <a href="page10595.html">Checking V4 Model Data Before Copying It to V5 
+       : Interactive Checker</a><font face="Verdana, Helvetica, sans-serif">.&nbsp;</font></li>
+       <li>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">Select the
+       </font><kbd><font face="Verdana, Helvetica, sans-serif">Migrate</font></kbd><font face="Verdana, Helvetica, sans-serif"> 
+       option in order to convert V4 documents to V5 documents. &nbsp;</font></li>
+       <li>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">Leave the
+       </font><font face="Arial"><kbd>
+       <font face="Verdana, Helvetica, sans-serif">Run Local</font></kbd></font><font face="Verdana, Helvetica, sans-serif"> 
+       option selected to run the migration batch locally on your computer. Your 
+       migration batch parameters are now defined.</font></li>
+       <li>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">Click the
+       </font><kbd><font face="Verdana, Helvetica, sans-serif">Save</font></kbd><font face="Verdana, Helvetica, sans-serif"> 
+       button to specify where you want to save your batch parameters. A dialog 
+       box is displayed.</font></li>
+       <li>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">Browse to the 
+       directory in which you want to save the batch parameters file, specify a 
+       file name in the appropriate field, and click </font><font face="Arial">
+       <kbd><font face="Verdana, Helvetica, sans-serif">Save</font></kbd></font><font face="Verdana, Helvetica, sans-serif">. 
+       Your parameters are saved in an xml file.</font></li>
+       <li>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">Click </font>
+       <kbd><font face="Verdana, Helvetica, sans-serif">Run</font></kbd><font face="Verdana, Helvetica, sans-serif"> 
+       to run the batch immediately. A progress bar appears.<br>
+&nbsp;</font></p>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">When the 
+       migration process is over, the migration report is displayed in another 
+       dialog box. The message is OK, which means that the .models and their 
+       components can be converted to CATIA V5. You can double-click the line of 
+       your choice for more information.&nbsp;</font></p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber5">
+         <tr>
+           <td width="100%"><font face="Verdana, Helvetica, sans-serif">
+           <img border="0" src="b35doc/english/online/intug_c2/images/ConvertAuxview2ViewsBatchMode04NLS.gif" width="291" height="248"></font></td>
+         </tr>
+       </table>
+       </li>
+       <li value="14">
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">Optionally, 
+       save the migration report as a text file by clicking the </font><kbd>
+       <font face="Verdana, Helvetica, sans-serif">Save As Text</font></kbd><font face="Verdana, Helvetica, sans-serif"> 
+       button.&nbsp;</font></li>
+       <li>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">Close the&nbsp; 
+       Migration Report dialog box, and then the Migration Batch dialog box.</font></li>
+       <li>
+       <p class="task"><font face="Verdana, Helvetica, sans-serif">You can now 
+       access the converted documents in CATIA V5. The V4 AUXVIEW2 views have 
+       been converted to V5 Generative Drafting views, and the CATDrawing 
+       document is fully associative with the CATProduct document.&nbsp;</font></p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber6">
+         <tr>
+           <td width="100%"><font face="Verdana, Helvetica, sans-serif">
+           <img border="0" src="b35doc/english/online/intug_c2/images/ConvertAuxview2ViewsBatchMode05NLS.gif" width="492" height="501"></font></td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="198"></td>
+     <td valign="top" align="left" height="198">
+     <h3><font color="#282187" face="Verdana, Helvetica, sans-serif">About Batch 
+     Migration of DRAW data:</font></h3>
+     <p><font face="Verdana, Helvetica, sans-serif">When a model contains DRAW 
+     data, they are migrated as a unique document: a CATDrawing.</font></p>
+     <p><font face="Verdana, Helvetica, sans-serif">Some entities undergo a few 
+     changes during the V4 to V5 conversion:</font></p>
+     <ul>
+       <li><font face="Verdana, Helvetica, sans-serif">V4 DRAFT &nbsp;&gt;&nbsp; V5 Sheet</font></li>
+       <li><font face="Verdana, Helvetica, sans-serif">V4 Detail &nbsp;&gt;&nbsp; V5 Detail 
+       Sheet</font></li>
+       <li><font face="Verdana, Helvetica, sans-serif">V4 Views &nbsp;&gt;&nbsp; V5 Views</font></li>
+     </ul>
+     <p style="line-height: 100%; margin-top: 0; margin-bottom: 0">
+     <font face="Verdana, Helvetica, sans-serif">In the Batch Mode, all Draw and 
+     Detail workspaces are migrated in CATIA V5. On the contrary, if you Copy / 
+     Paste a Draft or a View interactively, only referenced Details are 
+     migrated.</font></td>
+   </tr>
+   <tr>
+     <td valign="top" height="69"><font face="Verdana, Helvetica, sans-serif">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="18" height="18"></font></td>
+     <td height="69">
+     <h4><font color="#282187" face="Verdana, Helvetica, sans-serif">Details 
+     about V4 Drafting Entity conversion:</font></h4>
+     <p><font face="Verdana, Helvetica, sans-serif">The following <b>V4 View 
+     Parameters</b> are migrated AS SPEC using the migration batch:</font></td>
+   </tr>
+   <tr>
+     <td valign="top" height="502"></td>
+     <td height="502">
+     <table border="0" cellspacing="0" width="604" height="502">
+       <tr>
+         <td width="274" height="19" bgcolor="#CCCCCC">
+         <font face="Verdana, Helvetica, sans-serif"><b>DRAW Elements</b></font></td>
+         <td width="274" height="19" bgcolor="#CCCCCC">
+         <p align="center"><font face="Verdana, Helvetica, sans-serif"><b>V4 to 
+         V5 Migration AS SPEC</b></font></td>
+       </tr>
+       <tr>
+         <td width="782" height="19" colspan="2" bgcolor="#CCCCCC">
+         <font face="Verdana, Helvetica, sans-serif"><b>Views </b></font></td>
+       </tr>
+       <tr>
+         <td width="391" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">AUXVIEW2 View</font></td>
+         <td width="391" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Generative Drafting View</font></td>
+       </tr>
+       <tr>
+         <td width="391" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">AUXVIEW View</font></td>
+         <td width="391" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Interactive Drafting View</font></td>
+       </tr>
+       <tr>
+         <td width="782" height="19" colspan="2" bgcolor="#CCCCCC">
+         <font face="Verdana, Helvetica, sans-serif"><b>View Types</b></font></td>
+       </tr>
+       <tr>
+         <td width="280" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Projection</font></td>
+         <td width="250" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Projection</font></td>
+       </tr>
+       <tr>
+         <td width="280" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Section Cut / Section View</font></td>
+         <td width="250" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Section Cut / Section View</font></td>
+       </tr>
+       <tr>
+         <td width="280" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Detail View</font></td>
+         <td width="250" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Detail View</font></td>
+       </tr>
+       <tr>
+         <td width="280" valign="bottom" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Auxiliary View</font></td>
+         <td width="250" valign="bottom" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Auxiliary View</font></td>
+       </tr>
+       <tr>
+         <td width="782" height="19" colspan="2" bgcolor="#CCCCCC">
+         <font face="Verdana, Helvetica, sans-serif"><b>Specific Behavior of the 
+         View</b></font></td>
+       </tr>
+       <tr>
+         <td width="280" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Simple Breakout</font></td>
+         <td width="250" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Simple Breakout</font></td>
+       </tr>
+       <tr>
+         <td width="280" height="18" valign="top" bgcolor="#F2F2F2">
+         <a name="hj-uncut"></a><font face="Verdana, Helvetica, sans-serif">
+         Filter on Views: UnCut/UnUse/UnHlr</font></td>
+         <td width="250" height="18" valign="bottom" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Filter on Views: UnCut/UnUse/UnHlr</font></td>
+       </tr>
+       <tr>
+         <td width="280" height="18" valign="top" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Backclipping</font></td>
+         <td width="250" height="18" valign="bottom" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Breakout</font></td>
+       </tr>
+       <tr>
+         <td width="782" height="19" colspan="2" bgcolor="#CCCCCC">
+         <font face="Verdana, Helvetica, sans-serif"><b>View Parameters</b></font></td>
+       </tr>
+       <tr>
+         <td width="280" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Hidden Lines</font></td>
+         <td width="250" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Hidden Lines</font></td>
+       </tr>
+       <tr>
+         <td width="280" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Generation of Axis</font></td>
+         <td width="250" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Generation of Axis</font></td>
+       </tr>
+       <tr>
+         <td width="280" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Fillets</font></td>
+         <td width="250" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Fillets</font></td>
+       </tr>
+       <tr>
+         <td width="280" height="16" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Same/Standard</font></td>
+         <td width="250" height="16" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">3D Color Inheritance</font></td>
+       </tr>
+       <tr>
+         <td width="280" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">View Name Representation</font></td>
+         <td width="250" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">View Name Representation</font></td>
+       </tr>
+       <tr>
+         <td width="280" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Callout Representation</font></td>
+         <td width="250" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">Callout Representation
+         </font></td>
+       </tr>
+       <tr>
+         <td width="280" height="18" bgcolor="#F2F2F2"><a name="hj-pattern"></a>
+         <font face="Verdana, Helvetica, sans-serif">Pattern Representation</font></td>
+         <td width="250" height="18" bgcolor="#F2F2F2">
+         <font face="Verdana, Helvetica, sans-serif">&gt;Pattern Representation</font></td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="32"><font face="Verdana, Helvetica, sans-serif">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="18" height="18"></font></td>
+     <td height="32"><font face="Verdana, Helvetica, sans-serif">To make sure 
+     that you obtain proper results when migrating UnCut/UnUse/UnHlr Filter on 
+     Views, make sure that the </font><kbd>
+     <font face="Verdana, Helvetica, sans-serif">A CATPart by Solid</font></kbd><font face="Verdana, Helvetica, sans-serif"> 
+     option is selected in </font><kbd>
+     <font face="Verdana, Helvetica, sans-serif">Tools &nbsp;&gt;&nbsp; Options &nbsp;&gt;&nbsp; General &nbsp;&gt;&nbsp; 
+     Compatibility &nbsp;&gt;&nbsp;</font></kbd><font face="Verdana, Helvetica, sans-serif">
+     </font><kbd><font face="Verdana, Helvetica, sans-serif">V4 Data Reading</font></kbd><font face="Verdana, Helvetica, sans-serif"> 
+     tab.</font></td>
+   </tr>
+   <tr>
+     <td valign="top" height="187"></td>
+     <td height="187"><font face="Verdana, Helvetica, sans-serif">The following 
+     specifications are not yet migrated AS SPEC:</font><ul>
+       <li><font face="Verdana, Helvetica, sans-serif">Specific Behavior of the 
+       Views</font><ul>
+         <li><font face="Verdana, Helvetica, sans-serif">&gt;Unspec Breakout,</font></li>
+         <li><font face="Verdana, Helvetica, sans-serif">Filter on Layer, Box, 
+         View.</font></li>
+       </ul>
+       </li>
+     </ul>
+     <ul>
+       <li><font face="Verdana, Helvetica, sans-serif">View Parameters:</font><ul>
+         <li><font face="Verdana, Helvetica, sans-serif">Representation Types of 
+         Hidden Lines,</font></li>
+         <li><font face="Verdana, Helvetica, sans-serif">Lock of the generated 
+         geometry,</font></li>
+         <li><font face="Verdana, Helvetica, sans-serif">Old generated elements: 
+         Scratch/choose Layer,</font></li>
+         <li><font face="Verdana, Helvetica, sans-serif">Autolayering.</font></li>
+       </ul>
+       </li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td colspan="2" valign="top" height="35">
+     <p align="center"><font face="Verdana, Helvetica, sans-serif">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></font></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,288 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head><meta name="MonocodingType" content="0"></meta>
+	  <meta name="MonocodingFlag" content="C2"></meta>
+	  <meta http-equiv="Content-Language" content="en-us"></meta>
+	  <meta name="GENERATOR" content="Microsoft FrontPage 6.0"></meta>
+	  <meta name="ProgId" content="FrontPage.Editor.Document"></meta>
+  	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	  <title>Boundary Conditions</title>
+          <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+          
+	 </head><body onload="newPage('pt03ch10s02.html');" ondblclick="newSelection();" bgcolor="#FFFFFF" text="#000000" vlink="#FF5113" alink="#004D48" link="#004D48" class="TEXT"><div class="sect1" id="ath-gen-env-gen-boundaryconditions-thm">
+    <a name="ath-gen-env-gen-boundaryconditions-thm"></a>
+
+    <div class="titlepage">
+      
+
+      <div class="title">
+        <h3>Boundary Conditions</h3>
+      </div>
+    </div>
+
+    <p>Boundary conditions are used to prescribe values of basic
+    solution variables. In the case of heat transfer analysis
+    temperature is the basic solution variable. The Thermal
+    Analysis workbench supports the definition of temperature
+    boundary conditions.</p>
+
+    <p class="indent"><b><img src="b35doc/english/online/anlug_c2/images/ABQ_I_TemperatureBC.gif"></img><a href="page0438.html#ath-gen-env-gen-bc-createtempbc-thm">Creating
+    Temperature Boundary Conditions</a></b>:&nbsp;Defines the time
+    history of temperature degrees of freedom on a geometry
+    selection.</p>
+
+    <p>You apply environmental actions, such as boundary
+    conditions, to supports (geometrical features) on your model.
+    The supports that are available include points/vertices,
+    curves/edges, surfaces/faces, or volumes/parts. In addition,
+    point, line, or surface groups that were created from a mesh
+    part are also valid supports. You can either select the support
+    and then set the boundary condition specifications or set the
+    boundary condition specifications and then select the support.
+    <a href="page0438.html#afc-table-bcsupports-thm">Table 10&#8211;1</a> summarizes the supports to which
+    each type of boundary condition can be applied.</p>
+
+    <div class="table">
+      <p><a name="afc-table-bcsupports-thm"></a><b><span class="gentxt_dkgry">Table 10&#8211;1</span></b> Supports for
+      boundary conditions.</p>
+
+      <table border="1"><thead><tr><th valign="top" align="center">Boundary Condition</th>
+
+            <th valign="top" align="center">Point, Vertex, or Point
+            Group</th>
+
+            <th valign="top" align="center">Curve, Edge, or Line
+            Group</th>
+
+            <th valign="top" align="center">Surface, Face, or
+            Surface Group</th>
+          </tr></thead><tbody><tr><td align="left">Temperature</td>
+
+            <td align="center"><img height="19" width="15" src="b35doc/english/online/anlug_c2/images/ath_eqn00001.gif"></img></td>
+
+            <td align="center"><img height="19" width="15" src="b35doc/english/online/anlug_c2/images/ath_eqn00001.gif"></img></td>
+
+            <td align="center"><img height="19" width="15" src="b35doc/english/online/anlug_c2/images/ath_eqn00001.gif"></img></td>
+          </tr></tbody></table><br></br></div>
+
+    <div class="sect2" id="ath-gen-env-gen-bc-createtempbc-thm">
+      <a name="ath-gen-env-gen-bc-createtempbc-thm"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Creating Temperature
+          Boundary Conditions</h3>
+        </div>
+      </div>
+
+      <p><a name="CATCommandHeader.ABQTemperatureBCHdr"></a>Temperature boundary conditions constrain selected
+      temperature degrees of freedom to a prescribed temperature
+      history.</p>
+
+      <p>You can apply temperature boundary conditions only in heat
+      transfer steps.</p>
+
+      <p>The magnitude of a temperature boundary condition can vary
+      with time during a step according to an amplitude definition
+      (see <a href="page0433.html">Amplitudes</a> for more
+      information on defining amplitudes).</p>
+
+      <p>You can prescribe the time variation of the magnitude of a
+      temperature boundary condition in a user subroutine, which is
+      sometimes preferable when the time history of the magnitude
+      is complex. You can also apply knowledgeware techniques to
+      control the value of a temperature boundary condition (for
+      more information, see <a href="page0468.html">Applying
+      Knowledgeware</a>).</p>
+
+      <p>You can import temperature data into a temperature
+      boundary condition from an Excel (<tt class="filename">.xls*</tt>) spreadsheet or a text (<tt class="filename">.txt</tt>) file. The imported temperature data
+      must satisfy the following criteria:</p>
+
+      <ul type="disc"><li>
+          <p>The data must be arranged in four columns in the
+          following order: X&#8211;coordinate,
+          Y&#8211;coordinate, Z&#8211;coordinate, and temperature
+          value.</p>
+        </li>
+
+        <li>
+          <p>The data must include a header row in which the
+          dimensional data is provided in parentheses. Temperature
+          data can be provided without dimensions. The following
+          sample header row provides one example of proper header
+          row syntax:</p>
+
+          <p><tt class="filename">X(mm)</tt>&nbsp;&nbsp;&nbsp;<tt class="filename">Y(mm)</tt>&nbsp;&nbsp;&nbsp;<tt class="filename">Z(mm)</tt>&nbsp;&nbsp;&nbsp;<tt class="filename">Temperature()</tt></p>
+        </li>
+      </ul><p>The actual temperature values created from imported data
+      will be the product of the dimensionless temperature values
+      multiplied by the value you provide for the <span class="guitext"><b class="guilabel">Magnitude</b></span> of the
+      temperature. For example, if your imported data specifies a
+      dimensionless value of <tt class="filename">10</tt> at the
+      location (0,0,0) and you specify a value of <tt class="filename">20Kdeg</tt> for the temperature boundary condition
+      object, the temperature at that location will be 200K for the
+      analysis.</p>
+
+      <p>Temperature boundary conditions can be applied to
+      point/vertex, curve/edge, or surface/face supports or to a
+      point, line, or surface.</p>
+
+      <div style="margin-left: 0.5in; margin-right: 0.5in;" class="note">
+        <p><b class="title"><a name="d0e17334">Note:&nbsp;</a></b>
+        For static analyses, make sure you define sufficient
+        boundary conditions to allow for a unique solution.</p>
+      </div>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to create a temperature boundary
+      condition on geometry.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Click the Temperature Boundary Condition icon
+            <img src="b35doc/english/online/anlug_c2/images/ABQ_I_TemperatureBC.gif"></img>.</p>
+
+            <p>The <span class="guitext"><b class="guititle">Temperature BC</b></span> dialog box
+            appears, and a Temperature object appears in the
+            specification tree under the Boundary Conditions
+            objects set for the current step.</p>
+          </li>
+
+          <li>
+            <p>You can change the identifier of the boundary
+            condition by editing the <span class="guitext"><b class="guilabel">Name</b></span>
+            field.</p>
+          </li>
+
+          <li>
+            <p>Select the geometry support (a point, an edge, or a
+            surface). Any selectable geometry is highlighted when
+            you pass the cursor over it. You can select several
+            supports to apply the boundary condition to all
+            supports simultaneously. You can also select an
+            appropriate group.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">Supports</b></span> field is updated to
+            reflect your selection.</p>
+          </li>
+
+          <li>
+            <p>Enter a value for the temperature <span class="guitext"><b class="guilabel">Magnitude</b></span>.</p>
+          </li>
+
+          <li>
+            <p>Right-click on the <span class="guitext"><b class="guilabel">Magnitude</b></span> field to add
+            knowledgeware controls (for more information, see
+            <a href="page0468.html">Applying
+            Knowledgeware</a>).</p>
+          </li>
+
+          <li>
+            <p>To import and incorporate temperature mappings into
+            the boundary condition object, perform the following
+            steps:</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Toggle on <span class="guitext"><b class="guilabel">Data mapping</b></span>, then click
+                  the <span class="guitext"><b class="guilabel">...</b></span> button.</p>
+
+                  <p>The <span class="guitext"><b class="guilabel">Data Mapping</b></span> dialog box
+                  opens.</p>
+                </li>
+
+                <li>
+                  <p>Click <span class="guitext"><b class="guibutton">Browse</b></span>, then select the
+                  Excel (<tt class="filename">.xls*</tt>) file or
+                  text (<tt class="filename">.txt</tt>) file from
+                  which you want to import temperature data.</p>
+
+                  <p>Once you select a file, you can display the
+                  imported data in tabular form in the <span class="guitext"><b class="guilabel">Imported
+                  Table</b></span> dialog box by clicking
+                  <span class="guitext"><b class="guibutton">Show</b></span>.</p>
+                </li>
+
+                <li>
+                  <p>If desired, toggle on <span class="guitext"><b class="guilabel">Display Bounding
+                  Box</b></span> to display a three-dimensional box
+                  incorporating the minimum and maximum values from
+                  the imported table. The bounding box enables you
+                  to confirm that the support you select lies
+                  completely within the space dictated by the
+                  imported data; if a portion of the support is
+                  outside this box, an error will be returned
+                  during the analysis.</p>
+                </li>
+
+                <li>
+                  <p>Click <span class="guitext"><b class="guibutton">OK</b></span> to close the
+                  <span class="guitext"><b class="guilabel">Data
+                  Mapping</b></span> dialog box.</p>
+                </li>
+              </ol></div>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">More</b></span> to access additional
+            temperature boundary condition options.</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Toggle on <span class="guitext"><b class="guilabel">Selected amplitude</b></span>, and
+                  select an amplitude from the specification tree
+                  to define a nondefault time variation for the
+                  temperature boundary condition.</p>
+
+                  <p>If you do not specify an amplitude, the solver
+                  applies the reference magnitude based on the
+                  <span class="guitext"><b class="guilabel">Default
+                  load variation with time</b></span> option that
+                  you selected when you created the step. The
+                  solver either applies the reference magnitude
+                  linearly over the step (<span class="guitext"><b class="guilabel">Ramp</b></span>) or
+                  applies it immediately at the beginning of the
+                  step and subsequently holds it constant
+                  (<span class="guitext"><b class="guilabel">Instantaneous</b></span>).</p>
+                </li>
+
+                <li>
+                  <p>Toggle on <span class="guitext"><b class="guilabel">Apply user subroutine</b></span> to
+                  define a nonuniform variation of the temperature
+                  boundary condition magnitude throughout the step
+                  in user subroutine <tt class="computeroutput">DISP</tt>. For more information,
+                  see <a href="page0490.html">Using User
+                  Subroutines</a>.</p>
+                </li>
+
+                <li>
+                  <p>The propagation status shows the
+                  following:</p>
+
+                  <ul type="disc"><li>
+                      <p>Whether the boundary condition was
+                      <span class="guitext"><b class="guilabel">Created</b></span> in this step or
+                      <span class="guitext"><b class="guilabel">Propagated</b></span> into this
+                      step.</p>
+                    </li>
+
+                    <li>
+                      <p>Whether the boundary condition is
+                      <span class="guitext"><b class="guilabel">Active</b></span> or <span class="guitext"><b class="guilabel">Inactive</b></span>.</p>
+                    </li>
+                  </ul></li>
+              </ol></div>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">OK</b></span> in the <span class="guitext"><b class="guititle">Temperature BC</b></span>
+            dialog box.</p>
+
+            <p>Symbols representing the constrained degrees of
+            freedom are displayed on the geometry.</p>
+          </li>
+        </ol></div><span id="ath-gen-env-gen-bc-createtempbc-thm"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div><span id="ath-gen-env-gen-boundaryconditions-thm"></span>
+  </div></body></html>
+

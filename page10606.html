@@ -1,0 +1,181 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Main PartBody is no longer used in conversion AS SPEC 
+	</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Main PartBody is no longer used in conversion AS SPEC
+ <a name="ix-conversion AS SPEC:PartBody"></a></h1>
+ <table border="0" cellspacing="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" Width="0">
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>This task shows you that
+     <span style="color:black;
+mso-bidi-font-weight:bold">the copy/paste As Result or As Spec of Solids 
+     requires to create several Bodies, and the main PartBody in CATIA V5 is no 
+     longer used.</span></td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td>
+     <p class="MsoNormal" style="margin-left:0in">
+     <span style="color:black;mso-bidi-font-weight:
+bold">When copy/pasting a model containing several Solids into a<span style="mso-spacerun: yes">
+     </span>void CATPart, the first Solid to be migrated generates V5 PartDesign 
+     specifications in the main PartBody. This can be a problem in several 
+     cases:</span></p>
+     <ul>
+       <li>
+       <p class="MsoNormal" style="margin-left:0in">
+       <span style="color:black;mso-bidi-font-weight:bold">Using the main 
+       PartBody introduces a specific role to one migrated Solid, even when this 
+       specificity does not exist in the V4 model.</span></li>
+       <li>
+       <p class="MsoNormal" style="margin-left:0in">
+       <span style="color:black;mso-bidi-font-weight:bold">If the first migrated 
+       Solid is a DETAIL used in a Macro-Primitive, it is not possible to 
+       perform Boolean operations of the main Body under other Bodies.</span></li>
+       <li>
+       <span style="mso-fareast-font-family: Times New Roman; mso-bidi-font-family: Times New Roman; color: black; letter-spacing: -.25pt; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA; mso-bidi-font-weight: bold">
+       V4 CSG first primitive may be inactive. However in a main PartBody, the 
+       first specification can not be inactive or deleted whereas this 
+       restriction does not exist on next Bodies.</span></li>
+     </ul>
+     <p><span style="color:black;mso-bidi-font-weight:
+bold">If only one Body has to be generated, we still use the main Partbody. If 
+     there are several of them, the Partbody is not used.</span></td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">&nbsp;</td>
+     <td>
+     <h3><font color="#282187">First example: when a DETAIL is used by a DITTO.</font></h3>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol class="task">
+       <li>
+       <p class="task">Open <a href="b35doc/english/online/intug_c2/samples/DITTOS-BOULON.model">DITTOS-BOULON.model</a>.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1">
+         <tr>
+           <td width="100%"><img border="0" src="b35doc/english/online/intug_c2/images/bt237NLS.gif" width="330" height="411"></td>
+         </tr>
+       </table>
+       <p class="task">In this sample, there is a DETAIL (*SOL 62 in the BOULON 
+       tab) used by a DITTO (*DIT25 for example): </p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber2">
+         <tr>
+           <td width="100%"><img border="0" src="b35doc/english/online/intug_c2/images/bt239NLS.gif" width="261" height="349"></td>
+         </tr>
+       </table>
+       <p class="task"><br>
+&nbsp;</li>
+       <li>
+       <p class="task">Copy / Paste AS SPEC *DIT25 into a CATPart.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber3">
+         <tr>
+           <td width="100%"><img border="0" src="b35doc/english/online/intug_c2/images/bt238NLS.gif" width="400" height="339"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Update the CATPart:</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber4">
+         <tr>
+           <td width="100%"><img border="0" src="b35doc/english/online/intug_c2/images/bt004NLS.gif" width="400" height="339"></td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     <p>In Geometrical Set.1, there is the geometry of DIT25 which has been 
+     copied only once. The DETAIL is the first migrated element; you can 
+     visualize it in the Specification Tree, it is called Body.2(*SOL62-wsp 
+     BOULON-). </p>
+     <p>The DITTO appears further down in the Specification Tree; it is called 
+     CARWL of Body.2 (*SOL62-wsp BOULON-). The DETAIL BOULON (*SOL62-wsp BOULON-) 
+     remains its reference.</p>
+     <p>In the Specification Tree, the Body of the DETAIL appears before the 
+     DITTO because it is a reference for the DITTO. The DETAIL is not the main 
+     object of the CATPart which explains why the <b>PartBody is empty</b>. </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>
+     <h3><font color="#282187">Second example: when a DETAIL is used by a Solid 
+     or a Macro-Primitive.</font></h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>
+     <ol class="task">
+       <li>
+       <p class="task">Open
+       <a href="b35doc/english/online/intug_c2/samples/ASSEMBLE_SUBSTRACT_WITH_MACRO_PRIM.model">
+       ASSEMBLE_SUBSTRACT_WITH_MACRO_PRIM.model</a>.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber5">
+         <tr>
+           <td width="100%"><img border="0" src="b35doc/english/online/intug_c2/images/bt240NLS.gif" width="383" height="274"></td>
+         </tr>
+       </table>
+       <p class="task">In this sample, there is a DETAIL (*SOL3 in the GUIDA SUP 
+       tab) used by a Solid (*SOL370). This DETAIL plays the role of a 
+       Macro-Primitive. </p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber6">
+         <tr>
+           <td width="100%"><img border="0" src="b35doc/english/online/intug_c2/images/bt241NLS.gif" width="312" height="232"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Copy / Paste AS SPEC *SOL370 into a CATPart.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber7">
+         <tr>
+           <td width="100%">
+			<img border="0" src="b35doc/english/online/intug_c2/images/bt242NLS.gif" width="647" height="383"></td>
+         </tr>
+       </table>
+       <p class="task">The DETAIL is the first migrated element (Body.2 (*SOL3 -wsp 
+       GUIDA SUP- Non Smart-) because it is then used by the Solid. The DETAIL 
+       is not meant to be the main Body of the CATPart which explains why the <b>
+       PartBody is empty</b>. <br>
+       In the Specification Tree, the copy of the Solid is represented by: CARWL 
+       of Body.2(Body.2 (*SOL3 -wsp GUIDA SUP- Non Smart-) (*SOL370 -wsp 
+       *MASTER-) further down in the Tree. CARWL of Body.2 keeps a link with the 
+       Body of the DETAIL that has been migrated.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>In the Specification Tree, the copy of the DETAIL always appears before 
+     the copy of the DITTOS or the Solids. The DETAIL is the first migrated 
+     entity into CATIA V5. </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td colspan="2" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

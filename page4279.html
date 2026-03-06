@@ -1,0 +1,345 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating, Managing and Deploying Knowledge Applications Resources Using RADE Tools and SCM</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Creating, Managing and Deploying Knowledge Applications Resources Using RADE Tools and SCM <a name="top"></a></h1>
+ <p>This section describes the recommended methodology. </p>
+ <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber17">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo_custo.gif" width="32" height="32"></td>
+     <td valign="top">We assume that:<ul>
+       <li>A CATIA version (install, download, release source) is located in a &lt;CATIA_folder&gt; 
+       folder, where &lt;CATIA_folder&gt; may be:<div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber12">
+           <tr>
+             <td>
+             <ul>
+               <li>c:\Program Files\Dassault Systemes\V5R20</li>
+               <li>e:\users\yyy\Download\server\CXR20</li>
+               <li>&nbsp;\\server\CXR20.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>The architect builds only one application.</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <p>When working with SCM, you have to create a Buildtime view that is managed 
+ by SCM and a Runtime view to open CATIA. CATIA cannot be started from the 
+ Buildtime view and SCM cannot deal with files stored in the Runtime view. So 
+ both views have to be split.</p>
+ <h2>Creating the Application<a name="structure"></a></h2>
+ <p>The very first thing to do consists in creating a CAA workspace whose 
+ structure is identical to the one shown below. </p>
+ <ol class="task">
+   <li>
+   <p class="task">Create the Buildtime view manually. It must be identical to 
+   the view below.</p>
+   <div align="left">
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber18">
+       <tr>
+         <td width="31%" valign="top">
+         <img border="1" src="b35doc/english/online/cfyugkwr_c2/images/kwrarm8NLS.gif" width="279" height="215"></td>
+         <td width="69%" valign="top">A <a name="ix-Buildtime view">Buildtime 
+         view</a> is a workspace containing frameworks including code modules 
+         and CNext directories.
+         <ul>
+           <li><a name="ix-icons directory"><code>icons</code> directory</a>: 
+           Contains the icons associated to your workbenches, and templates.</li>
+           <li><a name="ix-knowledgeResources directory"><code>
+           knowledgeResources</code> directory</a>: Contains the CATPart files 
+           you use in your application, the ones that contain the templates, the 
+           CATProduct files and such files.</li>
+           <li><a name="ix-knowledgeResourcesCatalogs directory"><code>
+           knowledgeResourcesCatalogs</code> directory</a>: Contains the
+           <a name="ix-ARM catalog">ARM catalogs</a>.</li>
+           <li><a name="ix-knowledgeTypesCustom directory"><code>
+           knowledgeTypesCustom</code> directory</a>: Contains the .CATGscript 
+           files created when typing a User Feature, and the .CATfct&nbsp; 
+           files.</li>
+           <li><a name="ix-msgcatalog directory"><code>msgcatalog</code> 
+           directory</a>: Contains the .CATNls files.</li>
+           <li><a name="ix-automation directory"><code>automation</code> 
+           directory</a>: Contains the .CATScript used in your applications.</li>
+           <li><a name="ix-html directory"><code>html</code> directory</a>: 
+           Contains the html files used (like the ones associated to the 
+           ActiveXUrl behavior in BKT for example.)</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+   </div>
+   <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+     <tr>
+       <td valign="top">&nbsp;</td>
+       <td valign="top">
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber10">
+           <tr>
+             <td width="6%">&nbsp;</td>
+             <td width="94%">&nbsp;</td>
+           </tr>
+         </table>
+       </div>
+       </td>
+     </tr>
+     <tr>
+       <td valign="top">
+       <img src="b35doc/english/online/icons_C2/images/I_FondationRapidApplication32.gif" border="1" align="right" width="32" height="32"></td>
+       <td valign="top">The RADE tool to be used at this stage is SCM. SCM 
+       integration consists for the application architect in locating the 
+       resource at the right place in the framework directory, and in checking 
+       in and checking out the files.<br>
+       Files like CATScript, CATGScript, CATNls can be checked-out concurrently 
+       by several users because it is possible to merge the information. Other 
+       objects (CATPart, .catalog for example) cannot be automatically merged. 
+       As a consequence, they cannot be concurrently checked out. The conflicts 
+       will have to be managed outside the tool. To share the application with 
+       other users, the architect promotes his work to its father workspace or 
+       publishes his work to his children workspaces.</td>
+     </tr>
+   </table>
+   </li>
+   <li>
+   <p class="task">From the <kbd>Start</kbd> menu, select <kbd>
+   Programs&gt;CATIA&gt;Tools&gt;Environment Editor V5R20</kbd>.</li>
+   <li>
+   <p class="task">Select <kbd>Environment&gt;New from...</kbd>.</li>
+   <li>
+   <p class="task">Check <kbd>Add a new path to this environment</kbd> and enter 
+   a new path in the <kbd>NewPath</kbd> field.</li>
+   <li>
+   <p class="task">Enter the name of the application you want to create and 
+   click <kbd>OK</kbd> when done.</p>
+   <div align="left">
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber13">
+       <tr>
+         <td width="100%"><img border="0" src="b35doc/english/online/cfyugkwr_c2/images/kwrarm5NLS.gif" width="505" height="249"></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>
+   <p class="task">Valuate the <code>CATKnowledgeBuildPath</code> setting with 
+   the path of the &quot;knowledge&quot; directory of your Buildtime view. </p>
+   <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber7">
+     <tr>
+       <td>
+       <ul>
+         <li>Select <kbd>Tools &gt; Options</kbd>. The<kbd> Options</kbd> dialog 
+         box is displayed.</li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td>
+       <ul>
+         <li>Choose the <kbd>General</kbd> category in the left-hand box. Click 
+         the <kbd>Parameters and measure&nbsp; </kbd>category. </li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td>
+       <ul>
+         <li>Click the <kbd>Knowledge Environment</kbd> tab and select the 
+         desired directory in the
+         <a name="ix-Architect Resources Creation Path field"><kbd>Architect 
+         Resources Creation Path</kbd> field</a>. <br>
+         Note that:<div align="left">
+           <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber8">
+             <tr>
+               <td colspan="2">
+               <ul>
+                 <li>This setting value can be modified several times during a 
+                 CATIA session, so that you can create/modify resources in all 
+                 frameworks of your workspace without restarting CATIA.</li>
+               </ul>
+               </td>
+             </tr>
+             <tr>
+               <td valign="top">
+               <img src="b35doc/english/online/icons_C2/images/I_FondationRapidApplication32.gif" border="1" width="32" height="32"></td>
+               <td valign="top">
+               <ul>
+                 <li>If you use SCM, all modifications of files belonging to the 
+                 Buildtime part (code and resources) are managed by SCM, so that 
+                 concurrent engineering is supported. </li>
+               </ul>
+               </td>
+             </tr>
+           </table>
+         </div>
+         </li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+   </li>
+   <li>
+   <p class="task">Create the Runtime view. To do so, copy the CNext directory 
+   located in the Buildtime view into the &lt;OS&gt; directory of the Runtime view. 
+   The structure must be identical to the one below.</p>
+   <div align="left">
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber20">
+       <tr>
+         <td width="29%" valign="top">
+         <img border="1" src="b35doc/english/online/cfyugkwr_c2/images/kwrarm2NLS.gif" width="261" height="219"></td>
+         <td width="71%" valign="top">Note that you can copy the CNext directory 
+         anywhere if this location is known by the environment, that is to say, 
+         provided you set the <code>CATKnowledgePath</code> environment variable 
+         properly.</td>
+       </tr>
+     </table>
+   </div>
+   <div align="left">
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber14">
+       <tr>
+         <td width="53" valign="top">
+         <img src="b35doc/english/online/icons_C2/images/I_FondationRapidApplication32.gif" border="1" align="right" width="32" height="32"></td>
+         <td width="843" valign="top">The RADE tool to be used at this stage is 
+         MAB. Use the <a name="ix-mkrtv command"><kbd>mkrtv</kbd> command</a> 
+         then the <kbd>mkGetPreq</kbd> command (mkGetPreq 
+     &#045;p 
+         &lt;CATIA_folder&gt;\BSF) to create the link between your code and CATIA 
+         code. The structure must be identical to the view above.<ul>
+           <li>If the architect who creates and modifies an application needs to 
+           create, access, and modify resources during a CATIA session and wants 
+           its creations/modifications to be taken into account during the CATIA 
+           session, the resources must be located in the Runtime view.</li>
+           <li>If the architect wants its creations/modifications to be taken 
+           into account during the application delivery and wants to manage 
+           concurrent engineering of those resources (using SCM), the resources 
+           have to be located in the Buildtime view. So, the architect must 
+           create and modify its resources in his Buildtime view and not in the 
+           directories designated by the&nbsp; <code>CATKnowledgePath</code> 
+           environment variable, then quit CATIA, run the <kbd>mkrtv</kbd> 
+           command and restart CATIA to see his modifications. </li>
+         </ul>
+         <div align="left">
+           <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber21">
+             <tr>
+               <td width="4%" valign="top">
+               <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+               <td width="96%" valign="top">Note that .CATfct, icons, and .CATnls 
+               files are not located in the <code>CATKnowledgePath</code> 
+               environment variable. So, when working with these files, you must 
+               use the <kbd>mkrtv</kbd> command so that your changes are taken 
+               into account.</td>
+             </tr>
+           </table>
+         </div>
+         </td>
+       </tr>
+     </table>
+   </div>
+   </li>
+ </ol>
+ <p align="right"><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></p>
+ <h2>Deploying the Application</h2>
+ <ol class="task">
+   <li>
+   <p class="task">The administrator installs the CATIA version he used to 
+   develop his application on all client computers or on a server. </li>
+   <li>
+   <p class="task">The administrator copies the &lt;OS&gt; (directories structure and 
+   content), and more generally, the whole Runtime view of his directories 
+   structure on the client computer or on a server.</li>
+   <li>
+   <p class="task">The administrator sets the required variables: </p>
+   <div align="left">
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber11">
+       <tr>
+         <td width="100%">
+         <ul>
+           <li>If he copies the content (&quot;code&quot;/&quot;resources&quot;/&#133; 
+           directories) of the &lt;OS&gt; structure under the corresponding &lt;CATIA_folder&gt;\&lt;OS&gt;, 
+           he won&#039;t 
+           have to modify any environment variable since the copied data is 
+           located in the directory known by CATIA.</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td width="100%">
+         <ul>
+           <li>
+           <p class="task">If he copies the Runtime directories and structure at 
+           a location that is not known by CATIA, he has to set up his 
+           environment i.e. modify the content of some environment variables (<code>CATMsgCatalogPath</code>,
+           <code>CATKnowledgePath</code>, <code>CATGraphicPath</code>, <code>
+           CATStartupPath</code>...). To do so, he can:</p>
+           <div align="left">
+             <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber15">
+               <tr>
+                 <td width="100%" colspan="2">
+                 <ul>
+                   <li>Use the <kbd>New From...</kbd> command in the CATIA 
+                   Environment Editor. In this case, a new path will be added 
+                   before or after all variables depending on the selected 
+                   option.</li>
+                 </ul>
+                 </td>
+               </tr>
+               <tr>
+                 <td width="100%" colspan="2">
+                 <ul>
+                   <li>Use the <kbd>New</kbd> command in the CATIA Environment 
+                   Editor. In this case, he must select the variables to which 
+                   he wants to add a new path.</li>
+                 </ul>
+                 </td>
+               </tr>
+               <tr>
+                 <td width="5%" valign="top">
+                 <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+                 <td width="95%" valign="top">For more information about the 
+                 CATIA Environment Editor, see <var>CATIA Infrastructure 
+                 Installation Guide: Administering Version 5:</var> <var>
+                 Customizing Your Environment on Windows</var>. For more 
+                 information about these variables, see
+                 <a href="page4281.html">About the Knowledge Environment 
+                 Variables and Settings</a>.</td>
+               </tr>
+             </table>
+           </div>
+           </li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>
+   <p class="task">The administrator empties and locks the <code>
+   CATKnowledgeBuildPath</code> setting on the client install. For more 
+   information about the way to lock settings, see <var>CATIA Infrastructure 
+   Installation Guide: Administering Version 5:</var> <var>Locking Settings</var>. 
+   The targeted user will access all knowledge resources i.e. CATIA native ones 
+   and the new deployed application resources. </li>
+ </ol>
+ <p align="right"><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></p>
+
+ </body>
+
+</html>
+

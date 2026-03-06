@@ -1,0 +1,184 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>General</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ 
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body bgcolor="#FFFFFF" text="#000000" link="#3366FF" vlink="#0080FF" alink="#990000">
+
+ <h1 align="center"> General
+	<a name="ix-Tools Options - Manufacturing System Definition:General"></a>
+ <a name="hj-top"></a></h1>
+ <p align="left">
+	<img border="1" src="b35doc/english/online/bascumsd_c2/images/cumsdtbNLS.png" width="226" height="26"></p>
+ <p align="left">This page deals with the <kbd>General</kbd> options for Manufacturing System Definition. 
+	These options apply to both the System Editor and the System Gantt. The calculation of the utilization of logical resource is started 
+	when the System Editor and System Gantt are first opened. The 
+	colors are updated if relevant changes occur for the utilization.<br>
+&nbsp;</p>
+ <ul>
+   <li>
+   <p align="left"><a href="#hj-rsrcutlilzation">Resource Utilization</a></li>
+   <li>
+   <p align="left"><a href="#hj-utilizationcrit">Utilization Criteria</a></li>
+ </ul>
+ <table border="0" cellspacing="1" width="100%">
+   <tr>
+     <td>
+     <h2>Resource Utilization<a name="hj-rsrcutlilzation"></a> </h2>
+     </td>
+   </tr>
+   <tr>
+     <td>
+     <img border="1" src="b35doc/english/online/bascumsd_c2/images/cuGenRsrcUtilNLS.png" hspace="0" width="320" height="75"></td>
+   </tr>
+   <tr>
+     <td>
+     <h3>
+     Consider Product Flows</h3>
+		</td>
+   </tr>
+	<tr>
+     <td VALIGN="top">A product flow expresses the concept that one resource may 
+		start its work after another resource. When a product flow is defined 
+		for activities, selecting the <kbd>Consider Product Flows</kbd> check 
+		box shows the timing considerations required in both the Gantt chart and 
+		in the output of the <kbd>Process Verification Across Resources</kbd> 
+		command.<p>
+     <img border="0" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" alt="D" width="13" height="13">By 
+     default, the check box is not selected.</td>
+   			</tr>
+   <tr>
+     <td>
+     <h3>
+     Calculate and Display Utilization of Logical Resources</h3>
+		</td>
+   </tr>
+   <tr>
+     <td VALIGN="top">The utilization of logical resources (like stations and workplaces) is 
+	calculated in percentages based on the takt time, which is a measure of how 
+		long a resource is busy. For example, if the takt time is 60 seconds and 
+		the range goes from 50% to 75% then the corresponding time range is 30 
+		(60 x 50%) to 45 seconds (60 x 75%). 
+		Any resource utilized from 30 to 45 seconds (or 50% to 75%) is marked in 
+	the defined color for this range.<p>If the calculation of utilization is 
+		unchecked, then the System Editor uses the color defined for the node 
+		background in <kbd>Tools</kbd> &gt; <kbd>Options </kbd>&gt;
+				<kbd>Digital Process for Manufacturing</kbd> &gt; <kbd>PERT Chart</kbd>.</p>
+	<p>For calculating the utilization of a logical resource in either the System 
+	Gantt or System Editor, three types of resources are available:</p>
+		<dl>
+				<dt>Resource with links to a TSA, physical resource, ownsbehavior 
+		= FALSE, <kbd>Hide in System Editor </kbd>= TRUE</dt>
+				<dd>If a resource has at least one link to a TSA of another resource 
+	(<kbd>Process uses Resource</kbd> link) no utilization is calculated for this 
+	resource. If the resource is a physical resource (ownsbehavior = FALSE on 
+	plantype or CAtProduct, CATPart, etc assigned), no utilization can be 
+	calculated. If <kbd>Hide in System Editor </kbd>= TRUE is set for the plantype of the 
+	resource, then no utilization can be calculated. The calculation of the 
+	utilization stops at this level and no further utilization for the children 
+	of this resource can be calculated. This type of resource is not shown in 
+	the System Gantt.<br>
+&nbsp;</dd>
+				<dt>Resource with behavior and TSAs </dt>
+				<dd>For a resource with non-empty behavior, utilization is calculated with the 
+	following formula:<br>
+				<code>Utilization [%] = (Time in which the resource is busy/cycle time of 
+	resource) *100<br>
+				</code><br>
+				<kbd>Time in which the resource is busy</kbd> is the duration of time from TSAs with respect to the defined control flow, parallel activities and times 
+	where the resource is not busy.<br>
+				<br>
+				<kbd>Cycle time of resource</kbd> is the cycle time as shown in 
+				the image, persisted in the attribute <kbd>cycletime</kbd> of the resource itself or its father, 
+	grandfather etc. If no valid cycle time could be retrieved, utilization is 0. 
+	The utilization of the resource is not persisted, it is available in the 
+	session.<br>
+				<br>
+				The busy time of workspace 1 is 30 seconds and cycle time is 60 
+				seconds. The resulting utilization is 50%:<br>
+				<img border="0" src="b35doc/english/online/bascumsd_c2/images/dbResource1NLS.gif" width="418" height="115"><br>
+				<br>
+	The busy time of workspace 1 is 20 seconds and cycle time is 60 seconds. The 
+	resulting utilization is 33.33%.<br>
+				<img border="0" src="b35doc/english/online/bascumsd_c2/images/dbResource2NLS.gif" width="426" height="133"><br>
+				<br>
+				The busy time of workspace 1 is 30 seconds (20 + 10 seconds) and cycle time 
+	is 60 seconds. The resulting utilization is 50%.<br>
+				<img border="0" src="b35doc/english/online/bascumsd_c2/images/dbResource3NLS.gif" width="426" height="120"></dd>
+				<dt>Resource without a behavior or with an empty behavior</dt>
+				<dd>If a resource has no behavior or has an empty behavior, the utilization is 
+	calculated from the utilization of the children with the following formula:<br>
+				<code>Utilization [%] = (Sum of utilization of children/number 
+				of children)</code></dd>
+		</dl>
+		<p>
+     <img border="0" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" alt="D" width="13" height="13">By 
+     default, the check box is selected.</td>
+   </tr>
+   <tr>
+     <td align="right"><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></td>
+   </tr>
+ </table>
+ <table border="0" cellspacing="1" width="100%">
+   <tr>
+     <td>
+     <h2>Utilization Criteria<a name="hj-utilizationcrit"></a></h2>
+     </td>
+   </tr>
+   <tr>
+     <td>
+     <img border="1" src="b35doc/english/online/bascumsd_c2/images/cuGenUtilzCritraNLS.png" width="491" height="192"></td>
+   </tr>
+   <tr>
+     <td>
+     <h3>
+     Takt time (sec)</h3>
+		</td>
+   </tr>
+   <tr>
+     <td VALIGN="top">Setting the takt time determines the remainder of the 
+		utilization criteria because the remaining calculations are based on the 
+		takt time. Four ranges are offered; you can opt to use 2 or 3. For each 
+		range, a color and one or two percentage values are defined. deselect 
+		the checkbox if you do not want one or both of the midranges. If the 
+		range is deselected, the corresponding fields for color, percentage value(s), and absolute value(s) are no 
+		longer accessible. The selection for 
+		the color field is hidden and the other fields disappear.<p>
+				When the 
+				percentage value is changed, the corresponding absolute time value also 
+				get updated. The ranges cannot overlap, and an error 
+				message appears in case of misleading inputs, such as holes between 
+				the ranges. Misleading inputs are checked when the percentage value is 
+				changed or a range is selected or deselected.</p>
+				<p>If utilization cannot be calculated for a resource, then the 
+				System Editor uses the color defined for the node background in <kbd>Tools</kbd> &gt; <kbd>Options </kbd>&gt;
+				<kbd>Digital Process for Manufacturing</kbd> &gt; <kbd>PERT Chart</kbd>.
+				In the System Gantt, the default color for resources 
+				(light blue) is used.<p>
+     <img border="0" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" alt="D" width="13" height="13">The 
+		default color values and ranges are shown; by default, all four ranges 
+		are available.</td>
+   </tr>
+   <tr>
+     <td align="right"><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></td>
+   </tr>
+ </table>
+
+ <p>&nbsp;</p>
+
+ </body>
+
+</html>
+

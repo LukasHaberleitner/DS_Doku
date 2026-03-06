@@ -1,0 +1,343 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Restoring a Trimmed Surface</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style type="text/css">
+.style1 {
+	text-align: center;
+}
+</style>
+ </head>
+
+ <body>
+
+ <h1 class="style1">Restoring a Trimmed Surface<a name="CATHASModelHeader.HASUnTrim"></a> <a name="CATCCSModelHeader.CATHybridPartUntrim"></a>&nbsp;<a name="CATShapeDesignCommandHeader.CATShapeDesignUntrim"></a> <a name="CATStCLADefaultCommand.AffixGeom"></a>&nbsp;<a name="CATHybridPartCommandHeader.CATHybridPartUntrim"></a>
+ <a name="CATClaCreationWbenchHeader.ClaAffixGeom"></a>
+ </h1>
+ <table Border="0" CELLSPACING="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="5">
+   <tr valign="top" BORDER="0">
+     <td>
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td rowspan="1" valign="top">This task shows you how to restore<a name="ix-restoring:surface limits"></a> 
+     the limits of a surface or a curve when it has been split using:<ul>
+       <li><kbd>Break Surface or Curve</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_CurveSurfaceBreakP2.gif" width="24" height="24"> 
+       (<cite>FreeStyle</cite> workbench)</li>
+       <li><kbd>Split</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_SplitSurfacesP2.gif" width="24" height="24"> 
+       (<cite>Generative Shape Design</cite> and <cite>Wireframe &amp; Surface</cite> 
+       workbenches).</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td>
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td rowspan="1">
+     <p style="margin-top: 10">Open the
+     <a href="b35doc/english/online/cfysm_C2/samples/FreeStyle/FreeStyle_06.CATPart">
+     FreeStyle_06.CATPart</a> document.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td>
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol class="task">
+       <li value="1">
+       <p class="task">Click <kbd>Untrim Surface or Curve</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_RepastePiecesP2.gif" width="24" height="24">
+       .</li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td>&nbsp;</td>
+     <td>
+     <p style="margin-left: 40">The <kbd>Untrim</kbd> dialog box appears.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td>&nbsp;</td>
+     <td>
+		<p align="left">
+		<img border="0" src="b35doc/english/online/cfyugfss_c2/images/dbuntrim01NLS.gif" width="222" height="209"><br>
+		<a name="Restoring a Surface01"></a>The <kbd>Untrim</kbd> dialog box has 
+		the following options:</p>
+		<p align="left"><kbd>Selection</kbd>:<span style="font-size: 8.0pt; font-family: Verdana">
+		</span><font size="2"><span style="font-family: Verdana">When you select the elements to be untrimmed, the selected 
+					elements will be shown in the multi-selection field. The 
+					selections allowed are surface, curve and edges of surface.</span></font></p>
+		<p align="left"><kbd>Create Curves</kbd><span style="font-family: Verdana">:
+					</span>You can extract the boundary of the selected elements 
+					using this option. 
+					</p>
+		<ul>
+			<li>
+			<p align="left">If &#8220;Create Curves&#8221; 
+						push button is ON, all the boundary edges of selected 
+						elements will be extracted as datum curves. 
+						</li>
+			<li>
+			<p align="left">If &#8220;Create Curves&#8221; 
+						push button is OFF, datum curves will not be created.</li>
+			<li>
+			<p align="left"><font size="2">All the 
+						datum curves will be added in the specification tree as 
+						Curve.XXX.</font></li>
+		</ul>
+		<p align="left"><kbd>Create Extract</kbd><span style="font-family: Verdana">:
+		<font size="2">GSD Extract command is available by contextual menu on 
+		multi-selection field in untrim dialog box. You can create GSD Extract 
+		of the selected edges. The result of GSD extract will be added in 
+		multi-selection field and will be input for the untrim feature. The GSD 
+		Extract feature will be aggregated under untrim feature in specification 
+		tree. Result </font></span>of extract feature will be used to identify 
+		whether you are willing to perform the untrim of entire outer loop or 
+		the partial outer loop. If the result of the extract feature is:</p>
+		<ul>
+			<li>
+			<p align="left">Face: then Untrim will 
+						be performed on entire face.</li>
+			<li>
+			<p align="left">Part of inner loop: 
+						Untrim will be performed on the entire inner loop.</li>
+			<li>
+			<p align="left">Entire Inner loop: 
+						Untrim will be performed on the entire inner loop.</li>
+			<li>
+			<p align="left">Part of outer loop: 
+						Untrim will be performed on the part of the outer loop 
+						if possible otherwise entire outer loop will be used for 
+						untrim operation.</li>
+			<li>
+			<p align="left">Entire outer loop: 
+						Untrim will be performed on the entire outer loop. </li>
+			<li>
+			<p align="left">Multi domain boundary 
+						(Boundary of faces containing holes): Untrim will be 
+						performed based on the corresponding type of selection. 
+						(For example, If actual input of extract has multiple 
+						inner loops and one outer loop and the result of extract 
+						contained only one of the&nbsp; inner loop and the outer loop 
+						then the untrim will be performed like local untrim of 
+						selected inner loop + local untrim of outer loop).</li>
+			<li>
+			<p align="left">The Dashboard options that you can use are as 
+						follows:<ul>
+				<li>
+				<p style="MARGIN-LEFT: 40px"><kbd>Create 
+							Datum</kbd>
+				<img border="0" src="b35doc/english/online/icons_C2/images/I_IsolatedP2.gif" width="24" height="24">: 
+							This option is to create a datum feature.
+							</li>
+			</ul></li>
+		</ul>
+		</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td>
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>
+     <ul>
+		<li>
+		<p align="left">While creating new Untrim feature:<ul>
+			<li>
+			<p align="left">You can either directly select the 
+								surface to be untrimmed.</li>
+			<li>
+			<p align="left">Or you can select 
+		the edges of the surface interactively.</li>
+			<li>
+			<p align="left">If you select an 
+		edge of the surface which is part of the inner loop the untrim will be 
+		performed on the entire inner loop.</li>
+			<li>
+			<p align="left">If you select an 
+		edge of the surface which is part of the outer loop the untrim will be 
+		performed on the part of the outer loop only if it is possible to do so. 
+		Otherwise untrim will be performed on the entire outer loop.</li>
+			<li>
+			<p align="left">The contextually created GSD Extract feature 
+								will not be directly used as input of Untrim 
+								feature. <br>The input of GSD extract feature will be used 
+								as the input of untrim feature. <br>For example if input of extract feature is a 
+								multi-cell surface then the input of untrim feature will also be the same multi-cell 
+								surface. It is not possible to use contextual GSD 
+								Extract command in the Untrim panel to extract a 
+								solid face or a face of multi-cell surface. In 
+								this case Extract the face before entering in 
+								the Untrim command.</li>
+		</ul></li>
+		<li>
+		<p align="left">In case of editing the existing untrim 
+							feature:<ul>
+			<li>
+			<p align="left">You will not be allowed to select 
+								multiple elements.</li>
+			<li>
+			<p align="left">In case of multiple selections only 
+								last selection will be considered for the 
+								creation of the untrim.</li>
+			<li>
+			<p align="left">When the selection is changed then 
+								all earlier extract features (aggregated under 
+								untrim) will be removed and then you have 
+								to manage creation of new extract if required.</li>
+			<li>
+			<p align="left">Also please note that in case of edit 
+								mode if you create multiple extract features 
+								only the last created extract feature will be 
+								kept and the other features will be removed.</li>
+		</ul></li>
+		<li>
+		<p align="left">In case of editing the existing extract 
+							feature under untrim feature:<ul>
+			<li>
+			<p align="left">When the selection is changed then 
+								all earlier extract features (aggregated under 
+								untrim) will be removed from untrim feature and 
+								will be added in specification tree above untrim 
+								feature. Then, you have to manage creation 
+								of new extract if required.</li>
+		</ul></li>
+		</ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td>
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>
+     <p class="MsoNormal">The local undo/redo support for the selection 
+		is provided when you are working with untrim command.</p>
+		<p class="MsoNormal">You can decide to create the curves for the 
+		selection he has done to create untrim by enabling the option 
+		<font color="#666666"><b>Create 
+		Curves</b></font> on the dialog. In this case the datum curves will be created for 
+		the selection done by you except for extract feature. When entire 
+		face is selected as input, all the edges of the face will be extracted.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td></td>
+     <td>
+     <ol class="task">
+       <li value="2">
+		<p class="task">Select the surface which limits should be restored.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td height="31">&nbsp;</td>
+     <td height="31">
+     <p style="margin-left: 40">The <kbd>Untrim</kbd> dialog box is updated 
+     accordingly.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td>&nbsp;</td>
+     <td><img border="0" src="b35doc/english/online/cfyugfss_c2/images/untrim01.gif" hspace="40" width="197" height="208"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td></td>
+     <td>
+     <ol class="task">
+       <li value="3">
+       <p class="task">Click <kbd>OK</kbd> in the dialog box.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td>&nbsp;</td>
+     <td valign="middle">
+     <p style="margin-left: 40">A progression bar<a name="hj-progressionbar_NewV5R6"></a> 
+     is displayed, while the surface is restored.<br>It automatically disappears once the operation is complete (progression at 
+     100%).</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td>&nbsp;</td>
+     <td valign="middle">
+     <img border="0" src="b35doc/english/online/cfyugfss_c2/images/dbuntrimNLS.gif" hspace="40" width="396" height="134"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td></td>
+     <td valign="middle">
+     <p style="margin-left: 40">The initial surface is automatically restored.<br>
+	 <table style="width: 100%">
+		 <tr>
+			 <td style="width: 34px">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+			 <td>If the surface is extrapolated by other operations such as trim 
+			 or split, before using the <kbd>Untrim Surface or Curve</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_RepastePiecesP2.gif" width="24" height="24">, 
+			 it cannot be restored to its original shape.</td>
+		 </tr>
+	 </table>
+	   </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td>&nbsp;</td>
+     <td valign="top"><img border="0" src="b35doc/english/online/cfyugfss_c2/images/untrim02.gif" hspace="40" width="195" height="199"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td>&nbsp;</td>
+     <td valign="top">
+     <p style="margin-left: 40"><a name="hj-V5R10 SP2"></a>The restored surface 
+     or curve is identified as Surface Untrim.xxx or Curve Untrim.xxx.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td>&nbsp;</td>
+     <td valign="top">
+     <p style="margin-left: 40"><a name="hj-V5R11"></a>You can perform a local 
+     untrim on faces. Three modes of selection are available:</p>
+     <ul>
+       <li>
+       <p style="margin-left: 40">Selection of the face: the initial surface is 
+       restored:<br>
+       <img border="0" src="b35doc/english/online/cfyugfss_c2/images/untrimlocal05.gif" vspace="5" width="180" height="176"><img border="0" src="b35doc/english/online/cfyugfss_c2/images/untrimlocal06.gif" vspace="5" hspace="40" width="195" height="192"></li>
+       <li>
+       <p style="margin-left: 40">Selection of an inner loop: only this loop is 
+       restored:<br>
+       <img border="0" src="b35doc/english/online/cfyugfss_c2/images/untrimlocal01.gif" vspace="5" width="179" height="174"><img border="0" src="b35doc/english/online/cfyugfss_c2/images/untrimlocal02.gif" hspace="40" vspace="5" width="173" height="171"></li>
+       <li>
+       <p style="margin-left: 40">Selection of the outer loop: only this loop is 
+       restored:<br>
+       <img border="0" src="b35doc/english/online/cfyugfss_c2/images/Untrimlocal07.gif" width="233" height="213"><img border="0" src="b35doc/english/online/cfyugfss_c2/images/Untrimlocal08.gif" width="189" height="219"></li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td>
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top">
+     <ul>
+		<li>If the surface has been trimmed several times, 
+       it is the initial surface which is restored. To partially untrim the 
+       surface, you need to use the <kbd>Undo</kbd> command right after the 
+		trim.</li>
+		<li>If the surface to be restored is closed (in 
+       the case of a cylinder) or infinite (in the case of an extrude), the 
+       limits of the untrim feature will be the bounding boxes of the initial 
+       surface. Therefore, the initial surface and the untrim surface may be 
+		identical.</li>
+		<li>You can individually select a vertex or a boundary from the restored 
+		surface or curve.</li>
+		<li><a name="hj-V5R10"></a>Multi-selection is 
+       available and allows to create several untrim features in one step. All 
+       untrim features will appear in the specification tree.</li>
+		<li>The
+       	<a href="page3991.html">keep original</a> 
+		capability is available from the Tools Dashboard.</li>
+		</ul>
+     </td>
+   </tr>
+ </table>
+ <p align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

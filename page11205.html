@@ -1,0 +1,332 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Sequential Turning Operations</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style type="text/css">
+.style2 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+</head>
+
+<body>
+
+<h1><a name="SequentialMachining"></a>Sequential Turning Operations</h1>
+<a name="ix-Sequential Turning operation"></a>
+<p>The information in this section will help you create and edit <kbd>Sequential Turning</kbd> 
+operations in your manufacturing program. </p>
+<p>You can create a sequence of basic Go, Go InDirv, Go Delta, and Follow tool motions 
+in a single <kbd>Sequential Turning</kbd> operation. PP words can be inserted in the sequence 
+of tool motions.</p>
+<p>When you select the <kbd>Tool motion management</kbd> icon a dialog box is displayed listing 
+any previously created tool motions and PP words. You can create or edit tool motions 
+and PP words.</p>
+<p>If there are no previously created tool motions listed in the Sequential Turning 
+dialog box, the first one must be a Go Standard motion to a point. It specifies 
+either the absolute start position from where the following position can be computed 
+or the end point of the approach macro (if the operation has one).</p>
+<p>When defining a tool motion, the corresponding new tool position is displayed 
+according to all the options that were selected for creating this motion.</p>
+<p>The following topics are dealt with in the paragraphs below:</p>
+<ul>
+	<li><a href="#tools">Tooling</a></li>
+	<li><a href="#geometry">Geometry</a></li>
+	<li><a href="#GoMotion">Go Motion</a></li>
+	<li><a href="#GoIndirv">Go InDirv Motion</a></li>
+	<li><a href="#GoDelta">Go Delta Motion</a></li>
+	<li><a href="#Follow">Follow Motion</a></li>
+	<li><a href="#RefPoint">Reference Point in the First Go Motion of the Operation</a></li>
+	<li><a href="#SequentialTurningBeh">Sequential Turning Behavior Based on Guiding Point</a></li>
+	<li><a href="#FandSSequential">Feeds and Speeds</a></li>
+	<li><a href="#AppRetMacros">Approach and Retract Macros for Sequential Turning</a></li>
+</ul>
+<h3><a name="tools"></a>Tooling for Sequential Turning</h3>
+<p>All tool types with compatible inserts are authorized.<br>
+Refer to <a target="_blank" href="page11208.html">Trigon Insert Used on a Groove 
+Insert-holder</a> for more information about this tooling configuration.</p>
+<h3><a name="geometry"></a>Geometry Selection for Sequential Turning</h3>
+<p>You can select lines, curves and edge elements as check and drive elements. Points 
+can also be selected as checks. Selected elements must be located in the plane defined 
+by the machine spindle axis and radial axis. </p>
+<p>The following table summarizes how the tool is positioned with respect to a check 
+element depending on the <kbd>TO/PAST</kbd> modes and <kbd>negative/positive</kbd> offset values.</p>
+<div align="center">
+	<center>
+	<table border="0" width="170">
+		<tr>
+			<td></td>
+			<td align="center"><b>Positive offset</b></td>
+			<td align="center"><b>Negative offset</b></td>
+		</tr>
+		<tr>
+			<td><b>To</b></td>
+			<td>
+			<img border="1" src="b35doc/english/online/lmgug_c2/images/LmgSeqThicknessTOPOS.gif" width="200" height="200"></td>
+			<td>
+			<img border="1" src="b35doc/english/online/lmgug_c2/images/LmgSeqThicknessTONEG.gif" width="200" height="200"></td>
+		</tr>
+		<tr>
+			<td><b>Past</b></td>
+			<td>
+			<img border="1" src="b35doc/english/online/lmgug_c2/images/LmgSeqThicknessPASTPOS.gif" width="200" height="200"></td>
+			<td>
+			<img border="1" src="b35doc/english/online/lmgug_c2/images/LmgSeqThicknessPASTNEG.gif" width="200" height="200"></td>
+		</tr>
+	</table>
+	</center></div>
+<h3><a name="GoMotion"></a>Go Motion</h3>
+<a name="ix-Go Standard Tool Motion;Sequential Turning motion:Go Standard"></a>
+<p>In Go motion, the program positions the tool with respect to one or two check 
+elements. </p>
+<p>When only one check element is selected, the tool is projected onto the check 
+element.</p>
+<p>When two check elements are selected, the tool is positioned with respect to 
+the two check elements.</p>
+<p>The tool is positioned with respect to each check element depending on the 
+<kbd>TO-ON-PAST</kbd> 
+mode. </p>
+<p><b>TO</b>: the tool nose is positioned tangent to the near side of the selected 
+element with a possible offset.<br>
+<b>ON</b>: the tool nose is positioned on the selected element, with a possible 
+axial or radial offset (normal offset, collision avoidance and safety angles are 
+not applicable).<br>
+<b>PAST</b>: the tool nose is positioned tangent to the far side of the selected 
+element with a possible offset.</p>
+<p>The first check element can be point, line, curve, or edge type elements.<br>
+If it is a point, no second check element can be selected. Otherwise, the second 
+check element can be line, curve or edge type elements. </p>
+<p>Note that for the first Go Motion of an operation, the user can define a chosen 
+direction of motion by means of a Reference point. This reference point will be 
+used in determining the exact Tool Position considering the Check modes, offsets, 
+and so on. See <a href="#RefPoint">Reference Point</a> for more information about 
+this option.</p>
+<p>The following options are available when defining a Go motion:</p>
+<ul>
+	<li>Control over geometric extrapolation of each check curve.</li>
+	<li>Axial, radial and normal offsets with respect to each check element.</li>
+	<li>Feedrate and spindle speed.</li>
+	<li>Collision avoidance for each check element when the tool is positioned in 
+	TO or PAST mode.</li>
+	<li>Left and right safety angles when collision avoidance is used.</li>
+	<li>Machining tolerance.</li>
+	<li>Tool compensation.</li>
+	<li>Guiding Point, if a square or grooving insert is used.</li>
+</ul>
+<p>Note that the positioning mode (<kbd>TO-ON-PAST</kbd>) and offsets are not applicable 
+when the tool is positioned on a point. </p>
+<h3><a name="GoIndirv"></a>Go InDirv Motion</h3>
+<a name="ix-Go InDirv Tool Motion;Sequential Turning motion:Go InDirv"></a>
+<p>In Go InDirv (Go in Direction Vector) motion, the tool moves in a given direction 
+up to the selected check curve.<br>
+The tool is positioned with respect to the selected element depending on the 
+<kbd>TO-ON-PAST</kbd> 
+mode. </p>
+<p><b>TO</b>: the tool nose is positioned tangent to the near side of the selected 
+element with a possible offset.<br>
+<b>ON</b>: the tool nose is positioned on the selected element, with a possible 
+axial or radial offset (normal offset, collision avoidance and safety angles are 
+not applicable).<br>
+<b>PAST</b>: the tool nose is positioned tangent to the far side of the selected 
+element with a possible offset.</p>
+<p>The selected check curve can be edge, line and curve type elements.</p>
+<p>The following options are available when defining a Go InDirv motion:</p>
+<ul>
+	<li>Drive element type: line or angle.</li>
+	<li>Angle of drive, if drive element type is angle.</li>
+	<li>Drive direction: Same or Inverted.<br>
+	This is useful in the particular case when two positions are reachable.</li>
+	<li>Control over geometric extrapolation of check curve.</li>
+	<li>Axial, radial and normal offsets with respect to the check element.</li>
+	<li>Feedrate and spindle speed.</li>
+	<li>Collision avoidance when the tool is positioned in TO or PAST mode.</li>
+	<li>Left and right safety angles when collision avoidance is used.</li>
+	<li>Machining tolerance</li>
+	<li>Tool compensation</li>
+	<li><a href="#ix-Sequential Turning Behavior Based on Guiding Point">Guiding Point</a>, if a square or grooving insert is used.</li>
+</ul>
+<h3><a name="GoDelta"></a>Go Delta Motion </h3>
+<a name="ix-Go Delta Motion;Sequential Turning motion:Go Delta"></a>
+<p>In Go Delta motion, the tool move is based on the current position of the tool. 
+The <kbd>TO-ON-PAST</kbd> mode is not proposed. </p>
+<p>The following options are available when defining a Go Delta motion:</p>
+<ul>
+	<li>Delta check mode:
+	<ul>
+		<li>Distance between two points (two points are to be selected)</li>
+		<li>Line and distance (line and distance are to be selected)</li>
+		<li>Angle and distance (angle and distance are to be given)</li>
+		<li>Axial and radial (axial and radial offsets are to be given)</li>
+	</ul>
+	</li>
+	<li>Feedrate and spindle speed.</li>
+	<li>Machining tolerance</li>
+	<li>Tool compensation.</li>
+</ul>
+<h3><a name="Follow"></a>Follow Motion </h3>
+<a name="ix-Follow Tool Motion;Sequential Turning motion:Follow"></a>
+<p>In Follow motion, the tool follows a drive element up to a check element. The 
+check element is to be selected in the Follow motion and can be an edge, line, a 
+curve or a point. </p>
+<p>The drive element is a curve on which the tool is positioned by a preceding motion. 
+Therefore, the preceding motion must be a Go, Go InDirv or Follow motion. A Go to 
+a point or a Go Delta cannot precede a Follow motion.</p>
+<p>If the preceding motion is a Go motion, the first selected check curve is used 
+as drive curve for the Follow motion.</p>
+<p>If the preceding motion is a Go InDirv motion, the selected check curve is used 
+as drive curve for the Follow motion.</p>
+<p>If the preceding motion is a Follow motion, the check element of the preceding 
+Follow motion is used as drive curve when this check element is not a point and 
+the Change Drive option of the preceding Follow motion is set. Otherwise, both consecutive 
+Follow motions share the same drive curve.</p>
+<p>Note that:</p>
+<ul>
+	<li>the offsets applied to follow the drive element are also defined on the 
+	same preceding motion. When the drive and check curves are tangent, any offset 
+	values on the check curve should be the same on the tangent drive curve.</li>
+	<li>the collision avoidance and the control over geometry extrapolation on drive 
+	curve are also defined on the same preceding motion.</li>
+</ul>
+<p>The tool will follow the drive element up to the check element. The final tool 
+position will be determined by the TO-ON-PAST mode:<br>
+<b>TO</b>: tool nose tangent to the drive element and before the check element with 
+a possible offset.<br>
+<b>ON</b>: tool nose tangent to the drive element and on the check element, with 
+a possible axial or radial offset (normal offset is not applicable).<br>
+<b>PAST</b>: tool nose tangent to the drive element and after the check element 
+with a possible offset.</p>
+<p>The following options are available when defining a Follow motion:</p>
+<ul>
+	<li>Drive direction: Same or Inverted.<br>
+	This is useful in the particular case when two positions are reachable.</li>
+	<li>Control over geometric extrapolation of check curve.</li>
+	<li>Axial, radial and normal offsets with respect to the check element.</li>
+	<li>Feedrate and spindle speed.</li>
+	<li>Collision avoidance when the tool is positioned in TO or PAST mode.</li>
+	<li>Left and right safety angles when collision avoidance is used.</li>
+	<li>Machining tolerance</li>
+	<li>Tool compensation</li>
+	<li><a href="#ix-Sequential Turning Behavior Based on Guiding Point">Guiding Point</a>, if a square or grooving insert is used.</li>
+</ul>
+<h4>Control over Geometric Extrapolation of Check Curve</h4>
+<p>When check limit mode is set to Extended, a virtual tangent element is added 
+to each extremity of the check element before it is actually taken into account 
+as a check element. <br>
+Therefore, if there is no intersection between the drive and check elements, the 
+final tool position may be located at the intersection of the drive curve and a 
+tangent of the check element. </p>
+<p>When check limit mode is set to Actual, no virtual tangent element is added.
+<br>
+Therefore, the final tool position is located on the check element. </p>
+<p>Furthermore, please note that control over geometric extrapolation is not controlled 
+in the Follow motion but on the preceding motion that positions the tool on the 
+drive element.</p>
+<p>Note that collision avoidance is taken into account for positioning in ON mode, 
+and that left and right safety angles are only considered in collision avoidance 
+mode.</p>
+<h3><a name="RefPoint"></a>
+<a name="ix-Sequential Turning parameter:Reference Point"></a>Reference Point in 
+the First Go Motion of the Operation</h3>
+<p>The tool positioning for the first motion of a Sequential Turning Operation with 
+respect to TO/ON/PAST is specified according to a Reference Point. This point can 
+be derived from the previous operation or can be selected using the <kbd>Reference 
+Point</kbd> symbol in the dialog box. </p>
+<p>Note that Reference Point definition is optional. If a Reference Point is not 
+defined, the tool is positioned by default with respect to the check elements depending 
+on the <kbd>TO-ON-PAST</kbd> setting.</p>
+<p>Click the point symbol in the dialog box then select the desired point or right-click 
+the symbol to display contextual commands.</p>
+<p>
+<img border="1" src="b35doc/english/online/lmgug_c2/images/dbSequential07NLS.gif" width="440" height="234"></p>
+<p><kbd>Select</kbd>: Pick a point as a reference from the 3D window.</p>
+<p>I<kbd>nitialise from Previous</kbd>: Automatically take a Reference point which 
+has been initialised from the previous Machining Operation or Tool Change. <br>
+If the current Sequential Turning operation immediately follows a Tool Change, then
+<kbd>Initialise from Previous</kbd> will take the Tool Change point as Reference 
+Point. Otherwise it will be the last point of the previous machining operation (which 
+is the end point of the retract motion, if a retract motion is present on the previous 
+operation).</p>
+<p><kbd>Analyze</kbd>: Visualise the Reference Point in the 3D window.</p>
+<p><kbd>Remove</kbd>: Reject the previous selection and make a new selection.</p>
+<p>To illustrate Reference Point behavior, the two figures below have identical 
+check modes on both check elements. The only difference is the position of the Reference 
+Point. Notice how a change in Reference Point affects the Tool Position.</p>
+<p>
+<img border="1" src="b35doc/english/online/lmgug_c2/images/RefPoint01.gif" width="515" height="297"></p>
+<p>With a new Reference Point position :</p>
+<p>
+<img border="1" src="b35doc/english/online/lmgug_c2/images/RefPoint02.gif" width="500" height="313"></p>
+
+<h3><a name="SequentialTurningBeh"></a>Sequential Turning Behavior Based on Guiding Point</h3>
+<a name="ix-Sequential Turning Behavior Based on Guiding Point"></a>
+<a name="pgfId=1034564"></a><a name="marker=1080026"></a>
+<ul>
+	<li><b>Left Guiding Point</b> positions the insert
+			based on the left radius of Insert, such as the P9 compensation point. The
+			following picture shows the behavior for a groove insert:<p>
+	<img border="1" src="b35doc/english/online/lmgug_c2/images/LeftGuidingPointNLS.png" width="404" height="268"></p></li>
+	<li><b>Right Guiding Point</b> positions the insert
+			based on the right radius of insert, such as the P9R compensation point. The
+			following picture shows the behavior for a groove insert: <p>
+	<img border="1" src="b35doc/english/online/lmgug_c2/images/RightGuidingPointNLS.png" width="420" height="253"></p>
+			</li>
+</ul>
+
+<h3><a name="FandSSequential"></a>Feeds and Speeds for Sequential Turning</h3>
+<p><a name="ix-Sequential Turning parameter:Feeds and Speeds"></a>
+<a name="pgfId=1034563"></a><a name="marker=1080025"></a>Speed unit can be set to:
+</p>
+<ul>
+	<li>Angular: spindle speed in revolutions per minute</li>
+	<li>Linear: constant cutting speed in units per minute</li>
+</ul>
+<p><a name="pgfId=1043029"></a>then you can give a Machining speed value. </p>
+<p>You can also set a Maximum spindle speed value for the operation (by 
+default, this value is the same as the Maximum spindle speed set on the Part 
+Operation).</p>
+<p align="left">The following feedrates can be set to either Angular units (length 
+per revolution) or Linear units (length per minute):</p>
+<ul>
+	<li><b>Machining feedrate</b>&nbsp; </li>
+	<li><b>Lift-off feedrate</b>&nbsp; </li>
+	<li><b>Lead-in feedrate</b></li>
+	<li><b>Air cutting feedrate</b>.</li>
+</ul>
+<p>In addition to these global feedrates, local feedrates can be applied to each 
+tool motion. </p>
+<p>Note that RAPID feedrate can be replaced by Air cutting feedrate in tool trajectories 
+(except in macros) by selecting the check box in the Feed and Speeds tab page
+<img border="1" src="b35doc/english/online/lmgug_c2/images/TabFeedG.gif" align="middle" width="36" height="22">.</p>
+		<p>
+		<img src="b35doc/english/online/lmgug_c2/images/AirCutting01.gif" width="363" height="76" class="style2"></p>
+		<p>You can select <kbd>Air Cutting feed-rate</kbd> as Linear (feed per 
+		minute) or Angular (feed per revolution). When you select it as Angular the 
+		unit is set to mm_turn, the unit is set to mm_mn for Linear.</p>
+		<p>The changes in unit of <kbd>Air cutting feed-rate</kbd>, are also reflected in APT 
+		file output. Calculated cycle time in Properties dialog box of MO also 
+		get changed. There are changes in total time and machining time on tool 
+		path replay dialog box.</p>
+<h3><a name="AppRetMacros"></a>Approach and Retract Macros for Sequential Turning</h3>
+<p>The following Approach and Retract macros are proposed: Direct, Axial-radial, 
+Radial-axial, and Build by user.<br>
+The selected macro type (Approach or Retract) defines the tool motion before or 
+after machining. </p>
+<p>Various feedrates are available for the approach and retract motions (RAPID, 
+lead-in, lift-off, and so on). Local feedrates can be set to either Angular units 
+(length per revolution) or Linear units (length per minute).</p>
+<p>See
+<a href="page11368.html" target="_blank">Define 
+Macros on a Turning Operation</a> for more information.</p>
+
+</body>
+
+</html>
+

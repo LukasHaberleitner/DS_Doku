@@ -1,0 +1,1066 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Migrating from ENOVIA V5 VPM V5R20 to ENOVIA V5 VPM V5R21 on Windows</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style>
+<!--
+ li.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";
+	margin-left:0in; margin-right:0in; margin-top:0in}
+.style1 {
+	font-family: "Courier New";
+	font-size: 10pt;
+	color: #976970;
+	letter-spacing: -0.6pt;
+}
+-->
+</style>
+ </head>
+
+ <body>
+
+ <h1>Migrating from ENOVIA V5 VPM V5R20 to ENOVIA V5 VPM V5R21 on Windows</h1>
+ <table border="0" cellpadding="0" cellspacing="0" width="986" style="border-collapse: collapse" bordercolor="#111111" id="table2">
+   <tr>
+     <td valign="top" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td colspan="2" width="954">
+     <h2>Special Notes</h2>
+		<p>R21 GA utility <code>Upgrade521NT_Enovia.sh</code> will support 
+		migration of standard and customized LCA Windows Oracle and DB2 
+		databases for Windows <span>Server 2008 R2(Runtime) Windows Server 2008 
+		SP2 (Runtime)</span>. A 
+		separate program (<code>Upgrade521NT_Enovia.sh</code>) supports migration 
+		of databases from R20 to R21 on Windows.<br>
+		As a prerequisite to the migration on Windows, MKS Toolkit Software with 
+		the appropriate level required must be installed on the machine that 
+		hosts the ENOVIA server. For more information about prerequisites, see 
+		the the Software Prerequisites section of the Program Directory. </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td colspan="2" width="954">
+     <h2>Scope &amp; Purpose</h2>
+     <p>This documentation allows a user to migrate an existing
+     <strong>ENOVIAV5VPM</strong> V5R20 database 
+     into a database containing structures and data that will support
+     <strong>ENOVIAV5VPM</strong> V5R21 while 
+     maintaining all the user-supplied data that was generated during use of the 
+     product under <strong>ENOVIAV5VPM</strong> 
+     V5R20.</p>
+     <p>A database migrated through this process will be converted from R20 to 
+		R21. The 
+     migration process does NOT create a separate copy of the database, but 
+     instead converts the existing database. Once you have performed this 
+     migration, you cannot use
+     <strong>ENOVIAV5VPM</strong> R20 on this 
+     database without dropping it and restoring a backup image of the database 
+     that was taken while it was still in R20. Attempting to run
+     <strong>ENOVIAV5VPM</strong> V5R20 on the 
+     database after it has been migrated to R21 is 
+     unsupported.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td colspan="2" width="954">
+     <h2>Assumptions</h2>
+     <p>These instructions assume you are migrating directly from V5R20 to V5R21. This 
+     procedure does not support any other releases or migration effort. Do not 
+     attempt to use any other releases of
+     <strong>ENOVIAV5VPM</strong> with these 
+     instructions.<br>
+     <br>
+     These instructions also assume you have a working V5R20 installation, 
+     including a completely functional Oracle or DB2 database that is up and 
+     running before beginning migration. Oracle or DB2 software should be at a 
+     level supported in the
+     <strong>ENOVIAV5VPM</strong> installation 
+     documentation. There should be no users connected to
+     <strong>ENOVIAV5VPM</strong><strong> </strong>
+     or the database at the time of migration.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td colspan="2" width="954">
+     <h2>Overview</h2>
+     <p>For better documentation, error diagnosis, and restart ability, the R20&nbsp;to 
+		R21 migration is done in 6 steps that each perform a particular unit of 
+     work on the database. The steps listed below generate their own unique 
+     output log that contains the name of the step embedded in the file name, 
+     located in the directory specified by the &#8211;TMP parameter. Thus, if a step 
+     fails for some reason, we can look at the logs that pertain directly to 
+     that step to determine the cause of the failure. <br>
+     <br>
+     Before the official migration steps begin, we do some introductory 
+     environmental preparation and checking the database availability by 
+     connecting to it successfully. Then we use a function called GETMETAR21LIST, 
+     which gets the list of all the Metadata that is used in R21. This is 
+     a hard-coded list that was obtained from a CD-install of
+     R21 by 
+     connecting to its database and doing &quot;select schema name from rdbentitymapping&quot; and then eliminating <code>VPMAdminSchema </code>from the 
+     list. This step does not change anything during migration; it simply loads 
+     the values of some variables that will be needed later.<br>
+     <br>
+     Then we proceed to the steps of migration as follows:</p>
+     <blockquote>
+       <ul>
+         <li><b>DDL</b> - This step is required. Uses R20 and R21 
+         metadata to generate database scripts (DDL) necessary to make the 
+         database structure changes to convert to R21 and 
+         then executes the DDL to make the changes. <br>
+         <br>
+         Output = Upgrade521.logGENERATEDDL, Upgrade521.logRUNGENDDL, <br>
+			Upgrade521.logCustoProcessDDLSetup,<br>
+			Upgrade521.logCustoProcessDDL</li>
+			<li><b>ADMIN</b> - This step is required. Runs AddCustoInAdmin (in a 
+         customized environment) and LoadAdmin (in all environments). These make 
+         changes to the database based on the contents of the VPMAdmin.adm file. 
+         The ADMIN step has a dependency on the DDL step. You cannot run the 
+         ADMIN step without simultaneously running the DDL step during a 
+         migration. If you put DDL on the EXCLUSIONLIST, the ADMIN step running 
+         alone will fail. You must run them both together during the same 
+         execution of the migration script. <br><br>Output = Upgrade521.logADMIN</li>
+			<li>&nbsp;<strong>MASKS </strong>- This step is required. Updates P&amp;O 
+         (People &amp; Organizations) data (users, contexts and roles) and default 
+         masks. <br><br>Output = Upgrade521.logMASKS</li>
+			<li><b>STATS</b> - This step is optional. Runs &#8220;update statistics&#8221; 
+         (DB2) or &#8220;analyze statistics&#8221; (Oracle) on all the
+         	<strong>ENOVIAV5VPM</strong> tables in 
+         the database to improve performance of the
+         	<strong>ENOVIAV5VPM</strong> product in 
+         the future. <br><br>Output = Upgrade521.logSTATS</li>
+			<li><b>GRAPH</b> - This step is required. Updates the default status 
+         graphs. <br><br>Output = Upgrade521.logGRAPH</li>
+			<li><b>NAVREP -&nbsp; </b>This step is required for NavRep modeler.&nbsp; <br>
+			<br>
+			Output = Upgrade521.logNAVREP<br>
+			<br>The above Step migrates NavReps from older format to new format which provides better performances. </li>
+       </ul>
+     	<p>&nbsp;</p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td colspan="2" width="954">
+     <h2>Before You Begin</h2>
+     <ol>
+       <li><strong>VERY IMPORTANT: Before starting the migration, make an 
+       offline (cold) backup of your R20 database in the current Oracle or DB2 
+       database environment and copy it off to tape or other offline storage 
+       device.</strong></li>
+       <li>Ensure that you are migrating directly from V5R20 to V5R21. These 
+       procedures do not support any other releases or migration effort. Do not 
+       attempt to use any other releases of
+       <strong>ENOVIAV5VPM</strong> with these 
+       instructions.</li>
+       <li>Ensure that you have a working V5R21 installation, including a 
+		completely functional Oracle or DB2 database that is up and running 
+		before beginning migration:
+       <ol type="a">
+         <li>Oracle or DB2 software should be at the level required in the 
+         documentation for
+         <strong>ENOVIAV5VPM</strong> in R21</li>
+       </ol>
+       </li>
+       <li>There should be no users connected to
+       <strong>ENOVIAV5VPM</strong> or the database 
+       at the time of migration. </li>
+       <li><strong>VERY IMPORTANT: Ensure that you have large transaction 
+       logging capability in the database.</strong> DDL steps will fail if they 
+       run out of logging during the extensive updates needed for successful 
+       migration. Add transaction logs (DB2) or more table space to the rollback 
+       segments (Oracle) as needed. The size needed depends on the size of your 
+       database. We recommend you increase the logging space normally taken by 
+       your database by 100% before starting migration, and more may be required 
+       depending on your environment. Consult DB2 or Oracle documentation for 
+       instructions on how to make these changes and how to undo them after 
+       migration, if desired.</li>
+       <li>If you are using DB2, ensure that the<code> STMTHEAP</code> parameter 
+       value on your database is set to at least 3500. You can check this by 
+       logging in as the database administrator ID and running: <br>
+       <br>
+       <code>db2 get db cfg for &lt;databasename&gt; | grep STMT</code><br>
+       <br>
+       If it is &lt; 3500, increase it by using the following commands:<br>
+       <br>
+       <code>db2 update db cfg for &lt;databasename&gt; using STMTHEAP 3500;db2stop 
+       force;<br>
+       db2start</code><br>
+       <br>
+       Consult DB2 documentation for more details about this parameter and how 
+       to modify it.</li>
+       <li>If you are using DB2, ensure that the<code> APPLHEAPSZ</code> 
+       parameter for your database is set to at least 1000 and your<code> 
+       LOCKLIST</code> is set to at least 4000 and<code> MAXLOCKS</code> is set 
+       to 40. Check this by logging in as the database administrator and 
+       running:<br>
+       <br>
+       <code>db2 get db cfg for &lt;databasename&gt; | grep APPLHEAPSZ <br>
+       db2 get db cfg for &lt;databasename&gt; | grep LOCKLIST<br>
+       db2 get db cfg for &lt;databasename&gt; | grep MAXLOCKS</code><br>
+       <br>
+       To increase it:<br>
+       <br>
+       <code>db2 update db cfg for &lt;databasename&gt; using APPLHEAPSZ 1000 LOCKLIST 
+       4000 MAXLOCKS 40;<br>
+       db2stop force; <br>
+       db2start</code></li>
+       <li>If using DB2, ensure that<code> STAT_HEAP_SZ</code> database 
+       configuration parameter is set to at least 9000 during the duration of 
+       the 20&nbsp;&gt;&nbsp;21 migration. To increase it:<br>
+       <br>
+       <code>db2 update db cfg for &lt;databasename&gt; using STAT_HEAP_SZ 9000<br>
+       db2stop force; <br>
+       db2start</code><br>
+       <br>
+       Consult DB2 documentation for more details about these parameters and how 
+       to modify them.</li>
+       <li>If you have created your own Masks, you should save the Mask 
+       information (the old version of the Default Mask + your own Mask) prior 
+       to starting the migration. Refer to CAA-RADE R21 
+       documentation: Migrating Existing ENOVIA Masks / Retrieving Needed Masks 
+       for Merging.</li>
+       <li><strong>
+		<span style="font-size: 10.0pt; font-family: Verdana,sans-serif">IF YOU 
+		HAVE CUSTOMIZED</span></strong><span style="font-size: 10.0pt; font-family: Verdana,sans-serif"> 
+		security processes (from the customized modeler) in People &amp; 
+		Organization: There are some special steps you need to take if you want 
+		to preserve these customizations and migrate them into R21. If you do 
+		not take these steps, your basic P&amp;O functionality will work, but the 
+		customizations you added in R21 will be lost. </span>
+		<ol start="1" type="a" style="margin-bottom: 0in">
+			<li class="MsoNormal" style="color: black">
+			<span style="font-size: 10.0pt; font-family: Verdana,sans-serif">
+			Exclude the MASKS step from the 20&nbsp;&gt;&nbsp;21 
+			database migration. See the information elsewhere in this document 
+			on how to put MASKS on the</span><span style="font-size:10.0pt"><code style="font-family: Courier New; color: #976970; letter-spacing: -.6pt; font-weight: normal"> </code></span>
+			<code>EXCLUSIONLIST</code> 
+			so that it is not executed during the migration.</li>
+			<li class="MsoNormal" style="color: black">
+			<span style="font-size: 10.0pt; font-family: Verdana,sans-serif">
+			Before migration begins, while the product is still active in R21, 
+			export P&amp;O data using the following commands: </span>
+			<ol type="i" style="margin-bottom: 0in">
+				<li class="MsoNormal" style="color: black">
+				<code style="font-family: Courier New; color: #976970; letter-spacing: -.6pt; font-weight: normal">
+				<span style="font-size:10.0pt">cd $INSTALL_PATH\xxx_a\code\command</span></code><span style="font-size: 10.0pt; font-family: Verdana,sans-serif"> 
+				&lt;-- referring to the installation path and the </span>
+				<span class="style1">intel</span><code style="font-family: Courier New; color: #976970; letter-spacing: -.6pt; font-weight: normal"><span style="font-size:10.0pt">_a</span></code><span style="font-size: 10.0pt; font-family: Verdana,sans-serif"> 
+				directory where the product is installed </span></li>
+				<li class="MsoNormal" style="color: black">
+				<code style="font-family: Courier New; color: #976970; letter-spacing: -.6pt; font-weight: normal">
+				<span style="font-size:10.0pt">./catstart -run &quot;VPMPeopleImport 
+				-export /savepath/PeopleExportFile&quot;</span></code><span style="font-size: 10.0pt; font-family: Verdana,sans-serif"><br>
+				-&nbsp;&gt;&nbsp; where </span>
+				<code style="font-family: Courier New; color: #976970; letter-spacing: -.6pt; font-weight: normal">
+				<span style="font-size:10.0pt">&quot;/savepath&quot;</span></code><span style="font-size: 10.0pt; font-family: Verdana,sans-serif"> 
+				is a path where your data will be saved and can be protected<br>
+				from deletion or alteration until migration is completed. </span>
+				</li>
+			</ol>
+			</li>
+			<li class="MsoNormal" style="color: black">
+			<span style="font-size: 10.0pt; font-family: Verdana,sans-serif">
+			After migration is finished (with the<strong><span style="font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;"> 
+			MASKS</span></strong> step excluded), migrate your existing 
+			customization using</span><code style="font-family: Courier New; color: #976970; letter-spacing: -.6pt; font-weight: normal"><span style="font-size:10.0pt"> 
+			CAA RADE</span></code><span style="font-size: 10.0pt; font-family: Verdana,sans-serif">. 
+			See the documentation of CAA-RADE R21 &quot;Migrating an Existing 
+			Customization&quot; for complete information. Be sure to include your 
+			customized security processes in these updates. </span></li>
+		</ol>
+		<strong>Before Migration Begins:</strong> Ensure that you have a good
+       <code>EnvName.txt</code> file in your <code>Install-Path/intel_a </code>
+       directory. For example, if your install path is <code>C:\Program 
+		Files\Dassault Systemes\R20</code>, you will have a path under this 
+       directory with the name of your operating system (like <code>intel_a</code>) 
+       in it. Inside this directory, there should be a file named <code>
+       EnvName.txt </code>that contains the name of the
+       <strong>ENOVIAV5VPM</strong> level you are 
+       using. For example, the text inside the file will look something like 
+       this:<br>
+       <br>
+       <code>
+       <strong>ENOVIAV5VPMR21.B21</strong></code><br>
+       <br>
+       Ensure that this file exists in both R20 and R21, that 
+       it is named <code>EnvName.txt</code>, and that it contains the correct 
+       name for the <strong>ENOVIAV5VPM</strong> 
+       environment that you are migrating at both levels.</li>
+       <li>Set the <code>V5MEM </code>environment variable in the <code>.txt</code> 
+       file in your <code>CATEnv </code>directory to 8:<br>
+       <code>V5MEM=8</code><br>
+       If you have a large number of ECOs and this parameter is not set, you 
+       might experience an out-of-memory condition during the<code> CMAFF</code> 
+       step of migration. If you do not want to set this value, you can also 
+       manage memory usage by using the <code>&#8211;cmaffsize</code> parameter on the 
+       migration command line as described below. </li>
+		<li>Set the new R21 vault to the same Unix path as the LCA V5R20 vault 
+		and follow the Vault documentation instructions for configuring the R21 
+		vault using the R20 vault database and vault files. This must be done 
+		before running the R20-R21 LCA database migration.<br>
+		After your installation is completed, you must manually 
+		change the information in the properties file to set the V5R21 Vault to 
+		the same path as the old V5R20 Vault. To do this:<br>
+		- cd to the Java Properties directory ~/&lt;platform&gt;_a/docs/java 
+		(platform=WindowNT)<br>
+		- edit the ENOVIAVaultServer.properties file <br>
+		If you have defined your own Vault(s) - other than the one created 
+		during product installation - you must recreate in V5R21 the additional vault(s) using the directions contained in the document &#8220;Setting Up the 
+		Vault Server Manually in Windows&#8221; after migration is completed. Make the 
+		same Java Properties changes to document these additional vaults as 
+		well.
+		<p>Important: You must perform this R21 vault configuration and activate 
+		the R21 vault (pointing to the R20 database and R20 vault files paths) 
+		before starting the migration utility documented here. </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td colspan="2" width="954">
+     <h2>Migration Steps</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td colspan="2" width="954">
+     <h3>Step 1: Install
+     V5R21 pointing to 
+     existing V5R20 database</h3>
+     <p>Follow the CD installation steps for
+     <strong>ENOVIAV5VPM</strong> V5R21 with the 
+     following special instructions:</p>
+     <ol>
+       <li>Use the same database vendor as
+       <strong>ENOVIAV5VPM</strong> V5R20 used.</li>
+       <li>Use the same database name and path as
+       <strong>ENOVIAV5VPM</strong> V5R20.</li>
+     </ol>
+		<p>Use a different Port Number for LCA V5R21 than LCA V5R20 used. Do not 
+		select the Database objects nor the Startup Data options - this is 
+		because we will be using the existing database and data from R20. You 
+		may have to &#8220;unselect&#8221; these 2 options if they are selected by default.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td colspan="2" width="954">
+     <h3>Step 2: Migrate V5R20 &gt; V5R21</h3>
+     <ol>
+       <li>Logon to the 
+       <strong>ENOVIA LCA</strong> 
+       product server with the ENOVIA administrator ID. DO NOT attempt to run 
+       the migration as Administrator. </li>
+       <li>cd to the code directory under your product install 
+       path. This path appears like one of the following under the directory 
+       where you installed the product.<br>
+       <br>
+       <code>cd &lt;&lt;R20 
+       Install Path&gt;&gt;\intel_a\code</code><br>
+&nbsp;</li>
+       <li>Create (for example, using the notepad editor) a batch file 
+       containing all the parameters you will need to run the migration script. 
+       The parameters should all wrap continuously as one line; there should be 
+       no carriage return.</li>
+		<li>If you are migrating an Oracle database, the commands below must be 
+		executed in an MKS Korn shell window. If you are migrating a DB2 
+		database, the commands below must be executed in a DB2 Command Window 
+		(Note: NOT a DB2 Command Editor and NOT a DB2 Command Line Processor). 
+		Note that in no case is the Windows migration performed in the normal 
+		Windows &#8220;command prompt.&#8221;</li>
+       <li><b>The command line for the STANDARD option is as follows</b>: [if 
+       you are running CUSTOMIZED migration, go to Step 5 and DO NOT run Step 
+       4.]<p><code>&#8220;C:\installpathR21\intel_a\code\bin\catstart&#8221; -run &quot;sh 
+		Upgrade521NT_Enovia.sh ... &quot; </code></p>
+       <p>The info below goes into the (...) of the command line. Be sure to put 
+       the double quotes (&quot;) around the command from the beginning of <code>&quot;sh 
+       Upgrade521NT_Enovia.sh&quot;</code> to the end of the last parameter.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top" width="144"><code>-DBVendor</code></td>
+     <td width="810">ORACLE or DB2<br>
+     <br>
+     Example:<br>
+     <br>
+     &nbsp;-DBVendor ORACLE </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top" width="144"><code>-DBName</code></td>
+     <td width="810">The name of your
+     R21 database 
+     which you are migrating to.<br>
+     <br>
+     Example:<br>
+     <br>
+     &nbsp;-DBName LCADB</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top" width="144"><code>-DBAID</code></td>
+     <td width="810">The database administrator ID. If you are using DB2 with a 
+     remote database on a separate machine from the
+     <strong>ENOVIAV5VPM</strong> installation, 
+     this parameter is the administrator-ID of the database on the REMOTE 
+     machine where the database was built. <br>
+     <strong>For Oracle users:</strong> The DBAID is usually not the ID that 
+     created the database. It may be the ID that owns the tables, and this may 
+     be the same ID as the ENOVIA administrator ID, but it could also be any 
+     userid that has been granted dba permissions by the Oracle administrator. 
+     We recommend that you ensure that the ENOVIA administrator ID has been 
+     granted dba privileges on the Oracle database and use it as the DBA ID for 
+     the purposes of migration. DO NOT use &#8216;system&#8217; as your DBA or
+     <strong>ENOVIAV5VPM</strong> administrator ID 
+     during migration even if you used this as the DBA id during PLMDBSetup. 
+     This will not work and is not supported.<br>
+     <br>
+     Examples: <br>
+     <br>
+     -DBAID db2adm<br>
+     -DBAID ev5adm [where ev5adm is an Oracle ID that has DBA permissions]</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top" width="144"><code>-DBAdmHome</code></td>
+     <td width="810">The home directory of the Oracle ID or the DB2 instance ID.
+     <br>
+     If you are using DB2 with a remote database on a separate machine from the
+     <strong>ENOVIAV5VPM</strong> installation, 
+     this parameter is the database instance home directory on the LOCAL machine 
+     where you are running the migration, not any directory on the remote 
+     machine where the database was built.<br>
+     <br>
+     Examples:<br>
+     <br>
+     -DBAdmHome E:\Program Files\SQLLIB<br>
+     -DBAdmHome E:\Oracle\ora11</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top" width="144"><code>-TbsName</code></td>
+     <td width="810">The tablespace name used by
+     <strong>ENOVIA LCA</strong> for its database 
+     tables. <br>
+     <br>
+     Example:<br>
+     <br>
+     &nbsp;-TbsName ENOTBS</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top" width="144"><code>-IdxTbsName</code></td>
+     <td width="810">The tablespace name used by
+     <strong>ENOVIA LCA</strong> for its indexes
+     <br>
+     <br>
+     Example:<br>
+     <br>
+     &nbsp;-IdxTbsName ENOTBS</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top" width="144"><code>-TableOwner</code></td>
+     <td width="810">The ID that is owner of database tables - must use all 
+     CAPITAL LETTERS. This parameter is optional. If not specified, default is 
+     AdmUsr. <br>
+     <br>
+     Example:<br>
+     <br>
+     -TableOwner VPMADM</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top" width="144"><code>-AdmUsr</code></td>
+     <td width="810">The ENOVIA administrative user ID specified in 
+     PLMDBSetup. <br>
+     <br>
+     Example:<br>
+     <br>
+     -AdmUsr EV5ADM</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top" width="144"><code>-EnvDir</code></td>
+     <td width="810">The full directory path to the CATEnv directory. <br>
+     <br>
+     Example:<br>
+     <br>
+     -EnvDir E:\Program Files\Dassault Systemes\B18\CATEnv</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top" width="144"><code>-EnvName</code></td>
+     <td width="810">The name of the &quot;<strong>ENOVIAV5VPM</strong>~&quot; 
+     file in CATEnv directory without the &quot;.txt&quot;. <br>
+     <br>
+     Example<br>
+     <br>
+     -EnvName
+     <strong>ENOVIAV5VPMEnvironmentName</strong></td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top" width="144"><code>-R20path</code></td>
+     <td width="810">The path above &lt;&lt;R20 Install Path&gt;&gt;\intel_a directory on 
+     your ENOVIA Release 20 configuration (the one that is being migrated in 
+     this exercise.<br>
+     <br>
+     Example:<br>
+     <br>
+     -R20path E:\Program Files\Dassault Systemes\B20\intel_a</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top" width="144"><code>-TMP</code></td>
+     <td width="810">A Windows path where errors, logs and debugging information 
+     will go; ensure you have permission to write to this directory and 500 
+     megabytes of free space; this parameter is optional
+     &#045; 
+     it will default to TEMP if not specified.<br>
+     <br>
+     Example:<br>
+     <br>
+     -TMP E:\Program Files\Dassault Systemes\tmp</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top" width="144"><code>-Step</code></td>
+     <td width="810">-Step ALL runs all steps; or use -step STEPNAME to select a 
+     single step. The migration is not complete until all required steps run 
+     successfully. Note that Step names must be all capital letters. <br>
+     <br>
+     Example: <br>
+     <br>
+     -Step ALL</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-DBAPwd</code></td>
+     <td width="810">Optional. If you would prefer not to be prompted to type in 
+     the DBA password, you can put it on the command line, but recognize that 
+     this will expose the password to some security risk. <br>
+     <br>
+     Example:<br>
+     <br>
+     -DBAPwd password</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-AdmPwd</code></td>
+     <td width="810">Optional. If you would prefer not to be prompted to type in 
+     the ENOVIA Admin ID password, you can put it on the command line, but 
+     recognize that this will expose the password to some security risk. <br>
+     <br>
+     Example: <br>
+     <br>
+     -AdmPwd password</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td colspan="2" width="954">*If the R20 release does not reside on the same 
+     physical machine on which you are installing R21, then you 
+     must make a copy of all the files in the <code>~code/dictionary</code> 
+     directory or directories in R20 and create a separate directory (or 
+     directories) somewhere on your R21 machine, 
+     and put a copy of all the R20 dictionary files under this directory 
+     (ensuring that the R20 dictionary path has at least read permission to all 
+     users). Then you can use this new directory name(s) as your parameter for 
+		R20dict path. DO NOT overwrite any of the dictionary files that are in the 
+     dictionary directory of your R21 
+     installation. If you must copy R20 dictionary files, put them in a special 
+     directory, such as a new one you create under TEMP.<br>
+     <br>
+     For example, if you were working on an Windows machine and you copied the 
+     files to a new directory called <code>R20dict</code> under <code>C:\R20Copy</code>, 
+     you would have the parameter <code>-R20path C:\R20Copy\R20dict\intel_a</code>. 
+     The files should reside under subdirectories beneath <code>R20dict</code> 
+     that follow the format <code>C:\R20Copy\R20dict\intel_a\code\dictionary</code> 
+     such that all your dictionary files that used to be on the old machine 
+     under the <code>R20installpath\intel_a\code\dictionary</code> are now 
+     copied into <code>C:\R20Copy\R20dict\intel_a\code\dictionary</code> on the 
+     new machine.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td colspan="2" width="954">For command line help with this script, simply 
+     type<code> Upgrade518NT_Enovia.sh</code>, and press <kbd>Enter</kbd> from 
+     the UNIX command line and it will return some help text.<p>Here are two 
+     sample executable files, one for Oracle and one for DB2:</p>
+     <p><b>DB2</b></p>
+     <p><code>&#8220;C:\installpathR21\intel_a\code\bin\catstart&#8221; &#8211;run &#8220;sh 
+		C:\installpathR21\intel_a\code\command\Upgrade521NT_Enovia.sh -DBVendor 
+		DB2 -DBName R20STD -DBAID ev5adm -DBAdmHome E:\Program Files\SQLLIB -TbsName 
+		ENOTBS -IdxTbsName ENOTBS -TableOwner ev5adm -AdmUsr ev5adm -EnvDir 
+		E:\Program Files\Dassault Systemes\B20\CATEnv -EnvName 
+		<strong>ENOVIAV5VPMR21.B21</strong> -R20path E:\Program Files\Dassault Systemes\B18\intel_a 
+		-TMP E:\Program Files\Dassault Systemes\tmp -Step ALL -DBAPwd ev5adm <br>
+		-AdmPwd ev5adm&#8221;</code></p>
+		<p><b>ORACLE</b></p>
+		<p><code>&#8220;C:\installpathR21\intel_a\code\bin\catstart&#8221; &#8211;run &#8220;sh 
+		C:\installpathR21\intel_a\code\command\Upgrade521NT_Enovia.sh -DBVendor 
+		ORACLE -DBName R20STD -DBAID ev5adm -DBAdmHome E:\Oracle\ora11 -TbsName 
+		ENOTBS -IdxTbsName ENOTBS -TableOwner ev5adm -AdmUsr ev5adm -EnvDir 
+		E:\Program Files\Dassault Systemes\B20\CATEnv -EnvName 
+		<strong>ENOVIAV5VPMR21.B21</strong> -R20path E:\Program Files\Dassault Systemes\B18\intel_a 
+		-TMP D:\Projects\DataMigration\Logs\R20-R21\tmp.std.oracle -Step ALL -DBAPwd 
+		ev5adm -AdmPwd ev5adm&#8221;<br>
+&nbsp;</code></p>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td colspan="2" width="954">
+     <ol start="6">
+       <li>The command line for the <b>CUSTOMIZED</b> option is as follows: [if 
+       you are running STANDARD migration, go back to Step 4 and DO NOT run Step 
+       5.] A Customized database is one that is used in an environment that has 
+       been altered using customizations produced by the RADE tool.<p><code>
+		&#8220;C:\installpathR21\intel_a\code\bin\catstart&#8221; &#8211;run &#8220;sh 
+		Upgrade521NT_Enovia.sh ...&#8221; </code></li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p>The info below goes into the (...)&#034;&#133;&#034; 
+           of the command line. Be sure to put the double quotes (&quot;&#034;) 
+           around the command from the beginning of <code>
+           &#034;&quot;sh 
+           Upgrade521NT_Enovia.sh ..&quot;</code>
+           &#034; 
+           to the end of the last parameter.</p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-DBVendor</code></td>
+     <td width="810">ORACLE or DB2 <br>
+     <br>
+     Example: <br>
+     <br>
+     -DBVendor ORACLE </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-DBName</code></td>
+     <td width="810">The name of your database. <br>
+     <br>
+     Example: <br>
+     <br>
+     -DBName R20CUS</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-DBAdmHome</code></td>
+     <td width="810">Home directory of the Oracle ID or the DB2 instance ID. If 
+     you are using DB2 with a remote database on a separate machine from the
+     <strong>ENOVIAV5VPM</strong> installation, 
+     this parameter is the client database instance home directory on the LOCAL 
+     machine where you are running the migration.<br>
+     <br>
+     Examples:<br>
+     <br>
+     -DBAdmHome E:\Program Files\SQLLIB<br>
+     -DBAdmHome E:\Oracle\ora11</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-TbsName</code></td>
+     <td width="810">The tablespace name used by
+     <strong>ENOVIA LCA</strong> for its database 
+     tables. <br>
+     <br>
+     Example:<br>
+     <br>
+     -TbsName ENOTBS</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-IdxTbsName</code></td>
+     <td width="810">The tablespace name used by
+     <strong>ENOVIA LCA</strong> for its indexes.<br>
+     <br>
+     Example: <br>
+     <br>
+     -IdxTbsName ENOTBS</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-TableOwner</code></td>
+     <td width="810">The ID that is owner of database tables - must use all 
+     CAPITAL LETTERS. This parameter is optional. If not specified, default is 
+     AdmUsr. <br>
+     <br>
+     Example: <br>
+     <br>
+     -TableOwner VPMADM</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-AdmUsr</code></td>
+     <td width="810">The ENOVIA administrative user ID specified in 
+     PLMDBSetup. <br>
+     <br>
+     Example:<br>
+     <br>
+     -AdmUsr EV5ADM</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-DBAID</code></td>
+     <td width="810">The database administrator ID. If you are using DB2 with a 
+     remote database on a separate machine from the
+     <strong>ENOVIAV5VPM</strong> installation, 
+     this parameter is the administrator-ID of the database on the REMOTE 
+     machine where the database was built. <br>
+     <strong>For Oracle users:</strong> The DBAID is usually not the ID that 
+     created the database. It may be the ID that owns the tables, and this may 
+     be the same ID as the ENOVIA administrator ID, but it could also be any 
+     userid that has been granted dba permissions by the Oracle administrator. 
+     We recommend that you ensure that the ENOVIA administrator ID has been 
+     granted dba privileges on the Oracle database and use it as the DBA ID for 
+     the purposes of migration. <strong>DO NOT use system as your DBA or
+     </strong><b><strong>ENOVIAV5VPM</strong></b><strong> 
+     administrator ID during migration even if you used this as the DBA id 
+     during </strong><b>PLMDBSetup</b><strong>.</strong> This will not work and is not supported.<br>
+     <br>
+     Examples: <br>
+     <br>
+     -DBAID db2adm<br>
+     -DBAID ev5adm [where ev5adm is an Oracle ID that has DBA permissions]</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-EnvDir</code></td>
+     <td width="810" height="18">The full directory path to the CATEnv 
+     directory. <br>
+     <br>
+     Example:<br>
+     <br>
+     -EnvDir E:\Program Files\Dassault Systemes\B20\CATEnv</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-EnvName</code></td>
+     <td width="810" height="18">The name of the
+     <strong>ENOVIAV5VPM</strong>~ file in CATEnv 
+     directory without the .txt <br>
+     <br>
+     Example:<br>
+     <br>
+     -EnvName
+     <strong>ENOVIAV5VPMEnvironmentName</strong></td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-R20path</code></td>
+     <td width="810" height="18">The path to the ~code/dictionary directory on 
+     your <strong>ENOVIAV5VPM</strong> Release 20 
+     configuration (the one that is being migrated in this exercise)*.<br>
+     <br>
+     Example:<br>
+     <br>
+     -R20path E:\Program Files\Dassault Systemes\B20\intel_a</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-R20custo</code></td>
+     <td width="810" height="18">Path(s) (concatenated if necessary) to R20 
+     customized dictionary directory(ies) <br>
+     <br>
+     Example:<br>
+     <br>
+     -R20custo 
+     D:\Custo1\intel_a\code\dictionary;D:\Custo2\intel_a\code\dictionary</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-R20CustoWorkspace</code></td>
+     <td width="810" height="18">Path(s) (concatenated if necessary) to the 
+     customized R20 Generator directory(ies). <br>
+     <br>
+     Example:<br>
+     <br>
+     -R20CustoWorkspace D:\Custo1\intel_a\reffiles\DBMS\Generator</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top" width="144"><code>-TMP</code></td>
+     <td width="810" height="18">Optional
+     &#045; 
+     it will default to TEMP if not specified. A windows path where errors, logs 
+     and debugging information will go; ensure you have permission to write to 
+     this directory and 500 megabytes of free space. <br>
+     <br>
+     Example:<br>
+     <br>
+     -TMP D:\tmp</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top" width="144"><code>-Step</code></td>
+     <td width="810" height="18">-Step ALL runs all steps; or use
+     &#045;step 
+     STEPNAME to select a single step. The migration is not complete until all 
+     required steps run successfully. Note that Step names must be all capital 
+     letters. <br>
+     <br>
+     Examples:<br>
+     <br>
+     -Step ALL<br>
+     -Step STATS </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-DBAPwd</code></td>
+     <td width="810" height="18">Optional. If you would prefer not to be 
+     prompted to type in the DBA password, you can put it on the command line, 
+     but recognize that this will expose the password to some security risk. <br>
+     <br>
+     Example:<br>
+     <br>
+     -DBAPwd password</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-AdmPwd</code></td>
+     <td width="810" height="18">Optional. If you would prefer not to be 
+     prompted to type in the ENOVIA Admin ID password, you can put it on the 
+     command line, but recognize that this will expose the password to some 
+     security risk. <br>
+     <br>
+     Example:<br>
+     <br>
+     -AdmPwd password</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top" width="144"><code>-cmaffsize</code></td>
+     <td width="810" height="18">Optional. Number of affected objects to manage 
+     in each iteration within the<code> CMAFF</code> step. Larger values create 
+     faster performance but can use a lot of memory at once (possibly exceeding 
+     the capacity of your computer). Small<code> cmaffsize</code> values can 
+     greatly degrade performance if the database has a lot of affected objects.
+     <br>
+     <br>
+     Default if not specified = 500. <br>
+     Acceptable values = 1 &#8211; 2000. <br>
+     <br>
+     Example: <br>
+     <br>
+     -cmaffsize 1000<br>
+     <br>
+     If the<code> CMAFF</code> step fails with an out-of-memory error, you 
+     should retry the step using a smaller value for <code>&#8211;cmaffsize</code>.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td colspan="2" width="954">*If the R20 release does not reside on the same 
+     physical machine on which you are installing R21, then you 
+     must make a copy of all the files in the ~code/dictionary directory or 
+     directories in R20 and create a separate directory (or directories) 
+     somewhere on your R21 machine, 
+     and put a copy of all the R20 dictionary files under this directory 
+     (ensuring that the R20 dictionary path has at least &quot;read&quot; permission to 
+     all users). Then you can use this new directory name(s) as your parameter 
+     for R20dict path. DO NOT overwrite any of the dictionary files that are in 
+     the dictionary directory of your R21 
+     installation. If you must copy R20 dictionary files, put them in a special 
+     directory, such as a new one you create under TEMP.<br>
+     <br>
+     For example, if you were working on an Windows machine and you copied the 
+     files to a new directory called R20dict under <code>C:\R20Copy</code>, you 
+     would have the parameter <code>-R20path C:\R20Copy\R20dict\intel_a</code>. 
+     The files should reside under subdirectories beneath R20dict that follow 
+     the format <code>C:\R20Copy\R20dict\intel_a\code\dictionary</code> such 
+     that all your dictionary files that used to be on the old machine under the
+     <code>R20installpath\intel_a\code\dictionary</code> are now copied into 
+     C:\R20Copy\R20dict\intel_a\code\dictionary on the new machine.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td colspan="2" width="954">For command line help with this script, simply 
+     type <code>Upgrade521NT_Enovia.sh </code>and press <kbd>Enter</kbd> from 
+     the UNIX command line and it will return some help text.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td colspan="2" width="954">Here are two sample executable files with 
+     working command lines for<strong> CUSTO</strong> migration, one for Oracle 
+     and one for DB2:
+     <p><strong>ORACLE:<br>
+     </strong><code><br>
+     &#8220;C:\installpathR21\intel_a\code\bin\catstart&#8221; &#8211;run &#8220;sh command\Upgrade521NT_Enovia.sh -DBVendor ORACLE -DBName 
+		R2018CUS -DBAID ev5adm -DBAdmHome E:\Oracle\ora92 -TbsName ENOTBS -IdxTbsName 
+     ENOTBS -TableOwner ev5adm -AdmUsr ev5adm -EnvDir E:\Program Files\Dassault 
+     Systemes\B18\CATEnv -EnvName 
+		<strong>ENOVIAV5VPMEnvironmentName</strong> 
+     -R20path E:\Program Files\Dassault Systemes\B17\intel_a -TMP E:\Program 
+     Files\Dassault Systemes\tmp -Step ALL -R20custo D:\home\Custos\NAPR20CustoOra\intel_a\code\dictionary 
+     -R20CustoWorkspace D:\home\Custos\NAPR20CustoOra\intel_a\reffiles\DBMS\Generator&#8221;<br>
+     </code><br>
+     <strong>DB2:<br>
+     </strong><br>
+     <code>&#8220;C:\installpathR21\intel_a\code\bin\catstart&#8221; &#8211;run &#8220;sh command\Upgrade518NT_Enovia.sh -DBVendor DB2 -DBName 
+		R2018CUS -DBAID ev5adm -DBAdmHome E:\Program Files\SQLLIB -TbsName ENOTBS -IdxTbsName 
+     ENOTBS -TableOwner ev5adm -AdmUsr ev5adm -EnvDir E:\Program Files\Dassault 
+     Systemes\B18\CATEnv -EnvName 
+		<strong>ENOVIAV5VPMEnvironmentName</strong> 
+     -R20path E:\Program Files\Dassault Systemes\B17\intel_a -TMP E:\Program 
+     Files\Dassault Systemes\tmp -Step ALL -R20custo 
+     D:\home\Custos\NAPR20CustoDb2\intel_a\code\dictionary -R20CustoWorkspace 
+     D:\home\Custos\NAPR20CustoDb2\intel_a\reffiles\DBMS\Generator -DBAPwd 
+     ev5adm -AdmPwd ev5adm&#8221;</code></td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td colspan="2" width="954"><b>SPECIAL NOTE REGARDING THE -Step PARAMETER</b><p>
+     The R20 migration has the capability to run the steps of migration in an
+     &#034;all&#133;but&#034; 
+     fashion &#045; 
+     that is, to run all the steps except the ones that you would like to 
+     exclude. You might want to do this if:</p>
+     <ul>
+       <li>You do not want to run one of the optional steps</li>
+       <li>You have experienced a problem on some steps but the others have 
+       already succeeded. Rather than run the entire migration again, you can 
+       correct the problem and then run with all the succeeded steps excluded.
+       </li>
+     </ul>
+     <p>To run all the steps except for one or more to be excluded, follow these 
+     procedures:</p>
+     <blockquote>
+       <blockquote>
+         <ol>
+           <li>Create a text file called EXCLUSIONLIST (all capital letters) 
+           under the directory provided in your &#8211;TMP parameter.</li>
+           <li>List the steps inside this file that you DO NOT want to be 
+           executed during the migration. <br>
+           For example, you might create a file <code>D:\tmp\EXCLUSIONLIST</code> 
+           that looks like this:<br>
+           STATS</li>
+           <li>Now run the migration with the &#8211;Step ALL parameter. It will run 
+           all the steps except the ones you mentioned in the EXCLUSIONLIST.</li>
+           <li>Notice that Step names are all capital letters and are all listed 
+           in bold type in the <strong>OVERVIEW</strong> section of this 
+           document above.</li>
+           <li>It is not permitted to run the ADMIN step without running the DDL 
+           step simultaneously, due to dependencies inside ADMIN.</li>
+           <li>Recognize that some steps have dependencies on the successful 
+           completion of other steps. If you try to run any individual step out 
+           of order or without completion of its dependencies, the migration 
+           script will stop and report that a dependency has been violated and 
+           will advise you what to do.</li>
+       <li>Run the (filename) script from the command prompt. Informational 
+       status messages appear. Some steps will take several minutes, during 
+       which no additional messages will appear.</li>
+       <li>If you did not specify the DBAID password on the command line, a 
+       prompt will appear as follows:<br>
+       <br>
+       <code>Enter password for Database Admin Id (xxxxxx):</code><br>
+       <br>
+       where xxxxxx is the userid that you put into your command line as the 
+       Database Administrator. Type the password for this userid. It will be 
+       displayed on the screen.</li>
+       <li>If you did not specify the ENOVIA Admin User password on the command 
+       line, a prompt will appear as follows:<br>
+       <br>
+       <code>Enter password for EV5 Admin User (XXXXXX):</code><br>
+       <br>
+       Where XXXXXXX is the userid that you put into your command line as the 
+       ENOVIA Administrator. Type the password for this userid. It will not be 
+       displayed on the screen.</li>
+       <li>If running with the -Step ALL parameter, the failure of any critical 
+       steps will abort the script and the other steps will not run. Optional 
+       steps may allow the migration to continue if they fail. If a step fails:<ul>
+         <li>resolve the error and then rerun any steps that did not execute or 
+         that failed the first time, in the order that they appear in the STATUS 
+         message at the end of the failed execution (also documented in the 
+         OVERVIEW above). This allows you to keep the results of any steps that 
+         succeeded, but requires you to manually run each step for the rest of 
+         the migration until they are all completed or use the -Step ALL with 
+         the EXCLUSIONLIST</li>
+         <li>or restore the database and run again with the -Step ALL parameter 
+         after resolving the error. This wipes out all migration done so far and 
+         completely starts over.</li>
+       </ul>
+       </li>
+       <li>Be patient. Migration of a large database can take several hours. If 
+       the migration appears to be &#145;hung&#039;, 
+       you can verify progress by opening a second command window and going to 
+       the directory you gave as your TMP directory. Use the command
+       &#034;ls 
+       -lrt&#034; 
+       and look at the timestamp on the most recent Upgrade521* file. If more 
+       than 1 hour passes with no activity in this directory, it is likely the 
+       migration has stopped.</li>
+       <li>If you used something other than CAARADE to customize your
+       <strong>ENOVIAV5VPM</strong> R20 
+       environment, and you have customized a schema, you now need to consult 
+       with the author or maintainer of those customizations to obtain 
+       instructions for migrating these customizations into
+       <strong>ENOVIA LCA</strong> R20.</li>
+         </ol>
+       	<p>If you have not already done, don&#8217;t forget to reconfigure your Vault 
+		in R21 to point to the R20 Vault. You must follow the procedures 
+		documented within the Migrating a Vault Server Manually chapter of R21 
+		LCA documentation. There are no changes needed to the Vault database to 
+		make it compatible with R21; however, you must still follow the steps 
+		needed to point the R21 environment to the R20 vault files.</p>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td colspan="2" width="954">
+     <h2>Special Notes on Migration of Lifecycles (Graphs) </h2>
+     <p>General instructions for migration of customizations to ENOVIA object 
+     lifecycles:</p>
+     <p>If you want to remove a lifecycle state for an object type, you should 
+     either: </p>
+     <ul>
+       <li>ensure that no objects of this type exist in that state, or </li>
+       <li>leave the state in the lifecycle graph, with an appropriate 
+       transition to a state in the new lifecycle. In this case, users can 
+       migrate the old data to the new lifecycle states as needed. </li>
+     </ul>
+     <p>You may update the lifecycle either by editing the text of the lifecycle 
+     VGraph file, or by editing the lifecycle in the
+     <strong>LCA Classic</strong>, then exporting 
+     to a VGraph file and adding any specialized conditions and operations. </p>
+     <p>If necessary, you may retrieve the old customized lifecycle VGraph from 
+     the old ENOVIA database, but you must do this before you migrate the ENOVIA 
+     database to the new release.</td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="3" width="986">
+     <p align="center"><font face="Verdana">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></font></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

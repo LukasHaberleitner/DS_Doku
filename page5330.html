@@ -1,0 +1,197 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Merging Stackings</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+</head>
+
+<body>
+
+<h1 align="center">
+Merging 
+Stackings<a name="CATCoDefaultCmdHeader.CATCwbMergeStacking"></a> </h1>
+  <table border="0" style="border-collapse: collapse" id="AutoNumber1">
+    <tr>
+      <td>
+      &nbsp;</td>
+      <td>This task shows you how to <a href="#ix-merging stackings">merge stackings</a>, 
+		explains how the <a href="#ix-merging stackings:principle">merging works</a>, 
+		and how to <a href="#ix-merging stackings:avoiding duplication">avoid 
+		duplicating</a> objects.<p>Several stackings can be 
+		merged into one destination stacking but it has to be done one stacking 
+		by one stacking <br>
+		(multi-selection of stackings is not supported).</td>
+    </tr>
+    <tr>
+      <td>
+      
+      <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+      <td>
+		<ul>
+			<li>Open any CATPart containing a stacking to merge.</li>
+			<li>You must have write permission on the origin part <br>
+			or run&nbsp; 
+			<kbd>c:Prepare for Synchronization</kbd> from the PowerInput in order to merge the stackings.</li>
+			</ul>
+		</td>
+    </tr>
+    <tr>
+      <td valign="top">
+      
+      <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+      <td>
+      <h2><a name="ix-merging stackings"></a>Merging the Stackings</h2>
+      <ol class="task">
+        <li>
+        <p class="task"><a name="ix-commands::Merge Stacking"></a>Click <kbd>Merge Stacking</kbd>
+        <img border="0" src="b35doc/english/online/icons_C2/images/I_CompositesMergeStackingP2.gif" width="24" height="24"> 
+		in the <kbd>Plies</kbd> toolbar. 
+        <br>
+		The <kbd>Merge Stacking</kbd> dialog box is displayed.<br>
+		<img border="0" src="b35doc/english/online/cpdug_c2/images/dbMergeStacking01NLS.gif" width="434" height="114"></li>
+		<li>
+        <p class="task">Click ... to select the CATPart with the second stacking 
+		to merge.</li>
+		<li>
+        <p class="task">Click <kbd>OK</kbd>. The stackings 
+				are merged.<br>
+		A message requests that you save the part to allow future 
+		synchronization.<br>
+		A report dialog box is displayed listing the result of the stacking:<table border="0" id="table2">
+			<tr>
+				<td>
+			<p class="task">Check is done on a ply basis (ply by ply) and 
+			displayed status is as follows for a ply:<ul>
+				<li>
+				Created: Ply has been created during the 
+				operation, </li>
+				<li>
+				Deleted: Ply has been deleted during the 
+				operation,</li>
+				<li>
+				Modified: Ply has been modified during operation. In 
+				this case a message will detail the modification. </li>
+				<li>
+				Following 
+				modifications can be displayed (there can be several 
+				modifications listed one by one):<ul>
+				<li>Material has changed,</li>
+				<li>Orientation has changed,</li>
+				<li>Resulting contour has changed.</li>
+			</ul>
+				</li>
+			</ul>
+				<p>This report can be exported as a text.<br>&nbsp;</td>
+			</tr>
+		</table>
+        </li>
+      </ol>
+      <h2><a name="ix-merging stackings:principle"></a>How Merge Stackings Works</h2>
+		<p>The Composites information from the second stacking are 
+					transferred to the current part:</p>
+		<ul>
+			<li>Composites parameters and their contents, </li>
+			<li>Stacking and its content (plies groups, sequences 
+						and plies or cores):<br>Plies and cores come with their properties and the 
+						contour will be added &#8216;as result&#8217;, <br>
+			corresponding to the 
+						last contour found in the origin part: 
+			<ul>
+				<li><kbd>Merge Stacking</kbd> 
+							gathers all plies and computes all prerequisites for 
+							the features under the stacking <br>
+				(for instance, for a 
+							ply group, the rosette, the lying surface and the 
+							material information <br>
+				and then recursively their 
+							prerequisites). </li>
+				<li><kbd>Merge Stacking </kbd>does not gather logical 
+							information (Composites PD, Grid). </li>
+				<li>On the Composites 
+							geometry, <kbd>Merge Stacking</kbd> gathers the result of 
+							the last contour <br>
+				(not its specification, hence, not 
+							its constructing elements such as parallels, ramp 
+							supports, slicing curves, etc.) <br>
+				and the lying 
+							surface. </li>
+				<li>Then the destination part is created 
+							only with the elements gathered, i.e. the 
+							plies contour will be &#8216;as result&#8217;, <br>
+				without link to any geometry but the 
+							lying surface (history of the contour will not be 
+							transferred) <br>
+				and all the features constituting the 
+							engineering contour will be merged as one single 
+							result contour. </li>
+				<li>This &#8216;as result&#8217; contour is manageable as any 
+				other contour <br>
+				(for instance, material excess or a dart can be 
+				applied to it).</li></li>
+				<li>The synchronization of the 
+				destination part vs. modified original Composites part will be 
+				enabled. <br>
+				The destination part will always be synchronized using 
+				&#8216;as result&#8217; mechanism. <br>
+				This means that if a limit contour is 
+				added to a ply in the origin part, after synchronization, <br>
+				the 
+				destination ply will still have one single contour but 
+				corresponding to the modified contour from origin part. </li>
+			</ul>
+		</ul>
+		<h2><a name="ix-merging stackings:avoiding duplication"></a>Avoiding the Duplication of Similar Objects </h2>
+		<p>Let's consider a Composites part, split between several users, <br>
+		each of them working 
+		on a given sub-area of it. </p>
+		<p>If 
+				each user creates its own Composites parameters with link to a 
+				given unique material, <br>
+		during the merge 
+				process unique IDs will be added to each cache 
+				material feature, <br>
+		hence creating two different material cache features, 
+		although they are similar 
+				<br>
+		(pointing to the same material reference). <br>
+		The same applies to any 
+		objects receiving different IDs 
+				during the merge process. </p>
+		<p>To avoid this, share the same entities in the different CATParts using the 
+				standard collaboration mechanism. <br>
+		One possible process is:</p>
+		<ul>
+			<li>Prepare the destination part with Composites parameters, rosette 
+				and support surface. </li>
+			<li>Then using the collaboration native 
+				product, share all those features and merge them in all the 
+				parts <br>
+			that will be used by individual users. This will provide 
+				the uniqueness of collaboration IDs across all of them. </li>
+			<li>During the merge, as the Composites parameters and their contents, 
+				draping surface, rosette, etc. <br>
+			share the same unique 
+				collaboration ID, the merge process will recognize them and 
+				hence avoid the duplication of similar objects</li>
+		</ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <p align="center">
+      
+      <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+    </tr>
+  </table>
+  
+</body>
+
+</html>
+

@@ -1,0 +1,658 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Full-Text Search</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/search.css">
+<script src="b35doc/english/online/icons_C2/long.js"></script>
+<script src="b35doc/english/online/icons_C2/jquery-3.1.0.min.js"></script>
+<script src="b35doc/english/online/icons_C2/DSDocCommon.js"></script>
+<script src="b35doc/english/online/icons_C2/status.js"></script>
+<script src="b35doc/english/online/icons_C2/search.js"></script>
+<script src="b35doc/english/online/icons_C2/readparameters.js"></script>
+<script src="b35doc/english/online/CATIA_PLM_Express_search.js"></script>
+<script language="Javascript">
+	var enter_key_pressed = 0;
+	var third_row, fifth_row;
+	var FOUND_TITLE = "Found in";
+	var PARTS_TITLE = "Search in";
+	var SCOPE_TITLE = "Scope";
+	var GO_TITLE = "GO";	
+	var SEARCHING_TITLE = "Searching...";
+	var RESULTS_TITLE = "Results";
+	var NEXT_TITLE = "Find Next";
+	var MODE1 = "AND";
+	var MODE2 = "OR";
+	var MODE3 = "Exact phrase";
+	var STRING_NOT_FOUND = "String not found in selected scope.";
+	var EMPTY_SOLUTION_SCOPE = "Select at least one solution in the scope.";
+	var EMPTY_PRODUCT_SCOPE = "Select at least one product in the scope.";
+	var	NoSolDoc = false;
+	var	NoPrdDoc = false;
+
+	function change_color(elem){
+		if($(elem).hasClass("anchor_class1")) {
+			$(elem).removeClass("anchor_class1").addClass("anchor_class2");
+		}
+		else {
+			$(elem).removeClass("anchor_class2").addClass("anchor_class1");
+		}
+	}
+
+	function resetAll() {
+		var x = document.getElementsByClassName("anchor_class2");
+		while(x.length > 0) {
+			$(x[0]).removeClass("anchor_class2").addClass("anchor_class1");
+		}
+	}
+	
+	function showHelp() {
+		var navigate_tab = document.getElementById('navigate_option');
+		if(navigate_tab != null || navigate_tab != undefined) {
+			navigate_tab.disabled = false;
+		}
+		ShowPage("icons_C2/searchhelp.htm","DS_SEARCH");
+	}
+	
+	function ShowPagelocal(url,view,word) {
+		var word_to_search = [];
+		if(filter != MODE3) {
+			word_to_search = word.split(" ");
+		}
+		else {
+			word_to_search[0] = word.replace(",", " ");
+		}
+		document.getElementById('ResultClass').disabled = false;
+		document.getElementById('ResultClass').setAttribute('style', 'color:rgb(28,21,87)');
+		var navigate_tab = document.getElementById('navigate_option');
+		if(navigate_tab != null || navigate_tab != undefined) {
+			navigate_tab.disabled = false;
+		}
+		ShowPage(url,view,word_to_search);
+		var word = $('#navigate_option').find(":selected").text();
+		if(word == "") {
+			temporisation(word_to_search[0],view);
+		}
+		else {
+			temporisation(word,view);
+		}
+	}
+
+	function change_background(elem)
+	{
+		var elements = document.getElementsByClassName('result_anchor_class2');
+		for(var i = elements.length - 1; i >= 0; --i)
+		{
+			elements[i].className = "result_anchor_class1";
+		}
+		if($(elem).hasClass("result_anchor_class1")) {
+			$(elem).removeClass("result_anchor_class1").addClass("result_anchor_class2");
+		}
+	}
+
+	function view_result_list() {
+		var result_div = document.getElementById(bookchoice_container);
+		var labelToChange = document.getElementById('label_change');
+		labelToChange.innerHTML = FOUND_TITLE;
+	  
+		$("#bookchoice_container").empty();
+		var word = ($('#usersearch').val());
+		ResultSet.sort();
+		if(ResultSet.length != 0) {
+			jQuery.each(ResultSet, function(index, value) {
+				var _a = document.createElement('a');
+				_a.href = "#";
+				value = value.substring(0,(ResultSet[index]).lastIndexOf(":"));
+				_a.innerHTML = value;
+				var url = ResultSet[index].substr((ResultSet[index]).lastIndexOf(":") +1);
+				_a.ondblclick = function(){ ShowPagelocal(url,"DS_SEARCH",word); }
+				_a.onclick = function() { change_background(this); }
+				_a.className = "result_anchor_class1";
+
+				$("#bookchoice_container").append(_a);
+				$("#bookchoice_container").append("<br/>");
+			});
+
+			$("#bookchoice_container a").css('color', '#000000');
+			$("#bookchoice_container a").css('pointer-events',' auto');
+			$("#bookchoice_container a").css('cursor','default');
+		}
+	}
+
+	function view_solution_list() {
+		NoSolDoc = false;
+		NoPrdDoc = false;
+		$("#bookchoice_container").empty();
+		if(bookchoicesol.length != 0) {
+			jQuery.each(bookchoicesol, function(index, value) {
+				$("#bookchoice_container").append("<a  href='#' onclick = 'change_color(this)' class='anchor_class1'>" + value + '</a>' + '<br/>');
+				$("#all_sols").next('label').css('color', '#1c1557');
+				$("#bookchoice_container a").css('color', '#000000');
+				$("#bookchoice_container a").css('pointer-events',' auto');
+				$("#bookchoice_container a").css('cursor','default');
+			});
+		}
+	}
+
+	function view_products_list() {
+		NoSolDoc = false;
+		NoPrdDoc = false;
+		$("#bookchoice_container").empty();
+		if(bookchoice.length != 0) {
+			jQuery.each(bookchoice, function(index, value) {
+			 	$("#bookchoice_container").append("<a  href='#' onclick = 'change_color(this)' class='anchor_class1' style='pointer-events: auto;'>" + value + '</a>' + '<br/>');
+			 	$("#bookchoice_container a").css('color', '#000000');
+		   });
+	 	}
+	}
+
+	function option_check(elem) {
+		switch(($(elem).attr('id'))) {
+			case "all_doc":
+				if((!$(elem).is(":checked"))) {
+					$("#all_sols").prop("disabled", false);
+					$("#all_prod").prop("disabled", false);
+					if($("#all_sols").is(":checked")) {
+						$("#all_sols").next('label').css('color', '#1c1557');
+						$("#all_prod").next('label').css('color', '#1c1557');
+						$("#bookchoice_container a").css('color', '#000000');
+						$("#bookchoice_container a").css('pointer-events','');
+						$("#bookchoice_container a").css('cursor','default');
+					}
+					else if($("#all_prod").is(":checked")) {
+						$("#all_sols").prop("disabled", false);
+						$("#all_prod").prop("checked", true);
+						view_products_list();
+						$("#all_prod").next('label').css('color', '#1c1557');
+						$("#all_sols").next('label').css('color', '#1c1557');
+					}
+				}
+				else if(($(elem).is(":checked"))) {
+					$("#all_sols").prop("disabled", true);
+					$("#all_prod").prop("disabled", true);
+					if($("#all_sols").is(":checked")) {
+						$("#all_sols").next('label').css('color', '#7a7a7a');
+						$("#bookchoice_container a").css('color', '#7a7a7a');
+						$("#bookchoice_container a").css('pointer-events','none');
+						$("#bookchoice_container a").css('cursor','default');
+					}
+					else if($("#all_prod").is(":checked")) {
+						$("#all_sols").prop("disabled", true);
+						$("#all_prod").prop("disabled", true)
+						view_solution_list();
+						$("#all_sols").next('label').css('color', '#7a7a7a');
+						$("#bookchoice_container a").css('color', '#7a7a7a');
+						$("#bookchoice_container a").css('cursor','default');
+					}
+				}
+				break;
+			case "all_sols":
+				if((!$(elem).is(":checked"))){
+					$("#all_prod").prop("checked", true);
+					view_products_list();
+				}
+				else if(($(elem).is(":checked"))){
+					$("#all_prod").prop("checked", false);
+					view_solution_list();
+				}
+				break;
+			case "all_prod":
+				if((!$(elem).is(":checked"))){
+					$("#all_sols").prop("checked", true);
+					view_solution_list();
+				}
+				else if(($(elem).is(":checked"))){
+					$("#all_sols").prop("checked", false);
+					view_products_list();
+				}
+				break;
+		}
+	}
+
+	function buildUI() {	
+		var elem = $("#head tr:first td:first-child label");
+		var SEARCH_TITLE = "Search For";
+		var index = parametersEnvName.indexOf("SEARCH_TITLE");
+		if(index >= 0) {
+			var SEARCH_TITLE = parametersEnvValue[index];
+		}
+		elem.html(SEARCH_TITLE);
+		
+		elem = document.getElementById('matchlabel');
+		var MATCH_TITLE = "Match whole word";
+		index = parametersEnvName.indexOf("MATCH_TITLE");
+		if(index >= 0) {
+			MATCH_TITLE = parametersEnvValue[index];
+		}
+		elem.textContent = MATCH_TITLE; 
+			
+		elem = $("#third_row tr:first td:nth-child(2) label");
+		var SEARCH_MODE = "Search mode";
+		index = parametersEnvName.indexOf("SEARCH_MODE");
+		if(index >= 0) {
+			var SEARCH_MODE = parametersEnvValue[index];
+		}
+		elem.html(SEARCH_MODE);
+		
+	    elem = document.getElementById('select_class').options;
+		
+		index = parametersEnvName.indexOf("MODE1");
+		if(index >= 0) {
+			MODE1 = parametersEnvValue[index];
+		}
+		elem[0].textContent = MODE1;
+		
+		index = parametersEnvName.indexOf("MODE2");
+		if(index >= 0) {
+			MODE2 = parametersEnvValue[index];	
+		}
+		elem[1].textContent = MODE2;
+		
+		index = parametersEnvName.indexOf("MODE3");
+		if(index >= 0) {
+			MODE3 = parametersEnvValue[index];	
+		}
+		elem[2].textContent = MODE3;
+		
+		elem = $("#options-1 tr:nth-child(1) td:first-child label");
+		var SEARCH_SCOPE = "Search scope";
+		index = parametersEnvName.indexOf("SEARCH_SCOPE");
+		if(index >= 0) {
+			SEARCH_SCOPE = parametersEnvValue[index];
+		}
+		elem.html(SEARCH_SCOPE);
+		
+		elem = $("#options-1 tr:nth-child(2) td:first-child").find("label");
+		var ALL_TITLE = "All documents";
+		index = parametersEnvName.indexOf("ALL_TITLE");
+		if(index >= 0) {
+			ALL_TITLE = parametersEnvValue[index];
+		}
+		elem.html(ALL_TITLE);
+			
+		elem = $("#options-1 tr:nth-child(3) td:first-child").find("label");
+		var SOLUTION_TITLE = "Solutions";
+		index = parametersEnvName.indexOf("SOLUTION_TITLE");
+		if(index >= 0) {
+			SOLUTION_TITLE = parametersEnvValue[index];
+		}
+		elem.html(SOLUTION_TITLE);
+			
+		elem = $("#options-1 tr:nth-child(4) td:first-child").find("label");
+		var PRODUCT_TITLE = "Products";
+		index = parametersEnvName.indexOf("PRODUCT_TITLE");
+		if(index >= 0) {
+			PRODUCT_TITLE = parametersEnvValue[index];
+		}
+		elem.html(PRODUCT_TITLE);
+		
+		elem = $("#head tr:nth-child(2) td:nth-child(2) input");
+		index = parametersEnvName.indexOf("GO_TITLE");
+		if(index >= 0) {
+			GO_TITLE = parametersEnvValue[index];	
+		}
+		elem[0].value = GO_TITLE;
+		
+		index = parametersEnvName.indexOf("SEARCHING_TITLE");
+		if(index >= 0) {
+			SEARCHING_TITLE = parametersEnvValue[index];	
+		}
+		
+		elem = document.getElementById('result_button');
+		index = parametersEnvName.indexOf("RESULTS_TITLE");
+		if(index >= 0) {
+			RESULTS_TITLE = parametersEnvValue[index];	
+		}
+		elem.value = RESULTS_TITLE;
+			
+		elem = $("#options-2 tr:nth-child(1) td:first-child").find("input");
+		var RESET_TITLE = "Reset";
+		index = parametersEnvName.indexOf("RESET_TITLE");
+		if(index >= 0) {
+			RESET_TITLE = parametersEnvValue[index];
+		}
+		elem[0].value = RESET_TITLE;
+			
+		elem = $("#options-2 tr:nth-child(2) td:first-child").find("input");
+		var HELP_TITLE = "Help";	
+		index = parametersEnvName.indexOf("HELP_TITLE");
+		if(index >= 0) {
+			HELP_TITLE = parametersEnvValue[index];	
+		}
+		elem[0].value = HELP_TITLE;
+			
+		index = parametersEnvName.indexOf("NEXT_TITLE");
+		if(index >= 0) {
+			NEXT_TITLE = parametersEnvValue[index];	
+		}
+			
+		index = parametersEnvName.indexOf("SCOPE_TITLE");
+		if(index >= 0) {
+			SCOPE_TITLE = parametersEnvValue[index];
+		}
+		
+		elem = $("#fourth-row td:first-child label");
+		index = parametersEnvName.indexOf("PARTS_TITLE");
+		if(index >= 0) {
+			PARTS_TITLE = parametersEnvValue[index];
+		}
+		elem.html(PARTS_TITLE);
+			
+		index = parametersEnvName.indexOf("FOUND_TITLE");
+		if(index >= 0) {
+			FOUND_TITLE = parametersEnvValue[index];	
+		}
+			
+		index = parametersEnvName.indexOf("STRING_NOT_FOUND");
+		if(index >= 0) {
+			STRING_NOT_FOUND = parametersEnvValue[index];	
+		}
+			
+		index = parametersEnvName.indexOf("EMPTY_SOLUTION_SCOPE");
+		if(index >= 0) {
+			EMPTY_SOLUTION_SCOPE = parametersEnvValue[index];	
+		}
+			
+		index = parametersEnvName.indexOf("EMPTY_PRODUCT_SCOPE");
+		if(index >= 0) {
+			EMPTY_PRODUCT_SCOPE = parametersEnvValue[index];	
+		}
+	}
+	
+	window.onload = function () {
+		readParameters("icons_C2");
+		buildUI();
+		charge_index_status("CATIA_PLM_Express");
+		if(bookchoicesol.length != 0) {
+			jQuery.each(bookchoicesol, function(index, value) {
+    			$("#bookchoice_container").append("<a  href='#' onclick = 'change_color(this)' class='anchor_class1'>" + value + '</a>' + '<br/>');
+				$("#bookchoice_container a").css('pointer-events','none');
+ 			});
+			$("#bookchoice_container a").css('color', '#7a7a7a');
+		}
+	}
+	
+	function find() {
+		var word = $('#navigate_option').find(":selected").text();
+		if(word == "") {
+			word = ($('#usersearch').val());
+			}
+		chercheSurPage(word,'DS_SEARCH');
+	}
+
+	function createReplacement() {
+		third_row = document.getElementById('third_row');
+		if(third_row != null || third_row != undefined) {
+			third_row.style.visibility = "hidden";
+			var td = document.getElementById("dynamic_td");
+			var word_to_search = ($('#usersearch').val());
+			if(word_to_search != "" && ($("#select_class :selected").text() != MODE3)) {
+				word_to_search = word_to_search.split(" ");
+				var select = document.createElement("select");
+				select.setAttribute('style','width:25%;');
+				select.id = "navigate_option";
+				for (var i = 0; i < word_to_search.length; i++) {
+					var opt = document.createElement('option');
+					opt.value = word_to_search[i];
+					opt.innerHTML = word_to_search[i];
+					select.appendChild(opt);
+				}
+				select.disabled = true;
+			}
+
+			var element2 = document.createElement("input");
+			element2.type = "button";
+			element2.value = NEXT_TITLE;
+			element2.onclick = function() { find(); }
+			element2.setAttribute('style', 'background-color: white;color:rgb(122,122,122);box-shadow: #888888;width:25%');
+			element2.id = "ResultClass";
+			element2.disabled = true;
+			td.removeChild(third_row);
+
+			if(select != null || select != undefined) {
+				td.appendChild(select);
+			}
+			td.appendChild(element2);
+
+	         //extend div
+			fifth_row = document.getElementById('fifth-row');
+			var head = document.getElementById('head');
+			var index = fifth_row.rowIndex;
+			head.deleteRow(index);
+
+			var newRow = head.insertRow(index);
+			var newtd = newRow.insertCell(0);
+			newtd.colSpan = "2";
+			var div = document.createElement("div");
+			div.setAttribute('style', 'background-color: white;height:146px;border:1px solid black;width:610px');
+			div.id = "bookchoice_container";
+			newtd.appendChild(div);
+			newRow.id = "replace_fifth_row";
+
+			var res_button = document.getElementById('result_button');
+			res_button.value = SCOPE_TITLE;
+
+			if($('#usersearch').val() == "") {
+				div.innerHTML = STRING_NOT_FOUND;
+			}
+			else {
+				if(NoSolDoc == true) {
+					div.innerHTML = EMPTY_SOLUTION_SCOPE;
+				}
+				else if(NoPrdDoc == true) {
+					div.innerHTML = EMPTY_PRODUCT_SCOPE;
+				}
+				else {
+					if(ResultSet.length == 0) {
+						div.innerHTML = STRING_NOT_FOUND;
+					}
+					else {
+						view_result_list();
+					}
+				}
+			}
+		}
+	}
+
+	function toggle_result_button(elem) {
+		if(elem.value == SCOPE_TITLE) {
+			var labelToChange = document.getElementById('label_change');
+			labelToChange.innerHTML = PARTS_TITLE;
+		
+			if(document.getElementById("ResultClass") != undefined && document.getElementById("ResultClass") != null) {
+				var td = document.getElementById("dynamic_td");
+				var result = document.getElementById("ResultClass");
+				var navigate_tab = document.getElementById("navigate_option");
+				if(result != null) {
+					td.removeChild(result);
+					if(td.contains(navigate_tab))
+					{
+						td.removeChild(navigate_tab);
+					}
+					if(third_row != null || third_row != undefined) {
+						td.appendChild(third_row);
+						third_row.style.visibility = "visible";
+					}
+					var fifth = document.getElementById("replace_fifth_row");
+					var head = document.getElementById('head');
+					var index = replace_fifth_row.rowIndex;
+					head.deleteRow(index);
+					$('#head > tbody > tr').eq(index-1).after(fifth_row);
+					var res_button = document.getElementById('result_button');
+					res_button.value = RESULTS_TITLE;
+				}
+			}
+		}
+		else if(elem.value == RESULTS_TITLE) {
+			var labelToChange = document.getElementById('label_change');
+		    labelToChange.innerHTML = FOUND_TITLE;
+			createReplacement();
+		}
+	}
+
+	$(document).ready(function () {
+		$('#usersearch').on("keypress", function(e) {
+			if (e.keyCode == 13) {
+				enter_key_pressed = 1;
+				Searchlocaltimedout();
+				document.activeElement.blur();
+				e.preventDefault();
+			}
+		});
+	});
+
+	function handle_input_focus(textbox) {
+		if(document.getElementById("ResultClass") != undefined && document.getElementById("ResultClass") != null) {
+			var td = document.getElementById("dynamic_td");
+			var result = document.getElementById("ResultClass");
+			var navigate_tab = document.getElementById("navigate_option");
+			if(result != null) {
+				td.removeChild(result);
+				if(td.contains(navigate_tab)) {
+					td.removeChild(navigate_tab);
+					}
+				if(third_row != null || third_row != undefined) {
+					td.appendChild(third_row);
+					third_row.style.visibility = "visible";
+				}
+				var fifth = document.getElementById("replace_fifth_row");
+				var head = document.getElementById('head');
+				var index = replace_fifth_row.rowIndex;
+				head.deleteRow(index);
+				$('#head > tbody > tr').eq(index-1).after(fifth_row);
+			}
+		}
+	}
+
+	function Searchlocaltimedout()
+	{
+		var elem = $("#head tr:nth-child(2) td:nth-child(2) input");
+		elem[0].value = SEARCHING_TITLE;
+		elem[0].style.border = '1px dashed';
+		elem[0].disabled = true;
+		$('#usersearch').disabled = true;
+		setTimeout(Searchlocal, 50); // To let IE accept the style change
+	}
+
+	function Searchlocal()
+	{
+		var elem = $("#head tr:nth-child(2) td:nth-child(2) input");
+		
+		ResultSet = [];
+		if(!($('#all_doc').is(":checked")))	{
+			if(($('#all_prod').is(":checked")))	{
+				var product_search_list = document.getElementsByClassName('anchor_class2');
+				if(product_search_list.length !=0 ) {
+					Search("CATIA_PLM_Express",3,product_search_list);
+					NoPrdDoc = false;
+					createReplacement();
+				}
+				else {	
+					NoPrdDoc = true;
+					createReplacement();
+				}
+			}
+			else{
+				if(($('#all_sols').is(":checked"))) {
+					var solution_search_list = document.getElementsByClassName('anchor_class2');
+					if(solution_search_list.length !=0 ) {
+						Search("CATIA_PLM_Express",2,solution_search_list);
+						NoSolDoc = false;
+						createReplacement();
+					}
+					else {
+						NoSolDoc = true;
+						createReplacement();
+					}
+				}
+			}
+		}
+		else {
+			var iString = $('#usersearch').val();
+			if(iString != "") {
+				Search("CATIA_PLM_Express",1);
+			}
+			NoPrdDoc = false;
+			NoSolDoc = false;
+			createReplacement();
+		}
+		
+		elem[0].value = GO_TITLE;
+		elem[0].style.border = '';
+		elem[0].disabled = false;
+		$('#usersearch').disabled = false;
+	}
+</script>
+</head>
+
+<body bgcolor="#FFFFFF" background="icons_C2/common/tocbg.jpg" style="background-repeat: repeat-y">
+
+<!-- Applet -->
+<p class ="ex" align="left">
+
+	<table id="head">
+		<tr>
+			<td><label class="label_class" style="background-color:transparent !important;"></label></td>
+		</tr>
+
+		<tr>
+			<td><input type="text" class="text_class" id="usersearch"  onfocus="handle_input_focus(this)"></td>
+			<td><input type="button" class="button_class" value="Go" onclick="Searchlocaltimedout()"></td>
+		</tr>
+
+		<tr>
+			<td id="dynamic_td">
+				<table id="third_row" style="width:100%">
+					<tr>
+						<td style="width:45%;padding-right: 0px;border-collapse:collapse;">
+							<input type="checkbox" id="match" class="checkbox_class"/><label class="label_class" id="matchlabel"/>
+						</td>
+						<td style="width:25%;">
+							<label class="label_class" style="display: block;"></label>
+						</td>
+						<td  style="width:20%;">
+							<select id="select_class">
+								<option value="and"></option>
+								<option value="or"></option>
+								<option value="exact"></option>
+							</select>
+						</td>
+						<td style="width:15%;">
+						</td>
+					</tr>
+				</table>
+			</td>
+
+			<td><input style="background-color:rgb(255,223,165)" type="button" class="button_class" id="result_button" value="Results" onclick="toggle_result_button(this)"></td>	
+		</tr>
+		
+		<tr id ="fourth-row">
+			<td style="width:50%;"><label class="label_class" id="label_change">Search in</label></td>
+		</tr>
+		
+		<tr id ="fifth-row">
+			<td>
+				<div id="bookchoice_container">
+				</div>
+			</td>
+
+			<td>
+                <table id="options-1">
+                    <tr><td><label class="label_class" style="color:rgb(28,21,87); !important;"></label></td></tr>
+                    <tr><td><input type="checkbox" class="checkbox_class" id="all_doc" onclick ="option_check(this)" checked><label class="label_class"></label></td></tr>
+                    <tr><td><input type="checkbox" class="checkbox_class" id="all_sols" onclick ="option_check(this)" disabled="disabled" checked><label class="label_class" style="color:#7a7a7a; !important"></label></td></tr>
+                    <tr><td><input type="checkbox" class="checkbox_class" id="all_prod" onclick ="option_check(this)" disabled="disabled"><label class="label_class" style="color:#7a7a7a; !important"></label></td></tr>
+                </table>
+                <table id="options-2">
+                    <tr><td><input type="button" class="button_class" value="Reset" onclick="resetAll()"></td></tr>
+                    <tr><td><input type="button" class="button_class" value="Help" onclick="showHelp()"></td></tr>
+                </table>
+			</td>
+		</tr>
+	</table>
+</p>
+
+</body>
+</html>
+

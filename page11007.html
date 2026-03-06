@@ -1,0 +1,540 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating a Power Copy Containing a Loop</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="docCompliance" content="v 0.9; Fri Oct 14 14:45:30 2005">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1><font color="#282187">Creating a Power Copy Containing a Loop
+ <a name="ix-creating a power copy containing a loop"></a>&nbsp;<a name="ix-loop::creating a power copy containing a loop"></a></font></h1>
+ <table border="0" valign="top" cellpadding="4" Width="0">
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>This task illustrates how to interactively apply a loop to an existing 
+     document. In this scenario, you are going to make holes in a pad. To do so, 
+     you are going to:<ul>
+       <li><a href="#Creating the loop referencing the user feature">Create a 
+       loop referencing the inputs of an existing User Feature (UDF) used to 
+       make holes in a pad</a>.</li>
+       <li><a href="#Saving the loop in a powercopy">Save the loop in a Power 
+       Copy</a>.</li>
+       <li><a href="#Instantiating the powercopy into an existing document">
+       Instantiate the Power Copy into an existing document and creates the 
+       holes</a>.</li>
+     </ul>
+     <p>To perform the scenario, you will need the following files:<br>
+&nbsp;</p>
+     <div align="left">
+       <table border="0" cellspacing="0" id="AutoNumber1" cellpadding="0">
+         <tr>
+           <td valign="top"><img border="1" src="b35doc/english/online/kwrug_c2/images/kwrloop10NLS.gif" width="334" height="264"></td>
+           <td valign="top">The <a href="b35doc/english/online/kwrug_c2/samples/KwrLoop1.CATPart">
+           KwrLoop1.CATPart</a> is made up of a surface (<kbd><font color="#FF0000">2</font></kbd>) 
+           and a solid (<font color="#FF0000"><kbd>1</kbd></font>) that 
+           symbolizes a hole. This hole is inserted into a User Feature (UDF) 
+           named Clearance_Hole_UDF for a later instantiation. The User Feature 
+           (UDF) has 3 different inputs (a point, an axis and a surface). 2 
+           parameters of the User Feature (UDF) are published (<font color="#FF0000"><kbd>3</kbd></font>):<ul>
+             <li>Clearance=4mm</li>
+             <li>Diameter=8mm</li>
+           </ul>
+           </td>
+         </tr>
+         <tr>
+           <td valign="top">&nbsp;</td>
+           <td valign="top">&nbsp;</td>
+         </tr>
+         <tr>
+           <td valign="top"><img border="1" src="b35doc/english/online/kwrug_c2/images/kwrloop22NLS.gif" width="333" height="213"></td>
+           <td valign="top">The <a href="b35doc/english/online/kwrug_c2/samples/KwrLoop3.CATPart">
+           KwrLoop3.CATPart</a> file is made up of a pad and a surface and of 24 
+           points (<font color="#FF0000"><kbd>1</kbd></font>) inserted into a 
+           list. Line.2 is the instantiation axis (<font color="#FF0000"><kbd>2</kbd></font>). 
+           This .CATPart file is the one that will contain the loop contained in 
+           the Power Copy that will be instantiated into KwrLoop4.CATPart.</td>
+         </tr>
+         <tr>
+           <td valign="top">&nbsp;</td>
+           <td valign="top">&nbsp;</td>
+         </tr>
+         <tr>
+           <td valign="top"><img border="0" src="b35doc/english/online/kwrug_c2/images/kwrloop23NLS.gif" width="328" height="128"></td>
+           <td valign="top">The <a href="b35doc/english/online/kwrug_c2/samples/KwrLoop4.CATPart">
+           KwrLoop4.CATPart</a> is made up of a pad and a surface (<font color="#FF0000"><kbd>3</kbd></font>) 
+           and of 17 points (<font color="#FF0000"><kbd>2</kbd></font>) inserted 
+           into a list. Line.1 is the instantiation axis (<font color="#FF0000"><kbd>1</kbd></font>). 
+           It will contain the instantiated loop and the holes.</td>
+         </tr>
+       </table>
+     </div>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" border="0" width="32" height="32"></td>
+     <td>Before creating a loop in a CATPart document, make sure that <kbd>
+     Manual input</kbd> is <kbd>unchecked</kbd> in the Part Number field of the
+     <kbd>Tools&gt;Options...&gt;Infrastructure&gt;Product Structure&gt;Product Structure</kbd> 
+     tab.</td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/amethod.gif" border="0" width="32" height="32"></td>
+     <td>To create a loop, you have to:<ol class="task">
+       <li>
+       <p class="task"><a href="page11002.html">Declare input data</a></li>
+       <li>
+       <p class="task"><a href="page11004.html">Define the context</a></li>
+       <li>
+       <p class="task"><a href="page11001.html#Iterators">Specify iterators</a></li>
+       <li>
+       <p class="task"><a href="page10986.html">Write the body of the action 
+       script</a></li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <h2>Create the Loop Referencing the User Feature (UDF)<a name="Creating the loop referencing the user feature"></a></h2>
+     <ol class="task">
+       <li>
+       <p class="task">Open the <a href="b35doc/english/online/kwrug_c2/samples/KwrLoop3.CATPart">
+       KwrLoop3.CATPart</a>. The following image is displayed.</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber11">
+           <tr>
+             <td valign="top">
+             <p align="center">
+             <img border="1" src="b35doc/english/online/kwrug_c2/images/kwrloop24NLS.gif" align="left" width="402" height="198"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <ol start="2" class="task">
+       <li>
+       <p class="task">From the <kbd>Start&gt;Knowledgeware</kbd> menu, access the
+       <kbd>Knowledge Advisor</kbd> workbench.</li>
+       <li>
+       <p class="task">Click the <kbd>Loop</kbd> icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_LoopP2.gif" width="24" height="24">) 
+       in the <kbd>Control Features</kbd> bar. The Loop Edition window is 
+       displayed.</li>
+       <li>
+       <p class="task">In the specification tree, select the inputs of the loop.</p>
+       <div align="left">
+         <table border="0" cellspacing="0" id="AutoNumber2" cellpadding="4">
+           <tr>
+             <td colspan="2" valign="top">
+             <ul>
+               <li>
+               <p class="task">Expand the Parameters node and click the <kbd>
+               Lists_PointRef</kbd> list. In the Input Name field, enter the 
+               name of the list: PointsList.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td colspan="2" valign="top">
+             <ul>
+               <li>
+               <p class="task">Expand the Geometrical Set.1 node and select the 
+               Clearance_Surface feature. In the Input name field, enter the 
+               name of the feature: SurfRef.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td colspan="2" valign="top">
+             <ul>
+               <li>
+               <p class="task">Expand the Holes_Points node and select the 
+               Line.2 feature. In the Input name field, enter the name of the 
+               line: LineAxis.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td bgcolor="#F2F2F2" valign="top">
+             <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+             <td bgcolor="#F2F2F2">
+             <p class="task">Note that the name indicated in the Input name 
+             field is the one that will be used in the loop body.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Select the context, that is to say, in this scenario, the 
+       feature that will contain the instantiated holes. </p>
+       <div align="left">
+         <table border="0" cellspacing="1" id="AutoNumber3" cellpadding="4">
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">Click the Context field.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">Click ResultBody in the specification tree. </li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Indicate the number of holes that you want to instantiate 
+       into the surface. </p>
+       <div align="left">
+         <table border="0" cellspacing="0" id="AutoNumber4" cellpadding="0">
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">In the <kbd>From</kbd> field, indicate 1. (1 
+               corresponds to Extract.1.)</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">Right-click the <kbd>To... </kbd>field and select
+               <kbd>Edit formula...</kbd>. The Formula Editor is displayed.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">In the specification tree, click ListSize=24. 
+               Click <kbd>OK</kbd> when done. The number of instantiated holes 
+               is now valuated by a formula based on the list, that is to say on 
+               the number of points contained in the list.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Enter the following action script into the Editor.</p>
+       <div align="left">
+         <table border="0" id="AutoNumber5" cellpadding="4">
+           <tr>
+             <td rowspan="3" valign="top">
+             <img border="1" src="b35doc/english/online/kwrug_c2/images/kwrloop25.gif" width="330" height="121"></td>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">Use the <a href="page10993.html#import Keyword">
+               import</a> keyword to indicate the path of the file containing 
+               the User Feature (UDF) to be instantiated (<a href="b35doc/english/online/kwrug_c2/samples/KwrLoop1.CATPart">KwrLoop1.CATPart</a>).</li>
+               <li>
+               <p class="task">To indicate the path of the file, it is 
+               recommended to use
+               <a href="page11005.html#Insert File Path Command">Insert File 
+               Path</a>&nbsp; available in the contextual menu to import 
+               KwrLoop1.CATPart. (<font color="#FF0000"><kbd>1</kbd></font>)</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">UDF_$i$ is the name that will be attributed to 
+               each instance of the hole. (<font color="#FF0000"><kbd>2</kbd></font>)</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">Clearance_Hole_UDF is the name assigned to the 
+               User Feature (UDF) in the KwrLoop1.CATPart file. (<font color="#FF0000"><kbd>2</kbd></font>)</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top" colspan="2">
+             <ul>
+               <li>
+               <p class="task">Position is a point and also the first input that 
+               needs to be valuated when instantiating the holes. PointsList[$i$] 
+               is the name of the List. [$i$] corresponds to the nth item of the 
+               list. In this case, nth is equal to 24, the number of holes to be 
+               instantiated (<font color="#FF0000"><kbd>3</kbd></font>).</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top" colspan="2">
+             <ul>
+               <li>
+               <p class="task">Clearance_Surface is the second input required 
+               and defined when creating the User Feature (UDF) and SurfRef is 
+               the revolute into which the holes will be instantiated. (<font color="#FF0000"><kbd>4</kbd></font>)</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top" colspan="2">
+             <ul>
+               <li>
+               <p class="task">Axis is the third input required and defined when 
+               creating the User Feature (UDF) and LineAxis is Line.9, that is 
+               to say the instantiation axis. (<font color="#FF0000"><kbd>5</kbd></font>)</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top" colspan="2">
+             <ul>
+               <li>
+               <p class="task">Clearance is one of the published parameters of 
+               the User Feature (UDF). It is used in the action script because 
+               you want the value of the published parameter to be modified. (<font color="#FF0000"><kbd>6</kbd></font>)</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top" colspan="2">
+             <p class="task">For more information about the syntax to be used 
+             (;, {}, $i$) in the loop body, see <a href="page10986.html">Using 
+             the Scripting Language</a>.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd> when done. The holes are instantiated 
+       (see graphic below.)</li>
+       <li>
+       <p class="task">Click the <kbd>Update</kbd> icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_UpdateP2.gif" width="24" height="24">) 
+       to update the document.</li>
+     </ol>
+     <ol start="10" class="task">
+       <li>
+       <p class="task">Right-click the loop and use the <kbd>Properties</kbd> 
+       command to rename the loop into Loop_Holes. Click <kbd>OK</kbd> when 
+       done.</li>
+       <li>
+       <p class="task">In the specification tree, right-click the loop (located 
+       below the Relations node) and select the <kbd>Loop_Holes 
+       object&gt;Deactivate </kbd>command.</li>
+     </ol>
+     <h2>Save the Loop in a Power Copy<a name="Saving the loop in a powercopy"></a></h2>
+     <ol class="task" start="12">
+       <li>
+       <p align="left" class="task">Click the root of the specification tree, 
+       and from the <kbd>Start&gt;Mechanical Design</kbd> menu, access the <kbd>
+       Part Design</kbd> workbench.</li>
+       <li>
+       <p align="left" class="task">From the <kbd>Insert&gt;Advanced Replication 
+       Tools</kbd> menu, select <kbd>PowerCopy Creation...</kbd>. The Power Copy 
+       Definition window is displayed.</li>
+       <li>
+       <p align="left" class="task">In the specification tree, select the items 
+       making up the Power Copy:</p>
+       <div align="left">
+         <table border="0" cellspacing="0" id="AutoNumber7" cellpadding="0">
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">Formula.1</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">Loop_Holes</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"><p class="task">
+             Note that the Power Copy will need the following inputs at 
+             instantiation time:</p>
+             <div align="left">
+               <table border="0" cellspacing="1" id="AutoNumber10">
+                 <tr>
+                   <td valign="top">
+                   <ul>
+                     <li>
+                     <p class="task">ListSize</li>
+                     <li>
+                     <p class="task">Line.2</li>
+                     <li>
+                     <p class="task">Clearance_Surface</li>
+                     <li>
+                     <p class="task">List_PointsRef</li>
+                     <li>
+                     <p class="task">ResultBody</li>
+                   </ul>
+                   </td>
+                   <td valign="top">
+                   <img border="1" src="b35doc/english/online/kwrug_c2/images/kwrloop30NLS.gif" align="left" width="231" height="107"></td>
+                 </tr>
+               </table>
+             </div>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p align="left" class="task">Click <kbd>OK</kbd> when done. The Power 
+       Copy is created and is displayed below the Power Copy node in the 
+       specification tree.</li>
+       <li>
+       <p align="left" class="task">Save your file and close it.</li>
+     </ol>
+     <h2>Instantiate the Power Copy into an Existing Document<a name="Instantiating the powercopy into an existing document"></a></h2>
+     <ol class="task" start="17">
+       <li>
+       <p align="left" class="task">Open the <a href="b35doc/english/online/kwrug_c2/samples/KwrLoop4.CATPart">
+       KwrLoop4.CATPart</a> file. The following image is displayed.</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber13">
+           <tr>
+             <td valign="top"><img border="1" src="b35doc/english/online/kwrug_c2/images/kwrloop27NLS.gif" width="429" height="160"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <ol class="task" start="18">
+       <li>
+       <p align="left" class="task">From the <kbd>Insert</kbd> menu, select <kbd>
+       Instantiate From Document...</kbd>.</li>
+       <li>
+       <p align="left" class="task">In the <kbd>File Selection</kbd> window, 
+       select the KwrLoop3.CATPart file that you have saved and click <kbd>Open</kbd>. 
+       The Insert Object dialog box is displayed.</li>
+     </ol>
+     <div align="left">
+       <table border="0" cellspacing="0" id="AutoNumber8" cellpadding="0">
+         <tr>
+           <td valign="top">
+           <ol class="task" start="20">
+             <li>
+             <p align="left" class="task">Valuate the inputs of the Power Copy. 
+             To do so, in the specification tree, click:</p>
+             <div align="left">
+               <table border="0" cellspacing="0" id="AutoNumber9" cellpadding="0">
+                 <tr>
+                   <td valign="top">
+                   <ul>
+                     <li>
+                     <p class="task">ListSize=15 to valuate ListSize. </li>
+                   </ul>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td valign="top">
+                   <ul>
+                     <li>
+                     <p class="task">Body.2 to valuate the ResultBody.</li>
+                   </ul>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td valign="top">
+                   <ul>
+                     <li>
+                     <p class="task">List_Of_Points to valuate the 
+                     List_PointsRef.</li>
+                   </ul>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td valign="top">
+                   <ul>
+                     <li>
+                     <p class="task">Extrude.1 (located below Geometrical Set.1) 
+                     to valuate the Clearance_Surface.</li>
+                   </ul>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td valign="top">
+                   <ul>
+                     <li>
+                     <p class="task">Line.1 (located below Geometrical Set.1) to 
+                     valuate Line.2, that is to say the instantiation axis.</li>
+                   </ul>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td valign="top">&nbsp;</td>
+                 </tr>
+               </table>
+             </div>
+             </li>
+           </ol>
+           </td>
+           <td valign="top"><img border="0" src="b35doc/english/online/kwrug_c2/images/kwrloop31NLS.gif" width="268" height="389"></td>
+         </tr>
+       </table>
+     </div>
+     <ol class="task" start="21">
+       <li>
+       <p align="left" class="task">Click <kbd>OK</kbd> when done. The Loop and 
+       the formula contained in the Power Copy are instantiated.</li>
+     </ol>
+     <ol class="task" start="22">
+       <li>
+       <p align="left" class="task">To instantiate the holes, activate the loop. 
+       To do so, right-click Loop.1 in the specification tree and select <kbd>
+       Loop.1 object&gt;Activate</kbd>. The holes are instantiated.</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber15">
+           <tr>
+             <td valign="top">
+             <p align="center">
+             <img border="1" src="b35doc/english/online/kwrug_c2/images/kwrloop29NLS.gif" align="left" width="421" height="204"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top" colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p align="left"></p>
+
+ </body>
+
+</html>
+

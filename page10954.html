@@ -1,0 +1,163 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Smart Mechanical Components Functions</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+ <meta name="docCompliance" content="v 0.9; Fri Oct 14 11:14:05 2005">
+ <style type="text/css">
+ .auto-style1 {
+	 color: #282187;
+ }
+ </style>
+ </head>
+
+ <body>
+
+ <h1>Smart Mechanical Components Functions 
+ <a name="CATDFDBusinessLogic.BusinessLogic"></a></h1>
+ <h2>GetPartFeature</font></font></h2>
+ <p>According to the parameter of circularity in the process export attributes, 
+ you can access different type of the process in the Knowledge Advisor. You can 
+ create rules to modify the process export attribute.</p>
+ <h2 class="auto-style1">Exposed Die Face Design Tools</h2>
+ <ul>
+	 <li>
+	 Additional Tool
+	 </li>
+	 <li>
+	 Blank Holder Tool
+	 </li>
+	 <li>
+	 Cut Tool
+	 </li>
+	 <li>
+	 Die Insert Tool
+	 </li>
+	 <li>
+	 Die Tool
+	 </li>
+	 <li>
+	Inner Cut Tool	 </li>
+	 <li>
+	 Punch Insert Tool	 </li>
+	 <li>
+	Scrap Cut Tool	 </li>
+	 <li>
+	Stam Tool	 </li>
+	 <li>
+	 Unfold Tool	 </li>
+	 <li>
+	User Tool	 </li>
+ </ul>
+ <h2><font color="#282187">S</font><span class="auto-style1">yntax</span></h2>
+ <pre>GetPartFeature() : Part</pre>
+ <h2><font color="#282187"><font color="#282187">Example</font></font></h2>
+ <div align="left">
+   <table border="0" cellspacing="3" bgcolor="#FFFFFF" cellpadding="3">
+     <tr>
+       <td valign="top" bgcolor="#F0F0F0" align="left" bordercolor="#F0F0F0">
+       <p class="MsoNormal">
+	   <span style="font-family:Consolas;mso-bidi-font-family:&quot;Times New Roman&quot;;
+color:#C0504D;mso-themecolor:accent2">/*Rule created by BBY4 9/20/2019*/<br>/*<br>
+	   * We are going to retrieve all Inner Cut Tools of the part and test the 
+	   circularity of them.<br>* If it is circular, the hole type will be 
+	   standard type. Otherwise, it will be form type.<br>*/<br>/* Declaration 
+	   of variables */<br>Let featurePart(Part) <br>Let 
+	   listOfToolsInnerCut(List)<br>Let iNbOfInnerCutTools(Integer)<br>Let 
+	   iNbOfToolsCircular(Integer)<br>Let iNbOfToolsNonCircular(Integer)<br>Let 
+	   featureInnerCutToolTemp(InnerCutTool)<br>Let featureInputElement(Feature)<br>
+	   Let listInputElements(List)<br>Let I(Integer)<br>Let J(Integer)<br>Let 
+	   booleanInnerCut(Boolean)<o:p></o:p></span></p>
+	   <p class="MsoNormal">
+	   <span style="font-family:Consolas;mso-bidi-font-family:&quot;Times New Roman&quot;;
+color:#C0504D;mso-themecolor:accent2">/* Initialize variables */<br>Set I=1<br>
+	   Set iNbOfInnerCutTools=0<br>Set iNbOfToolsCircular=0<br>Set 
+	   iNbOfToolsNonCircular=0<br>Set booleanInnerCut=false<o:p></o:p></span></p>
+	   <p class="MsoNormal">
+	   <span style="font-family:Consolas;mso-bidi-font-family:&quot;Times New Roman&quot;;
+color:#C0504D;mso-themecolor:accent2">/* Retrieve the part */<br>featurePart = 
+	   GetPartFeature()<o:p></o:p></span></p>
+	   <p class="MsoNormal">
+	   <span style="font-family:Consolas;mso-bidi-font-family:&quot;Times New Roman&quot;;
+color:#C0504D;mso-themecolor:accent2">/* Retrieve the tools */<br>
+	   listOfToolsInnerCut =<span style="mso-spacerun:yes">&nbsp; </span>
+	   featurePart -&gt;Query(&quot;InnerCutTool&quot;,&quot;&quot;)<o:p></o:p></span></p>
+	   <p class="MsoNormal">
+	   <span style="font-family:Consolas;mso-bidi-font-family:&quot;Times New Roman&quot;;
+color:#C0504D;mso-themecolor:accent2">for I while I &lt;= 
+	   listOfToolsInnerCut.Size()<o:p></o:p></span></p>
+	   <p class="MsoNormal">
+	   <span style="font-family:Consolas;mso-bidi-font-family:&quot;Times New Roman&quot;;
+color:#C0504D;mso-themecolor:accent2">{<span style="mso-tab-count:1"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>/* Initialize the variable J */<br><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>Set J=1<br><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>listInputElements-&gt;RemoveAll()<span style="mso-tab-count:1"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>/* Retrieve the item I */<br><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>featureInnerCutToolTemp = listOfToolsInnerCut.GetItem(I)<span style="mso-tab-count:1"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>/* Test on inner */<br><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>if featureInnerCutToolTemp -&gt;GetAttributeString(&quot;Cut Sub Type&quot;) == 
+	   &quot;Pierce/Inner Cutting&quot;<br><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>{<br><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>Set booleanInnerCut = true<br><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>}<br><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>if featureInnerCutToolTemp -&gt;GetAttributeString(&quot;Cut Type&quot;) == 
+	   &quot;Pierce/Inner Cutting&quot;<br><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>{<br><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>Set booleanInnerCut = true<br><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>}<span style="mso-tab-count:1"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>/* Test on boolean */<br><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>if booleanInnerCut == true<br><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>{<br><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>iNbOfInnerCutTools = iNbOfInnerCutTools + 1<span style="mso-tab-count:2"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>/*Retrieve the elements of the inner cut tool */<br>
+	   <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>listInputElements = featureInnerCutToolTemp-&gt;GetInputElements()<span style="mso-tab-count:2"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>/* Debug */<br><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>/* Message(&quot;Number of inputs : #&quot;, listInputElements.Size()) */<span style="mso-tab-count:2"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>for J while J &lt;= listInputElements.Size()<br>
+	   <span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>{<br><span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>featureInputElement = listInputElements.GetItem(J)<span style="mso-tab-count:3"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>/* Search for boolean */<br><span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>if featureInputElement -&gt;GetAttributeBoolean(&quot;Is Circular Hole&quot;) 
+	   == true<br><span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>{<br><span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>iNbOfToolsCircular = iNbOfToolsCircular + 1<span style="mso-tab-count:4"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>/* We set the hole type to standard */<br>
+	   <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>featureInputElement -&gt;SetAttributeString(&quot;Hole Type&quot;, &quot;Standard&quot;)<span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>}<br><span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>else<br><span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>{<br><span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>iNbOfToolsNonCircular = iNbOfToolsNonCircular + 1<span style="mso-tab-count:4"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>/* We set the hole type to form */<br>
+	   <span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>featureInputElement -&gt;SetAttributeString(&quot;Hole Type&quot;, &quot;Form&quot;)<span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>}<br><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>}<br><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>}<br>}<br>/* Display informations*/<br>/* Message(&quot;Number of inner 
+	   cutting tools is : #&quot;, iNbOfInnerCutTools) */<br>/* Message(&quot;Number of 
+	   circular holes is : #&quot;, iNbOfToolsCircular) */<br>/* Message(&quot;Number of 
+	   non circular holes is : #&quot;, iNbOfToolsNonCircular) */<br>if 
+	   iNbOfToolsCircular &gt; 0 <br><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	   </span>Message(&quot;# Hole types have been changed to standard&quot;, 
+	   iNbOfToolsCircular)<br>if iNbOfToolsNonCircular &gt; 0 <br>
+	   <span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+	   Message(&quot;# Hole types have been changed to form&quot;, iNbOfToolsNonCircular )<o:p></o:p></span></p>
+       </td>
+     </tr>
+   </table>
+ </div>
+ <p align="center">&nbsp;</p>
+
+ </body>
+
+</html>
+

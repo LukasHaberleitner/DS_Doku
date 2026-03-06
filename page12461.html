@@ -1,0 +1,101 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2L2">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating Activity-to-Product/Weld/Resource Relationships</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta content="none, default" name="Microsoft Border">
+</head>
+
+ <body>
+
+ <h1>Creating Activity-to-Product/Weld/Resource Relationships</h1>
+ <table border="0" width="100%" cellspacing="3" cellpadding="3">
+   <tr>
+     <td width="5%" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td width="95%" valign="top">Using Interface Description Language (IDL), the PPR Document is available for Automation clients to access 
+     the Process Document. Using this functionality, clients can:<br>
+&nbsp;
+     <ul>
+       <li>Add a process library to use.</li>
+       <li>Insert products and resources in their respective contexts.</li>
+       <li>Retrieve the handle of a specific product or resource in the tree. (This is used to assign to an activity.)</li>
+       <li>Retrieve the list of processes, products and resources in the process document.</li>
+     </ul>
+     <p>This feature helps users build the process document from external applications (such as Microsoft Excel), as 
+     well as from running VBScript macros from the <kbd>Tools>Macro</kbd> command.<br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="5%" valign="top"></td>
+     <td width="95%" valign="top">
+     <pre><code>Language=&quot;VBSCRIPT&quot;
+Sub CATMain()
+'Create a New PPRDocument and Set it as an ActiveDocument
+Dim processDoc As PPRDocument
+Set processDoc = CATIA.Documents.Add(&quot;Process&quot;)
+Set processDoc = CATIA.ActiveDocument
+
+'Adding a Process Library to Use
+processDoc.addProcessLibraryToUse  &quot;d:/myProcess.act&quot;
+
+'Inserting Products and Resources in their Respective Contexts
+processDoc.addProduct   &quot;d:/Product1.CATProduct&quot; 
+processDoc.addProduct   &quot;d:/Product2.CATProduct&quot; 
+
+processDoc.addResource  &quot;d:/Resource1.CATProduct&quot;
+processDoc.addResource  &quot;d:/Resource2.CATProduct&quot; 
+
+'Get the Handle to the Root Process
+Dim Process as Activity
+Set Process = ProcessDoc.Processes.Item( 1 )
+ 
+ 'Create an Activitiy of Type Load1
+Dim LoadActivity as Activity
+set LoadActivity = Process.CreateChild(&quot;Load1&quot;)
+LoadActivity.Name = &quot;LoadActivity&quot;
+
+'Create an Activitiy of Type Load33
+Dim WeldActivity as Activity
+set WeldActivity = Process.CreateChild(&quot;Load33&quot;)
+WeldActivity.Name = &quot;WeldActivity&quot;
+
+'Get the Handle to Product in the ProductList  as an Item
+Dim Product1 As CATIAProduct
+Set Product1 = processDoc.Products.Item(1)
+
+'Get the Handle to a Resource in the ResourceList 
+Dim Resource1 As CATIAProduct
+Set Resource1 = processDoc.Resources.Item( 1 )
+
+'Get the Handle to Manage the Collection of Items on the Activity and 
+'assign the item handle to this collection
+Dim itms as items
+Set itms = LoadActivity.items
+itms.AssignItem( Product1 )
+
+'Get the Handle to Manage the Collection of Resources on the Activity 
+'and assign the Resource handle to this collection
+Dim resrcs as Resources
+Set rsrcs = LoadActivity.Resources
+rsrcs.AssignResource( Resource1 )
+
+'Create the Link between Load and Weld Activities and Save the Document. 
+LoadActivity.CreateLink(WeldActivity)
+processDoc.SaveAs &quot;d:&#092;CreatedFromVBScript.CATProcess&quot;
+End Sub
+</code></pre>
+     </td>
+   </tr>
+ </table>
+ <p align="center"><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

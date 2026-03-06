@@ -1,0 +1,482 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+  <head>
+  <meta name="MonocodingType" content="0">
+  <meta name="MonocodingFlag" content="C2D2">
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <title>NURBS Formats in APT Output</title>
+  <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  </head>
+
+  <body>
+
+  <h1><a name="WNR11NURBS"></a>NURBS Formats in APT Output</h1>
+  <p>It is possible to generate NC output files containing tool motion descriptions 
+  using a format based on NURBS technology for both fixed or variable axis programs.</p>
+  <p>This format is recognized by most new generation NC controllers (such as the 
+  Siemens 840D). It supports High Speed Milling (HSM) in order to reduce machining 
+  time and improve surface quality.</p>
+  <p>Examples of Fixed Axis and Variable Axis NURBS output statements that can be 
+  found in the generated APT file are given below.</p>
+  <p><b>Fixed Axis NURBS example:</b></p>
+  <blockquote>
+    <p><code>BEGIN NURBS_SIEMENS(D=3,F=4000,AXIS=0.00,0.00,1.00);<br>
+    N0,XT= 0.000,YT=0.000,ZT=0.000,DK= 0.00,W=1.0;<br>
+    N1,XT=10.000,YT=0.000,ZT=0.000,DK= 0.00,W=1.0;<br>
+    N2,XT=20.000,YT=0.000,ZT=0.000,DK=30.00,W=1.0;<br>
+    N3,XT=30.000,YT=0.000,ZT=0.000,DK= 0.00,W=1.0;<br>
+    END NURBS;</code></p>
+  </blockquote>
+  <p><b>Variable Axis NURBS example:</b></p>
+  <blockquote>
+    <p><code>BEGIN NURBS_SIEMENS(D=3,F=4000,AXIS=VAR,LENGTH=100.00);<br>
+    N0,XT= 0.000,YT=0.000,ZT=0.000,XH= 0.000, $<br>
+    YH=0.000,ZH=100.00,DK= 0.00,W=1.0;<br>
+    N1,XT=10.000,YT=0.000,ZT=0.000,XH=10.000, $ <br>
+    YH=0.000,ZH=100.00,DK= 0.00,W=1.0;<br>
+    N2,XT=20.000,YT=0.000,ZT=0.000,XH=20.000, $<br>
+    YH=0.000,ZH=100.00,DK=30.00,W=1.0;<br>
+    N3,XT=30.000,YT=0.000,ZT=0.000,XH=30.000, $<br>
+    YH=0.000,ZH=100.00,DK= 0.00,W=1.0;<br>
+    END NURBS; </code></p>
+  </blockquote>
+  <p>These statements are supported by some of the Post-Processors proposed under
+  <a target="_blank" href="page1017.html">
+  Tools &gt; Options &gt; Machining &gt; Output</a> for conversion to Siemens Nurbs/Bspline 
+  statements.</p>
+  <h2>Benefit Derived from Using NURBS Interpolated Tool Paths</h2>
+  <p>There are several advantages in using NURBS interpolated tool paths:</p>
+  <ul>
+    <li>gain in overall dynamic performance</li>
+    <li>better surface quality</li>
+    <li>gain in productivity.</li>
+  </ul>
+  <h3>Gain in Overall Dynamic Performance</h3>
+  <p>Because NURBS curves introduce C<sup>2</sup> continuity in the path as often 
+  as possible, it decreases dramatically the machine decelerations produced by curvature 
+  discontinuities. This fact is easily explained. If the second derivative of the 
+  curve is not continuous on a point, the numerical controller detects a discontinuity 
+  in acceleration at this position. There are two solutions to this problem:</p>
+  <ul>
+    <li>Let the acceleration go to its calculated value. <br>
+    Theoretically, this means that the variation of acceleration (which is called
+    <i>Jerk</i>) on the neighborhood of this point will be infinite. In fact the 
+    Jerk is directly linked to the power of the linear motors and the inertia of 
+    the machine. So it has a specified limit value (which is constant). </li>
+    <li>Force the speed of the tool to a small value.<br>
+    This means that the acceleration and the Jerk will be forced to a small value. 
+    The machine has a big slowdown. This is the current method employed by the numerical 
+    controller. This method had big disadvantages. First, a lot of machining time 
+    can be lost due to continuity problems. Second, a big feedrate variation during 
+    a machining operation could mark the surface being machined and so deteriorate 
+    surface quality.</li>
+  </ul>
+  <h3>Better Surface Quality</h3>
+  <p>Compared to linear interpolation, a NURBS machined surface will have a smoother 
+  aspect and will not provide a facetized result like in linear interpolation. A 
+  very good surface quality can be obtained without significantly reducing the program 
+  tolerance. </p>
+  <h3>Gain in Productivity</h3>
+  <p>NURBS output provides better dynamic properties and, as a result, the gain 
+  in productivity using NURBS instead of linear or linear/circular interpolation 
+  is increased. A comparison in terms of machining time gain of the different APT 
+  output formats has been verified with a lot of programs including 3-axis and 5-axis 
+  operations.</p>
+  <p>This interpolation provides as good results as the numerical controller polynomial 
+  interpolation. The advantage of using NURBS interpolation is that there is no 
+  need for extra numerical controller parameterization. </p>
+  <p>The NURBS tool path final tolerance is equal to 1.5 times the computed operation 
+  tolerance.</p>
+  <h2>CATIA Version 5 APT Output Format</h2>
+  <p>The fixed and variable axis NURBS output can be included in regular CATIA APT 
+  output containing other classes of 3 or 5 axis tool motion statements. The most 
+  common of these statements are:</p>
+  <blockquote>
+    <p><code>GOTO / x, y, z </code><br>
+    <code><br>
+    GOTO / x, y, z, i, j, k </code></p>
+  </blockquote>
+  <p><b>Sample</b>: </p>
+  <blockquote>
+    <p><code>GOTO / 0.00000, 89.19372, 12.00000<br>
+    <br>
+    GOTO / 0.00000, 89.19372, 12.00000, 0.000000, 0.000000, 1.000000</code></p>
+  </blockquote>
+  <h3>Syntax</h3>
+  <p>A Fixed Axis Catia NURBS for Siemens Output looks like this:</p>
+  <blockquote>
+    <p><code>BEGIN NURBS_SIEMENS (D=3,F=8000.000,AXIS= 0.000000, 0.000000, 1.000000)<br>
+    N0, XT= 0.00000, YT= 89.19372, ZT= 12.00000,DK=0.000,W=1.000;<br>
+    N1, XT= -35.25923, YT= 82.30182, ZT= 12.00000,DK=0.000,W=1.000;<br>
+    N2, XT= -70.67279, YT= 76.14709, ZT= 12.00000,DK=107.790,W=1.000;<br>
+    N3, XT= -105.90481, YT= 69.14878, ZT= 12.00000,DK=0.000,W=1.000;<br>
+    END NURBS</code></p>
+  </blockquote>
+  <p>A Variable Axis Catia NURBS for Siemens Output looks like this:</p>
+  <blockquote>
+    <p><code>BEGIN NURBS_SIEMENS (D=3,F=8000.000,AXIS=VAR,LENGTH= 50.000)<br>
+    N0, XT= -75.76597, YT= 71.65094, ZT= -21.94567, XH= -72.178223, YH=$<br>
+    62.527376, ZH= 27.083796,DK=0.000,W=1.000;<br>
+    N1, XT= -78.91003, YT= 71.01919, ZT= -21.77676, XH= -79.690819, YH=$<br>
+    61.032142, ZH= 27.416003,DK=0.000,W=1.000;<br>
+    N2, XT= -82.06101, YT= 70.37700, ZT= -21.56199, XH= -87.244248, YH=$<br>
+    59.640659, ZH= 27.190920,DK=22.998,W=1.000;<br>
+    N3, XT= -85.40313, YT= 69.68892, ZT= -21.29975, XH= -94.767915, YH=$<br>
+    58.350206, ZH= 26.488684,DK=0.000,W=1.000;<br>
+    END NURBS</code></p>
+  </blockquote>
+  <p>The number of digits used for each float value is not imposed. The $ character 
+  signifies that the instruction continues on the next line.</p>
+  <h3>Mathematical and Geometrical Interpretation</h3>
+  <p><b>D=Integer value</b>: <br>
+  degree on the NURBS, means order-1, in most cases degree is 3 and order is 4.<br>
+  <b>F=Float value</b>: <br>
+  feedrate in mm per minute (Feedrate)<br>
+  <b>LENGTH=Float value</b>: <br>
+  distance (constant in the NURBS) between MT and MH control points.<br>
+  <b>N=Integer value</b>: <br>
+  rank of the control point in the NURBS, starts at 0 for the initial point.<br>
+  <b>XT, YT, ZT=Float values</b>:<br>
+  coordinates of the control point of the tool tip (MT).<br>
+  <b>XH, YH, ZH=Float values</b>:<br>
+  coordinate of the control point of a point on the tool axis (MH).<br>
+  <b>DK=Float value</b>:<br>
+  increment of nodal parameter related to this node (can be null, always &gt;= 0.00).<br>
+  <b>W= Float value</b>: <br>
+  weight of the control point (in most cases it is set to 1.00 for all NURBS, which 
+  is Polynomial and not Rational in this case ).</p>
+  <blockquote>
+    <p><img border="1" src="b35doc/english/online/mfgug_c2/images/Nurbs01.gif" width="330" height="159"></p>
+  </blockquote>
+  <p>Consider (DKi), (Wi), (XTi,YTi,ZTi), (XHi,YHi,ZHi) for all the values related 
+  to the control point i, for i in [0,NB]. <br>
+  With all this data it is possible to define a NURBS function from [0.00,Kmax] 
+  to R<sup>6</sup>.<br>
+  Kmax = &#931;DKi , for i=0 to NB.</p>
+  <p>The nodal vector (U(I)) of the NURBS contains NB+5 Values:<br>
+  U(0)=0.00<br>
+  U(1)=0.00<br>
+  And for I=2 to NB+3<br>
+  U(I)=U(I-1)+DK(I-2) (that is, U(2)=U(1)+DK(0)=0.00)<br>
+  then<br>
+  U(NB+4) = U(NB+3) = Kmax<br>
+  U(NB+5) = U(NB+4)</p>
+  <p><b>In Fixed Axis mode</b>, for each value of w in [0,Kmax] this function give 
+  3 values: X(w), Y(w), Z(w), which are the control point coordinates of the tool 
+  tip at the w parameter.</p>
+  <p><b>In Variable Axis mode</b>, for each value of w in [0,Kmax] this function 
+  give 6 values: XT(w), YT(w), ZT(w), XH(w), YH(w), ZH(w) which are the control 
+  point coordinates of the points MT=(XT,YT,ZT) and MH=(XH,YH,ZH). </p>
+  <p>MT is the position of the tool tip at the w parameter.<br>
+  MH is the position, at the w parameter, of the point on the tool axis located 
+  a distance LENGTH from MT. This length defines the active cutting part of the 
+  tool. This means that all transformations of the tool path must respect the machining 
+  tolerance (chordal deviation) for all points between MT and MH.</p>
+  <p>The first Tool position (XYZIJK) of the NURBS is:</p>
+  <blockquote>
+    <p><code>X=XT0<br>
+    Y=YT0<br>
+    Z=ZT0<br>
+    I=(XH0-XT0)/LENGTH<br>
+    J=(YH0-YT0)/LENGTH<br>
+    K=(ZH0-ZT0)/LENGTH.</code></p>
+  </blockquote>
+  <h2>Post Processing Considerations for Siemens 840D Format</h2>
+  <h3>Variable Axis Syntax</h3>
+  <p>The format used by 840D is the following: </p>
+  <blockquote>
+    <p><code>BEGIN NURBS_SIEMENS(D=3,F=xxxx,AXIS=VAR,LENGTH=100.00);<br>
+    N0,XT=xt0,YT=yt0,ZT=zt0,XH=xh0,YH=yh0,ZH=zh0,DK=dk0,W=w0;<br>
+    N1,XT=xt1,YT=yt1,ZT=zt1,XH=xh1,YH=yh1,ZH=zh1,DK=dk1,W=w1;<br>
+    N2,XT=xt2,YT=yt2,ZT=zt2,XH=xh2,YH=yh2,ZH=zh2,DK=dk2,W=w2;<br>
+    <br>
+    ../..<br>
+    Nn,XT=xtn,YT=ytn,ZT=ztn,XH=xhn,YH=yhn,ZH=zhn,DK=dkn,W=wn;<br>
+    END NURBS; </code></p>
+  </blockquote>
+  <p>If previous Catia block is a NURBS block:<br>
+  <code>&nbsp;&nbsp;&nbsp;&nbsp; SD=3 F xxxx ; NURBS degree and feedrate</code>
+  <br>
+  Otherwise:<br>
+  <code>&nbsp;&nbsp;&nbsp;&nbsp; ORIVECT<br>
+&nbsp;&nbsp;&nbsp;&nbsp; G1 X Y Z A3=I B3=J C3=K ; first point of the NURBS, Control 
+  Point 0<br>
+  </code>Then:<br>
+  <code>&nbsp;&nbsp;&nbsp;&nbsp; ORICURVE<br>
+&nbsp;&nbsp;&nbsp;&nbsp; G642 ; start of continuous motion statement<br>
+&nbsp;&nbsp;&nbsp;&nbsp; BSPLINE SD=3 F xxxx ; NURBS declaration, degree and feedrate
+  <br>
+&nbsp;&nbsp;&nbsp;&nbsp; X Y Z XH YH ZH PW=W PL=DK ; Control Point 1<br>
+&nbsp;&nbsp;&nbsp;&nbsp; X Y Z XH YH ZH PW=W PL=DK ; Control Point 2<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ../..<br>
+&nbsp;&nbsp;&nbsp;&nbsp; X Y Z XH YH ZH PW=W PL=DK ; Last Control Point of the NURBS.</code></p>
+  <h4>Translation from Catia Format</h4>
+  <p>All parameters are the same as the one on the corresponding Catia line (i), 
+  except for the first one. If needed it is translated by a G1 statement.</p>
+  <blockquote>
+    <p><code>Siemens Xi= Catia XTI<br>
+    Siemens Yi= Catia YTI<br>
+    Siemens Zi= Catia ZTI<br>
+    Siemens XHi= Catia XHi<br>
+    Siemens YHi= Catia YHi<br>
+    Siemens ZHi= Catia ZHi<br>
+    Siemens PWi= Catia Wi<br>
+    Siemens PLi= Catia DKi</code></p>
+  </blockquote>
+  <h4>APT Sample for Variable Axis NURBS</h4>
+  <blockquote>
+    <p><code>$$ -----------------------------------------------------------------<br>
+    $$ Generated on Wednesday, September 25, 2002 05:24:47 PM<br>
+    $$ CATIA APT VERSION 1.0<br>
+    $$ -----------------------------------------------------------------<br>
+    $$ Flank Mixed Combin<br>
+    $$ Part Operation.1<br>
+    $$*CATIA0<br>
+    $$ Flank Mixed Combin<br>
+    $$ 1.00000 0.00000 0.00000 0.00000<br>
+    $$ 0.00000 1.00000 0.00000 0.00000<br>
+    $$ 0.00000 0.00000 1.00000 0.00000<br>
+    PARTNO Part Operation.1<br>
+    FROM / 0.00000, 0.00000, 100.00000, 0.000000, 0.000000, 0.000000<br>
+    PPRINT OPERATION NAME : Tool Change.10<br>
+    $$ Start generation of : Tool Change.10<br>
+    MULTAX<br>
+    $$ TOOLCHANGEBEGINNING<br>
+    CUTTER/ 8.000000, 4.000000, 0.000000, 4.000000, 0.000000,$<br>
+    0.000000, 50.000000<br>
+    TOOLNO/2,MILL, 8.000000, 4.000000,, 100.000000,$<br>
+    60.000000,, 50.000000,4, 8000.000000,$<br>
+    MMPM,15000.000000,RPM,CLW,ON,$<br>
+    AUTO, 0.000000,NOTE<br>
+    TPRINT/balld8,,balld8<br>
+    LOADTL/2,2,2<br>
+    $$ End of generation of : Tool Change.10<br>
+    PPRINT OPERATION NAME : Multi-Axis Flank Contouring.2<br>
+    $$ Start generation of : Multi-Axis Flank Contouring.2<br>
+    FEDRAT/ 8000.0000,MMPM<br>
+    SPINDL/15000.0000,RPM,CLW<br>
+    BEGIN NURBS_SIEMENS (D=3,F=8000.000,AXIS=VAR,LENGTH= 50.000)<br>
+    N0, XT= 19.75656, YT= 81.42861, ZT= 20.00000, XH= 19.757763, YH=$<br>
+    71.623025, ZH= 69.029078,DK=0.000,W=1.000;<br>
+    N1, XT= 19.75625, YT= 83.94658, ZT= 7.40984, XH= 19.757454, YH=$<br>
+    74.140998, ZH= 56.438918,DK=0.000,W=1.000;<br>
+    N2, XT= 19.75594, YT= 86.46456, ZT= -5.18032, XH= 19.757144, YH=$<br>
+    76.658971, ZH= 43.848757,DK=38.518,W=1.000;<br>
+    N3, XT= 19.75563, YT= 88.98253, ZT= -17.77048, XH= 19.756835, YH=$<br>
+    79.176944, ZH= 31.258597,DK=0.000,W=1.000;<br>
+    END NURBS<br>
+    BEGIN NURBS_SIEMENS (D=3,F=8000.000,AXIS=VAR,LENGTH= 50.000)<br>
+    N0, XT= 19.75563, YT= 88.98253, ZT= -17.77048, XH= 19.756835, YH=$<br>
+    79.176944, ZH= 31.258597,DK=0.000,W=1.000;<br>
+    N1, XT= 19.38827, YT= 89.96343, ZT= -23.02431, XH= 19.389475, YH=$<br>
+    80.157844, ZH= 26.004770,DK=0.000,W=1.000;<br>
+    N2, XT= 14.20175, YT= 89.85474, ZT= -27.41283, XH= 14.202952, YH=$<br>
+    80.049153, ZH= 21.616250,DK=15.662,W=1.000;<br>
+    N3, XT= 9.00010, YT= 88.77303, ZT= -26.95061, XH= 9.001309, YH=$<br>
+    78.967440, ZH= 22.078468,DK=0.000,W=1.000;<br>
+    END NURBS<br>
+    <br>
+    ../..<br>
+    <br>
+    BEGIN NURBS_SIEMENS (D=3,F=8000.000,AXIS=VAR,LENGTH= 50.000)<br>
+    N0, XT= 19.18055, YT= -42.44969, ZT= -6.28780, XH= 19.180191, YH=$<br>
+    -37.474471, ZH= 43.464058,DK=0.000,W=1.000;<br>
+    N1, XT= 19.18049, YT= -41.57342, ZT= 2.47480, XH= 19.180128, YH=$<br>
+    -36.598205, ZH= 52.226657,DK=0.000,W=1.000;<br>
+    N2, XT= 19.18042, YT= -40.69716, ZT= 11.23740, XH= 19.180065, YH=$<br>
+    -35.721939, ZH= 60.989257,DK=26.419,W=1.000;<br>
+    N3, XT= 19.18036, YT= -39.82089, ZT= 20.00000, XH= 19.180002, YH=$<br>
+    -34.845674, ZH= 69.751856,DK=0.000,W=1.000;<br>
+    END NURBS<br>
+    $$ End of generation of : Multi-Axis Flank Contouring.2<br>
+    FINI</code></p>
+  </blockquote>
+  <h4>NC Code Sample for Variable Axis NURBS</h4>
+  <blockquote>
+    <p><code>N10 ;PROGRAMME : Part Operation.1<br>
+    N20 ;PROGRAMMEUR: AAU<br>
+    N30 ;DATE : AAU<br>
+    G642<br>
+    ffwon<br>
+    N40 TRAORI<br>
+    G57<br>
+    M8<br>
+    N50 ORIVECT<br>
+    N60 G0 Z100.0<br>
+    N70 G0 X0.0 Y0.0<br>
+    N80 T2 M06<br>
+    N90 G1 X19.75656 Y81.42861 Z20.0 A3=0.00002 B3=-0.19611 C3=0.98058<br>
+    N100 ORICURVE<br>
+    N110 G642<br>
+    N120 BSPLINE SD=3 F8000.000<br>
+    N130 X19.75625 Y83.94658 Z7.40984 XH=19.75745 YH=74.141 ZH=56.43892 PL=0.0<br>
+    N140 X19.75594 Y86.46456 Z-5.18032 XH=19.75714 YH=76.65897 ZH=43.84876 PL=38.518<br>
+    N150 X19.75563 Y88.98253 Z-17.77048 XH=19.75683 YH=79.17694 ZH=31.2586 PL=0.0<br>
+    N160 X19.38827 Y89.96343 Z-23.02431 XH=19.38948 YH=80.15784 ZH=26.00477 PL=0.0<br>
+    N170 X14.20175 Y89.85474 Z-27.41283 XH=14.20295 YH=80.04915 ZH=21.61625 PL=15.662<br>
+    N180 X9.0001 Y88.77303 Z-26.95061 XH=9.00131 YH=78.96744 ZH=22.07847 PL=0.0<br>
+    <br>
+    ../..<br>
+    <br>
+    N470 X19.19914 Y-42.982 Z-11.59413 XH=19.19878 YH=-38.00679 ZH=38.15773 PL=15.662<br>
+    N480 X19.18055 Y-42.44969 Z-6.2878 XH=19.18019 YH=-37.47447 ZH=43.46406 PL=0.0<br>
+    N490 X19.18049 Y-41.57342 Z2.4748 XH=19.18013 YH=-36.59821 ZH=52.22666 PL=0.0<br>
+    N500 X19.18042 Y-40.69716 Z11.2374 XH=19.18007 YH=-35.72194 ZH=60.98926 PL=26.419<br>
+    N510 X19.18036 Y-39.82089 Z20.0 XH=19.18 YH=-34.84567 ZH=69.75186 PL=0.0<br>
+    N520 ORIVECT<br>
+    N530 TRAFOOF<br>
+    N540 G57<br>
+    N550 M5 M9<br>
+    N560 M30</code></p>
+  </blockquote>
+  <h3>Fixed Axis Syntax</h3>
+  <p>The format used by 840D is the following: Translation Convention.</p>
+  <blockquote>
+    <p><code>BEGIN NURBS_SIEMENS(D=3,F=xxxx,AXIS=0.00,0.00,1.00);<br>
+    N0,X=x0,Y=y0,Z=z0,DK=dk0,W=w0;<br>
+    N1,X=x1,Y=y1,Z=z1,DK=dk1,W=w1;<br>
+    N2,X=x2,Y=y2,Z=z2,DK=dk2,W=w2;<br>
+    ../..<br>
+    Nn,X=xn,Y=yn,Z=zn,DK=dkn,W=wn;<br>
+    END NURBS; </code></p>
+  </blockquote>
+  <p>If previous Catia block is a NURBS Block:<br>
+  <code>&nbsp;&nbsp;&nbsp;&nbsp; SD=3 F xxxx ; NURBS degree and feedrate&nbsp;
+  <br>
+  </code>Otherwise:<br>
+  <code>&nbsp;&nbsp;&nbsp;&nbsp; G1 X Y Z ; first point of the NURBS, Control Point 
+  0<br>
+  </code>Then:<code><br>
+&nbsp;&nbsp;&nbsp;&nbsp; G64 ; start of continuous motion statement<br>
+&nbsp;&nbsp;&nbsp;&nbsp; BSPLINE SD=3 F xxxx ; NURBS declaration, degree and feedrate
+  <br>
+&nbsp;&nbsp;&nbsp;&nbsp; X Y Z PW=W PL=DK ; Control Point 1<br>
+&nbsp;&nbsp;&nbsp;&nbsp; X Y Z PW=W PL=DK ; Control Point 2<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ../..<br>
+&nbsp;&nbsp;&nbsp;&nbsp; X Y Z PW=W PL=DK ; Last Control Point of the NURBS</code></p>
+  <h4>Translation from Catia Format</h4>
+  <p>All parameters are the same as the one on the corresponding Catia line (i), 
+  except for the first one. If needed it is translated by a G1 statement.</p>
+  <blockquote>
+    <p><code>Siemens Xi= Catia Xi<br>
+    Siemens Yi= Catia Yi<br>
+    Siemens Zi= Catia Zi<br>
+    Siemens PWi= Catia Wi<br>
+    Siemens PLi= Catia DKi</code></p>
+  </blockquote>
+  <h4>APT Sample for Fixed Axis NURBS</h4>
+  <blockquote>
+    <p><code>$$ -----------------------------------------------------------------<br>
+    $$ Generated on Wednesday, September 25, 2002 05:24:29 PM<br>
+    $$ CATIA APT VERSION 1.0<br>
+    $$ -----------------------------------------------------------------<br>
+    $$ Manufacturing Program.7<br>
+    $$ Part Operation.1<br>
+    $$*CATIA0<br>
+    $$ Manufacturing Program.7<br>
+    $$ 1.00000 0.00000 0.00000 0.00000<br>
+    $$ 0.00000 1.00000 0.00000 0.00000<br>
+    $$ 0.00000 0.00000 1.00000 0.00000<br>
+    PARTNO Part Operation.1<br>
+    FROM / 0.00000, 0.00000, 100.00000<br>
+    PPRINT OPERATION NAME : Tool Change.14<br>
+    $$ Start generation of : Tool Change.14<br>
+    MULTAX<br>
+    $$ TOOLCHANGEBEGINNING<br>
+    CUTTER/ 8.000000, 4.000000, 0.000000, 4.000000, 0.000000,$<br>
+    0.000000, 50.000000<br>
+    TOOLNO/2,MILL, 8.000000, 4.000000,, 100.000000,$<br>
+    60.000000,, 50.000000,4, 8000.000000,$<br>
+    MMPM,15000.000000,RPM,CLW,ON,$<br>
+    AUTO, 0.000000,NOTE<br>
+    TPRINT/balld8,,balld8<br>
+    LOADTL/2,2,2<br>
+    $$ End of generation of : Tool Change.14<br>
+    PPRINT OPERATION NAME : Isoparametric Machining.2<br>
+    $$ Start generation of : Isoparametric Machining.2<br>
+    FEDRAT/ 8000.0000,MMPM<br>
+    SPINDL/15000.0000,RPM,CLW<br>
+    GOTO / 9.95037, -48.78022, 20.00000<br>
+    GOTO / 9.95037, -48.78022, 22.00000<br>
+    BEGIN NURBS_SIEMENS (D=3,F=8000.000,AXIS= 0.000000, 0.000000, 1.000000)<br>
+    N0, XT= 9.95037, YT= -48.78022, ZT= 22.00000,DK=0.000,W=1.000;<br>
+    N1, XT= 10.01206, YT= -48.78639, ZT= 16.72430,DK=0.000,W=1.000;<br>
+    N2, XT= 5.43447, YT= -48.32863, ZT= 11.75306,DK=15.662,W=1.000;<br>
+    N3, XT= 0.00000, YT= -47.78518, ZT= 12.00000,DK=0.000,W=1.000;<br>
+    END NURBS<br>
+    <br>
+    ../..<br>
+    <br>
+    BEGIN NURBS_SIEMENS (D=3,F=8000.000,AXIS= 0.000000, 0.000000, 1.000000)<br>
+    N0, XT= 0.00000, YT= -44.60573, ZT= 12.00000,DK=0.000,W=1.000;<br>
+    N1, XT= 5.25284, YT= -45.09640, ZT= 11.93801,DK=0.000,W=1.000;<br>
+    N2, XT= 10.20252, YT= -45.55876, ZT= 16.53842,DK=15.662,W=1.000;<br>
+    N3, XT= 9.95665, YT= -45.53580, ZT= 22.00000,DK=0.000,W=1.000;<br>
+    END NURBS<br>
+    GOTO / 9.95665, -45.53580, 22.00000<br>
+    GOTO / 9.95665, -45.53580, 20.00000<br>
+    $$ End of generation of : Isoparametric Machining.2<br>
+    FINI</code></p>
+  </blockquote>
+  <h4>NC Code Sample for Fixed Axis NURBS</h4>
+  <blockquote>
+    <p><code>N10 ;PROGRAMME : Part Operation.1<br>
+    N20 ;PROGRAMMEUR: AAU<br>
+    N30 ;DATE : AAU<br>
+    G642<br>
+    ffwon<br>
+    N40 TRAORI<br>
+    G57<br>
+    M8<br>
+    N50 ORIVECT<br>
+    N60 G0 Z100.0<br>
+    N70 G0 X0.0 Y0.0<br>
+    N80 T2 M06<br>
+    N90 G1 X9.95037 Y-48.78022 Z20 <br>
+    N100 G1 X9.95037 Y-48.78022 Z22.0<br>
+    N110 G64<br>
+    N120 BSPLINE SD=3 F8000.000<br>
+    N130 X10.01206 Y-48.78639 Z16.7243 PL=0.0<br>
+    N140 X5.43447 Y-48.32863 Z11.75306 PL=15.662<br>
+    N150 X0.0 Y-47.78518 Z12.0 PL=0.0<br>
+    <br>
+    ../..<br>
+    <br>
+    N2700 X0.0 Y-44.60573 Z12.0 PL=0.0<br>
+    N2710 X5.25284 Y-45.0964 Z11.93801 PL=0.0<br>
+    N2720 X10.20252 Y-45.55876 Z16.53842 PL=15.662<br>
+    N2730 X9.95665 Y-45.5358 Z22.0 PL=0.0<br>
+    N2740 ORIVECT<br>
+    N2750 G1 X9.95665 Y-45.5358 Z22 <br>
+    N2760 Z20 <br>
+    N2770 TRAFOOF<br>
+    N2780 G57<br>
+    N2790 M5 M9<br>
+    N2800 M30</code></p>
+  </blockquote>
+  <h2>Scope and Limitations</h2>
+  <p>The tool paths of all non-axial machining operations can be generated in NURBS 
+  format.</p>
+  <p>NURBS output statements are computed by taking into account the machining tolerance 
+  defined on the machining operation. The number of control points is a consequence 
+  of the accuracy required on the NURBS and so is relative to the machining tolerance. 
+  There is no option for the user to manage the number of control points.</p>
+  <p>Note that the <kbd>3D Nurbs Interpolation</kbd> check box in the
+  <a href="page11418.html">Machine Editor</a> dialog box must be set to specify 
+  the ability to generate NURBS data in an APT output file.</p>
+  <p>The NURBS output of an operation is not compatible with any compensation output 
+  format (Profile or PQR).</p>
+  <p>The NURBS output is not compatible with Center output, NURBS is always a Tip 
+  position.</p>
+  <p>The NURBS ouput is only possible in APT (not CLFile).</p>
+  <p>It is not possible to import an APT containing NURBS statements using the
+  <kbd>APT Import</kbd> command.</p>
+  <p>ISO simulation of the NURBS formats is not possible.</p>
+
+  </body>
+
+</html>
+

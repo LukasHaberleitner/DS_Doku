@@ -1,0 +1,172 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>About Plies Creation from Virtual Stacking</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style type="text/css">
+
+span.glossterm {
+	color: #1A79B1; /* #0070C0; JWS CHANGE */
+	border-bottom: 1px dotted #1A79B1; /* JWS ADDED */
+	text-decoration: none; 
+	}
+.auto-style1 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+</head>
+
+<body>
+
+<h1 align="center">
+About Plies Creation from Virtual Stacking</h1>
+  <table border="0" style="border-collapse: collapse" id="AutoNumber1">
+    <tr>
+      <td valign="top">
+      
+      &nbsp;</td>
+      <td><h2>General Information</h2><ul>
+        <li>
+		The contour of the plies are based on the
+			sequence shapes (cell coverage) and on the initial staggering 
+			defined on structural elements during the panel creation. <br>If the 
+			staggering parameters are set to 0, a warning message is issued.
+			</li>
+		
+				  <li>Starting with V5-6R2014, selecting a ply shape from the stacking 
+		order or the cell coverage is no longer required. <br>
+		  </li>
+		  <li>The drop-offs are 
+		directly optimized for each group of plies with the same shape. <br>
+		A pattern is applied depending on that shape. <br>
+		This ensures a better result, and less future rework of the generated 
+		plies. </li>
+        <li>A ramp support is a section of the structural 
+        element from which a group of plies drops off.</li>
+        <li>Ramp supports are automatically computed. However they can be 
+        edited.</li>
+		  <li>The definition of the limitation side of limit contours is taken 
+        into account.</li>
+		  <li>If you generate a second plies group from a virtual stacking that 
+        already contains a plies group, 
+		<br>only the plies group created first will 
+        be synchronized with the virtual stacking <br>(the second one will not be 
+        synchronized).</li>
+      </ul>
+      <p>Plies are generated as follows:</p>
+	  <ul>
+		  <li>Ramp supports are grouped by structural elements groups and by 
+		  side.</li>
+		  <li>The stacking is generated with ply contours based on the ramp 
+		  entity curves. </li>
+		  <li>To reduce the number of useless ramp support curves, one ramp 
+		  support is created for each structural element per side (+1 and/or-1).
+		  </li>
+	  </ul>
+      	  <p>&nbsp;</p>
+      	  If a plies group has already been generated from the selected 
+				virtual stacking, you are prompted to update it.<br>New and 
+				temporary plies are generated in a plies group. <br>These new 
+				temporary plies and plies group are compared to the existing ones, 
+				that are then updated as follows:<ul>
+					<li>You must have switched to upgraded rosette mode.</li>
+					<li>Surface, lay-up direction and rosette of the plies group 
+					must be the same as for the grid panel of the virtual 
+					stacking.</li>
+					<li>If the ply group had been defined 
+					with layer levels, and if some layer levels are now missing, 
+					update is not possible.</span></li>
+					<li>The names of the virtual plies and virtual sequences in 
+					the virtual stacking must be unique.</li>
+					<li>There cannot be a mix of plies and cores inside the same 
+					sequence.</li>
+					<li>Ramp support fallback strategies are not stored in the 
+					plies group. <br>They are retrieved from the parameters set in 
+					this command.</li>
+					<li>When necessary, the old plies group is migrated to
+					<a href="page5388.html">automatic shells mode</a>.</li>
+					<li>If a ply of the old plies group is not in the newly 
+					generated plies, it is deleted.</li>
+					<li>Empty sequences are deleted.</li>
+					<li>If a newly generated ply is not in the old plies group, 
+					it is added. The corresponding sequence is created if 
+					needed.</li>
+					<li>Sequences are renamed if needed.</li>
+					<li>All modifications of the plies attributes are carried 
+					over to the existing plies.</li>
+					<li>For each ply, new contours are compared to old ones:<ul>
+						<li>In most cases, plies have a single contour. If the 
+						old and new contour have a similar definition, the old 
+						one is left unchanged. <br>Otherwise, it is updated from the 
+						new input list.<br>Note that two contours may have a 
+						different but similar definition: They have the same 
+						curves but in reverse order.</li>
+						<li>When a ply has several contours, they are compared 
+						in their order in list. Extra contours are added, 
+						missing ones are removed.</li>
+						<li>Only first standard contours are analyzed. Other 
+						(limit contours, rounded corners, material addition, 
+						material excess,...) are ignored.</li>
+						<li>If the contour inputs are modified, the contour is 
+						upgraded.</li>
+					</ul>
+					</li>
+					<li>If a newly generated ply is located in a different 
+					sequence, due to change in cell covering, the existing ply 
+					is moved accordingly.</li>
+					<li>When needed, plies are re-ordered in existing sequences 
+					and existing sequences are re-ordered in the plies group to 
+					match the temporary plies group.</li>
+				</ul>
+				<h2>Case of Staggering or Weight Saving Steps</h2>
+	  <p>Let's consider the following example:</p>
+	  <ul>
+		  <li>Cell gauges are as follows<br>
+		  <img src="b35doc/english/online/cpdug_c2/images/StaggeringStep01.png"><br>
+		  with the following staggering defined for vertical <br>
+		  <img src="b35doc/english/online/cpdug_c2/images/StaggeringStep02.png"><br>and horizontal structure 
+		  reference elements<br>
+		  <img height="298" src="b35doc/english/online/cpdug_c2/images/StaggeringStep03.png" width="615"></li>
+		  <li>Plies are generated as follows:<br>
+		  <img src="b35doc/english/online/cpdug_c2/images/StaggeringStep04.png"><br>In 
+		  a detailed view:<br>
+		  <img height="329" src="b35doc/english/online/cpdug_c2/images/StaggeringStep05.png" width="298"><br>
+		  Steps appear in the ply shapes because of staggering change on the 
+		  horizontal structure reference element.<br>They could also appear for 
+		  weight saving reason.</li>
+		  <li>The staggering definition used for these steps is that of the 
+		  yellow plies. <br>It is the staggering definition below the grid node 
+		  on the vertical structure reference element. <br>This ensures a 
+		  constant ramp in the white dotted line region. <br>
+		  <img height="367" src="b35doc/english/online/cpdug_c2/images/StaggeringStep06.png" width="225"></li>
+	  </ul>
+      <p>Let's consider another example with different cell gauges and the same 
+	  staggering definitions as previously:<br>
+	  <img src="b35doc/english/online/cpdug_c2/images/StaggeringStep07.png"><br>resulting in <br>
+	  <img height="367" src="b35doc/english/online/cpdug_c2/images/StaggeringStep08.png" width="225"><br>
+	  Although there are no ply drops between the cells below the node, the 
+	  staggering step uses the staggering definition <br>below the grid node on 
+	  the vertical surface reference element (same as in previous example):</p>
+	  <ul>
+		  <li>As a designer, you might have used the staggering definition above 
+		  the grid node for the step.</li>
+		  <li>However, to be consistent with the first example, and with all 
+		  cases, the chosen algorithm is that of the first example.<br></li>
+	  </ul>
+      </td>
+    </tr>
+    </table>
+ 
+
+</body>
+
+</html>
+

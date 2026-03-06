@@ -1,0 +1,223 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta http-equiv="Content-Language" content="us">
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Type" content="text/HTML; charset=iso-8859-1">
+ <title>System Behavior</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="docCompliance" content="v 0.9; Tue Oct 18 10:20:44 2005">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1><a name="CATBehaviorCommandHeader.SystemImplementationCmdHId"></a>System 
+ Behavior: Data Sheet <a name="ix-implementation behaviors::system behavior">
+ </a>&nbsp; <a name="ix-system behavior"></a><a name="ix-behavior::system"></a>
+ <a name="ix-commands::System Behavior"></a></h1>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/ap3_title.gif" width="152" height="32"></p>
+ <table border="1" cellpadding="0" cellspacing="0" bordercolor="#C0C0C0">
+   <tr>
+     <td valign="top" bgcolor="#F2F2F2"><font color="#000080">Accessing this 
+     behavior</font></td>
+     <td valign="top">This behavior can be accessed by clicking the <kbd>System 
+     Behavior</kbd> icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_SystemImplementationP2.gif" width="24" height="24">) 
+     in the Implementation toolbar.</td>
+   </tr>
+   <tr>
+     <td valign="top" bgcolor="#F2F2F2"><font color="#000080">Describing this 
+     behavior</font></td>
+     <td valign="top">This behavior is designed to:<ul>
+       <li>Launch an <a name="ix-executable file">executable file</a> (.exe), a
+       <a name="ix-shell">shell</a> (.sh) or a .bat file.</li>
+       <li>Call a compiled CAA coded function thus enabling you to perform 
+       complex operations that cannot be performed using a script language. </li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" bgcolor="#F2F2F2"><font color="#000080">Methodology</font></td>
+     <td valign="top">You choose in which mode (Process or library) the behavior 
+     works. In library mode, the name of the function, which corresponds to the 
+     name of the CAA function to call will be required. In this mode, the 
+     Process Name input will be the library name. The library name does not need 
+     the extension (like .dll under Windows OS), the behavior being OS 
+     independent, it looks automatically for the library corresponding to the 
+     current Operating System.<p align="center">
+     <img border="0" src="b35doc/english/online/bktug_c2/images/bktSystem4NLS.gif" width="630" height="420"></p>
+     <p>The availability of the behavior inputs depends on the selected call 
+     type.</p>
+     <ul>
+       <li><kbd>Process</kbd>: The behavior remains the same as the V5R15 one. 
+       The only difference is that it is possible to specify in which mode the 
+       process will be run. </li>
+       <li><kbd>Library</kbd>: The function name is required and the process 
+       name requires the name of the library to load. The behavior is in <code>
+       CannotOperate</code> mode until the 2 mandatory inputs i.e. the library 
+       name and the function Name are valuated. So if the function is located in 
+       a file called MyLib.dll, the library name will be MyLib.<br>
+       The library need not be in the runtime view at build time. Since the 
+       behavior calls a library, the module containing the function has to be 
+       compiled. </li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" bgcolor="#F0F0F0"><font color="#000080">EXAMPLE</font></td>
+     <td valign="top">When working with the CAA function, make sure that this 
+     function has the following signature:<br>
+     &nbsp;<div class="Section1" style="page: Section1">
+		<p class="MsoNormal"><font face="Courier New" color="blue" size="2">
+		<span lang="EN-GB" style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'">
+		<code><span style="letter-spacing: 0">#ifdef</span></code></span></font><font face="Courier New" size="2"><span lang="EN-GB" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><code><span style="letter-spacing: 0">&nbsp; 
+		_WINDOWS_SOURCE</span></code></span></font><font face="Courier New" color="blue" size="2"><span lang="EN-GB" style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'"><code><span style="letter-spacing: 0"><br>
+		#define</span></code></span></font><font face="Courier New" size="2"><span lang="EN-GB" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><span style="letter-spacing: 0"><code> 
+		EXDLL_API&nbsp;&nbsp;&nbsp;&nbsp; __declspec(dllexport)</code></span></span></font><font face="Courier New" color="blue" size="2"><span lang="EN-GB" style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'"><code><span style="letter-spacing: 0"><br>
+		#else<br>
+		#define</span></code></span></font><font face="Courier New" size="2"><span lang="EN-GB" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><code><span style="letter-spacing: 0"> 
+		EXDLL_API</span></code></span></font><font face="Courier New" color="blue" size="2"><span lang="EN-GB" style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'"><code><span style="letter-spacing: 0"><br>
+		#endif</span></code></span><span style="FONT-SIZE: 10pt; COLOR: blue; FONT-FAMILY: 'Courier New'"><code><span style="letter-spacing: 0"><br>
+		extern</span></code></span></font><font face="Courier New" size="2"><span style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'"><code><span style="letter-spacing: 0">
+		<font color="#a31515"><span style="COLOR: #a31515">&quot;C&quot;</span></font> 
+		EXDLL_API HRESULT MyCAAFunction(CATIVariableManagement* iBehavior, 
+		CATIVariableManagement*iExtendedObject);</span></code></span></font></div>
+		<p><code><span lang="en-us">(</span>see script below.) </code></p>
+     <div align="left">
+       <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber2">
+         <tr>
+           <td valign="top">
+           <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+           <td valign="top">The inputs are those defined on the behavior. As the 
+           behavior is an argument of the function, the <code>
+           CATIVariableManagement</code> interface will be used to retrieve the 
+           behavior inputs. Behavior outputs will be managed using the same 
+           interface.</td>
+         </tr>
+       </table>
+     </div>
+     <span style="background-color: #FFFF00">
+     <div align="left">
+       <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber1" bgcolor="#E0E0E0">
+         <tr>
+           <td>
+           <img border="1" src="b35doc/english/online/bktug_c2/images/bktSystem5NLS.gif" width="767" height="518"></td>
+         </tr>
+       </table>
+     </div>
+     </span></td>
+   </tr>
+   <tr>
+     <td valign="top" bgcolor="#F0F0F0"><font color="#000080">Using this 
+     Behavior Interface</font></td>
+     <td valign="top">
+     <p align="center"><img border="1" src="b35doc/english/online/bktug_c2/images/bktSystem3NLS.gif" width="422" height="341"></p>
+     <div align="center">
+       <center>
+       <table border="1" cellpadding="4" cellspacing="1">
+         <tr>
+           <td bgcolor="#F0F0F0"><font color="#000080">Name</font>:&nbsp;</td>
+           <td>Name attributed to the behavior.</td>
+         </tr>
+         <tr>
+           <td bgcolor="#F0F0F0"><font color="#000080">Comment</font>:&nbsp;</td>
+           <td>Comment attributed to the behavior.</td>
+         </tr>
+       </table>
+       </center>
+     </div>
+     <div align="center">
+       <center>
+       <table border="1" cellpadding="4" cellspacing="1">
+         <tr>
+           <td rowspan="4" valign="top" bgcolor="#F0F0F0"><font color="#000080">
+           Process</font></td>
+           <td bgcolor="#F0F0F0" valign="top" rowspan="3"><font color="#000080">
+           Call Type:</font></td>
+           <td valign="top"><i><font color="#000080">Process</font></i></td>
+           <td valign="top">Select this mode if you want to launch an 
+           executable.</td>
+         </tr>
+         <tr>
+           <td valign="top"><i><font color="#000080">Library</font></i></td>
+           <td valign="top">Select this mode if you want to call a CAA function. 
+           Only the library name must be specified.</td>
+         </tr>
+         <tr>
+           <td valign="top"><i><font color="#000080">Synchronous </font></i>
+           </td>
+           <td valign="top">If checked, the process is run synchronously with 
+           the behavior. The synchronous/asynchronous run only applies to 
+           Process call types. The behavior will wait for the launched process 
+           to end before continuing its operation. It means that CATIA will wait 
+           for the process execution. <br>
+           If unchecked, the process is launched and the behavior continues its 
+           operation, independently from the launched process.<br>
+           Note that this option is available in Process mode only.</td>
+         </tr>
+         <tr>
+           <td bgcolor="#F0F0F0" valign="top"><font color="#000080">Process:</font></td>
+           <td valign="top" colspan="2">Enter the process path or the process 
+           name if the process is recognized by the operating system (like 
+           notepad for example) or if it is in the runtime view.<br>
+           When working with a CAA function, the Process name corresponds to the 
+           library name.</td>
+         </tr>
+         <tr>
+           <td valign="top" bgcolor="#F0F0F0">&nbsp;</td>
+           <td bgcolor="#F0F0F0" valign="top"><font color="#000080">Function 
+           name:</font></td>
+           <td valign="top" colspan="2">Enter the name of the CAA function to 
+           call. This input is mandatory when working with CAA functions.</td>
+         </tr>
+         <tr>
+           <td valign="top" bgcolor="#F0F0F0">&nbsp;</td>
+           <td bgcolor="#F0F0F0" valign="top"><font color="#000080">Source File:</font></td>
+           <td valign="top" colspan="2">Enter the name of the file that will be 
+           used to generate the input data for the process.<br>
+           If no path is indicated, the<a name="ix-CATTemp"> <code>CATTemp</code></a> 
+           variable will indicate the directory to use.<br>
+           If no file is indicated, a temporary file name will be allocated by 
+           the behavior. <br>
+           Note that this field is not available when selecting the Library 
+           mode. It is therefore grayed out.</td>
+         </tr>
+         <tr>
+           <td valign="top" bgcolor="#F0F0F0">&nbsp;</td>
+           <td bgcolor="#F0F0F0" valign="top"><font color="#000080">Result 
+           File:&nbsp;</font></td>
+           <td valign="top" colspan="2">Enter the name of the file that will be 
+           used to handle the result of the process.&nbsp;<br>
+           Note that this field is not available when selecting the Library 
+           mode. It is therefore grayed out.</td>
+         </tr>
+       </table>
+       </center>
+     </div>
+     <div align="left">
+       <table border="0" cellpadding="4" cellspacing="1">
+         <tr>
+           <td valign="top" bgcolor="#FFFFFF">
+           <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+           <td valign="top" bgcolor="#FFFFFF">Note that for portable 
+           applications, the process must be accessible in the run time view.</td>
+         </tr>
+       </table>
+     </div>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" bgcolor="#F0F0F0"><font color="#000080">Using this 
+     behavior</font></td>
+     <td valign="top">You want to perform advanced operations using C++.</td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

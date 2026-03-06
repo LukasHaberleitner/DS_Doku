@@ -1,0 +1,266 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Searching Fillets</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1>
+    <a name="CATCCSModelHeader.CCSFilletRadius"></a>Searching 
+	Fillets<a name="CATCCSModelHeader.CATShapeDesignCorner"></a></h1>
+
+<p>&nbsp;</p>
+<table border="0" style="border-collapse: collapse" cellpadding="0" cellspacing="0" height="699" width="634">
+  <tr>
+    <td valign="top" height="33" width="32">
+    <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="33"></td>
+    <td valign="top" height="33" width="602">This task explains how to search fillets and 
+    analyze their radii. Once this step is done, you can:<ul>
+		<li>reconstruct them using 
+    the <kbd>Fillet Radius Reduction </kbd>command, or in some cases, other commands such as fills. 
+		</li>
+		<li>or color them to be used later on by color-based commands.</li>
+	</ul>
+	<p>Be aware that: </p>
+	<ul>
+					<li>Not 
+    all fillets can be detected nor can be reconstructed.</li>
+					<li>Orange and red colors are used for warnings:
+					<ul>
+									<li>Orange indicates there is a variation in 
+									the fillet radius. It is up to you to decide wether the element is a fillet or not.</li>
+									<li>Red indicates surfaces with invalid 
+									edges, as explained <a href="#hj-red">below</a>.</li>
+					</ul>
+					</li>
+	</ul>
+	<p>It is not possible to have an overview of&nbsp; the size of the fillets 
+    of a model: you must be familiar with the model, or work by trial and error. 
+    We recommend that you handle first the fillets that are easy to recognize, 
+    and then that you handle more complex areas.</td>
+  </tr>
+  <tr>
+    <td valign="top" height="32" width="32">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td valign="top" height="32" width="602">
+    <ul>
+      <li>This command is available on a part level only. <br>
+      If you are working in 
+      an assembly, make current the part containing the surfaces to analyze.</li>
+      <li>This command aims at detecting four-sided fillets, with a constant 
+      radius:<ul>
+      <li>Three-sided junctions of fillets are not detected. <br>
+      Fillets finishing in a triangle are not detected, at least whenever they 
+      have only three sides.<br>
+      We recommend that you recreate those fillets as fills.</li>
+      <li>The notion of number of sides is based on geometric considerations: 
+      two adjacent edges of the boundary are not in the same side if they form a 
+      sharp angle. Sometimes, a face may be seen as having three sides, whereas 
+      it has more than three sides, geometrically speaking.</li>
+      <li>Fillets with variable radius are not dealt with.</li>
+    </ul>
+      </li>
+      <li>This command can detect concave or convex fillets with respect to a 
+      stamping or pulling direction:<ul>
+      <li>You must ensure that the surface to analyze 
+      does not present undercut areas with respect to this direction <br>(stamping 
+      or pulling direction) otherwise the criterion concave or convex will have 
+      no meaning in the current context.</li>
+    </ul></li>
+      <li>You have to choose the best direction for the search. <br>In most cases, 
+      the direction to use is the pulling direction (plastic injection) or the 
+      stamping direction.</li>
+      <li><kbd>Search Fillets</kbd> creates a join per interval found and per 
+      area of connected surfaces.<br>
+      Below is an example of joins created on two areas.<br>
+      <img border="0" src="b35doc/english/online/cfyugccv_c2/images/ModifyRadiusJoinNoConnexNLS.gif" width="542" height="606"><br>
+      Then the validity of the join edges is checked.<br>
+      <a name="hj-red"></a>When invalid edges are found, the surfaces are put into a sub-geometrical 
+      set named yyyNoJoin.x and the faces are displayed in red.<br>
+    <img border="0" src="b35doc/english/online/cfyugccv_c2/images/ModifyRadiusNoJoinNLS.gif" width="233" height="450"></li>
+      <li>We recommend that you use one single interval with the smallest 
+      possible interval values or the detection of fillets. Regrouping fillets of different sizes in a single geometrical set can 
+      make the analysis of the result difficult.
+      <li>The command may detect faces as candidate fillets, although they are 
+      not fillets:<ul>
+        <li>This occurs because the geometry analyzed is not precise enough,</li>
+        <li>The analysis is done face by face. <br>Often a visual inspection of the 
+      neighboring faces will tell you whether a face was intended to be a fillet 
+      or not. <br>Therefore, you should remove faces that you know are not fillets 
+      from the selection to analyze.</li>
+        <li>Simply click a face to remove it from the result selection.</li>
+      </ul></li></ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" height="32" width="32">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td valign="top" height="32" width="602">Open 
+	<a href="b35doc/english/online/cfysm_C2/samples/CCV/Fillet01.CATPart">Fillet01.CATPart</a> from the samples directory.<br>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="32">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td valign="top" width="602">
+    <ol class="task">
+        <li>
+		<p class="task">Click <kbd>Search Fillets</kbd>
+		<img border="0" height="24" src="b35doc/english/online/icons_C2/images/I_TlgGeomFilletRadiusFindP2.png" width="24"> 
+      in the <kbd>Modify Fillet Radius</kbd> toolbar. <br>The <kbd>Search Fillets</kbd> 
+      dialog box is displayed:<br>
+		<img border="0" src="b35doc/english/online/cfyugccv_c2/images/dbSearchFillets01NLS.png"></li>
+		<li>
+		<p class="task"><a name="ix-searching fillet:shape"></a>Select the <kbd>Shape</kbd>.<table border="0" id="table1">
+			<tr>
+				<td>Multi-selection is available.<ul>
+					<li>Click
+					<img border="0" src="b35doc/english/online/icons_C2/images/small/I_CCSMultiSel_for_panel.png" width="16" height="16"> 
+				to display the list of elements selected. </li>
+					<li>Click an element in the graphic area or in the specification 
+				tree to add it to the selection list. </li>
+					<li>Select an element in the list, and click <kbd>Remove</kbd> 
+				to modify the selection list. </li>
+					<li>Click <kbd>Reset</kbd> to clear the selection list. </li>
+					<li>Click <kbd>Close</kbd> to end the selection and revert to 
+				the main dialog box. </li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		</li>
+		<li>
+		<p class="task"><a name="ix-searching fillet:output"></a>Define the type of output by clicking:<table border="0" id="table2">
+			<tr>
+				<td>
+				<ul>
+					<li>
+					<img border="0" src="b35doc/english/online/icons_C2/images/small/I_CCSApplyColorsSmall.png" width="16" height="16">: 
+				the output is a color attribute.</li>
+					<li>
+					<img border="0" src="b35doc/english/online/icons_C2/images/small/I_CCSExtractAreas.png" width="16" height="16">: 
+				the output is colored extracts.</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		</li>
+		<li>
+		<p class="task"><a name="ix-searching fillet:direction"></a>Optional: Define the 
+		<kbd>Direction</kbd> of search.</p>
+		<table border="0" id="table3">
+			<tr>
+				<td>
+				<ul>
+					<li>Select a line to take its orientation as the search 
+					direction, </li>
+					<li>or select a plane to take its normal as the search 
+					direction, </li>
+					<li>or use the <kbd>Direction</kbd> contextual menu:<br>
+					<img border="0" src="b35doc/english/online/cfyugccv_c2/images/SearchFilletContextNLS.png" width="180" height="183"></li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		</li>
+		<li>
+		<p class="task"><a name="ix-searching fillet:type of fillets"></a>Optional: select the type of fillets to search:<br>
+		<table style="width: 100%">
+			<tr>
+				<td><ul><li><kbd>All</kbd></li>
+					<li><kbd>Concave</kbd></li>
+					<li><kbd>Convex</kbd></li></ul></td>
+			</tr>
+		</table>
+		</li>
+		<li>
+		<p class="task"><a name="ix-searching fillet:interval"></a>Select as many 
+		<kbd>Interval</kbd> lines as you need, and key in 
+		the <kbd>Minimum</kbd> and <kbd>Maximum</kbd> radius values of those intervals.<br>Click + to display more intervals.</li>
+    </ol>
+    	</td>
+  </tr>
+  <tr>
+    <td valign="top" width="32">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td valign="top" width="602">
+    Although you can select several intervals, we recommend that you select only 
+	one interval.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="32">
+    &nbsp;</td>
+    <td valign="top" width="602">
+    <ol class="task" start="7">
+		<li>
+		<p class="task">Click <kbd>Apply</kbd>.<br>
+		The number of fillets found on each interval is displayed in the dialog 
+		box.<br>
+		<img border="1" src="b35doc/english/online/cfyugccv_c2/images/dbSearchFillets02NLS.png" width="300" height="320"><br>
+		The fillets are highlighted in the corresponding color:<br>
+		<img border="0" src="b35doc/english/online/cfyugccv_c2/images/SearchFillet01.png" width="184" height="315"></li>
+		<li>
+		<p class="task">Double-click a color patch to launch the color editor 
+		and edit the color of the fillets found in this interval.<br>
+		Take advantage of the color to analyze the result of the search:<br>
+		In the image below, it is easy to see that some faces have been missed 
+		by the search, and that you need to extract them to complete the fillet.<br>
+		<img border="0" src="b35doc/english/online/cfyugccv_c2/images/SearchFillet02.png" width="276" height="195"></li>
+		<li>
+		<p class="task">Click <kbd>OK</kbd>.<br>
+		If you have selected
+				<img border="0" src="b35doc/english/online/icons_C2/images/small/I_CCSApplyColorsSmall.png" width="16" height="16">, 
+		the fillets found are colored:<br>
+		<img border="0" src="b35doc/english/online/cfyugccv_c2/images/SearchFilletOutputColorNLS.png" width="176" height="545"><br>
+		If you have selected
+				<img border="0" src="b35doc/english/online/icons_C2/images/small/I_CCSExtractAreas.png" width="16" height="16">:</p>
+		<table border="0" id="table4">
+			<tr>
+				<td>
+				<ul>
+					<li>A geometrical set is created for each interval.</li>
+					<li>Its name is made of Radius followed by the radius value 
+					of the interval.</li>
+					<li>The fillets are created with the&nbsp; color 
+					corresponding to the interval in the dialog box.<br>
+					<img border="0" src="b35doc/english/online/cfyugccv_c2/images/SearchFilletOutputNLS.png" width="154" height="603"><br>
+					The fillets found in a given interval are extracted as <kbd>
+					RadiusExtract.x</kbd> in feature mode or <kbd>
+					RadiusSurface.x</kbd> in datum mode and placed in the 
+					geometrical set created for this given interval. </li>
+					<li>The input surface is sent to the NoShow.</li>
+					<li>A geometrical set named <kbd>SupportSet</kbd> is created 
+					with the faces of the input surface that are not candidate 
+					fillets, gathered in connected surfaces.</li>
+					<li>The collection of <kbd>SupportSet</kbd> and of all the
+					<kbd>Radiusxx</kbd> geometrical sets represents precisely 
+					the entire input model.</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		</li>
+	</ol>
+	</td>
+  </tr>
+  <tr>
+    <td colspan="2" height="35">
+    <p align="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

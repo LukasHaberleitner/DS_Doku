@@ -1,0 +1,303 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating a Reaction: BeforeUpdate Event</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="docCompliance" content="v 0.9; Fri Oct 14 14:45:30 2005">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>&nbsp; Creating a Reaction: BeforeUpdate Event<a name="ix-creating a knowledge advisor reaction::beforeupdate event"></a>
+ <a name="ix-event::beforeupdate"></a>&nbsp;<a name="ix-reaction::beforeupdate event"></a>
+ <a name="ix-beforeupdate event (reaction)"></a></h1>
+ <table border="0" valign="top" cellpadding="4" cellspacing="0" Width="0">
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>This task explains how to use the BeforeUpdate event in a reaction 
+     feature. In the scenario below, you are going to optimize the position of a 
+     point each time you modify the length of the cable (spline). You create&nbsp; 
+     your geometry and insert all the components in a User Feature (UDF). This 
+     UDF contains the geometry of a cable going through 3 points:
+     <table border="0" cellpadding="0" cellspacing="0">
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>The two points located at both extremities are to be specified in 
+           input. </li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>The coordinate of the third point is optimized to reach a target 
+           length for the cable.&nbsp;</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+     <p>This target parameter is a published parameter of the UDF. The 
+     optimization is launched by using a VBMacro with argument, called in a 
+     Reaction to the &quot;Before Update&quot; event of the UDF.&nbsp;&nbsp;</td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td>This scenario requires the Product Engineering Optimizer product.</td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol class="task">
+       <li>
+       <p class="task">Open the <a href="b35doc/english/online/kwrug_c2/samples/KwrEvent_BeforeUpdate.CATPart">
+       KwrEvent_BeforeUpdate.CATPart </a>file: It contains 3 points and a spline 
+       (called cable in this scenario). </p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber1">
+           <tr>
+             <td valign="top"><img border="1" src="b35doc/english/online/kwrug_c2/images/kwrEventBeforUpdate1NLS.gif" width="299" height="276"></td>
+             <td>&nbsp;</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <ol start="2" class="task">
+       <li>
+       <p class="task">From the <kbd>Start &gt; Knowledgeware</kbd> menu, access 
+       the <kbd>Product Engineering Optimizer</kbd> workbench and click the <kbd>
+       Optimize</kbd> icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_OptimizeP2.gif" width="24" height="24">). 
+       The Optimization window opens.</li>
+       <li>
+       <p class="task">Enter the following data in the Optimization window: </p>
+       <div align="left">
+         <table border="0" cellpadding="2" cellspacing="3">
+           <tr>
+             <td bgcolor="#CCCCCC" valign="top">Problem tab</td>
+             <td valign="top" colspan="2">&nbsp;</td>
+           </tr>
+           <tr>
+             <td rowspan="5" valign="top">&nbsp;</td>
+             <td valign="top" bgcolor="#F0F0F0">Optimization type</td>
+             <td valign="top"><kbd>Minimization</kbd></td>
+           </tr>
+           <tr>
+             <td valign="top" bgcolor="#F0F0F0">Optimized parameter</td>
+             <td valign="top"><kbd>distance</kbd></td>
+           </tr>
+           <tr>
+             <td valign="top" bgcolor="#F0F0F0">Free parameters</td>
+             <td valign="top"><kbd>Geometrical Set.1&#092;Point.3&#092;Z</kbd></td>
+           </tr>
+           <tr>
+             <td valign="top" bgcolor="#F0F0F0">Algorithm</td>
+             <td valign="top"><kbd>Simulated Annealing Algorithm</kbd></td>
+           </tr>
+           <tr>
+             <td valign="top" bgcolor="#F0F0F0">Termination criteria</td>
+             <td valign="top">
+             <p class="task">Maximum number of updates: <kbd>100</kbd><br>
+             Consecutive updates without improvements: <kbd>20</kbd><br>
+             Maximum time (minutes): <kbd>5</kbd></td>
+           </tr>
+           <tr>
+             <td bgcolor="#CCCCCC" valign="top">Constraints tab</td>
+             <td valign="top" colspan="2">&nbsp;</td>
+           </tr>
+           <tr>
+             <td valign="top">&nbsp;</td>
+             <td valign="top">New constraint</td>
+             <td><kbd>Geometrical Set.1&#092;Point.3&#092;Z` 
+             - max (Geometrical Set.1&#092;Point.2&#092;Z) 
+             ,Geometrical Set.1&#092;Point.1&#092;Z) 
+             &lt;= 0mm&nbsp;</kbd></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       </li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd> in the opening dialog box, click <kbd>
+       Run optimization.</kbd> </li>
+       <li>
+       <p class="task">Select an output file and click <kbd>Save</kbd>.</li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd>&nbsp; when the optimization process 
+       is over.</li>
+       <li>
+       <p class="task">From the <kbd>Start &gt; Knowledgeware</kbd> menu, access 
+       the Knowledge Advisor workbench and click the Macros with argument icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_KweMacroP2.gif" width="24" height="24">). 
+       The Script Editor opens. Enter the following data in the editor and click
+       <kbd>OK</kbd>: </p>
+       <div align="left">
+         <table border="0" cellpadding="2" cellspacing="3">
+           <tr>
+             <td bgcolor="#F0F0F0" bordercolor="#F0F0F0" valign="top">Argument</td>
+             <td><kbd>optim</kbd></td>
+           </tr>
+           <tr>
+             <td bgcolor="#F0F0F0" bordercolor="#F0F0F0" valign="top">Script body</td>
+             <td><kbd>optim.Run false</kbd></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <ol start="8" class="task">
+       <li>
+       <p class="task">Click the Reaction icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_kweReactionP2.gif" width="24" height="24">). 
+       The Reaction dialog box opens.&nbsp;</li>
+     </ol>
+     <div align="left">
+       <table border="0" cellpadding="2" cellspacing="0">
+         <tr>
+           <td rowspan="3" valign="top">
+           <img border="0" src="b35doc/english/online/kwrug_c2/images/kwrEventBeforUpdate2NLS.gif" width="308" height="410"></td>
+           <td valign="top" bgcolor="#F0F0F0">
+           <table border="0" cellpadding="0" cellspacing="0">
+             <tr>
+               <td valign="top">
+               <ul>
+                 <li>&nbsp;</li>
+               </ul>
+               </td>
+               <td valign="top">In the <kbd>Source type</kbd> field, select <kbd>
+               Owner</kbd>.</td>
+             </tr>
+           </table>
+           </td>
+         </tr>
+         <tr>
+           <td valign="top" bgcolor="#F0F0F0">
+           <table border="0" cellpadding="0" cellspacing="0">
+             <tr>
+               <td valign="top">
+               <ul>
+                 <li>&nbsp;</li>
+               </ul>
+               </td>
+               <td valign="top">From the <kbd>Available events</kbd> list, 
+               select <kbd>BeforeUpdate</kbd>.</td>
+             </tr>
+           </table>
+           </td>
+         </tr>
+         <tr>
+           <td valign="top" bgcolor="#F0F0F0">
+           <table border="0" cellpadding="0" cellspacing="0">
+             <tr>
+               <td valign="top">
+               <ul>
+                 <li>&nbsp;</li>
+               </ul>
+               </td>
+               <td valign="top">In the <kbd>Action</kbd> field, select <kbd>
+               Knowledgeware action</kbd>.</td>
+             </tr>
+           </table>
+           </td>
+         </tr>
+       </table>
+     </div>
+     <ol start="9" class="task">
+       <li>
+       <p class="task">Click <kbd>Edit action...</kbd>, paste the following 
+       script in the editor, and click <kbd>OK </kbd>twice:</li>
+     </ol>
+     <div align="left">
+       <table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+         <tr>
+           <td bgcolor="#F0F0F0" valign="top"><code>if (CableLength &lt;= distance (Geometrical 
+           Set.1&#092;Point.1 
+           ,Geometrical Set.1&#092;Point.2 
+           ))<br>
+           Message (&quot;Incompatible inputs: cable length is less than distance 
+           between points!&quot;)<br>
+           else<br>
+           {<br>
+           `VB Script.1` .Run(Relations&#092;Optimizations.1&#092;Optimization.1 
+           )<br>
+           }</code></td>
+         </tr>
+       </table>
+     </div>
+     <ol start="10" class="task">
+       <li>
+       <p class="task">Double-click the root of the specification tree and 
+       select <kbd>Insert &gt; UserFeature &gt; UserFeature Creation...</kbd>. The 
+       User Feature Definition window opens.</li>
+       <li>
+       <p class="task">In the <kbd>Name</kbd> field, enter the name of the UDF:
+       <kbd>Cable1</kbd> in this scenario.</li>
+       <li>
+       <p class="task">Select the Spline, Point3, Reaction.1, VB Script.1, 
+       Optimization.1, the 4 formulas, and the parameters: they are displayed in 
+       the User Feature definition window.</li>
+     </ol>
+     <div align="left">
+       <table border="0" cellpadding="4" cellspacing="1">
+         <tr>
+           <td bgcolor="#F2F2F2" valign="top">
+           <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+           <td bgcolor="#F2F2F2">Note that the UDF becomes the owner of the 
+           reaction. This reaction will be fired before the update of the UDF 
+           instance.</td>
+         </tr>
+       </table>
+     </div>
+     <ol start="13" class="task">
+       <li>
+       <p class="task">Click the <kbd>Parameters</kbd> tab, select CableLength, 
+       click the <kbd>Published name</kbd> check box and click <kbd>OK</kbd>.</li>
+       <li>
+       <p class="task">Save the file and close it.</li>
+       <li>
+       <p class="task">Create a .CATPart file, access the Generative Shape 
+       Design workbench,&nbsp; and create 3 points.&nbsp;</li>
+       <li>
+       <p class="task">Select <kbd>Insert &gt; Instantiate From Document...</kbd>. 
+       The File Selection window opens. Select the KwrEvent_BeforeUpdate.CATPart 
+       file you saved and click <kbd>Open</kbd>.</li>
+       <li>
+       <p class="task">The Insert object dialog box opens. Select Point.1 and 
+       Point.2 in the geometry or in the specification tree and click <kbd>OK</kbd>. 
+       The cable (UDF) is instantiated and the optimization is launched before 
+       the update.</li>
+       <li>
+       <p class="task">Repeat steps 14 and 15: select Point.2 and Point.3 when 
+       instantiating the UDF: the cable lengths are optimized.</li>
+     </ol>
+     <ol start="19" class="task">
+       <li>
+       <p class="task">Double-click the <kbd>CableLength=400mm</kbd> parameter 
+       and change its value to 200mm. This cable length is optimized once again 
+       before the update.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>For more information about the Reaction feature window, see
+     <a href="page10980.html">Using the Reaction Feature Window</a>.</td>
+   </tr>
+ </table>
+ <p align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+ </p>
+
+ </body>
+
+</html>
+

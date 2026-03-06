@@ -1,0 +1,84 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>About Tool Point Calibration</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+ </head>
+
+ <body bgcolor="#FFFFFF" text="#000000" link="#3366FF" vlink="#0080FF" alink="#990000">
+
+ <h1 align="center">About Tool Point Calibration<a name="ix-about::tool point calibration"></a></h1>
+ <table border="0" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/abasic.gif" width="32" height="32"></td>
+     <td valign="top">Calibration features in DELMIA products allow you to 
+     identify the sources of position inaccuracy and to modify the simulation 
+     world to match the real world. This correction allows a generic simulation 
+     developed in DELMIA products to be downloaded to different workcells that 
+     are nominally identical but which differ slightly in the locations of their 
+     parts and devices, their tool offsets, and their robot signatures.<p>The
+     <a name="ix-tool point:calibration method">tool point calibration method</a> 
+     adjusts the tool profile (Utool) of a robot based on the measurement of 
+     multiple points. The procedure consists of selecting a robot resource and a 
+     tag group representing uploaded mount plate positions. The tag group is 
+     assumed to have been generated at the robot's mounting plate (0,0,0,0,0,0) 
+     while moving the tool tip to a fixed point in space at different 
+     orientations of the robot's wrist. The user also enters an initial guess 
+     for the tool point parameters. The guess parameters should be within a few 
+     centimeters of the actual tool parameters. The calibration also requires 
+     the following information from the user:</p>
+     <ul>
+       <li>Translate X, Y, Z (Free/Fixed): specifies which components of the 
+       Tool frame are to be adjusted. </li>
+       <li>Estimated measurement noise: an estimate of the uncertainty of the 
+       positional measurements during the calibration experiment. </li>
+     </ul>
+     <p>Unless the resource is known to be aligned with an axis or on a plane, 
+     the [X, Y, Z] parameters should all be set &quot;Free&quot; during calibration. The 
+     measurement noise need only be an order of magnitude estimate, for example 
+     0.1 mm or 1.0 mm. </p>
+     <p>Based on the selections, the robot's tool profile is adjusted in an 
+     attempt to get the tool tip to move to the same point in space from each of 
+     the different wrist orientations. The algorithm works by minimizing the 
+     mean square position error between the tool tip positions from each of the 
+     mounting plate tag points while maintaining the constraints of the 
+     ''Translate X, Y, Z'' selection.</p>
+     <p>Upon convergence, an analysis of the results is displayed:<br>
+&nbsp;</p>
+     <ul>
+       <li><i>Number of iterations</i>: the number of iterations required by the 
+       numerical identification method.</li>
+       <li><i>Number of fitting points</i>: the number of points used for the 
+       least squares fitting procedure. </li>
+       <li><i>Root mean square fitting error</i>: the root mean square fitting 
+       error on the points after adjusting the tool profile to the best fit 
+       possible. </li>
+       <li><i>Maximum uncertainties</i>: the maximum of the uncertainties for 
+       the fit on the parameters to be identified. Large uncertainty values are 
+       an indication that the experimental observation strategy was flawed - 
+       even if the RMS fitting error was small. </li>
+     </ul>
+     <p>The positions and orientations of the tag points of the mount plate tag 
+     group are significant for this procedure. However, only the tool profile 
+     position [X, Y, Z] will be adjusted; the tool profile orientation will not 
+     be changed.</td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

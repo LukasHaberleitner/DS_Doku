@@ -1,0 +1,237 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating Bolt Tightening Connection Properties</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Creating Bolt Tightening Connection Properties<a name="ix-commands::Bolt Tightening Connection Property;tightening connection properties::bolt;bolt tightening connection properties;connection properties::bolt tightening"></a></h1>
+ <table Border="0" CELLSPACING="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr>
+     <td valign="top" align="center">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32">
+     </td>
+     <td rowspan="1">
+     <p class="task"><a name="CATGPSCommandHeader.CATGPSBoltTighteningHdr"></a>
+     This task shows how to create a Bolt Tightening Connection between two 
+     parts. </td>
+   </tr>
+   <tr>
+     <td align="center" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td>
+     <ul>
+       <li>
+       <p class="task">Only available with the <b>Generative Assembly Structural 
+       Analysis (GAS)</b> product
+       <img border="0" src="b35doc/english/online/estug_c2/images/icon_GAS.gif" align="middle" width="32" height="32">.</li>
+       <li>
+       <p class="task">To have precisions and to know restrictions, refer to
+       <a href="page7130.html#hj-PrecisionsRestrictions">About Connection 
+       Properties</a>.</li>
+       <li>
+       <p class="task">The Gradient method is not available if several Bolt 
+       Tightening connections reference the same degree of freedom. In this 
+       case, try to choose another method type.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+     <td>
+     <p class="task">As a support, the bolt tightening connection requires a 
+     surface constraint of face-face type between the bolt thread and the bolt 
+     support tapping. Note that both these surfaces should be coincident.</p>
+     <p class="task">
+     <img border="0" src="b35doc/english/online/estug_c2/images/bolttighteningprop01NLS.gif" width="288" height="357"></p>
+     <p align="left" class="task">In this example, Surface 1 and Surface 2 are 
+     supports for the assembly constraint of surface contact type.</p>
+     <p class="task">A bolt tightening connection is a connection that takes 
+     into account pre-tension in bolt-tightened assemblies. The computation is 
+     carried out according to the two-step traditional approach. In the first 
+     step of the computation, the model is submitted to tension forces relative 
+     to bolt tightening by applying opposite forces on the bolt thread and on 
+     the support tapping, respectively. Then, in the second step, the relative 
+     displacement of these two surfaces (obtained in the first step) is imposed 
+     while the model is submitted to user loads. During these two steps, the 
+     bolt and the support displacements are linked in the direction normal to 
+     the bolt axis. Since bodies can be meshed independently, the Bolt 
+     Tightening Connection is designed to handle incompatible meshes.&nbsp;</p>
+     <p class="task">The Contact Connection relations take into account the 
+     elastic deformability of the interfaces.</p>
+     <p class="task">The program proceeds as follows:</p>
+     <ul>
+		<li>each node of the finer surface mesh (mesh with the greatest number 
+		of nodes) is projected parallel 
+       to the local outer normal of the first surface onto the second surface 
+       mesh.</li>
+		<li>a projection point is located whenever possible at the 
+       intercept of the projection direction with the second surface mesh 
+       (extrapolated at the face boundary by roughly half an element width).&nbsp;&nbsp;&nbsp;&nbsp;</li>
+		<li>if a projection point exists, the start node is connected 
+       by a node-to-face element with Bolt Tightening property to all nodes of 
+       the element face on which the projection point has landed.</li>
+		<li>a set of join-type relations (involving interpolation 
+       using element shape functions) is computed between the degrees of freedom 
+       of the start node and the degrees of freedom of element face nodes (the 
+       projection point virtual degrees of freedom are eliminated in the 
+       process).</li>
+		<li>rigid body kinematical relations are computed between the 
+       start node and the nodes of element face.</li>
+		<li>after the elimination of the projection point degrees of 
+       freedom, these relations are rotated in a coordinate frame the third 
+       vector of which is aligned with the tension direction (bolt axis).</li>
+		<li>two scalar equality relations are generated in the first 
+       two directions of the coordinate frame, in order to link the displacement 
+       of the start node and the nodes of the element face in the plane normal 
+       to the bolt axis.</li>
+		<li>a cable relation (the reverse of a contact relation) is 
+       generated between the start node and the nodes of element face in the 
+       third direction, generating an inequality.</li>
+		</ul>
+     <p class="task">Thus, the Bolt Tightening Connection generates at most as 
+     many node-to-face elements with Bolt Tightening property as there are nodes 
+     on the finer surface mesh for which a projection onto the opposite surface 
+     mesh exists.<br>
+     To know more about the generated element, refer to
+     <a href="page7595.html" target="ds_doc2">
+     Tightening Join</a> in the <i>Finite Element Reference Guide</i>.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td align="center">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td>
+     <p class="task">Open the <a href="b35doc/english/online/estug_c2/samples/sample21.CATAnalysis">
+     sample21.CATAnalysis</a> document from the samples directory.</p>
+     <ul>
+       <li>
+       <p class="task">Make sure you created a Finite Element Model containing a 
+       Static Analysis Case from this assembly.</li>
+       <li>
+       <p class="task">Make sure you know all you need about
+       <a href="page7130.html#hj-PropertyType">what type of property you will 
+       use for what type of connection</a>.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">Click <kbd>Bolt Tightening Connection Property</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_TighteningConnectionP2.gif" width="24" height="24"> 
+       in the <kbd>Connection Properties</kbd> toolbar.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+         <tr>
+           <td>
+           <p class="task">The Bolt Tightening Connection Property dialog box 
+           appears.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/dbbolttighteningprop01NLS.gif" width="280" height="174"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Select an assembly constraint or an analysis connection.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5">
+         <tr>
+           <td>
+           <p class="task">In this particular example, select <kbd>Coincidence.1 
+           (Part4.1, Vis.1)</kbd> in the specification tree (under the <kbd>
+           Constraints</kbd> set).</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Optionally modify the default value of the force and 
+       orientation parameters.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+         <tr>
+           <td colspan="2">
+           <p class="task">Choose either the same or the opposite orientation so 
+           that the graphic representation of the Bolt Tightening Connection 
+           matches the bolt direction.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/dbbolttighteningprop02NLS.gif" width="280" height="174"></td>
+         </tr>
+         <tr>
+           <td>
+           <blockquote>
+             <p class="task"><u><kbd>Same Orientation</kbd></u></p>
+             <p class="task">
+             <img border="0" src="b35doc/english/online/estug_c2/images/bolttighteningprop02.gif" width="152" height="355"></p>
+           </blockquote>
+           </td>
+           <td valign="top">
+           <blockquote>
+             <p class="task"><u><kbd>Opposite Orientation</kbd></u></p>
+             <p class="task">
+             <img border="0" src="b35doc/english/online/estug_c2/images/bolttighteningprop04.gif" width="152" height="353"></p>
+           </blockquote>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd> in the Bolt Tightening Connection 
+       Property dialog box.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4">
+         <tr>
+           <td colspan="2">
+           <p class="task">A symbol representing the Bolt Tightening Connection 
+           Property is visualized on the corresponding faces.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/bolttighteningprop03.gif" width="242" height="271"></td>
+         </tr>
+         <tr>
+           <td align="center" valign="top">
+           <img src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+           <td>
+           <p class="task">To obtain the same visualization of the assembly, 
+           select <kbd>Shading with Edges</kbd> in the <kbd>View</kbd> toolbar.</td>
+         </tr>
+         <tr>
+           <td colspan="2">
+           <p class="task">Note that two elements appear in the specification 
+           tree: </p>
+           <ul>
+             <li>
+             <p class="task">A <kbd>Tightening Connection Mesh.1</kbd> 
+             connection mesh part under the <kbd>Nodes and Elements</kbd> set</li>
+             <li>
+             <p class="task">A <kbd>Bolt Tightening Connection Property.1</kbd> 
+             connection property under the <kbd>Properties.1</kbd> set.</li>
+           </ul>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/stbolttighteningpropNLS.gif" width="245" height="257">
+           </td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

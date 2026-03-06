@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2006 -->
+<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/02/xpath-functions" xmlns:xdt="http://www.w3.org/2005/02/xpath-datatypes">
+
+  <xsl:output method = "xml" indent = "yes" /> 
+
+<!--  Define some internal XSL variables   --> 
+
+  <!-- Scan XML to rebuilt Parameter nodes inside the ParametersList node-->
+  <xsl:template match = "/"> 
+    <xsl:element name="ParametersList"> 
+      <xsl:apply-templates/> 
+    </xsl:element> 
+  </xsl:template> 
+
+  <xsl:template match = "//Parameter"> 
+    <xsl:choose>
+      <!--  Remove "Supplier Name" parameter added at input as information   --> 
+      <xsl:when test="@Name='Supplier Name'" />
+      
+      <!--  Other parameters are copied  without any modification   --> 
+      <xsl:otherwise>
+        <xsl:copy-of select="." /> 
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template> 
+
+</xsl:stylesheet>   

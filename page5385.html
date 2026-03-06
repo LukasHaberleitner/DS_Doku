@@ -1,0 +1,318 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Using Non Crimp Fabrics</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style type="text/css">
+.auto-style1 {
+	font-family: Verdana, Helvetica, sans-serif;
+	color: #1144EE;
+}
+.auto-style2 {
+	border-collapse: collapse;
+}
+</style>
+</head>
+
+<body>
+
+<h1 align="center">
+      Using Non Crimp Fabrics</h1>
+   <table border="0" id="AutoNumber1" class="auto-style2">
+    <tr>
+      <td valign="top">
+      <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+      <td>This chapter will explain how to create a Non Crimp Fabrics (NCF) in 
+      the material catalog and how to use it in Composites Design:<ul>
+        <li><a href="#ix-defining a material as NCF">Defining a Material as NCF</a>,</li>
+        <li><a href="#ix-NCF:core sampling">Core Sampling and Inspection 
+        Analysis</a>,</li>
+        <li><a href="#ix-NCF:on the fly information">On the Fly Information</a>,</li>
+        <li><a href="#ix-NCF:ply exploder">Ply Exploder</a>,</li>
+        <li><a href="#ix-NCF:ply table">Ply Table</a>,</li>
+        <li><a href="#ix-NCF:XML export">XML Export</a>,</li>
+        <li><a href="#ix-NCF:symmetry">Symmetry</a>.</li>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+      &nbsp;</td>
+      <td>Non Crimp Fabrics (NCF) is a specific pre-manufactured material made 
+      of several layers of different materials <br>
+		and used as is to define a ply.
+      <br>
+      Each layer composing the ply is made of a material with a given 
+      orientation, e.g.<br>
+      <img border="0" src="b35doc/english/online/cpdug_c2/images/NCF01NLS.gif" width="517" height="143"><br>
+      This NCF is added as a ply with an orientation and also a direction (Hand 
+      A or Hand B). <br>
+      Even if used as a single material for a ply, you need to know the content 
+      of the NCF to understand and validate your design <br>
+		and to transfer this 
+      information to any other process (simulation process, documentation 
+      process, manufacturing process).</td>
+    </tr>
+    <tr>
+      <td valign="top">
+      <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+      <td valign="top">
+      <h2><a name="ix-defining a material as NCF">Defining a Material as NCF</a></h2>
+      <ol class="task">
+        <li>
+        <p class="task">When creating the material, go to the Composites tab 
+        page of its properties and select the NCF option:<br>
+        <img border="1" src="b35doc/english/online/cpdug_c2/images/NCF02NLS.gif" width="330" height="419"><br>
+        This makes the NCF description available.</li>
+        <li>
+        <p class="task">Select a material corresponding to a layer of the NCF 
+        from the  list.<br>
+        <img border="1" src="b35doc/english/online/cpdug_c2/images/NCF03NLS.gif" width="129" height="157"><br>
+        The material is added to the field below. By default, its direction is 0 
+        degree.<br>
+        <img border="1" src="b35doc/english/online/cpdug_c2/images/NCF04NLS.gif" width="182" height="151"><br>
+        Click below Direction and enter the direction value (between 0 and 180).<br>
+        <img border="1" src="b35doc/english/online/cpdug_c2/images/NCF05NLS.gif" width="182" height="151"></li>
+        <li>
+        <p class="task">Repeat this step for all the materials and directions of 
+        the NCF.<br>
+        <img border="1" src="b35doc/english/online/cpdug_c2/images/NCF06NLS.gif" width="182" height="151"><br>
+        Click <kbd>OK</kbd> when done.</li>
+        <li>
+        <p class="task">In Composites Design specification tree, NCF material 
+        (named New Material below) are displayed this way, <br>
+        with the layers description directly under the 
+        node:<br>
+        <img border="0" src="b35doc/english/online/cpdug_c2/images/NCF07NLS.gif" width="272" height="381"><br>
+        In a ply node, the Hand information is added, as well as the order of 
+        layers (depending on the Hand) <br>
+		and the <a name="hj-orient">orientations</a> computed from the 
+        ply orientations and those defined in the material catalog.<br>
+        <img border="0" src="b35doc/english/online/cpdug_c2/images/NCF08NLS.gif" width="187" height="292"><br>
+        Those orientations are computed as follows:</p>
+        <table border="1" cellpadding="3" style="border-collapse: collapse" id="table1">
+          <tr>
+            <td rowspan="2">Ply <br>
+            orientation</td>
+            <td rowspan="2">NCF material <br>
+            orientations</td>
+            <td colspan="2">Orientations computed</td>
+          </tr>
+          <tr>
+            <td>&nbsp;for Hand A</td>
+            <td>for Hand B</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>0<br>
+            45<br>
+            90<br>
+            135</td>
+            <td>0<br>
+            45<br>
+            90<br>
+            135</td>
+            <td>45<br>
+            90<br>
+            135<br>
+            0</td>
+          </tr>
+          <tr>
+            <td>90</td>
+            <td>0<br>
+            45<br>
+            90<br>
+            135</td>
+            <td>90<br>
+            135<br>
+            0<br>
+            45</td>
+            <td>135<br>
+            0<br>
+            45<br>
+            90</td>
+          </tr>
+          <tr>
+            <td>45</td>
+            <td>0<br>
+            45<br>
+            90<br>
+            135</td>
+            <td>45<br>
+            90<br>
+            135<br>
+            0</td>
+            <td>90<br>
+            135<br>
+            0<br>
+            45</td>
+          </tr>
+          <tr>
+            <td>135</td>
+            <td>0<br>
+            45<br>
+            90<br>
+            135</td>
+            <td>135<br>
+            0<br>
+            45<br>
+            90</td>
+            <td>0<br>
+            45<br>
+            90<br>
+            135</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>0<br>
+            45<br>
+            90<br>
+            135</td>
+            <td>10<br>
+            55<br>
+            100<br>
+            145</td>
+            <td>55<br>
+            100<br>
+            145<br>
+            10</td>
+          </tr>
+        </table>
+        </li>
+      </ol>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">
+      <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+      <td valign="top">
+      <ul>
+        <li>For <a href="page5385.html">NCF materials</a>, the
+        <kbd>Attributes</kbd> tab page in the Ply definition dialog box changes<br>
+        to let you choose <kbd>Hand A</kbd> or <kbd>Hand B</kbd>.</li>
+        <li>If a 45 degrees tape is flipped over (Hand A to Hand B), the 
+        orientation is reversed by 180 degree, 45 becoming -45 degrees.<br>
+        <img border="0" src="b35doc/english/online/cpdug_c2/images/NCF10.gif" width="573" height="319"></li>
+      </ul>
+&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="top">
+      &nbsp;</td>
+      <td valign="top">
+      <h2>Multiple <a name="ix-NCF:core sampling">Core Sample</a>s and
+      Producibility
+      <a name="ix-NCF:producibility inspection">Inspection</a></h2>
+      <p>NCF are &#8216;exploded&#8217; for the
+      <a href="page5338.html">M<span class="auto-style1">ultiple Core Samples</span></a> and the 
+		<a href="page3504.html">
+		Producibility Inspection</a> 
+      to enable a complete check inside the NCF layers at the selected point.
+      <br>
+      This means that all the layers composing a core sample or being inspected 
+      will be visible as individual layers <br>
+		and provide accurate information 
+      (especially orientation) for the same ply:</p>
+      <ul>
+        <li>The ply is repeated n times (n being the number of layers in the NCF),
+        </li>
+        <li>The material name is the concatenation of the NCF material name and 
+        of the layer material name,</li>
+        <li>The order of the layers depends on the Hand (A or B),</li>
+        <li>The orientations are computed from the ply orientations and those 
+        defined in the material catalog (see <a href="#hj-orient">above</a>).</li>
+      </ul>
+      <p>Here is an example of a Core Sampling:<br>
+      <img border="1" src="b35doc/english/online/cpdug_c2/images/NCF11NLS.gif" width="424" height="191"></p>
+      <h2><a name="ix-NCF:on the fly information">On the Fly Information</a></h2>
+      <p><a href="page3502.html">On 
+      the Fly Information</a> displays: </p>
+      <ul>
+        <li>The ply orientation, </li>
+        <li>The hand information, </li>
+        <li>The order of the layers that depends on the Hand (A or B),</li>
+        <li>The orientations that are computed from the ply orientations and 
+        those defined in the material catalog (see <a href="#hj-orient">above</a>).</li>
+      </ul>
+      <p><img border="0" src="b35doc/english/online/cpdug_c2/images/NCF12NLS.gif" width="311" height="198"></p>
+      <h2><a name="ix-NCF:ply exploder">Ply Exploder</a></h2>
+      <p>NCF are &#8216;exploded&#8217; for the <a href="page5322.html">Ply exploder</a> 
+      to enable a visualization inside the NCF layers of the selected ply:</p>
+      <ul>
+        <li>One surface is created for each layer of the NCF,</li>
+        <li>All exploded surfaces are placed in a geometrical set aggregated 
+        under the ply or the cut-piece,</li>
+        <li>The total thickness of the exploded surfaces for a ply or cut-piece 
+        is equal to NCF thickness x scale factor <br>
+		(i.e. the offset value for each 
+        layer of the NCF is not computed from the thickness of the layer 
+        material, <br>
+		but is equal to the NCF thickness divided by n-1, n being the 
+        number of layers of the NCF),</li>
+        <li>Each surface is colorized according to the computed orientation of 
+        the layer of the NCF.</li>
+      </ul>
+      <p><img border="0" src="b35doc/english/online/cpdug_c2/images/NCF13NLS.gif" width="526" height="358"></p>
+      <h2><a name="ix-NCF:ply table">Ply Table</a></h2>
+      <p>When exporting the <a href="page5322.html">ply table</a>:</p>
+      <ul>
+        <li>Each individual layer composing a NCF is exported as a row in the 
+        generated file. <br>
+        This enables the visualization of exploded layers composing a ply table.</li>
+        <li>The order of the rows depends on the Hand (A or B),</li>
+        <li>The orientations that are computed from the ply orientations and 
+        those defined in the material catalog (see <a href="#hj-orient">above</a>).</li>
+      </ul>
+      <p><img border="1" src="b35doc/english/online/cpdug_c2/images/NCF14NLS.gif" width="732" height="86"></p>
+      <p>When importing a ply table, you cannot:</p>
+      <ul>
+        <li>Re-order the layers of a NCF,</li>
+        <li>Change the orientations,</li>
+        <li>Change the draping direction for one layer only,</li>
+        <li>Change the name of the ply, sequence, plies group for one layer 
+        only.</li>
+      </ul>
+      <p>All changes are imposed by the first layer (name, orientation, drapind 
+      direction, ...).</p>
+      <h2><a name="ix-NCF:XML export">XML Export</a></h2>
+      <p>When <a href="page5357.html">exporting to XML</a>, in the material 
+      section, the NCF is detailed to contain all layers with their own material 
+      and orientation.<br>
+      <img border="0" src="b35doc/english/online/cpdug_c2/images/NCF15NLS.gif" width="581" height="394"></p>
+      <p>In the layers sections, depending on whether the NCF material has a 
+      link with its constituting material, <br>
+		the properties are displayed or not.<br>
+      The orientation value is always exported:</p>
+      <ul>
+        <li>the NCF has a link with its constituting material, the properties 
+        are displayed:<br>
+        <img border="0" src="b35doc/english/online/cpdug_c2/images/NCF16NLS.gif" width="289" height="153"><br>
+        Note that the link to the NCF in the material catalog must be available 
+        when you start the XML export.</li>
+        <li>The NCF has no link with its constituting material, or the link is 
+        not available, only the name of the material is displayed:<br>
+        <img border="0" src="b35doc/english/online/cpdug_c2/images/NCF17NLS.gif" width="189" height="56"></li>
+      </ul>
+      <h2><a name="ix-NCF:symmetry">Symmetry</a></h2>
+      <p>When you perform a <a href="page5324.html">symmetry</a> of a plies group, the hands are switched 
+      from A to B or vice-versa.</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <p align="center">
+      <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+    </tr>
+  </table>
+  
+
+</body>
+
+</html>
+

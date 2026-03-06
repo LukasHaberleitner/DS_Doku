@@ -1,0 +1,197 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2E2L2O2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>Editing the Feedrate</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+</head>
+
+<body>
+
+<h1>
+<a name="ix-tool path editor:editing the feedrate"></a>Editing the Feedrate
+<a name="CATTPEHeader.TPEFeedrateModification"></a></h1>
+<table border="0" style="border-collapse: collapse" cellpadding="0" cellspacing="0" width="1061">
+  <tr>
+    <td valign="top" width="32">
+    <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td valign="top" width="1029">This task explains how to modify the feedrate of 
+    one or several tool paths, i.e.:<ul>
+      <li>Modify feedrate of imported V4 data (trough APT Import type 
+      operations).</li>
+      <li>Locally slow down the tool of an operation, to avoid chatter and 
+      ensure an accurate tool path on the machine (due to poor rigidity of the 
+      setup, change of part surface topology &#8230;.) </li>
+    </ul>
+    <p>It is available on APT imports and milling operations. <br>
+    In an APT Import machining operation,&nbsp; the type of feedrate is 
+    determined as follows:</p>
+    <ul>
+      <li>The slowest feedrate of an operation in the APT file is considered the 
+      Machining feedrate, </li>
+      <li>The 2nd slowest is the approach feedrate, </li>
+      <li>The 3rd slowest is the retract feedrate ,</li>
+      <li>All others are local feedrates.</li>
+    </ul>
+    <p>Edited feedrates using the tool path editor only impact the tool path, 
+    the Machining Operation (MO) spec is not changed. <br>
+    Tool paths with edited feedrates will be flagged in the PPR tree as 
+    modified.<br>
+    The result is not associative. If the tool path is re-computed (i.e. a 
+    parameter is modified or there is a design change), local feedrates will be 
+    lost.</p>
+    <p>    You are offered two possibilities: </p>
+    <ul>
+      <li><a href="#hj-portion">Modifying a Portion of a Tool Path</a>. After 
+      you have selected a portion of the tool path, you can modify the feedrate:<ul>
+        <li>As a type (approach, retract, machining, etc&#8230;),</li>
+        <li>As a value,</li>
+        <li>As a ratio of the machining feedrate value (for Local type).</li>
+      </ul></li>
+    </ul>
+    <blockquote>
+      <p>If the selected area contains several trajectories with different 
+      feedrates and if the new feedrate is local, only the machining 
+      trajectories will be modified (in order to ignore jumps or macros 
+      trajectories). </p>
+    </blockquote>
+    <ul>
+      <li><a href="#hj-Globally">Modifying a Tool Path Globally</a>. You do not 
+      select any area: the modification will apply globally on all tool paths:<ul>
+      <li>Select the type of feedrate to modify (approach, retract, machining, 
+      local). </li>
+      <li>If there are several &#8216;local&#8217; types with different feedrates, you can 
+      select Local1, Local2, Local3 &#8230; and corresponding areas are highlighted.</li>
+      <li>Apply a new feedrate as a value (or a ratio of the machining feedrate 
+      value for Local type).<br></li>
+    </ul>
+      </li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="32">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td width="1029">
+    <p class="task">Open
+    <a href="b35doc/english/online/cfysm_C2/samples/Machining/Block/Block.CATProcess">
+    Block.CATProcess</a> from the samples directory.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="32">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td valign="top" width="1029">
+    <h2>Modifying a <a name="hj-portion">Portion</a> of a Tool Path</h2>
+    <ol class="task">
+      <li>
+      <p class="task">Select <kbd>Sweeping.1</kbd> and click <kbd>Edit Tool Path</kbd>
+      <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/I_M3xTPEEdit.gif" width="22" height="22"> in the <kbd>Tool Path 
+      Management</kbd> toolbar.</li>
+      <li>
+      <p class="task">The <kbd>Tool Path Editor</kbd> dialog box is displayed:</p>
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="table1">
+        <tr>
+          <td colspan="2">
+          <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/dbtpe02NLS.gif" width="332" height="79"></td>
+        </tr>
+        <tr>
+          <td>
+          <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+          <td>If you have selected only one object, the title <kbd>Tool Path 
+          Editor</kbd> is replaced with the name of the operation.</td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p class="task">Click <kbd>Area Modification</kbd> <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/I_M3xAppTPEAreaModification.gif" width="24" height="24">.The tool path and the tool path area editor are displayed.<br>
+      <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/dbTPE03NLS.gif" width="413" height="58"><br>
+      Select the <a href="page5128.html">portion of the 
+      tool path</a> where you want to modify the feedrate.<br>
+      <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/Editfeedrate01.gif" width="282" height="189"></li>
+      <li>
+      <p class="task">Click <kbd>Modify feedrate</kbd>
+            <img border="0" src="b35doc/english/online/icons_C2/images/I_TPEFeedrateModificationP2.gif" width="22" height="22"> 
+            in the tool path area editor. <br>
+      The <kbd>Feedrate Modification</kbd> dialog box is displayed:<br>
+      <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/dbfeedrate01NLS.gif" width="231" height="149"></li>
+      <li>
+      <p class="task">Select <kbd>Local</kbd> from the drop-down list:<br>
+      <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/dbfeedrate03NLS.gif" width="231" height="149"><br>
+      the dialog box turns to:<br>
+      <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/dbfeedrate02NLS.gif" width="231" height="149"><br>
+      The <kbd>Feedrate value</kbd> proposed is the current one.<br>
+      If several tool paths are selected with different values for the same 
+      feedrate type, the value field is hidden.<br>
+      If several tool paths are selected with different values for the machining 
+      feedrate, the value field of the local feedrate is hidden.</li>
+      <li>
+      <p class="task">Key-in the new <kbd>Feedrate value</kbd> or the <kbd>
+      Feedrate ratio </kbd>(when you modify one, the other is recomputed).</li>
+      <li>
+      <p class="task">Click <kbd>OK</kbd> to validate and exit the dialog box.<br>
+      The tool path is modified with this new feedrate value.<br>
+      It is marked (modified) in the specification tree, and is displayed in 
+      white in the 3D viewer.<br>
+      <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/Editfeedrate02NLS.gif" width="486" height="150"></li>
+    </ol>
+    <h2>Modifying a Tool Path <a name="hj-Globally">Globally</a></h2>
+    <ol class="task">
+      <li>
+      <p class="task">Select <kbd>Manufacturing Program.1</kbd> and click <kbd>Edit Tool Path</kbd>
+      <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/I_M3xTPEEdit.gif" width="22" height="22"> in the <kbd>Tool Path 
+      Management</kbd> toolbar.</li>
+      <li>
+      <p class="task">The <kbd>Tool Path Editor</kbd> dialog box is displayed:</p>
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="table2">
+        <tr>
+          <td colspan="2"><img border="1" src="b35doc/english/online/cfyugtpe_c2/images/dbtpe02NLS.gif" width="332" height="79"></td>
+        </tr>
+        <tr>
+          <td>
+          <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+          <td>If you have selected only one object, the title <kbd>Tool Path 
+          Editor</kbd> is replaced with the name of the operation.</td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p class="task">Click <kbd>Area Modification</kbd> <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/I_M3xAppTPEAreaModification.gif" width="24" height="24">.The tool path and the tool path area editor are displayed.<br>
+      <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/dbTPE03NLS.gif" width="413" height="58"><br>
+      Do not perform any selection! </li>
+      <li>
+      <p class="task">Click <kbd>Modify feedrate</kbd>
+      <img border="0" src="b35doc/english/online/icons_C2/images/I_TPEFeedrateModificationP2.gif" width="22" height="22">.<br>
+      The <kbd>Feedrate Modification</kbd> dialog box is displayed:<br>
+      <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/dbfeedrate04NLS.gif" width="231" height="149"><br>
+      If several tool paths are selected with different values for the same 
+      feedrate type, the value of the first tool path is given as default value. </li>
+      <li>
+      <p class="task">Modify the type of the feedrate<br>
+      <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/dbfeedrate05NLS.gif" width="231" height="149"><br>
+      or the <kbd>Feedrate value</kbd>.<br>
+      RAPID is never proposed because its value cannot be modified, as it is 
+      defined by the machine.</li>
+      <li>
+      <p class="task">Click <kbd>OK</kbd> to validate and exit the dialog box.<br>
+      All the tool paths are modified:<br>
+      <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/Editfeedrate03NLS.gif" width="259" height="254"></li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+    <p align="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

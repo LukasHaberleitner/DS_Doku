@@ -1,0 +1,152 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Syntaxes for Multi-Slide Lathe Machine Environment</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Syntaxes for Multi-Slide Lathe Machine Environment</h1>
+ <a name="ix-Syntaxes"></a>
+ <p>This section describes specific syntaxes that can be used in a Multi-Slide 
+ Lathe machine environment in order to produce NC data for a multi-channel 
+ context. In particular, this means that commands must be available:</p>
+ <ul>
+   <li>to segregate the code for different channels</li>
+   <li>to synchronize channels.</li>
+ </ul>
+ <p>For more information about NC commands and NC instructions, please refer to
+ <a target="_blank" href="page11460.html">PP 
+ Tables and PP Word Syntaxes</a>.</p>
+ <h2>Syntaxes for Turret Management</h2>
+ <p>To identify the channel (Turret) in the program header a new attribute 
+ MFG_CHANNEL_NUMBER is added to the NC instruction NC_START_MACRO.<br>
+ Synchronization is also possible thanks to the NC instruction 
+ NC_PROGRAM_HEADER.</p>
+ <h4><a name="ix-NC instruction, auxiliary command type::NC_START_MACRO"></a>
+ <a name="NC_START_MACRO"></a>NC_START_MACRO&nbsp;</h4>
+ <p>MFG_IDENTIFIER: Part Operation identifier<br>
+ MFG_PROGRAM_NAME: Manufacturing Program name<br>
+ MFG_MACHINE_NAME: Machine name<br>
+ MFG_CHANNEL_NUMBER: Channel number (Turret)<br>
+ MFG_MODEL_NAME: Name of the CATProcess (with document suffix)<br>
+ MFG_PRODUCT_NAME: Name of the CATProduct/CATPart (with no document suffix).</p>
+ <h4>Definition in PP Table</h4>
+ <blockquote>
+   <p><code>*START_NC_INSTRUCTION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NC_START_MACRO<br>
+   ...<br>
+   CHANNEL,%MFG_CHANNEL_NUMBER<br>
+   ...<br>
+   *END</code></p>
+ </blockquote>
+ <h4>Example of resulting APT source</h4>
+ <blockquote>
+   <p><code>...<br>
+   CHANNEL,1<br>
+   ...</code></p>
+   <h4><a name="ix-NC instruction, auxiliary command type::NC_PROGRAM_HEADER">
+   </a><a name="NC_PROGRAM_HEADER"></a>NC_PROGRAM_HEADER</h4>
+   <font SIZE="2">
+   <p><code>*START_NC_INSTRUCTION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+   NC_PROGRAM_HEADER<br>
+   *START_SEQUENCE<br>
+   CHANNEL,%MFG_CHANNEL_NUMBER<br>
+   *END<br>
+   *END</code></p>
+   </font>
+ </blockquote>
+ <h2>Syntax for Synchronization Management</h2>
+ <p>To valuate the synchronizations defined in the programs, an NC command 
+ NC_SYNCHRONISATION is available to define the syntax to be valuated.</p>
+ <h4><a name="ix-NC instruction, auxiliary command type::NC_SYNCHRONISATION">
+ </a><a name="NC_SYNCHRONISATION"></a>NC_SYNCHRONISATION</h4>
+ <p>MFG_SYNCHRONISATION_NUMBER: index of the synchronization<br>
+ MFG_CHANNEL1: first synchronized channel<br>
+ MFG_CHANNEL2: second synchronized channel<br>
+ MFG_MASTER_CHANNEL: number of the channel set as parent.</p>
+ <h4>Default definition in PP Table</h4>
+ <blockquote>
+   <p><code>*START_NC_COMMAND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NC_SYNCHRONISATION<br>
+   SYNC/%MFG_SYNCHRONISATION_NUMBER,%MFG_CHANNEL1,%MFG_CHANNEL2,%MFG_MASTER_CHANNEL<br>
+   *END</code></p>
+ </blockquote>
+ <h4>Result</h4>
+ <p>For two channels, the number of synchronizations can be managed dynamically.<br>
+ With more than 2 channels, the algorithm to compute the number of 
+ synchronizations is more complex. In this case, the numbering of 
+ synchronizations might not be always relevant.</p>
+ <p>Note that if no parent is defined in a synchronization, the last parameter 
+ (MFG_MASTER_CHANNEL) of the SYNC syntax is 0 (zero).</p>
+ <h2>Syntax for Spindle Management</h2>
+ <p>As several spindles can be addressed within a given channel, a new attribute 
+ MFG_SPINDLE_NAME is added to identify the current spindle when defining 
+ existing NC commands NC_SPINDLE_LATHE and NC_MACHINING_AXIS.</p>
+ <h4><a name="ix-NC command::NC_SPINDLE_LATHE"></a><a name="NC_SPINDLE_LATHE">
+ </a>NC_SPINDLE_LATHE</h4>
+ <p>Note that this corresponds to the <b>part's </b>spindle speed.</p>
+ <p>MFG_SPNDL_UNIT: list with two values defining the spindle rotation units.<br>
+ First value: spindle rotation expressed in revolutions per minute. RPM is the 
+ default value.<br>
+ Second value: spindle rotation expressed in surface meters per minute. SMM is 
+ the default value.<br>
+ MFG_SPNDL_WAY: list with two values defining the direction of rotation of the 
+ spindle.<br>
+ First value: spindle rotation processed clockwise. CLW is the default value.<br>
+ Second value: spindle rotation processed counter-clockwise. CCLW is the default 
+ value.<br>
+ MFG_SPNDL_SPEED: numerical value of the spindle speed.<br>
+ MFG_SPINDLE_NAME: current spindle name if any.</p>
+ <h4>Default definition in PP Table for NC_SPINDLE_LATHE</h4>
+ <blockquote>
+   <p><code>*START_NC_COMMAND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NC_SPINDLE_LATHE<br>
+   SPINDL/%MFG_SPNDL_SPEED,&amp;MFG_SPNDL_UNIT,%MFG_SPINDLE_NAME<br>
+   *END</code></p>
+ </blockquote>
+ <h4>SPINDL Syntax on the Counter Spindle </h4>
+ <p>When machining is done on the Counter Spindle, the SPINDL syntax is set to 
+ be coherent with the Counter Spindle.</p>
+ <p>The figure below shows how the Clockwise / Counterclockwise spindle 
+ direction is determined: you must look at the tool from the jaws. In this 
+ figure, the spindle direction is counterclockwise. </p>
+ <blockquote>
+   <p>
+   <img border="1" src="b35doc/english/online/mlgug_c2/images/SpindleRotation01.gif" width="342" height="389"></p>
+ </blockquote>
+ <h4><a name="ix-NC command::NC_MACHINING_AXIS"></a><a name="NC_MACHINING_AXIS">
+ </a>NC_MACHINING_AXIS</h4>
+ <p>MFG_NCAXIS_IDENTIFIER: machining axis identifier<br>
+ MFG_SPINDLE_NAME: name of the spindle that is linked to the origin<br>
+ MFG_SPINDLE_NUMBER: number of the spindle that is linked to the origin<br>
+ MFG_NCAXIS_X_ORIG, MFG_NCAXIS_Y_ORIG, MFG_NCAXIS_Z_ORIG: coordinates of the 
+ machining axis origin<br>
+ MFG_NCAXIS_X_VECX, MFG_NCAXIS_Y_VECX, MFG_NCAXIS_Z_VECX: components of the 
+ x-axis<br>
+ MFG_NCAXIS_X_VECY, MFG_NCAXIS_Y_VECY, MFG_NCAXIS_Z_VECY: components of the 
+ y-axis<br>
+ MFG_NCAXIS_X_VECZ, MFG_NCAXIS_Y_VECZ, MFG_NCAXIS_Z_VECZ: components of the 
+ z-axis.</p>
+ <h4>Default definition in PP Table for NC_MACHINING_AXIS</h4>
+ <blockquote>
+   <p><code>*START_NC_COMMAND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NC_MACHINING_AXIS<br>
+   $$*CATIA0<br>
+   $$ %MFG_NCAXIS_IDENTIFIER,%MFG_SPINDLE_NAME, %MFG_SPINDLE_NUMBER<br>
+   $$ %MFG_NCAXIS_X_VECX %MFG_NCAXIS_X_VECY %MFG_NCAXIS_X_VECZ 
+   %MFG_NCAXIS_X_ORIG<br>
+   $$ %MFG_NCAXIS_Y_VECX %MFG_NCAXIS_Y_VECY %MFG_NCAXIS_Y_VECZ 
+   %MFG_NCAXIS_Y_ORIG<br>
+   $$ %MFG_NCAXIS_Z_VECX %MFG_NCAXIS_Z_VECY %MFG_NCAXIS_Z_VECZ 
+   %MFG_NCAXIS_Z_ORIG<br>
+   *END</code></p>
+ </blockquote>
+
+ </body>
+
+</html>
+

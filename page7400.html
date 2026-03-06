@@ -1,0 +1,351 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Generating Dimensions</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="docCompliance" content="v0.5; Fri Jul  1 14:51:00 2005">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1>Generating Dimensions<a name="CATTPSEditorHeader.TPSCreateGenDimHdr"></a>&nbsp;</h1>
+<table Border="0" CELLSPACING="0" valign="top" cellpadding="5">
+  <tr valign="top" BORDER="0">
+    <td valign="top" align="left">
+    <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td valign="top" align="left">This task shows you how to generate dimensions 
+    automatically.</td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top" align="left">&nbsp;</td>
+    <td valign="top" align="left">This command allows you to generate the 
+    following dimensions from Part Design features only:<ul>
+      <li>Some or all hole dimensions from a hole parameters (except if these 
+      parameters cannot be associated with an existing geometrical element to 
+      generate dimensions: diameter of a tapered hole out of the part, depth for 
+      a blind hole setting a &quot;through hole&quot;, etc).</li>
+      <li>Pad/Pocket length; if two limits are defined, two dimensions will be 
+      generated between the sketch plane and each limiting face, and sketch 
+      constraints.</li>
+      <li>Multi-Pad/Multi-Pocket lengths, and sketch constraints.</li>
+      <li>Shaft/Groove distance constraints that are parallel or perpendicular 
+      to the shaft/groove axis direction,<br>
+      distance between shaft/groove axis and point and/or straight line and/or 
+      circle (arc or complete) as a half dimension diameter if the shaft/groove 
+      is not complete (value of the single angle or total of the 2 less than 360 
+      degrees, as regular diameter if the shaft/groove is complete, angle, and 
+      sketch constraints.</li>
+      <li>Chamfer features; dimensions are generated according to 
+      the Part Design chamfer feature definition: for a chamfer with a length x 
+      length definition, the dimension format will be distance x distance, 
+      whereas for a chamfer with a length x angle definition, the dimension 
+      format will be distance x angle dimension. However, you should be aware of 
+      the fact that if tolerances are applied to chamfer parameters, only the 
+      tolerance applied to the first parameter will be generated. Chamfer 
+      dimensions cannot be edited, but they can be modified via the <kbd>
+      Dimension Properties</kbd> toolbar and the <kbd>Edit Properties</kbd> 
+      command.</li>
+		<li>Chamfering consists of removing or adding a flat section from a 
+		selected edge to create a beveled surface between the two original faces 
+		common to that edge. So, a chamfer dimension is created on three faces 
+		which comprises of, an added flat section and the two original faces. 
+		Thus, whenever the chamfer dimension is selected, the features 
+		generating the two original faces also get highlighted in the feature 
+		tree.</li>
+      <li>Thread features; thread diameter, depth and pitch 
+      parameter dimensions can be generated. Dimension generation automatically 
+      generates a thread symbolic representation.<br>
+      Note that:<ul>
+        <li>any tolerance attached to the pitch or diameter parameter will not 
+        be generated.</li>
+        <li>generating a pitch parameter dimension requires the generation of 
+        the corresponding thread diameter parameter dimension.</li>
+        <li>if the thread is not a metric one, the prefix will be a diameter 
+        symbol instead of the letter M.</li>
+        <li>You could select <kbd>User Feature</kbd> and explore them in order 
+        to find Part features allowed in Generative command.<br>
+        The command will recursively search each compatible internal Part 
+        features (in the same way <kbd>User Feature</kbd> containing other <kbd>
+        User Features</kbd>) in order to show parameters (if nothing could be 
+        analyzed by generative command, no parameter will appear).<br>
+        Moreover, user can immediately select all of them in generative command 
+        list as if User Feature does not exist.<br>
+        Only published parameters (during User Feature creation) are seen in 
+		list and corresponding dimensions could be created.</li>
+      </ul>
+      </li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+    <img src="b35doc/english/online/icons_C2/common/abasic.gif" width="32" height="32"></td>
+    <td valign="top" align="left">Remember that:<ul>
+      <li>A dimension is only linked with a sketch parameter when the dimension 
+		is based on 3D geometrical elements generated from parameterized sketch 
+		elements.</li>
+		<li>Dimensions are associated with the design of a part, including the 
+      Mean Dimension behavior.</li>
+      <li>When parameter tolerances are still defined, they are set to the 
+      dimension tolerances.</li>
+      <li>Modifying dimension tolerances modifies the parameter tolerances and 
+      vice-versa.</li>
+      <li>A generated dimension is always created in an annotation plane 
+      parallel to the related feature internal parameter plane and this 
+      annotation plane is not necessarily the active annotation plane:<ul>
+        <li>If an annotation plane parallel to the feature internal parameter 
+        plane already exists, the dimension is created in this annotation plane,</li>
+        <li>Otherwise a new annotation plane is created parallel to the feature 
+        internal parameter plane.</li>
+      </ul>
+      </li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+    <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td valign="top" align="left">Open the
+    <a href="b35doc/english/online/cfysm_C2/samples/Tolerancing/Functional/Annotations_Part_04.CATPart">
+    Annotations_Part_04.CATPart</a> document:<ul>
+      <li>Improve the highlight of the related geometry, see
+      <a href="page3850.html">
+      Highlighting of the Related Geometry for 3D Annotation</a>.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">
+    <ol class="task">
+      <li value="1">
+      <p class="task">Click <kbd>Generative Dimension </kbd>
+      <img border="0" src="b35doc/english/online/icons_C2/images/I_TPSGenerativeDimP2.gif" width="24" height="24">
+      <a name="ix-commands::Generative Dimension"></a>&nbsp;in the <kbd>Annotations</kbd><span style="font-size: 10.0pt; font-family: Verdana"><kbd style="color: #666666; letter-spacing: -.6pt; font-weight: bold">
+		</kbd></span>toolbar.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber1">
+        <tr>
+          <td>The <kbd>Generate 3D Tolerancing Dimensions </kbd>dialog box 
+          appears.</td>
+        </tr>
+        <tr>
+          <td>
+          <img border="0" src="b35doc/english/online/fdtug_c2/images/db108NLS.gif" vspace="5" width="576" height="241"></td>
+        </tr>
+      </table>
+      </li>
+      <li value="2">
+      <p class="task">Select the hole as shown on the part.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber2">
+        <tr>
+          <td><img border="1" src="b35doc/english/online/fdtug_c2/images/gw144.gif" vspace="5" width="485" height="300"></td>
+        </tr>
+        <tr>
+          <td>The hole parameter is displayed in the dialog box.</td>
+        </tr>
+        <tr>
+          <td>
+          <img border="0" src="b35doc/english/online/fdtug_c2/images/db109NLS.gif" vspace="5" width="534" height="241"></td>
+        </tr>
+        <tr>
+          <td>Also, the hole parameter is shown on the part.</td>
+        </tr>
+        <tr>
+          <td><img border="1" src="b35doc/english/online/fdtug_c2/images/gw082.gif" vspace="5" width="485" height="300"></td>
+        </tr>
+      </table>
+      </li>
+      <li value="3">
+      <p class="task">Select the <kbd>Diameter</kbd> parameter in the dialog 
+      box. You can also select the parameter on the geometry.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber3">
+        <tr>
+          <td>
+          <img border="1" src="b35doc/english/online/fdtug_c2/images/db110NLS.gif" vspace="5" width="436" height="151"></td>
+        </tr>
+      </table>
+      </li>
+      <li value="4">
+      <p class="task">Click <kbd>OK</kbd> in the dialog box.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber4">
+        <tr>
+          <td>The diameter dimension is created.</td>
+        </tr>
+        <tr>
+          <td><img border="1" src="b35doc/english/online/fdtug_c2/images/gw083.gif" vspace="5" width="485" height="300"></td>
+        </tr>
+      </table>
+      </li>
+      <li value="5">
+      <p class="task">Right-click the dimension and select <kbd>Transfer To 
+      View/Annotation Plane</kbd> from the contextual menu.</li>
+    </ol>
+    <ol class="task">
+      <li value="6">
+      <p class="task">Select <kbd>Front View.2</kbd> annotation plane.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber5">
+        <tr>
+          <td><img border="1" src="b35doc/english/online/fdtug_c2/images/gw084.gif" vspace="5" width="485" height="300"></td>
+        </tr>
+        <tr>
+          <td>The dimension is transferred.</td>
+        </tr>
+        <tr>
+          <td><img border="1" src="b35doc/english/online/fdtug_c2/images/gw085.gif" vspace="5" width="485" height="300"></td>
+        </tr>
+      </table>
+      </li>
+      <li value="7">
+      <p class="task">Drag the dimension. </p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber6">
+        <tr>
+          <td><img border="1" src="b35doc/english/online/fdtug_c2/images/gw145.gif" vspace="5" width="485" height="300"></td>
+        </tr>
+      </table>
+      </li>
+      <li value="8">
+      <p class="task">Right-click the dimension and select <kbd>Edit Generative 
+      Parameter </kbd>from the contextual menu.<a name="CATTPSBasicHeaders.TPSEditMfParameters"></a><a name="ix-contextual commands::edit generative parameter"></a></p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber7">
+        <tr>
+          <td><img border="1" src="b35doc/english/online/fdtug_c2/images/gw165.gif" vspace="5" width="485" height="300"></td>
+        </tr>
+        <tr>
+          <td>The <kbd>Parameter Definition </kbd>dialog box appears.<br>
+          This dialog box allows you to modify the hole parameter and edit the 
+          part.</td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/fdtug_c2/images/db111NLS.gif" vspace="5" width="202" height="98"></td>
+        </tr>
+      </table>
+      </li>
+      <li value="9">
+      <p class="task">Set the value to 41mm.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber8" width="605">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/fdtug_c2/images/db112NLS.gif" vspace="5" width="202" height="98"></td>
+        </tr>
+        <tr>
+          <td>The part turns red because it has been modified but not updated.
+			<br>
+			When you click <kbd>OK</kbd>, the part will be updated (when the 
+			Part update is automatic update).</td>
+        </tr>
+        <tr>
+          <td><img border="1" src="b35doc/english/online/fdtug_c2/images/gw086.gif" vspace="5" width="485" height="300"></td>
+        </tr>
+      </table>
+      </li>
+      <li value="10">
+      <p class="task">Click <kbd>OK</kbd>, then it is automatically updated 
+		(when the Part update is automatic update).</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber9">
+        <tr>
+          <td>The part hole and diameter dimension are modified.</td>
+        </tr>
+        <tr>
+          <td><img border="1" src="b35doc/english/online/fdtug_c2/images/gw087.gif" vspace="5" width="485" height="300"></td>
+        </tr>
+      </table>
+      </li>
+      <li "9" value="11">
+      <p class="task">Right-click the dimension and select <kbd>Edit Generative 
+      Parameter </kbd>from the contextual menu again. </li>
+    </ol>
+    <ol class="task">
+      <li value="12">
+      <p class="task">Right-click in the value field and select the <kbd>Add 
+      tolerance... </kbd>from the contextual menu.
+      <a name="ix-contextual commands::add tolerance"></a></p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber10">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/fdtug_c2/images/db113NLS.gif" vspace="5" width="202" height="98"></td>
+        </tr>
+        <tr>
+          <td>The <kbd>Tolerance </kbd>dialog box appears.<br>
+          This dialog box allows you to modify the hole parameter tolerances.</td>
+        </tr>
+        <tr>
+          <td>
+          <img border="0" src="b35doc/english/online/fdtug_c2/images/db114NLS.gif" vspace="5" width="258" height="124"></td>
+        </tr>
+      </table>
+      </li>
+      <li value="13">
+      <p class="task">Set the tolerances to <kbd>0.5</kbd> and <kbd>-0.5</kbd> .</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber11">
+        <tr>
+          <td>
+          <img border="0" src="b35doc/english/online/fdtug_c2/images/db115NLS.gif" vspace="5" width="258" height="124"></td>
+        </tr>
+        <tr>
+          <td>Tolerances are displayed on the dimension.</td>
+        </tr>
+        <tr>
+          <td><img border="1" src="b35doc/english/online/fdtug_c2/images/gw088.gif" vspace="5" width="485" height="300"></td>
+        </tr>
+      </table>
+      </li>
+      <li value="14">
+      <p class="task">Click <kbd>OK</kbd> in the <kbd>Tolerance </kbd>and <kbd>
+      Parameter Definition </kbd>dialog boxes.</li>
+    </ol>
+    <ol class="task">
+      <li value="15">
+      <p class="task">Modify the tolerances in the <kbd>Dimension Properties</kbd> 
+      toolbar to <kbd>+-0.25</kbd> .</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber12">
+        <tr>
+          <td>
+			<img border="0" src="b35doc/english/online/fdtug_c2/images/tb028NLS.gif" width="221" height="61"></td>
+        </tr>
+        <tr>
+          <td>Tolerances are updated on the dimension.</td>
+        </tr>
+        <tr>
+          <td><img border="1" src="b35doc/english/online/fdtug_c2/images/gw089.gif" vspace="5" width="485" height="300"></td>
+        </tr>
+      </table>
+      </li>
+      <li "9" value="16">
+      <p class="task">Right-click the dimension and select <kbd>Edit Generative 
+      Parameter </kbd>from the contextual menu again.</li>
+    </ol>
+    <ol class="task">
+      <li value="17">
+      <p class="task">Right-click in the value field and select the <kbd>
+      Tolerance&gt;Edit... </kbd>from the contextual menu.
+      <a name="ix-contextual commands::tolerance"></a></p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber13">
+        <tr>
+          <td>The parameter tolerances are also updated.</td>
+        </tr>
+        <tr>
+          <td>
+          <img border="0" src="b35doc/english/online/fdtug_c2/images/db116NLS.gif" vspace="5" width="258" height="124"></td>
+        </tr>
+      </table>
+      </li>
+      <li value="18">
+      <p class="task">Click <kbd>OK</kbd> in the <kbd>Tolerance </kbd>and <kbd>
+      Parameter Definition </kbd>dialog boxes.</li>
+    </ol>
+    </td>
+  </tr>
+</table>
+<p align="center">
+<img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+</body>
+
+</html>
+

@@ -1,0 +1,210 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="C2D2E2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Checking DS License Server Availability</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style type="text/css">
+.style1 {
+	border-style: solid;
+	border-width: 1px;
+}
+.style2 {
+	border-width: 1px;
+}
+.style3 {
+	border: 1px solid #000000;
+}
+</style>
+ </head>
+
+ <body>
+
+ <h1>Checking DS License Server Availability</h1>
+ <h2>About DSCheckLS</h2>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr valign="top" BORDER="0">
+     <td valign="top" style="width: 44px">
+      <img border="0" src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+     <td>
+     <p><kbd>DSCheckLS</kbd> is a command-line tool, installed in the licensing client 
+		runtime view, designed to contact the list of declared license servers 
+		and rapidly request and release a license to check that license servers 
+		are operating correctly, without having to run processes such as CATIA 
+		or DSLicMgt. <kbd>DSCheckLS</kbd> does not have a graphical interface, no shortcut 
+		is added in the Windows start menu, does not need an environment and can 
+		be run without using the <kbd>catstart</kbd> utility.</p>
+     </td>
+   </tr></table>
+   <h2>How to check the DS License Server Availability using DSCheckLS</h2>
+   <table>
+   <tr valign="top" BORDER="0">
+     <td valign="top" style="width: 44px">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>
+     <p>This scenario shows you can check the DS License Server Availability 
+		using <kbd>DSCheckLS</kbd>.</p>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" style="width: 44px">
+      <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol>
+       <li>
+		<p>On the license client, go to the directory:</p>
+		<p><code>LicensingClientInstallPath\OS\code\bin</code></p>
+		<p>for example:</p>
+		<p><code>C:\Program Files\Dassault Systemes\B216\win_b64\code\bin</code></p>
+		<p>and run the <code>DSCheckLS -h</code> command to get the command syntax:</p>
+		<p><code>DSCheckLS [-h|-l|-r lic]</code></p>
+
+				where:<ul>
+		<li><code>-l</code>: displays the status of the license servers </li>
+		<li><code>-r lic</code>: requests license <code>lic</code> enrolled on the license server.</li>
+		</ul>
+		</li>
+		<li>Run the <code>DSCheckLS -l</code> command. 
+
+
+<br>
+		<kbd>DSCheckLS</kbd> parses the <code>DSLicSrv.txt</code> client-side license server configuration file referencing the list of license servers and validates them.
+
+		<br>
+		The command contacts the declared license servers and displays a status along with information about each contacted license server:
+
+		<br><ul><li>
+		the pathname and contents of the <code>DSLicSrv.txt</code> file.</li><li>
+		server status:
+		each status is described in the following table:<br>
+		<table style="width: 100%" class="style1">
+			<tr>
+				<th style="width: 220px" class="style2"><strong>Status</strong></th>
+				<th class="style2"><strong>Description</strong></th>
+			</tr>
+			<tr>
+				<td style="width: 220px" class="style3">RUNNING</td>
+				<td class="style3">License server up and running.</td>
+			</tr>
+			<tr>
+				<td style="width: 220px" class="style3">NOT_SYNCHRONIZED</td>
+				<td class="style3">License server and license client not 
+				time-synchronized </td>
+			</tr>
+			<tr>
+				<td style="width: 220px" class="style3">HOST_UNREACHEABLE</td>
+				<td class="style3">Host did not reply (for example, host has 
+				been shut down)</td>
+			</tr>
+			<tr>
+				<td style="width: 220px" class="style3">NOT_RUNNING</td>
+				<td rowspan="3" class="style3">Host is up, but license server 
+				process not available or down </td>
+			</tr>
+			<tr>
+				<td style="width: 220px" class="style3">CANNOT_CONNECT </td>
+			</tr>
+			<tr>
+				<td style="width: 220px" class="style3">INVALID_SERVER_RESPONSE</td>
+			</tr>
+			<tr>
+				<td style="width: 220px" class="style3">NO_IP_ADDRESS</td>
+				<td class="style3">Unable to get license server IP address</td>
+			</tr>
+			<tr>
+				<td style="width: 220px" class="style3">INVALID_SERVER_VERSION</td>
+				<td class="style3">&nbsp;License server too old; minimum license 
+				server level required not present </td>
+			</tr>
+			<tr>
+				<td style="width: 220px" class="style3">INVALID_SERVER_VERSION</td>
+				<td class="style3">&nbsp;Ignored: server is declared more than 
+				once in the DSLicSrv.txt file </td>
+			</tr>
+			<tr>
+				<td style="width: 220px" class="style3">
+				INVALID_SERVER_DECLARATION</td>
+				<td class="style3">Incorrect license server declaration: 
+				incorrect format or invalid characters.</td>
+			</tr>
+		</table>
+		</li>
+		<li>configuration type: STANDALONE or FAILOVER </li>
+		<li>version number </li>
+		<li>build date </li>
+		<li>IP address</li>
+		<li>licensing port number</li> 
+<li>OS name</li>
+<li>OS version </li>
+<li>OS architecture</li> 
+<li>computer id.</li>
+	
+		</ul>
+		<p>For example:<br>
+		<br>
+		<img title="." src="b35doc/english/online/basil_c2/images/DSLSconfig.png" width="697" height="413"></p>
+		</li>
+		<li>Run the <code>DSCheckLS -r lic</code> command, replacing <code>lic</code> by a real license name, for example like this: 
+		<code>DSCheckLS 
+		-r MD2</code>. 
+
+
+		<br>
+		This grants then releases the <code>MD2</code> license.
+
+<br>
+		If the request succeeds, the following information related to the granted license is displayed, for example:
+
+
+
+		<br>
+		<code>CPF successfully granted.
+<br>
+				#Granted license info:
+<br>
+				#           - feature&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : MD2
+		<br>
+		#           - al_id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : DSCheckLS
+		<br>
+#           - status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : GRANTED 		
+		<br>
+		#           - e&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : STD
+		<br>
+		#           - model&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : NAMED_USER 		
+		<br>
+		#           - bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 15-Oct-2014 08:15
+		<br>
+		#           - n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 1
+		<br>
+		#           - customer site&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : DS HQ            - 
+		<br>
+		# - customer country&nbsp;&nbsp;&nbsp;&nbsp; : FRA<br>
+		#           - customer id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : DSFRA123
+		<br>
+		#           - server&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : lw5sesdsy 		
+		<br>
+		#           - itional infos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 0
+		<br>
+				#           - postion in queue&nbsp;&nbsp;&nbsp;&nbsp; : 0 <br>
+		</code><br>
+		Data such as authorization rules and MaxReleaseNumber are taken into account</li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" align="middle" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+
+ </body>
+
+</html>
+

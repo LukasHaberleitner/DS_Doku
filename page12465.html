@@ -1,0 +1,158 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2L2">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Working with Precedence Constraints</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta content="none, default" name="Microsoft Border">
+</head>
+
+ <body>
+
+ <h1>Working with Precedence Constraints</h1>
+ <div align="left">
+   <table border="0" cellspacing="3" cellpadding="4" width="100%">
+     <tr>
+       <td valign="top"><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+       <td valign="top">
+       <p style="margin-bottom: 1em">The DPM Process and Resource Definition installation includes three example scripts 
+       which provide a set of rules for automating the process of setting precedence constraints on activities, checking 
+       a sequence of activities, and creating a sequence of activities in a CATProcess document.</p>
+       <p style="margin-bottom: 1em">These scripts can be found in the <kbd>&lt;install_dir&gt;&#092;intel_a&#092;code&#092;command</kbd> 
+       directory of your V5 installation, and are named as follows:</p>
+       <ul>
+         <li><a href="#ix-SetPrecedenceConstraintsHTML.CATScript">SetPrecedenceConstraintsHTML.CATScript</a></li>
+         <li><a href="#ix-CheckSequenceAssignedItemsHTML.CATScript">CheckSequenceAssignedItemsHTML.CATScript</a></li>
+         <li><a href="#ix-CreateSequenceCheckAttributeHTML.CATScript">CreateSequenceCheckAttributeHTML.CATScript</a></li>
+       </ul>
+       <p style="margin-bottom: 1em">The sections which follow describe the general functionality provided by each.</td>
+     </tr>
+     <tr>
+       <td valign="top"><img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+       <td valign="top">
+       <ul>
+         <li>
+         <p style="margin-bottom: 1em">The scripts described in this section are accessible via the <kbd>Tools> Macro 
+> Macros...</kbd> menu command in Process and Resource Definition. For more information regarding how to use 
+         macros to automate tasks in DELMIA applications, please refer to the Basic Tasks section of the DELMIA 
+         Infrastructure User Guide.&nbsp;</li>
+         <li>
+         <p style="margin-bottom: 1em">An activity must be selected prior to running any of the following macros. The 
+         macro will then work on the children of the selected activity.</li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td valign="top">
+       <img src="b35doc/english/online/icons_C2/common/ascenari.gif" title="ascenari.gif (1364 bytes)" width="32" height="32"></td>
+       <td valign="top">
+       <h2><a name="ix-SetPrecedenceConstraintsHTML.CATScript">SetPrecedenceConstraintsHTML.CATScript</a></h2>
+       </td>
+     </tr>
+     <tr>
+       <td valign="top"></td>
+       <td valign="top">
+       <p style="margin-bottom: 1em"><i>SetPrecedenceConstraintsHTML.CATScript</i> sets the precedence constraints of 
+       each activity such that they are guaranteed to be in the required sequence when they are linked. This macro 
+       requires that the children of the selected activity have not yet been linked.</p>
+       <p style="margin-bottom: 1em">The script currently traverses the children of the selected activity and searches 
+       for activities of type <i>locate</i>, <i>drill</i>, <i>deburr</i> and <i>screw</i> that each have a single item 
+       assigned to them. In this scenario, the following precedence rules are applied:</p>
+       <ul>
+         <li>If an item is to be screwed, it must have previously been deburred</li>
+         <li>If an item is to be deburred, it must have previously been drilled</li>
+         <li>If an item is to be drilled, it must have previously been located</li>
+       </ul>
+       <p style="margin-bottom: 1em">If at least two such activities of the above types are found to have the same 
+       assigned item, the required precedent activity is added as an attribute to the successive activity. For example, 
+       if a Screw activity and Deburr activity have the same assigned item, the Deburr activity will be added to the 
+       Previous activities attribute of the Screw activity. When the macro is finished, the properties for the Screw 
+       activity might look like this:</p>
+       <p style="margin-bottom: 1em" align="center"><img border="0" src="b35doc/english/online/prpug_c2/images/dbActivityPropertiesPrecendenceNLS.gif" width="452" height="218"></p>
+       <p style="margin-bottom: 1em">In this example, the activities Deburr.2, Drill.1 and Locate.1 have automatically 
+       been added to the Previous activities list for Screw.1 by the SetPrecedenceConstraintsHTML macro.</p>
+       <p style="margin-bottom: 1em">The results of the SetPrecedenceConstraintsHTML macro are written to a generated 
+       HTML file which can be referred to after the macro has finished processing. When the macro is executed, the user 
+       is queried to indicate a name and location to store this HTML file.</p>
+       <p style="margin-bottom: 1em">Although this script (as provided) is based on a Locate> Drill> Deburr> Screw 
+       scenario, it may be customized for any type of activities that have specific precedence requirements.</td>
+     </tr>
+     <tr>
+       <td valign="top"></td>
+       <td valign="top">
+       <h2><a name="ix-CheckSequenceAssignedItemsHTML.CATScript">CheckSequenceAssignedItemsHTML.CATScript</a></h2>
+       </td>
+     </tr>
+     <tr>
+       <td valign="top"></td>
+       <td valign="top">
+       <p style="margin-bottom: 1em"><i>CheckSequenceAssignedItemsHTML.CATScript</i> works on a process that has 
+       activities that are already linked.</p>
+       <p style="margin-bottom: 1em">This script checks a process to ensure that its activities are linked correctly. 
+       Like the script described above, <i>CheckSequenceAssignedItemsHTML.CATScript</i> is also based on the Locate> 
+       Drill> Deburr> Screw scenario, but can be customized to work with any other activities.</p>
+       <p style="margin-bottom: 1em">This script performs the following functions:</p>
+       <ul>
+         <li>Ensure that all child activities of the selected activity are linked in the proper sequence</li>
+         <li>Ensure that each activity in the sequence is operating on the same item</li>
+         <li>If an error is found, stop the script</li>
+         <li>Report the results of the operation in an automatically generated HTML file</li>
+       </ul>
+       <p style="margin-bottom: 1em">The image below shows an example of a generated HTML file:</p>
+       <p style="margin-bottom: 1em" align="center"><img border="0" src="b35doc/english/online/prpug_c2/images/wnHTMLOutput1NLS.gif" width="600" height="247"></p>
+       <p style="margin-bottom: 1em">The activity is shown in the left column and the item that the activity is 
+       performed on is in the right column. In this example, it can be seen that the Locate> Drill> Deburr> Screw 
+       sequence is performed on the item EdgeFillet.4 without error. However, the Drill activity did not exist for the 
+       Line.1 item, therefore the script was stopped at this step.</td>
+     </tr>
+     <tr>
+       <td valign="top"></td>
+       <td valign="top">
+       <h2><a name="ix-CreateSequenceCheckAttributeHTML.CATScript">CreateSequenceCheckAttributeHTML.CATScript</a></h2>
+       </td>
+     </tr>
+     <tr>
+       <td valign="top"></td>
+       <td valign="top"><i>CreateSequenceCheckAttributeHTML.CATScript</i> automatically creates the sequence between the 
+       child activities of a selected activity or process. This macro requires that the children of the selected 
+       activity have not yet been linked.
+       <p style="margin-bottom: 1em">Like the previous scripts described, CreateSequenceCheckAttributeHTML.CATScript is 
+       also based on the Locate> Drill> Deburr> Screw scenario, but can be customized to work with any other 
+       activities.&nbsp;</p>
+       <p style="margin-bottom: 1em">This script also introduces the notion of precedence rules based on activity 
+       attributes (rather than just activity types). In this script, if the Screw activity has an attribute named 
+       &quot;DrillDiameter&quot; and its value is greater than 10, then another activity of type PreDrill is also required.</p>
+       <p style="margin-bottom: 1em">Therefore, in this scenario the following precedence rules are applied: </p>
+       <ul>
+         <li>If an item is to be screwed, it must have previously been deburred</li>
+         <li>If an item is to be deburred, it must have previously been drilled</li>
+         <li>If an item is to be drilled, it must have previously been pre-drilled if it has a DrillDiameter attribute 
+         with a value of greater than 10</li>
+         <li>If an item is to be pre-drilled, it must have previously been located</li>
+       </ul>
+       <p>This procedure also produces an HTML file which displays the results of the operation, as shown in the 
+       following example:</p>
+       <p align="center"><img border="0" src="b35doc/english/online/prpug_c2/images/wnHTMLOutput2NLS.gif" width="625" height="323"></p>
+       <p style="margin-bottom: 1em">Referring to the above image, the section titled Result of Screw Activity: Screw.1 
+       indicates that the item has a DrillDiameter attribute of 12, therefore the PreDrill activity is required prior to 
+       the Drill activity. In the section titled Result of ScrewActivity.2, the DrillDiameter attribute has a value of 
+       only 8 and the PreDrill activity is not required.</td>
+     </tr>
+   </table>
+ </div>
+ <p align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="aendtask.gif (1477 bytes)" width="64" height="32"> </p>
+
+ </body>
+
+</html>
+

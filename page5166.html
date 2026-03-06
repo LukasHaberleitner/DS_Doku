@@ -1,0 +1,1562 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Using Head and Hand Tracking Devices in Version 5</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Using Head and Hand Tracking Devices in Version 5</h1>
+ <p align="center">&nbsp;
+ <img border="0" src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32"><img border="0" src="b35doc/english/online/icons_C2/common/ap3_title.gif" width="152" height="32"></p>
+ <p align="center">&nbsp;</p>
+ <table Border="0" valign="top" height="13626" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td height="108" width="37">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td rowspan="1" height="108" colspan="2" width="1259">This task aims at 
+     giving you a general overview of the necessary virtual reality devices as 
+     well as two application examples for head tracking and hand tracking. This 
+     is the basic method requiring a manual configuration.<br>
+     All the drivers supported by Version 5 can still be run as standalone 
+     processes (as explained further in this section) but as they are now 
+     threaded, you can also activate them using the
+     <a href="page5165.html#hj-threaded drivers">Immersive System Assistant 
+     workbench</a> which enables you to generate a configuration file containing 
+     all the necessary data. These data will then be used to run the broker and 
+     the driver automatically when starting Version 5.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="63" width="37"></td>
+     <td valign="top" height="63" colspan="2" width="1259">
+     <div align="center">
+       <center>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" width="100%" id="AutoNumber2">
+         <tr>
+           <td width="100%">
+           <p align="center"><a href="#hj-deviceoverview">Device Overview</a></td>
+         </tr>
+         <tr>
+           <td width="100%">
+           <p align="center"><a href="#hj-headtracking">Head Tracking</a></td>
+         </tr>
+         <tr>
+           <td width="100%">
+           <p align="center"><a href="#hj-hand tracking">Hand Tracking</a></td>
+         </tr>
+       </table>
+       </center>
+     </div>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="23" width="37">&nbsp;</td>
+     <td valign="top" height="23" colspan="2" width="1259">&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="70" width="37"></td>
+     <td valign="middle" height="70" colspan="2" width="1259">
+     <h2><font color="#282187"><a name="hj-deviceoverview"></a>Device Overview</font></h2>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="49" width="37"></td>
+     <td height="49" colspan="2" width="1259">Using efficiently Virtual Reality 
+     services implies that you fully understand the Virtual Reality 
+     architecture.<br>
+     To do so, let's have a quick look at the following scheme: </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="162" width="37">&nbsp;</td>
+     <td height="162" colspan="2" width="1259">
+     <img border="1" src="b35doc/english/online/cfyugvr_c2/images/VRarchitectureNLS.gif" width="560" height="146"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="261" width="37"></td>
+     <td height="261" colspan="2" width="1259">The virtual reality devices which 
+     can be handled are connected to Version 5 through a socket communication 
+     mechanism involving three actors: Version 5, a broker and a device driver.&nbsp;
+     <p>Version 5 requires a broker to be able to use device drivers. A broker 
+     is a small application holding all the running driver communication port. 
+     This broker application always runs on the same computer as Version 5, 
+     whereas the drivers can run on another computer or another operating 
+     system.<br>
+     Each driver declares itself to the broker thus implying that the broker 
+     should always be running before running a driver.</p>
+     <p>Broker and driver applications can be standalone processes or run within 
+     the Version 5 process (they are threaded processes). Some drivers may be 
+     threaded or not, depending on the devices. As a consequence, you can use 
+     either a threaded or standalone driver with a standalone broker.&nbsp;<br>
+     To run a standalone broker or driver, you need to execute it explicitly, 
+     whereas running a threaded broker or driver only requires they be activated 
+     via the <kbd>Devices</kbd> tab in <kbd>Tools &gt; Options &gt; Devices and 
+     Virtual Reality</kbd>.</p>
+     <p>Prior to using head or hand tracking in Version 5, you need to set up 
+     these actors proceeding the following way:&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="412" width="37">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top" height="412" colspan="2" width="1259">
+     <ol class="task">
+       <li>
+       <p class="task">Start the broker.</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5" height="58">
+           <tr>
+             <td height="58">
+             <p class="task">The broker role is to list and store any device 
+             declaration and to provide this list to Version 5 when requested. 
+             The broker must be started on the same host as the one of Version 5 
+             session.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Start the driver.</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber6" height="196">
+           <tr>
+             <td height="196">
+             <p class="task">The driver will declare itself to the instantiated 
+             broker and will answer Version 5 when an event enumeration or an 
+             event sending is requested.<br>
+             The driver may be launched on a different host as the one of the 
+             Version 5 session.</p>
+             <p>The driver sends events to the Version 5 application. Here are 
+             the four event types used:</p>
+             <ul>
+               <li>POSITION_EVENT for the tracker position and orientation in 
+               space</li>
+               <li>VIEWPORT_EVENT for the coordinates of the screen corners as 
+               well as the letf and right eye position</li>
+               <li>ButtonPress which for the press button number</li>
+               <li>ButtonRelease for the released button number.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Start a Version 5 session.</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber7" height="58">
+           <tr>
+             <td height="56">
+             <p class="task">When started, Version 5 asks the broker for a list 
+             of devices and asks each device for an event enumeration. In the 
+             meantime, these devices are asked to start or stop event sending.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="41" width="37"></td>
+     <td valign="middle" height="41" colspan="2" width="1259">
+     <h2><a name="hj-headtracking"></a>
+     <a name="ix-virtual reality:head tracking"></a>Head tracking</h2>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="146" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="146" colspan="2" width="1259">There are two 
+     kinds of head tracking:&nbsp;
+     <ul>
+       <li><i>camera tracking</i> in which the tracking acts as if a camera 
+       moves in the model. The displayed image is the one filmed by the camera. 
+       In that case, the rendering projection pyramid keeps its original shape. 
+       This tracking is typically used for head mounted display or to simulate a 
+       camera</li>
+       <li><i>asymetrical tracking</i> in which an image is computed and 
+       displayed on a screen that should be considered as being fixed in 
+       relation to the model, although you move in relation to the screen.<br>
+       This tracking is used for displaying images on fix screens and making the 
+       user feels as if the model were steady in the room as he moves in it.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="274" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="top" height="274" width="484">
+     <blockquote>
+       <p><img border="0" src="b35doc/english/online/cfyugvr_c2/images/cameratracking.gif" width="243" height="255"></p>
+     </blockquote>
+     </td>
+     <td valign="top" height="274" width="507">
+     <img border="0" src="b35doc/english/online/cfyugvr_c2/images/asymetricaltracking.gif" width="263" height="256"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="108" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="108" colspan="2" width="1259">
+     <blockquote>
+       <p>The camera tracking functionality requires a POSITION_EVENT or a 
+       symetric VIEWPORT_EVENT (head mounted display type).<br>
+       The asymetrical tracking functionality requires a POSITION_EVENT if the 
+       SGI multipipe management system is running, otherwise a VIEWPORT_EVENT.</p>
+       <p>When using a POSITION_EVENT, the head tracking requires the 
+       POSITION_EVENT X axis&nbsp; to be in the same direction as the vector 
+       defined by (Left Eye, Right Eye):</p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="213" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td height="213" colspan="2" width="1259">
+     <blockquote>
+       <p><img border="0" src="b35doc/english/online/cfyugvr_c2/images/headtracking.gif" width="488" height="189"></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="133" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="133" colspan="2" width="1259">
+     <blockquote>
+       <p>If the tracker is not fixed on the stereo glasses so that X is well 
+       aligned, you need to ask the driver to apply an offset matrix.</p>
+       <p>If several matching events are available, a window prompts you to 
+       choose an event when launching the <kbd>VRViewTracking</kbd> command: just select 
+       the event corresponding to the tracker dedicated to head tracking. You 
+       can also identify the convenient event thanks to its type and emitter 
+       driver name.&nbsp;</p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="70" width="37">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top" height="70" colspan="2" width="1259">The following 
+     examples detail the viewpoint tracking installation procedures using a 
+     Polhemus Fastrak sensor and an IRIX platform.
+     <p>The V5 driver managing the Polhemus Fastrak is a standalone (i.e. 
+     non threaded) driver named &quot;PolExecDaemon&quot;.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="3488" width="37" bgcolor="#FFFFFF">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top" height="3488" colspan="2" width="1259">
+     <ol class="task">
+       <li>
+       <p class="task">The first step is to edit a configuration file to adapt 
+       it to your own configuration.&nbsp;</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber8" height="2595" width="1282">
+           <tr>
+             <td height="54" colspan="2" width="1280">The configuration file 
+             holds necessary information for the driver: the communication baud 
+             rate on the serial port, the serial port number, the events to 
+             send, the matrix you could use to virtually offset the trackers 
+             from their mounting point, the screen definition and the eye 
+             position for the VIEWPORT_EVENT.</td>
+           </tr>
+           <tr>
+             <td height="156" colspan="2" width="1280">Two examples of 
+             configuration files are detailed in this task but bear in mind that 
+             there are no specific settings for using the Polhemus Fastrak. The 
+             dip switch on the Polhemus box should correspond to what is 
+             declared in the configuration file.<br>
+             For your information, the settings used in Dassault Syst&#232;mes 
+             are:<p>Select (number of devices): Down Up Up Up (one sensor only)<br>
+             I/O Select: Up Up Up Down Down Up (serial port 115200 bps).</p>
+             <p>Be careful to use always the same hemisphere during viewpoint 
+             tracking. Refer to the Polhemus documentation for detailed 
+             information.</td>
+           </tr>
+           <tr>
+             <td height="61" bgcolor="#E0E0E0" valign="top" width="1">
+             <img border="0" src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+             <td height="61" bgcolor="#E0E0E0" valign="top" width="1246">The <kbd>
+             Immersive System Assistant</kbd> workbench enables you to generate 
+             automatically the necessary configuration file for head tracking. 
+             For detailed information, refer to <a href="page5165.html">
+             Working With the Immersive System Assistant</a> in this guide.<br>
+             However, you can still edit the configuration file manually, if 
+             desired. To do so, follow the instructions detailed below.</td>
+           </tr>
+           <tr>
+             <td height="154" colspan="2" width="1280"><u>Example 1</u><p>Let's 
+             describe a configuration file assuming you use a Polhemus Fastrak 
+             for tracking both head and hand. Your display system is a bench or 
+             a multi-channel display and you use the <kbd>View &gt; Full Screen</kbd>.<br>
+             In this case, you need the driver to send two POSITION_EVENTs.</p>
+             <p>The <kbd><font face="Courier" color="#000000">
+             <span style="font-weight: 400">#</span></font></kbd> symbol 
+             indicates a comment in the configuration file and the opposite text 
+             explains each of the following instructions:</td>
+           </tr>
+           <tr>
+             <td height="477" colspan="2" width="1280">
+             <div align="left">
+               <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber9" width="673">
+                 <tr>
+                   <td valign="top" width="248">
+                   <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US; font-weight: 400">
+                   <font size="2" color="#000000"><code>SERIALPORT<span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   </span>&quot;COM1&quot;<br>
+                   BPS<span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   </span>38400<br>
+                   TRACKER<span style="mso-spacerun: yes">&nbsp; </span>0<span style="mso-spacerun: yes">&nbsp;
+                   </span>POSITION_EVENT<br>
+                   TRACKER<span style="mso-spacerun: yes">&nbsp; </span>1<span style="mso-spacerun: yes">&nbsp;
+                   </span>POSITION_EVENT </code></font></span>
+                   <p><code><br>
+                   </code>
+                   <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US; font-weight: 400">
+                   <font size="2" color="#000000"><code>#Intersense Head Tracker<br>
+                   MATRIX 0<br>
+                   [0,1,0]<br>
+                   [0,0,-1]<br>
+                   [-1,0,0]<br>
+                   [0,0,0] </code></font></span></p>
+                   <p>
+                   <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US; font-weight: 400">
+                   <font size="2" color="#000000"><code>#Intersense Wand<br>
+                   MATRIX 1<br>
+                   [0,1,0]<br>
+                   [0,0,-1]<br>
+                   [-1,0,0]<br>
+                   [0,0,0] </code></font></span></p>
+                   <p>
+                   <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US">
+                   <font size="2" color="#000000">
+                   <span style="font-weight: 400"><code>SCREEN<br>
+                   {</code></span><code><span style="mso-spacerun:
+yes"><br>
+&nbsp;&nbsp; </span><span style="font-weight: 400">UPPERLEFT<span style="mso-spacerun: yes">&nbsp;&nbsp;</span>[-700, 
+                   300, -430]<span style="mso-spacerun:
+yes"><br>
+&nbsp;&nbsp; </span>UPPERRIGHT<span style="mso-spacerun: yes">&nbsp;</span>[-700,<span style="mso-spacerun: yes">&nbsp;</span>300, 
+                   430]<span style="mso-spacerun:
+yes"><br>
+&nbsp;&nbsp; </span>LOWERRIGHT<span style="mso-spacerun: yes">&nbsp;</span>[-700, 
+                   900, 430]<br>
+                   }</span></code></font></span><span style="font-weight: 400"><font color="#000000"><code>
+                   </code></font></span></td>
+                   <td valign="top" width="421"><font size="2">Specify the 
+                   serial communication port number. You can use either COM1, 
+                   COM2 or COM3.<br>
+                   Specify the communication baud rate with the Polhemus 
+                   Fastrak. Usual baud rates are 38400 and 115200.</font>
+                   <p><font size="2">Here you can type as many lines as events 
+                   you need. Specify the tracker number: a Polhemus Fastrak has 
+                   up to four trackers plugged in. Specify the desired event for 
+                   each tracker. You can choose among four types of events by 
+                   selecting them using the keywords POSITION_EVENTS, 
+                   VIEWPORT_EVENT, BUTTON_PRESS and BUTTON_RELEASE. You can ask 
+                   for different events on the same tracker number.</font></p>
+                   <p><font size="2">Specify the matrix to be applied to the 
+                   POSITION_EVENT coming from tracker 0.<br>
+                   This matrix means that the drivers will send to the 
+                   application the Y-tracker axis as X axis, the Z-tracker axis 
+                   as Y axis and the X-tracker axis as Z axis.</font></p>
+                   <p><font size="2">If you do not apply any matrix, use an 
+                   identity matrix.<br>
+                   Keep a screen section (detailed hereafter) even though it is 
+                   not used.</font></p>
+                   <p>&nbsp;</td>
+                 </tr>
+               </table>
+             </div>
+             </td>
+           </tr>
+           <tr>
+             <td height="111" colspan="2" width="1280">Now, suppose you want to 
+             use the Polhemus Fastrak to track both hand and head without using 
+             the <kbd>MPK</kbd> functionality. In this case, you will need 
+             asymetrical tracking just as you have done it before but, as you 
+             will not use mpconfig, you will need the driver to send a 
+             POSITION_EVENT for the hand and a VIEWPORT_EVENT for the head.<p>
+             The configuration file will then look like this:</td>
+           </tr>
+           <tr>
+             <td height="16" colspan="2" width="1280">
+             <div align="left">
+               <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber10" width="676">
+                 <tr>
+                   <td valign="top" width="240">
+                   <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US; font-weight: 400">
+                   <font size="2" color="#000000"><code>SERIALPORT &quot;COM1&quot;<br>
+                   BPS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 115200<br>
+                   TRACKER 0 VIEWPORT_EVENT<br>
+                   TRACKER 1 POSITION_EVENT<br>
+                   MATRIX 1<br>
+                   [0,0,1]<br>
+                   [1,0,0]<br>
+                   [0,1,0]<br>
+                   [0,0,0]&nbsp;&nbsp;</code></font></span><p>
+                   <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US">
+                   <font size="2" color="#000000">
+                   <span style="font-weight: 400"><code>SCREEN<br>
+                   {<span style="mso-spacerun:
+yes"><br>
+&nbsp;&nbsp; </span>UPPERLEFT <span style="mso-spacerun: yes">&nbsp;</span>[-700, 
+                   300, -430]<span style="mso-spacerun:
+yes"><br>
+&nbsp;&nbsp; </span>UPPERRIGHT [-700,<span style="mso-spacerun: yes">&nbsp;
+                   </span>300, 430]<span style="mso-spacerun:
+yes"><br>
+&nbsp;&nbsp; </span>LOWERRIGHT [-700, 900, 430]<br>
+                   }</code></span></font></span><span style="font-weight: 400"><font color="#000000"><code>
+                   </code></font></span></p>
+                   <p><font size="2" color="#000000">
+                   <span style="font-weight: 400"><code>LEFTEYE&nbsp; [0.0, 0.0, 
+                   61.0]<br>
+                   RIGHTEYE [0.0, 0.0, 124.0]</code></span></font></td>
+                   <td valign="top" width="432"><font size="2">For the 
+                   VIEWPORT_EVENT, you need to specify the corner coordinates of 
+                   the projection screens. These coordinates are to be expressed 
+                   within the same reference frame (R0) as the data sent by the 
+                   tracker.</font>
+                   <p>&nbsp;</p>
+                   <p>&nbsp;</p>
+                   <p><font size="2">The screen is assumed to be rectangular.</font></p>
+                   <p><font size="2">You also need to specify the eye position 
+                   in the mobile tracker reference frame.&nbsp;&nbsp;<br>
+                   We call &quot;mobile tracker reference frame&quot; the reference frame 
+                   defined by the x, y, z, h, p and r coordinates sent by the 
+                   tracker.<br>
+                   Express these coordinates in millimeters.</font></p>
+                   <p>&nbsp;</td>
+                 </tr>
+               </table>
+             </div>
+             </td>
+           </tr>
+           <tr>
+             <td height="158" colspan="2" width="1280">Here is some additional 
+             information on the above-mentioned parameters:<ul>
+               <li><b><font size="2">MATRIX</font></b><br>
+               Polhemus will send an event to PolExecDaemon driver which has 
+               been defined in the axis system of the transmitter. In turn, 
+               PolExecDaemon will send an event to Version 5 but this event will 
+               be modified using the matrix you applied. Generally, the matrix 
+               is used for sending POSITION_EVENT thus, in case you are only 
+               using VIEWPORT_EVENT, the matrix parameter is not mandatory</li>
+               <li><b><font size="2">SCREEN</font></b><br>
+               This parameter defines the coordinates of the visualization 
+               screen in the Polhemus axis system. The screen coordinates have 
+               to been measured manually. The result depends on the the position 
+               and orientation of the Polhemus transmitter.&nbsp;<br>
+               For instance, suppose you are using a transmitter positioned in 
+               front of the screen with X pointing out the screen, Y down and Z 
+               right (cf. the Axis system engraved on the Polhemus transmitter 
+               box). In this case, you get coordinates where X is constant and 
+               negative and the other values vary along the YZ plane. This 
+               corresponds to the values detailed in the above example:</li>
+             </ul>
+             <blockquote>
+               <p>
+               <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US">
+               <font size="2" color="#000000"><span style="font-weight: 400">
+               <code>SCREEN<br>
+               {<span style="mso-spacerun:
+yes"><br>
+&nbsp;&nbsp; </span>UPPERLEFT<span style="mso-spacerun: yes">&nbsp;&nbsp; </span>
+               [-700, 300, -430]<span style="mso-spacerun:
+yes"><br>
+&nbsp;&nbsp; </span>UPPERRIGHT<span style="mso-spacerun: yes">&nbsp; </span>
+               [-700,<span style="mso-spacerun: yes">&nbsp; </span>300, 430]<span style="mso-spacerun:
+yes"><br>
+&nbsp;&nbsp; </span>LOWERRIGHT<span style="mso-spacerun: yes">&nbsp; </span>
+               [-700, 900, 430]<br>
+               }</code></span></font><kbd><font size="2" color="#990033"><br>
+               </font></kbd></span></p>
+             </blockquote>
+             <ul>
+               <li><b><font size="2">LEFTEYE</font></b> and <font size="2"><b>
+               RIGHTEYE<br>
+               </b></font>These parameters lets you define the position of the 
+               eyes in the mobile tracker axis system. The result depends on how 
+               the Polhemus sensor is attached to the user's head.<br>
+               For instance, you can attach the Polhemus sensor to the left 
+               branch of the steroe glasses which means that X points to the 
+               screen, Y is up and Z goes from left eye&nbsp; to right eye. This 
+               axis system corresponds to the default as explained in the 
+               Polhemus manual (refer to the Polhemus Fastrak User's Manual 
+               Revision F for detailed information). In that case, the eyes are 
+               aligned exactly on the Z axis of the sensor and the coordinates 
+               you get correspond to those detailed in the above example:</li>
+             </ul>
+             <blockquote>
+               <p><font size="2"><code>LEFTEYE [0.0, 0.0, 61.0]<br>
+               RIGHTEYE [0.0, 0.0, 124.0] </code></font></p>
+               <p>These coordinates have to be measured manually.</p>
+             </blockquote>
+             </td>
+           </tr>
+           <tr>
+             <td height="182" colspan="2" width="1280"><u>Example 2</u><p>Let's 
+             take a look at a second example and consider the following case: 
+             you want to use the Polhemus Fastrak to track both hand and head 
+             and your display system is a Head Mounted Display.&nbsp;<br>
+             You will thus need a camera type tracking. You also need the driver 
+             to send a POSITION_EVENT for the hand and either a POSITION_EVENT 
+             or a VIEWPORT_EVENT for the head. If the driver sends a 
+             POSITION_EVENT for the head, no stereo viewing is available and you 
+             need to adjust the viewpoint angle for your head mounted display in 
+             Version 5. To do so, create a named view by selecting <kbd>View &gt; 
+             Named Views</kbd> then edit its properties.&nbsp;<br>
+             <b>Note</b>: you cannot adjust its ratio in case the head mounted 
+             display optics are not symmetric.</td>
+           </tr>
+           <tr>
+             <td height="45" width="1" bgcolor="#E0E0E0" valign="top">
+             <img border="0" src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+             <td height="45" width="1246" bgcolor="#E0E0E0" valign="top">This 
+             camera is saved in the .CATProduct file under the application node. 
+             The POSITION_EVENT must have its X axis going to the right, its Y 
+             axis up and its Z axis backwards.<br>
+             Otherwise (as we explained it before), you have to ask the driver 
+             to apply a rotation matrix. You can use the first configuration 
+             file for this system.</td>
+           </tr>
+           <tr>
+             <td height="49" colspan="2" width="1280">If you use a 
+             VIEWPORT_EVENT, the configuration file should be as follows:</td>
+           </tr>
+           <tr>
+             <td height="423" colspan="2" width="1280">
+             <div align="left">
+               <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber11" width="630">
+                 <tr>
+                   <td valign="top" width="242"><code><font size="2">
+                   <span style>SERIALPORT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   </span>&quot;COM1&quot;<br>
+                   BPS<span style="mso-spacerun: yes; font-size: 9.0pt; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   </span>115200<br>
+                   TRACKER<span style="mso-spacerun: yes; font-size: 9.0pt; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow">&nbsp;
+                   </span>0<span style="mso-spacerun: yes; font-size: 9.0pt; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow">&nbsp;
+                   </span>VIEWPORT_EVENT<br>
+                   TRACKER<span style="mso-spacerun: yes; font-size: 9.0pt; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow">&nbsp;
+                   </span>1<span style="mso-spacerun: yes; font-size: 9.0pt; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow">&nbsp;
+                   </span>POSITION_EVENT<span lang="FR" style="font-size:9.0pt;mso-bidi-font-size:
+10.0pt;font-family:&quot;Arial Narrow&quot;"><br>
+                   </span>MATRIX 1<span lang="FR" style="font-size:9.0pt;mso-bidi-font-size:
+10.0pt;font-family:&quot;Arial Narrow&quot;"><br>
+                   </span>[0,0,1]<br>
+                   [1,0,0]<br>
+                   [0,1,0]<br>
+                   [0,0,0]</font></code><p>
+                   <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US">
+                   <code><font size="2">HMDSCREEN<br>
+                   {<span style="mso-spacerun:
+yes"><br>
+&nbsp;&nbsp; </span>UPPERLEFT<span style="mso-spacerun: yes">&nbsp;&nbsp;</span>[700, 
+                   -900, -720]<span style="mso-spacerun:
+yes"><br>
+&nbsp;&nbsp; </span>UPPERRIGHT<span style="mso-spacerun: yes">&nbsp;</span>[700,<span style="mso-spacerun: yes">&nbsp;
+                   </span>900, -720]<span style="mso-spacerun:
+yes"><br>
+&nbsp;&nbsp; </span>LOWERRIGHT<span style="mso-spacerun: yes">&nbsp;</span>[700, 900, 
+                   720]<br>
+                   }</font></code></span></p>
+                   <p><code><font size="2">
+                   <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US">
+                   LEFTEYE&nbsp; [0.0, 0.0, 61.0]<br>
+                   RIGHTEYE [0.0, 0.0, 124.0]</span></font></code></p>
+                   <p>&nbsp;</td>
+                   <td valign="top" width="384"><font size="2">Use this section 
+                   to describe the HMD fields of view. Describe the desired 
+                   virtual projection pyramid.&nbsp;</font>
+                   <p><font size="2">All the figures are to be expressed in the 
+                   mobile tracker (fixed on the head) reference frame centered 
+                   between right and left eye. For instance, if the tracker is 
+                   mounted such as Z is going down and Y forward, the 
+                   coordinates are as shown below:</font></p>
+                   <div align="left">
+                     <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber12" height="232">
+                       <tr>
+                         <td height="204">
+                         <img border="1" src="b35doc/english/online/cfyugvr_c2/images/headtracking02.gif" width="272" height="192"></td>
+                       </tr>
+                       <tr>
+                         <td height="24"><font size="2">Here, the pixel ratio is 
+                         1.25.</font></td>
+                       </tr>
+                     </table>
+                   </div>
+                   </td>
+                 </tr>
+               </table>
+             </div>
+             </td>
+           </tr>
+           <tr>
+             <td height="34" width="32" bgcolor="#E0E0E0">
+             <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+             <td height="34" width="1246" bgcolor="#E0E0E0">
+             <p align="left">Pay attention to the coordinates you enter. The 
+             more careful you are, the better the results will be.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="2">
+       <p class="task"><a name="hj-broker for head tracking"></a>Run the Virtual 
+       Reality broker using the following command:</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber13" height="84">
+           <tr>
+             <td height="82"><code>/.../Bn/Os_a/code/command/catstart -run 
+             CATVisVRBroker</code><p>where:<ul>
+				<li><code>/.../</code> is the Version 5 
+             installation path</li>
+				<li><code>n</code> is the current release number</li>
+				<li><code>Os_a</code> is: 
+				<ul>
+					<li>aix_a </li>
+					<li>hpux_b</li>
+					<li>solaris_a.</li>
+					</ul>
+					</li>
+					</ul>
+					<p>For a standard installation, the path should be
+             <code>/usr/DassaultSystemes</code>.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="3">
+       <p class="task">Run the tracker device driver for viewpoint tracking:</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber14" height="11" width="632">
+           <tr>
+             <td height="99" colspan="2" width="630"><code>
+             /.../Bn/Os_a/code/command/catstart -run PolExecDaemon -object <i>
+             computer_name configuration_file</i></code><p>where <i>
+             &quot;configuration_file&quot;</i> is the full path name of the configuration 
+             you edited in step 1 and <i>&quot;computer_name&quot;</i> is the name of the 
+             computer.</td>
+           </tr>
+           <tr>
+             <td height="9" width="8">
+             <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+             <td height="9" width="620">This driver may be used with any device 
+             compliant with the Fastrak protocol. </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="4">
+       <p class="task">Start Version 5:</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber15" height="46">
+           <tr>
+             <td height="31"><code>/.../Bn/Os_a/code/command/catstart</code></td>
+           </tr>
+           <tr>
+             <td height="44">If you want to use stereoscopic viewing, you have 
+             to perform Steps 5 to 12 otherwise, jump to Step 13.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="5">
+       <p class="task">Select <kbd>Tools &gt; Options</kbd> <kbd>&gt; General &gt; 
+       Display</kbd> then click the <kbd>Visualization</kbd> tab.</li>
+       <li>
+       <p class="task">In the Stereo enable area, click <kbd>On</kbd>.</li>
+       <li value="7">
+       <p class="task">Click <kbd>OK</kbd> to validate your parameters.</li>
+       <li value="8">
+       <p class="task">Restart Version 5.</li>
+       <li value="9">
+       <p class="task">In the power input box, enter the following command:</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber16">
+           <tr>
+             <td>
+             <p class="task"><code>c:stereoscopic </code></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="10">
+       <p class="task">Click <kbd>OK</kbd>.</li>
+       <li value="11">
+       <p class="task">In the power input box, enter:</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber17" height="125">
+           <tr>
+             <td height="77" colspan="2">
+             <p class="task"><code>c:VRViewTracking</code></p>
+             <p>The Viewpoint Tracking is activated. It can be simply 
+             deactivated by re-entering the <code>c:VRViewTracking</code> 
+             command in the power input field</td>
+           </tr>
+           <tr>
+             <td height="44" bgcolor="#E0E0E0">
+             <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+             <td height="44" bgcolor="#E0E0E0">Before using this command, make 
+             sure that a driver is running and able to send POSITION_EVENT or 
+             VIEWPORT_EVENT.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="35" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="top" height="35" colspan="2" width="1259">
+     <blockquote>
+       <p><b>Intersense</b></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="67" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="top" height="67" colspan="2" width="1259">
+     <blockquote>
+       <p>Since the Intersense firmware protocol is an enriched Fastrak 
+       protocol, the PolExecDaemon Version 5 driver can communicate with an 
+       Intersense IS900 tracker.<br>
+       The above-mentioned instructions are still valid in this case.<br>
+       In addition, the Intersense IS900 supports a Wand hand tracker. This 
+       specific hand tracker has four buttons the driver is able to decode as 
+       ButtonPress and ButtonRelease events. </p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="192" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="top" height="192" colspan="2" width="1259">
+     <blockquote>
+       <blockquote>
+         <p><img border="0" src="b35doc/english/online/cfyugvr_c2/images/headtracking03NLS.gif" width="263" height="173"></p>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="169" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td height="169" colspan="2" width="1259">
+     <blockquote>
+       <p>To configure the driver with these two events, use the keywords 
+       BUTTON_PRESS and BUTTON_RELEASE as explained above.</p>
+       <p>Use the following matrix in the PolExecDaemon driver so that the 
+       attached reference frame is as required by the Version hand tracking 
+       functionality:</p>
+       <p><font color="#000000"><span style="font-weight: 400"><code>MATRIX 1<span lang="FR" style="font-size:9.0pt;mso-bidi-font-size:
+10.0pt;font-family:&quot;Arial Narrow&quot;"><br>
+       </span>[0,1,0]<br>
+       [0,0,-1]<br>
+       [-1,0,0]<br>
+       [0,0,0]&nbsp;</code></span></font><span style="font-weight: 400"><code> </code>
+       </span></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="50" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="50" colspan="2" width="1259">
+     <blockquote>
+       <p><a name="hj-Flock of Birds for head tracking"></a><b>Ascension Flock 
+       of Birds</b></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="1106" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td height="1106" colspan="2" width="1259">
+     <blockquote>
+       <p>The Ascension Flock of Birds tracking system driver is now supported 
+       for head tracking on Windows and UNIX. Note that from V5R13 onwards, you 
+       do not need to install the Bird.dll library anymore.<br>
+       This driver allows to measure in real time the position and orientation 
+       of several bodies in space. It can be used as a standalone executable 
+       (called &quot;CATFlockOfBirdsDriver&quot;) or as a threaded driver. </p>
+       <p>To use this driver as a standalone process, follow the instructions 
+       below:</p>
+       <p><u>On Windows</u></p>
+       <p>Go to the following installation directory </p>
+       <p><code>\<i>install_root</i>\intel_a\code\bin</code></p>
+       <p>and enter the command:</p>
+       <p><code>catstart -run CATFlockOfBirdsDriver [-f Frequency] [-com 
+       SerialPortNumber] [-bps SerialPortSpeed] [-host BrokerHostName] [-m 
+       TransformationMatrix] [-n NumberofDevices] [-mouse DeviceNumber] </code>
+       </p>
+       <p><u>On UNIX</u></p>
+       <p>Go to the following installation directory </p>
+       <p><code>/<i>install_root</i>/OS_a/code/bin</code></p>
+       <p>where &quot;OS_a&quot; is: </p>
+       <ul>
+         <li>aix_a </li>
+         <li>hpux_b </li>
+         <li>solaris_a. </li>
+       </ul>
+       <p>and enter the command:</p>
+       <p><code>./catstart -run CATFlockOfBirdsDriver [-f Frequency] [-com 
+       SerialPortNumber] [-bps SerialPortSpeed] [-host BrokerHostName] [-m 
+       TransformationMatrix] [-n NumberofDevices] [-mouse DeviceNumber] </code>
+       </p>
+       <p>Below is a description of the arguments:</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" width="100%" id="AutoNumber3" height="396">
+         <tr>
+           <td width="7%" height="47" valign="top" bgcolor="#E0E0E0">
+           <font size="2">-f</font></td>
+           <td width="93%" height="47" valign="top" bgcolor="#F2F2F2">
+           <font size="2">Event sending frequency from the CATFlockOfBirdsDriver 
+           to the Version 5 session. <br>
+           If not specified, a default value of 100 Hz is used</font></td>
+         </tr>
+         <tr>
+           <td width="7%" height="45" valign="top" bgcolor="#E0E0E0">
+           <font size="2">-com</font></td>
+           <td width="93%" height="45" valign="top" bgcolor="#F2F2F2">
+           <font size="2">Serial port number to which the Flock of Birds is 
+           connected.<br>
+           If not specified, a default value of 1 is used, meaning &quot;COM1&quot; on 
+           Windows systems.</font></td>
+         </tr>
+         <tr>
+           <td width="7%" height="48" valign="top" bgcolor="#E0E0E0">
+           <font size="2">-bps</font></td>
+           <td width="93%" height="48" valign="top" bgcolor="#F2F2F2">
+           <font size="2">Serial port speed.<br>
+           If not specified, the driver tries to connect to the Flock of Birds 
+           at the speed of 115200 bps.</font></td>
+         </tr>
+         <tr>
+           <td width="7%" height="47" valign="top" bgcolor="#E0E0E0">
+           <font size="2">-host</font></td>
+           <td width="93%" height="47" valign="top" bgcolor="#F2F2F2">
+           <font size="2">Name of the host on which the CATVisVRBroker is 
+           running.<br>
+           If not specified, LocalHost is assumed.</font></td>
+         </tr>
+         <tr>
+           <td width="7%" height="80" valign="top" bgcolor="#E0E0E0">
+           <font size="2">-m</font></td>
+           <td width="93%" height="80" valign="top" bgcolor="#F2F2F2">
+           <font size="2">Position and orientation received from the Flock of 
+           Birds are multiplied by this matrix before being sent to the Version 
+           5 session. The matrix should be described in lines using the 
+           following format:<br>
+           -m [m11,m12,m13][m21,m22,m23][m31,m32,m33]<br>
+           If not specified, the Identity matrix is assumed.</font></td>
+         </tr>
+         <tr>
+           <td width="7%" height="48" valign="top" bgcolor="#E0E0E0">
+           <font size="2">-n</font></td>
+           <td width="93%" height="48" valign="top" bgcolor="#F2F2F2">
+           <font size="2">Number of Flock of Birds running at the same time.<br>
+           If not specified, one Flock of Birds is assumed.</font></td>
+         </tr>
+         <tr>
+           <td width="7%" height="48" valign="top" bgcolor="#E0E0E0">
+           <font size="2">-mouse</font></td>
+           <td width="93%" height="48" valign="top" bgcolor="#F2F2F2">
+           <font size="2">Device number of the Flock of Birds to which an 
+           Ascension 6D Mouse is connected.<br>
+           If not specified, no 6D Mouse is supposed to be used. The numbering 
+           of the devices start with number 1.</font></td>
+         </tr>
+         <tr>
+           <td width="7%" height="33" valign="top" bgcolor="#E0E0E0">
+           <font size="2">-debug</font></td>
+           <td width="93%" height="33" valign="top" bgcolor="#F2F2F2">
+           <font size="2">Activates the display of error messages.</font></td>
+         </tr>
+       </table>
+       <p>However, bear in mind that this driver sends POSITION_EVENT only.</p>
+       <p>This driver is also supported for
+       <a href="#hj-Flock of Birds for hand tracking">hand tracking</a>.</p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="37" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="37" colspan="2" width="1259">
+     <blockquote>
+       <p><b><blink><a name="hj-ART head tracking"></a></blink>ART Optical 
+       tracking system</b></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="35" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td height="35" colspan="2" width="1259">
+     <blockquote>
+       <p>V5 now supports the ART driver. This driver can be used as a 
+       standalone executable (called &quot;CATARTDriver&quot;) or as a threaded driver.</p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="174" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td height="174" colspan="2" width="1259">
+     <blockquote>
+       <p><img border="0" src="b35doc/english/online/cfyugvr_c2/images/art01.gif" width="97" height="128">&nbsp;&nbsp;&nbsp;&nbsp;
+       <img border="0" src="b35doc/english/online/cfyugvr_c2/images/art02.gif" width="205" height="152"></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="537" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td height="537" colspan="2" width="1259">
+     <blockquote>
+       <p><i>How does it work?</i><br>
+       The ART Optical tracking system sends position and button information at 
+       a specific TCP/IP address on a specified port number. The V5 
+       driver reads this ethernet port and decode the information before 
+       translating it. The translated information is then sent by the driver to 
+       the Version 5 session in a V5 format.</p>
+       <p>To use this driver as a standalone process, enter the following 
+       command:</p>
+       <p><u>On Windows</u></p>
+       <p><code><i>installation_path</i>\intel_a\code\command\catstart -run 
+       CATARTDriver -h</code></p>
+       <p>The &quot;-h&quot; option displays help information.</p>
+       <p><u>On UNIX</u></p>
+       <p><code>/<i>install_path</i>/OS_a/code/command/catstart -run 
+       CATARTDriver -h</code></p>
+       <p>where &quot;OS_a&quot; is: </p>
+       <ul>
+         <li>aix_a </li>
+         <li>hpux_b </li>
+         <li>solaris_a. </li>
+       </ul>
+       <p>Note that this driver sends:</p>
+       <ul>
+         <li>POSITION_EVENT</li>
+         <li>BUTTON_EVENT</li>
+         <li>SLIDER1_EVENT</li>
+         <li>SLIDER2_EVENT.</li>
+       </ul>
+       <p>This driver is also supported for <a href="#hj-ART hand tracking">hand 
+       tracking</a>.</p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="35" colspan="3" width="100%">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="49" width="37"></td>
+     <td valign="middle" height="49" colspan="2" width="1259">
+     <h2><b><a name="hj-hand tracking"></a>
+     <a name="ix-virtual reality:hand tracking"></a></b>Hand tracking </h2>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="77" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="77" colspan="2" width="1259">The following two 
+     examples are designed for hand tracking using:
+     <ul>
+       <li>a Joystick Spacestick VirtualPresence with a Polhemus sensor and the 
+       DMU Navigator 3 product</li>
+       <li>a FakeSpace Neowand.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="56" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="56" colspan="2" width="1259">Note that the
+     <a target="ds_doc2" href="page5166.html">Immersive Assistant workbench</a> 
+     enables you to generate automatically the necessary configuration file for 
+     hand tracking.
+     However, you can still edit this file manually if desired. To do so, follow 
+     the instructions detailed below.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="94" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="94" colspan="2" width="1259">
+     <a name="hj-VRCursor command"></a>The <kbd>VR Cursor</kbd> command switches 
+     on and off the hand tracking functionality with the following prerequisite: 
+     one or more drivers should be running and able to send a POSITION_EVENT, a 
+     ButtonPress and a ButtonRelease. The command will look for the first driver 
+     able to send POSITION_EVENT then, ButtonPress and ButtonEvent.&nbsp;
+     <p>The POSITION_EVENT used for hand tracking should have its X axis 
+     pointing to the right, its Y axis up and its Z axis backward as shown 
+     below:</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="222" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="222" colspan="2" width="1259">
+     <blockquote>
+       <p><img border="0" src="b35doc/english/online/cfyugvr_c2/images/handtracking.gif" width="204" height="203"></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="83" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="83" colspan="2" width="1259">If the tracker is 
+     not fixed this way in the hand device, you will have to ask the driver to 
+     apply an offset matrix.
+     <p>When &quot;On&quot;, hand tracking displays a red laser pointer. This pointer is 
+     collocated with the hand tracker so that you really feels the pointer 
+     getting out of your hand.<br>
+     This feeling is reinforced in stereoscopic display:</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="217" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="217" colspan="2" width="1259">
+     <blockquote>
+       <p><img border="1" src="b35doc/english/online/cfyugvr_c2/images/handtracking02.gif" width="219" height="196"></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="194" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="194" colspan="2" width="1259">The buttons enable 
+     you to pick within the model and to manipulate the viewpoint.&nbsp;<br>
+     There are two manipulation modes: <a href="page5168.html">Examine mode
+     </a>and<a href="page5169.html"> Fly mode. </a>You can switch between 
+     the two simply by running the <kbd>VRFly</kbd> command. The Examine mode is 
+     the default mode when running the <kbd>VRCursor</kbd> command.
+     <p>You can also move the model objects by snapping the 3D compass to them. 
+     The 3D compass will then follow your hand moves.</p>
+     <p>Note: setting the compass to &quot;Snap automatically to selected object&quot; 
+     lets you snap the compass to any objects you can pick with the laser 
+     pointer.</p>
+     <p>Now let's go to using hand tracking! </p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="45" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="45" colspan="2" width="1259"><b>
+     <a name="hj-joystick spacestick"></a>Joystick Spacestick</b> </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="747" width="37" bgcolor="#FFFFFF">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="middle" height="747" colspan="2" width="1259">
+     <ol class="task">
+       <li>
+       <p class="task"><a name="hj-broker for hand tracking"></a>Run the 
+       PolExecDaemon.</li>
+       <li value="2">
+       <p class="task">Run the Joystick3DExecDaemon using the following command:</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber18" height="319" width="822">
+           <tr>
+             <td height="200" colspan="2" width="820"><code>
+             /.../Bn/{OS_a}/code/command/catstart -run &quot;Joystick3DExecDaemon 
+             brokerHost serialPort&quot;</code><p>where&nbsp;</p>
+             <p><code>- n</code> is the current release number<kbd><br>
+             -</kbd> <code>/.../</code> is the Version 5 installation 
+             path. For a standard installation, the path should be <code>
+             /usr/DassaultSystemes/</code><kbd><br>
+             - </kbd><code>{OS_a}</code> is the name of your operating system (<code>aix_a</code>, 
+             etc.) <kbd><br>
+             - </kbd><code>brokerHost</code> is the name of the computer on 
+             which the device broker and Version 5 are running<br>
+             <kbd>- </kbd><code>serialPort</code> is the port to which the 
+             joystick is connected (e.g.: COM1, COM2, COM3 or COM4).</p>
+             <p>There is no configuration file for this driver.</td>
+           </tr>
+           <tr>
+             <td height="119" width="6" valign="top">
+             <img border="0" src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+             <td height="119" width="786" valign="top">Another method to run the 
+             driver is to first create an icon on your desktop, then drag the 
+             Joystick3DExecDaemon.exe file from the explorer and drop it onto 
+             the desktop (this file can be found in the installation directory, 
+             in intel_a&#092;code&#092;bin).<br>
+             Edit the icon properties and modify the target file to <code>c:&#092;...&#092;intel_a&#092;code&#092;bin&#092;Joystick3DExecDaemon.exe 
+             brokerHost serialPort</code>.<br>
+             Then, you just have to double-click the icon to run the driver.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="3">
+       <p class="task">For the Polhemus version (a Polhemus tracker is fixed 
+       inside the joystick), use the following matrix in the PolExecDaemon 
+       driver so that the attached reference frame matched the Version 5 hand 
+       tracking functionality requirements:</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber19" height="164">
+           <tr>
+             <td height="129"><font color="#000000">
+             <span style="font-weight: 400"><code>MATRIX<span lang="FR" style="font-size:9.0pt;mso-bidi-font-size:
+10.0pt;font-family:&quot;Arial Narrow&quot;"><br>
+             </span>[0,0,1]<br>
+             [1,0,0]<br>
+             [0,1,0]<br>
+             [0,0,0]&nbsp;</code></span></font><span style="font-weight: 400"><code>
+             </code></span>
+             <p><font color="#000000">The buttons are located as described on 
+             the picture below:</font></td>
+           </tr>
+           <tr>
+             <td height="162">
+             <img border="1" src="b35doc/english/online/cfyugvr_c2/images/handtracking03NLS.gif" width="245" height="145"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="4">
+       <p class="task">Run the DMU Immersive Review configuration then the DMU 
+       Navigator 3 product.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="middle" height="48" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="48" colspan="2" width="1259"><b>Fakespace 
+     Neowand</b> </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="43" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="43" colspan="2" width="1259">The V5 
+     driver managing the Fakespace Neowand buttons is a standalone (i.e. non 
+     threaded) driver named &quot;CATNeoWandDriver&quot;.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="828" width="37" bgcolor="#FFFFFF">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="middle" height="828" colspan="2" width="1259">
+     <ol class="task">
+       <li>
+       <p class="task">Run the CATNeoWandDriver using the following command:</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber20" height="317" width="840">
+           <tr>
+             <td height="213" colspan="2" width="838"><code>
+             /.../{OS_a}/code/command/catstart -run CATNeoWandDriver brokerHost 
+             serialPort&quot;</code><p>where&nbsp;</p>
+             <p><kbd>-</kbd> <code>/.../</code> is the Version 5 installation 
+             path. For a standard installation, the path should be 
+             /usr/DassaultSystemes/B<i>n</i><kbd> </kbd>(&quot;<i>n</i>&quot; representing 
+             the release number)<kbd><br>
+             - </kbd><code>{OS_a}</code> is the name of your operating system (<code>aix_a</code>, 
+             etc.) <kbd><br>
+             - </kbd><code>brokerHost</code> is the name of the computer on 
+             which the device broker and Version 5 are running<br>
+             <kbd>- </kbd><code>serialPort</code> is the port to which the 
+             joystick is connected (e.g.: COM1, COM2, COM3 or COM4).</p>
+             <p>There is no configuration file for this driver.</td>
+           </tr>
+           <tr>
+             <td height="104" width="10" valign="top">
+             <img border="0" src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+             <td height="104" width="804" valign="top">Another method to run the 
+             driver is to first create an icon on your desktop, then drag the 
+             CATNeoWandDriver.exe file from the explorer and drop it onto the 
+             desktop (this file can be found in the installation directory, in
+             <kbd>i</kbd><code>ntel_a&#092;code&#092;bin</code>).<br>
+             Edit the icon properties and modify the target file to <code>c:&#092;...&#092;intel_a&#092;code&#092;bin&#092;CATNeoWandDriver.exe 
+             BrokerHostName serialPort</code>.<br>
+             Then, you just have to double-click the icon to run the driver.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="2">
+       <p class="task">In case a Polhemus tracker is fixed inside the NeoWand, 
+       use the following matrix in the PolExecDaemon driver so that the attached 
+       reference frame matches the Version 5 hand tracking functionality 
+       requirements:</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber21" height="204">
+           <tr>
+             <td height="122"><font color="#000000">
+             <span style="font-weight: 400"><code>MATRIX<span lang="FR" style="font-size:9.0pt;mso-bidi-font-size:
+10.0pt;font-family:&quot;Arial Narrow&quot;"><br>
+             </span>[0,1,0]<br>
+             [0,0,-1]<br>
+             [-1,0,0]<br>
+             [0,0,0]</code></span></font><span style="font-weight: 400"><code>
+             </code></span>
+             <p>The buttons are located as shown in the picture below:</td>
+           </tr>
+           <tr>
+             <td height="161">
+             <img border="1" src="b35doc/english/online/cfyugvr_c2/images/handtracking04NLS.gif" width="264" height="151"></td>
+           </tr>
+           <tr>
+             <td height="78">
+             <img border="2" src="b35doc/english/online/cfyugvr_c2/images/handtracking05_small.gif" title="Click to enlarge this image" width="100" height="133"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="middle" height="39" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="39" colspan="2" width="1259"><b>Icido Thready 
+     Motion Controller</b> </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="46" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="46" colspan="2" width="1259">In addition to the 
+     Fakespace Neowand, Version 5 supports Icido Thready Motion Controller (also 
+     known as &quot;Mike&quot;). The driver managing this device is named &quot;CATMikeDriver&quot; 
+     and should be used the same way you do with CATNeoWandDriver detailed 
+     above.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="40" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="40" colspan="2" width="1259"><b>Ascension Flock 
+     of Birds</b></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="1115" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td height="1115" colspan="2" width="1259">
+     <a name="hj-Flock of Birds for hand tracking"></a>The Ascension Flock of 
+     Birds tracking system driver is now supported for hand tracking on Windows 
+     and UNIX. Note that you do not need to install the Bird.dll library 
+     anymore.<blink><br>
+     </blink>This driver allows to measure in real time the position and 
+     orientation of several bodies in space. It can be used as a standalone 
+     executable (called &quot;CATFlockOfBirdsDriver&quot;) or as a threaded driver.<p>To 
+     use this driver as a standalone process, follow the instructions below:</p>
+     <p><u>On Windows</u></p>
+     <p>Go to the following installation directory:</p>
+     <p><code>\<i>install_root</i>\intel_a\code\bin</code></p>
+     <p>and enter the command:</p>
+     <p><code>catstart -run CATFlockOfBirdsDriver [-f Frequency] [-com 
+     SerialPortNumber] [-bps SerialPortSpeed] [-host BrokerHostName] [-m 
+     TransformationMatrix] [-n NumberofDevices] [-mouse DeviceNumber] </code>
+     </p>
+     <p><u>On UNIX</u></p>
+     <p>Go to the following installation directory </p>
+     <p><code>/<i>install_root</i>/OS_a/code/bin</code></p>
+     <p>where &quot;OS_a&quot; is: </p>
+     <ul>
+       <li>aix_a </li>
+       <li>hpux_b </li>
+       <li>solaris_a. </li>
+     </ul>
+     <p>and enter the command:</p>
+     <p><code>./catstart -run CATFlockOfBirdsDriver [-f Frequency] [-com 
+     SerialPortNumber] [-bps SerialPortSpeed] [-host BrokerHostName] [-m 
+     TransformationMatrix] [-n NumberofDevices] [-mouse DeviceNumber] </code>
+     </p>
+     <p>Below is a description of the arguments:</p>
+     <blockquote>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" width="100%" id="AutoNumber4">
+         <tr>
+           <td width="7%" height="47" valign="top" bgcolor="#E0E0E0">
+           <font size="2">-f</font></td>
+           <td width="93%" height="47" valign="top" bgcolor="#F2F2F2">
+           <font size="2">Event sending frequency from the CATFlockOfBirdsDriver 
+           to the Version 5 session. <br>
+           If not specified, a default value of 100 Hz is used</font></td>
+         </tr>
+         <tr>
+           <td width="7%" height="45" valign="top" bgcolor="#E0E0E0">
+           <font size="2">-com</font></td>
+           <td width="93%" height="45" valign="top" bgcolor="#F2F2F2">
+           <font size="2">Serial port number to which the Flock of Birds is 
+           connected.<br>
+           If not specified, a default value of 1 is used, meaning &quot;COM1&quot; on 
+           Windows systems.</font></td>
+         </tr>
+         <tr>
+           <td width="7%" height="48" valign="top" bgcolor="#E0E0E0">
+           <font size="2">-bps</font></td>
+           <td width="93%" height="48" valign="top" bgcolor="#F2F2F2">
+           <font size="2">Serial port speed.<br>
+           If not specified, the driver tries to connect to the Flock of Birds 
+           at the speed of 115200 bps.</font></td>
+         </tr>
+         <tr>
+           <td width="7%" height="47" valign="top" bgcolor="#E0E0E0">
+           <font size="2">-host</font></td>
+           <td width="93%" height="47" valign="top" bgcolor="#F2F2F2">
+           <font size="2">Name of the host on which the CATVisVRBroker is 
+           running.<br>
+           If not specified, LocalHost is assumed.</font></td>
+         </tr>
+         <tr>
+           <td width="7%" height="98" valign="top" bgcolor="#E0E0E0">
+           <font size="2">-m</font></td>
+           <td width="93%" height="98" valign="top" bgcolor="#F2F2F2">
+           <font size="2">Position and orientation received from the Flock of 
+           Birds are multiplied by this matrix before being sent to the Version 
+           5 session. The matrix should be described in lines using the 
+           following format:<br>
+           -m [m11,m12,m13][m21,m22,m23][m31,m32,m33]<br>
+           If not specified, the Identity matrix is assumed.</font></td>
+         </tr>
+         <tr>
+           <td width="7%" height="48" valign="top" bgcolor="#E0E0E0">
+           <font size="2">-n</font></td>
+           <td width="93%" height="48" valign="top" bgcolor="#F2F2F2">
+           <font size="2">Number of Flock of Birds running at the same time.<br>
+           If not specified, one Flock of Birds is assumed.</font></td>
+         </tr>
+         <tr>
+           <td width="7%" height="64" valign="top" bgcolor="#E0E0E0">
+           <font size="2">-mouse</font></td>
+           <td width="93%" height="64" valign="top" bgcolor="#F2F2F2">
+           <font size="2">Device number of the Flock of Birds to which an 
+           Ascension 6D Mouse is connected.<br>
+           If not specified, no 6D Mouse is supposed to be used. The numbering 
+           of the devices start with number 1.</font></td>
+         </tr>
+         <tr>
+           <td width="7%" height="44" valign="top" bgcolor="#E0E0E0">
+           <font size="2">-debug</font></td>
+           <td width="93%" height="44" valign="top" bgcolor="#F2F2F2">
+           <font size="2">Activates the display of error messages.</font></td>
+         </tr>
+       </table>
+     </blockquote>
+     <p>However, bear in mind that this driver sends POSITION_EVENT only.</td>
+   </tr>
+   <tr>
+     <td height="49" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="49" colspan="2" width="1259"><b>
+     <a name="hj-ART hand tracking"></a>ART Optical tracking system</b></td>
+   </tr>
+   <tr>
+     <td height="40" width="37" bgcolor="#FFFFFF">&nbsp;</td>
+     <td valign="middle" height="40" colspan="2" width="1259">V5 supports the ART driver for hand tracking. This driver is also supported 
+     for <a href="#hj-ART head tracking">head tracking</a>.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="3" valign="top" height="39" width="100%">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+   <tr>
+     <td height="34" width="37" bgcolor="#FFFFFF" valign="top">&nbsp;</td>
+     <td height="34" colspan="2" width="1259" valign="top"><b>Tracking 
+     calibration</b></td>
+   </tr>
+   <tr>
+     <td height="217" width="37" bgcolor="#FFFFFF" valign="top">&nbsp;</td>
+     <td height="217" colspan="2" width="1259" valign="top">
+     <p style="text-align: left"><span style="mso-ansi-language:
+EN-US">In case you intend to use a multi-channel display system with head 
+     tracking, you should add some information related to the tracking sytem 
+     inside the MPK configuration file. These information should be added at the 
+     end of the file, before the last closing bracket &quot;}&quot;.&nbsp;<br>
+     They should all begin with a comment symbol &quot;#&quot;. Even though there are 
+     commented out, they are used by Version 5. The only used information are 
+     those included in the &quot;userdata&quot; section. The measure unit for all the 
+     numbers it the millimeter. </span></p>
+     <p style="text-align: left">As required by the head tracking functionality, 
+     the mobile tracker reference frame should have its X axis pointing right, 
+     its Y axis pointing up, and its Z axis pointing backward. However, it may 
+     not have its origin&nbsp; located exactly between the two eyes. The 
+     &quot;eye-offset&quot; keyword enables you to specify the middle eye point 
+     coordinates in this mobile tracker reference frame.</p>
+     <p style="text-align: left"><span style="mso-ansi-language:
+EN-US">The fix tracker reference frame may be different from the MPK frame. Use 
+     the &quot;tracker-X&quot;, &quot;tracker-Y&quot; and &quot;tracker-origin&quot; keywords to specify it. 
+     In the example below, the fix tracker frame has its X axis pointing 
+     backward., its Y axis pointing to the right and its origin directly 1524 mm 
+     under the MPK origin. </span></p>
+     <p style="text-align: left"><span style="mso-ansi-language:
+EN-US">If you used the millimeter as unit in the MPK file, the keyword 
+     &quot;MPK_unit_in_mm&quot; should be valuated to 1. If you used meter for instance, 
+     it should be valuated to 1000. </span></td>
+   </tr>
+   <tr>
+     <td height="242" width="37" bgcolor="#FFFFFF" valign="top">&nbsp;</td>
+     <td height="242" colspan="2" width="1259" valign="top">
+     <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in" align="left">
+     <span style="font-weight: 400; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">
+     <code># All dimensions are to be specified in mm. </code></span></p>
+     <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+     <span style="font-weight: 400; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">
+     <code># - eye-offset specifies the eye coordinates in the mobile tracker 
+     frame </code></span></p>
+     <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+     <span style="font-weight: 400; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">
+     <code># - IPD is the inter-pupillary distance </code></span></p>
+     <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+     <span style="font-weight: 400; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">
+     <code># - the tracker related data describe the fixed tracker frame in the 
+     MPK global frame </code></span></p>
+     <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+     <span style="font-weight: 400; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">
+     <code># - MPK_unit_in_mm defines the MPK data unit. </code></span></p>
+     <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+     <span style="font-weight: 400; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">
+     <code># userdata </code></span></p>
+     <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+     <span style="mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">
+     <span style="font-weight: 400"><code># {</code></span><span style="font-weight: 400; mso-spacerun: yes; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </code></span></span></p>
+     <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+     <span style="font-weight: 400; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">
+     <code>#<span style="mso-spacerun: yes; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>eye-offset<span style="mso-spacerun: yes; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>[0,-20,0] </code></span></p>
+     <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+     <span style="font-weight: 400; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">
+     <code>#<span style="mso-spacerun: yes; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>IPD<span style="mso-spacerun: yes; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>57 </code></span></p>
+     <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+     <span style="font-weight: 400; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">
+     <code>#<span style="mso-spacerun: yes; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>tracker-X<span style="mso-spacerun: yes; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>[0,0,-1] </code></span></p>
+     <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+     <span style="font-weight: 400; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">
+     <code>#<span style="mso-spacerun: yes; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>tracker-Y<span style="mso-spacerun: yes; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>[1,0,0] </code></span></p>
+     <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+     <span style="font-weight: 400; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">
+     <code>#<span style="mso-spacerun: yes; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>tracker-origin<span style="mso-spacerun: yes; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">&nbsp;&nbsp;&nbsp;
+     </span>[0,-1524,0] </code></span></p>
+     <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+     <span style="font-weight: 400; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">
+     <code>#<span style="mso-spacerun: yes; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>MPK_unit_in_mm<span style="mso-spacerun: yes; mso-bidi-font-size: 10.0pt; font-family: Arial Narrow; mso-ansi-language: EN-US">&nbsp;&nbsp;&nbsp;
+     </span>1 </code></span></p>
+     <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">&nbsp;</td>
+   </tr>
+   <tr>
+     <td height="38" width="37" bgcolor="#FFFFFF" valign="top">&nbsp;</td>
+     <td height="38" colspan="2" width="1259" valign="top"><b>A standard session 
+     example</b></td>
+   </tr>
+   <tr>
+     <td height="256" width="37" bgcolor="#FFFFFF" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td height="256" colspan="2" width="1259" valign="top">Suppose the following 
+     case:
+     <ul>
+       <li>you use a three-channel display system in a reality center</li>
+       <li>you also use a three-pipes SGI computer. The display system has three 
+       projectors, one per channel, projecting active stereo</li>
+       <li>you want your head and hand to be tracked in front of the screens</li>
+       <li>your tracking system is an Intersense IS900</li>
+       <li>there are two trackers, one for the head and one for the hand, both 
+       plugged on the IS900</li>
+       <li>the hand tracker is an Intersense wand with four buttons.</li>
+     </ul>
+     <p>You have already set up the system, i.e. you have all the necessary 
+     configuration files and your CATSettings are up-to-date.<br>
+     Moreover, you have set the <kbd>Virtual reality starting mode</kbd> option 
+     to <kbd>Manual</kbd> in <kbd>Tools &gt; Options &gt; General &gt; Devices</kbd> 
+     since the Intersense driver is a standalone, i.e. non threaded, driver.</p>
+     <p>The scenario detailed hereafter shows you how to use the system.</td>
+   </tr>
+   <tr>
+     <td height="477" width="37" bgcolor="#FFFFFF" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="477" colspan="2" width="1259" valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">Power up the Intersense IS900</li>
+       <li>
+       <p class="task">Open a shell window then run the broker (this is a non 
+       threaded case)</li>
+       <li>
+       <p class="task">Open another shell window then run the Version 5 IS900 
+       driver. Because of the configuration file you use, the driver will send 
+       two POSITION_EVENTs (one per tracker), a ButtonPress and a ButtonRelease.</li>
+       <li>
+       <p class="task">Open a third shell window then run a Version 5 session</li>
+       <li>
+       <p class="task">Open a .CATProduct model file</li>
+       <li>
+       <p class="task">Switch to Full Screen mode by selecting <kbd>View &gt; Full 
+       Screen</kbd>.</li>
+       <li value="7">
+       <p class="task">Key in the following command in the power input box:</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber22" height="68">
+           <tr>
+             <td height="66"><code>c:VR View Tracking</code><p>then choose the 
+             head tracker POSITION_EVENT before clicking <kbd>OK</kbd>.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="8">
+       <p class="task">Key in the following command in the power input box:</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber23" height="28">
+           <tr>
+             <td height="26"><code>c:VR Cursor</code></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="9">
+       <p class="task">Key in the following command in the power input box:</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber24" height="67">
+           <tr>
+             <td height="65"><code>c:VRFly</code><p>to select the convenient 
+             manipulation mode for your session</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="10">
+       <p class="task">Select <kbd>View &gt; Full Screen</kbd>.</li>
+     </ol>
+     <blockquote>
+       <p>The system is running.</p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td height="58" width="37" bgcolor="#FFFFFF" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td height="58" colspan="2" width="1259" valign="top">
+     <blockquote>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber25" height="39">
+           <tr>
+             <td height="37" bgcolor="#E0E0E0">You can customize the commands 
+             entered in the power input box so that they appear as push buttons 
+             in a toolbar. You can also assign a keyboard shortcut to them if 
+             you wish so.</td>
+           </tr>
+         </table>
+       </div>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td height="140" width="37" bgcolor="#FFFFFF" valign="top">&nbsp;</td>
+     <td height="140" colspan="2" width="1259" valign="top">When you want to open 
+     a new model or quit the session: <br>
+     <ol class="task">
+       <li>
+       <p class="task">Deactivate the full screen mode and stop the multipipe 
+       management by right-clicking then deselecting <kbd>Full Screen</kbd></li>
+       <li>
+       <p class="task">Key in <code>c:VR View Tracking</code> in the power input 
+       field to stop head tracking</li>
+       <li>
+       <p class="task">Key in <code>c:VR Cursor</code> in the power input field 
+       to stop hand tracking</li>
+       <li>
+       <p class="task">Select <kbd>File &gt; Open</kbd> or <kbd>File &gt; Exit</kbd>.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="3" valign="top" height="35" width="100%">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

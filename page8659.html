@@ -1,0 +1,631 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Migrating V4 Multi-Model Links (MML) in ENOVIA V5 VPM</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>
+     Migrating V4 Multi-Model Links (MML) in ENOVIA V5 VPM</h1>
+ <table border="0" cellSpacing="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" width="1107" id="table3">
+   <tr>
+     <td align="center" width="32" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>
+     <p class="MsoNormal">This task will show you how you can
+     retrieve model links from CATIA V4, after a data migration into ENOVIA V5 
+		VPM. 
+     Two processes are described:</p>
+     <ul>
+       <li>
+       <p class="MsoNormal"><a href="#hj-Migration of the CDM or VPM database">Migration of the CDM or VPM database</a>.</p>
+       </li>
+       <li>
+       <p class="MsoNormal">
+       <a href="#hj-Multi Model Links rerouting in CATIA V4">Multi Model Links 
+       rerouting in CATIA V4</a>.</p></li>
+     </ul>
+     <p class="MsoNormal">The customer who want to migrate 
+     its CDM or VPM database to the new LCA one, can use the strategic DS 
+     tools:</p>
+     <ul>
+       <li>
+       <p class="MsoNormal">psnmigex.sh for the CDM 
+       extraction (File saving).</li>
+       <li>
+       <p class="MsoNormal">IEnovIn.sh for the LCA insert 
+       (from File).</li>
+     </ul>
+     <p class="MsoNormal">These tools insure the well 
+     migration for the CDM/VPM BOM and CATIA V4 models as simple representation. Unfortunately, there is no model 
+     introspection during the migration from a process to another. That means 
+     the links inside a model keep unchanged. After the complete migration 
+     process, a migrated model keeps on pointing the original model (VPM links).</p>
+     <p class="MsoNormal">The customer wants to be able to 
+     retrieve easily the corresponding pointed model in its LCA database to go 
+     on working with it. </p>
+     <p class="MsoNormal">The customer will need to have a 
+     CATIA V4 process in order to retrieve the corresponding pointed model in 
+     the LCA database. For this, interoperability between LCA and CATIA V4 is 
+     necessary.
+     The goal after the migration is to be able to:</p>
+     <ul>
+       <li>
+       <p class="MsoNormal">send to CATIA V4 from LCA the 
+       migrated models,</li>
+       <li>
+       <p class="MsoNormal">dereference into CATIA V4 the links 
+       inside the model,</li>
+       <li>
+       <p class="MsoNormal">retrieve from these old 
+       information (one CDM/VPM model ID) the corresponding migrated model (one 
+       LCA model ID),</li>
+       <li>
+       <p class="MsoNormal">rebuild the new link from this 
+       new information (CATIA V4 is the only process authorized to modify 
+       the links),</li>
+       <li>
+       <p class="MsoNormal">load the new pointed LCA models 
+       through the CATIA V4 application,</li>
+     </ul>
+     <p class="MsoNormal">This CATIA V4 process will be 
+     called hereafter the <b>rerouting mechanism</b>.</p>
+     For this, we 
+     need to have a mapping between the old information (CDM/VPM ID) and the new 
+     one (LCA ID). This will be possible with a dedicated mapping during the 
+     migration process:<ul>
+       <li>the 
+       express mapping will keep the CDM/VPM ID in a dedicated attribute of the 
+       LCA express model.</li>
+       <li>knowing this attribute it will be easy to have a correspondence between 
+       these two pieces of information.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td align="center" width="32">&nbsp;</td>
+     <td>
+         <h2>Migration of the CDM or VPM database<a name="hj-Migration of the CDM or VPM database"></a></h2>
+         <p class="MsoNormal">This functionality includes 
+         several steps:</p>
+         <ul>
+           <li>
+           <p class="MsoNormal">the export from CDM/VPM into 
+           a step file,</li>
+           <li>
+           <p class="MsoNormal">the mapping from CDM/VPM to 
+           LCA,</li>
+           <li>
+           <p class="MsoNormal">the import into LCA from a 
+           step file.</li>
+         </ul>
+     </td>
+   </tr>
+   <tr>
+     <td align="center" width="32" height="313">&nbsp;</td>
+     <td height="313">
+         <p class="MsoNormal">We will describe explicitly the 
+         different steps, in order to make understandable the complete process.</p>
+         <ol class="task">
+           <li>
+           <p class="task">Export:</li>
+         </ol>
+         <blockquote>
+           <blockquote>
+             <blockquote>
+               <p class="task">This first step, with the 
+               psnmigex.sh command, does not need any recommendation.<br>
+               The customer can run it as of today.</p>
+             </blockquote>
+           </blockquote>
+         </blockquote>
+         <ol class="task" start="2">
+           <li>
+           <p class="task">Mapping:</li>
+         </ol>
+         <blockquote>
+           <blockquote>
+             <blockquote>
+               <p class="MsoNormal">This step is very 
+               important because it is a customer action and the mapping will 
+               condition the future behaviour of the highlight.<br>
+               We will briefly explain the different entities and attributes to 
+               take into account, the purpose will not be to have training on 
+               express language and STEP mapping.</p>
+               <ol>
+                 <li type="a">
+                 The highlight needs simple information: the 
+                 CDM/VPM ID.<br>
+                 This ID is certainly a simple concatenation of COID, COMPID and 
+                 CAENV (for the environment). The CATAB (table information: 
+                 CATIA_MODEL) is useless.<br>
+                 The entry point in the LCA model is the <b>
+                 ENOVExVPMTPDocumentMaster</b> object. This object could have 
+                 several <b>ENOVExVPMTPDocumentRevision</b>. In order to 
+                 transfer the CDM/VPM data without ambiguity, the current 
+                 mapping will create one <b>ENOVExVPMTPDocumentMaster</b> and 
+                 one <b>ENOVExVPMTPDocumentRevision</b> for each representation 
+                 to migrate.<br>
+                 You will find any information in the express files:<br>
+                 - <b>cdma.express</b> for the CDM/VPM model.<br>
+                 - <b>ENOV_DATAX.express</b> for the LCA model.<p>
+                 
+                 These created objects have to be unique.<br>
+                 The uniqueness is insured through the <b>V_ID</b> attribute of 
+                 the <b>ENOVExVPMTPDocumentMaster</b> object, and for 
+                 reconciliation purpose, this attribute has to be a VPM unique 
+                 identifier. In order to transfer and keep the CDM/VPM ID into 
+                 LCA, the more simple solution is to use the <b>V_ID</b> 
+                 attribute. But any string typed attribute of the <b>
+                 ENOVExVPMTPDocumentMaster</b> object could be used provided 
+                 that the length attribute is enough, for example: <b>V_name</b>.<br>
+                 Anyway, at this step the customer has to know what is its 
+                 migration policy considering the attributes uniqueness, the 
+                 CDM/VPM objects to migrate and the new LCA model. Moreover, by 
+                 default, the model is identified in the LCA client by its <b>
+                 V_ID</b> attribute. That means, this attribute should be the 
+                 clearer as possible.<br>
+                 Our recommendation is to use either:<br>
+                 - the <b>V_ID</b> attribute<br>
+                 - or the <b>V_name</b> attribute.<br>
+                 in order to keep the concatenation of COID, COMPID and CAENV 
+                 attributes. This last operation could be done through the 
+                 user-function: <b>B_GetDocID 
+                 (const
+                 SdaiPrimitiveH&amp; iDoc)</b>,
+                 with the variable <b>
+                 
+                 ENOVExVPMtoLCA_DocIdentificationMode</b> 
+                 set to &quot;2&quot;.</p>
+                 <p>In other words, the piece of the mapping for the
+                 <b>
+                 
+                 ENOVExVPMTPDocumentMaster</b> 
+                 and the <b>ENOVExVPMTPDocumentRevision</b> attributes should 
+                 look like this:<br>
+                 VIEW DOCMCM_VPMENV FOR dcmnt : 
+                 enovia::ENOVExVPMTPDocumentMaster;<br>
+                 FROM (model : cdma::VPMENV_CATIA_MODEL)<br>
+                 WHEN TRUE;<br>
+                 BEGIN_VIEW <br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dcmnt.V_ID&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:= B_GetDocID(model);<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dcmnt.V_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; := model.C_NICKNAME;<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#8230;<br>
+                 END_VIEW;<br>
+                 
+                 
+                 -------------------------------------------------------------------------------<br>
+                 VIEW DOCVCM_VPMENV FOR dctv : enovia::ENOVExVPMDocumentRevision;<br>
+                 FROM (model : cdma::VPMENV_CATIA_MODEL)<br>
+                 WHEN TRUE;<br>
+                 BEGIN_VIEW <br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dctv.V_version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; := model.C_REVISION;<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dctv.V_status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; := 'nls_WIP';&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dctv.V_master&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; := {DOCMCM_VPMENV} model;<br>
+                 END_VIEW;</p>
+                 <p>But if the customer has its own uniqueness rule for the <b>
+                 V_ID</b> attribute (through the user function: User_fnct1() &#8211; 
+                 see below), the first view also looks like:<br>
+                 VIEW DOCMCM_VPMENV 
+                 FOR dcmnt : enovia::ENOVExVPMTPDocumentMaster;<br>
+                 FROM (model : cdma::VPMENV_CATIA_MODEL)<br>
+                 WHEN TRUE;<br>
+                 BEGIN_VIEW <br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dcmnt.V_ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;:= User_fnct1(model);<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dcmnt.V_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; := B_GetDocID(model);<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#8230;<br>
+                 END_VIEW;<br>
+                 <br>
+                 Obviously, in any case, as it is showed above, the <b>V_ID</b> 
+                 must be unique.<br>
+                 And for the next steps, the customer has to know exactly what 
+                 is the attribute dedicated to the CDM/VPM ID.</li>
+                 <li type="a">
+                 The normal behavior for the import is not to manage the 
+                 timestamps for the object, but, for an interoperability 
+                 purpose, some attributes must be valuated, including the 
+                 timestamp attributes:<br>
+                 - 
+                 <b>C_created<br>
+                 </b>- 
+                 <b>C_modified</b><br>
+                 So, in order to avoid some inconsistencies with the CATIA V4 
+                 functionalities, you are strongly advised to set the timestamps 
+                 attributes in the mapping, at least for the following LCA 
+                 objects:<br>
+                 - <b>ENOVExVPMTPDocumentMaster<br>
+                 </b>- <b>ENOVExVPMDocumentRevision<br>
+                 </b>- <b>ENOVExVPMDocumentIteration<br>
+                 </b>- <b>ENOVExVPMTPRepresentation</b><br>
+                 <br>
+                 This is possible through the user-function: 
+                 <b>
+                 <br>
+                 C_SetTime                
+                 (const
+                 SdaiPrimitiveH&amp; iObject,<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const SdaiPrimitiveH&amp; iSetMode)<br>
+					</b>where <b>iObject</b> is the model object to 
+                 import, where <b>iSetMode</b> is the attribute set mode:<br>
+                 - &quot;1&quot; for creation mode, i.e. <b>C_CREATE</b> (VPM attribute) 
+                 will be read,<br>
+                 - &quot;2&quot; for modification mode, i.e. <b>C_LASTMOD</b> (VPM 
+                 attribute) will be read.<br>
+                 <br>
+                 Here is an example:<br>
+                 VIEW DOCMCM_VPMENV FOR dcmnt : 
+                 enovia::ENOVExVPMTPDocumentMaster;<br>
+                 FROM (model : cdma::VPMENV_CATIA_MODEL)<br>
+                 WHEN TRUE;<br>
+                 BEGIN_VIEW <br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dcmnt.V_ID&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:= B_GetDocID(model);<br>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dcmnt.V_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; := model.C_NICKNAME;</li>
+               </ol>
+               <blockquote>
+                 <blockquote>
+                   <blockquote>
+                     <p>&#8230;<br>
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dcmnt.C_created&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; := 
+                     C_SetTime(model,1);<br>
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dcmnt.C_modified&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; := C_SetTime(model,2);<br>
+                     END_VIEW;</p>
+                   </blockquote>
+                 </blockquote>
+               </blockquote>
+             </blockquote>
+           </blockquote>
+         </blockquote>
+         <ol class="task" start="3">
+           <li>
+           <p class="task">Import:</li>
+         </ol>
+         <blockquote>
+           <blockquote>
+             <blockquote>
+               <p class="task">This step, with the IEnovIn.sh 
+               command, does not need any recommendation.<br>
+               The customer can run it as of today.</p>
+             </blockquote>
+           </blockquote>
+         </blockquote>
+         <ol class="task" start="4">
+           <li>
+           <p class="task">Environment:<br>
+           The UNIX common environment necessary to perform the following tests 
+           is:</li>
+         </ol>
+         <blockquote>
+           <blockquote>
+             <blockquote>
+               <ol>
+                 <li type="a">
+                 <p class="task">One VPM database with:<br>
+                 - MML V4 links exposed.<br>
+                 - the navigation library (libLV0XCDMA.*) and the corresponding 
+                 cdma.express correctly generated.</li>
+                 <li type="a">
+                 <p class="task">One CATIA V4 installation 
+                 with at least the LCA database connection.<br>
+                 The VPM database connection is not necessary if all MML V4 
+                 structure has been already built.</li>
+                 <li type="a">
+                 <p class="task">One LCA installation&nbsp;with:<br>
+                 - the express library from the VPM cdma.express file correctly 
+                 generated.<br>
+                 - the mapping from cdma.express to ENOV_DATAX.express and the 
+                 corresponding library correctly generated.</li>
+               </ol>
+             </blockquote>
+           </blockquote>
+         </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td align="center" width="32">&nbsp;</td>
+     <td>
+     <h2>Multi Model Links rerouting in CATIA V4<a name="hj-Multi Model Links rerouting in CATIA V4"></a></h2>
+     <p>The link synchronization will 
+         be possible after migration. The customer will be able to view the 
+         different components of its drawing, SolidE or Numerical command (NC) 
+         data. The rerouting mechanism will no longer be manual, and there 
+         will be a major impact on all CDM / VPM V4 users. It will make the CDM 
+         or VPM to LCA migration deployment easier and, the LCA deployment and 
+         processes scalable.<br>
+&nbsp;</p>
+         <table border="0" cellpadding="0" style="border-collapse: collapse" width="86%" id="table4" height="132">
+           <tr>
+             <td class="code"><b>Before this functionality:</b></td>
+             <td class="code" width="504"><b>With this functionality:</b></td>
+           </tr>
+           <tr>
+             <td class="code2" valign="top" height="112">
+             There was not any automatic way to reconnect and synchronize the 
+             VPM links inside a LCA model.<br>
+             The only way was a manual one: for each link, the customer had to 
+             know the application owner of the link, and reconnect manually the 
+             link with the dedicated tool with the right application.</td>
+             <td class="code2" width="504" valign="top" height="112">
+             A new command (<kbd>/reroute</kbd>) is added to the CATIA V4 
+             product.<br>
+             This command automatically scans the current model, and for 
+             each VPM link (exclusively Drafting, SolidE
+             and Numerical Control links type) 
+             inside the model, retrieves the corresponding LCA model, and 
+             reroutes the link within this model. Then, the AUXVIEW2 
+             application, SolidE
+             and MFGPROG can be run on the 
+             current model.</td>
+           </tr>
+         </table>
+         <p class="MsoNormal">This functionality includes 
+         several steps:</p>
+         <ul>
+           <li>
+           <p class="MsoNormal">the interoperability between 
+           LCA and CATIA V4 (send to CATIA V4 from LCA);</li>
+           <li>
+           <p class="MsoNormal">the <kbd>/reroute</kbd> command in CATIA 
+           V4 or rerouting mechanism.</li>
+         </ul>
+     </td>
+   </tr>
+   <tr>
+     <td align="center">&nbsp;</td>
+     <td>
+         <ol class="task">
+           <li>
+           <p class="task">ENOVIA V5 VPM / CATIA V4 Interoperability:</li>
+         </ol>
+         <blockquote>
+           <blockquote>
+             <blockquote>
+               <p class="task">As of today, the 
+               behavior of the interoperability between LCA 
+               client and CATIA V4 does not need any special recommendation.<br>
+               However, at this step, the UNIX and customization variables 
+               should be set for the LCA client side, LCA server side and CATIA 
+               V4 side.</p>
+               <ol>
+                 <li type="a">
+                 <p class="task">For LCA client: no specific 
+                 customization is needed.</li>
+                 <li type="a">
+                 <p class="task">For LCA server: the 
+                 attribute used to store the CDM/VPM ID must be known by the 
+                 server.<br>
+                 For that, the UNIX variable <b>ENOVExVPMId</b> must be set with 
+                 the right value name.<br>
+                 For example, if <b>V_name</b> was used, the customer has to set 
+                 the variable as following:<br>
+                 <b>export ENOVExVPMId=&#8217;V_name&#8217;<br>
+                 </b>in the customisation environment file:<br>
+                 <b>$HOME/CustomEnv</b> for the testing user, or the 
+                 installation customization file (see further details in the 
+                 installation guide).<br>
+                 By default, if this variable is not set, the <b>V_ID</b> 
+                 attribute will be considered as the right one.</li>
+                 <li type="a">
+                 For CATIA V4 side: the command /reroute must be correctly 
+                 defined in the declarative file for functions and commands as following:<p class="task">
+                 
+                 CATCMD.COMMAND.LOAD3D.REROUTE = &#8216;LD0RELNK&#8217;;<br>
+                 CATCMD.COMMAND.LOAD2D.REROUTE = &#8216;LD0RELNK&#8217;;<br>
+                 CATCMD.COMMAND.LOADDR.REROUTE = &#8216;LD0RELNK&#8217;;<br>
+                 CATCMD.COMMAND.NAME.REROUTE = &#8216;LD0RELNK&#8217;;<br>
+                 CATCMD.COMMAND.DETSPACE.REROUTE = TRUE;<br>
+                 CATCMD.COMMAND.DETDRAW.REROUTE = TRUE;<br>
+                 CATCMD.COMMAND.MODSPACE.REROUTE = TRUE;</li>
+               </ol>
+             </blockquote>
+           </blockquote>
+         </blockquote>
+         <ol class="task" start="2">
+           <li>
+           <p class="task">Rerouting mechanism in CATIA V4 (<kbd>/reroute</kbd> 
+           command):</li>
+         </ol>
+         <blockquote>
+           <blockquote>
+             <blockquote>
+               <p class="task">As usual, CATIA V4 has to be 
+               connected to the LCA client by any mean:</p>
+               <ol type="a">
+                 <li>
+                 <p class="task"><span lang="en-gb">Manually 
+                 through the CATIA V4 command: <b><kbd>/enovia</kbd></b>.</li>
+                 <li>
+                 <p class="task">Automatically, by launching 
+                 the CATIA V4 process from the LCA client.</li>
+               </ol>
+               From <kbd>Content 
+               Management</kbd> and <kbd>Document Editor</kbd> on the LCA 
+               client, retrieve the model with VPM Links and apply the Send To / CATIA V4 
+               menu on it (to have it as the active one).<p>
+               
+               After the load of the model, i.e. the drafting model, or 
+               the model containing the SolidE import, or the geometric model 
+               for machining operations, the command <b><kbd>/reroute</kbd></b> 
+               can be run.</p>
+               <p>
+               The only user interface available is the CATIA V4 
+               command: <b><kbd>/reroute</kbd></b>. This command is a GII one.<br>
+               In case of error, the help is available (/help command).
+               Otherwise, the command ends with an informative short message.
+               
+               Here is the list of the messages visible in CATIA V4, with the 
+               &quot;error&quot; number:</p>
+               <blockquote>
+                 <blockquote>
+                   <blockquote>
+                     <p><u>
+                     Information messages:<br>
+                     </u>When there is no more links to a VPM model to reroute:<br>
+                     1896<br>
+                     MODEL COMPLETELY PROCESSED<br>
+                     ALL LINKS WITHIN THE CURRENT MODEL HAVE BEEN REROUTED</p>
+                     <p><u>Error 
+                     messages:<br>
+                     </u>When you activate the link window in CATIA V4 (<kbd>/link</kbd> 
+                     window for AUXVIEW2 function and Part Editor checklinks or checklink 
+                     menu for SolidE) and, when there are VPM links with models 
+                     in ENOVIA V5 VPM:<br>
+                     1890<br>
+                     LCA MODEL WITH VPM LINKS<br>
+                     ALL LINKS ARE POINTING 'DBMS' MODELS: <br>
+                     YOU SHOULD USE /REROUTE COMMAND TO CHANGE OLD LINKS</p>
+                     <p>When the 
+                     current model is not loaded from ENOVIA V5 VPM (ex: model 
+                     loaded from Open &gt; File), no link rerouting is available:<br>
+                     1891<br>
+                     MODEL NOT SUPPORTED FOR /REROUTE<br>
+                     ONLY LCA MODELS ARE SUPPORTED</p>
+                     <p>When 
+                     there is a problem with a link within the model:<br>
+                     1892<br>
+                     MODEL LINKS EXTRACTION ERROR <br>
+                     PROBLEM DETECTED WITH MODEL LINKS</p>
+                     <p>When 
+                     mapping information is missing (can happen when the model has not been 
+                     migrated from VPM into LCA):<br>
+                     1893<br>
+                     MODEL MAPPING ERROR <br>
+                     PROBLEM DETECTED WITH LCA/VPM MAPPING</p>
+                     <p>When 
+                     there is a link that can not be rerouted:<br>
+                     1894<br>
+                     LINK REROUTE ERROR <br>
+                     PROBLEM DETECTED WITH MODEL LINKS REROUTING</p>
+                     <p>There no 
+                     link (or no link anymore) to VPM models, the rerouting 
+                     command cannot operate:<br>
+                     1895<br>
+                     NO LINKS TO REROUTE<br>
+                     NO SUPPORTED LINKS TO REROUTE</p>
+                     <p>There 
+                     are still links to be rerouted (ex: pointed models from 
+                     VPM which have not been migrated, or non-VPM links that 
+                     have not been modified):<br>
+                     - 1897<br>
+&nbsp;&nbsp; MODEL PARTIALLY PROCESSED<br>
+&nbsp;&nbsp; LINKS WITHIN THE CURRENT MODEL HAVE BEEN REROUTED<br>
+&nbsp;&nbsp; BUT AT LEAST ONE OLD LINK REMAINS IN THE MODEL.<br>
+                     - 1898<br>
+&nbsp;&nbsp; HYBRID LCA MODEL WITH VPM LINKS<br>
+&nbsp;&nbsp; SOME LINKS ARE STILL POINTING 'DBMS' MODELS: <br>
+&nbsp;&nbsp; THESE LINKS HAVEN'T BEEN CORRECTLY REROUTED (MAPPING ERROR OR 
+                     MODELS HAVEN'T BEEN MIGRATED).<br>
+&nbsp;&nbsp; TRY TO USE /REROUTE COMMAND TO CHANGE THESE LINKS.</span></p>
+                   </blockquote>
+                 </blockquote>
+               </blockquote>
+               <p>In short, this command:<br>
+               - scans the model and lists all the CDM/VPM Drafting and SolidE 
+               and NC links, with the VPM ID,<br>
+               - calls the LCA server with these information,<br>
+               - the LCA server retrieves thanks to the internal mapping the new 
+               LCA ID,<br>
+               - the LCA server returns these new information,<br>
+               - the links are modified by CATIA V4 and point to the corresponding 
+               VPM model migrated in LCA.</p>
+               <p>Then, 
+               the AUXVIEW2 and SolidE and MFGPROG functions are able to 
+               analyze, scan, browse the new links, and the information related 
+               to the pointed models in LCA could be exposed.</p>
+             </blockquote>
+           </blockquote>
+         </blockquote>
+         </td>
+   </tr>
+   <tr>
+     <td align="center" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>
+     <h2>Miscellaneous and limitations</h2>
+     </td>
+   </tr>
+   <tr>
+     <td align="center" width="32">&nbsp;</td>
+     <td>
+     <h3>Miscellaneous</h3>
+     <p>SolidE and Drafting NC links can be managed through CATIA V4 windows (<kbd>/link</kbd> 
+     window for <span lang="en-gb">AUXVIEW2 </span>function and Part Editor checklinks or checklink menu 
+     for SolidE). You can see the new pointed models after rerouting and they 
+     can be automatically loaded (with Load Passive commands). The pointed 
+     models can be managed transparently as before, in VPM. For AUXVIEW2 links, 
+     the load as passive of the pointed models and an update could be required 
+     to synchronize Views.</p>
+     <h3>Limitations</h3>
+     <p>After 
+     migration, this highlight will allow the customer retrieve the correct 
+     information on the link. This link could be rerouted, resynchronised and 
+     the model could be saved or not with the new information.<br>
+     Due to the uncertain LCA support of all CATIA V4 
+     application, the functionality focuses on:</p>
+     <ul>
+       <li>
+       <p class="MsoNormal">AUXVIEW2 links, i.e. MML_Drafting 
+       links, through the <kbd>/link</kbd> command.</li>
+       <li>
+       <p class="MsoNormal">SolidE 
+       links, i.e. MML_SolidE and MML_Solskin links (solid pointing to skin), through the functionalities 
+       in the Part Editor:<ul>
+         <li><b>Check Link&#8230;</b> on the Import primitive,</li>
+         <li><b>Check Links&#8230;</b> on the SolidE.</li>
+       </ul>
+       </li>
+       <li>MFGPROG links, i.e. MML_NC links, through the 
+       interactive function MFGPROG.</li>
+     </ul>
+     <p>No 
+     customization is possible at installation, through settings and so on. But the mapping 
+     can be customized in order to choose 
+     the attribute which holds the CDM/VPM ID (see External behavior) and 
+     connect it to LCA ID.
+     This implies to set an UNIX variable for the<kbd> <b>/reroute</b> </kbd>
+     command.<p class="MsoNormal">The rerouting mechanism does not need to load the pointed 
+     models in order to reroute the links.<br>
+     Nevertheless, due to the CATIA V4 infrastructure, the rerouting 
+     mechanism cannot be automated through a batch process. That means CATIA V4 
+     always needs to connect manually to a LCA client process, which is a 
+     prerequisite of any 
+     interoperability mechanism.</p>
+     <p class="MsoNormal">Only Drafting, SolidE 
+     and NC links are taken into account in the rerouting 
+     mechanism. Any other applicative links cannot be rerouted.<br>
+     In the VPM database, those links can be analyzed and visualized with the 
+     MML graph functionality. Their applicative types are MML_NC, MML_Drafting, 
+     MML_SolidE and MML_Solskin. Therefore, the pointing model can mix supported 
+     links after the rerouting mechanism:</p>
+     <ul>
+       <li>
+       <p class="MsoNormal">LCA 
+     links (Drafting and SolidE and NC) 
+     onto LCA models,</li>
+       <li>
+       <p class="MsoNormal">CDM/VPM links which 
+     have not been rerouted and still stay in the model.</li>
+     </ul>
+     <p class="MsoNormal">This situation is not recommended, the customer should 
+     avoid to have mixed links.</td>
+   </tr>
+   <tr vAlign="top" BORDER="0">
+     <td vAlign="top" colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

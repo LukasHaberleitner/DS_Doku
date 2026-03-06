@@ -1,0 +1,151 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>NC Review of Copy/Index/Tracut Operations</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>NC Review of Copy/Index/Tracut Operations</h1>
+ <p align="left">In general the V4 customer's process is to use the CATIA V4 
+ utility (CATNC) to obtain the APT source file, which is then processed by the 
+ APT processor. The INDEX, COPY, TRACUT statements as well as the APT macros are 
+ translated by the APT processor. The result is a clfile which is then processed 
+ by the Post Processor to get machine code.</p>
+ <p align="left">This process is not modified when using CATIA V5 to convert 
+ CATIA V4 NC programs.</p>
+ <p align="left">The methodology to get an APT source file allowing a successful 
+ association to the program read in NC Review, requires that COPY and TRACUT 
+ operations are not treated by the V4 CATNC utility, so that the corresponding 
+ statements remain in the APT source file.</p>
+ <p align="left">In V5 the customer has the ability to perform replay of V4 
+ Index/Copy operations, and to generate INDEX and COPY statements in the APT 
+ obtained using the V5 MfgBatch utility.</p>
+ <p align="left">Note that many V4 NC MILL programs use Index/Copy features and, 
+ in some cases, multi-level indexes.</p>
+ <h2 align="left">Translation of V4 Copy Entities into V5 Entities</h2>
+ <p align="left">When reading V4 programs in NC Review, each time a Copy 
+ operation is treated, it is replaced by a COPY operator entity. This COPY 
+ operator entity is automatically created.</p>
+ <p align="left">The possible cases for COPY statements in V4 are as follows:</p>
+ <blockquote>
+   <p align="left"><code>COPY/n,SAME,nb<br>
+   COPY/n,TRANSL,dx,dy,dz,nb<br>
+   COPY/n,XYROT,angle,nb<br>
+   COPY/n,YZROT,angle,nb<br>
+   COPY/n,ZXROT,angle,nb<br>
+   COPY/n,SCALE,factor,nb<br>
+   COPY/n,MODIFY, $<br>
+   (MATRIX/ ...),nb</code></p>
+ </blockquote>
+ <p align="left">In all cases, the Copy number (n), which is a kind of 
+ identifier, and the number of copies (nb) are stored on the Copy operator 
+ entity.</p>
+ <p align="left">A specific conversion rule is defined for each of the COPY 
+ cases and is described below.</p>
+ <p align="left"><b>Copy operation type: SAME</b></p>
+ <p align="left">This type of Copy is transformed into COPY operator with:<br>
+ Transformation type: Matrix (identity)<br>
+ In Absolute Machining Axis System</p>
+ <p align="left"><b>Copy operation type: TRANSL</b></p>
+ <p align="left">This type of Copy is transformed into COPY operator with:<br>
+ Transformation type: Translation<br>
+ Translation type: Absolute coordinates<br>
+ Distance along X, Y, Z: values of the components along each axis.</p>
+ <p align="left">Note that TRANSL processing is not correct if the reference 
+ machining axis system of the Part Operation is not the absolute axis system. In 
+ this case you must re-define the transformation manually.</p>
+ <p align="left"><b>Copy operation type: XYROT, YZROT, ZXROT</b></p>
+ <p align="left">This type of Copy is transformed into COPY operator with:</p>
+ <blockquote>
+   <p align="left">Transformation type: Rotation<br>
+   Rotation type: Machining axis (current machining axis to be selected)<br>
+   Angle: rotation angle in degrees.</p>
+ </blockquote>
+ <p align="left"><b>Copy operation type: SCALE</b></p>
+ <p align="left">This type of Copy is transformed into COPY operator with:</p>
+ <blockquote>
+   <p align="left">Transformation type: Scale<br>
+   Machining Axis System: Current Machining Axis System to be selected<br>
+   Scale factor: scale factor to be applied along the 3 vectors.</p>
+ </blockquote>
+ <p align="left"><b>Copy operation type: MODIFY MATRIX transformation</b></p>
+ <p align="left">This type of Copy is mapped into a Matrix type of COPY operator 
+ in Absolute Machining Axis System.</p>
+ <p align="left">Note that MATRIX processing is not correct if the reference 
+ machining axis system of the Part Operation is not the absolute axis system. In 
+ this case you must re-define the transformation manually.</p>
+ <h2 align="left">INDEX and INDEX/NOMORE Entities</h2>
+ <p align="left">V4 INDEX and INDEX/NOMORE entities are converted into V5 INDEX 
+ and INDEX/NOMORE activities, which are considered as markers in the program: 
+ they delimit the copied part of the program in the tree.</p>
+ <h2 align="left">Translation of V4 Tracut Entities into V5 Entities</h2>
+ <p align="left">When reading V4 programs in NC Review, each time a Tracut 
+ operation is treated, it is replaced by a TRACUT operator entity. This TRACUT 
+ operator entity is automatically created.</p>
+ <p align="left">The possible cases for TRACUT statements in V4 are as follows:</p>
+ <blockquote>
+   <p align="left"><code>TRACUT/(MATRIX,TRANSL,dx,dy,dz)<br>
+   TRACUT/(MATRIX,XYROT,angle)<br>
+   TRACUT/(MATRIX,YZROT,angle)<br>
+   TRACUT/(MATRIX,ZXROT,angle)<br>
+   TRACUT/(MATRIX,SCALE,factor)<br>
+   TRACUT/(MATRIX/ matrix transformation components)</code></p>
+ </blockquote>
+ <p align="left">A specific conversion rule is defined for each of the TRACUT 
+ cases and is described below.</p>
+ <p align="left"><b>Tracut operation type: TRANSL</b></p>
+ <p align="left">This type of Tracut is transformed into TRACUT operator with:</p>
+ <blockquote>
+   <p align="left">Transformation type: Translation<br>
+   Translation type: Absolute coordinates<br>
+   Distance along X, Y, Z: values of the components along each axis.</p>
+   <p align="left">Note that TRANSL processing is not correct if the reference 
+   machining axis system of the Part Operation is not the absolute axis system. 
+   In this case you must re-define the transformation manually.</p>
+ </blockquote>
+ <p align="left"><b>Tracut operation type: XYROT, YZROT, ZXROT</b></p>
+ <p align="left">This type of Tracut is transformed into TRACUT operator with:</p>
+ <blockquote>
+   <p align="left">Transformation type: Rotation<br>
+   Rotation type: Machining axis (current machining axis to be selected)<br>
+   Angle: rotation angle in degrees.</p>
+ </blockquote>
+ <p align="left"><b>Tracut operation type: SCALE</b></p>
+ <p align="left">This type of Tracut is transformed into TRACUT operator with:</p>
+ <blockquote>
+   <p align="left">Transformation type: Scale<br>
+   Machining Axis System: Current Machining Axis System to be selected<br>
+   Scale factor: scale factor to be applied along the 3 vectors.</p>
+ </blockquote>
+ <p align="left"><b>Tracut operation type: MATRIX transformation</b></p>
+ <p align="left">This type of Tracut is mapped into a Matrix type of TRACUT 
+ operator in Absolute Machining Axis System.</p>
+ <p align="left">Note that MATRIX processing is not correct if the reference 
+ machining axis system of the Part Operation is not the absolute axis system. In 
+ this case you must re-define the transformation manually.</p>
+ <h2 align="left">TRACUT/NOMORE Entity</h2>
+ <p align="left">V4 TRACUT/NOMORE entities are converted into V5 TRACUT/NOMORE 
+ activities, which are considered as markers in the program: they delimit the 
+ transformed part of the program in the tree.</p>
+ <h2 align="left">Replay and APT Generation</h2>
+ <p align="left">V4 INDEX, INDEX/NOMORE and TRACUT/NOMORE entities have no 
+ replay. During APT generation, they allow INDEX, INDEX/NOMORE and TRACUT/NOMORE 
+ statements to be generated.</p>
+ <p align="left">As V4 COPY and TRACUT entities are converted into COPY and 
+ TRACUT operators, their replay can be done.</p>
+ <p align="left">During APT generation, COPY and TRACUT entity processing 
+ defines a COPY or TRACUT statement, or the tool path which has been displayed 
+ during Replay, depending on the MfgBatch utility settings.</p>
+
+ </body>
+
+</html>
+

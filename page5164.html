@@ -1,0 +1,744 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Running a Multipiped Version 5 Session</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta content="none, default" name="Microsoft Border">
+</head>
+
+ <body>
+
+ <h1>Running a <span lang="en-us">Multipiped</span> Version 5 
+ Session&nbsp; <a name="ix-virtual reality:multipiped session"></a></h1>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32">
+ <img border="0" src="b35doc/english/online/icons_C2/common/ap3_title.gif" width="152" height="32"></p>
+ <table Border="0" CELLSPACING="0" valign="top" height="5593" width="98%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="50" width="33">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top" colspan="2" height="50" width="1333">In
+     <a href="page5162.html">About Virtual Reality Support in Version 5</a>, 
+     we discussed the different types of virtual reality configurations 
+     available. However, intensive use of virtual reality technology leads to 
+     loss of performance if you are using only one graphics pipe.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="60" width="33">&nbsp;</td>
+     <td valign="top" colspan="2" height="60" width="1333">This scenario shows 
+     you how to run a multipiped session manually, which is the basic mode. This 
+     mode requires you to use the CATMPKConfig variable and to create and edit 
+     the configuration file referenced by the variable.<br>
+     However, an alternate (and more convenient) method is to use the<a href="page5165.html"> 
+     Immersive System Assistant workbench</a> that enables you to generate 
+     automatically your configuration file.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="90" width="33"></td>
+     <td valign="middle" colspan="2" height="90" width="1333">
+     <h3><font face="Verdana">What is a &quot;pipe&quot; and what is the difference 
+     between a single and multipipe system? </font></h3>
+     <p><font face="Verdana">A &quot;pipe&quot; in this context refers to the graphics 
+     board associated with each single window into an application. It also 
+     refers to the data that is placed by the application which owns the pipe.</font></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="173" width="33"></td>
+     <td valign="middle" height="173" width="721">You can also have a single 
+     pipe feeding three display channels like this:
+     <p>Nothing prevents you from using virtual reality configurations with just 
+     one pipe, the problem is that<font face="Verdana"> the overhead of running 
+     multiple applications in a single piped system can result in very poor 
+     performance.</font></td>
+     <td valign="middle" height="173" width="613">
+     <img border="0" src="b35doc/english/online/cfyugvr_c2/images/Multipipe1.gif" align="center" width="265" height="156"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="81" width="33"></td>
+     <td valign="middle" colspan="2" height="81" width="1333">In a &quot;multipipe&quot; 
+     system, you can have several graphics boards, and each graphics board feeds 
+     a different display channel. <font face="Verdana">Each application in a &quot; 
+     multipipe&quot; system has its own distinct pipe to the graphics hardware. There 
+     is a price to pay in memory usage and a very slight price to pay in 
+     computer overhead to manage the multiple pipes, but the overall positive 
+     effect on system performance is dramatic.</font></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="54" width="33"></td>
+     <td valign="middle" colspan="2" height="54" width="1333">Performance can be 
+     enhanced even further if you are running workstations using multiple 
+     processors, which allow &quot;multithreading&quot; of applications.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="100" width="33"></td>
+     <td valign="middle" colspan="2" height="100" width="1333">Note that:
+     <ul>
+       <li>the Version 5 infrastructure for UNIX platforms provides support for 
+       16 windows maximum</li>
+       <li>one window/pipe can be assigned to two threads (2 CPUs).</li>
+     </ul>
+     <p>&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="53" width="33">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td valign="top" colspan="2" height="53" width="1333">A typical 
+     configuration is a workstation using four 
+     graphics pipes. You run a main Version 5 session using one pipe from a 
+     workstation, and create three secondary windows (each one using its own 
+     graphics pipe) for projection onto a Reality Center-type projection screen, 
+     or inside a virtual reality CAVE.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="955" width="33">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="middle" colspan="2" height="955" width="1333">
+     <ol class="task">
+       <li>
+       <p class="task">Log onto the workstation.</li>
+       <li value="2">
+       <p class="task">Run the following command to display graphics subsystem 
+       information about your configuration:</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2" height="279">
+           <tr>
+             <td height="277"><code>/usr/gfx/gfxinfo</code><p>This command 
+             displays information (display name, resolution, etc.) about each 
+             graphics pipe like this:</p>
+             <p style="margin-top: 0; margin-bottom: 0"><code>Graphics board 0 
+             is &quot;KONAL&quot; graphics.</code></p>
+             <p style="margin-top: 0; margin-bottom: 0"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+             Managed (&quot;:0.0&quot;) 1280x1024</code></p>
+             <p style="margin-top: 0; margin-bottom: 0"><code>...</code></p>
+             <p style="margin-top: 0; margin-bottom: 0"><code>Graphics board 1 
+             is &quot;KONAL&quot; graphics.</code></p>
+             <p style="margin-top: 0; margin-bottom: 0"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+             Managed (&quot;:0.1&quot;) 1280x1024</code></p>
+             <p style="margin-top: 0; margin-bottom: 0"><code>... </code></p>
+             <p style="margin-top: 0; margin-bottom: 0"><code>Graphics board 0 
+             is &quot;KONAL&quot; graphics.</code></p>
+             <p style="margin-top: 0; margin-bottom: 0"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+             Managed (&quot;:0.2&quot;) 1280x1024</code></p>
+             <p style="margin-top: 0; margin-bottom: 0"><code>...</code></p>
+             <p style="margin-top: 0; margin-bottom: 0"><code>Graphics board 1 
+             is &quot;KONAL&quot; graphics.</code></p>
+             <p style="margin-top: 0; margin-bottom: 0"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+             Managed (&quot;:0.3&quot;) 1280x1024</code></p>
+             <p style="margin-top: 0; margin-bottom: 0"><code>... </code></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="3">
+       <p class="task">Synchronize the graphics pipes with the video channels in 
+       your configuration by running the program:</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3" height="69">
+           <tr>
+             <td height="67"><code>/usr/gfx/ircombine</code><p>Refer to your 
+             IRIX documentation for more information about the <code>ircombine</code> 
+             program.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="4">
+       <p class="task">Export the following environment variable:</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4" height="136">
+           <tr>
+             <td height="95"><font FACE="Century Gothic, Arial, Helvetica">
+             <code>export CATMPKConfig=path/myconfigfile</code></font><p>where &quot;<i>path</i>&quot; 
+             is the path of a directory and &quot;<i>myconfigfile</i>&quot; is the name of 
+             a configuration file which you must create and edit to set up the 
+             secondary windows and assign them to different graphics pipes and 
+             displays.&nbsp; </td>
+           </tr>
+           <tr>
+             <td height="95"><a name="hj-CATMPKConfig"></a>Version 5 supports 
+             OpenGL Multipipe SDK technology (MPK). The MPK library is 
+             developped by SGI to manage multi-channel display configurations.&nbsp;<br>
+             <a name="ix-commands::Full Screen;Full Screen command"></a>Selecting
+             <kbd>View &gt; Full Screen</kbd> switches on and off the Version 5 
+             multichannel and the MPK support. The prerequisite is that the 
+             environment variable, i.e. CATMPKConfig is valuated to a 
+             configuration file path before running the application.</td>
+           </tr>
+           <tr>
+             <td height="134">Using MPK Version 5 provides powerful support for 
+             many virtual reality configurations:
+             <ul>
+               <li>active or passive stereo</li>
+               <li>decompositions, such as Stereo (Eye), DPLEX, 2D</li>
+               <li>all multi-screen/multi-projector configurations such as TAN 
+               Holobench, Fakespace CAVE, etc.</li>
+               <li>viewpoint tracking on all screens.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="5">
+       <p class="task">Edit the configuration file.&nbsp;</li>
+       <li value="6">
+       <p class="task">Save your changes to the configuration file, then start 
+       your main Version 5 session.</li>
+       <li value="7">
+       <p class="task">In your main session, run the command, select <kbd>View &gt; 
+       Full Screen</kbd>.</p>
+       <div align="left">
+         <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5" height="46">
+           <tr>
+             <td height="44">The video output displayed inside your main session 
+             is now projected coherently across the three windows. </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="8">
+       <p class="task">In your main session, right-click then clear <kbd>Full 
+       Screen</kbd> to exit Full Screen mode and stop multipiping.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="middle" BORDER="0">
+     <td valign="middle" height="50" width="33">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="middle" colspan="2" height="50" width="1333">
+     <blockquote>
+       <p>You can use stereoscopic viewing from within a multipiped session. </p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="66" width="33"></td>
+     <td valign="middle" colspan="2" height="66" width="1333">
+     <blockquote>
+       <p>Note also that in CAVE configuration, you can increase the specular 
+       lighting accuracy by selecting <kbd>Enable OpenGL local viewer lighting</kbd> 
+       in <kbd>Tools &gt; Options &gt; General &gt; Display &gt; Performance</kbd>.<br>
+       Be aware that this may lead to a loss of performance. </p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="53" bgcolor="#FFFFFF" width="33">&nbsp;</td>
+     <td valign="middle" colspan="2" height="53" width="1333">
+     <h3><b><font face="Arial,Helvetica,Geneva,Swiss,SunSans-Regular">
+     <a name="hj-multichannelcalibration"></a></font></b><font face="Verdana">
+     Calibrating the multi-channel support</font></h3>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="294" width="33"></td>
+     <td valign="middle" colspan="2" height="294" width="1333">First of all, let's 
+     remind us of the SGI pipe and channel architecture.
+     <p>An SGI computer as an Octane or an Onyx may host several graphic boards, 
+     named pipes. A same application can render images on all of these pipes. A 
+     pipe has a frame buffer in which the application write the images they 
+     compute. More precisely, each application writes images in windows that are 
+     sub-parts of the frame buffer.</p>
+     <p style="text-align:justify">On the video output side, the system reads 
+     the pipes frame buffer and generate video signals. There is one video 
+     signal per active channel. Each pipe may host several channels. Each 
+     channel is positioned on a part of a pipe frame buffer, and a video signal 
+     generated display this particular part. </p>
+     <p style="text-align:justify">The important caracteristic of the system is 
+     the number of pipes, their frame buffer size (called &quot;managed area&quot;), the 
+     number of channel per pipe, their corresponding frame buffer sub area and 
+     the video signal format they output. </p>
+     <p style="text-align:justify">You get the system information by typing
+     <code>/usr/gfx/gfxinfo</code> in a shell. You can modify your system 
+     configuration using the &quot;setmon&quot; or &quot;ircombine&quot; commands. They enable you 
+     to change the pipe-managed area size, the activated channels on each pipe, 
+     their frame buffer part as well as their video format. Report to the SGI 
+     documentation to use these commands.</p>
+     <p style="text-align:justify">The pipes are usually named &quot;:0.0&quot; , &quot;:0.1&quot; , 
+     &quot;:0.2&quot; ..., unless you have several X Servers, in which case they are named 
+     &quot;:0.0&quot;, &quot;:0.1&quot; ... on X Server 0, &quot;:1.0&quot;, &quot;:1.1&quot;,..., on X server 1 ....</p>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="665" width="33"></td>
+     <td valign="middle" colspan="2" height="665" width="1333">
+     <p align="center"><img border="1" src="b35doc/english/online/cfyugvr_c2/images/channelarchitectureNLS.gif" width="589" height="645"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="397" width="33"></td>
+     <td valign="middle" colspan="2" height="397" width="1333">On the scheme 
+     above, the system has two pipes and six channels per pipe. Only two are 
+     activated on each pipe. The pipe-managed areas are 2560x2000.
+     <p>The Pipe 0, channel 0 is associated to an area of size 1280x1024, and 
+     located at the coordinate (0,0).<br>
+     The Pipe 0, channel 1 is associated to an area of size 1280x1024, and 
+     located at the coordinate (0.5,0).<br>
+     The Pipe 1, channel 0 is associated to an area of size 1280x1024, and 
+     located at the coordinate (0,0).<br>
+     The Pipe 1, channel 1 is associated to an area of size 1280x1024, and 
+     located at the coordinate (0.5,0). </p>
+     <p style="text-align:justify">The channel video format are 1280x1024 at 
+     96Hz stereo for instance.</p>
+     <p>Version 5 renders 3D images in four windows. Two of them are on pipe 0, 
+     and the other two on pipe 1. Among these windows, one is particular: this 
+     is the main document window which appears within the application frame. The 
+     other windows are called &quot;auxiliary windows&quot;. If the user goes to the 
+     &quot;FullScreen&quot; mode, a complete image of the model will appear on the screen.</p>
+     <p>All the information Version 5 needs for such a configuation are in a 
+     configuration file (refer to <a href="#hj-CATMPKConfig">SGI MPK support</a>).<br>
+     However, the system should also be correctly set up using <kbd>ircombine</kbd> 
+     or <kbd>setmon</kbd>. </p>
+     <p>Also, since this system outputs active stereo, the pipes need to be 
+     &quot;genlocked&quot;. This means that their video refresh are synchronized. This is 
+     necessary for the stereo glasses to work corrrectly. You should refer to 
+     the SGI support for genlocking your system.</p>
+     <p style="text-align:justify">For instance, to set up the system, you can 
+     run the following script in a shell. You need the administrator privileges. 
+     This script will log you out and may badly affect the system if there is an 
+     error in it.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="358" width="33"></td>
+     <td valign="middle" colspan="2" height="358" width="1333">
+     <blockquote>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       echo &quot;Pipe 0 INTERNAL (main). Setting ...&quot; </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       /usr/gfx/ircombine &#092;       </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       -target :0.0 &#092;       </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       -destination eeprom &#092;       </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       -global syncsource=INTERNAL,size=2560x2000 &#092;       </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       -channel 0 format=1280x1024_96s,sync=RGB,sourceloc=0+0 &#092;       </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       -channel 1 format=1280x1024_96s,sync=RGB,sourceloc=1280+0 </code></span>
+       </p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       echo &quot;done.&quot; </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>&nbsp;&nbsp;
+       </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       echo &quot;Pipe 1 EXTERNAL (secondary). Setting ...&quot; </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       /usr/gfx/ircombine &#092;       </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       -target :0.1 &#092;       </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       -destination eeprom &#092;       </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       -global syncsource=EXTERNAL,syncformat=1280x1024_96s,size=2560x2000 &#092;       </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       -channel 0 format=1280x1024_96s,sync=RGB,sourceloc=0+0 &#092;       </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       -channel 1 format=1280x1024_96s,sync=RGB,sourceloc=1280+0 </code></span>
+       </p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       echo &quot;done.&quot; </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       echo </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>&nbsp;&nbsp;
+       </code></span></p>
+       <p style="mso-border-alt: solid windowtext .5pt; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt; border-style: none; border-width: medium; margin: 0; padding: 0in">
+       <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+       (/usr/gfx/stopgfx;/usr/gfx/startgfx)&amp;</code></span></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="489" width="33"></td>
+     <td valign="middle" colspan="2" height="489" width="1333">
+     <p style="text-align:justify">To run V5 with such a configuration file, 
+     type in a shell: </p>
+     <p style="text-align:justify"><code>export CATMPKConfig={complete path of 
+     the config file}</code></p>
+     <p style="text-align:justify">then, in this same shell, run Version 5: </p>
+     <p style="text-align: left"><code>/usr/DassaultSystemes/B<i>n</i>/irix_a/command/catstart 
+     -env {EnvName} -direnv {environment path name} </code></p>
+     <p style="text-align:justify">where &quot;<i>n</i>&quot; is the release number.</p>
+     <p style="text-align: left"><span style="font-weight: 400"><kbd>View &gt; Full 
+     Screen</kbd> </span>uses the configuration file pointed by the CATMPKConfig 
+     environment variable.To have a full undertanding of the MPK config file 
+     format, please refer to the MPK documentation. Only a standard display 
+     configuration will be taken as an example and detailed here. </p>
+     <p style="text-align: left"><span style="mso-ansi-language:
+EN-US">Let's assume we have a cubic immersive space such as a Fakespace CAVE, or 
+     a Barco Cubic Immersive Space. This system has four walls. All of them are 
+     square. The length of each square side is 3 meters long. There are four 
+     projectors displaying active stereo (one projector per wall). </span></p>
+     <p style="text-align:justify"><span style="mso-ansi-language:
+EN-US">The computer has two pipes and six channels per pipe. It is set 
+     (ircombine) so that: </span></p>
+     <ul>
+       <li>
+       <p style="text-align:justify"><span style="mso-ansi-language:EN-US">The 
+       pipe-managed areas are 2560x1024</span></li>
+       <li>
+       <p style="text-align:justify"><span style="mso-ansi-language:EN-US">Pipe 
+       0 channel 0 goes to the front wall. Its size is 1280x1024. Its location 
+       is (0,0)</span></li>
+       <li>
+       <p style="text-align:justify"><span style="mso-ansi-language:EN-US">Pipe 
+       0 channel 1 goes to the right wall. Its size is 1280x1024. Its location 
+       is (1280,0)</span></li>
+       <li>
+       <p style="text-align:justify"><span style="mso-ansi-language:EN-US">Pipe 
+       1 channel 0 goes to the left wall. Its size is 1280x1024. Its location is 
+       (0,0)</span></li>
+       <li>
+       <p style="text-align:justify"><span style="mso-ansi-language:EN-US">Pipe 
+       1 channel 1 goes to the floor. Its size is 1280x1024. Its location is 
+       (1280,0) </span></li>
+     </ul>
+     <p>
+     <span style="mso-fareast-font-family: Times New Roman; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+     The mpk file writes as follows:</span> </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="1570" width="33"></td>
+     <td valign="top" height="1570" width="721" align="left">
+     <p style="line-height:7.0pt;mso-line-height-rule:exactly">
+     <font face="Verdana"><code>global<br>
+     </code></font><code><font size="2" face="Verdana"><br>
+     {<br>
+&nbsp;&nbsp;&nbsp; MPK_WATTR_PLANES_ALPHA<span style="mso-spacerun: yes">&nbsp;
+     </span>1<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp; </span>MPK_DEFAULT_EYE_OFFSET 57<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp; </span>MPK_WATTR_HINTS_STEREO<span style="mso-spacerun: yes">&nbsp;
+     </span>1<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp; </span>MPK_DATTR_QUADSTEREO_HEIGHT 768 <br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp; </span>MPK_DATTR_QUADSTEREO_WIDTH<span style="mso-spacerun: yes">&nbsp;
+     </span>1024<br>
+     <br>
+     }<br>
+     <br>
+     config<br>
+     <br>
+     {<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp; </span>name<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;
+     </span>&quot;Config&quot;<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp; </span>mode<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;
+     </span>stereo<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp; </span>mono<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;
+     </span>[ &quot;&quot;, none ]<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp; </span>stereo<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;
+     </span>[ &quot;&quot;, quad ]</font><font face="Arial" size="2"><br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp; <br>
+     </span></font><span style="mso-spacerun: yes">
+     <font size="2" face="Verdana"><br>
+&nbsp;&nbsp;&nbsp; </font></span><font size="2" face="Verdana">pipe<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp; </span>{<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>display<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>&quot;:0.0&quot;<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>window<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>name<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>&quot;left window&quot;<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>viewport<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span></font><font face="Verdana" size="1">[0, 0, 1, 1 ]</font><font size="2" face="Verdana"><br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>channel<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{</font><font size="1" face="Verdana"><br>
+     </font><font size="2" face="Verdana"><span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>name<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>&quot;left view&quot;<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>viewport<span style="mso-tab-count:
+1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></font>
+     <font face="Verdana" size="1">[ 0., 0., 1., 1. ]</font><font size="2" face="Verdana"><br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>wall<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+     bottom_left<span style="mso-tab-count:1">&nbsp;&nbsp; </span></font>
+     <font face="Verdana" size="1">[-1828.8, -1524, 1828.8 ]</font><font size="2" face="Verdana"><br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+     bottom_right<span style="mso-tab-count:1">&nbsp; </span></font>
+     <font face="Verdana" size="1">[-1828.8, -1524, -1828.8 ]</font><font size="2" face="Verdana"><br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+     top_left<span style="mso-tab-count:1">&nbsp;&nbsp; </span>
+     <span style="mso-tab-count:
+1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>[</font><font face="Verdana" size="1">-1828.8, 1524, 1828.8 ]
+     </font><font size="2" face="Verdana"><span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>}<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp; </span>}<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>window<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>name<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>&quot;front window&quot;<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>viewport<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span></font><font face="Verdana" size="1">[0, 0, 1, 1 ]</font><font size="2" face="Verdana"><br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>channel<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>name<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>&quot;front view&quot;<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>viewport<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span></font><font face="Verdana" size="1">[ 0., 0., 1., 1. ]</font><font size="2" face="Verdana"><br>
+     </font><span style="mso-spacerun: yes"><font face="Verdana"><font size="1">
+     <br>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font> </font></span><font face="Verdana" size="2">wall<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+     bottom_left<span style="mso-tab-count:1">&nbsp; </span></font>
+     <font face="Verdana" size="1">[-1828.8, -1524, -1828.8 ]<br>
+     </font><font face="Verdana" size="2"><span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+     bottom_right<span style="mso-tab-count:1"> </span></font>
+     <font face="Verdana" size="1">[1828.8, -1524, -1828.8 ]</font><font face="Verdana" size="2"><br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+     top_left<span style="mso-tab-count:1">&nbsp;&nbsp; </span>
+     <span style="mso-tab-count:
+1">&nbsp;&nbsp;&nbsp;&nbsp; </span></font><font face="Verdana" size="1">
+     [-1828.8, 1524, -1828.8 ]</font><font face="Verdana" size="2"><br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp; </span>}<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp; </span>pipe<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp; </span>{<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>display<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>&quot;:0.1&quot;<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>window<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>name<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>&quot;right window&quot;<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>viewport<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span></font><font face="Verdana" size="1">[0, 0, 1, 1 ]</font><font face="Verdana" size="2"><br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>channel<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>name<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>&quot;right view&quot;<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>viewport<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span></font><font face="Verdana" size="1">[ 0., 0., 1., 1. ]</font><font face="Verdana" size="2"><br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>wall<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{</font><font size="1" face="Verdana"><br>
+     </font><font face="Verdana" size="2"><span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+     bottom_left<span style="mso-tab-count:1">&nbsp; </span></font>
+     <font face="Verdana" size="1">[1828.8, -1524, -1828.8 ]</font><font face="Verdana" size="2"><br>
+     &nbsp;<span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+     bottom_right<span style="mso-tab-count:1"> </span></font>
+     <font face="Verdana" size="1">[1828.8, -1524, 1828.8 ]</font><font face="Verdana" size="2"><br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+     top_left<span style="mso-tab-count:1">&nbsp;&nbsp; </span>
+     <span style="mso-tab-count:
+1">&nbsp;&nbsp;&nbsp; </span></font><font face="Verdana" size="1">[1828.8, 1524, 
+     -1828.8 ]</font><font face="Verdana" size="2"><br>
+&nbsp;&nbsp;&nbsp; <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>} <br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp; </span>}<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>window<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>name<span style="mso-tab-count:
+1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>&quot;floor window&quot;<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>viewport<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span></font><font face="Verdana" size="1">[0, 0, 1, 1 ]</font><font face="Verdana" size="2"><br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>channel<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+     name<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>&quot;floor view&quot;<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+     viewport<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span></font><font face="Verdana" size="1">[ 0., 0., 1., 1. ]</font><font face="Verdana" size="2"><br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+     wall<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+     {<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>bottom_left<span style="mso-tab-count:1"> </span></font>
+     <font face="Verdana" size="1">[-1828.8, -1524, 1828.8 ]</font><font face="Verdana" size="2"><br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>bottom_right<span style="mso-tab-count:1"> </span></font>
+     <font face="Verdana" size="1">[1828.8, -1524, 1828.8 ]</font><font face="Verdana" size="2"><br>
+     <span style="mso-spacerun:
+yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </span>top_left<span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;
+     </span></font><font face="Verdana" size="1">[-1828.8, -1524, -1828.8 ]</font><font face="Verdana" size="2"><br>
+     </font></code><font face="Verdana" size="2">
+     <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US"><code>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+     }<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}<br>
+     <span style="mso-spacerun: yes"><br>
+&nbsp;&nbsp; </span>}</code></span></font></p>
+     <p style="line-height:7.0pt;mso-line-height-rule:exactly">&nbsp;</td>
+     <td valign="top" height="1570" width="613">
+     <p style="text-align:justify">
+     <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US">
+     <font size="2">This is the global section where you set some global 
+     options.</font></span></p>
+     <p align="left">
+     <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US">
+     <font size="2">Always specify the MPK_WATTR_HINTS_STEREO option when using 
+     stereo. Set thMPK_DATTR_QUADSTEREO_HEIGHT and MPK_DATTR_QUADSTEREO_WIDTH<span style="mso-spacerun: yes">&nbsp;
+     </span>to your<span style="mso-spacerun: yes">&nbsp; </span>manage area 
+     size when using stereo. </font></span></p>
+     <p style="text-align:justify">
+     <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US">
+     <font size="2">Set the &quot;mode&quot; to &quot;stereo&quot; or &quot;mono&quot; to activate or not the 
+     stereoscopic rendering. </font></span></p>
+     <p style="text-align:justify">&nbsp;</p>
+     <p style="text-align:justify">&nbsp;</p>
+     <p style="text-align:justify">
+     <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US">
+     <font size="2">Declare the pipes you are using and specify their name.
+     </font></span></p>
+     <p><font size="2">In each pipe section, declare the windows Version 5 will 
+     manage on these pipe (including the main document window). The main 
+     document window should always appear first in its pipe. If your run Version 
+     5 in pipe X, the main document window will use the paramaters of the window 
+     declared first in the pipe X section of the configuration file.<span style="mso-bidi-font-size: 10.0pt">
+     </span></font></p>
+     <p style="text-align: left">
+     <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US">
+     <font size="2">The window viewport specifies the window size and position 
+     within the pipe frame buffer. The figures correspond to a ratio of the 
+     managed area size : [x,y,width.height]. </font></span></p>
+     <p style="text-align: left">
+     <span style="mso-bidi-font-size: 10.0pt; mso-ansi-language: EN-US">
+     <font size="2">You should always declare one channel per window, and only 
+     one (Version 5 only support on channel per window). The term channel may be 
+     confusiong since it does not have the same meaning as the usual pipe 
+     channels. Just always declare the channel viewport as [0,0,1,1]. Then, 
+     specify the coordinates of the wall corners. This window image will then be 
+     supposed to be projected onto the corresponding wall, fitting exactly the 
+     rectangle described by the coordinates. </font></span></p>
+     <p style="text-align:justify"><font size="2">The coordinates should be 
+     expressed in the MPK reference frame. Use the same unit as the unit.</font>
+     </p>
+     <p style="text-align: left"><font size="2">The default eye position is 
+     defined by this reference frame. This means that if you use the <kbd>View &gt; 
+     Full Screen</kbd> command without head tracking, the point of view will be 
+     computed for a user standing with its head at this reference frame origin, 
+     looking along its -Z axis, and with its right on the positive X axis side.</font></p>
+     <p><font size="2">Since it is usually better to define the system front 
+     wall as the one naturally seen by the default head position, the MPK 
+     reference frame is chosen so that this front wall is on its -Z axis side.</font></p>
+     <p><font size="2"><span style="mso-ansi-language: EN-US">Bear</span></font><span style="mso-ansi-language:EN-US"><font size="2"> 
+     also in mind that the interaction with the model is only possible within 
+     the main window. In particular, this is the case of the viewpoint 
+     manipulation with the mouse.<br>
+     Thus, the front wall is usually set as the main document window.</font></span></p>
+     <p style="text-align:justify">
+     <span style="mso-fareast-font-family: Times New Roman; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA; mso-bidi-font-size: 10.0pt">
+     <font size="2">Here, we get :</font></span></p>
+     <blockquote>
+       <blockquote>
+         <p><img border="0" src="b35doc/english/online/cfyugvr_c2/images/mpkfile.gif" width="108" height="96"></p>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td colspan="3" valign="top" height="35" width="100%">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

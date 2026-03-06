@@ -1,0 +1,252 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>About Panasonic CSR Translators</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>About Panasonic CSR Translators<a name="ix-about:Panasonic CSR"></a></h1>
+ <table border="0" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/anew.gif" width="32" height="32"></td>
+     <td valign="top">This section provides basic information about the 
+		Panasonic CSR translator. The information includes:&nbsp;<ul>       
+       <li>Supported Activities</li>
+       <li>Command Mapping</li>
+       <li>Parameter Data</li>
+		<li>Notes</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h2><a name="ix-Panasonic CSR:supported activities"></a>Supported Activities</h2>
+     <p>Currently, the following
+     activities are supported in download and upload for the Panasonic CSR translator: </p>
+		<br>
+     <ul>
+       <li>Move Activity</li>
+       <li>Delay Activity</li>
+       <li>I/O Activities (Set and Wait Signal)</li>
+		<li>Call Task Activity</li>
+		<li>Comments</li>
+     </ul>
+     </td>
+     </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h2><a name="ix-Panasonic CSR:command mapping"></a>Command Mapping</h2>
+     <p>This table displays the mapping between Panasonic CSR commands, XML elements, 
+		and V5 functionality:</p>
+		<p class="task">&nbsp;</p>
+		
+     <table border="0" width="100%" cellspacing="3" cellpadding="3" class="Indented" style="border-collapse: collapse" bordercolor="#111111" id="table1">
+       <tr>
+         <th valign="top"><b>CSR Command</b></th>
+         <th valign="top"><b>XML Element</b></th>
+         <th valign="top"><b>V5 Task Activity</b></th>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">MOVEP, P1, &#8230; MOVEP, GA#(1:name), &#8230;</td>
+         <td valign="top" class="code2">DNBRobotMotionActivity with MotionType 
+			Joint</td>
+         <td valign="top" class="code2">RobotMotion with MotionType JNT</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">MOVEL, P1, &#8230;<br>
+			MOVEL, GA#(1:name), &#8230;</td>
+         <td valign="top" class="code2">DNB DNBRobotMotionActivity<br>
+			with MotionType Linear</td>
+         <td valign="top" class="code2">RobotMotion with MotionType LIN</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">MOVEC, P1, &#8230;<br>
+			MOVEC, GA#(1:name), &#8230;</td>
+         <td valign="top" class="code2">DNB DNBRobotMotionActivity with 
+			MotionType Circular or CircularVia(first MOVEC)</td>
+         <td valign="top" class="code2">RobotMotion with MotionType CIR or CIRV</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">P1, AJ, &#8230;</td>
+         <td valign="top" class="code2">(joint target for robot motions)</td>
+         <td valign="top" class="code2">(joint target for robot motions)</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">OUT, O1#(1:name), ON|OFF</td>
+         <td valign="top" class="code2">DNBSetSignalActivity with PortNumber and 
+			SignalName</td>
+         <td valign="top" class="code2">Set IO Operation</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">CALL, progname</td>
+         <td valign="top" class="code2">DNBIgpCallRobotTask with CallName progname</td>
+         <td valign="top" class="code2">Call Task activity</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">DELAY, timeinsec</td>
+         <td valign="top" class="code2">DelayActivity</td>
+         <td valign="top" class="code2">DelayActivity</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">TOOL, 1:name</td>
+         <td valign="top" class="code2">(set precomment of next operation, set toolprofile for 
+			next robot motion operation)</td>
+         <td valign="top" class="code2">(precomment of next operation)</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">ARC-ON, filename, number</td>
+         <td valign="top" class="code2"><font color="#0000FF">&lt;</font><font color="#800000">UserProfile</font>
+			<font color="#800000">Type</font><font color="#0000FF">=&quot;</font><b>PANArcON</b><font color="#0000FF">&quot;&gt;</font></td>
+         <td valign="top" class="code2"><font color="#0000FF">&lt;</font><font color="#800000">UserProfile</font>
+			<font color="#800000">Type</font><font color="#0000FF">=&quot;</font><b>PANArcON</b><font color="#0000FF">&quot;&gt;</font></td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">ARC-OFF, filename, number</td>
+         <td valign="top" class="code2"><font color="#0000FF">&lt;</font><font color="#800000">UserProfile</font>
+			<font color="#800000">Type</font><font color="#0000FF">=&quot;</font><b>PANArcOFF</b><font color="#0000FF">&quot;&gt;</font></td>
+         <td valign="top" class="code2"><font color="#0000FF">&lt;</font><font color="#800000">UserProfile</font>
+			<font color="#800000">Type</font><font color="#0000FF">=&quot;</font><b>PANArcOFF</b><font color="#0000FF">&quot;&gt;</font></td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">ARC-SET, num, num, num</td>
+         <td valign="top" class="code2"><font color="#0000FF">&lt;</font><font color="#800000">UserProfile</font>
+			<font color="#800000">Type</font><font color="#0000FF">=&quot;</font><b>PANArcSET</b><font color="#0000FF">&quot;&gt;</font></td>
+         <td valign="top" class="code2"><font color="#0000FF">&lt;</font><font color="#800000">UserProfile</font>
+			<font color="#800000">Type</font><font color="#0000FF">=&quot;</font><b>PANArcSET</b><font color="#0000FF">&quot;&gt;</font></td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">CRATER, num, num, num</td>
+         <td valign="top" class="code2"><font color="#0000FF">&lt;</font><font color="#800000">UserProfile</font>
+			<font color="#800000">Type</font><font color="#0000FF">=&quot;</font><b>PANArcCRATER</b><font color="#0000FF">&quot;&gt;</font></td>
+         <td valign="top" class="code2"><font color="#0000FF">&lt;</font><font color="#800000">UserProfile</font>
+			<font color="#800000">Type</font><font color="#0000FF">=&quot;</font><b>PANArcCRATER</b><font color="#0000FF">&quot;&gt;</font></td>
+       </tr>
+       </table>
+     </td>
+     </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h2><a name="ix-Panasonic CSR:parameter data"></a>Parameter Data</h2>
+     <p class="task">Following are parameters which can be associated 
+     with a CATProduct.&nbsp;For information on how to set parameters for a 
+     CATProduct see the 
+		<blink> 
+		<a href="page4468.html">Setting 
+     Parameters</a></blink> section of this manual.</p>
+     <table border="0" cellpadding="3" cellspacing="3" width="100%" class="Indented" style="border-collapse: collapse" bordercolor="#111111" id="table2">
+       <tr>
+         <th width="12%"><b>Parameter Name</b></th>
+         <th width="8%"><b>Value Type</b></th>
+         <th width="13%"><b>Usage</b></th>
+         <th width="10%"><b>Default Value</b></th>
+         <th width="54%"><b>&nbsp;Description</b></th>
+       </tr>
+       <tr>
+         <td width="12%" valign="top" class="Code2">ProgramFileEncoding</td>
+         <td width="8%" valign="top" class="Code2">String</td>
+         <td width="13%" valign="top" class="Code2">Download and Upload</td>
+         <td width="10%" valign="top" class="Code2">UTF-8</td>
+         <td width="54%" valign="top" class="Code2">This parameter specifies the 
+			encoding of the robot program to be uploaded, or to be created.
+			<p class="task">Commonly used are ISO-8859-1 (West European), and SHIFT_JIS 
+			(Japanese).</td>
+       </tr>
+       <tr>
+         <td width="12%" class="code" valign="top">OLPStyle</td>
+         <td width="8%" class="code" valign="top">String</td>
+         <td width="13%" class="code" valign="top">Upload</td>
+         <td width="10%" class="code" valign="top">General</td>
+         <td width="54%" class="code" valign="top">This parameter is used to 
+			determine, whether a comment in a robot program is uploaded as an 
+			attribute of a motion activity, or an individual operation. 
+			<p class="task">Valid 
+			values are <kbd>General</kbd> or <kbd>OperationComments</kbd>.</td>
+       </tr>
+       <tr>
+         <td width="12%" class="code2" valign="top">CommentWaitSignal</td>
+         <td width="8%" class="code2" valign="top">Boolean</td>
+         <td width="13%" class="code2" valign="top">Upload</td>
+         <td width="10%" class="code2" valign="top">True</td>
+         <td width="54%" class="code2" valign="top">By default, WAIT IO 
+			statements are commented out during upload. If this is not desired, 
+			set this parameter to <kbd>false</kbd>.</td>
+       </tr>
+       <tr>
+         <td width="12%" class="code" valign="top">IOName</td>
+         <td width="8%" class="code" valign="top">String</td>
+         <td width="13%" class="code" valign="top">Upload</td>
+         <td width="10%" class="code" valign="top">DO[]</td>
+         <td width="54%" class="code" valign="top">This parameter specifies the 
+			output signal names for Set-IO activities. These IOs must be there 
+			before upload. 
+			<p class="task">If the parameter ends with a pair of square brackets (&quot;[]&quot;), 
+			the signal names would be &lt;io_name&gt;[&lt;port_number&gt;]; otherwise the 
+			signal names would be &lt;io_name&gt;&lt;port_number&gt;.</td>
+       </tr>
+       </table>
+     
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">    
+     </td>
+     <td valign="top">
+     <h2>Notes</h2>
+		<ul>
+			<li>
+			<p style="margin-top: 1em">Use absolute Motion Basis when specifying 
+			a Motion Profile for linear or circular moves. <br>
+			DELMIA V5 motion 
+			planning for linear and circular moves with percentage speeds is 
+			different than that of Panasonic CSR. Therefore, if percentage speed 
+			value is specified for linear or circular motion, the cycle time will be 
+			much different when compared with an actual robot. </li>
+			<li>V5 does not synchronize robot and auxiliary device motions for robots with auxiliary axes (robot rail/track and workpiece 
+			positioned), therefore the TCP trace in V5 is different than the actual 
+			robot TCP trace. </li>
+			<li>Robots do not simulate the weave motion in V5, therefore the 
+			cycle time will differ from that of a robot that does weave 
+			motion. </li>
+			<li>Motion activity attribute TargetNum: <br>
+			For the targets in the 
+			programs to retain their original numbers, an attribute TargetNum is 
+			created upon upload for each motion activity. When a target is used 
+			more than once, the value of this attribute is automatically 
+			increased from the largest target number defined in the program. The 
+			values of this attribute are used to generate the target position number 
+			on download. <br>
+			<br>
+			When this attribute does not exist, e.g. downloading a task created 
+			in V5, the target numbers are automatically generated in the 
+			sequence they are used in the motion activities.</li>
+		</ul>
+     
+     </td>
+   </tr>
+ 	</table>
+
+ </body>
+
+</html>
+

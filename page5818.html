@@ -1,0 +1,230 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>More about Wrapping</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style type="text/css">
+.style1 {
+	font-size: 12pt;
+}
+.style2 {
+	font-family: Verdana, Helvetica, sans serif;
+	font-size: 12pt;
+	background: #E5F3FF;
+	text-decoration: none;
+}
+</style>
+ </head>
+
+ <body>
+
+ <a name="ix-more about::wrapping"></a>
+ <h1 align="center"><a name="hj-top"></a>More about Wrapping</h1>
+ <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber8">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>The following section aims at describing wrapping operation in more 
+     details:<br>
+&nbsp;<ul>
+       <li><a href="#hj-how">How is the Wrapping Representation Calculated?</a></li>
+       <li><a href="#hj-step1">Step 1: Computing Points Using the Grain 
+       Parameter</a></li>
+       <li><a href="#hj-step2">Step 2: Offsetting Points Using the Offset Ratio 
+       Parameter</a></li>
+       <li><a href="#hj-step3">Step 3: Building the Result&nbsp;</a></li>
+       <li><a href="#hj-tables">How the Grain and Offset Parameters Impact the 
+       Wrapping Calculation? (Tables)</a></li>
+     </ul>
+     <h4><br>
+     </h4>
+     <h3><a name="hj-how"></a>How is the Wrapping Representation Calculated?<a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" alt="Top" align="right" width="25" height="17"></a></h3>
+     <p>You generate a wrapping from existing geometric elements by:</p>
+     <ul>
+       <li>computing a set of points regularly spaced on the envelope of the 
+       original geometry (distance between points = grain parameter)</li>
+       <li>offsetting these points to obtain a inflated result which better 
+       includes the original geometry (offset value = grain * offset ratio)</li>
+       <li>building triangles from the set of offset points.&nbsp;&nbsp;&nbsp;<br>
+       </li>
+     </ul>
+     <p>The following example aims at illustrating these three steps as well as 
+     the impact of grain and offset ratio parameters on the final result.<br>
+&nbsp;</p>
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+       <tr>
+         <td>
+         <img border="0" src="b35doc/english/online/dmoug_c2/images/silhouetteexample01NLS.gif" align="left" width="503" height="239"></td>
+       </tr>
+       <tr>
+         <td>&nbsp;</td>
+       </tr>
+     </table>
+     <h3><b><a name="hj-step1"></a></b>Step 1: Computing Points Using the Grain 
+     Parameter<a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" alt="Top" align="right" width="25" height="17"></a><b><br>
+     </b></h3>
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+       <tr>
+         <td><img border="0" src="b35doc/english/online/dmoug_c2/images/wrappingexample01NLS.gif" width="440" height="372"></td>
+       </tr>
+     </table>
+     <h3><i><br>
+     </i><b><a name="hj-step2"></a></b>Step 2: Offsetting Points Using the 
+     Offset Ratio Parameter<a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" alt="Top" align="right" width="25" height="17"></a></h3>
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+       <tr>
+         <td><img border="0" src="b35doc/english/online/dmoug_c2/images/wrappingexample02NLS.gif" width="502" height="265"></td>
+       </tr>
+     </table>
+     <h3>&nbsp;</h3>
+     <h3><a name="hj-step3"></a>Step 3: Building the Result&nbsp;<a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" alt="Top" align="right" width="25" height="17"></a></h3>
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4">
+       <tr>
+         <td>
+         <h5>Case 1: Offset Ratio = 0.0&nbsp;</h5>
+         </td>
+         <td>
+         <h5>Case 2:&nbsp; Offset Ratio = 0.5</h5>
+         </td>
+       </tr>
+       <tr>
+         <td colspan="2"><img border="0" src="b35doc/english/online/dmoug_c2/images/wrappingexample03NLS.gif" width="634" height="274"></td>
+       </tr>
+     </table>
+     <h4>Case 3: Illustration of how the frontier between inner area 
+     and outer area is calculated with a simplified envelope.</h4>
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber9">
+       <tr>
+         <td><img border="0" src="b35doc/english/online/dmoug_c2/images/wrappingexample05NLS.gif" width="374" height="408"></td>
+       </tr>
+     </table>
+     <br>
+		<span class="blink">In this case, any geometry which is not visible from 
+		any of the six canonical directions is considered as internal and is not 
+		considered for the wrapping volume computation.<br>
+		To take such geometries under consideration, use convex envelop.</span><h5 class="style1">Case 4: Cubic option set</h5>
+     <p>When the cubic check box is selected, the result is a voxel (cubic) 
+     representation of the envelope. The voxel size equals the grain parameter. 
+     The offset ratio is not used.<br>
+&nbsp;</p>
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber10">
+       <tr>
+         <td><img border="0" src="b35doc/english/online/dmoug_c2/images/wrappingexample04NLS.gif" width="511" height="276"></td>
+       </tr>
+     </table>
+     <h5 class="style2">Case 5: Illustration of how the frontier between inner area 
+     and outer area is calculated with a convex envelope.</h5>
+		<p class="blink">
+		<img alt="" src="b35doc/english/online/dmoug_c2/images/wrappingexample06NLS.png" width="267" height="248"></p>
+     <table style="width: 100%" class="blink">
+		<tr>
+			<td style="width: 35px">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+			<td>The computation time is higher for the <kbd>Convex envelop</kbd> 
+			computation type, for the same grain size.<br>
+			However, a higher grain size can be used because it ensures that the 
+			geometry is well contained in the envelope.</td>
+		</tr>
+		</table>
+     <h3><a name="hj-tables"></a>How the Grain and Offset Parameters Impact the 
+     Wrapping Calculation?<a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" alt="Top" align="right" width="25" height="17"></a></h3>
+     <p>The table below shows the grain parameter impact on the wrapping 
+     calculation:</p>
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber11">
+       <tr>
+         <td width="97" align="center" valign="top" bgcolor="#E0E0E0">
+         <h5>Grain Value</h5>
+         </td>
+         <td width="182" align="center" valign="top" bgcolor="#E0E0E0">
+         <h5>Computation Time</h5>
+         </td>
+         <td width="136" align="center" valign="top" bgcolor="#E0E0E0">
+         <h5>Used Memory </h5>
+         </td>
+         <td width="171" align="center" valign="top" bgcolor="#E0E0E0">
+         <h5>Resulting Size (number of triangles)</h5>
+         </td>
+       </tr>
+       <tr>
+         <td width="97" bgcolor="#F2F2F2">
+         <img border="0" src="b35doc/english/online/dmoug_c2/images/arrowup.gif" width="44" height="56">Greater</td>
+         <td width="182" bgcolor="#F2F2F2">
+         <img border="0" src="b35doc/english/online/dmoug_c2/images/arrowdown.gif" width="44" height="56">Shorter</td>
+         <td width="136" bgcolor="#F2F2F2">
+         <img border="0" src="b35doc/english/online/dmoug_c2/images/arrowdown.gif" width="44" height="56">Less</td>
+         <td width="171" bgcolor="#F2F2F2">
+         <img border="0" src="b35doc/english/online/dmoug_c2/images/arrowdown.gif" width="44" height="56">Smaller</td>
+       </tr>
+       <tr>
+         <td width="97" bgcolor="#F2F2F2">
+         <img border="0" src="b35doc/english/online/dmoug_c2/images/arrowdown.gif" width="44" height="56">Smaller</td>
+         <td width="182" bgcolor="#F2F2F2">
+         <img border="0" src="b35doc/english/online/dmoug_c2/images/arrowup.gif" width="44" height="56">Longer</td>
+         <td width="136" bgcolor="#F2F2F2">
+         <img border="0" src="b35doc/english/online/dmoug_c2/images/arrowup.gif" width="44" height="56">More</td>
+         <td width="171" bgcolor="#F2F2F2">
+         <img border="0" src="b35doc/english/online/dmoug_c2/images/arrowup.gif" width="44" height="56">Bigger</td>
+       </tr>
+     </table>
+     <p>The table below shows the offset ratio impact on the wrapping 
+     calculation:</p>
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber12" width="752">
+       <tr>
+         <td align="center" bgcolor="#E0E0E0" valign="top">
+         <h5>Offset Ratio Value</h5>
+         </td>
+         <td align="center" bgcolor="#E0E0E0" valign="top">
+         <h5>Computation Time</h5>
+         </td>
+         <td align="center" bgcolor="#E0E0E0" valign="top">
+         <h5>Used Memory </h5>
+         </td>
+         <td align="center" bgcolor="#E0E0E0" valign="top">
+         <h5>Resulting Geometric Size</h5>
+         </td>
+         <td align="center" bgcolor="#E0E0E0" valign="top">
+         <h5>Resulting Size <br>
+         (number of triangles)</h5>
+         </td>
+       </tr>
+       <tr>
+         <td width="147" height="59" bgcolor="#F2F2F2">
+         <img border="0" src="b35doc/english/online/dmoug_c2/images/arrowup.gif" width="44" height="56">Greater</td>
+         <td width="158" align="center" height="59" bgcolor="#F2F2F2">No Change</td>
+         <td width="110" align="center" height="59" bgcolor="#F2F2F2">No Change</td>
+         <td width="155" align="center" height="59" bgcolor="#F2F2F2">Bigger</td>
+         <td width="182" align="center" height="59" bgcolor="#F2F2F2">No change</td>
+       </tr>
+       <tr>
+         <td width="147" height="59" bgcolor="#F2F2F2">
+         <img border="0" src="b35doc/english/online/dmoug_c2/images/arrowdown.gif" width="44" height="56">Smaller</td>
+         <td width="158" align="center" height="59" bgcolor="#F2F2F2">No Change</td>
+         <td width="110" align="center" height="59" bgcolor="#F2F2F2">No Change</td>
+         <td width="155" align="center" height="59" bgcolor="#F2F2F2">Smaller</td>
+         <td width="182" align="center" height="59" bgcolor="#F2F2F2">No Change</td>
+       </tr>
+       <tr>
+         <td width="147" height="72" bgcolor="#F2F2F2">Cubic Mode</td>
+         <td width="158" height="72" bgcolor="#F2F2F2">
+         <img border="0" src="b35doc/english/online/dmoug_c2/images/arrowdown.gif" width="44" height="56">Shorter</td>
+         <td width="110" height="72" bgcolor="#F2F2F2">
+         <img border="0" src="b35doc/english/online/dmoug_c2/images/arrowdown.gif" width="44" height="56">Less</td>
+         <td width="155" height="72" bgcolor="#F2F2F2">Includes entirely the 
+         original geometry</td>
+         <td width="182" align="center" height="72" bgcolor="#F2F2F2">No Change</td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

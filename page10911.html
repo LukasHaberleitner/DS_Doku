@@ -1,0 +1,121 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Optimizations: Methodology</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="docCompliance" content="v 0.9; Tue Sep 13 14:44:41 2005">
+ <meta name="Microsoft Border" content="none">
+</head>
+
+ <body>
+
+ <h1>Optimizations: Methodology<a name="top"></a></h1>
+ <h2><font color="#282187">Applying Ranges and Steps
+ <a name="ix-ranges and steps"></a></h2>
+ </font>
+ <ul>
+   <li>It is ALWAYS better to apply ranges to the free parameters (especially 
+   for the simulated Annealing). This prevents the geometry from taking 
+   unreasonable configurations if the free parameters take too high a value.</li>
+   <li>Too big a step makes it useless, but too small a step can prevent fast 
+   convergence to a solution. If you are not sure, do not attribute any step but 
+   assign ranges.</li>
+   <li>Steps are only indicative starting values used by the algorithms: To 
+   converge toward optimal values both Gradient and SA algorithms need to reduce 
+   the steps between consecutive trials. If the search makes progress in the 
+   same direction (local optimum not detected), the step increases to speed up 
+   the localization of the local (and global) optimum. As soon as an optimum is 
+   located, Gradient and SA do not behave the same way: The gradient algorithm 
+   reduces its step to reach convergence inside this optimum. The SA makes the 
+   step evolve depending on the history of the run according to a complex law.<br>
+   &nbsp;It must be noticed that in no case, the step remains constant.</li>
+ </ul>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2>Creating and Using Parameters as Free Parameters<a name="ix-free parameter"></a>
+ <a name="ix-free parameters, selecting"></a></h2>
+ <p>When working in an optimization, since you cannot create external 
+ references, you can select:</p>
+ <ul>
+   <li>The parameters located above the optimization: The immediate Part, 
+   Product, Product of Part, Analysis Manager.</li>
+   <li>The parameters located below each son of the local literal father. Only 
+   if those parameters are loaded.</li>
+ </ul>
+ <p>Note that:</p>
+ <div align="left">
+   <table border="0" cellpadding="4" id="AutoNumber3">
+     <tr>
+       <td>
+       <ul>
+         <li>if you select a node in the tree, the parameters published by the 
+         selected node will be displayed only if they belong to the parameters 
+         mentioned above.</li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td>
+       <ul>
+         <li>even if the optimization is at an upper level, the selection of a 
+         parameter is conditioned by the fact that the parts must be in design 
+         mode if you want to select parameters located below a Part.</li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+ </div>
+ <p>Depending on the loading mode in CATIA, parameters can be selected or not 
+ (see graphic below).</p>
+ <div align="left">
+   <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber4">
+     <tr>
+       <td>
+       <p align="center">
+       <img border="0" src="b35doc/english/online/kwoug_c2/images/kwobrep4NLS.gif" align="left" width="588" height="423"></td>
+     </tr>
+   </table>
+ </div>
+ <p align="right"><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></p>
+ <h2><font color="#282187">Algorithms and Objective Function<a name="ix-algorithm and objective function"></a></font></h2>
+ <ul>
+   <li>In general, the shape of the Objective function is unknown. It is 
+   therefore better to begin with a Simulated Annealing and to refine the 
+   results with a gradient descent. This approach is slow but works for a larger 
+   amount of functions.<br>
+   </li>
+   <li>If the properties of the curve are known (continuous, differentiable at 
+   all point and with a single optimum), then the gradient can be used straight 
+   on. It is usually faster than the Simulated Annealing algorithm.<br>
+   </li>
+   <li>If you have to restart the optimization because you are not satisfied 
+   with the first result, reduce the ranges on the free parameters and/or reduce 
+   the steps.</li>
+ </ul>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h2>
+ <h2><font color="#282187">Algorithms Use <a name="ix-algorithms use"></a></h2>
+ </font>
+ <ul>
+   <li>Approximating a solution with the Simulated Annealing can be quickened by 
+   reducing the consecutive bad evaluation stopping criterion to 15 or 20. 
+   However, this will increase the risk of a premature convergence to local 
+   optimization especially if the optimized problem contains several free 
+   parameters.</li>
+   <li>For both algorithms, the final results provided can be refined by 
+   removing one or several variables and by restarting the optimization.</li>
+ </ul>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+
+ </body>
+
+</html>
+

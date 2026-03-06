@@ -1,0 +1,229 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Declaring Input Data</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="docCompliance" content="v 0.9; Thu Oct 13 09:35:18 2005">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>&nbsp;Declaring Input Data <a name="ix-declaring input data"></a>
+ <a name="ix-input data::declaring"></a></h1>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32"></p>
+ <table border="0" cellpadding="2" style="border-collapse: collapse" bordercolor="#111111" cellspacing="0">
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>This task explains how to declare data as to-be-entered by the user and 
+     how to fill in the dialog window which is displayed before the document is 
+     generated. Not all data can be declared as inputs.&nbsp;
+     <p>Data can be entered by the user provided they have been declared as 
+     Inputs by using the <code>Input</code> keyword in the script. When the 
+     script is generated, a dialog box is displayed the list of values to be 
+     entered to generate the document. See the<a href="page12181.html"> Input 
+     Keyword</a> for more information on this keyword.</td>
+   </tr>
+ </table>
+ <h3>&nbsp; <font color="#000080"><kbd><i>
+ <a name="ix-input data::file paths, feature names and parameter values"></a>
+ </i></kbd><span style="font-weight: 400">File Paths, Feature Names and 
+ Parameter Values</span></font> </h3>
+ <table border="0" cellpadding="2" style="border-collapse: collapse" bordercolor="#111111" cellspacing="0">
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">In the Product Knowledge Template workbench, click the
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_ScriptP2.gif" width="24" height="24"> 
+       icon. The Knowledgeware Script Editor is displayed.</li>
+       <li>
+       <p class="task">Enter the script below&nbsp; </p>
+       <div align="left">
+         <table border="0" cellpadding="2" bgcolor="#DADADA">
+           <tr>
+             <td bgcolor="#F0F0F0" bordercolor="#F0F0F0">
+             <pre><code>import Input : FilePath &quot;Name of the CATPart to be imported&quot;;
+Pad1 isa CATPart
+     {
+       mypad isa Part
+         {
+           X = 10mm, Input : Length &quot;Enter the pad length&quot;;  
+           PartBody, Input:Name &quot;New PartBody Name&quot; isa BodyFeature  
+             {
+               <font color="#008000">S isa Sketch.1{}</font>
+               P isa Pad(&quot;S&quot;){}
+             }
+          }
+     }</code></pre>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Click <kbd>Generate</kbd>. The dialog box below is 
+       displayed:<br>
+       <img border="0" src="b35doc/english/online/pktug_c2/images/pktInput1.gif" vspace="7" width="485" height="228"></li>
+       <li>
+       <p class="task">To enter the FilePath input, click <kbd>Select</kbd> then 
+       select the <a href="b35doc/english/online/pktug_c2/samples/PktSketchToImport.CATPart">
+       PktSketchToImport.CATPart</a> sample. Click <kbd>Apply</kbd>.</li>
+       <li>
+       <p class="task">The X value is now highlighted in the dialog box and you 
+       are prompted to enter the X value, that is the pad length. To use the 
+       default value, click <kbd>Apply</kbd>. Otherwise, enter a new value in 
+       the X field, then click <kbd>Apply</kbd>. </li>
+       <li>
+       <p class="task">If need be, repeat this operation for the Name input. 
+       Click Apply to enter the Name value. <kbd>OK</kbd> must now be active. (<kbd>OK</kbd> 
+       is grayed out if there is still one or more inputs to be specified). 
+       Click <kbd>OK</kbd>. The extruded pad is generated.</li>
+     </ol>
+     </td>
+   </tr>
+ </table>
+ <h6 align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></h6>
+ <h3 align="left"><font color="#000080"><kbd><i>
+ <a name="ix-input data::edges and points"></a></i></kbd>
+ <span style="font-weight: 400">Edges</span></font></h3>
+ <table border="0" cellpadding="4" cellspacing="0">
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">In the Product Knowledge Template workbench, click the
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_ScriptP2.gif" width="24" height="24"> 
+       icon. The Knowledgeware Script Editor is displayed.</li>
+       <li>
+       <p class="task">Enter the script below:&nbsp;</p>
+       <div align="left">
+         <table border="0" cellpadding="2" bgcolor="#DADADA">
+           <tr>
+             <td bgcolor="#F0F0F0" bordercolor="#F0F0F0">
+             <pre><code>MyBox isa CATPart 
+  {&nbsp;
+    BoxPart isa Part&nbsp;
+      {&nbsp;
+     PartBody isa BodyFeature&nbsp;
+       {
+          Box1 isa Box&nbsp;
+          {&nbsp;
+             Width = 20.0 mm ;
+             Height = 25.0 mm ;&nbsp;
+             Length = 15.0 mm ;
+           }&nbsp;
+        }&nbsp;
+     }
+  }&nbsp;</code></pre>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Click <kbd>Generate</kbd>. A box is displayed in the 
+       geometry area.</li>
+       <li>
+       <p class="task">Back to the script editor. Add the statements related to 
+       the fillet and hole creations to your script:</p>
+       <div align="left">
+         <table border="0" cellpadding="2" bgcolor="#DADADA">
+           <tr>
+             <td bgcolor="#F0F0F0" bordercolor="#F0F0F0">
+             <pre><code>MyBox isa CATPart
+ {&nbsp;
+  BoxPart isa Part&nbsp;
+   {&nbsp;
+    PartBody isa BodyFeature&nbsp;
+     {
+      Box1 isa Box&nbsp;
+       {&nbsp;
+        Width = 20.0 mm ;
+        Height = 25.0 mm ;&nbsp;
+        Length = 15.0 mm ;
+       }&nbsp;
+       /* Added statements - Start */
+       fillet2 isa ConstantEdgeFillet (//right-click, select the Get Edge command and click an edge in the Geometry)
+                   {
+                    Radius =2.0 mm;
+                   }
+       /* Added statements - End */
+    }&nbsp;
+  }
+ }&nbsp;</code></pre>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Click <kbd>Generate</kbd>. The fillet is created.</li>
+     </ol>
+     </td>
+   </tr>
+ </table>
+ <p align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+ <h3 align="left"><font color="#000080"><kbd><i>
+ <a name="ix-input data::features"></a></i></kbd><span style="font-weight: 400">
+ Features</span></font></h3>
+ <table border="0" cellpadding="4" cellspacing="0">
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">In the Product Knowledge Template workbench, click the
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_ScriptP2.gif" width="24" height="24"> 
+       icon. The Knowledgeware Script Editor is displayed.</li>
+       <li>
+       <p class="task">Use the <kbd>File &gt; Open</kbd> command to open the
+       <a href="b35doc/english/online/pktug_c2/samples/PktInputFeature0.CATGScript">PktInputFeature0.CATGscript</a> 
+       macro which is delivered as a sample. Don't remove the comments 
+       corresponding to the line creation.</li>
+       <li>
+       <p class="task">Click Generate. The Po1 and Po2 points are created in the 
+       geometry area and the specification tree is updated accordingly.</li>
+       <li>
+       <p class="task">In the script editor, remove the comments to create L, 
+       then click Generate. The &quot;Enter Inputs&quot; dialog box is displayed. Only one 
+       input is to be entered by the end-user. Click <kbd>Select</kbd>, then 
+       select the Po1 feature in the specification tree.</p>
+       <div align="left">
+         <table border="0" cellspacing="1">
+           <tr>
+             <td><img border="0" src="b35doc/english/online/pktug_c2/images/pktInputFeature0.gif" width="409" height="228"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Click <kbd>Apply</kbd> then <kbd>OK</kbd>. The line 
+       joining Po1 and Po2 is created.&nbsp;</li>
+     </ol>
+     </td>
+   </tr>
+ </table>
+ <p align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+ </p>
+
+ </body>
+
+</html>
+

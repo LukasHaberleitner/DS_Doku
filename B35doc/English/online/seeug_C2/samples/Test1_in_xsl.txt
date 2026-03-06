@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2006 -->
+<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/02/xpath-functions" xmlns:xdt="http://www.w3.org/2005/02/xpath-datatypes">
+
+  <xsl:output method = "xml" indent = "yes" /> 
+
+  <!-- Define some internal XSL variables -->
+
+  <xsl:variable name = "MySearchString">
+     <xsl:value-of select = "//Parameter[@Name='Application Reference File Name']/CurrentValue"/>
+  </xsl:variable> 
+  <xsl:variable name="length">
+    <xsl:value-of select="string-length($MySearchString)" /> 
+  </xsl:variable>
+  <xsl:variable name="FileType">
+    <xsl:value-of select="substring-after($MySearchString,'.')" /> 
+  </xsl:variable>
+
+  <!-- Scan XML to rebuilt Parameter nodes inside the ParametersList node 
+       NB: All under RenderingForm node could be ignored, it is automatically regenerated to define a layout for display -->
+  
+  <xsl:template match = "/"> 
+    <xsl:element name="ParametersList"> 
+      <xsl:apply-templates/> 
+    </xsl:element> 
+  </xsl:template> 
+
+  <xsl:template match = "//MainFrame"> 
+  </xsl:template> 
+
+  <xsl:template match = "//Parameter"> 
+    <xsl:choose>
+
+    <!-- Define a set of discrete values to criterion parameter Type, define a default value and change Alias -->
+        
+        <xsl:when test = "@Name='Related Item Number'" > 
+	             <!-- Additional parameter for Supplier Information before Related Item Number: This is not mapped to any parameter of the standard query-->
+   			 <xsl:element name="Parameter">
+         		 <xsl:attribute name="Name">Supplier Name</xsl:attribute> 
+                 <xsl:attribute name="Type">String</xsl:attribute> 
+                 <xsl:attribute name="Alias">Supplier Name</xsl:attribute> 
+                 <xsl:attribute name="Shown">Yes</xsl:attribute> 
+                 <xsl:attribute name="Mandatory">No</xsl:attribute> 
+                 <xsl:attribute name="Sensitive">No</xsl:attribute> 
+                 <xsl:attribute name="AccessMode">Read</xsl:attribute> 
+                 <xsl:element name="CurrentValue">
+                     <xsl:text>Supplier_1</xsl:text> 
+                 </xsl:element>
+             </xsl:element>
+
+             <xsl:copy-of select = "." /> 
+        </xsl:when>
+
+     <!-- Modify the Application Reference File Name parameter by deleting the 4 first characters and limiting the string to 11 characters -->
+
+        <xsl:when test = "@Name='Application Reference File Name'" > 
+   		  <xsl:element name="Parameter">
+		      <xsl:attribute name="Name">File Name</xsl:attribute> 
+              <xsl:attribute name="Type">String</xsl:attribute> 
+              <xsl:attribute name="Alias">File Name</xsl:attribute> 
+              <xsl:attribute name="Shown">Yes</xsl:attribute> 
+              <xsl:attribute name="Mandatory">No</xsl:attribute> 
+              <xsl:attribute name="Sensitive">No</xsl:attribute> 
+              <xsl:attribute name="AccessMode">ReadWrite</xsl:attribute> 
+
+              <!--  Current value selected   --> 
+              <xsl:element name="CurrentValue">
+				<xsl:value-of select = "concat(substring($MySearchString,5,10),'.',$FileType)"/>
+              </xsl:element>
+          </xsl:element>
+        </xsl:when>
+
+
+     <!-- Other parameters are copied  without any modification -->
+            
+      <xsl:otherwise > 
+        <xsl:copy-of select = "." /> 
+      </xsl:otherwise> 
+    </xsl:choose> 
+      
+  </xsl:template> 
+
+</xsl:stylesheet>   
+

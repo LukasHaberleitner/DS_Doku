@@ -1,0 +1,219 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Renaming Version 4 Documents regarding Windows File System Compatibility 
+	in Batch Mode
+	</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>
+ <a name="ix-batch:rename V4 documents regarding Windows file system compatibility in batch mode;utilities:V4 To V5 Windows Compatibility Name">
+ </a>Renaming Version 4 Documents regarding Windows File System Compatibility in 
+ Batch Mode</h1>
+ <table border="0" cellspacing="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" height="1696" Width="0">
+   <tr valign="top" border="0">
+     <td valign="top" height="102">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td height="102">This task shows you how to rename a Version 4 document 
+     which is not compatible with <font FACE="Arial" COLOR="#000000">Windows
+     </font>file system (i.e the name of the document contains forbidden 
+     characters) into a document which can be read on Windows. Then on Windows, 
+     renamed documents will be used while opening session, and decode of 
+     multi-model links with &quot;on the fly conversion&quot; will be available.<p>Batch 
+     tool will rename those V4 documents and their dependencies, according to 
+     definition of the characters mapping (See
+     <a href="page0965.html#hj-conversion table">
+     conversion table</a>).</td>
+   </tr>
+   <tr>
+     <td valign="top" height="87">
+     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32">
+     </td>
+     <td height="87">
+     <h3><font color="#282187">Consequences of Migration on Filenames</font><font FACE="Arial" COLOR="#000000"></h3>
+     <p>On Windows, it is extremely important to be aware of the consequences of 
+     migration on filenames. Before reading any further see &quot;<a href="page1384.html">About 
+     Filenames</a>&quot; in the <i>CATIA - Infrastructure User's Guide</i>.</font></td>
+   </tr>
+   <tr>
+     <td valign="top" height="35">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32">
+     </td>
+     <td rowspan="1" height="35">Select a Session document containing
+     <img border="0" src="b35doc/english/online/intug_c2/images/Plusless.gif" width="5" height="9"> characters.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="203">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td rowspan="1" height="203">Before launching the batch tool, you have to 
+     make sure that your environment is correctly set up. On Windows, the 
+     Batch's environment is installed during CATIA's installation. On UNIX, you 
+     have to set up this environment before starting the session. For more 
+     information about this, see
+     <a href="page1361.html" target="ds_doc2">
+     CATIA Infrastructure User's Guide - Starting a session on UNIX.</a><font FACE="Arial" SIZE="2"><p>
+     Note that due to Windows forbidden characters, the batch can be only 
+     launched on UNIX.<br>
+     If you have Windows-only CATIA V5, and want to use V5 applications (ex: 
+     migration) on V4 models that contain special characters. You have to follow 
+     this renaming procedure:</p>
+     <ul>
+       <li>Define the characters conversion table (see
+       <a href="page0965.html#hj-conversion table">
+       conversion table</a>, and see <font FACE="Arial" COLOR="#000000">
+       <a href="page1384.html">About 
+       Filenames</a></font>) for characters outside the iso-646 table and for 
+       Windows invalid characters.</li>
+       <li>On your UNIX station, you have to rename (by hand or with your own 
+       programs) the V4 documents by replacing special characters one to one 
+       according to this table.</font></li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="38">
+     <p align="center">&nbsp;</td>
+     <td valign="top" align="left" height="38">You can then launch the Extract 
+     tool in a pure Batch mode by entering the command:
+     <ul>
+       <li><b>CATV4ToV5NTCompatibilityName -<i>arg</i></b></li>
+     </ul>
+     <p>CATV4ToV5NTCompatibilityName [-h / -id inputDirectory [-if inputfile/-il 
+     inputlist] -od outputDirectory -report reportFile -depth level]</td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top" height="1118"></td>
+     <td height="1118">
+     <div align="center">
+       <center>
+       <table border="1" cellspacing="1" width="740" height="285">
+         <tr>
+           <td width="102" height="20"><b>Arg</b></td>
+           <td width="624" height="20">
+           <p align="center"><b>Description</b></td>
+         </tr>
+         <tr>
+           <td width="102" height="113">-h</td>
+           <td width="624" height="113" valign="top">Online help of the command. 
+           Writes in the standard output the list of valid arguments.<pre>   CATV4ToV5NTCompatibilityName [-h / -id inputDirectory 
+                           -if inputfile -il inputlist -od outputDirectory 
+                           -report reportFile -depth level
+       -h	: help
+       -id	: Intput document Directory (or DLNAME)
+       -if      : Input text File containing a list of V4 documents to process 
+		  with appropriate file extension (ie .session, .model, .exp, .dlv3).
+       -il      : Input list of V4 documentss to process
+                  with appropriate file extension (ie .session, .model, .exp, .dlv3).
+       -od	: Output Directory  (or DLNAME)
+       -depth   : level of Multi Model Link structure taken in account
+       -report  : Report File name
+
+</pre>
+           <p>If -h parameter is defined, others parameters are ignored.</td>
+         </tr>
+         <tr>
+           <td width="102" height="20">-id</td>
+           <td width="624" height="20">Input V4 document Directory <br>
+           Define the pathname or the DLNAME containing the V4 documents to 
+           process. <br>
+           This parameter is not mandatory. It is useful if all V4 documents are 
+           extracted from the same directory. It is used only as concatenation 
+           to document to process.</td>
+         </tr>
+         <tr>
+           <td width="102" height="20">-if</td>
+           <td width="624" height="20">Selection criteria <br>
+           Input text File containing a list of V4 documents to process with 
+           appropriate file extension (ie .dlv3 or .exp). <br>
+           If a V4 document defined in the text file is a concatenation of path 
+           (or DLNAME) and name, the input directory is ignored.
+           <p>At least one of the (-il/-if) parameters is mandatory, (-il/-if) 
+           parameters can be defined several times. </p>
+           <p>The batch aborts if no selection criteria is defined.</td>
+         </tr>
+         <tr>
+           <td width="102" height="20">-il</td>
+           <td width="624" height="20">Selection criteria <br>
+           Input list of V4 documents to process with appropriate file extension 
+           (ie .dlv3 or .exp). <br>
+           If a V4 document is a concatenation of path (or DLNAME) and name, the 
+           input directory is ignored.
+           <p>At least one of the (-il/-if) parameters is mandatory, (-il/-if) 
+           parameters can be defined several times. </p>
+           <p>The batch aborts if no selection criteria is defined.</td>
+         </tr>
+         <tr>
+           <td width="102" height="20">-od</td>
+           <td width="624" height="20">Output Model Directory<br>
+           Define the pathname or the DLNAME where the extracted .models are 
+           written.<br>
+           This parameter is mandatory. The batch aborts if no output Model 
+           Directory is defined.</td>
+         </tr>
+         <tr>
+           <td width="102" height="20">-depth</td>
+           <td width="624" height="20">Dependency Level<br>
+           <br>
+           This parameter is optional. By default, Maximum depth is taken.</td>
+         </tr>
+         <tr>
+           <td width="102" height="20">-report</td>
+           <td width="624" height="20">Report File name<br>
+           Give the possibility to Save the &quot;Rename report&quot; in the file and 
+           directory of your choice :<br>
+           In this report, you can find information about the renamed documents 
+           :
+           <ul>
+             <li>V4 document path</li>
+             <li>Name of the model(s)</li>
+             <li>A Return Code (success scale): <br>
+             ReturnCode = 0 : The batch ended successfully <br>
+             ReturnCode = 4 : at least one V4 document could not be processed
+             <br>
+             ReturnCode = 8 : The batch aborted.</li>
+           </ul>
+           <p><br>
+           The Report File can be a concatenation of path (or DLNAME) and name. 
+           It is automatically '.txt' suffixed. </p>
+           <p>This parameter is optional. If no Report File is defined, or if 
+           access to the Report File is denied, the report is written in the 
+           standard output.</td>
+         </tr>
+       </table>
+       </center>
+     </div>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="36"></td>
+     <td valign="top" align="left" height="36">
+     <h3 align="left"><font color="#282187">A few rules about Batch Conversion:</font></h3>
+     <ul>
+       <li>A V4 document is known by the extension .session, .model, .dlv3 or 
+       .exp.</li>
+       <li>A selected V4 document will be written in the output directory even 
+       if not renamed.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td colspan="2" valign="top" height="35">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

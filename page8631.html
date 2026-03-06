@@ -1,0 +1,375 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Managing Contextuality below the PRC</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style>
+<!--
+span.msoIns
+	{mso-style-name:"";
+	text-decoration:underline;
+	text-underline:single}
+-->
+</style>
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>
+		Managing Contextuality 
+		Below the PRC</h1>
+ <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr>
+     <td valign="top" align="left">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">
+     This task will help you to understand the behavior of contextual design in 
+     a PRC you open and save in CATIA V5.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">
+     <img border="0" src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+     <td valign="top">
+     <h3>About Contextuality<a name="hj-About Contextuality"></a></h3>
+     <p>Before going further, we need to define a common vocabulary to ensure the 
+     same level of understanding. In Filebase, a contextual part can have its 
+     context instance or any level of the assembly. This is shown in the Product 
+     Structure Specification Tree with different icons:</p>
+     <table border="0" cellpadding="0" style="border-collapse: collapse" width="100%" id="table24">
+       <tr>
+         <td width="43">
+         <img border="0" src="b35doc/english/online/i1oug_c2/images/SymbolDefInstance.gif" width="35" height="35"></td>
+         <td>Definition Instance: the visualized instance is the instance which 
+         defines the context.</td>
+       </tr>
+       <tr>
+         <td width="43">
+         <img border="0" src="b35doc/english/online/i1oug_c2/images/SymbolInstOfDefInstance.gif" width="34" height="33"></td>
+         <td>Instance of the Definition Instance: the visualized instance is an 
+         instance of the instance which defines the context.</td>
+       </tr>
+       <tr>
+         <td width="43">
+         <img border="0" src="b35doc/english/online/i1oug_c2/images/SymbolOutOfContextInst.gif" width="34" height="34"></td>
+         <td>Out of Context Instance: the instance is an instance of the same 
+         contextual Part but context is not defined on this instance.</td>
+       </tr>
+     </table>
+     <p>The current document and all the 
+     referenced documents (even the Parts with broken contextual links)) are 
+     listed in the <kbd>Save in ENOVIA V5</kbd> dialog box.<br>
+     For contextual 
+     parts, the reference keeps a link with the definition instance. For each 
+     part, every instance keeps a link with its reference. But their first 
+     reference has only one link, with a single instance which is contextual. 
+     This unique link allows you to know the name of the document (CATProduct) 
+     on which the part 's external geometry rests.<br>
+     If you remark that there is such a Part with these symbols (brown gear 
+     and red flash) in your Assembly: <img border="0" src="b35doc/english/online/i1oug_c2/images/symbol21.gif" width="30" height="30">, 
+     it is not advisable to save it in ENOVIA V5 VPM, because it has an unsolved 
+		link with the Reference of the Instance. The Reference contains a link 
+		that cannot be found in the Assembly. In this case, you need to use the 
+		&quot;Contextual Links&quot; or &quot;Isolate&quot; commands in order to redefine the 
+		context of the Part. Before saving CATIA documents 
+     in database, it is important not to have any broken links. This particular 
+     part icon for broken links has been created to warn the user that without 
+     running &quot;Define Contextual Links&quot; he is running a risk to have unexpected 
+     result.<br>
+     This red flash does not mean that it will be a problem to save data from 
+     CATIA V5 into ENOVIA V5 VPM, because this Part with the red flash is not the 
+     Instance that serves to define the Geometry of the Instance. Let's have a 
+     look at this example: Saving a CATProduct into ENOVIA V5 VPM.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td valign="top">
+     <ul>
+       <li>The setting <kbd>Use root context in assembly</kbd>, in <kbd>Tools &gt; 
+     Options &gt; Infrastructure &gt; Part Infrastructure</kbd>, must be checked:<table border="0" cellpadding="0" style="border-collapse: collapse" width="100%" id="table26">
+         <tr>
+           <td>
+           <img border="0" src="b35doc/english/online/i1oug_c2/images/TooslOptions1NLS.gif" width="479" height="162"></td>
+         </tr>
+       </table>
+       Some <b>restrictions</b> exist in
+          ENOVIA V5 VPM in order to ensure a better interoperability between CATIA 
+          V5 and ENOVIA V5 VPM. For instance, ENOVIA V5 VPM is not able to handle Contextual Design in 
+          a Structure Exposed Sub-Assembly.                     The main consequence is that Definition 
+          Instance will always be an instance in a the context of <b>PRC</b>.<br>
+           <b>PRC</b> 
+          is the short name for <b>Product Root Class</b> is the Root Product of an assembly in 
+          ENOVIA V5 VPM.<span class="msoIns"></span></li>
+       <li>During the <b>FBDI</b> <sup>(*)</sup>, if Contextual Design in a Sub 
+       Assembly is found only a warning was exposed to the user at the end of 
+       Save sequence. This warning means that no exposition has been done of the 
+       contextual design in ENOVIA V5 VPM:<ul>
+         <li>Relations to others ENOVIA V5 VPM entities has not been created: <kbd>Impacts On</kbd>, 
+         <kbd>Impacted By</kbd> information will not 
+     be available.</li>
+         <li>Update status is not managed by ENOVIA V5 VPM.</li>
+         </ul>
+         <p><sup>(*)</sup> <b>File Based Design Import (FBDI)</b>: 
+     first save in ENOVIA V5 VPM of Filebase data. It means 
+     that you first create an assembly in CATIA V5 (file-based document), then 
+     you save it in ENOVIA V5 VPM in Explode mode - Structure Exposed.</p>
+       </li>
+       </ul>
+       <table border="0" cellpadding="0" style="border-collapse: collapse" width="100%" id="table3">
+       <tr>
+         <td>
+         <ul>
+           <li>Even if contextual design has not been exposed to
+     		ENOVIA V5 VPM, it is still 
+     present in the CATPart Document and it will keep on trying to behave as in the File Base repository:<ul>
+       <li>
+       Links to instances will try to resolve themselves,</li>
+       <li>Update status will be calculated.</li>
+     </ul>
+     <p>Without 
+     exposition in ENOVIAV5,&nbsp;Links and Update Status will not be reliable. 
+     The warning becomes an error preventing the save of this kind of data:</p>
+     <ul>
+       <li>
+       You 
+       can use
+     an Interactive command to reroute automatically (if possible) all contextual design to 
+     PRC Definition instance.</li>
+       <li>
+       External References that cannot be 
+     rerouted automatically will be asked to be rerouted manually or to be isolated.<br>
+       When making a contextual part, a External reference node appears in the 
+       Specification Tree. There is as many external reference nodes as external 
+       geometry references. All external references will have the same 
+       Definition Instance. For more details see <i>Product Structure User's 
+       Guide</i> about Contextual Design. Here is an example of External 
+       Reference:<table border="0" cellpadding="0" style="border-collapse: collapse" width="100%" id="table25">
+         <tr>
+           <td>
+           <img border="0" src="b35doc/english/online/i1oug_c2/images/ExternalRef1NLS.gif" width="248" height="189"></td>
+         </tr>
+       </table>
+       </li>
+     </ul>
+           </li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     Therefore, in order to save contextual links in a proper 
+     way, a solution is suggested to the user, according to the situation:<ul>
+       <li><a href="#hj-Multi-Instantiated Part">When you have a 
+       Multi-Instantiated Part in your PRC</a>,</li>
+       <li><a href="#hj-Out of Context Part">When you have an Out of Context 
+       Part in your PRC</a>,</li>
+       <li><a href="#hj-Broken Links">When you have Broken Links in your PRC</a>.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">
+     &nbsp;</td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">Create a PRC in ENOVIA V5 VPM with contextual links and send 
+       it to CATIA V5.</p></li>
+       <li>
+       <p class="task">In CATIA V5, you can edit your assembly and modify 
+       contextual links.</p></li>
+       <li>
+       <p class="task">Save this assembly in ENOVIA V5 VPM as <kbd>Structure 
+       Exposed</kbd> (<b>File-Based Design 
+       Import</b>). When there is inconsistency in the Contextual Part between CATIA V5 and 
+     	ENOVIA V5 VPM, a warning appears preventing the Save of this Part. An 
+     Interactive Command is also provided to reroute all contextual design to 
+     Definition Instance automatically. And
+     External References that cannot be rerouted automatically will be asked to 
+     be rerouted manually or to be isolated.<br>Here is an example of Error message:</p>
+       <table border="0" cellpadding="0" style="border-collapse: collapse" width="100%" id="table27">
+         <tr>
+           <td>
+           <img border="0" src="b35doc/english/online/i1oug_c2/images/WarningContext1NLS.gif" width="618" height="299"></td>
+         </tr>
+       </table>
+       <p class="task">&quot;The Part2.1 is contextual to the sub-assembly SuybAssy (not supported in 
+     ENOVIA)&quot;: means that a contextual link defined in a sub-assembly context, 
+     cannot be exposed in database. This warning illustrates an error but it 
+     does not prevent the user to save his document, but:<ul>
+         <li>
+         <p class="task">the Impact Graph cannot be built,</li>
+         <li>
+         <p class="task">and the stability of contextual link updates cannot be guaranteed.</li>
+       </ul>
+       <p class="task">In the next steps, several solutions are given to the user in 
+           order to save contextual links in a proper way. The Incident <b>Report</b> 
+           is different according to the nature of the Instance.</li>
+       <li>
+       <p class="task"><b>When you have a Multi-Instantiated Part in your PRC</b>:<a name="hj-Multi-Instantiated Part"></a></p>
+       <table border="0" cellpadding="0" style="border-collapse: collapse" id="table19">
+         <tr>
+           <td width="445">
+           <p class="task">If the sub-assembly is multi-instantiated, the instance 
+           cannot be chosen for the Definition instance without user 
+           interaction:</td>
+           <td valign="top">
+           <p class="task">In this case, reroute 
+             will be asked to be done manually and the report will be:</td>
+         </tr>
+         <tr>
+           <td width="445">
+           <img border="0" src="b35doc/english/online/i1oug_c2/images/ManageCtxLinkToPRC8NLS.gif" width="216" height="343"></td>
+           <td>
+           <img border="0" src="b35doc/english/online/i1oug_c2/images/ManageCtxLinkToPRC3NLS.gif" width="579" height="260"></td>
+         </tr>
+       </table></li>
+       <li>
+       <p class="task">You can use an interactive command: <kbd>Manage 
+       Contextual Link to PRC</kbd> which is available in <kbd>Tools &gt; 
+       Customize &gt; Commands&gt; PDM</kbd>:</p>
+       <table border="0" cellpadding="0" style="border-collapse: collapse" id="table18" width="1123">
+         <tr>
+           <td width="447">
+           <img border="0" src="b35doc/english/online/i1oug_c2/images/ManageCtxLinkToPRC1NLS.gif" width="470" height="406"></td>
+           <td width="676" valign="top">
+           <p class="task">You can drag and drop this command, <kbd>Manage 
+           Contextual Link to PRC</kbd>, in a toolbar.</p>
+           <p class="task">This command only works in the PRC&#8217;s Editor. It is applied on 
+           all documents that are linked to the PRC. This command will 
+			automatically reroute contextual links from Instance of Definition 
+			Instance
+           <img border="0" src="b35doc/english/online/i1oug_c2/images/SymbolInstOfDefInstance.gif" width="34" height="33"> 
+           to Definition Instance
+           <img border="0" src="b35doc/english/online/i1oug_c2/images/SymbolDefInstance.gif" width="35" height="35"> 
+           at PRC level 
+           when it is possible.</td>
+         </tr>
+       </table></li>
+       <li>
+       <p class="task">Use the <kbd>Manage Contextual Link to PRC </kbd>command. A report details the status for each external references:</p>
+       <ul class="task">
+         <li>
+         <p class="task">rerouted automatically, for instance:</p>
+         <table border="0" cellpadding="0" style="border-collapse: collapse" width="100%" id="table28">
+           <tr>
+             <td>
+             <img border="0" src="b35doc/english/online/i1oug_c2/images/ManageCtxLinkToPRC2NLS.gif" width="566" height="189"></td>
+           </tr>
+         </table>
+         </li>
+         <li>
+         <p class="task">must be rerouted or Isolated manually,</p></li>
+         <li>
+         <p class="task">or handle manually through the <kbd>Define Contextual Links</kbd> 
+         command.</p></li>
+       </ul>
+       <p class="task">The message can explain that an external reference cannot be 
+           rerouted automatically because multi-instantiated and should be 
+           rerouted manually.</li>
+       <li>
+       <p class="task">Use the <kbd>Define Contextual Links </kbd>command in the
+       <kbd>Context</kbd> menu to define the links at PRC level. A report will 
+       say that an External Reference cannot be rerouted automatically because 
+       multi-instantiated and should be rerouted manually.</p></li>
+       <li>
+       <p class="task">Use the Define Contextual Links command in the Context 
+       menu to define the links at the PRC level.</p></li>
+       <li>
+       <p class="task">Save again the structure in ENOVIA V5 VPM check if the Save 
+       operation is successful this time.</p></li>
+       <li>
+       <p class="task"><b>When you have an Out of Context Part in your PRC:<a name="hj-Out of Context Part"></a></b></p>
+       <table border="0" cellpadding="0" style="border-collapse: collapse" id="table23" width="901">
+         <tr>
+           <td valign="top">
+           <p class="task">The External Reference cannot be rerouted automatically because contextuality is out of context:</td>
+           <td valign="top">
+           <p class="task">Therefore, contextuality must be isolated or rerouted manually:</td>
+         </tr>
+         <tr>
+           <td>
+           <img border="0" src="b35doc/english/online/i1oug_c2/images/ManageCtxLinkToPRC4NLS.gif" width="232" height="366"></td>
+           <td>
+           <img border="0" src="b35doc/english/online/i1oug_c2/images/ManageCtxLinkToPRC5NLS.gif" width="503" height="255"></td>
+         </tr>
+       </table></li>
+       <li>
+       <p class="task">You can use a new interactive command: <kbd>Manage 
+       Contextual Link to PRC level</kbd> which is available in <kbd>Tools &gt; 
+       Customize &gt; Command &gt; PDM</kbd>.</p></li>
+       <li>
+       <p class="task">Use the <kbd>Manage Contextual Link to PRC level</kbd> 
+       command. A report will say that External Reference cannot be rerouted 
+       automatically because contextuality is out of context and should be 
+       rerouted manually.</p></li>
+       <li>
+       <p class="task">Use <kbd>Define Contextual Links</kbd> command in the
+       <kbd>Context</kbd> menu to define the links at the PRC level and define 
+       the instance in context.</p></li>
+       <li>
+       <p class="task">Save again in ENOVIA V5 VPM and check if the Save operation 
+       is successful this time.</p></li>
+       <li>
+       <p class="task"><b>When you have Broken Links in your PRC:<a name="hj-Broken Links"></a></b></p>
+       <table width="1123">
+         <tr>
+           <td width="394">
+           <p class="task">For example, contextuality uses a Publication that 
+           has been deleted:</td>
+           <td valign="top">
+           <p class="task">You should use the <kbd>Change Context</kbd> 
+           functionality to manage links manually:</td>
+         </tr>
+         <tr>
+           <td width="394">
+           <img border="0" src="b35doc/english/online/i1oug_c2/images/ManageCtxLinkToPRC6NLS.gif" width="270" height="379"></td>
+           <td valign="top">
+           <img border="0" src="b35doc/english/online/i1oug_c2/images/ManageCtxLinkToPRC7NLS.gif" width="369" height="122"></td>
+         </tr>
+       </table></li>
+       <li>
+       <p class="task">You can use a new interactive command: <kbd>Manage 
+       Contextual Link to PRC level</kbd> which is available in <kbd>Tools &gt; 
+       Customize &gt; Command &gt; PDM</kbd>.</p></li>
+       <li>
+       <p class="task">Use the <kbd>Manage Contextual Link to PRC level</kbd> 
+       command. A report will say that an external reference cannot be rerouted 
+       automatically because contextuality has broken links and should be 
+       rerouted manually.</p></li>
+       <li>
+       <p class="task">Use the <kbd>Define Contextual Links</kbd> command in the
+       <kbd>Context</kbd> menu to define the links at PRC level and reroute 
+       geometry.</p></li>
+       <li>
+       <p class="task">Save again in ENOVIA V5 VPM and check if the Save operation 
+       is successful.</p></li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">
+     &nbsp;</td>
+     <td valign="top">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

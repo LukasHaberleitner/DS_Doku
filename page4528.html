@@ -1,0 +1,342 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>About Denso Translators</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+.style1 {
+				background-color: #F2F2F2;
+}
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>About Denso Translators</h1>
+ <table border="0" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/anew.gif" width="32" height="32"></td>
+     <td valign="top">This section provides basic information about the 
+		Denso translator. The information includes:&nbsp;<ul>       
+       <li><a href="#hj-Supported_Activities">Supported Activities</a></li>
+       <li><a href="#hj-Syntax_map">Syntax Map</a></li>
+       <li><a href="#hj-Robot_Parameter_Map">Parameter Data</a></li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h2><a name="hj-Supported_Activities">Supported Activities</a></h2>
+     <p>The following activities are supported in Download &amp; Upload for the 
+		Denso RC7 Controller. Denso program files (.pac) are listed for upload 
+		selection.&nbsp;</p>
+     <ul>
+       <li>Move Activity</li>
+       <li>Delay Activity</li>
+       <li>I/O Activities (Set and Wait Signal)</li>
+		<li>Call Task Activity</li>
+		<li>Comments</li>
+     </ul>
+     </td>
+     </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h2><a name="hj-Syntax_map">Syntax map</a></h2>
+		<p style="margin-bottom: 1em">The following table details the mapping 
+		among Denso PAC commands, XML elements, and V5 task 
+		activities.</p>
+		<p></p><table border="1" cellspacing="3" cellpadding="3">
+		<tr>
+			<td class="code">
+			<b>Denso PAC Commands</b></td>
+			<td class="code"><b>XML Element</b></td>
+			<td class="code"><b>V5 Task Activity</b></td>
+		</tr>
+		<tr>
+			<td class="code2" rowspan="2">MOVE <Interpolation>, [@Accuracy ]<Target>[,[@Accuracy 
+			]<Target> [EXA ((Jnumber, Jvalue))][, <Motion Option>][,NEXT] <br>
+			where <br>
+			Interpolation: P, L, C <br>
+			Accuracy: P, 0(default), <br>
+			<positive integer> Motion Option: Speed, Accel, Decel </td>
+			<td class="code2">DNBRobotMotionActivity </td>
+			<td class="code2">&nbsp;RobotMotion &nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2" colspan="2">Interpolation P,L,C is translated to 
+			motion type Joint, Linear, and CircularVia and Circular. (&quot;MOVE C&quot; 
+			needs 2 targets.) <br>
+			<br>
+			Accuracy P is Speed type and accuracy value is 1; accuracy <number> 
+			is Distance type, and when <number>=0, FlyBy=Off. <br>
+			<br>
+			&quot;Next&quot; is uploaded as an attribute and is appended when the motion 
+			activity is downloaded. &nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2" rowspan="2">APPROACH &lt;Interpolation&gt;, 
+			&lt;Target&gt;,[@Accuracy ]&lt;Offset&gt;[,&lt;Motion Option&gt;][,NEXT]<br>
+			where<br>
+			Interpolation: P, L&nbsp;</td>
+			<td class="code2">DNBRobotMotionActivity </td>
+			<td class="code2">&nbsp;RobotMotion &nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2" colspan="2">For 6-axis robots, DELMIA-Target = 
+			Denso-Target &#8211; Offset in Z<br>
+			<br>
+			For 4-axis robots, DELMIA-Target = Denso-Target + Offset in Z<br>
+			<br>
+			An attribute &quot;Offset&quot; with value=Offset is uploaded and is taken out 
+			of DELMIA-Target when the motion activity is downloaded as APPROACH 
+			command.&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2" rowspan="2">DEPART &lt;Interpolation&gt;, [@Accuracy 
+			]&lt;Offset&gt;[,&lt;Motion Option&gt;][,NEXT]<br>
+			where<br>
+			Interpolation: P, L&nbsp;</td>
+			<td class="code2">DNBRobotMotionActivity </td>
+			<td class="code2">&nbsp;RobotMotion &nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2" colspan="2">For 6-axis robots, DELMIA-Target = 
+			Current-Target &#8211; Offset in Z<br>
+			<br>
+			For 4-axis robots, DELMIA-Target = Current-Target + Offset in Z<br>
+			<br>
+			An attribute &quot;Depart&quot; is uploaded and the motion activity is 
+			downloaded as DEPART command if the target only differs with the 
+			previous target in Z direction.<br>
+			&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2" rowspan="2">GOHOME </td>
+			<td class="code2">DNBRobotMotionActivity </td>
+			<td class="code2">&nbsp;RobotMotion &nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2" colspan="2">Same as Denso MOVE P, @0 HOME&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2">HOME <position variable> &lt;position variable&gt;</td>
+			<td class="code2">robot motion target</td>
+			<td class="code2">(data used to create target for GOHOME)&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2">SPEED &lt;speed value&gt;</td>
+			<td class="code2">MotionProfile<br>
+			with percetage speed</td>
+			<td class="code2">MotionProfile used in subsequent moves</td>
+		</tr>
+		<tr>
+			<td class="code2">ACCEL &lt;acceleration&gt;</td>
+			<td class="code2">MotionProfile<br>
+			with Accel Value set </td>
+			<td class="code2">MotionProfile used in subsequent moves</td>
+		</tr>
+		<tr>
+			<td class="code2">Position variables defined in Var_P.csv<br>
+			PvarNum,X,Y,Z,RX,RY,RZ,FIG<br>
+			where RX=Yaw, RY=Pitch, RZ=Roll</td>
+			<td class="code2" rowspan="2">robot motion targets<br>
+			(X,Y,Z,Yaw,Pitch,Roll), with configuration and turns </td>
+			<td class="code2" rowspan="2">(data used to create targets for 
+			motion activities)&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2">DEFPOS &lt;PvarName&gt;[=&lt;position constant&gt;]</td>
+		</tr>
+		<tr>
+			<td class="code2">Joint variables defined in Var_J.csv<br>
+			JvarNum,j1,j2,j3,j4,j5,j6,&quot;&quot;</td>
+			<td class="code2" rowspan="2">robot motion targets<br>
+			Joint target with robot joint values and auxiliary joint values. &nbsp;</td>
+			<td class="code2" rowspan="2">(data used to create joint target for 
+			motion activities)</td>
+		</tr>
+		<tr>
+			<td class="code2">DEFJNT &lt;JvarName&gt;[=&lt;joint constant&gt;]</td>
+		</tr>
+		<tr>
+			<td class="code2">SET IO[PortNumber][,duration]<br>
+			RESET IO[PortNumber]</td>
+			<td class="code2">DNBSetSignalActivity<br>
+			with PortNumber and SignalName </td>
+			<td class="code2">Set IO Operation&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2" rowspan="2">WAIT <br>
+			IO[PortNumber][=ON|OFF][,&lt;Timeout&gt;[,&lt;Storage Variable&gt;]]</td>
+			<td class="code2">DNBWaitSignalActivity<br>
+			with PortNumber, MaxWaitTime and SignalName </td>
+			<td class="code2">Wait IO Operation</td>
+		</tr>
+		<tr>
+			<td class="code2" colspan="2">&lt;Storage Variable&gt; if present will be 
+			uploaded as an attribute.&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2">CALL &lt;PROnumeral&gt;</td>
+			<td class="code2">DNBIgpCallRobotTask<br>
+			with CallName pronumeral </td>
+			<td class="code2">Call Task activity</td>
+		</tr>
+		<tr>
+			<td class="code2">DELAY &lt;Delay time&gt;<br>
+			delay time unit: millisecond</td>
+			<td class="code2">DelayActivity </td>
+			<td class="code2">DelayActivity&nbsp;&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2">TOOL &lt;tool number&gt;, &lt;position constant or 
+			variable&gt;</td>
+			<td class="code2">ToolProfile definition </td>
+			<td class="code2">ToolProfile definition&nbsp;&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2">CHANGETOOL &lt;tool number&gt;</td>
+			<td class="code2">(set toolprofile for next robot motion operation) </td>
+			<td class="code2">ToolProfile used in subsequent moves&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2">WORK &lt;number&gt;, &lt;position constant or variable&gt;</td>
+			<td class="code2">ObjectProfile definition </td>
+			<td class="code2">ObjectProfile definition&nbsp;&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2">CHANGEWORK &lt;number&gt;</td>
+			<td class="code2">(set objectprofile for next robot motion 
+			operation) &nbsp;</td>
+			<td class="code2">ObjectProfile used in subsequent moves</td>
+		</tr>
+		<tr>
+			<td class="code2" rowspan="2">Rem comment<br>
+			OR<br>
+			&#8216;comment</td>
+			<td class="code2">When parameter OLPStyle=General<br>
+			AttributeList to the following Activity with AttributeValue comment </td>
+			<td class="code2">Activity attribute</td>
+		</tr>
+		<tr>
+			<td class="code2">When parameter OLPStyle=OperationComments<br>
+			Operation with AttributeValue comment <br>
+			&nbsp;</td>
+			<td class="code2">Operation</td>
+		</tr>
+		<tr>
+			<td class="code2">Unsupported Denso statements</td>
+			<td class="code2">Operation type Activity element with attribute set 
+			to the Denso statement &nbsp;</td>
+			<td class="code2">Operation with attribute set to the Denso 
+			statement</td>
+		</tr>
+		</table>
+		<p>Note: Targets can appear directly in the move commands as 
+		position/joint constants. They are uploaded into DELMIA as 
+		Cartesian/Joint targets without tag names.</td>
+     </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h2><a name="hj-Robot_Parameter_Map">Robot Parameter Map</a> </h2>
+		<p style="margin-bottom: 1em">&nbsp;<table border="1" cellspacing="3" cellpadding="3">
+		<tr>
+			<td class="code">
+			<b>Name</b></td>
+			<td class="code"><b>Type</b></td>
+			<td class="code"><b>Usage</b></td>
+			<td class="code"><b>Default Value</b></td>
+			<td class="code"><b>Description</b></td>
+		</tr>
+		<tr>
+			<td class="code2">ProgramFileEncoding&nbsp; </td>
+			<td class="code2">string </td>
+			<td class="code2">Download &amp; Upload</td>
+			<td class="code2">UTF-8</td>
+			<td class="code2">The parameter specifies the encoding of the robot 
+			program to be uploaded or to be created. Commonly used are 
+			ISO-8859-1 (West European), and SHIFT_JIS (Japanese)</td>
+		</tr>
+		<tr>
+			<td class="code2">OLPStyle</td>
+			<td class="code2">string</td>
+			<td class="code2">Upload</td>
+			<td class="code2">OperationComments </td>
+			<td class="code2">This parameter is used to determine whether a 
+			comment in a robot program is uploaded as an attribute of a motion 
+			activity or an individual operation. Valid values are 'General' or 'OperationComments<span class="style1">'</span>.</td>
+		</tr>
+		<tr>
+			<td class="code2">CommentWaitSignal</td>
+			<td class="code2">boolean </td>
+			<td class="code2">Upload </td>
+			<td class="code2">true </td>
+			<td class="code2">By default, WAIT IO statements are commented out 
+			during upload. If this is not desired, set this parameter to 
+			&quot;false&quot;.</td>
+		</tr>
+		<tr>
+			<td class="code2">IOName </td>
+			<td class="code2">string </td>
+			<td class="code2">Upload </td>
+			<td class="code2">IO[] </td>
+			<td class="code2">This parameter specifies the output signal names 
+			for Set-IO activities. These IOs must be defined before upload. If 
+			the parameter ends with a pair of square brackets(&quot;[]&quot;), the signal 
+			names would be &lt;io_name&gt;[&lt;port_number&gt;]; otherwise the signal names 
+			would be &lt;io_name&gt;&lt;port_number&gt;.&nbsp;&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="code2">OrentMode </td>
+			<td class="code2">&nbsp;string </td>
+			<td class="code2">&nbsp;Upload </td>
+			<td class="code2">2_axis &nbsp;</td>
+			<td class="code2">This parameter specifies the orient mode for 
+			linear and circular motions uploaded. Valid values are &quot;1_axis&quot;, 
+			&quot;3_axis&quot;, and &quot;wrist&quot;.&nbsp;</td>
+		</tr>
+		</table>
+		</td>
+     </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h2>Notes</h2>
+		<ul>
+						<li>Accuracy Type 'Speed' is considered to be Denso Pass 
+						Motion '@P', regardless of the Accuracy Profile's 
+						FlyByMode or Accuracy Value.</li>
+						<li>For Accuracy Type 'Distance', if FlyByMode is 'Off', 
+						it is considered to be Denso Encoder Value Check Motion 
+						'@E'. If FlyByMode is 'On', it is considered to be Denso 
+						End Motion '@IntegerValueInMM'.</li>
+						<li>For upload, if this option is omitted, the default 
+						setting '@0' is assumed.<br>
+						</li>
+		</ul>
+		</td>
+     </tr>
+   	</table>
+
+ </body>
+
+</html>
+

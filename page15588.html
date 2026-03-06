@@ -1,0 +1,299 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2L2">
+ <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+ <meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+ <title>Optimal CATIA PLM Usability</title>
+ <meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 6.0">
+ <meta NAME="ProgId" CONTENT="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Optimal CATIA PLM Usability
+ <a name="ix-interoperability::safe save in Electrical"></a></h1>
+ <table BORDER="0" CELLSPACING="1" VALIGN="top">
+   <tr VALIGN="top" BORDER="0">
+     <td ALIGN="center">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" hspace="0" width="32" height="32"></td>
+     <td ROWSPAN="1" VALIGN="middle">This section explains in greater detail how 
+     electrical data designed in CATIA can be stored in ENOVIA V5 using VPM 
+     Navigator.</td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td ALIGN="center">
+     <img src="b35doc/english/online/icons_C2/common/abasic.gif" hspace="0" width="32" height="32"></td>
+     <td VALIGN="middle">
+     <p class="task">When working with ENOVIA V5, the safe save mode ensures 
+     that you only create data in CATIA that can be correctly saved in ENOVIA 
+     V5.</p>
+     <p class="task">ENOVIA V5 offers two different storage modes: <kbd>
+     Workpackage</kbd> (Document kept - Publications Exposed) and <kbd>Explode</kbd> 
+     (Document not kept). Electrical products have been configured to work in 
+     both <a href="#hj-workpackage"><span style="font-weight: 400">Workpackage</span></a> 
+     mode and the <a href="#hj-explode"><span style="font-weight: 400">Explode</span></a> 
+     mode, depending on the objects considered.</p>
+     <p class="task">We recommend that you read the <em>VPM Navigator User's 
+     Guide</em> to know more about this product.<br>
+     This documentation can be found on the ENOVIA LifeCycle Applications 
+     Documentation CDRom.</td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td valign="middle" colspan="2">
+     <h2>Working with Geometrical Bundle as Workpackage<a name="hj-workpackage"></a></h2>
+     </td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td align="center">
+     <p class="task">
+     <img src="b35doc/english/online/icons_C2/common/areference.gif" hspace="0" width="32" height="32"></td>
+     <td valign="middle">
+     <p class="task">A workpackage is one or more documents that are displayed 
+     in ENOVIA V5 as a single entity.<br>
+     This means that a node in the CATIA specification tree is chosen as an 
+     entity to be shown in ENOVIA V5. The children are not visible as documents 
+     in the ENOVIA V5 tree.<br>
+     The geometrical bundle is a candidate to be stored this way, as it 
+     represents a complete and coherent package for the electrical design.</td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td align="center">
+     <p class="task">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="0" width="32" height="32"></td>
+     <td valign="middle">
+     <p class="task">If you are using Electrical Harness Flattening, it is the 
+     only mode supported to save geometrical bundle extracted data.</td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td align="center">
+     <p class="task">&nbsp;</td>
+     <td valign="middle">
+     <p class="task">Within CATIA connected to ENOVIA V5 through VPM Navigator, 
+     if the user selects a new product as a geometrical bundle, the system 
+     automatically knows that this geometrical bundle has to be stored as a 
+     workpackage.</p>
+     <p class="task">
+     <img border="0" src="b35doc/english/online/xomugelec_c2/images/wp_newproduct01NLS.gif" width="501" height="284">
+     </p>
+     <p class="task">Checks are performed when using the Electrical tools to 
+     ensure that all entities created or modified will be correctly stored, 
+     using the following rules:</p>
+     <ul>
+       <li>
+       <p class="task">No links to geometry (that is to say external references) 
+       can be done from a part inside a workpackage to a part outside the 
+       workpackage.</p>
+       <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber7">
+         <tr>
+           <td>
+           <p class="task">Let's see an example:</p>
+           <p class="task">With a geometrical bundle stored as a workpackage 
+           (publication exposed mode), the bundle segments belonging to this 
+           geometrical bundle cannot use, as routing objects, supports, devices 
+           or any geometry external to the geometrical bundle while keeping the 
+           contextuality. The external references won't be synchronized and the 
+           bundle segment shape won't any longer be contextual to any object 
+           outside the geometrical bundle. Contextual links are kept inside the 
+           geometrical bundle.</td>
+         </tr>
+         <tr>
+           <td>
+           <img border="0" src="b35doc/english/online/xomugelec_c2/images/contextuallinks01NLS.gif" width="590" height="342"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">The context for the external links must be set to a 
+       product node inside the workpackage.<br>
+       Refer to <cite>Infrastructure User's Guide</cite> - Customizing Part 
+       Infrastructure.</li>
+       <li>
+       <p class="task">Mechanical constraints and electrical connections between 
+       parts inside the workpackage and outside the workpackage must rely on 
+       published objects.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td align="center">&nbsp;</td>
+     <td valign="middle">
+     <h3><a name="hj-wnr16"></a>Bundle Segment-to-Support Link</h3>
+     <p class="task">As of Version 5 Release 16, you can manage links between 
+     bundle segments and supports when they are not in the same geometrical 
+     bundles. In particular, you can update bundle segments if supports, in a 
+     different geometrical bundle, have been moved.</p>
+     <p class="task">For more information, see <a href="page15589.html">
+     Updating Bundle Segment-to-Support Link</a>.</p>
+     <p class="task"><b>Important<a name="hj-important"></a></b>:</p>
+     <ul>
+       <li>This functionality is applicable to electrical data created as of 
+       Version 5 Release 16 only. It does not support adaptive supports.</li>
+       <li>The instance name of supports must be unique. The bundle 
+       segment-to-support link will not be updated if two or more instances have 
+       the same name in your session.</li>
+       <li>Modifying the instance name will make the link invalid.</li>
+       <li>Do not rename geometry created when routing bundle segments through 
+       supports.</li>
+     </ul>
+     <p class="task">Updating bundle segment-to-support links is based on a 
+     naming convention for support identifiers. Whenever a support is added, 
+     support geometry (published point and two published planes) is copied and 
+     renamed as follows:</p>
+     <p class="task"><code>Name of the geometry= [Instance name of selected 
+     support]![Name of the publication]</code></p>
+     <p class="task">
+     <img border="1" src="b35doc/english/online/xomugelec_c2/images/st_bns_to_support_link01NLS.gif" width="285" height="609"></td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td align="center">&nbsp;</td>
+     <td valign="middle">
+     <h3><a name="hj-options"></a>CATIA Settings </h3>
+     <p>To make this possible, the following settings must be applied when 
+     working with CATIA connected to ENOVIA V5, to store the geometrical bundles 
+     as workpackage in ENOVIA V5:</td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td>
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/ainfo_custo.gif" hspace="0" width="32" height="32"></td>
+     <td valign="middle">
+     <ol class="task" type="a">
+       <li>
+       <p class="task">Select the <kbd>Tools &gt; Options &gt; Infrastructure &gt; Part 
+       Infrastructure &gt; General</kbd> tab.</p>
+       <table border="0" cellspacing="1" id="AutoNumber1">
+         <tr>
+           <td>
+           <p class="task">In the <kbd>External References</kbd> frame, clear 
+           the <kbd>Use root context in assembly </kbd>check box.</td>
+         </tr>
+         <tr>
+           <td>
+           <p class="task">
+           <img border="1" src="b35doc/english/online/xomugelec_c2/images/prtrootcontextNLS.gif" width="385" height="130"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Select the <kbd>Tools &gt; Options &gt; Equipment and Systems &gt; 
+       Electrical Harness Discipline &gt; Electrical Harness Installation &gt; 
+       Harness Management </kbd>tab.</p>
+       <table border="0" cellspacing="1" id="AutoNumber2">
+         <tr>
+           <td>
+           <p class="task">Under <kbd>Contextual Links</kbd>, in the <kbd>Keep 
+           link with selected object </kbd>box, select <kbd>In geometrical 
+           bundle</kbd>.</td>
+         </tr>
+         <tr>
+           <td>
+           <p class="task">
+           <img border="1" src="b35doc/english/online/xomugelec_c2/images/contextuallinksNLS.gif" width="385" height="70"></td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     <p class="task">Anyway, the system checks that the rules are not violated 
+     and if those options are not set properly, an error message is displayed:</p>
+     <p class="task">
+     <img border="0" src="b35doc/english/online/xomugelec_c2/images/optionerrorNLS.gif" width="645" height="140"></p>
+     <p class="task">Moreover, during the electrical connection between devices 
+     and/or bundle segments that are not inside the same workpackage, 
+     publications are automatically created on the geometrical bundle stored as 
+     workpackage, to ensure that constraints and connections are correctly 
+     stored.</td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td valign="middle" colspan="2">
+     <h2>Working with Geometrical Bundle in Explode Mode<a name="hj-explode"></a></h2>
+     </td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td align="center">
+     <p class="task">
+     <img src="b35doc/english/online/icons_C2/common/areference.gif" hspace="0" width="32" height="32"></td>
+     <td valign="middle">
+     <p class="task">Using the <kbd>Explode</kbd> mode, all the nodes of the 
+     product structure are stored in ENOVIA V5.<br>
+     This means that each component and its children are as many documents 
+     visible in ENOVIA V5.</td>
+   </tr>
+   <tr>
+     <td align="center">
+     <p class="task">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="0" width="32" height="32"></td>
+     <td valign="middle">
+     <p class="task">The geometrical bundles saved in explode mode cannot be 
+     used in Electrical Harness Flattening. It will not be possible to save the 
+     geometrical bundle extracted data. Use the workpackage mode in this 
+     context.</td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td align="center">
+     <p class="task">&nbsp;</td>
+     <td valign="middle">
+     <p class="task">Within CATIA connected to ENOVIA V5 through to VPM 
+     Navigator, if the user selects a new component as a geometrical bundle, the 
+     system automatically knows that this geometrical bundle has to be stored in 
+     explode mode.</p>
+     <p class="task">
+     <img border="0" src="b35doc/english/online/xomugelec_c2/images/expl_newcomponent01NLS.gif" width="501" height="284"></p>
+     <p class="task">A single check is performed when using the Electrical tools 
+     to ensure that all the entities created or modified will be correctly 
+     stored:</p>
+     <p class="task">The context for the external links must be set to the root 
+     product node of the session.<br>
+     Refer to <cite>Infrastructure User's Guide</cite> - Customizing Part 
+     Infrastructure.</p>
+     <p class="task">To make this possible, the following settings must be 
+     applied when working with CATIA connected to ENOVIA V5, to store the 
+     geometrical bundles in explode mode in ENOVIA V5:</td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td align="center">
+     <img src="b35doc/english/online/icons_C2/common/ainfo_custo.gif" hspace="0" width="32" height="32"></td>
+     <td valign="middle">
+     <ol class="task" type="a">
+       <li>
+       <p class="task">Select the <kbd>Tools &gt; Options &gt; Infrastructure &gt; Part 
+       Infrastructure &gt; General</kbd> tab.</p>
+       <table border="0" cellspacing="1" id="AutoNumber6">
+         <tr>
+           <td>
+           <p class="task">Under <kbd>External References</kbd>, select the
+           <kbd>Use root context in assembly</kbd> check box.</td>
+         </tr>
+         <tr>
+           <td>
+           <p class="task">
+           <img border="1" src="b35doc/english/online/xomugelec_c2/images/prtrootcontext01NLS.gif" width="385" height="130"></td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td align="center">
+     <img src="b35doc/english/online/icons_C2/common/areference.gif" hspace="0" width="32" height="32"></td>
+     <td VALIGN="middle">To be consistent and useable, some electrical data 
+		needs to be at a higher load mode than <kbd>Visualization</kbd> mode. In ENOVIA 
+		V5 context, loading this needed information implies to transit of the 
+		impacted CATParts through the network. So if we only load necessary 
+		data, this transit will be redone for the switch to <kbd>Design</kbd> 
+		mode. So to optimize the data flow through the network, we just make a 
+		transit once for the catpart and load it into design mode.</td>
+   </tr>
+ </table>
+ <table BORDER="0" CELLSPACING="1" VALIGN="top">
+ </table>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

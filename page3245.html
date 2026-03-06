@@ -1,0 +1,964 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Splitting Geometry
+	</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none">
+	<style type="text/css">
+.style1 {
+	border-color: #111111;
+}
+</style>
+</head>
+
+ <body>
+
+ <p></p>
+ <h1>Splitting Geometry<a name="CATHASModelHeader.HASSplit"></a><a name="CATShapeDesignCommandHeader.CATGSDSplitDatum"></a><a name="CATCCSModelHeader.CATHybridPartSplit"></a><a name="CATHybridPartCommandHeader.CATHybridPartSplit"></a><a name="CATShapeDesignCommandHeader.CATShapeDesignSplit"></a><a name="CATCloudQsrHeaderCmd.CATQsrSplitHdr"></a><a name="ix-commands::Split;splitting geometry"></a></h1>
+ <p></p>
+ <h1></h1>
+ <table Border="0" valign="top" style="border-collapse: collapse">
+   <tr valign="top" BORDER="0">
+     <td width="32">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32">
+     </td>
+     <td rowspan="1">This task shows how to split a surface or wireframe element 
+		by means of a cutting element.<br>
+     You can split a wireframe element by a point, another wireframe element or 
+		a surface; or a surface by a wireframe element or another surface.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td width="32">&nbsp;</td>
+     <td>
+     <ul>
+       <li><a href="#hj-V5R10">Keeping or Removing Elements</a></li>
+       <li><a href="#intersectextrapol">Intersecting and extrapolating</a></li>
+       <li><a href="#wires">Splitting Wires</a></li>
+       <li><a href="#surface">Splitting a surface by a curve or a surface by a 
+		surface</a></li>
+       <li><a href="#closedsurfaces">Splitting closed surfaces by two connex 
+		surfaces or curves</a></li>
+       <li><a href="#intersect">Splitting A Surface When The Intersection Is Not 
+		Connex</a></li>
+       <li><a href="#hj-V5R13">Splitting Volumes</a></li>
+		<li><a href="#hj-approximate">Approximating the Split Result</a></li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td width="32">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32">
+     </td>
+     <td>
+     <p style="margin-top: 10">Open the
+     <a href="b35doc/english/online/cfysm_C2/samples/Split1.CATPart">
+     Split1.CATPart</a> document.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td width="32">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol class="task">
+       <li>
+       <p class="task">Click <kbd>Split</kbd>
+       <img src="b35doc/english/online/icons_C2/images/I_SplitSurfacesP2.gif" border="0" width="24" height="24">.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+         <tr>
+           <td>The <kbd>Split Definition</kbd> dialog box appears as well as the 
+			<kbd><span class="style1">Tools Palette</span></kbd>. <br>
+			For further information about the Tools Palette, refer to Selecting 
+			Using Selection Traps in the <cite>CATIA Infrastructure User's Guide</cite>.</td>
+         </tr>
+         </table>
+       </li>
+       <li>
+       <p class="task">Select the element to be split.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+         <tr>
+           <td colspan="2">You should make your selection by clicking on the 
+			portion that you want to keep after the split.</td>
+         </tr>
+         <tr>
+           <td colspan="2"><img src="b35doc/english/online/cfyug_c2/images/split01.gif" width="244" height="245"></td>
+         </tr>
+         <tr>
+           <td valign="top" rowspan="3">
+           <img src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+           <td><a name="hj-V5R14"></a>You can select several elements to cut. In 
+			that case, click <kbd>Element to cut</kbd> again or click
+           <img border="0" src="b35doc/english/online/cfyug_c2/images/I_MultiOutput02.gif" width="18" height="18">. 
+			The Elements to cut dialog box opens. Select as many elements as 
+			needed. Click <kbd>Close</kbd> 
+           to return to the <kbd>Split Definition</kbd> dialog box. The number 
+			of selected elements is displayed in the <kbd>Element to cut</kbd> 
+			field.</td>
+         </tr>
+         <tr>
+           <td>
+           <img border="0" src="b35doc/english/online/cfyug_c2/images/dbsplitdef03NLS.gif" width="172" height="185"></td>
+         </tr>
+         <tr>
+           <td>Click <kbd>Remove</kbd> or <kbd>
+           Replace</kbd> to modify the elements list.<br>
+           <a name="RI 497245"></a>When several elements to cut are selected, 
+			the selected portions are not taken into account as parts to keep. 
+			The parts to be kept depend on the type of the cutting element 
+			(point, curve, surface, etc.) and the orientation of cutting 
+			elements and the elements to cut.<br>
+           Click <kbd>Other side</kbd> to reverse the portion to be kept, 
+			element by element.</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Select the cutting element.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+         <tr>
+           <td colspan="2">A preview of the split appears. You can change the 
+			portion to be kept by selecting that portion. </td>
+         </tr>
+         <tr>
+           <td colspan="2">You can also select the portion to be kept by 
+			clicking the <kbd>Other side</kbd> button. <br>
+           This option applies on all selected elements to cut.</td>
+         </tr>
+         <tr>
+           <td colspan="2"><img src="b35doc/english/online/cfyug_c2/images/split02.gif" width="243" height="244"></td>
+         </tr>
+         <tr>
+           <td rowspan="2" valign="top">
+           <img src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+           <td>You can select several<a name="hj-multi-selection_V5R6"></a> 
+           cutting elements. In that case, note that the selection order is 
+			important as the area to be split is defined according to the side 
+			to be kept in relation to the current splitting element. </td>
+         </tr>
+         <tr>
+           <td>You can create a Join as the splitting element, by right-clicking <kbd>
+			Cutting elements</kbd> and choosing <kbd>Create Join</kbd>.<br>
+           <a name="RI 350780"></a>If you split a surface and you keep both 
+			sides by joining the resulting splits, you cannot access the 
+			internal sub-elements of the join: indeed, splits result from the 
+			same surface and the cutting elements are common.</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd> to split the element.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4">
+         <tr>
+           <td colspan="2">The created element (identified as Split.xxx) is 
+			added to the specification tree. </td>
+         </tr>
+         <tr>
+           <td colspan="2">In the case several elements to cut were used, the 
+			created elements are aggregated under a Multi-Output.xxx feature.</td>
+         </tr>
+         <tr>
+           <td colspan="2"><img src="b35doc/english/online/cfyug_c2/images/split03.gif" width="238" height="242"></td>
+         </tr>
+         <tr>
+           <td colspan="2">In the illustrations below, the top-left line is the 
+			first splitting element. In the left illustration it defines an area 
+			that intersects with the other three splitting curves, and in the 
+			illustration to the right, these three elements are useless to split 
+			the area defined by the first splitting element.</td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/cfyug_c2/images/split07.gif" align="left" width="196" height="266"></td>
+           <td><img border="0" src="b35doc/english/online/cfyug_c2/images/split08.gif" width="196" height="266"></td>
+         </tr>
+         <tr>
+           <td colspan="2">Would you need to remove or replace one of these 
+			cutting elements, select it from the list and click <kbd>Remove
+           </kbd>or<kbd> Replace </kbd>.</td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top">
+     <h3><a name="hj-V5R10"></a>Keeping or Removing Elements</h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top"><kbd>Elements to remove</kbd> and <kbd>
+     Elements to keep</kbd> allows to define the portions to be removed or kept 
+		when performing the split operation.
+     <ol>
+       <li>Click <kbd>Show parameters &gt;&gt;</kbd>.</li>
+		<li>Click in the field of your choice to be able to select the elements 
+		in the 3D geometry.</li>
+       <li>Right-click in the field either to clear the selection or display the 
+		list of selected elements.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5">
+         <tr>
+           <td colspan="3"><img border="0" src="b35doc/english/online/cfyug_c2/images/splitremoveNLS.gif" align="left" width="335" height="261"></td>
+           <td width="7">&nbsp;</td>
+         </tr>
+         <tr>
+           <td colspan="3"><i>Only the selected element is removed.<br>
+           All other elements are kept</i></td>
+           <td width="7">&nbsp;</td>
+         </tr>
+         <tr>
+           <td colspan="4">&nbsp;</td>
+         </tr>
+         <tr>
+           <td colspan="3"><img border="0" src="b35doc/english/online/cfyug_c2/images/splitkeepNLS.gif" align="left" width="373" height="263"></td>
+           <td width="7"></td>
+         </tr>
+         <tr>
+           <td colspan="4"><i>The selected elements are kept.<br>
+           All other elements are removed</i></td>
+         </tr>
+         <tr>
+           <td valign="top" width="289">&nbsp;</td>
+           <td colspan="3">&nbsp;</td>
+         </tr>
+         <tr>
+           <td valign="top" colspan="4">
+           <ul>
+             <li>You must select sub-elements as elements to keep or to remove; 
+				otherwise, a warning message is issued.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber6">
+               <tr>
+                 <td><img border="0" src="b35doc/english/online/cfyug_c2/images/splitkeep02.gif" width="241" height="159"></td>
+               </tr>
+             </table>
+             </li>
+             <li>You can also select a <a name="hj-V5R11">point</a> to define 
+				the portion to keep or to remove.
+             <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber7">
+               <tr>
+                 <td>A contextual menu is available on the <kbd>Elements to 
+					remove</kbd> and <kbd>Elements to keep</kbd> fields.</td>
+               </tr>
+               </table>
+             </li>
+             <li>You do not need to select elements to keep if you already 
+				selected elements to remove and vice-versa.</li>
+             <li>Select <kbd>Keep both sides</kbd> to retain the other side of 
+				the split element after the operation. In that case it appears 
+				as aggregated under the first element.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber10">
+               <tr>
+                 <td>Therefore both split elements can only be edited together 
+					and the aggregated element alone cannot be deleted.</td>
+               </tr>
+               <tr>
+                 <td>If you use the <a href="page3167.html">Datum</a> mode, the 
+					second split element is not aggregated under the first one, 
+					but two datum surfaces are created.</td>
+               </tr>
+             </table>
+             </li>
+           </ul>
+           <ul>
+             <li><a name="RI 379670"></a>Avoid splitting geometry when the 
+				intersection between the element to cut and the cutting element 
+				is merged with an edge of the element to cut. We advise you to 
+				use the <kbd>Elements to remove</kbd> and
+                 <kbd>Elements to keep</kbd> options to remove the positioning 
+				ambiguity.</li>
+             <li>In case there are several elements to cut, <kbd>Keep/Remove
+             </kbd>and <kbd><a name="RI 471132"></a>Keep both sides</kbd> only 
+				apply on the first selected element.</li>
+             <li><a name="RI 541544"></a>In case the intersection between the 
+				elements is not connex, an error message may be issued prompting 
+				you to choose the elements to be kept or not.</li>
+				<li>
+				<a name="hj-split"></a>S<span style="background-position: 0 0">elect 
+				the <kbd>
+				Ignore no intersecting elements</kbd> check box to split many 
+				elements (curves, surfaces, volumes) when the cutting element 
+				does not intersect all the elements.</span><table border="0" id="table2">
+					<tr>
+						<td>
+           <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+						<td>
+						<span style="background-position: 0 0">When this option 
+						is selected, the 
+						<kbd>Intersections computation</kbd> option is cleared 
+						and grayed out.</span></td>
+					</tr>
+				</table>
+				</li>
+				<li>
+           		S<span style="background-position: 0 0">elect the
+				<kbd>Keep elements in half space</kbd> check box to keep all the 
+				elements that are on one side of the cutting infinite plane. The 
+				cutting element defines this half space.</span><table border="0" cellpadding="0" style="border-collapse: collapse" id="table3">
+					<tr>
+						<td valign="top">
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+						<td>
+						<ul>
+							<li><span style="background-position: 0 0">This 
+							option applies only when the cutting element is an 
+							infinite plane.</span></li>
+							<li>If the split side is not towards the element to 
+							cut, an error message is issued. Note that, this 
+							behavior differs from the behavior in the Part 
+							Design workbench, i.e. no error message is issued.</li>
+							<li>If the cutting element is not an <span style="background-position: 0 0">
+							infinite plane, an error message is displayed.</span></li>
+							<li>If the element to be cut is a volume and the 
+							cutting element is not an infinite plane, the option 
+							does not work and no error message is displayed.</li>
+						</ul>
+						</td>
+					</tr>
+					<tr>
+						<td>
+           <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+						<td>When this option is selected, the
+				<span style="background-position: 0 0"> <kbd>
+						Ignore no intersecting elements </kbd>option is 
+						automatically selected and grayed out.</span></td>
+					</tr>
+					</table>
+				</li>
+           </ul>
+           </td>
+         </tr>
+         <tr>
+           <td valign="top" colspan="4">
+           <img border="0" src="b35doc/english/online/cfyug_c2/images/splitgeom1.gif" width="596" height="145"></td>
+         </tr>
+         <tr>
+           <td valign="top" colspan="4">
+           &nbsp;</td>
+         </tr>
+         <tr>
+           <td valign="top" colspan="4">
+		<p align="left"><span style="background-position: 0 0">Elements to cut: 
+		dark blue and light blue surfaces<br>
+		Cutting elements: yellow and purple planes</span></td>
+         </tr>
+         <tr>
+           <td valign="top" colspan="4">
+			<img border="0" src="b35doc/english/online/cfyug_c2/images/splitgeom.gif" width="505" height="122"></td>
+         </tr>
+         <tr>
+           <td valign="top" colspan="2">
+		<p align="left"><span style="background-position: 0 0">Result with 
+		<kbd>Ignore no intersecting elements</kbd> selected</span></td>
+           <td valign="top" colspan="2">
+           &nbsp;&nbsp;
+			</td>
+         </tr>
+         <tr>
+           <td valign="top" colspan="2">
+		<img border="0" src="b35doc/english/online/cfyug_c2/images/splitgeom3.gif" width="597" height="126"></td>
+           <td valign="top" colspan="2">
+           &nbsp;</td>
+         </tr>
+         <tr>
+           <td valign="top" colspan="2">
+           &nbsp;</td>
+           <td valign="top" colspan="2">
+           &nbsp;</td>
+         </tr>
+         <tr>
+           <td valign="top" colspan="2">
+		<p align="left"><span style="background-position: 0 0">Element to cut: 
+		non connex light blue surface<br>
+		Cutting element: yellow plane</span></td>
+           <td valign="top" colspan="2">
+           &nbsp;</td>
+         </tr>
+         <tr>
+           <td valign="top" colspan="2">
+		<img border="0" src="b35doc/english/online/cfyug_c2/images/splitgeom4.gif" width="374" height="94"></td>
+           <td valign="top" colspan="2">
+           &nbsp;</td>
+         </tr>
+         <tr>
+           <td valign="top" colspan="2">
+		<p align="left"><span style="background-position: 0 0">Result with 
+		<kbd>Keep elements in half space</kbd> selected</span></td>
+           <td valign="top" colspan="2">
+           &nbsp;</td>
+         </tr>
+         </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="middle">
+     <h3><a name="intersectextrapol"></a>Intersecting and extrapolating</h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="middle">
+     <ul>
+       <li>Select <kbd>Intersections computation</kbd> to create an aggregated 
+		intersection when performing the splitting operation. This element will 
+		be added to the specification tree as Intersect.xxx.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber11">
+         <tr>
+           <td colspan="2"><img border="0" src="b35doc/english/online/cfyug_c2/images/split13.gif" width="144" height="166"></td>
+         </tr>
+         <tr>
+           <td>
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+           <td>In case there are several elements to cut, the <kbd>Intersections 
+			computation</kbd> option only applies on the first selected element.</td>
+         </tr>
+       </table>
+       </li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td>
+     <ul>
+       <li>From the <kbd>Extrapolation type </kbd>list, select one of the 
+		available extrapolation types:<table style="width: 100%">
+		<tr>
+			<td>
+			<ul>
+				<li><kbd>None</kbd>: The cutting element has to completely intersect the 
+				element to be cut.</li>
+				<li><kbd>Tangent</kbd>: The cutting element is extrapolated along the 
+				tangents, to cut the element to be cut.</li>
+				<li><kbd>Curvature</kbd>: The cutting element is extrapolated along the 
+				curvature, on the element to be cut</li>
+			</ul>
+			</td>
+		</tr>
+		</table>
+       </li>
+		<li>The <kbd>Tangent</kbd> and <kbd>Curvature</kbd> options activate the 
+		automatic extrapolation while the <kbd>None</kbd> option de-activates 
+		the automatic extrapolation.<br>
+		If the <kbd>Tangent</kbd> and <kbd>Curvature options</kbd> are selected for 
+		a split operation, the automatic extrapolation is activated for the next 
+		trim operation. If the automatic extrapolation is activated for a trim 
+		operation, the <kbd>Tangent</kbd> extrapolation type is automatically 
+		selected for the next split operation.</li>
+		<li>Select a either <kbd>Volume</kbd> or <kbd>Surface</kbd> as the 
+		result type.<br>
+		<table style="width: 100%">
+			<tr>
+				<td style="width: 35px">
+				<img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+				<td>When you select a volume or a solid as an element to be cut 
+				and surface is selected as the result type, the extrapolation 
+				options might not create the expected result.</td>
+			</tr>
+		</table>
+		</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td>
+     &nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">&nbsp;</td>
+     <td valign="top">
+     <h3><a name="wires"></a>Splitting Wires</h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32"></td>
+     <td valign="top">
+     <ul>
+       <li>When splitting a wire (curve, line, sketch and so forth) by another 
+		wire, you can select a support to define the area that will be kept 
+		after splitting the element. It is defined by the vectorial product of 
+		the normal to the support and the tangent to the splitting element.&nbsp;<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber14">
+         <tr>
+           <td colspan="2">This is especially recommended when splitting a 
+			closed wire.&nbsp;</td>
+         </tr>
+         <tr>
+           <td colspan="2">The non disconnected elements of the element to cut 
+			are kept in the result of the split.</td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/cfyug_c2/images/split09.gif" align="left" width="237" height="137"></td>
+           <td><img border="0" src="b35doc/english/online/cfyug_c2/images/split10.gif" align="left" width="237" height="137"></td>
+         </tr>
+         <tr>
+           <td><i>Splitting with no support selected, first solution</i></td>
+           <td><i>Splitting with no support selected, second solution</i></td>
+         </tr>
+         <tr>
+           <td>&nbsp;</td>
+           <td>&nbsp;</td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/cfyug_c2/images/split11.gif" align="left" width="237" height="195"></td>
+           <td><img border="0" src="b35doc/english/online/cfyug_c2/images/split12.gif" align="left" width="241" height="198"></td>
+         </tr>
+         <tr>
+           <td><i>Splitting with a selected support (xy plane), first solution</i></td>
+           <td><i>Splitting with a selected support (xy plane), second solution</i></td>
+         </tr>
+       </table>
+       </li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <table Border="0" valign="top" width="100%" style="border-collapse: collapse">
+   <tr>
+     <td valign="top"></td>
+     <td valign="middle">
+     <h3>&nbsp;&nbsp;<br>
+     <a name="surface"></a>Splitting a surface by a curve or a surface by a 
+     surface</h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <p style="margin-top: 10">The following steps explain how split a surface 
+     by a curve or another surface.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="middle">
+     <h4>Split surface/curve</h4>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="middle">
+     <ol>
+       <li>First, the cutting element (the curve) is laid down the surface.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber15">
+         <tr>
+           <td>
+           <img src="b35doc/english/online/cfyug_c2/images/split04.gif" title="split04.gif (1750 bytes)" align="left" width="175" height="175"></td>
+         </tr>
+       </table>
+       </li>
+       <li>Then, the result of step 1 is tangentially extrapolated in order to 
+       split the surface correctly (as shown in following figure). However, when 
+       this extrapolation leads to the intersection<a name="hj-RI309455"></a> of 
+       the cutting element with itself prior to fully splitting the initial 
+       element, an error message is issued as there is an ambiguity about the 
+       area to be split. &nbsp;<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber16">
+         <tr>
+           <td>&nbsp;</td>
+           <td>
+           <img src="b35doc/english/online/cfyug_c2/images/split05.gif" title="split05.gif (2025 bytes)" align="left" width="175" height="175"></td>
+           <td>
+           <img src="b35doc/english/online/cfyug_c2/images/split06.gif" title="split06.gif (1649 bytes)" align="left" width="175" height="175"></td>
+         </tr>
+         <tr>
+           <td>
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+           <td colspan="2">If the cutting element 
+           does not reach the free edges of the element to cut, an extrapolation 
+           in tangency is performed using the part of the cutting element that 
+           lays down the surface.</td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="middle">
+     <h4>Split surface/surface</h4>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td valign="middle">Open the
+     <a href="b35doc/english/online/cfysm_C2/samples/Split2.CATPart">
+     Split2.CATPart</a> document.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="middle">
+     <ol>
+       <li><a name="hj-step1"></a>First, an intersection (the green wire) is 
+       created between the two surface elements.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber17">
+         <tr>
+           <td><img border="0" src="b35doc/english/online/cfyug_c2/images/intersectNLS.gif" width="308" height="277"></td>
+         </tr>
+       </table>
+       </li>
+       <li>Then, the result of the intersection is automatically extrapolated in 
+       tangency up to the closest free edges of the element to cut.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber18">
+         <tr>
+           <td colspan="2">The result of the extrapolation is used as the 
+           cutting element and the split is created.</td>
+         </tr>
+         <tr>
+           <td colspan="2"><img border="0" src="b35doc/english/online/cfyug_c2/images/split18.gif" width="230" height="300"></td>
+         </tr>
+         <tr>
+           <td>
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+           <td>Note that it is <b>not</b> the 
+           cutting element which is extrapolated but the result of the 
+           intersection.</td>
+         </tr>
+         <tr>
+           <td>
+           <img src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+           <td>If the result of the split is not 
+           what was expected, it is also possible to manually extrapolate the 
+           cutting element with the <a href="page3177.html">
+           extrapolate</a> feature before creating the split.</td>
+         </tr>
+       </table>
+       </li>
+       <li>Extrapolate the cutting element (the red surface) in order to fully 
+       intersect the element to cut.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber19">
+         <tr>
+           <td><img border="0" src="b35doc/english/online/cfyug_c2/images/extrapolation03NLS.gif" width="323" height="275"></td>
+         </tr>
+       </table>
+       </li>
+       <li>Then, use the extrapolated surface as the cutting element to split 
+       the surface.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber20">
+         <tr>
+           <td colspan="2">
+           <img border="0" src="b35doc/english/online/cfyug_c2/images/split14.gif" width="237" height="298"></td>
+         </tr>
+         <tr>
+           <td valign="top">
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+           <td>
+           <ul>
+             <li><a name="hj-V5R9SP2"></a>Avoid using input elements which are 
+             tangent to each other since this may result in geometric 
+             instabilities in the tangency zone.</li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="middle">
+     <h3><a name="closedsurfaces"></a>Splitting Closed Surfaces by Two Connex 
+     Surfaces or Curves<a name="RI 473974"></a></h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="middle">When splitting a closed surface or a curve by c<a name="RI 412156">onnex 
+     elements</a>, an error message is issued. You need to create a join feature 
+     of non connex elements and cut the closed surface or curve with this join 
+     feature. </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td valign="middle">Open the
+     <a href="b35doc/english/online/cfysm_C2/samples/Split3.CATPart">
+     Split3.CATPart</a> document.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="middle">
+     <blockquote>
+       <p><img border="0" src="b35doc/english/online/cfyug_c2/images/split20.gif" width="237" height="187"></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="middle">
+     <ol>
+       <li>Click <kbd>Join</kbd>
+       <img src="b35doc/english/online/icons_C2/images/I_AssembleBiparP2.gif" border="0" width="24" height="24">.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber24">
+         <tr>
+           <td>The <kbd>Join Definition</kbd> dialog box appears. </td>
+         </tr>
+       </table>
+       </li>
+       <li>Select Split.1 and Inverse.1 as the surfaces to be joined.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber25">
+         <tr>
+           <td valign="top">
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+           <td>Be careful that both surfaces
+           <a name="Ri 484146">or curves</a> to join have coherent orientations. 
+           If it is not the case, use the <a href="page3189.html">Invert 
+			Orientation</a> 
+           command to invert the orientation of one of the two surfaces or 
+           curves.<br>
+           Note that coherent orientations mean same orientations as the faces 
+           or edges of an equivalent connex splitting surface or curve:<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber29">
+             <tr>
+               <td><img border="0" src="b35doc/english/online/cfyug_c2/images/split22.gif" width="258" height="220"></td>
+             </tr>
+           </table>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0">Clear <kbd>Check connexity</kbd> 
+       .</li>
+       <li>Click <kbd>OK</kbd> to create the joined surface.</li>
+       <li>Click <kbd>Split</kbd>
+       <img src="b35doc/english/online/icons_C2/images/I_SplitSurfacesP2.gif" border="0" width="24" height="24">.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber26">
+         <tr>
+           <td>
+           <p style="margin-top: 0; margin-bottom: 0">The <kbd>Split Definition</kbd> 
+           dialog box is displayed.</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0">Select Surface.1 as the <kbd>
+       Element to cut</kbd> and Join.1 as the <kbd>Cutting element</kbd>.</li>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0">Click <kbd>OK</kbd> to split 
+       the closed surface.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber27">
+         <tr>
+           <td colspan="2"><img border="0" src="b35doc/english/online/cfyug_c2/images/split21.gif" width="234" height="191"></td>
+         </tr>
+         <tr>
+           <td>
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+           <td>If the orientation of the elements composing 
+           the joined surface or curve is incoherent, an error message is issued 
+           when creating the split surface.</td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="middle">
+     <h3><a name="intersect"></a>Splitting A Surface When The Intersection Is 
+     Not Connex</h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="middle">
+     <a name="RI 541545"></a>In case the intersection between the 
+           elements is not connex, an error message may be issued informing you 
+     to choose the elements to be kept or not.
+     <table border="0" cellspacing="1" id="table1">
+       <tr>
+         <td>
+         <img border="0" src="b35doc/english/online/cfyug_c2/images/split15.gif" align="left" width="338" height="172"></td>
+       </tr>
+     </table>
+     <p>In this case, use the <kbd>Elements to remove</kbd> and <kbd>
+     Elements to keep</kbd> options.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="middle">
+     <h3><a name="hj-V5R13"></a>Splitting Volumes</h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td>This capability is only available with Generative Shape Optimizer.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">Providing the element to be cut is a volume and the 
+     cutting element is a volume or a surface, you can choose whether you want 
+     the result of the split to be a surface or a volume. To do so, switch to 
+     either <kbd>Surface</kbd> or <kbd>Volume</kbd> option. This switch only 
+     concerns volumes since the transformation of a surface can only be a 
+     surface.<br>
+     Note:<ul>
+       <li>Replacing an input element does not change the result type,</li>
+       <li>The switch between surface and volume is grayed out when editing the 
+       feature.<br>
+       If the result of the split is a volume, the split is a modification 
+       feature. If the result of the split is a surface, the split is a creation 
+       feature.<br>
+       To have further information about volumes, please refer to the Creating 
+       Volumes chapter.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="middle">
+     <blockquote>
+       <p><img border="0" src="b35doc/english/online/cfyug_c2/images/split19.gif" align="left" width="272" height="211"></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="middle">
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber28">
+             <tr>
+               <td>
+               <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+               <td>
+				<ul>
+					<li>You can also split a solid using a plane, a volume, or a 
+					surface as a cutting element. The result of the split is a 
+					volume or a surface. You can choose whether you want the 
+					result of the split to be a surface or a volume. To do so, 
+					switch to either <kbd>Surface</kbd> or <kbd>Volume</kbd> 
+					option.</li>
+					<li>The following capabilities are 
+               available: <a href="page3246.html">Stacking Commands</a> 
+               and <a href="page3212.html" name="hj-V5R11">Selecting 
+               Using Multi-Output</a>.</li>
+				</ul>
+				</td>
+             </tr>
+           </table>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+               <img src="b35doc/english/online/icons_C2/common/ap2.gif" width="32" height="32"></td>
+     <td valign="middle">
+     <h3><a name="hj-approximate"></a>Approximating the Split Result</h3>
+     </td>
+   </tr>
+	<tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="middle">You can control the quality of the result of the 
+		split 
+		through several parameters and modes. </td>
+   </tr>
+	<tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="middle">
+     <ol>
+       <li>Double-click the split result in the specification tree to edit it.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="table4">
+         <tr>
+           <td>The <kbd>Split Definition</kbd> dialog box appears. </td>
+         </tr>
+       </table>
+       </li>
+       <li>Select the <kbd>Approximation</kbd> tab.</li>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0">In the <kbd>Approximation mode</kbd> 
+		list, select any one of the options:<table border="0" width="100%" id="table10">
+		<tr>
+			<td>
+			<ul>
+				<li><kbd>None</kbd>: the resulting split surface is not 
+				approximated.<br>
+				By default, this option is selected.</li>
+				<li><kbd>Deviation</kbd>: the resulting split surface is 
+				deviated according to the given length.<table border="0" width="100%" id="table12">
+					<tr>
+						<td><kbd>Note</kbd>:
+						<ul>
+							<li>The <kbd>Deviation</kbd> field is available when you 
+							select this option. </li>
+							<li>The deviation between the resulting 
+							surface and the original Split result is not more 
+							than the given value. </li>
+						</ul>
+						</td>
+					</tr>
+				</table>
+				</li>
+				<li><kbd>Parameters</kbd>: the resulting surface is computed 
+				according to the given parameter limits.<table border="0" width="100%" id="table13">
+					<tr>
+						<td>You can control the following parameters: </td>
+					</tr>
+					<tr>
+						<td>
+						<ul>
+							<li><kbd>Max Order</kbd>: On each scale (U, 
+							V), the polynomial approximation order is lower than 
+							the input value. </li>
+							<li><kbd>Max Segment</kbd>: On each scale (U, V), 
+							the surface is divided into segments that define 
+							areas that are approximated.<br>
+							The number of segments is lower than the input 
+							value. </li>
+						</ul>
+						</td>
+					</tr>
+				</table>
+				</li>
+			</ul>
+			</td>
+		</tr>
+		</table>
+		</li>
+       <li>
+		<p style="margin-top: 0; margin-bottom: 0">Click <kbd>OK</kbd>.</p>
+		<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="table8">
+			<tr>
+				<td>The split result is approximated.</td>
+			</tr>
+		</table>
+		<table border="0" width="100%" id="table14">
+			<tr>
+				<td width="31">
+               <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+				<td>The approximation is only available for 
+				rectangle type surfaces, i.e. for the surfaces which have only 
+				four side <br>
+				edges.</td>
+			</tr>
+		</table>
+		</li>
+     </ol>
+     </td>
+   </tr>
+	<tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="middle">
+     &nbsp;</td>
+   </tr>
+	<tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="middle">
+     &nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

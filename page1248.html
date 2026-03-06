@@ -1,0 +1,448 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Setting Up the Vault Server Cache</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Setting Up the Vault Server Cache</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td rowspan="1" valign="top">
+     <h2>Introduction to Vault Server Cache</h2>
+     <p style="tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+     <a name="ix-Vault Server::setting up cache"></a>The purpose of the vault 
+     server cache is to improve performance when accessing vault documents over 
+     a wide area network (WAN). To be efficient, the mechanism is based on the 
+     assumption that most users perform read access rather than modification to 
+     vault documents. The vault server cache mechanism creates a local copy of a 
+     remote vault document the first time it is accessed. Once in the cache, it 
+     is accessed locally in the cache and not remotely. The document in the 
+     cache is refreshed when needed.</p>
+     <p style="tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">This 
+     functionality applies only to a multi-site deployment with a vault cache.</p>
+     <p>To understand how a vault server cache works, compare the differences 
+     between a standard vault server and a vault server cache installation.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td rowspan="1" valign="top">
+     <h2>Standard Vault Server Installation</h2>
+     <p>The following drawing illustrates a standard vault server installation:</p>
+     <p align="center">
+     <img border="1" src="b35doc/english/online/basil_c2/images/LCA_VaultServerCache01_NLS.gif" align="left" width="585" height="401"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h3 style="tab-stops: .25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+     Read/Write Mechanism for the Standard Vault Server Installation</h3>
+     <p>In the case of a standard vault server installation, where a cache is 
+     not used, each vault client application connects directly to the standard 
+     vault server for any read/write operation.</p>
+     <p style="tab-stops: .5in 1.0in 1.5in 2.0in 2.5in 3.0in">Thus, for the 
+     sample above, in case of the standard vault server installation, the 
+     VaultClient properties file pertaining to VaultClientA could contain the 
+     following:</p>
+     <p style="mso-layout-grid-align: none; text-autospace: none"><b>## Standard 
+     Vault Client Properties File (VaultClientA)</b></p>
+     <p style="mso-layout-grid-align: none; text-autospace: none"><code>## We 
+     suppose the VaultServer Vault1OrbSrv is running<br>
+     ## on a workstation called laureen and the Orbix<br>
+     ## daemon listen port on this workstation is 1570</code></p>
+     <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 3.0in 3.25in; mso-layout-grid-align: none; text-autospace: none">
+     <code>VaultClient_DefaultAliasName&nbsp; =&nbsp; <b>Vault1</b><br>
+     VaultClient_ReadProtocol&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&nbsp; 2<br>
+     VaultClient_ReadProtocol_0&nbsp;&nbsp;&nbsp; =&nbsp; CORBA<br>
+     VaultClient_ReadProtocol_1&nbsp;&nbsp;&nbsp; =&nbsp; NFS<br>
+     VaultClient_WriteProtocol&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&nbsp; 2<br>
+     VaultClient_WriteProtocol_0&nbsp;&nbsp; =&nbsp; CORBA<br>
+     VaultClient_WriteProtocol_0&nbsp;&nbsp; =&nbsp; NFS<br>
+     </code><code>VaultClient_BlockSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     =&nbsp; 262144<br>
+     VaultClient_Trace&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     =&nbsp; OFF</code></p>
+     <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+     <code>## Vault1 alias entry</code></p>
+     <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 315.0pt 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+     <code>## Server for read operations</code></p>
+     <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 315.0pt 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+     <code>VaultClient_Vault1_ReadVaultServerName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     =&nbsp; <b>Vault1OrbSrv</b><br>
+     VaultClient_Vault1_ReadVaultServerHostName&nbsp;&nbsp;&nbsp;&nbsp; =&nbsp; 
+     laureen<br>
+     VaultClient_Vault1_ReadVaultServerDaemonPort&nbsp;&nbsp; =&nbsp; 1570</code></p>
+     <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 315.0pt 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+     <code>## Server for write operations</code></p>
+     <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 315.0pt 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+     <code>VaultClient_Vault1_WriteVaultServerName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     =&nbsp; <b>Vault1OrbSrv</b><br>
+     VaultClient_Vault1_WriteVaultServerHostName&nbsp;&nbsp;&nbsp; =&nbsp; 
+     laureen<br>
+     VaultClient_Vault1_WriteVaultServerDaemonPort&nbsp; =&nbsp; 1570</code></p>
+     <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 315.0pt 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+     Note: the vault alias name is the same as the Orbix service name, but you 
+     can modify the alias.</p>
+     <p style="tab-stops: .5in 1.0in 1.5in 2.0in 2.5in 3.0in">One benefit of 
+     activating the cache via a properties file is that it is very easy to plug 
+     in or unplug a vault server cache. You only have to modify a 
+     VaultClient.properties file once the vault server cache is installed. 
+     Another benefit is that the client application does not waste time in 
+     managing a cache application.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="middle">
+     <h2><a name="hj-CacheMechanism"></a>Vault Server Cache Mechanism</h2>
+     <p>The example below illustrates how a vault server cache works:</p>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/LCA_VaultServerCache02_NLS.jpg" width="720" height="540"></p>
+     <p>Note: If there is a single Vault Master, the VaultClientA 
+     VaultClient.properties file is the same as VaultCacheOrbSrv 
+     VaultClient.properties file.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="middle">
+     <h3 style="tab-stops: .5in 1.0in 1.5in 2.0in 2.5in 3.0in">Read Mechanism</h3>
+     <p style="tab-stops: .5in 1.0in 1.5in 2.0in 2.5in 3.0in">In a vault server 
+     cache installation, when a client application using a vault server cache 
+     tries to access a document, it asks the vault server cache to retrieve the 
+     document. Then, the vault server cache checks if the requested document is 
+     already in the cache. If the document is found, it checks if it is 
+     up-to-date. If this is the case, it transmits the document to the client 
+     application. But if the document is not up-to-date, it retrieves the latest 
+     version of the document from the vault server, stores it in the local 
+     cache, then sends it to the client.</p>
+     <p style="tab-stops: .5in 1.0in 1.5in 2.0in 2.5in 3.0in">In order to do so, 
+     a vault server cache embeds its own vault client application. This is why a 
+     vault server cache needs a VaultClient.properties file. This properties 
+     file has to be different from the one used by the VaultClientZ application 
+     in the illustration. It is due to the fact that read operations are done on 
+     the standard vault server instead of the vault server cache.</p>
+     <h4 style="tab-stops: .25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+     <a name="hj-VaultClientExample"></a>Vault Client Properties File with 
+     VaultServer Cache (VaultClientZ)</h4>
+     <p style="tab-stops: .25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">In the case 
+     of a vault server cache installation, the VaultClient properties file 
+     pertaining to VaultClientZ could contain the following:</p>
+     <p style="mso-layout-grid-align: none; text-autospace: none"><b>## Vault 
+     Client Properties File with<br>
+     ## VaultServer Cache (VaultClientZ)</b></p>
+     <p style="mso-layout-grid-align: none; text-autospace: none"><code>## We 
+     suppose the VaultServer Vault1OrbSrv is running<br>
+     ## on a workstation called laureen and the Orbix<br>
+     ## daemon listening port on this workstation is 1570.</code></p>
+     <p style="mso-layout-grid-align: none; text-autospace: none"><code>## We 
+     assume the VaultServer Cache VaultCacheOrbSrv<br>
+     ## is running on a workstation called glenn and the Orbix<br>
+     ## daemon listening port on this workstation is 1572.</code></p>
+     <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 3.0in 3.25in; mso-layout-grid-align: none; text-autospace: none">
+     <code>VaultClient_DefaultAliasName&nbsp; =&nbsp; Vault1<br>
+     VaultClient_ReadProtocol&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp; 2<br>
+     VaultClient_ReadProtocol_0&nbsp;&nbsp;&nbsp; =&nbsp; CORBA <br>
+     VaultClient_ReadProtocol_1&nbsp;&nbsp;&nbsp; =&nbsp; NFS<br>
+     VaultClient_WriteProtocol&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp; 2<br>
+     VaultClient_WriteProtocol_0&nbsp;&nbsp; =&nbsp; CORBA<br>
+     VaultClient_WriteProtocol_0&nbsp;&nbsp; =&nbsp; NFS<br>
+     VaultClient_BlockSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp; 262144<br>
+     VaultClient_Trace&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp; OFF</code></p>
+     <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+     <code>## Vault1 alias entry</code></p>
+     <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 315.0pt 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+     <code>## Server for read operations</code></p>
+     <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 315.0pt 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+     <code><font color="#FF0000">VaultClient_Vault1_ReadVaultServerName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp; VaultCacheOrbSrv</font><br>
+     VaultClient_Vault1_ReadVaultServerHostName&nbsp;&nbsp;&nbsp;&nbsp; =&nbsp; 
+     glenn<br>
+     VaultClient_Vault1_ReadVaultServerDaemonPort&nbsp;&nbsp; =&nbsp; 1572</code></p>
+     <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 315.0pt 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+     <code>## Server for write operations</code></p>
+     <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 315.0pt 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+     <code><font color="#FF0000">VaultClient_Vault1_WriteVaultServerName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp; VaultCacheOrbSrv</font><br>
+     VaultClient_Vault1_WriteVaultServerHostName&nbsp;&nbsp;&nbsp; =&nbsp; glenn<br>
+     VaultClient_Vault1_WriteVaultServerDaemonPort&nbsp; =&nbsp; 1572</code></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="middle">
+     <h3 style="tab-stops: .5in 1.0in 1.5in 2.0in 2.5in 3.0in">Mechanism for 
+     Writing Documents to the Local Vault Cache</h3>
+     <p style="tab-stops: .5in 1.0in 1.5in 2.0in 2.5in 3.0in">Now, the vault 
+     client application can write documents to the local vault cache, as 
+     illustrated by the diagram below:</p>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/LCA_VaultServerCache03_NLS.jpg" width="720" height="540"></p>
+     <p>In more details, the mechanism is as follows:</p>
+     <ul>
+       <li>the vault client begins a write operation</li>
+       <li>the vault cache sends a lock reservation to the remote vault server 
+       with the vault cache name (as seen by the vault client, the document is 
+       reserved for writing but is still available in read mode)</li>
+       <li>the vault client writes the document in the local vault cache</li>
+       <li>the vault server is informed in which vault cache the document is: 
+       later, the vault server will retrieve the document through an 
+       asynchronous replication process</li>
+       <li>once saved, the document can then be read and saved again by vault 
+       clients</li>
+       <li>document deletion is performed synchronously in both the vault server 
+       and the vault cache.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="middle">
+     <h4>Lock reservation procedure</h4>
+     <ol>
+       <li>The vault client begins an open write operation.</li>
+       <li>The vault cache requests the lock reservation from the vault server.</li>
+       <li>The vault server performs the lock reservation.</li>
+       <li>The vault server returns the new Vault ID and Timestamp information 
+       to the vault cache.</li>
+       <li>The vault cache does a reservation with the vault server parameters 
+       in its database.</li>
+       <li>The vault client writes the document in the vault cache.</li>
+       <li>The vault client requests a close from the vault cache.</li>
+       <li>The vault cache requests a close from the vault server.</li>
+       <li>The vault server commits the lock.</li>
+     </ol>
+     <h4>Vault Master Refresh Mechanism</h4>
+     <p>The vault server replicates through an external thread when the vault 
+     server is inactive or via a command line.</p>
+     <p>Asynchronous replication step by step:</p>
+     <ol>
+       <li>The vault server requests the document by block from the vault cache.</li>
+       <li>The vault server publishes the document when the document is 
+       completely transferred.</li>
+       <li>The vault server suppresses the reservation.</li>
+       <li>The vault server commits steps 2 and 3. </li>
+     </ol>
+     <p>Note: The vault cache could interrupt the asynchronous vault server 
+     transfer if its vault client modifies the document.</p>
+     <h4>Other Vault Cache or Vault Client</h4>
+     <p>Vault server clients and others vault cache clients cannot access the 
+     new document version until the document is on the vault server. In read 
+     mode, these vault clients will have access to the previous version of the 
+     document being modified.</p>
+     <p>Vault server clients and others vault cache clients cannot access the 
+     document in write mode until the document is on the vault server.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h2 style="tab-stops:0in 1.0in 1.5in 2.0in 2.5in 3.0in">
+     <font color="#282187">Vault Server Cache Installation Setup</font></h2>
+     <p style="tab-stops:0in 1.0in 1.5in 2.0in 2.5in 3.0in">Now that you 
+     understand the differences between the standard vault server installation 
+     and the local vault server cache, you are ready to begin the vault server 
+     cache installation.</p>
+     <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+     This setup is implemented in four steps:</p>
+     <h3 style="margin-top:12.0pt"><font color="#282187">Step one</font></h3>
+     <p style="tab-stops: .25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">Install the 
+     Vault Server Cache as you install a standard Vault Server. Then, change 
+     this Vault Server installation into a Vault Server Cache installation by 
+     following steps two and three below. Keep in mind that just like a standard 
+     Vault Server, a Vault Server Cache needs its own database structures and 
+     its own VaultServer.properties file. For information about how to install a 
+     standard vault server, refer to <a href="page1286.html">
+     Setting Up the Vault Server</a>.</p>
+     <p style="tab-stops: .25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">Beware: do 
+     not share database structures or server properties file between Vault 
+     Servers, it is neither supported nor allowed. In order to avoid any 
+     misunderstanding, assume the name of the Vault Cache server properties file 
+     is VaultCacheServer.properties in the following steps.</p>
+     <h3 style="margin-top:12.0pt;line-height:12.0pt;mso-layout-grid-align:
+none;text-autospace:none"><font color="#282187">Step two</font></h3>
+     <p style="margin-top:12.0pt;line-height:12.0pt;mso-layout-grid-align:
+none;text-autospace:none">Change the Vault Server you just installed into a 
+     Vault Server Cache. Two operations have to be done in order to do that:</p>
+     <ol>
+       <li>
+       <p style="margin-top:12.0pt;line-height:12.0pt;mso-layout-grid-align:
+none;text-autospace:none">Add the following line to the 
+       VaultCacheServer.properties file to enable the Cache working mode:<br>
+       <br>
+       <code>VaultServer_Cache = true</code><br>
+       <br>
+       This converts a standard vault server into a vault cache.</li>
+       <li>
+       <p style="margin-top:12.0pt;line-height:12.0pt;mso-layout-grid-align:
+none;text-autospace:none">Create a VaultClient.properties file for the Vault 
+       Server Cache to setup read/write connection parameters between the Vault 
+       Server Cache and the remote standard Vault Server. In the file 
+       VaultClient.properties for the vault server cache, declare the same vault 
+       alias name as in the VaultClient.properties file used for the 
+       <strong>LCA Classic</strong>.
+       <br>
+       <br>
+       The <i>host/port/Orbix service name</i> for a given alias must be 
+       different between the VaultClient.properties file of the 
+       <strong>LCA Classic</strong> client and 
+       the VaultClient.properties file of the vault server cache. The <i>
+       host/port/Orbix service name</i> for the 
+       <strong>LCA Classic</strong> client reference the vault 
+       cache, whereas the <i>host/port/Orbix service name</i> for the vault 
+       cache reference the cached vault.</li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p style="tab-stops: .5in 1.0in 1.5in 2.0in 2.5in 3.0in">The 
+           VaultClient properties file pertaining to VaultCacheOrbSrv 
+           illustrated above in the section <a href="#hj-CacheMechanism">Vault 
+           Server Cache Mechanism</a> could be:</p>
+           <p style="mso-layout-grid-align: none; text-autospace: none"><b>## 
+           Vault Client Properties File for<br>
+           ## VaultServer Cache (VaultCacheOrbSrv)</b></p>
+           <p style="mso-layout-grid-align: none; text-autospace: none"><code>## 
+           We suppose the VaultServer Vault1OrbSrv is running<br>
+           ## on a workstation called laureen and the Orbix<br>
+           ## daemon listen port on this workstation is 1570.</code></p>
+           <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 3.0in 3.25in; mso-layout-grid-align: none; text-autospace: none">
+           <code>VaultClient_DefaultAliasName&nbsp; =&nbsp; Vault1<br>
+           VaultClient_ReadProtocol&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp; 
+           2<br>
+           VaultClient_ReadProtocol_0&nbsp;&nbsp;&nbsp; =&nbsp; CORBA <br>
+           VaultClient_ReadProtocol_1&nbsp;&nbsp;&nbsp; =&nbsp; NFS<br>
+           VaultClient_WriteProtocol&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp; 2<br>
+           VaultClient_WriteProtocol_0&nbsp;&nbsp; =&nbsp; CORBA<br>
+           VaultClient_WriteProtocol_0&nbsp;&nbsp; =&nbsp; NFS<br>
+           VaultClient_BlockSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp; 262144<br>
+           VaultClient_Trace&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp; OFF</code></p>
+           <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+           <code>## Vault1 alias entry</code></p>
+           <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 315.0pt 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+           <code>## Server for read operations</code></p>
+           <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 315.0pt 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+           <code><font color="#FF0000">VaultClient_Vault1_ReadVaultServerName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+           =&nbsp; <b>Vault1OrbSrv</b></font><br>
+           VaultClient_Vault1_ReadVaultServerHostName&nbsp;&nbsp;&nbsp;&nbsp; =&nbsp; 
+           laureen<br>
+           VaultClient_Vault1_ReadVaultServerDaemonPort&nbsp;&nbsp; =&nbsp; 1570</code></p>
+           <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 315.0pt 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+           <code>## Server for write operations</code></p>
+           <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 315.0pt 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+           <code><font color="#FF0000">VaultClient_Vault1_WriteVaultServerName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+           =&nbsp; <b>Vault1OrbSrv</b></font><br>
+           VaultClient_Vault1_WriteVaultServerHostName&nbsp;&nbsp;&nbsp; =&nbsp; 
+           laureen<br>
+           VaultClient_Vault1_WriteVaultServerDaemonPort&nbsp; =&nbsp; 1570</code></p>
+           <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in 315.0pt 333.0pt; mso-layout-grid-align: none; text-autospace: none">
+           In this example, the vault cache is a client of the vault master
+           <code>Vault1OrbSrv </code>illustrated above.</p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <h3 style="margin-top:12.0pt"><font color="#282187">Step three</font></h3>
+     <p style="margin-top:12.0pt">Note: an old configuration (read on Vault 
+     Cache, write on Vault Server) is no longer supported and has been replaced 
+     by the Vault Cache write operation support.</p>
+     <p style="margin-top:12.0pt">Modify the VaultClient.properties used by 
+     Vault Client applications that are to use the VaultServer Cache. You have 
+     to update the read/write parameters for the right VaultAliasName in order 
+     to use the Vault Server Cache in place of the standard Vault Server, as 
+     illustrated in <a href="#hj-VaultClientExample">Vault Client Properties 
+     File with VaultServer Cache (VaultClientZ)</a>.</p>
+     <h3 style="margin-top:12.0pt"><font color="#282187">Step four</font></h3>
+     <p>Set up the remote Vault Server to enable it to retrieve the documents 
+     from the VaultServer Cache. Add the following line to the 
+     VaultServer.properties file to enable the Vault Server to get documents 
+     from the Vault Server Cache:</p>
+     <p><code>VaultServer_VSForWCV = true</code></p>
+     <p>The VaultServer will check every 300 seconds if it has a document to 
+     retrieve from a Vault Server Cache. You can change that default behavior by 
+     setting the following optional VaultServer key:</p>
+     <p><code>VaultServer_TimeoutForDocsCatcher: time between two checks if 
+     there is a document to get from a VaultServer Cache (unit: millisecond).
+     </code></p>
+     <p>If there are several documents to retrieve from one or several Vault 
+     Server Caches, the Vault Server retrieves them and then waits for the 
+     timeout above.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h2 style="tab-stops:0in 1.0in 1.5in 2.0in 2.5in 3.0in">
+     <font color="#282187">Vault Server Cache Administration</font></h2>
+     <h3>Vault Cache Clean Behaviour</h3>
+     <p>Whenever a client application connects with the Vault Server, a Vault 
+     session is created. When a Vault client such as CATIA V5 uses the Vault 
+     Server to retrieve data about a specific document, that document is kept in 
+     the Vault session. Documents remain in the Vault Cache as long as they are 
+     in a Vault session. Saving a document will remove it from the Vault 
+     session, and closing the Vault client application will remove opened 
+     documents from the Vault session. Only documents removed from the Vault 
+     session can be cleaned from the Vault Cache, if the VaultCacheClean 
+     property is enabled.</p>
+     <h4>Keys</h4>
+     <p style="tab-stops: 0in 1.0in 1.5in 2.0in 2.5in 3.0in">In order to be able 
+     to manage cache size and cleaning policy, the following keys can be added 
+     to the VaultServer.properties file used by Vault Server Cache:</p>
+     <p style="tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+     Optional Keys for a Cache VaultServer administration:</p>
+     <p style="tab-stops:3.25in 243.0pt"><code>VaultServer_Cache_CleanEnabled</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     :&nbsp; trigger cleaning mode on (default: true).</p>
+     <p style="tab-stops:3.25in 243.0pt"><code>VaultServer_Cache_MaxSize</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     :&nbsp; Maximum size of Vault Cache (unit: kb).</p>
+     <p style="tab-stops:3.25in 243.0pt"><code>VaultServer_Cache_CleanThreshold</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     :&nbsp; threshold for cleaning files (percent of cache max size).</p>
+     <p style="tab-stops:3.25in 243.0pt"><code>VaultServer_Cache_CleanRate</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     :&nbsp; targeted size after cleaning (percent of cache max size)</p>
+     <p style="tab-stops:3.25in 243.0pt"><code>VaultServer_Cache_TimeoutForClean</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     :&nbsp; time between two cleaning (unit: milli second).</p>
+     <p style="tab-stops:3.25in 243.0pt">These keys may be modified and reloaded 
+     without stopping the VaultServer Cache process.</p>
+     <h4 style="tab-stops:0in 1.0in 1.5in 2.0in 2.5in 3.0in">Key explanation</h4>
+     <p style="tab-stops: 1.0in 1.5in 2.0in 2.5in 3.0in">Cleaning functionality 
+     enabling: <code>VaultServer_Cache_CleanEnabled</code></p>
+     <p style="tab-stops: 1.0in 1.5in 2.0in 2.5in 3.0in">For instance, the line 
+     VaultServer_Cache_CleanEnabled = true means that a specialized thread is 
+     launched inside the VaultServer Cache process in order to manage cache size 
+     and cleaning operations. If this key is set to false, it disables the whole 
+     set of cache size management functionality.</p>
+     <p style="tab-stops: 0in 1.0in 1.5in 2.0in 2.5in 3.0in">Maximum cache size:
+     <code>VaultServer_Cache_MaxSize</code></p>
+     <p style="tab-stops: .25in 1.0in 1.5in 2.0in 2.5in 3.0in">For instance, the 
+     line VaultServer_Cache_MaxSize = 10000 means that the maximum size of the 
+     cache is ten mega bytes.</p>
+     <p style="tab-stops: 1.0in 1.5in 2.0in 2.5in 3.0in">Threshold for cleaning 
+     files: <code>VaultServer_Cache_CleanThreshold</code></p>
+     <p style="tab-stops: 1.0in 1.5in 2.0in 2.5in 3.0in">For instance, the line 
+     VaultServer_Cache_CleanThreshold = 80 means that if there is less than 80 
+     per cent of maximum cache size in use, then there is no cleaning operation 
+     done. But, if it is not the case, a cleaning operation is launched.</p>
+     <p style="tab-stops: 1.0in 1.5in 2.0in 2.5in 3.0in">Targeted size after 
+     cleaning: <code>VaultServer_Cache_CleanRate</code></p>
+     <p style="tab-stops: 1.0in 1.5in 2.0in 2.5in 3.0in">For instance, the line 
+     VaultServer_Cache_CleanRate = 50 means that after a cleaning operation, the 
+     new current cache size should be 50 per cent of the maximum cache size.</p>
+     <p style="tab-stops: 1.0in 1.5in 2.0in 2.5in 3.0in">Time between two checks 
+     if a cache cleaning is needed: <code>VaultServer_Cache_TimeoutForClean</code></p>
+     <p style="tab-stops: 1.0in 1.5in 2.0in 2.5in 3.0in">For instance, the line 
+     VaultServer_Cache_TimeoutForClean = 300000 means that every five minutes a 
+     check is done to know if a cleaning operation should be launched or not.</p>
+     <table>
+     </table>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="2" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

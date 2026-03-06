@@ -1,0 +1,102 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Exporting Parts from a V4 Model</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="Microsoft Theme" content="none">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Exporting Parts from a V4 Model</h1>
+ <table cellspacing="0" width="614" border="0" valign="top" style="border-collapse: collapse" cellpadding="0" height="741">
+   <tr valign="top" border="0">
+     <td align="center" height="55" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td colspan="2" height="55" width="582">This task shows you how to export 
+     parts from a V4 model for use as catalog parts in V5, using the batch 
+     program method. This step can be used as an alternative to exporting the 
+     part geometry explained in <a href="page14172.html">Migrating V4 Parts to 
+     V5</a>.</td>
+   </tr>
+   <font face="Arial, Arial, Helvetica" color="#282187">
+   <tr>
+     <td align="center" valign="top" height="367" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32">
+     <p><a name="ix-V4 to V5 integration::export parts from V4 model"></a></td>
+     </font>
+     <td valign="top" colspan="2" height="367" width="582">This process migrates 
+     part geometry and connector data directly from details in the V4 model, 
+     including Outside Diameter data. If you have TubeDimensions and EndStyle 
+     tables available in V5, then NominalSize and EndStyle data will also be 
+     migrated and added to the V5 part. The TubeDimensions table must have 
+     correct mapping between OutsideDiameter and NominalSize. The EndStyle table 
+     must be a normal V5 encode/decode table, with the decoded end style data 
+     representing V4 end-type data from the V4 PRJ (project) table. It should be 
+     in the same order as in the V4 PRJ, because the V4 model only contains the 
+     end-type number and not the end-type text.<p>Before executing this batch 
+     program you must set up the tubing mapping table for each detail you want 
+     migrated. See <a href="page14173.html">Modifying the Mapping Table</a> for 
+     more information.</p>
+     <p>Unless you set the variable AECMIGR_DIRECTORYPATH to a different 
+     location prior to executing the batch shell, the V4 model from which parts 
+     will be exported should reside in the following directory: <kbd>...intel_a&#092;startup&#092;EquipmentAndSystems&#092;MigrationDirectory&#092;SampleV4Models.</kbd></p>
+     <p>The TubeDimensions and EndStyle tables should be in: <kbd>...intel_a&#092;startup&#092;EquipmentAndSystems&#092;MigrationDirectory\TubingSystems\V5_Migrated_Tables</kbd></p>
+     <p>The Tubing mapping tables should be in: <kbd>..intel_a&#092;startup&#092;EquipmentAndSystems&#092;MigrationDirectory\Dictionary\MappingTable</kbd></td>
+   </tr>
+   <font face="Arial, Arial, Helvetica" color="#282187">
+   <tr valign="top" border="0">
+     <td valign="top" align="center" height="47" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top" width="28" height="47"><font color="#1c1557"><strong>1.</strong></font></td>
+     </font>
+     <td height="47" width="554">Place your V4 model in the V5 directory listed 
+     above. You can ftp it or place it there using any other method you prefer.</td>
+   </tr>
+   <tr valign="top" border="0">
+     <td align="center" height="153" width="32"></td>
+     <td valign="top" width="28" height="153"><font color="#1c1557"><strong>2.</strong></font></td>
+     <td height="153" width="554">In V5, open a command prompt window and change 
+     to the directory: <kbd>...intel_a&#092;code&#092;command</kbd>. 
+     Enter the following line and press Enter: set AECMIGR_DIRECTORYPATH=C:\...intel_a 
+     ...\MigrationDirectory or to your own location if diferent. (In Unix, enter 
+     'export' instead of 'set').<p>Enter the following line and press Enter:
+     <kbd>CATAecV4ToV5ModelParts.bat&nbsp;&nbsp;&nbsp;&nbsp; XXX.model</kbd> 
+     where XXX is the name of your V4 model. </p>
+     <p>In Unix execute the following command: <kbd>CATAecV4ToV5ModelParts.sh&nbsp;&nbsp;&nbsp;&nbsp; 
+     XXX.model</kbd></td>
+   </tr>
+   <font face="Arial, Arial, Helvetica" color="#282187">
+   <tr>
+     <td align="center" height="51" width="32"></td>
+     <td valign="top" width="28" height="51"><font color="#1c1557"><strong>3.</strong></font></td>
+     </font>
+     <td height="51" valign="top" width="554">The generated parts will be placed 
+     in the directory: <kbd>...MigrationDirectory&#092;TubingSystems&#092;V5_Generated_CATParts.</kbd>
+     </td>
+   </tr>
+   <font face="Arial, Arial, Helvetica" color="#282187">
+   <tr>
+     <td align="center" height="33" width="32"></td>
+     <td valign="top" width="28" height="33"><font color="#1c1557"><strong>4.</strong></font></td>
+     </font>
+     <td valign="top" height="33" width="554">Place these parts in your V5 parts 
+     catalog and modify your specifications catalog. </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td colspan="3" align="center" height="35" width="614">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

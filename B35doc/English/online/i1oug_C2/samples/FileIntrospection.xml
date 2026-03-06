@@ -1,0 +1,338 @@
+<?xml version="1.0" ?>
+<!--
+  Nodes definition 
+-->
+<!DOCTYPE FileIntrospection [
+  <!ELEMENT FileIntrospection ( Mime-Type)*      >
+  <!ELEMENT Mime-Type         (Utility)+         >
+  <!ELEMENT Utility           ( Compute )+       >
+  <!ELEMENT Compute           ( Parameter )+ >
+  <!--
+    Attribute definition for FileIntrospection
+  -->
+  <!ATTLIST FileIntrospection Version CDATA #REQUIRED>
+  <!--
+    Attribute definition for Mime-Type
+  -->
+  <!ATTLIST Mime-Type  Name  CDATA #REQUIRED >
+  <!--
+    Attribute definition for Utility
+  -->
+  <!ATTLIST Utility  Name CDATA #REQUIRED 
+					 UserExit CDATA #IMPLIED >
+  <!--
+    Attribute definition for Compute
+  -->
+  <!ATTLIST Compute Name CDATA #REQUIRED 
+					UserExit CDATA #IMPLIED >
+  <!--
+    Attribute definition for Parameter
+  -->
+  <!ATTLIST Parameter  Name          CDATA #REQUIRED
+                       Type          ( real | integer | string | binary | file ) 'file'
+                       Value         CDATA #IMPLIED
+                       Setting_File  CDATA #IMPLIED
+                       Setting_Name  CDATA #IMPLIED >
+]>
+<!--
+
+  File introspection administration:
+  For performance reasons the CATDMUUtility has been changed to allow batch processing. Also a new utility
+  has been written, ENOVIAExtractPreview is more efficient than CATUtilityJPG and works in either batch mode or single-file mode.
+  Currently, ENOVIAExtractPreview is available only for CATParts and CATProducts.
+  
+  For single file mode, the building of the command line is the same as before, no work is required. 
+  To use the batch mode, your utility must support taking in a list of objects to process. The output of the utility
+  should be put in a file based on the name of the input file. This name will be guaranteed to be unique by adding a CATUUID parameter.
+  
+  For single-file mode the below still applies and the BatchModeFlag should be set to "false".
+    
+    The objective is to generate a shell command according the mime-type 
+    of the file save in ENOVIA.
+    1- For each utility defines bellow a mime-type definition, we will build 
+       a command line that will be executed synchronously
+    2- The first utility argument will be "-f fileNameToBeIntrospected"
+    3- Each parameter will be included as -{NameField} {NameValue} in the command
+       line (if Setting_Name and Setting_User is present, the value will be extracted
+       from the setting file defined by Setting_File and which attribute name is
+       Setting_Name) 
+   ie. CATDMUUtility -f /tmp/myBolt.CATPart -box /tmp/theFileBox80038USERID.box -unit m -cgr /tmp/theFileCGR80038USERID.cgr -3dmap /tmp/theFile3dMap80038USERID.3dm -vox 0.020000
+    
+ 
+  For Batch mode processing the following changes are needed:       
+    The objective is to generate a shell command according the mime-type 
+    of the file save in ENOVIA.
+    1- For each utility defines bellow a mime-type definition, we will build 
+       a command line that will be executed synchronously
+    2- The first utility argument will be "-l" followed by the path of a file containing the list of fileNamesToBeIntrospected
+    3- Each parameter will be included as -{NameField} {NameValue} in the command
+       line (if Setting_Name and Setting_User is present, the value will be extracted
+       from the setting file defined by Setting_File and which attribute name is
+       Setting_Name) 
+       if the parameter type is "file" the value will not be added to the argument and the exteranl utility will be 
+       responsible for  naming the output files by taking the name of the input file and appending the appropriate mime-type
+       
+   ie   CATDMUUtility -l /tmp/listOfFilesToProcess -box  -unit m -cgr  -3dmap -vox 0.020000  
+       If you have run the AdminLoginInfo utility to set admin id/encrypted passwd information,
+	   then change DMUUtility.sh to ProductDMUUtility.sh in the "Utility Name" child element
+	   under the "application/catiav5-product" Mime-Type element. 
+   
+-->
+
+<FileIntrospection Version="2.0" QueueDirectory="/tmp/queue" SleepTime="5000" WorkRoot="" MaximumFilesPerProcess="50">
+  <Mime-Type Name="application/catia">
+    <Utility Name="DMUUtility.bat" BatchModeFlag="true" FlagInputFile="-l" UserExit="DMUUtilityManagerFormat">
+      <Compute Name="Bounding_Box" UserExit="DMUUtilityManagerBox">
+        <Parameter Name="box" Flag="-box" Type="file" Value="theFileBox.box"/>
+	      <Parameter Name="unit" Flag="-unit" Type="string" Value="m"/>
+      </Compute>
+      <Compute Name="File_Multi_Representation">
+        <Parameter Name="cgr" Flag="-cgr" Type="file" Value="theFileCGR.cgr"/>
+	    </Compute>
+      <Compute Name="3dMap" UserExit="DMUUtilityManager3dMap">
+        <Parameter Name="3dmap" Flag="-3dmap" Type="file" Value="theFile3dMap.3dm"/>
+	      <Parameter Name="vox" Flag="-vox" Type="real" Setting_Name="VPM_PS_VOXEL_SIZE" Setting_File="VPMAdmin"/>
+      </Compute>
+    </Utility>
+  </Mime-Type>
+  <Mime-Type Name="application/catia-mdldblfaix">
+  </Mime-Type>
+  <Mime-Type Name="application/catiaV5-Part">
+    <Utility Name="DMUUtility.bat" BatchModeFlag="true" FlagInputFile="-l" UserExit="DMUUtilityManagerFormat" OptimalInputCount="45">
+      <Compute Name="Bounding_Box" UserExit="DMUUtilityManagerBox">
+        <Parameter Name="box" Flag="-box" Type="file" Value="theFileBox.txt"/>
+			  <Parameter Name="unit" Flag="-unit" Type="string" Value="m"/>
+      </Compute>
+      <Compute Name="File_Multi_Representation">
+        <Parameter Name="cgr" Flag="-cgr" Type="file" Value="theFileCGR.cgr"/>
+      </Compute>
+      <Compute Name="3dMap" UserExit="DMUUtilityManager3dMap">
+        <Parameter Name="3dmap" Flag="-3dmap" Type="file" Value="theFile3dMap.3dmap"/>
+        <Parameter Name="vox" Flag="-vox" Type="real" Setting_Name="VPM_PS_VOXEL_SIZE" Setting_File="VPMAdmin"/>
+      </Compute>
+    </Utility>
+	  <Utility Name="ENOVIAExtractPreview" BatchModeFlag="true" FlagInputFile="-l" UserExit="UtilityManagerJPG">
+     <Compute Name="Jpeg">
+        <Parameter Name="jpg" Type="file" Value="theFileJPG.jpg"/>    
+		 </Compute>
+    </Utility>
+  </Mime-Type>
+  <Mime-Type Name="application/catia-3D">
+    <Utility Name="DMUUtility.bat" BatchModeFlag="false" FlagInputFile="-f" UserExit="DMUUtilityManagerFormat">
+      <Compute Name="Bounding_Box" UserExit="DMUUtilityManagerBox">
+        <Parameter Name="box" Flag="-box" Type="file" Value="theFileBox.box"/>
+	      <Parameter Name="unit" Flag="-unit" Type="string" Value="m"/>
+      </Compute>
+	    <Compute Name="3dMap" UserExit="DMUUtilityManager3dMap">
+        <Parameter Name="3dmap" Flag="-3dmap" Type="file" Value="theFile3dMap.3dm"/>
+        <Parameter Name="vox" Flag="-vox" Type="real" Setting_Name="VPM_PS_VOXEL_SIZE" Setting_File="VPMAdmin"/>
+      </Compute>
+    </Utility>
+	  <Utility Name="CATUtilityJPG" BatchModeFlag="false" UserExit="UtilityManagerJPG">
+      <Compute Name="Jpeg">
+        <Parameter Name="outputFile" Type="file" Value="theFileJPG.jpg"/>
+		  </Compute>
+    </Utility>
+  </Mime-Type>
+  <Mime-Type Name="application/Part">
+    <Utility Name="DMUUtility.bat" BatchModeFlag="false" FlagInputFile="-f" UserExit="DMUUtilityManagerFormat">
+      <Compute Name="Bounding_Box" UserExit="DMUUtilityManagerBox">
+        <Parameter Name="box" Flag="-box" Type="file" Value="theFileBox.box"/>
+			  <Parameter Name="unit" Flag="-unit" Type="string" Value="m"/>
+      </Compute>
+	    <Compute Name="File_Multi_Representation">
+        <Parameter Name="cgr" Flag="-cgr" Type="file" Value="theFileCGR.cgr"/>
+        <Parameter Name="NCGM" Flag="-NCGM" Type="file" Value="theFileNCGM.ncg"/>
+        <Parameter Name="sag" Flag="-sag" Type="real" Value="0.05"/>
+      </Compute>
+      <Compute Name="3dMap" UserExit="DMUUtilityManager3dMap">
+        <Parameter Name="3dmap" Flag="-3dmap" Type="file" Value="theFile3dMap.3dm"/>
+        <Parameter Name="vox" Flag="-vox" Type="real" Setting_Name="VPM_PS_VOXEL_SIZE" Setting_File="VPMAdmin"/>
+      </Compute>
+    </Utility>
+	  <Utility Name="CATUtilityJPG" BatchModeFlag="false" UserExit="UtilityManagerJPG">
+      <Compute Name="Jpeg">
+        <Parameter Name="outputFile" Type="file" Value="theFileJPG.jpg"/>
+		  </Compute>
+    </Utility>
+  </Mime-Type>
+  <Mime-Type Name="application/Assembly">
+    <Utility Name="DMUUtility.bat" BatchModeFlag="false" FlagInputFile="-f" UserExit="DMUUtilityManagerFormat">
+      <Compute Name="Bounding_Box" UserExit="DMUUtilityManagerBox">
+        <Parameter Name="box" Flag="-box" Type="file" Value="theFileBox.box"/>
+			  <Parameter Name="unit" Flag="-unit" Type="string" Value="m"/>
+      </Compute>
+	    <Compute Name="File_Multi_Representation">
+        <Parameter Name="cgr" Flag="-cgr" Type="file" Value="theFileCGR.cgr"/>
+        <Parameter Name="NCGM" Flag="-NCGM" Type="file" Value="theFileNCGM.ncg"/>
+        <Parameter Name="sag" Flag="-sag" Type="real" Value="0.05"/>
+      </Compute>
+      <Compute Name="3dMap" UserExit="DMUUtilityManager3dMap">
+        <Parameter Name="3dmap" Flag="-3dmap" Type="file" Value="theFile3dMap.3dm"/>
+        <Parameter Name="vox" Flag="-vox" Type="real" Setting_Name="VPM_PS_VOXEL_SIZE" Setting_File="VPMAdmin"/>
+      </Compute>
+    </Utility>
+	  <Utility Name="CATUtilityJPG" BatchModeFlag="false" UserExit="UtilityManagerJPG">
+      <Compute Name="Jpeg">
+        <Parameter Name="outputFile" Type="file" Value="theFileJPG.jpg"/>
+		  </Compute>
+    </Utility>
+  </Mime-Type>
+  <Mime-Type Name="application/proE-local2D">
+    <Utility Name="DMUUtility.bat" BatchModeFlag="false" FlagInputFile="-f" UserExit="DMUUtilityManagerFormat">
+      <Compute Name="Bounding_Box" UserExit="DMUUtilityManagerBox">
+        <Parameter Name="box" Flag="-box" Type="file" Value="theFileBox.box"/>
+			  <Parameter Name="unit" Flag="-unit" Type="string" Value="m"/>
+      </Compute>
+	    <Compute Name="File_Multi_Representation">
+        <Parameter Name="cgr" Flag="-cgr" Type="file" Value="theFileCGR.cgr"/>
+        <Parameter Name="NCGM" Flag="-NCGM" Type="file" Value="theFileNCGM.ncg"/>
+        <Parameter Name="sag" Flag="-sag" Type="real" Value="0.05"/>
+      </Compute>
+      <Compute Name="3dMap" UserExit="DMUUtilityManager3dMap">
+        <Parameter Name="3dmap" Flag="-3dmap" Type="file" Value="theFile3dMap.3dm"/>
+        <Parameter Name="vox" Flag="-vox" Type="real" Setting_Name="VPM_PS_VOXEL_SIZE" Setting_File="VPMAdmin"/>
+      </Compute>
+    </Utility>
+	  <Utility Name="CATUtilityJPG" BatchModeFlag="false" UserExit="UtilityManagerJPG">
+      <Compute Name="Jpeg">
+        <Parameter Name="outputFile" Type="file" Value="theFileJPG.jpg"/>
+		  </Compute>
+    </Utility>
+  </Mime-Type>
+  <Mime-Type Name="application/IDEAS-package">
+    <Utility Name="DMUUtility.bat" BatchModeFlag="false" FlagInputFile="-f" UserExit="DMUUtilityManagerFormat">
+      <Compute Name="Bounding_Box" UserExit="DMUUtilityManagerBox">
+        <Parameter Name="box" Flag="-box" Type="file" Value="theFileBox.box"/>
+			  <Parameter Name="unit" Flag="-unit" Type="string" Value="m"/>
+      </Compute>
+	    <Compute Name="File_Multi_Representation">
+        <Parameter Name="cgr" Flag="-cgr" Type="file" Value="theFileCGR.cgr"/>
+        <Parameter Name="NCGM" Flag="-NCGM" Type="file" Value="theFileNCGM.ncg"/>
+        <Parameter Name="sag" Flag="-sag" Type="real" Value="0.05"/>
+      </Compute>
+      <Compute Name="3dMap" UserExit="DMUUtilityManager3dMap">
+        <Parameter Name="3dmap" Flag="-3dmap" Type="file" Value="theFile3dMap.3dm"/>
+        <Parameter Name="vox" Flag="-vox" Type="real" Setting_Name="VPM_PS_VOXEL_SIZE" Setting_File="VPMAdmin"/>
+      </Compute>
+    </Utility>
+	  <Utility Name="CATUtilityJPG" BatchModeFlag="false" UserExit="UtilityManagerJPG">
+      <Compute Name="Jpeg">
+        <Parameter Name="outputFile" Type="file" Value="theFileJPG.jpg"/>
+		  </Compute>
+    </Utility>
+  </Mime-Type>
+  <Mime-Type Name="application/IDEAS-model">
+    <Utility Name="DMUUtility.bat" BatchModeFlag="false" FlagInputFile="-f" UserExit="DMUUtilityManagerFormat">
+      <Compute Name="Bounding_Box" UserExit="DMUUtilityManagerBox">
+        <Parameter Name="box" Flag="-box" Type="file" Value="theFileBox.box"/>
+			  <Parameter Name="unit" Flag="-unit" Type="string" Value="m"/>
+      </Compute>
+	    <Compute Name="File_Multi_Representation">
+        <Parameter Name="cgr" Flag="-cgr" Type="file" Value="theFileCGR.cgr"/>
+        <Parameter Name="NCGM" Flag="-NCGM" Type="file" Value="theFileNCGM.ncg"/>
+        <Parameter Name="sag" Flag="-sag" Type="real" Value="0.05"/>
+      </Compute>
+      <Compute Name="3dMap" UserExit="DMUUtilityManager3dMap">
+        <Parameter Name="3dmap" Flag="-3dmap" Type="file" Value="theFile3dMap.3dm"/>
+        <Parameter Name="vox" Flag="-vox" Type="real" Setting_Name="VPM_PS_VOXEL_SIZE" Setting_File="VPMAdmin"/>
+      </Compute>
+    </Utility>
+	  <Utility Name="CATUtilityJPG" BatchModeFlag="false" UserExit="UtilityManagerJPG">
+      <Compute Name="Jpeg">
+        <Parameter Name="outputFile" Type="file" Value="theFileJPG.jpg"/>
+		  </Compute>
+    </Utility>
+  </Mime-Type>
+  <Mime-Type Name="application/SLDAssembly">
+    <Utility Name="DMUUtility.bat" BatchModeFlag="false" FlagInputFile="-f" UserExit="DMUUtilityManagerFormat">
+      <Compute Name="Bounding_Box" UserExit="DMUUtilityManagerBox">
+        <Parameter Name="box" Flag="-box" Type="file" Value="theFileBox.box"/>
+			  <Parameter Name="unit" Flag="-unit" Type="string" Value="m"/>
+      </Compute>
+	    <Compute Name="File_Multi_Representation">
+        <Parameter Name="cgr" Flag="-cgr" Type="file" Value="theFileCGR.cgr"/>
+        <Parameter Name="NCGM" Flag="-NCGM" Type="file" Value="theFileNCGM.ncg"/>
+        <Parameter Name="sag" Flag="-sag" Type="real" Value="0.05"/>
+      </Compute>
+      <Compute Name="3dMap" UserExit="DMUUtilityManager3dMap">
+        <Parameter Name="3dmap" Flag="-3dmap" Type="file" Value="theFile3dMap.3dm"/>
+        <Parameter Name="vox" Flag="-vox" Type="real" Setting_Name="VPM_PS_VOXEL_SIZE" Setting_File="VPMAdmin"/>
+      </Compute>
+    </Utility>
+	  <Utility Name="CATUtilityJPG" BatchModeFlag="false" UserExit="UtilityManagerJPG">
+      <Compute Name="Jpeg">
+        <Parameter Name="outputFile" Type="file" Value="theFileJPG.jpg"/>
+		  </Compute>
+    </Utility>
+  </Mime-Type>
+  <Mime-Type Name="application/SLDPart">
+    <Utility Name="DMUUtility.bat" BatchModeFlag="false" FlagInputFile="-f" UserExit="DMUUtilityManagerFormat">
+      <Compute Name="Bounding_Box" UserExit="DMUUtilityManagerBox">
+        <Parameter Name="box" Flag="-box" Type="file" Value="theFileBox.box"/>
+			  <Parameter Name="unit" Flag="-unit" Type="string" Value="m"/>
+      </Compute>
+	    <Compute Name="File_Multi_Representation">
+        <Parameter Name="cgr" Flag="-cgr" Type="file" Value="theFileCGR.cgr"/>
+        <Parameter Name="NCGM" Flag="-NCGM" Type="file" Value="theFileNCGM.ncg"/>
+        <Parameter Name="sag" Flag="-sag" Type="real" Value="0.05"/>
+      </Compute>
+      <Compute Name="3dMap" UserExit="DMUUtilityManager3dMap">
+        <Parameter Name="3dmap" Flag="-3dmap" Type="file" Value="theFile3dMap.3dm"/>
+        <Parameter Name="vox" Flag="-vox" Type="real" Setting_Name="VPM_PS_VOXEL_SIZE" Setting_File="VPMAdmin"/>
+      </Compute>
+    </Utility>
+	  <Utility Name="CATUtilityJPG" BatchModeFlag="false" UserExit="UtilityManagerJPG">
+      <Compute Name="Jpeg">
+        <Parameter Name="outputFile" Type="file" Value="theFileJPG.jpg"/>
+		  </Compute>
+    </Utility>
+  </Mime-Type>
+  <Mime-Type Name="application/catiaV5-Product">
+  <!--If you want to activate the model generation from CATPart, uncomment the 4 lines below-->
+    <!--Utility Name="CATV5ToV4" FlagInputFile="-if" CallPreIntro="DMUUpdateModelV4"-->
+      <!--Compute Name="File_Multi_Representation" UserExit="DMUUtilityManagerFormat"-->
+      <!--/Compute-->
+    <!--/Utility-->
+	<!--If you have run the AdminLoginInfo utility to set admin id/encrypted passwd information,-->
+	<!--then change DMUUtility.bat to ProductDMUUtility.bat as the value in the "Utility Name" element below-->
+    <Utility Name="DMUUtility.bat" BatchModeFlag="true" FlagInputFile="-l" UserExit="DMUUtilityManagerFormat" OptimalInputCount="45">
+       <Compute Name="Bounding_Box" UserExit="DMUUtilityManagerBox">
+        <Parameter Name="box" Flag="-box" Type="file" Value="theFileBox.box"/>
+			  <Parameter Name="unit" Flag="-unit" Type="string" Value="m"/>
+      </Compute>
+      <Compute Name="File_Multi_Representation">
+        <Parameter Name="cgr" Flag="-cgr" Type="file" Value="theFileCGR.cgr"/>
+      </Compute>
+      <Compute Name="3dMap" UserExit="DMUUtilityManager3dMap">
+        <Parameter Name="3dmap" Flag="-3dmap" Type="file" Value="theFile3dMap.3dm"/>
+        <Parameter Name="vox" Flag="-vox" Type="real" Setting_Name="VPM_PS_VOXEL_SIZE" Setting_File="VPMAdmin"/>
+      </Compute>
+    </Utility>
+	  <Utility Name="ENOVIAExtractPreview" BatchModeFlag="true" FlagInputFile="-l" UserExit="UtilityManagerJPG">
+      <Compute Name="Jpeg">
+        <Parameter Name="outputFile" Type="file" Value="theFileJPG.jpg"/>
+		  </Compute>
+    </Utility>
+  </Mime-Type>
+	<Mime-Type Name="application/catiaV5-Shape">
+    <Utility Name="DMUUtility.bat" BatchModeFlag="false" FlagInputFile="-f" UserExit="DMUUtilityManagerFormat">
+      <Compute Name="Bounding_Box" UserExit="DMUUtilityManagerBox">
+        <Parameter Name="box" Flag="-box" Type="file" Value="theFileBox.box"/>
+			  <Parameter Name="unit" Flag="-unit" Type="string" Value="m"/>
+      </Compute>
+      <Compute Name="File_Multi_Representation">
+        <Parameter Name="cgr" Flag="-cgr" Type="file" Value="theFileCGR.cgr"/>
+      </Compute>
+      <Compute Name="3dMap" UserExit="DMUUtilityManager3dMap">
+        <Parameter Name="3dmap" Flag="-3dmap" Type="file" Value="theFile3dMap.3dm"/>
+        <Parameter Name="vox" Flag="-vox" Type="real" Setting_Name="VPM_PS_VOXEL_SIZE" Setting_File="VPMAdmin"/>
+      </Compute>
+    </Utility>
+	  <Utility Name="CATUtilityJPG" BatchModeFlag="false" UserExit="UtilityManagerJPG">
+      <Compute Name="Jpeg">
+        <Parameter Name="outputFile" Type="file" Value="theFileJPG.jpg"/>
+		  </Compute>
+    </Utility>
+  </Mime-Type>
+</FileIntrospection>

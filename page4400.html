@@ -1,0 +1,162 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Determining Graphical Representation</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Determining the Graphical Representation of Imported Objects</h1>
+ <table border="0" width="100%" cellspacing="3" cellpadding="3">
+   <tr>
+     <td width="5%" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td width="95%" valign="top">
+     <p style="margin-bottom: 1em">To determine the geometric properties of an object when it is imported from Process 
+     Engineer: </p>
+     <ul>
+       <li>DPM first searches for its representation in the <i>graphicname_alt1</i> attribute. If this attribute is not 
+       empty, it will provide a DPM-defined representation of the object (such as CATPart, model, CATProduct, CGR 
+       etc.).&nbsp;</li>
+       <li>If no such representation exists in the <i>graphicname_alt1</i> attribute,&nbsp;
+       <ul>
+         <li>For a product: the <i>CAD File</i> attribute is then queried. This attribute is used for representation 
+         supported by Process Engineer (CGR, JT, etc.) of the product.</li>
+         <li>For a resource: the <i>graphicname</i> attribute is then queried. This attribute is used for representation 
+         supported by Process Engineer (CGR, JT, etc.) of the resource.</li>
+       </ul>
+       </li>
+       <li>If no representation is found, the product/resource is represented as an empty node on the PPR tree with no 
+       graphical representation in the 3D viewer.</li>
+     </ul>
+     <p style="margin-bottom: 1em">DPM uses the value of this attribute to load the geometry of the entity. The object 
+     will then be loaded: </p>
+     <ul>
+       <li>As a shape representation if the file is a CGR or a model of another CAD type file (a DPM equivalent of the 
+       Process Engineer entity is created with the associated file as its representation).</li>
+       <li>
+       <p style="margin-bottom: 1em">As an external component for CATPart and CATProduct (so the Process Engineer entity 
+       is replaced by the root of this associated file).</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="5%" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="95%" valign="top">
+     <p style="margin-bottom: 1em">In the example below:</p>
+     <ul>
+       <li>When Part 1 was brought into DPM,&nbsp;the <i>graphicname_alt1</i> attribute was found to be empty, but the <i>CAD 
+       File</i> attribute defined a CGR as its representation. This can be seen via the Manage Representations dialog 
+       (as shown).</li>
+       <li>
+       <p style="margin-bottom: 1em">When Part 2 was brought into DPM, the <i>graphicname_alt1</i> attribute defined a 
+       CATPart as the graphical representation of the product. Therefore, the part and its sub-assembly can be seen in 
+       the PPR tree (highlighted in the blue box).</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="5%" valign="top"></td>
+     <td width="95%" valign="top">
+     <p align="center"><img border="1" src="b35doc/english/online/cfyugmfghub_c2/images/wnSearchForRepresentation.gif" width="816" height="627"></td>
+   </tr>
+   <tr>
+     <td width="5%" valign="top">
+     <h2><img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></h2>
+     </td>
+     <td width="95%" valign="top">
+     <h2>Notes</h2>
+     <ul>
+       <li>
+		<p style="margin-bottom: 1em">When defining the <i>graphicname_alt1</i> attribute in Process Engineer, either an 
+       absolute path or a relative path may be defined.<br><br>An absolute path specifies the full path to the graphic representation, as shown in the example below:<br>
+		<br>
+		<img border="1" src="b35doc/english/online/cfyugmfghub_c2/images/dbGraphicAbsolutePathNLS.gif" width="506" height="223"><br>
+		<br>When a relative path is specified, the root path is taken from the current 
+		<i>cadpath</i> and <i>product_cadpath</i> 
+       settings in Process Engineer:<br><br>
+		<img border="1" src="b35doc/english/online/cfyugmfghub_c2/images/dbDefineProductCADPathNLS.gif" width="746" height="427"><br>
+		<br>The relative path specified for the <i>graphicname_alt1</i> attribute is appended to the path defined for 
+		<i>cadpath</i> and <i>product_cadpath</i> to locate the graphic representation. The following example of a relative 
+       path would then resolve to: <i><br><br>C:\Program Files\DELMIA\PPRClient\data\cadpath\Engine\Crankshaft.CATProduct<br>
+		<br></i>
+		<img border="1" src="b35doc/english/online/cfyugmfghub_c2/images/dbGraphicRelativePathNLS.gif" width="506" height="223"></li>
+		<li>
+		<p style="margin-bottom: 1em">When loading geometry defined with 
+		relative paths, either of the following conditions must be satisfied:<ul>
+       <li>The values of the <code>cadpath</code> and <code>product_cadpath</code> 
+		variables each have a trailing backslash (&quot;\&quot;) character, <b><i>or</i></b> 
+		the relative pathname for the product/resource geometry begins with a 
+		backslash (&quot;\&quot;). </li>
+		<li>The values of the <code>cadpath</code> and <code>product_cadpath</code> 
+		variables each do <i>not</i> have a trailing backslash (&quot;\&quot;) character, 
+		and the relative pathname for product/resource geometry does not begin 
+		with a backslash character (&quot;\&quot;). </li>
+     </ul>
+     	<p>Geometry will not be successfully generated in the V5 cache in the 
+		event that (a) the values of the <code>cadpath</code> and <code>
+		product_cadpath</code> variables have a trailing backslash character at 
+		the end and (b) the relative pathname for product/resource geometry 
+		begins with a backslash.</li>
+		<li>
+		<p style="margin-bottom: 1em">If a resource has a work system component associated with it, the geometry of the 
+       work system component will be loaded in DPM when the resource is loaded in DPM. The following geometry formats 
+       are supported:<ul>
+			<li>.cgr </li>
+			<li>.objekt </li>
+			<li>.bom </li>
+			<li>.jt </li>
+			<li>.primitive </li>
+			<li>.wrl</li>
+		</ul></li>
+     </ul>
+     </td>
+   </tr>
+ 	<tr>
+     <td width="5%" valign="top">
+     <h2>&nbsp;</h2>
+     </td>
+     <td width="95%" valign="top">
+     <h2><a name="SupportDLNames">Support DL Names</a></h2>
+		<p>You can have multiple folders specified in the product_cadpath 
+		setting while locating the CAD data for the products which are loaded 
+		from the Manufacturing Hub into V5 DPM.</p>
+		<p>Multiple folder locations are supported for storing CAD data using 
+		existing setting product_cadpath. You can specify multiple folder 
+		locations in product_cadpath setting. Each folder location is separated 
+		by a semicolon. The <kbd>DPE Tools</kbd> &gt; <kbd>Settings</kbd> &gt; <kbd>
+		Maintenance Tool </kbd>&gt; <kbd>Global</kbd> &gt; <kbd>Import DL Names</kbd> 
+		button import DL locations (not DL names).</p>
+		<p>If the Document environment in DELMIA V5 is configured to use only 
+		DLNames, then the multiple folders specified in the product_cadpath 
+		setting in DELMIA Process Engineer must be specified as part of the 
+		folders referenced by the DLNames. If these folders are not referenced 
+		by the DLNames, then CAD present in these folders will not be loaded in 
+		V5 DPM upon load from Manufacturing Hub as there is no access to these 
+		folders.</p>
+     </td>
+   </tr>
+ </table>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"> </p>
+ <p align="center">&nbsp;</p>
+
+ </body>
+
+</html>
+

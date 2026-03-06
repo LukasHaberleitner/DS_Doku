@@ -1,0 +1,123 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Lighting</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+ </head>
+
+ <body>
+
+ <h1>
+     Lighting</h1>
+ <p align="center">&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" height="683" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="32" width="100%">
+		<h2>How does it happen?</h2>
+		<p>When visualizing a surface with a low-angle camera, visual artefacts 
+		might appear. This is due to the lighting computation which is done per 
+		vertex. In that case, the standard OpenGL lighting mode is used.</p>
+		<p>The 
+		OpenGL lighting model is hard-coded in the graphics card and works as 
+		follows: given the color of the three vertices, the color of pixels 
+		within a triangle is computed as a linear combination of the color at 
+		the three vertices of the triangle. Of course, it is an approximation of 
+		the real computation.<p>Below is an example showing how white stripes are 
+		triangle-dependent:</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="157" width="100%">
+		<table border="0" id="table1" width="685" height="130">
+			<tr>
+				<td align="left" valign="top" width="154" bgcolor="#E0E0E0">Fixed sag = 0.001<br>
+				No zoom</td>
+				<td width="156" align="left" valign="top" bgcolor="#F2F2F2">After zooming.<br>
+				No visual artefact</td>
+				<td width="188" align="left" valign="top" bgcolor="#E0E0E0">After zooming in.<br>
+				Visual artefact appears</td>
+				<td width="197" align="left" valign="top" bgcolor="#F2F2F2">
+				Conclusion.<br>
+				This is due to triangles</td>
+			</tr>
+			<tr>
+				<td align="left" width="154" height="83" bgcolor="#E0E0E0">
+				<p align="center">
+           <img border="2" src="b35doc/english/online/basug_c2/images/lighting01_small.gif" width="100" height="76" title="Click to enlarge this image" align="left"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script></td>
+				<td width="156" align="left" height="83" bgcolor="#F2F2F2">
+           <img border="2" src="b35doc/english/online/basug_c2/images/lighting03_small.gif" width="100" height="76" title="Click to enlarge this image"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script></td>
+				<td width="188" align="left" height="83" bgcolor="#E0E0E0">
+           <img border="2" src="b35doc/english/online/basug_c2/images/lighting02_small.gif" width="100" height="76" title="Click to enlarge this image"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script></td>
+				<td width="197" align="left" height="83" bgcolor="#F2F2F2">
+           <img border="2" src="b35doc/english/online/basug_c2/images/lighting04_small.gif" width="100" height="76" title="Click to enlarge this image"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script></td>
+			</tr>
+			</table>
+		</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="98" width="100%">
+		This visual artefact might be removed by using an advanced material 
+		(such as a CgFX material) because the texture fetch is performed at  
+		pixel level, and not at vertex level. For detailed information about 
+		advanced materials, refer to the <cite>Version 5 - Real Time Rendering 
+		User's Guide</cite>.<p>The pictures below show how the visual artefact 
+		disappears when applying advanced materials:</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="119" width="100%">
+		<table border="0" id="table2" width="759">
+			<tr>
+				<td width="239" bgcolor="#E0E0E0">Aluminium material.<br>
+				No shader</td>
+				<td width="253" bgcolor="#F2F2F2">Chroma polished advanced material.<br>
+				Made of CgFX shader</td>
+				<td width="261" bgcolor="#E0E0E0">Aluminium brushed advanced material.<br>
+				Made of CgFX shader</td>
+			</tr>
+			<tr>
+				<td width="239" bgcolor="#E0E0E0">
+           <img border="2" src="b35doc/english/online/basug_c2/images/lighting05_small.gif" width="214" height="93" title="Click to enlarge this image" align="left"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script></td>
+				<td width="253" bgcolor="#F2F2F2">
+           <img border="2" src="b35doc/english/online/basug_c2/images/lighting06_small.gif" width="213" height="93" title="Click to enlarge this image" align="left"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script></td>
+				<td width="261" bgcolor="#E0E0E0">
+           <img border="2" src="b35doc/english/online/basug_c2/images/lighting07_small.gif" width="214" height="93" title="Click to enlarge this image" align="left"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script></td>
+			</tr>
+		</table>
+		</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="103" width="100%">
+		Decreasing the
+		<a target="ds_doc2" href="page0907.html#hj-3D accuracy">
+		sag value</a> (which makes the tessellation more accurate) reduces the 
+		visual artefact because there are more triangles, these triangles are 
+		smaller and therefore, the density of vertices is higher.
+		<p>However, if you keep on zooming in, this visual artefact will 
+		reappear when the camera is getting closer to the mesh.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="55" width="100%">
+		<h2>How to solve this?</h2>
+		<p>The visual artefact can be reduced be 
+		modifying the tessellation settings (i.e. the 3D accuracy and the 
+		curves' accuracy ratio) and by reducing the material reflectivity.</td>
+   </tr>
+   </table>
+
+ </body>
+
+</html>
+

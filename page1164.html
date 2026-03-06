@@ -1,0 +1,266 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml">
+
+ <head>
+ <meta name="MonocodingType" content="2">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Setting Up the File Collaboration Server</title>
+ 
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style type="text/css">
+.style1 {
+	text-align: center;
+}
+</style>
+ </head>
+
+ <body>
+
+ <h1><font face="Arial, Arial, Helvetica" color="#282187">&nbsp;</font><font color="#282187" face="Verdana">Setting Up 
+	the File Collaboration Server</font></h1>
+ <p><br>This topic describes how to setup the File Collaboration Server 
+ (FCS). </p>
+ <h2 class="auto-style1">Before you begin</h2>
+ <p class="auto-style1">&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" style="height: 46px">
+   <tr valign="top" BORDER="0">
+     <td height="38" width="32">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td rowspan="1" height="38" width="639">
+         Ensure that the FCS has been installed. See
+			<a href="page1163.html">Installing File 
+			Collaboration Server</a>.<br>
+			About Setting Up the SDAM Environment. See
+			<a href="page1165.html">Setting Up the SDAM 
+			Environment</a>.</td>
+   </tr>
+   </table>
+ <h3>Create DB Tables Required for FCS Metadata Server</h3>
+ <p>&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" height="116" width="100%">
+   <tr>
+     <td width="45" valign="top" style="height: 9px">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="600" valign="top" style="height: 9px">During the ENOVIA V5 
+		installation and setup, the DB and the tables that are created are 
+		related to ENOVIA V5. You can use the same DB for FCS tables.<br><br>The 
+		following tables are required for managing the FCS metadata:<br>
+	 <div>
+		 <ul>
+			 <li>FILES</li>
+		 </ul>
+	 </div>
+	 <div>
+		 <ul>
+			 <li>INODE</li>
+		 </ul>
+	 </div>
+	 <div>
+		 <ul>
+			 <li>LOCATION</li>
+		 </ul>
+	 </div>
+	 <div>
+		 <ul>
+			 <li>PHYSICAL</li>
+		 </ul>
+	 </div>
+	 <div>
+		 <ul>
+			 <li>SITE</li>
+		 </ul>
+	 </div>
+	 <div>
+		 <ul>
+			 <li>STORE</li>
+		 </ul>
+	 </div>
+	 <div>
+		 <ul>
+			 <li>USERNAME</li>
+		 </ul>
+	 </div>
+	 <br>You can use the following scripts to create tables:<br>
+	 <div>
+		 <ul>
+			 <li><strong>ORACLE</strong>: &lt;CATInstallPath&gt;\reffiles\DBMS\ddl\VPMV5_FCS_Tables.sql</li>
+		 </ul>
+	 </div>
+	 <div>
+		 <ul>
+			 <li><strong>DB2</strong>: &lt;CATInstallPath&gt;\reffiles\DBMS\ddl\VPMV5_FCS_Tables.clp</li>
+		 </ul>
+	 </div>
+	 <br><strong>Note</strong>: Before running the DB scripts, modify them with 
+	 table owner and table space used for ENOVIA V5 DB.<br><br>
+     </td>
+   </tr>
+   </table>
+ <h3>Run the DB Scripts</h3>
+ <p>&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" height="114" width="100%">
+   <tr>
+     <td height="2" width="45" valign="top">
+     &nbsp;</td>
+     <td height="2" width="600" valign="top">This section describes how to run 
+		the DB scripts.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="1" width="36">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td rowspan="1" height="1" width="650">
+     <ol>
+       <li>Connect to DB.<br>
+	   For oracle, set ORACLE_SID=&lt;DB NAME&gt; on terminal or command prompt</li>
+		 <li>Login to the SQL console as DB 
+			 Administrator.</li><br>
+			 For example, <em>conn sys as sysdba</em>
+		 <li>Run the script:</li>
+			 @&lt;CATInstallPath&gt;\reffiles\DBMS\ddl\VPMV5_FCS_Tables.sql
+     </ol>
+     </td>
+   </tr>
+ </table>
+ <h3>Create Default Store</h3>
+ <p>&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" height="191" width="100%">
+   <tr>
+     <td height="2" width="45" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="2" width="600" valign="top">You can create the default store, 
+	 which points to the URL of FCS metadata server.<br><br>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="1" width="52">
+     &nbsp;</td>
+     <td rowspan="1" height="1" width="633">
+     <ol>
+       <li>To create a store, use the following SQL command:</li>
+		 <em><br>
+		INSERT INTO STORE (NAME,PATH,URL,PROTOCOL) values 
+		 (&#8216;V5FCSSTORE',&lt;Physical location&gt;,&lt;FCS Server URL&gt;,'file');</em><li>In SQL, replace the following values as per the 
+			 setup:<br>
+		V5FCSSTORE is the name of the default store.<br>
+		Physical location &#8211; Create a directory to store the physical 
+			 files and provide the value for &lt;Physical location&gt;</li>.<br>
+			 		For example &#8211; &#8216;C:\DassaultSystemes\R2022x\FCS\FCSVault&#8217;<br>
+		FCS 
+			 Server URL &#8211; URL of the previously installed FCS server</li>
+			 		<br>
+			 For example, http://&lt;hostname&gt;&lt;port for FCS&gt;/fcs </ol>
+     </td>
+   </tr>
+   </table>
+ <h3>Assign Specific FCS Server to the User (Optional)</h3>
+ <p>&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" height="191" width="100%">
+   <tr>
+     <td height="2" width="45" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="2" width="600" valign="top">You can assign a specific FCS 
+		server to the user.<br>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="1" width="52">
+     &nbsp;</td>
+     <td rowspan="1" height="1" width="633">
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p>The following SQL queries are used to assign specific FCS server 
+		   to the user as per user's site configuration. Ensure that the FCS 
+		   server used in this step is different than the FCS server used in the 
+			default store.</p>
+			 <ul>
+				 <li>Create a store: <br><em>INSERT INTO STORE 
+				 (NAME,PATH,URL,PROTOCOL) values ('SITEASTORE',&lt;Physical 
+				 location&gt;,&lt;FCS Server URL&gt;,'file');</em></li>
+				 <li>Create site<br><em>INSERT INTO SITE (NAME) values ('Site_A');</em></li>
+				 <li>Add user to the <em>'</em>Site A<em>'</em> &#8211; USER1 <br><em>INSERT INTO 
+				 USERNAME (NAME, SITE) values ('USER1', 'Site_A');</em></li>
+				 <li>Assign FCS Server to site <em>'</em>Site A<em>'</em><br><em>
+					INSERT INTO LOCATION (NAME,PATH,URL,PROTOCOL,STORE,SITE) 
+					values ('Location_A', &lt;Physical location&gt; ,&lt;FCS Server 
+					URL&gt;,'file','SITEASTORE', 'Site_A');<br>
+					<br>
+					</em>Where,<br>
+					Physical location &#8211; Create a directory to store the physical 
+					files and provide the value for &lt;Physical location&gt;.<br>
+					For example &#8211; &#8216;C:\DassaultSystemes\R2022x\FCS\FCSVault&#8217; <br>
+					FCS Server URL &#8211; URL of the previously installed FCS server.
+					<br>
+					For example, http://&lt;hostname&gt;&lt;port for FCS&gt;/fcs </li>
+			 </ul>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+ </table>
+ <h3>Configure FCS Server to Access DB</h3>
+ <p>&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" height="191" width="100%">
+   <tr>
+     <td height="2" width="45" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="2" width="600" valign="top">You can configure the FCS server, 
+	 which provides access to DB.<br>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="1" width="52">
+     &nbsp;</td>
+     <td rowspan="1" height="1" width="633">
+     <ul>
+		 <li>Copy DB vendor (Oracle/DB2) specific jdbc driver jar to either of 
+		 the following paths:<ul>
+			 <li><em>&lt;SDAM 
+			 middleware_Install_DIR&gt;\webapps\V5SDAMClientServ\WEB-INF\lib\</em></li>
+			 <li><em>&lt;SDAM middleware_Install_DIR&gt;\lib<br>
+				</em>Where,<br>
+				&lt;SDAM middleware_Install_DIR&gt; - Deployment directory of 
+				V5SDAMClientServ.war </li>
+		 </ul>
+		 </li>
+	 </ul>
+     <ul>
+		 <li>Configure FCS metadata server for DB connection.<ul>
+			 <li>Modify dbinfo.txt file located at &lt;<em>WEB-INF\classes</em>&gt; directory 
+			 of WebServer and add following details:<p>For Oracle:<br>
+				jdbcurl=jdbc:oracle:thin:@&lt;SDAMServerInstallationMachine&gt;:&lt;ListenPort&gt;:&lt;DBNAME&gt;<br>
+				user=&lt;fcs_admin&gt;<br>
+				password=&lt;fcs_admin_password&gt;<br>
+				DB=oracle</p>
+		<p>For DB2:<br>
+		jdbcurl=jdbc:db2://&lt;SDAMServerInstallationMachine&gt;:&lt;TCP Port for DB2 
+		service&gt;/&lt;DB Name&gt;<br>
+		user=&lt;fcs_admin&gt;<br>
+		password=&lt;fcs_admin_password&gt;<br>
+		DB=DB2 or db2 or ibm</p>
+				</li>
+		 </ul>
+		 </li>
+	 </ul>
+     </td>
+   </tr>
+ </table>
+ 
+ 
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" height="41">
+   <tr>
+     <td width="754" colspan="2" height="1" class="style1">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">&nbsp;</td>
+   </tr>
+ </table>
+ 
+ </body>
+
+
+</html>
+

@@ -1,0 +1,290 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>NC Data Import to Support Legacy Data</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>NC Data Import to Support Legacy Data</h1>
+ <p align="left">Machining data managed by customers (especially in aerospace) 
+ have a very long life cycle. During the product life, customers need to modify 
+ their products, and consequently associated machining data.<br>
+ Customers need to be able to retrieve machining data generated with CATIA V4 or 
+ other CAM systems, and modify them using Version 5 Machining products.</p>
+ <p align="left">The NC Data Import functionality allows retrieving APT source 
+ files, clfiles, and NC code.</p>
+ <p align="left">This section describes the NC Data Import capability and its 
+ scope for reviewing and reusing data generated with CATIA V4 or other CAM 
+ systems.</p>
+ <h2 align="left">NC Data Import</h2>
+ <p align="left">NC data files (generated using V5 or previous versions) may be 
+ tagged with markers (OPERATION NUMBER or OPERATION NAME, prefixed either by 
+ PPRINT or $$) that identify the start of each operation. </p>
+ <p align="left">When an NC data file is imported, each operation identified in 
+ this way is defined as an entity in the resulting V5 program (APT Import, PP 
+ Instruction, Table Rotation, INDEX/TRACUT/COPY, and so on).</p>
+ <h3>Created Operation Types</h3>
+ <p>The following types of operation can be created:</p>
+ <ul>
+   <li><a href="#TC">Tool Change</a></li>
+   <li><a href="#MachAxs">Machining Axis Change</a>&nbsp;</li>
+   <li><a href="#ROTABL">Table Rotation</a></li>
+   <li><a href="#Tracut">INDEX, COPY, TRACUT</a></li>
+   <li><a href="#APTimport">APT Import</a>.</li>
+ </ul>
+ <h4><a name="TC"></a>Tool Change</h4>
+ <p>A Version 5 Tool Change is created whenever a CUTTER statement with 7 
+ parameters is found in the imported file. In most cases this tool change uses a 
+ V5 End Mill defined from the parameters on the CUTTER statement. In some cases 
+ a V5 Drill is used.</p>
+ <p>The parameters are tool radius, corner radius, horizontal and vertical 
+ distances from the center of the corner to the tool axis or bottom, bottom and 
+ flank angles, and tool height. Default values are applied to other parameters 
+ of the tool.</p>
+ <p>Note that:</p>
+ <ul>
+   <li>Tools and tool changes can be modified (edit, modify, replace).</li>
+   <li>No unnecessary V5 tool change is created if the user replaces APT Import 
+   activities by V5 operations using the same tool in a sequence of APT Import 
+   activities. <br>
+   <br>
+   <img border="1" src="b35doc/english/online/mfgug_c2/images/APTImport01.gif" width="228" height="188"></li>
+ </ul>
+ <p>If the CUTTER statement has 1 parameter, a turning assembly with 
+ insert-holder and inset is created. The parameter in the&nbsp;CUTTER statement 
+ represents the nose radius of the insert.</p>
+ <h4><a name="MachAxs"></a>Machining Axis Change</h4>
+ <p>A Machining Axis Change operation is created whenever the following 
+ statements appear in the APT file:</p>
+ <ul>
+   <li>*CATIA0</li>
+   <li>ORIGIN</li>
+ </ul>
+ <p>The matrix associated with the Machining Axis Change operation is generated 
+ from the parameters associated&nbsp;with the *CATIA0 or ORIGIN statement.</p>
+ <p>Note that the first *CATIA0 met will generate a Machining Axis Change 
+ operation only if the associated matrix parameters are different from the 
+ machining axis system referenced by the Part Operation.</p>
+ <h4><a name="ROTABL"></a>Table Rotation </h4>
+ <p>Each time a sequence of ROTABL statements is clearly identified in the file 
+ to be imported, a Machine rotation will be created in the Manufacturing Program 
+ to manage it.</p>
+ <p>The rotation matrix associated with the Machine rotation is generated from 
+ the parameters associated with&nbsp;the *CATIA0 syntax that follows the ROTABL 
+ statement.&nbsp;</p>
+ <p><b>Table rotation statements (ROTABL)</b></p>
+ <p>The supported forms of <kbd>ROTABL/ axis, value, mode, way</kbd> statements 
+ are all combinations of the following parameters:</p>
+ <ul>
+   <li><kbd>axis</kbd> indicating the rotation axis (A, B, C, AAXIS, BAXIS, or 
+   CAXIS)</li>
+   <li><kbd>value</kbd> representing the angle value of the rotation</li>
+   <li><kbd>mode</kbd> indicating if the angle is defined in incremental (INCR) 
+   or absolute mode (ABS or ATANGL)</li>
+   <li><kbd>way</kbd> giving the direction of rotation (CLW or CCLW).</li>
+ </ul>
+ <p>The case of 2 successive table rotations is supported by the APT Import. 
+ These rotations are followed by a single matrix definition.</p>
+ <p>Example:</p>
+ <blockquote>
+   <p>ROTABL/AAXIS,...<br>
+   ROTABL/CAXIS,...<br>
+   $$CATIA0<br>
+   $$<br>
+   $$ a11 a12 a13 a14<br>
+   $$ a21 a22 a23 a24<br>
+   $$ a31 a32 a33 a34</p>
+ </blockquote>
+ <p><b>Notes:</b> </p>
+ <ul>
+   <li>The incremental mode is not supported: a statement including INCR value 
+   is considered as a simple PP word statement and not as a rotation. </li>
+   <li>If the axis name (A, B, C, AAXIS, BAXIS, or CXAXIS) or way of rotation (CLW 
+   or CCLW) of the rotary syntax is not defined, then no Machine rotation can be 
+   created. These statements will be considered as simple PP words and not as a 
+   rotation.</li>
+   <li>A ROTABL statement cannot be imported if the referenced machine is a 
+   generic machine (that is, machine created using the NC Machine Tool Builder 
+   product).</li>
+ </ul>
+ <h4><a name="Tracut"></a>INDEX, COPY, TRACUT</h4>
+ <p>Each time an INDEX, COPY or TRACUT statement is found during APT Import, a 
+ V5 COPY or TRACUT activity is created.</p>
+ <p>The following forms of INDEX, COPY and TRACUT statements are supported.</p>
+ <p><b>INDEX </b></p>
+ <p>INDEX/n where n is the index number<br>
+ <br>
+ INDEX/n,NOMORE where n is the index number.</p>
+ <p><b>COPY</b></p>
+ <p>COPY/n,SAME,p where n is the index number and p is the number of copies<br>
+ <br>
+ COPY/n,TRANSL,dx,dy,dz,p where n is the index number, dx,dy,dz are the 
+ components of the translation vector and p is the number of copies<br>
+ <br>
+ COPY/n,XYROT,a,p where n is the index number, a is the angle value and p is the 
+ number of copies<br>
+ <br>
+ COPY/n,YZROT,b,p where n is the index number, b is the angle value and p is the 
+ number of copies<br>
+ <br>
+ COPY/n,ZXROT,c,p where n is the index number, c is the angle value and p is the 
+ number of copies <br>
+ <br>
+ COPY/n,SCALE,s,p where n is the index number, s is the scale factor and p is 
+ the number of copies <br>
+ <br>
+ COPY/n,MODIFY,$<br>
+&nbsp; (MATRIX/a11,a12,a13,$<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ a21,a22,a23,$<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ a31,a32,a33,$<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ a41,a42,a43),p <br>
+ where n is the index number, aij are the components of the matrix and p is the 
+ number of copies</p>
+ <p><b>TRACUT</b></p>
+ <p>TRACUT/(MATRIX/TRANSL,dx,dy,dz) where dx,dy,dz are the components of the 
+ translation vector<br>
+ <br>
+ TRACUT/(MATRIX/XYROT,a) where a is the angle value of the rotation<br>
+ <br>
+ TRACUT/(MATRIX/YZROT,b) where b is the angle value of the rotation<br>
+ <br>
+ TRACUT/(MATRIX/ZXROT,c) where c is the angle value of the rotation<br>
+ <br>
+ TRACUT/(MATRIX/SCALE,s) where s is the scale factor<br>
+ <br>
+ TRACUT/(MATRIX/a11,a12,a13,$<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ a21,a22,a23,$<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ a31,a32,a33,$<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ a41,a42,a43) <br>
+ where aij are the components of the matrix. </p>
+ <p><b>TRACUT/NOMORE</b></p>
+ <h4><a name="APTimport"></a>APT Import</h4>
+ <p>The purpose of the <a href="page11428.html#glAptImport">APT Import</a> activity 
+ is to store a tool path created from parameters included in the APT file. The 
+ tool path comprises linear and circular displacements and PP words</p>
+ <p>APT Import entities are automatically locked during creation.<br>
+ This allows the tool path to be modified by means of the Tool Path Editor.</p>
+ <p><b>Creation Conditions for a New APT Import</b></p>
+ <p>A first APT Import activity (with a current tool path) is created when the 
+ APT file is opened. </p>
+ <p>A new APT Import activity is created when the following parameters are 
+ decoded in the APT file: </p>
+ <ul>
+   <li>CUTTER (after creation of a Tool Change operation)</li>
+   <li>*CATIA0 or ORIGIN (after creation of a Machining Axis Change operation)</li>
+   <li>ROTABL (after creation of a Table Rotation operation)</li>
+   <li>FROM</li>
+   <li>TLAXIS</li>
+   <li>OPERATION NUMBER or OPERATION NAME type comment.</li>
+ </ul>
+ <p><b>Other Interpreted Parameters</b></p>
+ <p>The other interpreted parameters for the created tool path are as follows:
+ </p>
+ <ul>
+   <li>GOTO and GODLTA for linear displacements</li>
+   <li>INTOL, OUTTOL, AUTOPS, PSIS, INDIRV and TLON for circular displacements</li>
+   <li>MULTAX for 5-axis tool paths</li>
+   <li>FEDRAT and RAPID for feedrate descriptions</li>
+   <li>SPINDL for spindle speed descriptions</li>
+   <li>UNITS for the current unit (mm, inch, and so on)</li>
+   <li>TOOLCENTER, CONTACTPOINT and TOOLEND. These are descriptions of the 
+   tool's center point,&nbsp;contact point, and end point (or tip).</li>
+ </ul>
+ <p>Syntaxes that do not include recognized parameters are stored as is in the 
+ tool path and are generated as is in the&nbsp;APT file (for example, this is the 
+ case for PP words and comments). </p>
+ <p>Each time a sequence of PP word statements is clearly identified (with 
+ PPRINT OPERATION NUMBER) in the NC data file, a V5 Post-Processor instruction 
+ will be created in the Manufacturing Program. The created PP instruction can be 
+ edited.</p>
+ <p>Note that PP word statements defined in macros of a machining operation 
+ remain embedded in the tool path of the operation.</p>
+ <h3>PQR Cutter Compensation</h3>
+ <p>You can import an APT file containing PQR cutter compensation data (that is, 
+ the drive surface normal). </p>
+ <p>This PQR data may be of 2 forms shown in the examples below.</p>
+ <p>Example 1:</p>
+ <blockquote>
+   <p><code>CUTCOM/ NORMDS<br>
+   $$ START CUTCOM NORMDS XT,YT,ZT,I,J,K,P,Q,R<br>
+   GOTO / 100.00276, -17.79095, 34.00000, 0.000000, 0.000000, 1.00000$<br>
+   0, 0.000000,-1.000000, 0.000000<br>
+   ...<br>
+   CUTCOM/OFF<br>
+   $$ END CUTCOM NORMDS XT,YT,ZT,I,J,K,P,Q,R</code></p>
+ </blockquote>
+ <p>Example 2:</p>
+ <blockquote>
+   <p><code>CUTCOM/ NORMDS<br>
+   $$ START CUTCOM NORMDS XT,YT,ZT,P,Q,R<br>
+   GOTO / 100.00276, -17.79095, 34.00000, $ 0, 0.000000,-1.000000, 0.000000<br>
+   ...<br>
+   CUTCOM/OFF<br>
+   $$ END CUTCOM NORMDS XT,YT,ZT,P,Q,R</code></p>
+ </blockquote>
+ <h3>Transition Paths</h3>
+ <p>A Transition Path is a complex activity including linear transitions and 
+ machine rotations. Therefore it is imported as several entities (APT Import 
+ activities and machine rotations).</p>
+ <p>Linear transitions are imported as APT Import activities. When a machine 
+ rotation is found, the APT Import activity is ended, and a machine rotation 
+ activity is generated. Then another APT Import activity is created for the next 
+ linear transitions.</p>
+ <p>The supported forms for ROTABL instructions are the same as described in
+ <a href="#ROTABL">Table Rotation</a> above.</p>
+ <p>The names of all APT Import and machine rotation activities created from a 
+ V5 Transition Path includes the Transition Path name.</p>
+ <p><b>Automatic Generation of Transition Paths</b></p>
+ <p>APT Import activities are compatible with the automatic generation of 
+ transition paths capability. This enables you to complete an imported program 
+ like any other V5 program.</p>
+ <h3>NC Code Import</h3>
+ <p>Sample Post Processor parameter files are delivered with the product in&nbsp;the 
+ folder<kbd><br>
+ \Startup\Manufacturing\PPPar</kbd><br>
+ which provides NC output for various machine types.<br>
+ <a name="WNPPproviders"></a>Post Processors are provided by Cenit, Intelligent 
+ Manufacturing Software (IMS), and ICAM Technologies Corporation.</p>
+ <p>Select the type of Post Processor parameter files to be made available for 
+ selection using <a href="page1017.html">
+ Tools &gt; Options &gt; Machining &gt; Output</a> tab. If the output option is set to
+ <kbd>None</kbd>, the PP File selection list will not appear in the NC File 
+ Import dialog box (no PP parameter files will be available for selection).</p>
+ <p>For information about how to acquire Post Processor parameters files that 
+ provide machine specific NC code output, please contact your IBM 
+ representative.&nbsp;&nbsp;</p>
+ <h2>Limitations</h2>
+ <p>The following limitations apply. Please refer to <a href="page11453.html">
+ Syntaxes Interpreted by APT Import</a> for more information. </p>
+ <ul>
+   <li>The APT file is not imported if it contains OUTPUT PROFILE, TOOL FLANK 
+   OUTPUT, TOOL CENTER OUTPUT, or NURBS statements.</li>
+   <li>During APT Import, all tool motions are considered as Tip positions. This 
+   is due to the fact that in the APT source file, no compensation data is 
+   written. So, it is not possible to:<ul>
+     <li>detect that the position is not the tip position, and</li>
+     <li>compute the tip point corresponding to the position written in APT 
+     source file.</li>
+   </ul>
+   </li>
+   <li>A ROTHED statement cannot be imported.</li>
+ </ul>
+
+ </body>
+
+</html>
+

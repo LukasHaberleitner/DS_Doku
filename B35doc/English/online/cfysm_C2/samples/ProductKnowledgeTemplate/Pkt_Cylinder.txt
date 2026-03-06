@@ -1,0 +1,22 @@
+Let udf (UserFeature)
+Let i (Integer) 
+Let p (Point) 
+
+i=1 
+For i while i <= NbInstances  
+{
+	p= CreateOrModifyDatum("Point",`Instantiated Geometry` ,`Relations\Knowledge Pattern.1\points`  ,i) 
+	
+	p=pointoncurveRatio(`Base Geometry\Line.1` ,`Base Geometry\Point.1` ,i/(NbInstances +1),False)
+	
+	udf = CreateOrModifyTemplate("Knowledge_Pattern_Catalog|Cylinder_Normal_to_Surface",`Instantiated Geometry` ,`Relations\Knowledge Pattern.1\UDFs` ,i)
+	
+	udf->SetAttributeObject("Point.1",p)
+	
+	udf->SetAttributeObject("Surface.1",`Base Geometry\Surface.1` )
+	
+	EndModifyTemplate(udf)
+	
+}
+
+

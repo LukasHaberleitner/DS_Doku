@@ -1,0 +1,248 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Exporting Plies</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style type="text/css">
+.auto-style1 {
+	border-collapse: collapse;
+}
+.auto-style2 {
+	font-weight: bold;
+	color: #666666;
+}
+</style>
+</head>
+
+<body>
+
+<h1 align="center">
+<a name="CATCoDefaultCmdHeader.CATSLTCompositesLinkExportId"></a>Exporting Plies</h1>
+<table border="0" id="AutoNumber1" class="auto-style1">
+  <tr>
+    <td>
+    
+    <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td>This task shows how to export plies.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+          
+      <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td>
+    <ol class="task">
+      <li>
+      <p class="task"><a name="ix-export plies"></a>Click E<span class="auto-style2">xport Plies</span> 
+       <img src="b35doc/english/online/icons_C2/images/I_SLTClkExport.png" border="0" width="22" height="22"> in the Composites Link 
+	  toolbar.<br>
+	  <img height="580" src="b35doc/english/online/cclug_c2/images/dbExportPliesNLS.png" width="345"><li>
+        <p class="task"><a name="ix-selection to export"></a>Select the elements to export:<table style="width: 100%">
+			<tr>
+				<td><ul><li><kbd>Entire Stacking</kbd></li>
+					<li><kbd>Selected Groups</kbd> of plies. Use this option for 
+					complex models with multiple surfaces. <br>A typical example 
+					is a sandwich panel with separate plies groups to define the 
+					skin above and below the core.<br>The content of the list 
+					varies with the environment:<ul>
+						<li>In a part environment, groups of plies are listed.</li>
+						<li>&nbsp;In a product environment, all the parts 
+						contained in the product are listed and selectable.<br>The ply definitions found in the parts (if any) are 
+						exported in the order of the list, from top to bottom.<br>
+						Use <kbd>Move Up</kbd> and <kbd>Move Down</kbd> to 
+						modify that order.<br>Order matters when surfaces in the 
+						CAD model are coincident.<br>
+						<img height="108" src="b35doc/english/online/cclug_c2/images/OrderNLS.png" width="450"><br>
+						In this example, we have separated the skin, flange and 
+						web for visualization purpose.<br>But if the skin, 
+						flange and web part surfaces are in the same plane where 
+						the core sample cuts through (dotted line), <br>there is 
+						no automatic way to determine the correct order of the 
+						three stacks.<br>You need to order them for further use 
+						by Composites Link.</li>
+					</ul>
+					</li>
+				</ul>
+				<p><a name="ix-export core"></a>Select the <kbd>Export Cores</kbd> check box to include 
+				existing cores in the export file.<br></p>
+				</td>
+			</tr>
+		</table>
+		</li><li><p class="task"><a name="ix-exclude materials"></a>If necessary, select materials to exclude:<br>
+		All the plies referencing the selected materials are excluded from the 
+		export.<br>This is useful to avoid exporting non-structural plies, such 
+		as peel plies, which are of no interest for an analysis.<li>
+		<p class="task"><a name="ix-rename materials"></a>If necessary, select the <kbd>Rename</kbd> check box to 
+		activate the renaming of materials.<table style="width: 100%">
+			<tr>
+				<td>This is useful when designers and analysts do not use the 
+				same material names<br>(mainly because of name length 
+				restrictions for materials used in the analysis).<ul>
+					<li>Create and store the rename file (spreadsheet stored in CSV 
+					- comma-separated variable) format.<br>The CATIA name is in column 
+				A, while the matching exported name is in column B.<br>
+					<img height="64" src="b35doc/english/online/cclug_c2/images/RenameMaterialNLS.png" width="200"><br>
+					Use 
+					<kbd>\*</kbd> as a wildcard for CATIA materials, in any 
+				position of the name string.</li>
+					<li>Click ... to select the storage 
+				path of the rename file.<br>Note that the name of the file 
+					appears only if it is valid.</li>
+					<li>Alternatively, use the variable
+					<kbd>SLTCompositesLinkMaterialRenameFile</kbd> to set a 
+					default storage path.</li>
+					<li>Clear the check box to de-activate 
+					the renaming, even is a rename file is selected.</li>
+				</ul>
+				</td>
+			</tr>
+		</table></li><li><p class="task">Under <kbd>Mesh</kbd>, select how to 
+		create the elements on 
+		which the ply data are exported.<table style="width: 100%">
+			<tr>
+				<td>These elements can be created by:<ul>
+					<li><kbd><a name="ix-tessellation"></a>Tessellation</kbd> <br>The underlying surfaces of the plies cut up using 
+					every ply boundary and curves referenced by the 
+					producibility parameters, <br>and tessellated to create 
+					triangular shell elements on which the ply layup is defined.
+					<br>This representation reflects the CATIA representation 
+					accurately, but is not suitable for the purposes of Finite 
+					Element Analysis (FEA). <br>In this case, the layup file generated 
+					by Composites Link need to be mapped onto a layup model 
+					based on an analysis mesh in the analysis environment. <br>This 
+					can be done with all analysis products using Simulayt 
+					Layup Technology, <br>such as Composites Modeler for Abaqus/CAE, 
+					Composites Modeler for Femap, MSC.Patran Laminate Modeler or 
+					Laminate Tools. <br><a name="ix-sag value"></a>The tessellation is controlled by the
+					<kbd>Sag Value</kbd>, or the maximum distance between the 
+					tessellation and geometry, <br>and optionally, the <kbd>
+					<a name="ix-step value"></a>Step 
+					Value</kbd> which controls the maximum size of the 
+					tessellation triangles. <br>This option is not available in 
+					a product environment. You need to select one of the 
+					following options.</li>
+					<li><kbd><a name="ix-CATIA mesh">C</a>ATIA Mesh<br></kbd>This option is available only 
+					is a shell mesh for analysis purpose exists in the CATIA model, 
+					in a CATAnalysis.<br>You can select it when the 
+					linked model is activated from within the analysis model <br>
+					(Go in the Analysis workbench and double-click the part 
+					containing the stacking).<br>It is similar to importing a 
+					mesh from an external file, except that you select a 
+					CATAnalysis instead of a file.<br>A mesh created in CATIA has 
+					the advantage of respecting the ply boundaries.</li>
+					<li><kbd><a name="ix-external mesh file"></a>External Mesh File</kbd><br>A shell mesh is read from a 
+					selected Nastran bulk data file (.bdf or .dat), an Ansys 
+					CDB, an Abaqus .inp file (the first&nbsp; part only) <br>or 
+					layup 
+					file and highlighted in the viewport to make sure it 
+					corresponds to the geometry. <br>Composites Link 
+					first maps the ply layup onto this mesh using CATIA core 
+					sampling capability <br>before exporting a layup (or 
+					Nastran/Ansys) file containing the ply layup. <br>This layup 
+					file can be imported directly into analysis environments and 
+					used without further mapping. </li>
+					<li><kbd>C<a name="ix-CATIA mesh selection"></a>ATIA Mesh Selection</kbd></li>
+				</ul>
+								</td>
+			</tr>
+		</table>
+		</li><li><p class="task"><a name="ix-export surface offsets"></a>When exporting plies from a CATIA part to a 
+		layup file, the export file can include points used for stress recovery 
+		or as reference points for downstream use.<br>Make sure these points are 
+		visible, and gathered under a geometrical set named <kbd>Target Points</kbd> under 
+		the root level.<br>They are exported to the point store at the root 
+		level of the layup object.</li>
+		<li>
+		<p class="task">Data can be offset using a rosette as a reference. <br>
+		In that case, select the <kbd>Export Surface Offsets</kbd> check box.<br>
+		The point of the offset definition is the origin of the rosette, and the 
+		rosette must lie on the surface.</li>
+		<li>
+		<p class="task"><a name="ix-only tessellate surface under plies"></a>If required, select the <kbd>Only tessellate surface 
+		under plies</kbd> check box.</li>
+		<li>
+		<p class="task"><a name="ix-fiber angles"></a>Define how the <kbd>Fiber Angles</kbd> 
+		of exported plies are computed. <table style="width: 100%">
+			<tr>
+				<td>When <kbd>Tessellation</kbd> is selected:<ul>
+					<li>The facets of the tessellation are processed as elements 
+					for the purposes of export. <br>The quality of these 
+					elements is not sufficient for FE analysis, but can be 
+					mapped onto good quality elements later on.</li>
+					<li><a name="ix-regenerated (actual)"></a>With <kbd>Regenerated (Actual)</kbd>, a draping 
+					simulation is run to calculate the angle on each element,
+					<br>irrespective of the solver settings for the ply 
+					producibility).<ul>
+						<li>For layup, the ply definition is written to the 
+						layup file used by other Simulayt tools to repeat the 
+						draping algorithm and determine the fiber angle for each 
+						element.</li>
+						<li>For other output files, the data is written 
+						explicitly as a fiber angle for each element<br>(The 
+						exact format depends on the export file type).</li>
+						<li>This is a relatively quick computation, where the 
+						draping simulation requires the corresponding 
+						producibility.<br>In case of failure (lack of 
+						producibility or processing of cores), the ply is processed with <kbd>
+						Regenerated (Theoretical) </kbd>or projected.</li>
+					</ul>
+					</li>
+					<li><a name="ix-regenerated (theoretical)"></a>With <kbd>Regenerated (Theoretical)</kbd>, the angle is 
+					computed from the projection of the reference direction onto 
+					each element, rotated by the ply angle.<br>The data is 
+					always written explicitly to files as an angle per element.<br>
+					Note that some third party tools use explicit data in the 
+					layup file, as they are unable to run a draping analysis.</li>
+					<li>If one <kbd>Regenerated</kbd> option is used, the ply 
+				coverage from the CATIA core sample and the ply definition <br>in 
+				CATIA are used to perform a draping simulation to calculate 
+				fiber angles, as is done for surface tessellation.</li>
+				</ul>
+				<p>When using <kbd>CATIA Mesh</kbd> or <kbd>CATIA 
+				Mesh Selection</kbd>, 
+				CATIA performs a core sampling to determine which mesh elements 
+				are in each ply (ply coverage).</p>
+				<ul>
+					<li><a name="ix-core sample (theoretical)"></a>With <kbd>Core Sample (Theoretical)</kbd>, CATIA 
+					performs a rosette transfer to retrieve the fiber angle on 
+					each element.</li>
+					<li><a name="ix-core sample (actual)"></a>With <kbd>Core Sample (Actual)</kbd>, CATIA runs the 
+					producibility solver method set for the ply to determine the 
+					fiber angle per element.</li>
+					<li>In both cases, the angles per element are written 
+					explicitly.</li>
+					<li>Both options recover the theoretical and the actual 
+					fiber angles. The method is a general one, but results in a 
+					slower export.</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		</li><li><p class="task">
+	    Select the <kbd>Export File</kbd> format from the list.<br>The format proposed by default is Simulayt Layup file format.
+		<br>A shell mesh is defined, on which a ply layup is defined.
+<br>The file can be used by tools using or supporting Simulayt layup technology.
+		<br>Other possible formats are described in the following tasks.</li>
+		<li>
+		<p class="task">
+	    Click ... to enter the storage path of the export file.</li>
+	  </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+    <p align="center">
+    
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

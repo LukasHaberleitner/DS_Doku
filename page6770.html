@@ -1,0 +1,157 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+ <meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+ <title>Creating Wire References Using Macros</title>
+ <meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 6.0">
+ <meta NAME="ProgId" CONTENT="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Creating Wire References<br>
+ Using Macros</h1>
+ <table BORDER="0" CELLSPACING="1" VALIGN="top">
+   <tr VALIGN="top" BORDER="0">
+     <td ALIGN="center">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" hspace="0" width="32" height="32"></td>
+     <td ROWSPAN="1">The <a NAME="ix-wire reference">wire reference</a> creation 
+     will be done using a VisualBasic macro (.<a NAME="ix-CATScript">CATScript</a> 
+     extension).<br>
+     This macro calls an Electrical Library method. This method needs two 
+     arguments:<ul>
+       <li>The <a NAME="ix-catalog::wire references">catalog</a> in which the 
+       wire references will be stored</li>
+       <li>A neutral file in which the wire references are described (<a NAME="ix-csv file">CSV</a> 
+       file defined in Excel).<br>
+       The default column separator used by Electrical Library for CSV files is 
+       the semi-colon &quot;;&quot;.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td VALIGN="top" ALIGN="center">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" alt="aprereq.gif (1223 bytes)" width="32" height="32"></td>
+     <td ROWSPAN="1">Copy the following files in your <kbd>c:&#092;Temp</kbd> 
+     from the samples folder and uncheck the <kbd>Read-only</kbd> attribute:
+     <ul>
+       <li>CreateWires.CATScript</li>
+       <li>WiresDefinition.csv</li>
+       <li>CatalogOfWires.catalog</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td VALIGN="top" ALIGN="center">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" vspace="10" width="32" height="32"></td>
+     <td>If you work on <b>Unix</b> platform, make sure you modify the paths 
+     consequently in the CreateWires.CATScript document.</td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" alt="aprereq.gif (1223 bytes)" width="32" height="32"></td>
+     <td>The script below is given as an example of the <a NAME="ix-macro">macro</a>:
+     <blockquote>
+       <div ALIGN="left">
+         <table BORDER="1" CELLSPACING="1">
+           <tr>
+             <td><kbd>Wire creation and storage in catalog</kbd></td>
+           </tr>
+           <tr>
+             <td>
+             <p STYLE="text-align:justify"><kbd>Language=&quot;VBSCRIPT&quot;</kbd></p>
+             <p STYLE="text-align:justify"><kbd>Sub CATMain()</kbd></p>
+             <p STYLE="text-align:justify"><kbd>&nbsp; 'Definition of input data<br>
+&nbsp; 'WARNING: Define the absolute path of the inputs<br>
+&nbsp; '(csv file and catalog)</kbd></p>
+             <p STYLE="text-align:justify"><kbd><span STYLE="mso-spacerun: yes">&nbsp;
+             </span>csvFile = &quot;c:&#092;Temp&#092;ListOfWires.csv&quot;</kbd></p>
+             <p STYLE="text-align:justify"><kbd><span STYLE="mso-spacerun: yes">&nbsp;
+             </span>catalogfile = &quot;c:&#092;Temp&#092;CatalogOfWires.catalog&quot;</kbd></p>
+             <p STYLE="text-align:justify"><kbd>&nbsp; 'Open Catalog</kbd></p>
+             <p STYLE="text-align:justify"><kbd><span STYLE="mso-spacerun: yes">&nbsp;
+             </span>Dim Catalog As Document</kbd></p>
+             <p STYLE="text-align:justify"><kbd><span STYLE="mso-spacerun: yes">&nbsp;
+             </span>Set Catalog = CATIA.Documents.Open(catalogfile)</kbd></p>
+             <p STYLE="text-align:justify"><kbd>&nbsp; 'Get the &quot;ElectricalLibrary&quot; 
+             workbench</kbd></p>
+             <p STYLE="text-align:justify"><kbd><span STYLE="mso-spacerun: yes">&nbsp;
+             </span>Dim Wkb As Workbench</kbd></p>
+             <p STYLE="text-align:justify"><kbd><span STYLE="mso-spacerun: yes">&nbsp;
+             </span>Set Wkb = Catalog.GetWorkbench(&quot;ElectricalLibrary&quot;)</kbd></p>
+             <p STYLE="text-align:justify"><kbd>&nbsp; 'Create the wires 
+             references and store them in the catalog</kbd></p>
+             <p STYLE="text-align:justify"><kbd><span STYLE="mso-spacerun: yes">&nbsp;
+             </span>Wkb.CreateWiresIntoCatalog csvFile, catalogfile</kbd></p>
+             <p STYLE="text-align:justify"><kbd>End Sub</kbd></td>
+           </tr>
+         </table>
+       </div>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" alt="aprereq.gif (1223 bytes)" width="32" height="32"></td>
+     <td>A CATIA session is running. In order to launch the macro:<ol CLASS="task">
+       <li>
+       <p CLASS="task">Select the <kbd>Tools &gt; Macro &gt; Macros...</kbd> item.</p>
+       <table BORDER="0" CELLSPACING="1">
+         <tr>
+           <td VALIGN="top">The dialog box opens:</td>
+         </tr>
+         <tr>
+           <td VALIGN="top"><img src="b35doc/english/online/elbug_c2/images/db_MacrosNLS.gif" hspace="0" width="441" height="259"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p CLASS="task">Click <kbd>Select...</kbd> and choose the CATScript file.</li>
+       <li>
+       <p CLASS="task">Edit it and update the csvFile and catalogfile variable 
+       with the corresponding paths, if need be.</li>
+       <li>
+       <p CLASS="task">Then run it!<br>
+       Once the macro performed, the result looks like this:<br>
+       if a <a NAME="ix-mapping"></a>mapping has been defined, the <kbd>
+       Reference</kbd> tab will display this information.</p>
+       <div ALIGN="left">
+         <table BORDER="0" CELLSPACING="1">
+           <tr>
+             <td><img src="b35doc/english/online/elbug_c2/images/CatalogWorkBenchEnd2NLS.gif" width="557" height="316"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>Other views are available giving more information if attributes have 
+     been defined in the catalog:
+     <ul>
+       <li>The <kbd>Reference</kbd> tab displays the wire references attributes</li>
+       <li>The <kbd>Keywords</kbd> tab</li>
+       <li>The <kbd>Preview</kbd> tab shows the wire references with a graphical 
+       representation</li>
+       <li>The <kbd>Generative Data</kbd> tab.</li>
+     </ul>
+     <p>For more information, refer to the
+     <a target="ds_doc2" href="page2908.html">
+     <cite>Component Catalog Editor User's Guide</cite></a>.</td>
+   </tr>
+ </table>
+ <p ALIGN="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+ </p>
+
+ </body>
+
+</html>
+

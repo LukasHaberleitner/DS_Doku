@@ -1,0 +1,228 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating Pressure Fitting Connection Properties</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Creating Pressure Fitting Connection Properties<a name="ix-commands::Pressure Fitting Connection Property;pressure fitting connection properties;connection properties::pressure fitting"></a></h1>
+ <table Border="0" CELLSPACING="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr>
+     <td valign="top" align="center">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32">
+     </td>
+     <td rowspan="1">
+     <p class="task"><a name="CATGPSCommandHeader.CATGPSPressureFittingHdr"></a>
+     This task shows how to create a Pressure Fitting Connection between two 
+     parts. </td>
+   </tr>
+   <tr>
+     <td align="center" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td>
+     <ul>
+       <li>
+       <p class="task">Only available with the <b>Generative Assembly Structural 
+       Analysis (GAS)</b> product
+       <img border="0" src="b35doc/english/online/estug_c2/images/icon_GAS.gif" align="middle" width="32" height="32">.</li>
+       <li>
+       <p class="task">To have precisions and to know restrictions, refer to
+       <a href="page7130.html#hj-PrecisionsRestrictions">About Connection 
+       Properties</a>.</li>
+       <li>
+       <p class="task">The Gradient method is not available if several Pressure 
+       Fitting connections reference the same degree of freedom. In this case, 
+       try to choose another method type.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+     <td>
+     <p class="task">The pressure fitting connection uses assembly surface 
+     contact constraint as a support. A pressure fitting connection is the link 
+     between two bodies which are assembled in a<b> </b>Pressure Fitting 
+     configuration, more precisely when there are interferences or overlaps 
+     between both parts. Along the surface normal, the connection behaves as a
+     <a href="page7119.html">contact connection</a> with negative clearance 
+     value (positive overlap). The difference lies in the tangential directions 
+     where both parts are linked together. Since bodies can be meshed 
+     independently, the Pressure Fitting Connection is designed to handle 
+     incompatible meshes.&nbsp;</p>
+     <p class="task">The Pressure Fitting Connection relations take into account 
+     the elastic deformability of the interfaces.</p>
+     <p class="task">The program proceeds as follows:</p>
+     <ul>
+       <li>
+       <p class="task">each node of the finer surface mesh (mesh with the 
+		greatest number of nodes) is projected parallel 
+       to the local outer normal of the first surface onto the second surface 
+       mesh.</li>
+       <li>
+       <p class="task">a projection point is located whenever possible at the 
+       intercept of the projection direction with the second surface mesh 
+       (extrapolated at the face boundary by roughly half an element width).</li>
+       <li>
+       <p class="task">if a projection point exists, the start node is connected 
+       by a a node-to-face element with contact property to all nodes of the 
+       element face on which the projection point has landed.</li>
+       <li>
+       <p class="task">a set of join-type relations (involving interpolation 
+       using element shape functions) is computed between the degrees of freedom 
+       of the start node and the degrees of freedom of element face nodes (the 
+       projection point virtual degrees of freedom are eliminated in the 
+       process).</li>
+       <li>
+       <p class="task">rigid body kinematical relations are computed between the 
+       start node and the nodes of element face.</li>
+       <li>
+       <p class="task">these relations are rotated in a coordinate system the 
+       third vector of which corresponds to the normal of the local surface.</li>
+       <li>
+       <p class="task">after the elimination of the projection point degrees of 
+       freedom, a pressure fitting relation is generated between the start node 
+       and the projected node, transforming the scalar equality relation into an 
+       inequality relation with a right-hand side equal to the minus 
+       user-defined overlap.</li>
+       <li>
+       <p class="task">two scalar equality relations are generated in the 
+       tangential plane to link the tangential displacement of the start node 
+       and its projection.</li>
+     </ul>
+     <p class="task">Thus, the Pressure Fitting Connection generates at most as 
+     many node-to-face elements with Pressure Fitting property as there are 
+     nodes on the finer surface mesh for which a projection onto the opposite 
+     surface mesh exists.<br>
+     To know more about the generated element, refer to
+     <a href="page7596.html" target="ds_doc2">
+     Fitting Join</a> in the <i>Finite Element Reference Guide</i>.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td align="center">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td>
+     <p class="task">Open the <a href="b35doc/english/online/estug_c2/samples/sample16.CATAnalysis">
+     sample16.CATAnalysis</a> document from the samples directory: you applied 
+     constraints to the assembly (<b>Assembly Design</b> workbench).&nbsp;</p>
+     <ul>
+       <li>
+       <p class="task">Make sure you created a Finite Element Model containing a 
+       Static Analysis Case from this assembly.</li>
+       <li>
+       <p class="task">Make sure you know all you need about
+       <a href="page7130.html#hj-PropertyType">what type of property you will 
+       use for what type of connection</a>.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">Click <kbd>Pressure Fitting Connection Property</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_FittingConnectionP2.gif" width="24" height="24"> 
+       in the <kbd>Connection Properties</kbd> toolbar.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+         <tr>
+           <td>
+           <p class="task">The Pressure Fitting Connection Property dialog box 
+           appears.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/dbpressurefittingpropNLS.gif" width="258" height="144"></p>
+           <ul>
+             <li>
+             <p class="task"><kbd>Name</kbd>: lets you change the name of the 
+             connection property.</li>
+             <li>
+             <p class="task"><kbd>Support</kbd>: lets you select the supports.</li>
+             <li>
+             <p class="task"><kbd>Overlap</kbd>: lets you enter an algebraic 
+             value for the maximum allowed normal clearance reduction. The 
+             overlap indicates the interference between both parts. It is 
+             intended to be positive.<ul>
+               <li>
+               <p class="task">a positive <kbd>Overlap</kbd> value (used for 
+               instance to model a press-fitted clamp between the surfaces) 
+               means that the surfaces are already too close, and the program 
+               will have to push them apart.</li>
+               <li>
+               <p class="task">a negative <kbd>Overlap</kbd> value (used to 
+               model a known gap between the surfaces) means that the surfaces 
+               can still come closer until they come in contact.&nbsp;</li>
+               <li>
+               <p class="task">the default value used for the <kbd>Overlap</kbd> 
+               represents the actual geometric spacing between surfaces.</li>
+             </ul>
+             </li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Select an assembly constraint previously created in the
+       <b>Assembly Design</b> workbench. </p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+         <tr>
+           <td>
+           <p class="task">The only allowed constraint type is Contact between 
+           body surfaces.</p>
+           <p class="task">A symbol representing the Pressure Fitting Connection 
+           is visualized on the corresponding faces. </p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/PressureFittingConnect01.gif" width="420" height="199"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Optionally modify the default value of the overlap 
+       parameter.&nbsp;In this case, enter <kbd>0.001mm.</kbd> </li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd> in the Pressure Fitting Connection 
+       Property dialog box.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4">
+         <tr>
+           <td>
+           <p class="task">Note that two elements appear in the specification 
+           tree: </p>
+           <ul>
+             <li>
+             <p class="task">A <kbd>Pressure Fitting Connection Mesh.1</kbd> 
+             connection mesh part under the <kbd>Nodes and Elements</kbd> set</li>
+             <li>
+             <p class="task">A <kbd>Pressure Fitting Connection Property.1</kbd> 
+             connection property under the <kbd>Properties.1</kbd> set.</li>
+           </ul>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/stpressurefittingpropNLS.gif" width="257" height="183">
+           </td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

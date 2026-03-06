@@ -1,0 +1,203 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="D2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>FAQs-ABB RAPID</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1>FAQs-ABB RAPID</h1>
+<table border="0" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">
+	<tr>
+		<td valign="top">
+		<ol class="task">
+			<li>
+			<p class="task"><i>The Rapid parser (Rapid.jar) will upload tag targets 
+			as non-via; All via tags in the original V5 task are uploaded 
+			as non-via tags.</i></p>
+			<p class="task">The ABB robot language (RAPID) does not have an attribute 
+			to differentiate between via/non-via target types. This is a V5 convention. 
+			However, if the user uses an XML file for upload (instead of robot language 
+			file), the via/non-via target type information will be preserved in 
+			the uploaded task.</p>
+			</li>
+			<li>
+			<p class="task"><i>I am unable to download WELD action using RAPID translators.</i></p>
+			<p class="task">If you are using the RAPID translator for download, 
+			make sure that the Spot Weld action is defined using RAPIDSpotWeld.act 
+			toolbars. Weld actions defined using other .act toolbars are ignored 
+			by the RAPID translator.</p>
+			<p class="task">Commands that are not supported on upload in V5 OLP are mapped 
+			to pre and post activity attributes. Unsupported commands are mapped 
+			to as PreComment attributes to the succeeding activity/action. An unsupported 
+			command encountered at the end of the robot program will be mapped to 
+			a PostComment attribute to the preceding activity/action. Consider the 
+			following robot program where sequence 2, shiftrot 4 are unsupported commands 
+			in V5 OLP. Upon upload, these commands will be mapped to attributes 
+			as shown in the following scenario:</p>
+		<ol class="task" type="a">
+			<li>
+			<p class="task">Upload a robot program with unsupported syntax. The 
+			parser reports the unparsed lines: </p>
+			<table border="0" cellspacing="3" cellpadding="3">
+				<tr>
+					<td>
+					<img border="1" src="b35doc/english/online/cfyugolp_c2/images/dbUploadUnsupportedMappingNLS.png" width="588" height="545"></td>
+				</tr>
+			</table>
+			</li>
+			<li>
+			<p class="task">A RobotTask is created with unsupported statements 
+			mapped to PreComment and PostComment activity attributes: </p>
+			<table border="0" cellspacing="3" cellpadding="3">
+				<tr>
+					<td>
+					<img border="1" src="b35doc/english/online/cfyugolp_c2/images/wnUploadUnsupportedTaskResultNLS.png" width="450" height="147"></td>
+				</tr>
+			</table>
+			</li>
+			<li>
+			<p class="task">The download of this program must generate a robot 
+			program similar to the initial program that was uploaded:</p>
+			<table border="0" cellspacing="3" cellpadding="3">
+				<tr>
+					<td>
+					<img border="0" src="b35doc/english/online/cfyugolp_c2/images/dbUploadUnsupportedMappingResultNLS.png" width="421" height="336"></td>
+				</tr>
+			</table>
+			</li>
+		</ol>
+			</li>
+			<li>
+			<p class="task"><i>The Rapid translator downloads the programs as a 
+			single module even though I did not select the <kbd>Subroutines</kbd> 
+			option in the <kbd>Downloading Options</kbd> dialog. </i> </p>
+			<p class="task">The Rapid translator always downloads tasks as 
+			procedures within a module. This is the proper format for ABB 
+			modules and procedures (tasks).</p>
+			</li>
+			<li>
+			<p class="task"><i>Whenever a robot task is downloaded, an XML file (simResult.xml) 
+			is generated behind the scenes. Which XML elements (in simResult.xml) 
+			are not used or supported by RAPID?</i></p>
+			<p class="task">The following XML elements (in simResult.xml) are 
+			not used by RAPID during download:</p>
+			<p class="task">OLPData -&gt; Resource -&gt; Controller -&gt; ToolProfileList -&gt; 
+			ToolProfile -&gt; <b>Mass</b> <br>
+			OLPData -&gt; Resource -&gt; Controller -&gt; ToolProfileList -&gt; ToolProfile 
+			-&gt; <b>Centroid</b> <br>
+			OLPData -&gt; Resource -&gt; Controller -&gt; ToolProfileList -&gt; ToolProfile 
+			-&gt; <b>Inertia</b> </p>
+			<p class="task">OLPData -&gt; Resource -&gt; Controller -&gt; MotionProfileList -&gt; 
+			MotionProfile -&gt; <b>Accel</b> <br>
+			OLPData -&gt; Resource -&gt; Controller -&gt; MotionProfileList -&gt; 
+			MotionProfile -&gt; <b>AngularSpeedValue</b> <br>
+			OLPData -&gt; Resource -&gt; Controller -&gt; MotionProfileList -&gt; 
+			MotionProfile -&gt; <b>AngularAccelValue</b></p>
+			</li>
+			<li>
+			<p class="task"><i>How does the Rapid translator and parser take 
+			into account the Object Frame profiles during download and upload?</i></p>
+			<ul class="task">
+				<li>
+				<p class="task">If the object frame offset is zero and tool is 
+				mobile (mounted on robot), the frame of reference is the robot 
+				base frame: <br>
+				<br>
+				The Rapid translator will read the target co-ordinate values 
+				from the simResult.xml file and output them into robtarget 
+				statements in the declaration section of the program with 
+				appropriate units regardless of whether <kbd>Apply to all 
+				targets</kbd> is set to ON or OFF.</p></li>
+				<li>
+				<p class="task">If the object frame offset is non-zero and tool 
+				is mobile, the frame of reference is the object frame (with its 
+				offset defined with respect to the world frame): <br>
+				<br>
+				Rapid translator will read the target co-ordinate values from 
+				the simResult.xml file and output them into robtarget statements 
+				in the declaration section of the program with appropriate units 
+				regardless of whether <kbd>Apply to all targets</kbd> is set to 
+				ON or OFF. If the WorldCoords parameter (see parameter data 
+				section in Syntax Map xls sheet above) is set to 'false' then 
+				the Rapid translator will treat all object frame values as being 
+				with respect to the robot base and will recalculate target 
+				coordinates accordingly.</p></li>
+				<li>
+				<p class="task">If object frame offset is zero and tool is 
+				stationary (fixed TCP), the frame of reference is the robot's 
+				mount frame: <br>
+				<br>
+				Rapid translator will read the target co-ordinate values from 
+				the simResult.xml file and output them into robtarget statements 
+				in the declaration section of the program with appropriate units 
+				regardless of whether <kbd>Apply to all targets</kbd> is set to 
+				ON or OFF. </p></li>
+				<li>
+				<p class="task">If object frame offset is non-zero and tool is 
+				stationary, the frame of reference is the object frame, which is 
+				defined relative to mount frame: <br>
+				<br>
+				Same as fixed TCP case above.</p></li>
+			</ul>
+			</li>
+			<li>
+			<p class="task"><i>Can I add comments to robot tasks in V5 and also 
+			download them?</i></p>
+			<p class="task">
+			To add/download comments:</p>
+		<ol class="task" type="a">
+			<li>
+			<p class="task">Select the Operation/Activity/Action from the robot 
+			task.</p></li>
+			<li>
+			<p class="task">Right-click and select <kbd>Properties</kbd> from 
+			the contextual menu. </p></li>
+			<li>
+			<p class="task">Select <kbd>Specific</kbd> tab page.</p></li>
+			<li>
+			<p class="task">Add the appropriate 
+			comments using the <kbd>Attribute Type</kbd>, <kbd>Attribute Name</kbd> and 
+			<kbd>Attribute 
+			Value</kbd> editors. <br>
+			For <kbd>Attribute Name</kbd>, always use either PreComment 
+			or PostComment (depending upon the location of the operation). The 
+			comments will be downloaded by the Rapid translator. If the <kbd>Attribute 
+			Name</kbd> is not defined as either PostComment/PreComment, the 
+			translator will not see the attributes as being comments.</p></li>
+		</ol>
+			</li>
+			<li>
+			<p class="task"><i>My robot task has an Activity/Action not yet 
+			supported byV5/OLP, but I still want to download the 
+			Activity/Action.</i> </p><p class="task">Please refer to the above FAQ. Follow the same procedure, except that the 
+			<kbd>Attribute Value</kbd> will be Robot Language:
+			<any robot language command>&lt;any robot language command&gt;. For example, PAYLOAD[4] command in RAPID is not supported in V5. By specifying RobotLanguage :  PAYLOAD[4] as 
+			<kbd>Attribute Value</kbd>, the transator will be able to download the above statement.</p></li>
+			<li>
+			<p class="task"><i>The I/O activities in XML have an attribute by name 
+			Port Number, what does this correspond to in V5?</i></p><p class="task"> Port Number 
+			corresponds to IO Number in V5.</p></li>
+		</ol>
+		</td>
+	</tr>
+</table>
+
+</body>
+
+</html>
+

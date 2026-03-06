@@ -1,0 +1,420 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>About Nachi AW/AX Translators</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>About Nachi AW/AX Translators<a name="ix-about:Nachi"></a></h1>
+ <table border="0" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/abasic.gif" width="32" height="32"></td>
+     <td valign="top">This section provides basic information about the 
+		Nachi translator. The information includes:<ul>       
+		<li><a href="#hj-controller profiles">Controller Profiles</a></li>
+		<li><a href="#hj-applicativeprof">Applicative Profiles</a></li>
+		<li><a href="#hj-actionlib">Action Libraries</a></li>
+		<li><a href="#hj-robot para data">Robot Parameter Data</a></li>
+		<li><a href="#hj-program logic">Program Logic/IO</a></li>
+		<li><a href="#hj-weldgun">Weld Guns</a></li>
+		<li><a href="#hj-syntax map">Syntax Map</a></li>
+		<li><a href="#hj-RoboParaMap">Robot Parameter Map</a></li>
+		<li><a href="#hj-spotweld">Spot Welding Application</a></li>
+		<li><a href="#hj-arcweld">Arc Welding Application</a></li>
+		</ul>
+		<h2><a name="hj-controller profiles"></a>Controller Profiles</h2>
+		<p class="task">Every robot controller has certain profiles each of 
+		which define characteristics of different aspects of the controller. By 
+		default, controllers by the name <kbd>Default</kbd> are defined for Motion, 
+		Tool, Accuracy and Object Profile.</p>
+	 <p class="task">During download, tool profiles are sequentially numbered. 
+	 However, tool profiles can be named in the format &quot;H=number&quot; such as &quot;H=1&quot; 
+	 to download to the desired tool numbers. </p>
+	 <p class="task">When a Motion activity's Object Profile changes, Nachi instruction "CHGCOORD &lt;number&gt;" is downloaded before the motion instruction. If the Object Profile name is in the format "ObjectFrameProfile.&lt;number&gt;&quot;, 
+	 the &lt;number&gt; is output as the &lt;number&gt; in the CHGCOORD instruction. Otherwise, it is sequentially numbered. The Cartesian location, or Pose (X, Y, Z, r, p, y) in the MOVEX motion instruction is appended with the letter 'U' ( such as "(X, Y, Z, r, p, y)U" ) designating that the move is using "user coordinate". Note that CHGCOORD does not apply to Joint targets, therefore Joint Pose (J1, J2, ..., J6) does not have 'U' appended.</p>
+		<p class="task">Please see <i>Device Task Definition: Workbench Description: Robot 
+		Controller Toolbar</i> for more information on controller profiles.</p>
+		<h2><a name="hj-applicativeprof"></a>Applicative Profiles</h2>
+		<p class="task">The purpose of applicative profile is to store 
+		application process data, or any data the user considers meaningful, but 
+		not accounted for in standard controller profiles (motion, accuracy, 
+		tool and object).</p>
+		<p class="task">Please see <i>Device Building: Advanced Tasks: Creating 
+		and Editing Profiles: Creating Applicative Profiles</i> for more 
+		details.</p>
+		<h2><a name="hj-actionlib"></a>Action Libraries</h2>
+		<p class="task">Action library consists of a sequence of activities that 
+		users create to perform specific operations within a robot task.</p>
+		<p class="task">Please see <i>Device Task Definition: User Tasks: Device 
+		Task Programming Tasks: Creating and Modifying an Action Library</i> for more 
+		details. </p>
+		<h2><a name="hj-robot para data"></a>Parameter Data</h2>
+		<p class="task">The purpose of parameter data is to include device specific and task 
+		specific information that is not stored in robot programs. </p>
+		<table border="0" width="100%" cellspacing="3" cellpadding="3" style="border-collapse: collapse" id="table2">
+			<tr>
+				<td width="34" valign="top">
+				<img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+				<td valign="top">The following procedure describes how to define device 
+				parameters.</td>
+			</tr>
+		</table>
+		<table border="0" width="100%" cellspacing="3" cellpadding="3" style="border-collapse: collapse">
+			<tr>
+				<td width="34" valign="top">
+				<img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+				<td valign="top">Open the 
+				<a href="b35doc/english/online/cfyugolp_c2/samples/delmia_d5/nachi_data/DownloadData/NachiAWDownload_start.CATProcess">
+		NachiAWDownload_start.CATProcess</a> file.</td>
+			</tr>
+		</table>
+		<table border="0" width="100%" cellspacing="3" cellpadding="3" style="border-collapse: collapse">
+			<tr>
+				<td width="34" valign="top">
+				<img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+				<td valign="top">
+		<ol class="task">
+       <li>
+       <p class="task">Right-click a robot in the PPR tree, e.g. AV06.1, and select 
+		<kbd>Properties</kbd>. The properties dialog box opens.
+		</li>
+		<li>
+		<p class="task">Click the <kbd>Define other properties</kbd> button.<br>
+		The <kbd>Define Other Properties</kbd> dialog box opens.<br>
+		<img border="0" src="b35doc/english/online/cfyugolp_c2/images/dbDefRoboParaOthrPropNLS.gif" width="439" height="328"></li>
+		<li>
+		<p class="task">Select the type of parameter from the list and 
+		click the <kbd>New Parameter of type </kbd>button. <br>
+		The newly created parameter appears in box listing the parameters (for 
+		example, in the dialog box above, <kbd>ProgramFileEncoding</kbd> has 
+		been added).</li>
+		<li>
+		<p class="task">In the <kbd>Edit name and value</kbd> field, enter a 
+		name and value as required. <p class="task">In Nachi robots, the robot&#8217;s 
+		third axis can be adjusted via 
+		the robot&#8217;s second axis. Internally, this is done by defining a relation 
+		between the two axes and the magnitude for adjustment. Define a device 
+		parameter that specifies joint3 to be linked with joint2 with the 
+		following attributes:<p class="task">		Parameter Name: Joint3Linked<br>
+		Parameter Value: true<br>
+		Parameter Type: Boolean</li>
+		<li>
+		<p class="task">Or instead, you can skip steps 3-4 and import parameters 
+		from a .txt file using <kbd>External properties</kbd>. The .txt file 
+		must have the following format:
+		<p class="task">parameter_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; parameter_value<br>....&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+					.....</li></ol>
+		<p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+								</td>
+			</tr>
+		</table>
+		
+		<h2><a name="hj-program logic"></a>Program Logic/IO</h2>
+		<p class="task">IOs enable users to synchronize resources using signals 
+		in a process where resource programs run in parallel.</p>
+		<p class="task">Please see 
+		<i>Workcell Sequencing: Workbench Description: IO Management Toolbar</i> for more details.
+		</p>
+		<h2><a name="hj-weldgun"></a>Weld Guns</h2>
+		<p class="task">Weld guns (servo / non-servo) are represented as mounted 
+		devices. <br>
+		A non-servo gun is a weldgun that is simply mounted to the robot but, 
+		not defined as an auxiliary axes device. If a weldgun is defined as an 
+		auxiliary device then the joint value is output for each RobotMotion 
+		activity as joint 7 (in the case of a single axis weldgun). <br>
+		For Nachi, regardless of whether a weldgun is a servo or non-servo, the
+		<kbd>AWSpotWeld/AXSpotWeld</kbd> actions along with their attributes 
+		will be output as a SPOT command.</p>
+		<h2><a name="hj-specialcons"></a>Special Considerations</h2>
+		<p class="task">For Nachi robots, the adjustment for axis 3 is done by default. This is achieved by defining two device parameters as explained 
+		below. </p>
+		<p class="task">If the user does not define these two device parameters 
+		explicitly, default values will be used by the downloader and uploader. 
+		</p>
+		<p class="task">In case the user does not want the default behavior or wants to assign 
+		different values, he has to explicitly define these two parameters and 
+		assign their values. </p>
+		<p class="task">
+		Parameter Name: <kbd>Axis3Adjust</kbd><br>
+		Parameter Type: Real<br>
+		Parameter Value: 90 (default value)<br>
+		Description: This parameter determines the amount of adjustment of axis 
+		3 during download/upload. For most Nachi robots, this value is 90; for 
+		tilt robots, the value is 0; for some models, it is set to &#8211;90. The 
+		value of this parameter is used in the <kbd>Joint3Linked</kbd> parameter 
+		description. By default, the value of this parameter is set to 0; it is 
+		the responsibility of the user to set it to the appropriate value 
+		depending on the robot model type. </p>
+		<p class="task">Parameter Name: <kbd>Joint3Linked</kbd><br>
+		Parameter Type: Boolean<br>
+		Parameter Value: false<br>
+		Description: This parameter controls the adjustment of axis 3 during 
+		download and upload. If this is set to true, which indicates that 
+		joint2 and joint3 are linked, no axis 3 adjustment will take place. 
+		Otherwise, axis 3 will be adjusted based on the following relation:</p>
+		<p class="task">Upload: igrip_axis_3 = robot_axis_3 &#8211; robot_axis_2 + axis3adjust<br>
+		Download: robot_axis_3 = igrip_axis_3 + igrip_axis_2 - axis3adjust</p>
+		<p class="task">
+		where, </p>
+		<p class="task">
+		igrip_axis_3 = robot&#8217;s joint 3 value as shown by the <kbd>Jog</kbd> command/dialog.<br>
+		igrip_axis_2 = robot&#8217;s joint 2 value as shown by the <kbd>Jog</kbd> command/dialog.<br>
+		robot_axis_3 = value of robot&#8217;s axis 3 in the downloaded program (as 
+		output by V5 OLP)<br>
+		robot_axis_2 = value of robot&#8217;s axis 2 in the robot program (as output 
+		by V5 OLP)<br>
+		axis3adjust = the parameter <kbd>Axis3Adjust</kbd> defined above.</p>
+		<h2><a name="hj-syntax map"></a>Syntax Map</h2>
+		<p class="task">Please refer to the <kbd>SLIM_V5_XML</kbd> worksheet in the
+		<a href="b35doc/english/online/cfyugolp_c2/samples/delmia_d5/nachi_data/SLIM_V5_XML_MAP.xls">
+		SLIM_V5_XML_MAP.xls</a> 
+		file for detailed syntax map and examples with screen captures.</p>
+		<h2>
+		<a name="hj-RoboParaMap"></a>Robot Parameter Map</h2>
+		<p class="task">Refer to the <kbd>Parameter Data</kbd> worksheet in the 
+		<a href="b35doc/english/online/cfyugolp_c2/samples/delmia_d5/nachi_data/SLIM_V5_XML_MAP.xls">
+		SLIM_V5_XML_MAP.xls</a> file.</p>
+		<h2><a name="hj-spotweld"></a>Spot Welding Application</h2>
+		<p class="task">This section illustrates the translation of V5 spot 
+		actions to SLIM commands. The table below shows the syntax map between 
+		V5, XML and SLIM specifically for the Spot application.:</p>
+		<table class="Indented" cellspacing="3" cellpadding="3" id="table3" width="915">
+			<tr>
+				<th>V5</th>
+			<th width="381">XML</th>
+			<th width="191">SLIM</th>
+		</tr>
+		<tr>
+			<td class="code2" valign=top>ActionType = AWSpotWeld or AXSpotWeld<p>
+			Attributes:<br>
+			Gun_Number<br>
+			Weld_Cond_Number<br>
+			Weld_Seq_Number<br>
+			Weld_Point_Number</p>
+			<p>With the following atomic activities:<br>
+			BasicMotionActivity<br>
+			DelayActivity BasicMotionActivity</td>
+			<td class="code2" width="381" valign=top>&lt;OLPData/Resource/ActivityList&gt;<br>
+			&lt;Action ActionType=&#8221;AWSpotWeld&#8221;/&gt;<br>
+			&lt;ActionName/&gt;<br>
+			&lt;ToolResource/&gt;<br>
+			&lt;AttributeList&gt;<br>
+			&lt;Attribute&gt;<br>
+			&lt;AttributeName&gt;Gun_Number&lt;/&gt;<br>
+			&lt;AttributeValue&gt;1&lt;/&gt;<br>
+			&lt;/Attribute&gt;<br>
+			&lt;Attribute&gt;<br>
+			&lt;AttributeName&gt;Weld_Cond_Number&lt;/&gt;<br>
+			&lt;AttributeValue&gt;2&lt;/&gt;<br>
+			&lt;/Attribute&gt;<br>
+			&lt;Attribute&gt;<br>
+			&lt;AttributeName&gt;Weld_Seq_Number&lt;/&gt;<br>
+			&lt;AttributeValue&gt;3&lt;/&gt;<br>
+			&lt;/Attribute&gt;<br>
+			&lt;Attribute&gt;<br>
+			&lt;AttributeName&gt;Weld_Point_Number&lt;/&gt;<br>
+			&lt;AttributeValue&gt;4&lt;/&gt;<br>
+			&lt;/Attribute&gt;<br>
+			&lt;ActivityList&gt;<br>
+			&lt;ActivityName=&#8221;DNBRobotMotionActivty&#8221;/&gt;<br>
+			&lt;Activity ActivityName=&#8221;DelayActivity&#8221;/&gt;<br>
+			&lt;Activity ActivityName=&#8221;DNBRobotMotionActiviy&#8221;/&gt;<br>
+			&lt;/ActivityList&gt;</td>
+			<td class="code2" width="191" valign=top>SPOT <br>
+			gun number,<br>
+			weld condition table,<br>
+			weld sequence table,<br>
+			weld point number.</td>
+		</tr>
+		</table>
+		
+			<p class="task">Below is the illustration of V5 spot weld action to 
+			SLIM spot 
+			translation that is common to both AW and AX controllers:</p>
+		<p class="task">
+		<img border="0" src="b35doc/english/online/cfyugolp_c2/images/v5NachiAWSpotNLS.gif" width="709" height="579"></p>
+		<h2><a name="hj-arcweld"></a>Arc Welding Application</h2>
+		<p class="task">The table below gives a syntax map between V5, XML and 
+		SLIM specifically for the Arc-Welding application for AW 
+		controllers:</p>
+		<table class="Indented" width="915" cellspacing="3" cellpadding="3" id="table4">
+			<tr>
+				<th>V5</th>
+			<th width="300">XML</th>
+			<th width="300">SLIM </th>
+		</tr>
+		<tr>
+			<td class="code2" valign=top>Activity Type = ArcOn
+&nbsp;<p class="task">With the following atomic activities:<br>
+			BasicMotionActivity<br>
+			Attribute </p>
+			<p class="task">V5 does not have a separate activity or action for arc welding 
+			application. </p>
+			<p class="task">ARCON command is associated with RobotMotion activity. </td>
+			<td class="code2" width="302" valign=top>&lt;OLPData/Resource/Controller&gt;<br>
+			&lt;UserProfileList&gt;<br>
+			&lt;UserProfileInstance&gt;<br>
+			&lt;UserDefinedAttribute&gt;<br>
+			&lt;DisplayName/&gt;<br>
+			&lt;DataType/&gt;<br>
+			&lt;Value/&gt;<br>
+			&lt;/UserDefinedAttribute&gt;<br>
+			&lt;&#8230;&gt;<br>
+			&lt;/UserProfileInstance&gt;<br>
+			&lt;&#8230;&gt;<br>
+			&lt;/UserProfileList&gt;<br>
+			&lt;/&gt;<br>
+			<br>
+			&lt;&#8230;&gt; indicates can be repeated any number of times.</td>
+			<td class="code2" width="283" valign=top>ARCON &lt;weld start condition 
+			number&gt;
+			<p class="task">The weld condition number refers to the weld table where 
+			parameters for ARCON command are defined.
+&nbsp;</p>
+			<p class="task">The parameters for ARCON in AW controller are:</p>
+			<p class="task">DisplayName: WeldSpeed<br>
+			DataType: Double<br>
+			Value: 0 (unset) </p>
+			<p class="task">DisplayName: StartDwellTime<br>
+			DataType: Double<br>
+			Value: 0 (unset) </p>
+			<p class="task">DisplayName: Current<br>
+			DataType: Double<br>
+			Value: 0 (unset) </p>
+			<p class="task">DisplayName: Voltage<br>
+			DataType: Double<br>
+			Value: 0 (unset)</td>
+		</tr>
+			<tr>
+			<td class="code2" valign=top>Activity Type = ArcOff<p class="task">With the 
+			following atomic<br>
+			activities:<br>
+			BasicMotionActivity<br>
+			Attributes </p>
+			<p class="task">V5 does not have a separate activity/action for arc welding 
+			application. </p>
+			<p class="task">ARCOFF command is associated with RobotMotion activity.</td>
+			<td class="code2" width="302" valign=top>
+			&lt;OLPData/Resource/Controller&gt;<br>
+			&lt;UserProfileList&gt;<br>
+			&lt;UserProfileInstance&gt;<br>
+			&lt;UserDefinedAttribute&gt;<br>
+			&lt;DisplayName/&gt;<br>
+			&lt;DataType/&gt;<br>
+			&lt;Value/&gt;<br>
+			&lt;/UserDefinedAttribute&gt;<br>
+			&lt;&#8230;&gt;<br>
+			&lt;/UserProfileInstance&gt;<br>
+			&lt;&#8230;&gt;<br>
+			&lt;/UserProfileList&gt;<br>
+			&lt;/&gt;</td>
+			<td class="code2" width="283" valign=top>ARCOOFF &lt;weld end condition 
+			number&gt;
+			<p class="task">The weld condition number refers to the weld table where 
+			parameters for ARCOFF command are defined.</p>
+			<p class="task">The parameters for ARCOFF in AW controller are:</p>
+			<p class="task">DisplayName: WeldSpeed<br>
+			DataType: Double<br>
+			Value: 0 (unset) </p>
+			<p class="task">DisplayName: EndDwellTime<br>
+			DataType: Double<br>
+			Value: 0 (unset) </p>
+			<p class="task">DisplayName: Current<br>
+			DataType: Double<br>
+			Value: 0 (unset) </p>
+			<p class="task">DisplayName: Voltage<br>
+			DataType: Double<br>
+			Value: 0 (unset)</td>
+			</tr>
+		</table>
+		
+		<p class="task">&nbsp;</p>
+		<p class="task">The table below gives a syntax map between V5, XML and 
+		SLIM specifically for the Arc-Welding application for AX 
+		controllers:</p>
+		<table class="Indented" width="915" cellspacing="3" cellpadding="3" id="table5">
+			<tr>
+				<th>V5</th>
+			<th width="300">XML</th>
+			<th width="300">SLIM </th>
+		</tr>
+		<tr>
+			<td class="code2" valign=top>Activity Type = RobotMotion
+			<p>V5 does not have a separate activity or action for arc welding 
+			application. </p>
+			<p>ArcStart (AS) is associated with RobotMotion activity.</td>
+			<td class="code2" width="302" valign=top>
+			&lt;OLPData/Resource/Controller&gt;<br>
+			&lt;UserProfileList&gt;<br>
+			&lt;UserProfileInstance&gt;<br>
+			&lt;UserDefinedAttribute&gt;<br>
+			&lt;DisplayName/&gt;<br>
+			&lt;DataType/&gt;<br>
+			&lt;Value/&gt;<br>
+			&lt;/UserDefinedAttribute&gt;<br>
+			&lt;&#8230;&gt;<br>
+			&lt;/UserProfileInstance&gt;<br>
+			&lt;&#8230;&gt;<br>
+			&lt;/UserProfileList&gt;<br>
+			&lt;/&gt;</td>
+			<td class="code2" width="283" valign=top>AS &lt;arc start weld 
+			parameters&gt;
+			<p>For AX controller, the AS command has 39 parameters. </p>
+			<p>Refer to the <kbd>User Profile</kbd> worksheet in the 
+			SLIM_V5_XML_Map.xls file attached under the <a href="#hj-syntax map">
+			Syntax Map</a> 
+			section.</td>
+		</tr>
+			<tr>
+			<td class="code2" valign=top>Activity Type = RobotMotion
+			<p>V5 does not have a separate activity/action for arc welding 
+			application.</p>
+			<p>ArcEnd(AE) is associated with RobotMotion activity.</td>
+			<td class="code2" width="302" valign=top>
+			&lt;OLPData/Resource/Controller&gt;<br>
+			&lt;UserProfileList&gt;<br>
+			&lt;UserProfileInstance&gt;<br>
+			&lt;UserDefinedAttribute&gt;<br>
+			&lt;DisplayName/&gt;<br>
+			&lt;DataType/&gt;<br>
+			&lt;Value/&gt;<br>
+			&lt;/UserDefinedAttribute&gt;<br>
+			&lt;&#8230;&gt;<br>
+			&lt;/UserProfileInstance&gt;<br>
+			&lt;&#8230;&gt;<br>
+			&lt;/UserProfileList&gt;<br>
+			&lt;/&gt;</td>
+			<td class="code2" width="283" valign=top>AE &lt;arc end weld 
+			parameters&gt;
+			<p>For AX controllers, the AE command has 28 parameters. </p>
+			<p>Refer to the UserProfile worksheet in the SLIM_V5_XML_Map.xls 
+			file attached under the <a href="#hj-syntax map">Syntax Map</a> 
+			section.</td>
+			</tr>
+		</table>
+		
+		<p class="task">&nbsp;</td>
+   </tr>
+     
+ </table>
+
+ </body>
+
+</html>
+

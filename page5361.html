@@ -1,0 +1,281 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>About Laser Projection</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="Microsoft Border" content="none">
+<style type="text/css">
+.style1 {
+				border-style: solid;
+				border-width: 1px;
+}
+.style2 {
+				border-width: 1px;
+}
+</style>
+</head>
+
+<body>
+
+<h1 align="center">
+    About 
+	Laser Projection</h1>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+  <tr>
+    <td>
+	<p>A laser projection is used in manufacturing shop floors. <br>Basically, it 
+	projects the shape of the ply to be laid on the mold by the operator for 
+	better positioning. </p>
+	<p>The following formats are used to exchange information: </p>
+	<ul>
+		<li>VIRTEK (.ply for plies information, .cal for calibration points information)</li>
+		<li>LPT (.xml, with one file for plies information and one for target 
+		points information)</li>
+		<li>LASERGUIDE (.lg)</li>
+		<li>LAP (.lpd, .cal).</li>
+	</ul>
+	<h2>Laser Projection Export</h2>
+	<p>When generating laser projection information, you 
+	can complete plies and points information with: </p>
+	<ul>
+		<li>
+		<kbd><a name="ix-exporting a laser projection:additional geometries">
+		</a>Additional Geometries,</kbd> taken into account 
+		provided <kbd>Laser Projection Export</kbd> has been selected at their creation.</li>
+		<li><kbd><a name="ix-exporting a laser projection:stacking texts"></a>Stacking Texts</kbd> defined in Composites 
+		Design or Composites Manufacturing Preparation.</li>
+		<li><kbd><a name="ix-exporting a laser projection:projected texts"></a>Projected Texts</kbd> if the option is selected in
+		<kbd>Laser Projection</kbd>. </li>
+	</ul>
+	<p><kbd>Laser Projection Export</kbd> is done in two main steps: 
+	Discretization, then elevation. </p>
+	<ul>
+		<li>As soon as entities are selected, all the 
+		curve-type geometries for each ply/cut-piece are discretized. <br>They can 
+		be 		<ul>
+			<li>Inner and outer ply contours 			</li>
+			<li>Additional curve-type geometries			</li>
+			<li>Guide curves 			</li>
+			<li>Orders of drape.			</li>
+		</ul>
+		</li>
+		<li>Discretization points are elevated from the 
+		reference surface taking the cured or uncured thickness into account. 
+		<br>The thickness is given by a core sample.		</li>
+		<li>The rosette is transferred at the seed point, if 
+		any, at the computed central point otherwise. 		</li>
+	</ul>
+	<p>As soon as a discretization is done, a preview tree 
+	displays the elements to export and the projectors, enabling you to check 
+	the elements. </p>
+	<h2>Laser Projection File Reader</h2>
+	<p>As in export, a preview tree
+	displays the read elements.</p>
+	<h2>Preview Tree</h2>
+	<p><a name="ix-exporting a laser projection:preview tree"></a>The preview tree displays the elements to export or to read in nodes, 
+	according to the options selected in 
+	<a href="page0723.html">Laser Projection</a>. </p>
+	<p>The information in the preview tree are very similar in both commands. 
+	However, less information are provided at reading (contour information or 
+	projector information, for example). </p>
+	<p>Selecting a node in the preview tree lets you check the elements in the 
+	node. It does not select the elements for export. </p>
+	<p>Each element node corresponds to: </p>
+	<ul>
+		<li>A LAYER level in VIRTEK format. </li>
+		<li>A xml node level in LPT format. </li>
+		<li>A PLY command in LASERGUIDE format.</li>
+		<li>A DRAWING/LAYER/GROUP in LAP format.</li>
+	</ul>
+	<p>Ply and cut-piece nodes contain detail nodes for each element: </p>
+	<ul>
+		<li>Rosette </li>
+		<li>Contours </li>
+		<li>Guide curve </li>
+		<li>Order of drape contours </li>
+		<li>Additional geometries:
+		<ul>
+			<li>Just like ply geometries, all visible curve-type geometries 
+			found in<kbd> Additional Geometries Sets</kbd> are discretized and exported.
+			</li>
+			<li>Closed curves are marked as <kbd>Additional contours</kbd> in the 
+			corresponding node. </li>
+			<li>Open curves are marked as A<kbd>dditional curves</kbd>. </li>
+		</ul>
+		</li>
+		<ul>
+			<li>In all formats, the curves and contours are exported as the other 
+			ply geometries (contours, seed curves, ...). </li>
+		</ul>
+		<li><kbd>Stacking Texts</kbd> are inserted in the preview tree, and exported in the 
+		file layers or xml nodes, at the same position they have in the 
+		specification tree. <br>The type of the text is given between brackets
+		<table style="width: 100%">
+			<tr>
+				<td>
+				<ul>
+					<li><kbd>Text (projected)</kbd> if the text is with <kbd>3D 
+					representation</kbd> and if <kbd>3D</kbd> option is chosen 
+					as&nbsp; its laser projection type. <br>It is projected on 
+					the mold alongside the other geometries. </li>
+					<li>For VIRTEK format: <kbd><br>Text (information)</kbd> if
+					<kbd>Information</kbd> option is chosen as its laser 
+					projection type. It is displayed on the console.<br><kbd>
+					Text (query)</kbd> if <kbd>Query</kbd> option is chosen as 
+					its laser projection type. It is displayed on the console 
+					and validation is requested.<br><kbd>Text (LED)</kbd> if
+					<kbd>LED</kbd> option is chosen as its laser projection 
+					type. It is displayed on the LED display.</li>
+					<li>&nbsp;For LPT format: <br><kbd>Text (information)</kbd> 
+					if <kbd>Information</kbd>, <kbd>Query</kbd> or <kbd>LED</kbd> 
+					option is chosen as its laser projection type. It is 
+					displayed on the console. <br><kbd>Ignored (no node)</kbd> 
+					if <kbd>3D Stacking Text</kbd> is outside plies or 
+					cut-pieces. </li>
+					<li>For LASERGUIDE format: <br><kbd>Comment</kbd> if <kbd>
+					Information</kbd>, <kbd>Query</kbd> or <kbd>LED</kbd> option 
+					is chosen as its laser projection type. <br><kbd>Ignored (no 
+					node)</kbd> if <kbd>3D Stacking Text</kbd> is outside plies 
+					or cut-pieces. </li>
+					<li>For LAP format: <kbd><br>Ignored (no node)</kbd> if <kbd>
+					Information</kbd>, <kbd>Query</kbd> or <kbd>LED</kbd> option 
+					is chosen as its laser projection type or if <kbd>Stacking 
+					Text</kbd> is outside plies or cut-pieces.&nbsp; &nbsp; </li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		</li>
+		<li><kbd>Automatic text</kbd> when
+		<a href="page0723.html#ix-composites laser projection:export">
+		Projected Text</a> is selected.<br>The text is added under each ply or 
+		cut-piece node in the preview tree and therefore in the corresponding 
+		LAYER (VIRTEK format), xml node (LPT format), PLY block (LASERGUIDE 
+		format) or GROUP (LAP format).<br>The text is displayed in the preview 
+		tree as <kbd>Automatic Text (projected).<br></kbd>It is visible in 
+		graphic area when the node is selected (or its parent ply node). <br>3D 
+		representation is the same as a Stacking Text with 3D representation and 
+		placed below the transferred rosette, in the same plane as the rosette 
+		and along the x direction of the rosette. </li>
+	</ul>
+	<p>The result font of <kbd>3D</kbd> texts projected by the actual projector may be 
+	different in shape and length, but the height remains the same. Polygonal 
+	representations are the same. </p>
+	<h2><a name="ix-exporting a laser projection:display options"></a>Display Options</h2>
+	<p>Display options are proposed in <kbd>Laser Projector</kbd>, <kbd>Laser 
+	Projection Export</kbd> and <kbd>Laser Projection File Reader</kbd>.<br>Although similar, they vary from one command to the other.</p>
+	<ul>
+		<li><kbd>Normal Vectors</kbd>. They are colored green, yellow or red depending on 
+		the angle they form with the ray line from the projector to the 
+		discretization point. When no projector is available, the vectors are 
+		colored green. When several projectors are available, the color of the 
+		normal vector is that of the shortest ray with an angle below the 
+		warning angle. The aim is to check that the plies and cut-pieces can be 
+		projected, not to show all solutions. </li>
+		<li><kbd>Original Contours</kbd> of the ply or cut-piece on the reference surface 
+		to be compared with the discretized ones. </li>
+		<li><kbd>Laser Projection Rays</kbd> that are the lines from the projector to the 
+		discretization points. When several projectors are available, for each 
+		discretization point, the projector considered is the closest projector 
+		with a ray-normal angle smaller than the warning angle. </li>
+		<li><kbd>Vertical Limit Planes</kbd> with respect to the maximum vertical angle of 
+		the projector. </li>
+		<li><kbd>Horizontal Limit Planes</kbd> with respect to the maximum horizontal angle 
+		of the projector. </li>
+		<li>Size of <kbd>Normal Vectors</kbd> </li>
+		<li><kbd>Color</kbd> of the <kbd>Projector Rays</kbd> and of the 
+		<kbd>Projected Elements. </kbd> </li>
+	</ul>
+	<h2>Examples of Files</h2>
+	<p>Extract of a .ply file</p>
+	<blockquote><kbd>LAYER START Plies Group.1<br>LAYER START Sequence.1<br>LAYER START Ply.1<br>
+	START Ply.1<br>P 3<br>242.604 62.809 -72.223 0 0.652 0.758<br>222.679 48.544 
+	-58.311 0 0.698 0.716<br>212.716 55.676 -65.267 0 0.676 0.737<br>P 31<br>
+	212.5 112.41 -105.855 0 0.474 0.88<br>150 112.41 -105.855 0 0.474 0.88<br>
+	87.5 112.41 -105.855 0 0.474 0.88<br>25 112.41 -105.855 0 0.474 0.88<br>25 
+	102.132 -100.009 0 0.514 0.858<br>25 92.194 -93.747 0 0.552 0.834<br>25 
+	82.596 -87.102 0 0.586 0.81<br>25 73.331 -80.102 0 0.619 0.786<br>25 67.332 
+	-75.249 0 0.639 0.769<br>25 61.471 -70.254 0 0.658 0.753<br>25 50.139 
+	-59.856 0 0.693 0.721<br>25 40.781 -50.488 0 0.721 0.693<br>25 31.77 -40.748 
+	0 0.747 0.665<br>25 23.095 -30.643 0 0.77 0.638<br>25 14.748 -20.18 0 0.793 
+	0.61<br>87.5 14.748 -20.18 0 0.793 0.61<br>150 14.748 -20.18 0 0.793 0.61<br>
+	212.5 14.748 -20.18 0 0.793 0.61<br>275 14.748 -20.18 0 0.793 0.61<br>275 
+	23.095 -30.643 0 0.77 0.638<br>275 31.77 -40.748 0 0.747 0.665<br>275 40.781 
+	-50.488 0 0.721 0.693<br>275 50.139 -59.856 0 0.693 0.721<br>275 61.471 
+	-70.254 0 0.658 0.753<br>275 67.332 -75.249 0 0.639 0.769<br>275 73.331 
+	-80.102 0 0.619 0.786<br>275 82.596 -87.102 0 0.586 0.81<br>275 92.194 
+	-93.747 0 0.552 0.834<br>275 102.132 -100.009 0 0.514 0.858<br>275 112.41 
+	-105.855 0 0.474 0.88<br>212.5 112.41 -105.855 0 0.474 0.88<br>END Ply.1<br>
+	LAYER END Ply.1<br>LAYER END Sequence.1</kbd></blockquote>
+	<p>Extract of .cal file</p>
+	<blockquote>4<br>T 1 D 25 162.459 -126.061<br>T 2 D 275 162.459 -126.061<br>T 3 D 
+	160.121 71.803 -104.222<br>T 4 D 222.679 48.404 -58.454</blockquote>
+	<p>Extract of .xml file (plies information)</p>
+	<blockquote>
+	<pre class="codeblock"><kbd>&lt;?xml version=&quot;1.0&quot;?&gt;
+-&lt;XML&gt;
+-&lt;PART TopLayers=&quot;3&quot; HIGHESTPLY=&quot;135&quot; USEASSIGNEDLASERS=&quot;&quot; DEFAULTLASER=&quot;0&quot; MODIFIED=&quot;2016-03-03-11.28.13&quot; INVERTNORMALS=&quot;&quot; DBVERSION=&quot;&quot; STATUS=&quot;&quot; NAME=&quot;vmua&quot;&gt;
+-&lt;PLY NAME=&quot;L1-Ply.40&quot;&gt;
+-&lt;PLY NAME=&quot;L2-Ply.40:0&quot; LASERNUMBER=&quot;1&quot;&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.727&quot; JVAL=&quot;-0.687&quot; IVAL=&quot;0&quot; ZVAL=&quot;-95.185&quot; YVAL=&quot;69.445&quot; XVAL=&quot;183.016&quot; NUMBER=&quot;1&quot;/&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.727&quot; JVAL=&quot;-0.687&quot; IVAL=&quot;0&quot; ZVAL=&quot;-70.899&quot; YVAL=&quot;43.751&quot; XVAL=&quot;147.661&quot; NUMBER=&quot;2&quot;/&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.727&quot; JVAL=&quot;-0.687&quot; IVAL=&quot;0&quot; ZVAL=&quot;-22.326&quot; YVAL=&quot;-7.637&quot; XVAL=&quot;218.372&quot; NUMBER=&quot;3&quot;/&gt;
+&lt;/PLY&gt;
+-&lt;PLY NAME=&quot;L3-Ply.40:1&quot; LASERNUMBER=&quot;1&quot;&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.567&quot; JVAL=&quot;-0.824&quot; IVAL=&quot;0&quot; ZVAL=&quot;-10.856&quot; YVAL=&quot;-7.371&quot; XVAL=&quot;295&quot; NUMBER=&quot;1&quot;/&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.644&quot; JVAL=&quot;-0.765&quot; IVAL=&quot;0&quot; ZVAL=&quot;-41.197&quot; YVAL=&quot;15.753&quot; XVAL=&quot;295&quot; NUMBER=&quot;2&quot;/&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.721&quot; JVAL=&quot;-0.693&quot; IVAL=&quot;0&quot; ZVAL=&quot;-68.791&quot; YVAL=&quot;41.541&quot; XVAL=&quot;295&quot; NUMBER=&quot;3&quot;/&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.811&quot; JVAL=&quot;-0.585&quot; IVAL=&quot;0&quot; ZVAL=&quot;-97.36&quot; YVAL=&quot;75.621&quot; XVAL=&quot;295&quot; NUMBER=&quot;4&quot;/&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.855&quot; JVAL=&quot;-0.519&quot; IVAL=&quot;0&quot; ZVAL=&quot;-109.87&quot; YVAL=&quot;94.472&quot; XVAL=&quot;295&quot; NUMBER=&quot;5&quot;/&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.896&quot; JVAL=&quot;-0.443&quot; IVAL=&quot;0&quot; ZVAL=&quot;-121.294&quot; YVAL=&quot;114.414&quot; XVAL=&quot;295&quot; NUMBER=&quot;6&quot;/&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.958&quot; JVAL=&quot;-0.287&quot; IVAL=&quot;0&quot; ZVAL=&quot;-137.171&quot; YVAL=&quot;151.744&quot; XVAL=&quot;295&quot; NUMBER=&quot;7&quot;/&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.981&quot; JVAL=&quot;-0.192&quot; IVAL=&quot;0&quot; ZVAL=&quot;-143.754&quot; YVAL=&quot;171.65&quot; XVAL=&quot;295&quot; NUMBER=&quot;8&quot;/&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.997&quot; JVAL=&quot;-0.081&quot; IVAL=&quot;0&quot; ZVAL=&quot;-147.64&quot; YVAL=&quot;192.329&quot; XVAL=&quot;295&quot; NUMBER=&quot;9&quot;/&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.999&quot; JVAL=&quot;0.039&quot; IVAL=&quot;0&quot; ZVAL=&quot;-148.088&quot; YVAL=&quot;212.618&quot; XVAL=&quot;295&quot; NUMBER=&quot;10&quot;/&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.985&quot; JVAL=&quot;0.172&quot; IVAL=&quot;0&quot; ZVAL=&quot;-145.959&quot; YVAL=&quot;232.783&quot; XVAL=&quot;295&quot; NUMBER=&quot;11&quot;/&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.935&quot; JVAL=&quot;0.356&quot; IVAL=&quot;0&quot; ZVAL=&quot;-138.644&quot; YVAL=&quot;259.427&quot; XVAL=&quot;295&quot; NUMBER=&quot;12&quot;/&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.853&quot; JVAL=&quot;0.522&quot; IVAL=&quot;0&quot; ZVAL=&quot;-126.175&quot; YVAL=&quot;284.729&quot; XVAL=&quot;295&quot; NUMBER=&quot;13&quot;/&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.853&quot; JVAL=&quot;0.522&quot; IVAL=&quot;0&quot; ZVAL=&quot;-126.175&quot; YVAL=&quot;284.729&quot; XVAL=&quot;5&quot; NUMBER=&quot;14&quot;/&gt;
+&lt;POINT NAME=&quot;&quot; KVAL=&quot;-0.935&quot; JVAL=&quot;0.356&quot; IVAL=&quot;0&quot; ZVAL=&quot;-138.644&quot; YVAL=&quot;259.427&quot; XVAL=&quot;5&quot; NUMBER=&quot;15&quot;/&gt;
+...&lt;/PLY&gt;
+&lt;TEXT NAME=&quot;1&quot; PT3ZVAL=&quot;26.246&quot; PT3YVAL=&quot;-59.025&quot; PT3XVAL=&quot;147.661&quot; PT2ZVAL=&quot;-22.326&quot; PT2YVAL=&quot;-7.637&quot; PT2XVAL=&quot;218.372&quot; PT1ZVAL=&quot;-70.899&quot; PT1YVAL=&quot;43.751&quot; PT1XVAL=&quot;147.661&quot; VALUE=&quot;Ply.40&quot;/&gt;
+&lt;/PLY&gt;
+&lt;/PART&gt;
+&lt;/XML&gt;</kbd></pre>
+	</blockquote>
+	<p>Extract of .xml file (target points information)</p>
+	<blockquote>
+	<pre class="codeblock"><kbd>&lt;?xml version=&quot;1.0&quot;?&gt;
+-&lt;XML&gt;
+-&lt;TOOL TOOLCODE=&quot;&quot; STATUS=&quot;&quot; COORDSYSTEM=&quot;RIGHT&quot; MODIFIED=&quot;2016-03-03-11.28.14&quot; NAME=&quot;vmub&quot; DBVERSION=&quot;&quot;&gt;
+&lt;TARGET NAME=&quot;Point.1&quot; SEARCHRATIO=&quot;1.0&quot; ZVAL=&quot;-126.061&quot; YVAL=&quot;162.459&quot; XVAL=&quot;275&quot; DVAL=&quot;Y&quot; LASERNUMBER=&quot;1&quot; NUMBER=&quot;1&quot;/&gt;
+&lt;TARGET NAME=&quot;Point.19&quot; SEARCHRATIO=&quot;1.0&quot; ZVAL=&quot;-101.832&quot; YVAL=&quot;68.518&quot; XVAL=&quot;195.779&quot; DVAL=&quot;Y&quot; LASERNUMBER=&quot;1&quot; NUMBER=&quot;2&quot;/&gt;
+&lt;TARGET NAME=&quot;Point.20&quot; SEARCHRATIO=&quot;1.0&quot; ZVAL=&quot;-80.933&quot; YVAL=&quot;43.099&quot; XVAL=&quot;79.575&quot; DVAL=&quot;Y&quot; LASERNUMBER=&quot;1&quot; NUMBER=&quot;3&quot;/&gt;
+&lt;TARGET NAME=&quot;Point.21&quot; SEARCHRATIO=&quot;1.0&quot; ZVAL=&quot;-151.805&quot; YVAL=&quot;197.793&quot; XVAL=&quot;73.237&quot; DVAL=&quot;Y&quot; LASERNUMBER=&quot;1&quot; NUMBER=&quot;4&quot;/&gt;
+&lt;TARGET NAME=&quot;Point.22&quot; SEARCHRATIO=&quot;1.0&quot; ZVAL=&quot;-151.629&quot; YVAL=&quot;194.743&quot; XVAL=&quot;182.877&quot; DVAL=&quot;Y&quot; LASERNUMBER=&quot;1&quot; NUMBER=&quot;5&quot;/&gt;
+&lt;TARGET NAME=&quot;Point.8&quot; SEARCHRATIO=&quot;1.0&quot; ZVAL=&quot;-76.567&quot; YVAL=&quot;38.393&quot; XVAL=&quot;147.661&quot; DVAL=&quot;Y&quot; LASERNUMBER=&quot;1&quot; NUMBER=&quot;6&quot;/&gt;
+&lt;/TOOL&gt;
+&lt;/XML&gt;</kbd></pre>
+	</blockquote></td>
+  </tr>
+  <tr>
+    <td width="814">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <p align="center">
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

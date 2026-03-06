@@ -1,0 +1,414 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Pattern Definition</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+</head>
+
+ <body>
+
+ <h1>Pattern Definition
+ <a name="ix-standards::pattern parameters;patterns::standard parameters"></a>&nbsp;<a name="Frames"></a></h1>
+ <table border="0" cellspacing="0" width="100%">
+   <tr>
+     <td>
+     <img border="0" src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+     <td>This section deals with pattern definition. Patterns are used for area 
+     fills or in a Generative Drafting context when cutting through material in 
+     section views/cuts or breakout views, for example.&nbsp;</td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+     <td>
+     <h3>Defining Patterns</h3>
+     <p>Pattern definitions are located in the <kbd>Patterns </kbd>node of the 
+     <kbd>Standard Definition</kbd> editor, available via <kbd>Tools> Standards</kbd>.</p>
+     <p>There are a number of pre-defined pattern definitions available in the 
+     Standards editor. You can customize these definitions to suit your needs, 
+     by modifying one or several values of the parameters defining the 
+     pattern.&nbsp;&nbsp;</p>
+     <p>You can also add additional instances of pattern definitions.&nbsp;To create 
+     a new pattern definition, you must use the Standards editor. Select the
+     <kbd>Patterns </kbd>type in the standards editor, and then click the <kbd>
+     Add Instance</kbd> button to add a new pattern instance. This will create a 
+     sample pattern definition that you will then customize to suit your needs, 
+     by modifying one or several values of the parameters defining the pattern.</p>
+     <p>Once defined or customized, a pattern can be applied to area fills 
+     (either via <kbd>Edit> Properties</kbd>, or using the Graphic Properties 
+     toolbar), or it can be used when cutting through material in generative 
+     section views/cuts or breakout views, for example.&nbsp;</td>
+   </tr>
+   <tr>
+     <td></td>
+     <td>
+     <h3>General remarks about patterns</h3>
+     <ul>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0">If no pattern is defined in 
+       the standard XML file (i.e. if all instances of pattern definitions are 
+       removed from the standards editor), the software will automatically use 
+       its own selection of patterns. In this case, you will be able to edit all 
+       the properties of these patterns via <kbd>Edit> Properties</kbd> or the 
+       <kbd>Graphic Properties</kbd> toolbar.</li>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0">You need to define at least 
+       one pattern for each type of pattern (hatching, dotting, coloring, image) 
+       if you want this specific pattern type to be available from <kbd>Edit> 
+       Properties</kbd> or from the Graphic Properties toolbar.</li>
+       <li><a name="hj-hatchingdottingpatterns"></a>With hatching or dotting 
+       patterns, the spacing between each hatch or dot is sometimes larger than 
+       the area to fill. This makes it impossible to display the pattern 
+       properly. In such a case, the area fill contour is made bold and is 
+       turned into the same color as the pattern color. This enables you to 
+       identify items with area fills even if the pattern is not visible. </li>
+       <li>If you modify the standard of a drawing which already includes 
+       patterns (in area fills, sections or breakouts, for example), existing 
+       patterns will not changed, even when updating the drawing. However, if 
+       you create new area fills or if you create section views/cuts or breakout 
+       views from new parts in this drawing, the newly-defined patterns will be 
+       used.&nbsp;&nbsp; </li>
+     </ul>
+     <h3>General remarks about generated patterns (Generative Drafting context)</h3>
+     <ul>
+       <li>Hatching patterns are a combination of the angle and hatching lists 
+       available in the standard XML file: newly created patterns are based on 
+       the first hatching standard referencing successively the values of the 
+       angle list, then the second hatching standard referencing successively 
+       the values of the angle list, and so on.</li>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0">A new hatching pattern is 
+       created for each newly cut part or body. Patterns are associated to 
+       bodies (their attributes are kept each time the view is updated) but are 
+       they are not persistent. This means that if a part becomes not cut after 
+       a view update, the associated pattern is definitively lost. If this part 
+       is cut again, a new pattern will be created.</li>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0">Some parts use a material to 
+       which a specific pattern is associated. In this case:
+       <ul>
+         <li>
+         <p style="margin-top: 0; margin-bottom: 0">You can either choose to use 
+         the pattern associated to this material (instead of the patterns 
+         defined in the standards) even if this pattern is not defined in the 
+         standards, or you can choose to use standard patterns only, instead of 
+         the pattern associated to this material. Refer to
+         <a href="page3684.html">View Generation Definition</a> for more 
+         information.</li>
+         <li>
+         <p style="margin-top: 0; margin-bottom: 0">The angle list available in 
+         the standard XML file is used to define the pattern. However, note the 
+         following exception to this rule: if the material pattern angle equals 
+         0, this is considered as a strong material specification. In this case, 
+         the angle for the generated pattern is kept at 0. </li>
+         <li>
+         <p style="margin-top: 0; margin-bottom: 0">If you modify the pattern 
+         associated with the part material, the generated pattern is not 
+         modified even if you update the view.</li>
+         <li>
+         <p style="margin-top: 0; margin-bottom: 0">When editing the properties 
+         of a pattern associated with a part material, a specific button is 
+         available in the Properties dialog box: <kbd>Reset using Part Material 
+         Pattern</kbd>. When the original properties of the part material are 
+         modified, this button is activated to let you revert to the original 
+         part material pattern. For example, if you replace or modify a pattern 
+         associated with a part material by a pattern from the standard, then 
+         the generated pattern is considered as overloaded, and will not be 
+         updated if you modify the properties of the part material. In this 
+         case, you can always revert to the original part material pattern using 
+         the <kbd>Reset using Part Material Pattern</kbd> button. <br>
+         Also use this button if you modify the part material pattern and want 
+         to apply these modifications to the generated patterns.<br>
+         If you reset a pattern using this button and do not modify it using 
+         other properties available in the Properties dialog box (no overload), 
+         and if you then modify the part material pattern, then this pattern 
+         will be updated accordingly. </li>
+       </ul>
+       </li>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0">When editing the properties of 
+       a pattern associated with a part material (via <kbd>Edit> Properties</kbd> 
+       or the <kbd>Graphic Properties </kbd>toolbar), the software offers its own selection 
+       of patterns, and not the patterns defined in the standard XML file.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td></td>
+     <td>
+     <h3><a name="motif"></a>Specific remarks about Image patterns</h3>
+     <ul>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0">It is recommended that you 
+       place images that you want to use for the Image pattern in either one (or 
+       in both) of the directories set by the following variables: <br>
+       - CATStartupPath (images used by materials)<br>
+       - CATGraphicPath (images and icons). <br>
+       Make sure you do not remove the files which are present in these 
+       directories when placing your images there. For more information on the 
+       CATStartupPath and on the CATGraphicPath variables, refer to the 
+       Infrastructure Installation Guide.</li>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0">Make sure that images 
+       referenced in the standard XML file are present on the computer of each 
+       user who will use this standard.</li>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0">Once an Image pattern is used 
+       in a drawing, the corresponding file is embedded inside it. You do not 
+       need to export the image files used in a given drawing.</li>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0">Images used as patterns must 
+       be bitmap images (not vector).</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td></td>
+     <td>&nbsp;<table border="1" cellpadding="0" bgcolor="#F2F2F2" cellspacing="0" height="493">
+       <tr>
+         <td align="left" height="38">
+         <p align="center" class="task"><b>Parameter</b></td>
+         <td height="38">
+         <p align="center" class="task"><b>Parameter <br>
+         Name</b></td>
+         <td align="left" height="38">
+         <p align="center" class="task"><b>Description</b></td>
+       </tr>
+       <tr>
+         <td height="66">
+         <p class="task"><b>Availability </b></td>
+         <td height="66" bgcolor="#FFFFFF">
+         <p class="task">Availability</td>
+         <td align="left" bgcolor="#FFFFFF" height="66">
+         <p class="task">Specifies whether users 
+         can modify all or only some pattern properties via <kbd>Edit> 
+         Properties</kbd>.<br>
+         If Yes, all pattern properties can be modified in the Properties dialog 
+         box.<br>
+         If No: only some pattern properties will be available from the 
+         Properties dialog box, namely: <br>
+         - Hatching: users can only modify the angle, the pitch and the offset, 
+         and choose a new pattern.<br>
+         - Dotting: users can modify all properties.<br>
+         - Coloring: users can modify all properties.<br>
+         - Image: users can only use the images defined in the standards. They 
+         can modify the image angle and scale.</td>
+       </tr>
+       <tr>
+         <td height="33">
+         <p class="task"><b>Angle List</b></td>
+         <td height="33" bgcolor="#FFFFFF">
+         <p class="task">Angle</td>
+         <td align="left" bgcolor="#FFFFFF" height="33">
+         <p class="task">Specifies preferred 
+         angle values that will be used when creating section views/cuts or 
+         breakout views. These values will be available via <kbd>Edit> 
+         Properties.</kbd></td>
+       </tr>
+       <tr>
+         <td rowspan="10" height="194">
+         <p class="task"><b>Hatching</b></td>
+         <td height="16" bgcolor="#FFFFFF">
+         <p class="task">Name</td>
+         <td align="left" bgcolor="#FFFFFF" height="16">
+         <p class="task">Specifies the name of 
+         this pattern.</td>
+       </tr>
+       <tr>
+         <td height="16" bgcolor="#FFFFFF">
+         <p class="task">Type</td>
+         <td align="left" bgcolor="#FFFFFF" height="16">
+         <p class="task">Shows the current 
+         pattern type, in this case, hatching.</td>
+       </tr>
+       <tr>
+         <td height="32" bgcolor="#FFFFFF">
+         <p class="task">Number&nbsp;of&nbsp;Hatching</td>
+         <td align="left" bgcolor="#FFFFFF" height="32">
+         <p class="task">Defines the number of 
+         different hatchings to use in this pattern. A tab will be created for 
+         each hatching, to let you define each one individually.</td>
+       </tr>
+       <tr>
+         <td height="16" bgcolor="#FFFFFF">
+         <p class="task">Angle</td>
+         <td align="left" bgcolor="#FFFFFF" height="16">
+         <p class="task">For each hatching used 
+         in this pattern, specifies the angle value in degrees.</td>
+       </tr>
+       <tr>
+         <td height="16" bgcolor="#FFFFFF">
+         <p class="task">Pitch</td>
+         <td align="left" bgcolor="#FFFFFF" height="16">
+         <p class="task">For each hatching used 
+         in this pattern, specifies the pitch in millimeters.</td>
+       </tr>
+       <tr>
+         <td height="16" bgcolor="#FFFFFF">
+         <p class="task">Offset</td>
+         <td align="left" bgcolor="#FFFFFF" height="16">
+         <p class="task">For each hatching used 
+         in this pattern, specifies the offset in millimeters.</td>
+       </tr>
+       <tr>
+         <td height="16" bgcolor="#FFFFFF">
+         <p class="task">Color</td>
+         <td align="left" bgcolor="#FFFFFF" height="16">
+         <p class="task">For each hatching used 
+         in this pattern, specifies the color.</td>
+       </tr>
+       <tr>
+         <td height="16" bgcolor="#FFFFFF">
+         <p class="task">Linetype</td>
+         <td align="left" bgcolor="#FFFFFF" height="16">
+         <p class="task">For each hatching used 
+         in this pattern, specifies the linetype. Only the first seven 
+			(normalized) mono-dimensional types are available for selection.</td>
+       </tr>
+       <tr>
+         <td height="16" bgcolor="#FFFFFF">
+         <p class="task">Thickness</td>
+         <td align="left" bgcolor="#FFFFFF" height="16">
+         <p class="task">For each hatching used 
+         in this pattern, specifies the linetype thickness.</td>
+       </tr>
+       <tr>
+         <td height="16" bgcolor="#FFFFFF">
+         <p class="task">Preview</td>
+         <td align="left" bgcolor="#FFFFFF" height="16">
+         <p class="task">Lets you preview the 
+         resulting hatching pattern.</td>
+       </tr>
+       <tr>
+         <td rowspan="6" height="112">
+         <p class="task"><b>Dotting</b></td>
+         <td height="16" bgcolor="#FFFFFF">
+         <p class="task">Name</td>
+         <td align="left" bgcolor="#FFFFFF" height="16">
+         <p class="task">Specifies the name of 
+         this pattern.</td>
+       </tr>
+       <tr>
+         <td height="16" bgcolor="#FFFFFF">
+         <p class="task">Type</td>
+         <td align="left" bgcolor="#FFFFFF" height="16">
+         <p class="task">Shows the current 
+         pattern type, in this case, dotting.</td>
+       </tr>
+       <tr>
+         <td height="16" bgcolor="#FFFFFF">
+         <p class="task">Pitch</td>
+         <td align="left" bgcolor="#FFFFFF" height="16">
+         <p class="task">Specifies the dotting 
+         pitch in millimeters.</td>
+       </tr>
+       <tr>
+         <td height="18" bgcolor="#FFFFFF">
+         <p class="task">Color</td>
+         <td align="left" bgcolor="#FFFFFF" height="18">
+         <p class="task">Specifies the dotting 
+         color.</td>
+       </tr>
+       <tr>
+         <td height="18" bgcolor="#FFFFFF">
+         <p class="task">Zigzag</td>
+         <td align="left" bgcolor="#FFFFFF" height="18">
+         <p class="task">Specifies whether 
+         dotting should zigzag.</td>
+       </tr>
+       <tr>
+         <td height="18" bgcolor="#FFFFFF">
+         <p class="task">Preview</td>
+         <td align="left" bgcolor="#FFFFFF" height="18">
+         <p class="task">Lets you preview the 
+         resulting dotting pattern.</td>
+       </tr>
+       <tr>
+         <td height="18" rowspan="4">
+         <p class="task"><b>Coloring</b></td>
+         <td height="16" bgcolor="#FFFFFF">
+         <p class="task">Name</td>
+         <td align="left" bgcolor="#FFFFFF" height="16">
+         <p class="task">Specifies the name of 
+         this pattern.</td>
+       </tr>
+       <tr>
+         <td height="16" bgcolor="#FFFFFF">
+         <p class="task">Type</td>
+         <td align="left" bgcolor="#FFFFFF" height="16">
+         <p class="task">Shows the current 
+         pattern type, in this case, coloring.</td>
+       </tr>
+       <tr>
+         <td height="4" bgcolor="#FFFFFF">
+         <p class="task">Color</td>
+         <td align="left" bgcolor="#FFFFFF" height="4">
+         <p class="task">Specifies the color.</td>
+       </tr>
+       <tr>
+         <td height="4" bgcolor="#FFFFFF">
+         <p class="task">Preview</td>
+         <td align="left" bgcolor="#FFFFFF" height="4">
+         <p class="task">Lets you preview the 
+         resulting coloring pattern.</td>
+       </tr>
+       <tr>
+         <td height="18" rowspan="6">
+         <p class="task"><b>Motif</b></td>
+         <td height="4" bgcolor="#FFFFFF">
+         <p class="task">Name</td>
+         <td align="left" bgcolor="#FFFFFF" height="16">
+         <p class="task">Specifies the name of 
+         this pattern.</td>
+       </tr>
+       <tr>
+         <td height="4" bgcolor="#FFFFFF">
+         <p class="task">Type</td>
+         <td align="left" bgcolor="#FFFFFF" height="16">
+         <p class="task">Shows the current 
+         pattern type, in this case, image.</td>
+       </tr>
+       <tr>
+         <td height="2" bgcolor="#FFFFFF">
+         <p class="task">Browse button</td>
+         <td align="left" bgcolor="#FFFFFF" height="2">
+         <p class="task">Lets you select the image 
+         to use for this pattern. Refer to <a href="#motif">Specific remarks 
+         about Image patterns</a> for more information.</td>
+       </tr>
+       <tr>
+         <td height="2" bgcolor="#FFFFFF">
+         <p class="task">Angle</td>
+         <td align="left" bgcolor="#FFFFFF" height="2">
+         <p class="task">Specifies the angle value 
+         in degrees.</td>
+       </tr>
+       <tr>
+         <td height="3" bgcolor="#FFFFFF">
+         <p class="task">Scale</td>
+         <td align="left" bgcolor="#FFFFFF" height="3">
+         <p class="task">Specifies the scale.</td>
+       </tr>
+       <tr>
+         <td height="3" bgcolor="#FFFFFF">
+         <p class="task">Preview</td>
+         <td align="left" bgcolor="#FFFFFF" height="3">
+         <p class="task">Lets you preview the 
+         original image (not the result after modifying the angle and scale).</td>
+       </tr>
+     </table>
+     <p>&nbsp;</td>
+   </tr>
+ </table>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

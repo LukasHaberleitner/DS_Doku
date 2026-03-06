@@ -1,0 +1,314 @@
+'=============================================================================
+' SAMPLE of VB code to generate Interference Checking rules from a excel file
+' This code is ONLY AN EXAMPLE to demonstrate how CATIA Automation APIs can
+' be used to make the rules edition easier.
+' Notes:
+'   - excel file will be open
+'   - rule catproduct will be CREATED
+'   - rules will be CREATED from excel data
+'   - rules will be solved
+'   - rule catproduct will be saved (if already exist, used will be prompted)
+'   - excel application will be closed
+'   - rule catproduct is kept open since
+' Warning: as an example, this code might not manage all customized conditions
+' other syntax and separators could be used
+'=============================================================================
+' COPYRIGHT DASSAULT SYSTEMES 2005
+'   Language:    VBScript
+' 2005-05-09 creation by CIN@DS
+'=============================================================================
+Option Explicit 'to prevent from implicit variant-type declarations
+
+' Constants Definition
+'==================================
+Const ruleGenDir As String = "E:\tmp\ImportRulesTest"                   'the working directory
+Const ruleExcelFile As String = ruleGenDir + "\SPE1Rules.xls"            'the excel source file
+Const ruleCATProduct As String = ruleGenDir + "\SPE_ITF_GENERATED_Rules.CATProduct"   'the resulting rules CATProduct
+
+Const ruleProductPartNumber As String = "SPE_ITF_RULES_PRODUCT"
+Const ruleBaseName As String = "SPE_ITF_RULES"
+Const ruleGenSet As String = "GENERATED"
+
+Const ruleSeverityParamName As String = "Severity"
+Const rulePenCandParamrName As String = "PenetrationCandidate"
+
+Const defaultRuleName As String = "DefaultClash"        'the default values
+Const defaultTypeProd1 As String = "Product"
+Const defaultTypeProd2 As String = "Product"
+Const defaultBasicCondition As String = "if(p1 !=  p2)"
+Const defaultClearance As String = "0mm"
+Const defaultTypeOfCalc As String = """Clash"""
+Const defaultShapeName As String = """Shape 1"""
+Const defaultSeverity As String = "Hard-Hard"
+Const defaultPenCand As String = "NotCandidate"
+Const defaultPriority As Double = 1
+
+Const hardhardColor As Integer = 38                     'the color index for hard-hard interferences
+Const softhardColor As Integer = 40                     'the color index for soft-hard interferences
+Const softsoftColor As Integer = 37                     'the color index for soft-soft interferences
+Const hardhardValue As String = "Hard-Hard"             'the different severity values
+Const softhardValue As String = "Soft-Hard"
+Const softsoftValue As String = "Soft-Soft"
+
+
+
+'=============================================================================
+' 1 - Create the rule product
+' 2 - Create Rules Set
+' 3 - Retrieve the Rules from Excel or Text file
+' 4 - For Each Excel Combination, Generate Rules in the Rule Set
+' 5 - Solving Rules
+' 6 - Saving Rules Product
+' 7 - Closing Excel
+'=============================================================================
+Sub CATMain()
+'=============================================================================
+
+' 1 - Create the rule product
+'============================
+Dim catiaDocs As Documents
+Set catiaDocs = CATIA.Documents
+
+Dim ruleProductDoc As Document
+Set ruleProductDoc = catiaDocs.Add("Product")
+
+Dim ruleProduct As Product
+Set ruleProduct = ruleProductDoc.Product
+CATIA.ActiveWindow.ActiveViewer.Viewpoint3D.ProjectionMode = 0
+ruleProduct.PartNumber = ruleProductPartNumber
+
+' 2 - Create Rules Set
+'======================
+Dim ruleBase As Relation
+Set ruleBase = ruleProduct.Relations.CreateRuleBase(ruleBaseName)
+
+Dim generatedRuleSet As ExpertRuleSet
+Set generatedRuleSet = ruleBase.RuleSet.CreateRuleSet(ruleGenSet, "")
+
+
+' 3 - Retrieve the Rules from Excel or Text file
+'======================
+Dim msExcelApp As Object
+Set msExcelApp = GetObject("", "Excel.Application")
+msExcelApp.Visible = True
+msExcelApp.UserControl = True
+
+Dim msExcelWorkbook As Workbook
+Set msExcelWorkbook = msExcelApp.Workbooks.Open(ruleExcelFile)
+
+Dim rulesWorkSheet As Worksheet
+Set rulesWorkSheet = msExcelWorkbook.Worksheets.Item(1)
+
+
+' 4 - For Each Excel Combination, Generate Rules in the Rule Set
+'======================
+Dim colIndex As Integer, colMaxIndex As Integer
+colIndex = 2
+colMaxIndex = colIndex
+
+'determining max column index
+While (Not rulesWorkSheet.Cells(1, colMaxIndex) Like "")
+    colMaxIndex = colMaxIndex + 1
+Wend
+
+Dim rowIndex As Integer, rowMaxIndex As Integer
+rowMaxIndex = colMaxIndex
+
+
+'While all the columns have not been processed..
+While (colIndex < colMaxIndex)
+    rowIndex = 2
+    While (rowIndex <= colIndex)
+        
+        Call CreateRuleFromWorksheetCell(rulesWorkSheet, colIndex, rowIndex, ruleProduct, generatedRuleSet)
+        
+        rowIndex = rowIndex + 1
+    Wend
+    colIndex = colIndex + 1
+Wend
+
+' 5 - Solving Rules
+'======================
+ruleBase.SolveType = AutomaticCompleteSolveType
+Call ruleBase.Deduce
+
+' 6 - Saving Rules Product
+'======================
+ruleProductDoc.SaveAs (ruleCATProduct)
+'product is kept open for "Manual Optimized Solve" & control
+
+' 7 - Closing Excel
+'======================
+msExcelApp.Workbooks.Close
+msExcelApp.Quit
+
+End Sub
+
+
+
+
+'=============================================================================
+' Add a new rule to the given product&set according to given cell
+'=============================================================================
+Sub CreateRuleFromWorksheetCell(rulesWorkSheet As Worksheet, colIndex As Integer, rowIndex As Integer, ruleProduct As Product, generatedRuleSet As ExpertRuleSet)
+'=============================================================================
+
+'variables declaration
+Dim colTitle As String, rowTitle As String
+
+Dim cellColor As Variant
+Dim cellComment As String
+
+Dim rule_name As String, rule_custoname As String, rule_priority As Double
+Dim rule_typeprod1 As String, rule_typeprod2 As String
+Dim rule_clearance As String, rule_typeofcalc As String
+Dim tmpShape1 As String, tmpShape2 As String
+Dim rule_shape1 As String, rule_shape2 As String
+Dim rule_severity As String, rule_pencandidate As String
+Dim rule_variables As String, rule_condition As String, rule_computation As String, rule_body As String
+Dim rule_advcondition As String
+
+Dim extracted_type As String, extracted_pencand As String, extracted_priority As String
+
+
+Dim newRule As ExpertRule
+Dim ruleParams As Parameters
+Dim severityParam As Parameter, pencandidateParam As Parameter
+
+Dim createRuleFlag As Boolean
+
+' Initialization
+createRuleFlag = True
+
+' Initialization for the Rule's customizable inputs
+rule_name = defaultRuleName
+rule_custoname = ""
+rule_typeprod1 = defaultTypeProd1
+rule_typeprod2 = defaultTypeProd1
+rule_condition = defaultBasicCondition
+rule_advcondition = ""
+rule_clearance = defaultClearance
+rule_typeofcalc = defaultTypeOfCalc
+rule_shape1 = defaultShapeName
+rule_shape2 = defaultShapeName
+rule_severity = defaultSeverity
+rule_pencandidate = defaultPenCand
+rule_priority = defaultPriority
+
+'for severity
+cellColor = rulesWorkSheet.Cells(rowIndex, colIndex).Interior.ColorIndex
+
+Select Case cellColor
+    Case hardhardColor
+        rule_severity = hardhardValue
+    Case softhardColor
+        rule_severity = softhardValue
+    Case softsoftColor
+        rule_severity = softsoftValue
+    Case Else
+        createRuleFlag = False
+End Select
+
+'If no color is specified, we don't create the rule
+If (createRuleFlag) Then
+    'retrieving product types and shape names
+    colTitle = rulesWorkSheet.Cells(1, colIndex)
+    rowTitle = rulesWorkSheet.Cells(rowIndex, 1)
+    
+    rule_typeprod1 = Split(colTitle, "/", 2)(0)
+    tmpShape1 = Split(colTitle, "/", 2)(1)
+    rule_shape1 = """" + tmpShape1 + """"
+    rule_typeprod2 = Split(rowTitle, "/", 2)(0)
+    tmpShape2 = Split(rowTitle, "/", 2)(1)
+    rule_shape2 = """" + tmpShape2 + """"
+    
+    'computation overloaded details: priority, type of calculation, clearance, penetration candidate
+    rule_priority = ExtractValueFromCell(rulesWorkSheet.Cells(rowIndex, colIndex).Text, rule_priority)
+    
+    rulesWorkSheet.Cells(rowIndex, colIndex).Select
+    If Not rulesWorkSheet.Cells(rowIndex, colIndex).Comment Is Nothing Then
+        cellComment = rulesWorkSheet.Cells(rowIndex, colIndex).Comment.Text
+        
+        rule_custoname = ExtractValueFromComment(cellComment, "RuleName", rule_custoname)
+        rule_advcondition = ExtractValueFromComment(cellComment, "AdvCondition", rule_advcondition)
+        rule_typeofcalc = ExtractValueFromComment(cellComment, "ComputationType", rule_typeofcalc)
+        rule_clearance = ExtractValueFromComment(cellComment, "Clearance", rule_clearance)
+        rule_pencandidate = ExtractValueFromComment(cellComment, "PenCandidate", rule_pencandidate)
+       
+    End If
+    
+    ' The Rule definition
+    '====================
+    'constructing rule name
+    If Len(rule_custoname) > 0 Then
+        rule_name = rule_custoname
+    Else
+        rule_name = rule_typeprod1 + "_" + tmpShape1 + "_" + rule_typeprod2 + "_" + tmpShape2 + "_" + Str(rule_priority)
+    End If
+    
+    If Len(rule_advcondition) > 0 Then
+        rule_condition = rule_condition + " AND " + rule_advcondition
+    End If
+    rule_variables = "p1:" + rule_typeprod1 + ";p2:" + rule_typeprod2
+    rule_computation = "{DefineInterferenceComputation(p1, p2," + rule_typeofcalc + ", " + rule_clearance + ", " + rule_shape1 + ", " + rule_shape2 + ", ThisRule);}"
+    rule_body = rule_condition + rule_computation
+    
+    Set newRule = generatedRuleSet.CreateRule(rule_name, rule_variables, rule_body, "")
+    newRule.Priority = rule_priority
+    
+    ' The Rule's Parameters
+    '======================
+    Set ruleParams = ruleProduct.Parameters.SubList(newRule, True)
+    Set severityParam = ruleParams.CreateString(ruleSeverityParamName, rule_severity)
+    Set pencandidateParam = ruleParams.CreateString(rulePenCandParamrName, rule_pencandidate)
+
+End If
+
+End Sub
+
+
+'=============================================================================
+' extract overloaded priority from cell
+'=============================================================================
+Function ExtractValueFromCell(cellText As String, default As Double)
+'=============================================================================
+Dim result As Double
+result = default
+If Len(cellText) > 0 Then
+    result = cellText
+End If
+ExtractValueFromCell = result
+End Function
+
+
+'=============================================================================
+' extract overloaded data from cells'comment
+' comment must be using following syntax
+'   param1=value1;
+'   param2=value2;
+'   ...
+'=============================================================================
+Function ExtractValueFromComment(commentText As String, attrName As String, default As String)
+'=============================================================================
+Dim result As String
+Dim commentline As String, nextline As String
+Dim param As String, value As String
+Dim index As Integer
+result = default
+If Len(commentText) > 0 Then
+    index = 0
+    nextline = "init=init"
+    While (InStr(1, param, attrName, vbTextCompare) <= 0 And InStr(1, nextline, "=", vbTextCompare) > 0)
+        commentline = Split(commentText, ";")(index)
+        nextline = Split(commentText, ";")(index + 1)
+        param = Split(commentline, "=")(0)
+        value = Split(commentline, "=")(1)
+        index = index + 1
+    Wend
+    If InStr(1, param, attrName, vbTextCompare) > 0 Then
+        result = value
+    End If
+End If
+ExtractValueFromComment = result
+End Function
+

@@ -1,0 +1,257 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Optimzing Rule-basd Clash Rules</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1><a name="hj-top"></a>Optimizing Rule-based Clash<a name="ix-clash::optimize knowledgeware rule-based clash;knowledgeware::optimize rule-based clash; ruel-based clash, optimizing"></a></h1>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32"></p>
+ <div align="left">
+   <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="737">
+     <tr>
+       <td valign="top" width="32">
+       <img border="0" src="b35doc/english/online/icons_C2/common/abasic.gif" width="32" height="32"></td>
+       <td colspan="2" valign="top" style="padding-bottom: 10">
+       Clash rules written to perform interference checking rely on the <code>
+		DefineInterferenceComputation</code> function.<br>
+		The mechanism works as follows:
+		<p>The rule enables calling the <code>DefineInterferenceComputation</code> 
+		function, which in return launches the interference calculation.<br>
+		<br>
+		Optimizing clash rules consist in making sure only relevant calls to 
+		this function are performed. Specifying the appropriate condition in the 
+		clash rule&nbsp;thus permits to avoid unnecessary calls and optimizes the 
+		computation time.</td>
+     </tr>
+     <tr>
+       <td valign="top" width="32">
+       <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+       <td valign="top" colspan="2">
+       <p class="task">This task shows you how to optimize clash rules for 
+		interference analysis purposes. The following procedures described are 
+		described:<br>
+&nbsp;</p>
+       <ul>
+         <li>
+         <p class="task"><a href="#hj-usehasrep">Using <code>HasARepresentation</code> condition</a></li>
+			<li>
+         <p class="task"><a href="#hj-testcondition">Preferring the test <code>&gt; </code>instead of <code>
+			=! </code>condition</a></li>
+         <li>
+         <p class="task"><a href="#hj-conditionsorder">Ordering conditions</a></li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td valign="top" colspan="2">
+       <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+       <td valign="top" width="705">
+       <h2><a name="hj-usehasrep"></a>Using 
+		HasARepresentation condition</h2>
+		<p>The <code>HasARepresentation </code>condition allows to verify the 
+		product involved has the same representation shape described as an 
+		argument within the <code>DefineInterferenceComputation </code>function.<br>
+		<br>
+		In the example below, the rule takes into account a <kbd>PipingPart </kbd>with a 
+		representation <kbd>Envelope</kbd> and <kbd>Equipment</kbd> with a representation 
+		<kbd>Layout</kbd>.</p>
+    
+                 <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2" width="705">
+           <tr>
+             <td colspan="2">
+             <p class="task">
+				<img border="1" src="b35doc/english/online/cfyugspa_c2/images/dboptimizerule01NLS.gif" width="314" height="216"></td>
+           </tr>
+           <tr>
+             <td colspan="2">
+				<ul>
+					<li>The condition specified in this rule (<kbd>if (p1 != p2)&nbsp;</kbd>only checks P1 different 
+				from P2. </li>
+					<li>No check is performed to verify that the 
+				representations described in the <code>DefineInterferenceComputation 
+					</code>exist for P1 and P2.<br>
+					<br>To optimize this rule, we recommend you to the 
+					<code>HasARepresentation </code>condition as follows:</li>
+				</ul>
+				</td>
+           </tr>
+           <tr>
+             <td colspan="2">
+				<img border="2" src="b35doc/english/online/cfyugspa_c2/images/dboptimizerule02NLS_small.gif" title="Click to enlarge this image" width="270" height="110"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script><ul>
+					<li>The 
+					<code>HasARepresentation </code>condition verifies P1 is 
+					assigned an <kbd>Envelope</kbd> representation and P2 is 
+					assigned a <kbd>Layout</kbd> representation.</li>
+				</ul>
+				</td>
+           </tr>
+           <tr>
+             <td width="29" valign="top">
+           <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+             <td width="676">
+				If in the <code>DefineInterferenceComputation</code> function 
+				the arguments specified for the representation are the default 
+				arguments, the <code>HasARepresentation</code> condition becomes 
+				obsolete because we are sure the representation exist.</td>
+           </tr>
+         </table>
+                  
+                 
+                 </p>
+         </li>
+       	
+			<h2><font color="#282187"><a name="hj-testcondition"></a>Preferring the the test &gt; instead of 			=! condition</font></h2>
+		<p>The<code> &gt;</code> test condition can only be used:</p>
+		<ul>
+			<li>When the type of product for P1 and P2 is the same. </li>
+		<li>When the expected representation name for P1 and P2 is the same.<br>
+		
+		<br>
+		
+		In the rule below (<kbd>if (p1 != p2)&nbsp;</kbd>, these two conditions are fulfilled:</li>
+		</ul>
+		<font color="#282187">
+			<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber8" height="192" width="703">
+				<tr>
+					<td height="68">
+					<p class="task">
+					<img border="1" src="b35doc/english/online/cfyugspa_c2/images/dboptimizerule03NLS.gif" width="328" height="225"></p>
+		<ul>
+			<li>P1 and P2 have the very same type (<kbd>Equipment</kbd>)</li>
+			<li>The representation name for P1 
+		and P2 is also identical (<kbd>Layout</kbd>).</li>
+		</ul>
+					<p>To optimize this rule, we recommend you to use the<code> &gt;</code> 
+					test condition as follows:</td>
+				</tr>
+				<tr>
+					<td height="92">
+					<p class="task">
+					<img border="1" src="b35doc/english/online/cfyugspa_c2/images/dboptimizerule04NLS.gif" width="325" height="219"></td>
+				</tr>
+				<tr>
+					<td height="32">
+					<h3>Test Condition Description</h3>
+					<p class="task">Let's say we have three products namely 
+					Product A, Product B and Product C<p class="task">
+					<img border="0" src="b35doc/english/online/cfyugspa_c2/images/optimizeclashruleNLS.gif" width="234" height="136"><p class="task">
+					The <code>DefineInterferenceComputation</code> function 
+					searches for interferences combining all pairs of products:<ul>
+						<li>
+						<p class="task">Product A vs. Product B</li>
+						<li>
+						<p class="task">Product A vs. Product C</li>
+						<li>
+						<p class="task">Product B vs. Product A</li>
+						<li>
+						<p class="task">Product B vs. Product C</li>
+						<li>
+						<p class="task">Product C vs. Product A</li>
+						<li>
+						<p class="task">Product C vs. Product B</li>
+					</ul>
+					<p class="MsoNormal">If products A, B and C are assigned the 
+					same product type and we are checking the same 
+					representations, the system performs useless double checks.</p>
+					<p class="task">Now, if we consider the same three products 
+					using the <code>&gt;</code> test condition, the interference 
+					checking will be performed between the following scheme: Product A 
+					&gt; Product C &gt; Product B.</td>
+				</tr>
+		</table>
+			<p class="task">
+			<img border="0" src="b35doc/english/online/cfyugspa_c2/images/optimizeclashrule01NLS.gif" width="234" height="133"></p>
+		<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber10" width="547">
+			<tr>
+				<td colspan="2">
+				<p class="task">The <code>DefineInterferenceComputation</code> function searches for 
+				interferences combining:<ul>
+					<li>
+					<p class="task">Product A vs. Product B</li>
+					<li>
+					<p class="task">Product A vs. Product C</li>
+					<li>
+					<p class="task">Product C vs. Product B<br>&nbsp;</li>
+				</ul>
+				<p class="task">The useless checks are not performed by the
+				<code>DefineInterferenceComputation</code>:</p>
+				<ul>
+					<li>
+					<p class="task">Product B vs. Product A</li>
+					<li>
+					<p class="task">Product B vs. Product C</li>
+					<li>
+					<p class="task">Product C vs. Product A</li>
+				</ul>
+				</td>
+			</tr>
+			<tr>
+				<td width="38" valign="top">
+				<p class="task">
+				<img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32" align="top"></td>
+				<td width="509">
+				<p class="task"><kbd>Important: </kbd>To make sure all cases 
+				will be taken into account during the calculation:<ul>
+					<li>
+					<p class="task">The product type for P1 and P2 must be 
+					identical.&nbsp; </li>
+					<li>
+					<p class="task">The representation name for &nbsp;P1 and P2 must 
+					be the very same for P1 and P2.</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		<p class="task">&nbsp;</p>
+			<h2><a name="hj-conditionsorder"></a>Ordering conditions</h2>
+			<p class="task">The system checks the test conditions 
+			specified in the clash rule <kbd>one by one </kbd>and in <kbd>the 
+			order they were specified </kbd>within the clash rule. </p>
+			<h3>Example:</h3>
+		</td>
+     </tr>
+     <tr>
+       <td valign="top" style="padding-bottom: 10" colspan="2">&nbsp;</td>
+       <td valign="top" style="padding-bottom: 10" width="705">
+		<img border="2" src="b35doc/english/online/cfyugspa_c2/images/dboptimizerule05NLS_small.gif" title="Click to enlarge this image" width="268" height="112"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script><h4>How does the system check the rule?<br>
+&nbsp;</h4>
+		<ul>
+			<li>Step 1: checks<kbd> </kbd>P1 is different from P2<kbd> if (p1 != p2)&nbsp;</kbd></li>
+			<li>Step 2: checks P2 is assigned an <kbd>Envelope </kbd>
+			representation <kbd>( p2&nbsp;&gt;&nbsp;HasARepresentation (&quot;Envelope&quot;))</kbd></li>
+			<li>Step 3: checks that P1 is assigned the representation <kbd>
+			Double ( p1&nbsp;&gt;&nbsp;HasARepresentation (&quot;Double&quot;))</kbd>.</li>
+		</ul>
+		<p>If for example, P2 is not assigned the <kbd>Envelope&nbsp; </kbd>representation, the system will not go further and will not check 
+			whether P1 is assigned the <kbd>Double</kbd> representation.<br><br>It is thus strongly recommended to order the conditions starting 
+			with the most restrictive test condition and finish with the less 
+			restrictive test conditions.</td>
+     </tr>
+     <tr>
+       <td valign="top" colspan="3" style="padding-bottom: 10">
+       <p align="center">
+       <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+     </tr>
+   </table>
+ </div>
+ <h2 align="left">&nbsp;</font></h2>
+ <table>
+ </table>
+
+ </body>
+
+</html>
+

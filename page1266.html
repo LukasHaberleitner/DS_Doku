@@ -1,0 +1,269 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+<head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta HTTP-EQUIV="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Starting and Stopping the HTTP, Websphere Application and LDAP Servers</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Starting and Stopping the HTTP, WebSphere Application and 
+ LDAP Servers</h1>
+ <table border="0" width="100%" cellspacing="0">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">Several tasks refer to starting and stopping different 
+     servers and consoles. This section contains reference information about how 
+     to start and stop:<ul>
+       <li>the IBM HTTP Server</li>
+       <li>the LDAP Directory server</li>
+       <li>the WebSphere Application Server and the Integrated Solutions Console.</li>
+     </ul>
+     <p>Note: the home directory for the WebSphere Application Server 
+     illustrated in this scenario is:</p>
+     <p>
+       <code>/home/data/WebSphere61</code></p>
+     <p>This is not the default installation path.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <h2>Starting the IBM HTTP Server</h2>
+     <h3>On Windows</h3>
+     <ol class="task">
+       <li>
+       <p class="task">Log on as administrator.</li>
+       <li>
+       <p class="task">Select the command <kbd>Start&nbsp;&gt;&nbsp;Control Panel 
+       &nbsp;&gt;&nbsp;Administration Tools &nbsp;&gt;&nbsp;Services</kbd>.</li>
+       <li>
+       <p class="task">Select <kbd>IBM HTTP Server</kbd>, right-click and select
+       <kbd>Start</kbd> in the contextual menu (or <kbd>Stop</kbd> to stop the 
+       server).</li>
+     </ol>
+     <h3><span style="font-style: normal; font-weight: 400">On UNIX</span></h3>
+     <ol class="task">
+       <li>
+       <p class="task">Log on as root and open a shell window.</li>
+       <li>
+       <p class="task">Go to the IBM HTTP Server installation directory, for 
+       example:<br>
+       <br>
+       <code>/home/data/IBMIHS/bin</code><br>
+&nbsp;</li>
+       <li>
+       <p class="task">Enter the command:</p>
+       <p class="task"><br>
+       <code>./apachectl start<br>
+       <br>
+       ./apachectl stop</code></li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p>to start or stop the server.</p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <h2>Starting the IBM Tivoli Directory Server 6.0</h2>
+     <p>After installing and configuring the IBM Tivoli Directory Server 6.0, you then have to:</p>
+     <ul>
+       <li>start the directory server instance</li>
+       <li>start the application server to use the Web Administration Tool (if 
+       you installed WAS Express).</li>
+       <li>start the Web Administration Tool.</li>
+     </ul>
+     <p>For full details, refer to
+     <a href="page1193.html#hj-IBMTivoliDirServer6">Installing and Configuring IBM Tivoli Directory Server 6.0</a>.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <h2>Starting the WebSphere Application Server</h2>
+     <p><b>Note that the LDAP directory server must be started before you can 
+     start the Web Application Server.</b></p>
+     <h3>On Windows</h3>
+     <ol class="task">
+       <li>
+       <p class="task">Launch the WebSphere Application Server.</li>
+       <li>
+       <p class="task">Launch the <kbd>Integrated Solutions Console</kbd>.</li>
+       <li>
+       <p class="task">In the <kbd>Integrated Solutions Console</kbd>, select<kbd> 
+       Servers&nbsp;&gt;&nbsp;Application Servers&nbsp;&gt;&nbsp;server1</kbd>, right-click and select <kbd>Start</kbd> 
+       in the contextual menu.</li>
+     </ol>
+     <p class="task">Note: On Windows, the IBM WebSphere Application Server used 
+		in order to deploy and run ENOVIA web application must not be used as a 
+		Windows server. The IBM WebSphere Application Server used with ENOVIA 
+		must be started using the startServer.bat command.</p>
+     <h3>On UNIX</h3>
+     <ol class="task">
+       <li>
+       <p class="task">Log on as root and open a shell window.</li>
+       <li>
+       <p class="task">Go to the WebSphere Application Server installation 
+       directory, for example:<br>
+       <br>
+       <code>/home/data/WebSphere61/AppServer/bin</code></li>
+       <li>
+       <p class="task">If necessary, export the display as follows:<br>
+       <br>
+       <code>DISPLAY=server_machine_name:0.0<br>
+       export DISPLAY</code></li>
+       <li>
+       <p class="task">Enter the command:<br>
+       <br>
+       <code>./startServer.sh <i>server_name</i> </code></li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p class="task">If your WAS is secured, stop it like this:</p>
+           <p class="task"><code>./stopServer.sh <i>server_name</i> -username <i>username</i> -password 
+           <i>password</i></code></p>
+           <p class="task">where <code><i>username</i></code> and <code><i>password</i></code> 
+       are the username and password used to start WAS.</p>
+           <p>Note: if the WebSphere Application Server cannot be stopped and a 
+     message like this is displayed:</p>
+           <p><code>The server &quot;server1&quot; cannot be reached. It appears to be stopped.</code></p>
+           <p>run the following commands to kill the WAS process:</p>
+           <p><code>ps -ef | grep java<br>kill -9 <i>javaprocess</i></code></p>
+           <p>where <i> <code>javaprocess</code></i> is the name of the appropriate WAS 
+     server process.</blockquote>
+       </blockquote>
+     </blockquote>
+     <p class="task">You must then wait until the server is started, which will 
+     be indicated by a message &quot;Open for e-business&quot;.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <h2>Stopping the WebSphere Application Server</h2>
+     <h4>On Windows</h4>
+     <ol class="task">
+       <li>
+       <p class="task">Launch the WebSphere Application Server.</li>
+       <li>
+       <p class="task">Launch the <kbd>Integrated Solutions Console</kbd>.</li>
+       <li>
+       <p class="task">In the <kbd>Integrated Solutions Console</kbd>, select<kbd> 
+       Servers&nbsp;&gt;&nbsp;Application Servers&nbsp;&gt;&nbsp;server1</kbd>, right-click and select <kbd>Stop</kbd> 
+       in the contextual menu.</li>
+     </ol>
+     <h4><span style="font-style: normal; font-weight: 400">On UNIX</span></h4>
+     <ol class="task">
+       <li>
+       <p class="task">Log on as root and open a shell window.</li>
+       <li>
+       <p class="task">Go to the WebSphere Application Server installation 
+       directory, for example:<br>
+       <br>
+       <code>/home/data/WebSphere6/AppServer/bin</code></li>
+       <li>
+       <p class="task">If necessary, export the display as follows:<br>
+       <br>
+       <code>DISPLAY=server_machine_name:0.0<br>
+       export DISPLAY</code></li>
+       <li>
+       <p class="task">Enter the command:<br>
+       <br>
+       <code>./stopServer.sh <i>server_name</i> <br>
+       <br>
+       </code>If your WAS is secured, stop it like this:<br>
+       <code><br>
+       ./stopServer.sh <i>server_name</i> -username <i>username</i> -password <i>
+       password<br>
+       <br>
+       </i></code>where <code><i>username</i></code> and <code><i>password</i></code> 
+       are the username and password used to start WAS.</li>
+     </ol>
+     <p>Note: if the WebSphere Application Server cannot be stopped and a 
+     message like this is displayed:</p>
+     <p><code>The server &quot;server1&quot; cannot be reached. It appears to be stopped.</code></p>
+     <p>run the following commands to kill the WAS process:</p>
+     <p><code>ps -ef | grep java<br>
+     kill -9 java process</code></p>
+     <p>where <code>java process</code> is the name of the appropriate WAS 
+     server process.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">
+     <h3>Monitoring Server Status</h3>
+     <p>The command:</p>
+     <p><code>./serverStatus.sh -all</code></p>
+     <p>allows you to monitor the status of WAS servers.<p>Alternatively, if you are using WebSphere Application 
+     Server for the first time, you can also use the application First Steps for 
+     performing simple WAS tasks such as starting and stopping servers, 
+     starting the administrative console, etc.</p>
+     <p><font face="Verdana">To run 
+     this application on UNIX, for example:</font></p>
+     <ol>
+       <li><font face="Verdana">Go to the directory:<br>
+       <br>
+       <code>/home/data/WebSphere61/AppServer/profiles/AppSrv01/firststeps</code><br>
+&nbsp;</font></li>
+       <li><font face="Verdana">Run the command:<br>
+       <br>
+       </font><code>./firststeps.sh</code><font face="Verdana"><code><br>
+       <br>
+       </code>
+       </font><font face="Verdana">which displays the <kbd>First Steps</kbd> 
+       application user interface:</font></li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p>
+           <img border="0" src="b35doc/english/online/basil_c2/images/WASFirststeps_NLS.gif" width="679" height="609"></p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <h2>Starting the WebSphere Administrative Console</h2>
+     <p>Once the WebSphere Application Server is up and running, you can start 
+     the WebSphere Administrative Console. To do so,<font face="Verdana"> open a 
+     web browser and enter the following URL:<br>
+     <br>
+     <code>http://WAS_hostname:9060/admin/</code><br>
+     <br>
+     where &quot;WAS_hostname&quot; is the name of the WAS server, and &quot;9043&quot; is the 
+     default port, for example:<br>
+     <br>
+     <code>http://loug3dsy.<b>dsy.ds</b>:9060/admin/</code><br>
+     <br>
+     where &quot;dsy.ds&quot; is an example of a domain name.</font></td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

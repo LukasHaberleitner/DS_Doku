@@ -1,0 +1,281 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Point Constructors
+	</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style type="text/css">
+.style1 {
+	color: #976970;
+}
+</style>
+ </head>
+
+ <body>
+
+ <h1><a name="ix-Knowledge Advisor::Point Constructors;Point Constructors"></a>
+ Point Constructors<a name="CATKnowledge.PointConstructors"></a></h1>
+ <p>Sample:
+ <a href="b35doc/english/online/cfysm_C2/samples/KwrPointContructors.CATPart">
+ KwrPointConstructors</a></p>
+ <div align="left">
+   <table border="0" cellpadding="2" cellspacing="1" style="border-collapse: collapse" width="100%" id="AutoNumber3">
+     <tr>
+       <td width="93%" valign="top">
+       <ul>
+         <li><b>point</b> (<i>x</i>: Length, <i>y</i>: Length, <i>z</i>: 
+         Length): Point <br>
+         Creates a point from its three coordinates. Values or parameter names 
+         can be used to pass the arguments.</li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td width="93%" valign="top">Examples:<br>
+       Specifying values:<br>
+       <code>Geometrical Set.1&#092;Point.1&nbsp;&nbsp; 
+       =<br>
+       point(10mm,10mm,10mm)<br>
+       </code>Specifying parameter names:<br>
+       <code>Geometrical Set.1&#092;Point.4&nbsp;&nbsp; 
+       =<br>
+       point(0mm,L3,L1)</code></td>
+     </tr>
+     <tr>
+       <td width="93%" valign="top">
+       <ul>
+         <li><b>pointbetween </b>(<i>pt1</i>: Point, <i>pt2</i>: Point, <i>ratio</i>: 
+         Real, <i>orientation</i>: Boolean): Point<br>
+         Creates a point between another two points. If true is specified in the 
+         fourth argument, the third parameter is the ratio of the distance <nobr>
+         pt1-new point</nobr> to the <nobr>pt1-pt2</nobr> distance. If false is 
+         specified in the fourth argument, the ratio expresses the distance 
+         pt2-new point to the pt1-pt2 distance (to create a point at the middle 
+         between pt1 and pt2, specify a ratio of 0.5).</li>
+       </ul>
+       <p>Example:<kbd><br>
+       </kbd><code>Geometrical Set.1&#092;Point.5&nbsp;&nbsp; 
+       =<br>
+       pointbetween (Geometrical Set.1&#092;Point.1, 
+       Geometrical Set.1&#092;Point.2, 
+       0.6, true)</code></td>
+     </tr>
+     <tr>
+       <td width="93%" valign="top">
+       <ul>
+         <li><b>pointoncurve </b>(<i>crv</i>: Curve, <i>pt</i>: Point, <i>
+         distance</i>: Length, <i>orientation</i>: Boolean): Point<br>
+         Creates a point on a curve. The point is to be created at a given 
+         curvilinear <i>distance</i> from a reference point specified in the 
+         second argument. The boolean specified in the fourth argument allows 
+         you to reverse the direction in which the point is to be created. If 
+         the point specified in the second argument is not on the curve, the 
+         projection of this point onto the curve becomes the actual reference 
+         point.</li>
+       </ul>
+       <p>Example:<kbd><br>
+       </kbd><code>Geometrical Set.1&#092;Point.6&nbsp;&nbsp; 
+       =<br>
+       pointoncurve (Geometrical Set.1&#092;Spline.1, 
+       Geometrical Set.1&#092;Point.5, 
+       5mm, true)</code></td>
+     </tr>
+     <tr>
+       <td width="93%" valign="top">
+       <ul>
+         <li><b>pointoncurveRatio </b>(<i>crv</i>: Curve, <i>pt</i>: Point, <i>
+         ratio</i>: Real, <i>orientation</i>: Boolean): Point<br>
+         Creates a point on a curve. The location of the point to be created is 
+         determined by the real which is specified in the third argument. This 
+         real is the ratio of&nbsp; the distance [point to be created &gt; reference 
+         point] to the distance [point to be created &gt; curve extremity]. The boolean specified in the fourth argument allows you to reverse the 
+         direction in which the point is to be created. If the point specified 
+         in the second argument is not on the curve, the projection of this 
+         point onto the curve becomes the actual reference point.</li>
+       </ul>
+       <p>Example:<kbd><br>
+       </kbd><code>Geometrical Set.1&#092;Point.7&nbsp;&nbsp; 
+       =<br>
+       pointoncurveRatio (Geometrical Set.1&#092;Spline.1,Geometrical 
+       Set.1&#092;Point.3, 
+       0.4,true)</code></td>
+     </tr>
+     <tr>
+       <td width="93%" valign="top">
+       <ul>
+         <li><b>pointonplane </b>(<i>pln</i>: Plane, <i>pt</i>: Point, <i>dx</i>: 
+         Length, <i>dy</i>: Length): Point<br>
+         Creates a point on plane. The location of the point to be created on 
+         the plane is determined by the coordinates (H,V system) passed in the 
+         third and fourth arguments. These values are specified with respect to 
+         the reference point passed in the second argument.</li>
+       </ul>
+       <p>Example:<kbd><br>
+       </kbd><code>Geometrical Set.1&#092;Point.8&nbsp;&nbsp; 
+       =<br>
+       pointonplane (Geometrical Set.1&#092;Plane.1,Geometrical 
+       Set.1&#092;Point.1, 
+       10mm,10mm)</code></td>
+     </tr>
+     <tr>
+       <td width="93%" valign="top">
+       <ul>
+         <li><b>pointonsurface </b>(<i>sur</i>: Surface, <i>Pt</i>: Point, <i>
+         Dir</i>: Direction, <i>dist</i>: Length): Point<br>
+         Creates a point on surface. The location of the point to be created on 
+         the surface is determined by its distance (fourth argument) to a 
+         reference point (second argument) along a direction (third argument).</li>
+       </ul>
+       <p>Example:<kbd><br>
+       </kbd><code>Geometrical Set.1&#092;Point.9&nbsp;&nbsp; 
+       =<br>
+       pointonsurface (Geometrical Set.1&#092;Extrude.1,Geometrical 
+       Set.1&#092;Point.3,<br>
+       direction (Geometrical Set.1&#092;Line.1),10mm)</code></td>
+     </tr>
+     <tr>
+       <td width="93%" valign="top">
+       <ul>
+         <li><b>center </b>(circle): Point<br>
+         Creates a point from a circle. The circle can be of any type (created 
+			within the Generative Shape Design workbench or using the Sketch 
+			command). The point which is created is the circle center.</li>
+       </ul>
+       <p>Example:<kbd><br>
+       </kbd><code>Geometrical Set.1&#092;Point.10&nbsp;&nbsp; 
+       =<br>
+       circle (Geometrical Set.1&#092;Circle.1)</code></td>
+     </tr>
+     <tr>
+       <td width="93%" valign="top">
+       <ul>
+         <li><b>pointtangent </b>(Curve, Direction): Point<br>
+         Creates the tangency point between a curve and a direction.&nbsp;&nbsp;</li>
+       </ul>
+       <p>Example:<kbd><br>
+       </kbd><code>Geometrical Set.1&#092;Point.11&nbsp;&nbsp; 
+       =<br>
+       pointtangent (Geometrical Set.1&#092;Spline.1, 
+       direction (`yz plane`))</code></td>
+     </tr>
+     <tr>
+       <td width="93%" valign="top">
+       <ul>
+         <li><b>extremum </b>(Curve, Direction, Boolean, Direction, Boolean, 
+         Direction, Boolean): Point<br>
+         Constructs an extremum point. The inputs are a curve, three directions, 
+         and three booleans.</li>
+       </ul>
+       <p>Example:<br>
+       <code>Geometrical Set.1\Point.2=<br>
+       extremum (`Geometrical Set.1\Circle.1` ,direction (`xy plane` ) ,FALSE, 
+       direction (`xy plane` ),TRUE, direction (`xy plane` ),TRUE) </code></td>
+     </tr>
+     <tr>
+       <td width="93%" valign="top">
+       <ul>
+         <li><b>extremum </b>(Surface, Direction, Boolean, Direction, Boolean, 
+         Direction, Boolean): Point<br>
+         Constructs an extremum point. The inputs are a surface, three 
+         directions, and three booleans.</li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td width="93%" valign="top">
+       <ul>
+         <li><b>extremum </b>(Solid, Direction, Boolean, Direction, Boolean, 
+         Direction, Boolean): Point<br>
+         Constructs an extremum point. The inputs are a solid, three directions, 
+         and three booleans.</li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td width="93%" valign="top">
+       <ul>
+         <li><b>centerofgravity </b>(Body,...): Point<br>
+         Constructs the center of gravity of a solid (i.e. a PartBody type 
+         feature). In case of a face, the center of gravity of the equivalent 
+			volume is computed with a unit thickness. Whereas, for a profile, it 
+			is computed with a unit section swept along the boundary.</li>
+       </ul>
+       <p>Example:<kbd><br>
+       </kbd><code>Geometrical Set.1&#092;Point.12&nbsp;&nbsp; 
+       =<br>
+       centerofgravity (PartBody)&nbsp;</code></td>
+     </tr>
+     <tr>
+       <td width="93%" valign="top">
+       <ul>
+         <li><b>curvaturecenter </b>(<em>crv</em>: Curve, <em>pt</em>: Point): Point<br>
+         Constructs the curvature center of a curve for a given point.</li>
+       </ul>
+       <p>Example:<kbd><br>
+       </kbd><code>Geometrical Set.1&#092;Point.13&nbsp;&nbsp; 
+       =<br>
+       curvaturecenter(Geometrical Set.1&#092;Circle.1, 
+       Geometrical Set.1&#092;Point.6)</code></td>
+     </tr>
+     <tr>
+       <td width="93%" valign="top">
+       <ul>
+         <li><blink><strong><a name="hj-V5R232Dto3D"></a>point2dto3d</strong> (<em>2DPoint</em>: Point) : Point<br>
+         Converts a 2D point (i.e. a point in a 2D sketch) into a 3D point by 
+			valuating the parameters.</blink><br>
+			<table style="width: 100%">
+				<tr>
+					<td>Example: <br>
+					<span class="style1"><code><br>
+					Let L1 (List)<br>
+					Let L2 (List)<br>
+					Let L3 (List)<br>
+					<br>
+					L1 = <br>
+					</code><code>PartBody\Sketch.1.Query(&quot;2DPoint&quot;, &quot;&quot;)<br>
+					L2 = <br>
+					</code><code>PartBody\Sketch.2.Query(&quot;2DPoint&quot;, &quot;&quot;)<br>
+					L3 = <br>
+					</code><code>PartBody\Sketch.3.Query(&quot;2DPoint&quot;, &quot;&quot;)<br>
+					<br>
+					</code><code>PartBody\Point.1 = <br>
+					point2dto3d(L1.GetItem(1))<br>
+					</code><code>PartBody\Point.2 = <br>
+					point2dto3d(L1.GetItem(2))<br>
+					</code><code>PartBody\Point.3 = <br>
+					point2dto3d(L2.GetItem(1))<br>
+					</code><code>PartBody\Point.4 = <br>
+					point2dto3d(L2.GetItem(2))<br>
+					</code><code>PartBody\Point.5 = <br>
+					point2dto3d(L3.GetItem(1))<br>
+					</code><code>PartBody\Point.6 = <br>
+					point2dto3d(L3.GetItem(2))</code></span></td>
+				</tr>
+			</table>
+			<br>
+			<table style="width: 100%">
+				<tr>
+					<td>
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+					<td><blink>You can valuate a 2D point which can be an existing 
+					datum point or a volatile point. The constructor computes 
+					the new 3D point at the same coordinates as that of the 2D 
+					point.</blink></td>
+				</tr>
+			</table>
+			</li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+ </div>
+
+ </body>
+
+</html>
+

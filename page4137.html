@@ -1,0 +1,174 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+  <head>
+  <meta name="MonocodingType" content="0">
+  <meta name="MonocodingFlag" content="C2D2E2L2O2">
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <title>Creating a Feature Dictionary</title>
+  <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+  </style>
+  <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta name="Microsoft Border" content="none, default">
+</head>
+
+  <body bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#0080FF" alink="#990000">
+
+  <h1 align="center">Creating a Feature Dictionary<a name="ix-creating:feature dictionary"></a></h1>
+  <table border="0" width="100%" cellspacing="3" cellpadding="3">
+    <tr>
+      <td valign="top">
+      <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+      <td valign="top">A feature dictionary is a user-defined catalog containing 
+      the features that are required at run time. </td>
+    </tr>
+    <tr>
+      <td valign="top">
+      <h2><font face="arial, arial, helvetica" color="#000080">
+      <img src="b35doc/english/online/icons_C2/common/ascenari.gif" alt="ascenari.gif (1223 bytes)" width="32" height="32"></font></h2>
+      </td>
+      <td valign="top">
+      <h2>Customizing a Feature Dictionary</h2>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">&nbsp;</td>
+      <td valign="top">
+      <ol class="task">
+        <li>
+        <p class="task">Create a new feature dictionary by clicking the <kbd>
+        File &gt; New</kbd> menu command and selecting <kbd>FeatureDictionary</kbd> 
+        from the <kbd>List of Types</kbd>:</p>
+        <table border="0" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+          <tr>
+            <td width="100%">
+            <p style="margin-bottom: 1em">
+            <img border="0" src="b35doc/english/online/cfyugigrip_c2/images/dbNewFeatDictNLS.gif" width="208" height="196"></td>
+          </tr>
+          <tr>
+            <td width="100%">The <kbd>Feature Dictionary</kbd> dialog box opens.</td>
+          </tr>
+        </table>
+        </li>
+        <li>
+        <p class="task" style="margin-bottom: 1em">Click <kbd>Open Application 
+        Dictionary </kbd>
+		<img border="0" src="b35doc/english/online/icons_C2/images/I_FdeOpenApplFeatP2P2.gif" width="24" height="24"> and 
+        open the existing base dictionary.</li>
+        <li>
+        <p class="task">From the <kbd>Feature Dictionary</kbd> list, select the
+        <kbd>Base Parameter Profiles</kbd> feature dictionary, and enter a robot 
+        type in the <kbd>Client ID</kbd> box.</p>
+        <table border="0" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+          <tr>
+            <td width="100%">
+            <p style="margin-bottom: 1em">
+            <img border="0" src="b35doc/english/online/cfyugigrip_c2/images/dbOpenApplFeatNLS.gif" width="390" height="111"></td>
+          </tr>
+        </table>
+        </li>
+        <li>
+        <p class="task">Click <kbd>Create Subclass</kbd>
+        <img border="0" src="b35doc/english/online/icons_C2/images/I_FdeCreateSubClassP2.gif" width="24" height="24"> to create subclasses 
+        of the applicative parameter profile class.</p>
+        <table border="0" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4">
+          <tr>
+            <td width="100%">Each subclass created inherits all of the 
+            attributes of its base type. Additional attributes may be defined 
+            with <kbd>Add Attribute </kbd>
+			<img border="0" src="b35doc/english/online/icons_C2/images/I_FdeAddAttributeP2.gif" width="23" height="25">.</td>
+          </tr>
+          <tr>
+            <td width="100%">
+            <p style="margin-bottom: 1em">
+            <img border="1" src="b35doc/english/online/cfyugigrip_c2/images/wnCreateFeatDictNLS.jpg" width="518" height="403"></td>
+          </tr>
+        </table>
+        </li>
+        <li>
+        <p class="task">Save the feature dictionary (with a .CATFct file 
+        extension) in the <kbd>resources\graphic</kbd> directory beneath the V5
+        <kbd>startup</kbd> directory.</li>
+      </ol>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">
+      <h2>&nbsp;</h2>
+      </td>
+      <td valign="top">
+      <h2><a name="Specifying a feature dictionary to use">Managing Feature 
+      Dictionaries</a></h2>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">&nbsp;</td>
+      <td valign="top">
+      <h3>Defining a Project Resource Management File</h3>
+      <p>The feature dictionary to be used is determined by a project resource 
+      management XML file. This file must be named Profiles.xml, and saved in 
+      the <kbd>Igrip\ProjectData</kbd> directory beneath the V5 <kbd>startup</kbd> 
+      directory.</p>
+      <p>In the Profiles.xml file, each robot controller type (e.g., ABB S4) is 
+      associated with a user-defined feature dictionary. In addition, a default 
+      feature dictionary is mapped to all the robot controller types so that 
+      whenever a robot is instantiated in a product document, the associated 
+      feature dictionary of the robot controller type and the default feature 
+      dictionary are loaded into the appropriate applicative container of the 
+      robot document. Thus, all of the user-defined applicative parameter 
+      profiles present in the loaded feature catalogs are available for use.</p>
+      <p>The content of a typical Profiles.xml file is shown below. In this 
+      example, the feature dictionary to be used is highlighted in blue:</p>
+      <pre><code>&lt;!DOCTYPE Project SYSTEM &quot;Project.dtd&quot;&gt;
+&lt;Project Name=&quot;Sample_Project&quot;&gt;
+&lt;!-- ************** PROJECT RESOURCES ************** -&gt;
+&lt;!-- ID SCHEMA RESOURCES -&gt;
+&lt;Resource Name=&quot;ProfilesIDSchema&quot; Description=&quot;Profiles ID Schema Directory&quot;&gt;
+&lt;ID Type=&quot;Path&quot; Driver=&quot;File&quot; Location=&quot;..\..\Igrip\Profiles\DataDictionary&quot;/&gt;
+&lt;/Resource&gt;
+&lt;!-- USER DICTIONARY RESOURCES -&gt;
+<font color="#0000FF">&lt;Resource Name=&quot;ALL&quot; Description=&quot;profiles User Dictionary&quot;&gt;
+&lt;ID Type=&quot;Misc&quot; Driver=&quot;File&quot; Location=&quot;<b>DBGWeldTimeTable.CATfct</b>&quot;/&gt;
+&lt;/Resource&gt;</font>
+<font color="#008000">&lt;Resource Name=&quot;ABB S4&quot; Description=&quot;profiles User Dictionary&quot;&gt;
+&lt;ID Type=&quot;Misc&quot; Driver=&quot;File&quot; Location=&quot;<b>ABBRapid.CATfct</b>&quot;/&gt; 
+&lt;/Resource&gt;</font>
+&lt;!-- ROBOTPROFILES DISCIPLINE RESOURCES -&gt;
+&lt;Discipline Name=&quot;RobotProfiles&quot; Description=&quot;Profiles Discipline&quot; Parent=&quot;Sample_Project&quot;&gt;
+&lt;Resource Name=&quot;DiscreteValues&quot; Description=&quot;Discrete Values Directory&quot;&gt;
+&lt;ID Type=&quot;Path&quot; Driver=&quot;File&quot; Location=&quot;..\..\Igrip\MigrationDirectory\DiscreteValues&quot;/&gt;
+&lt;/Resource&gt;
+&lt;Application Name=&quot;DNBParameterProfiles&quot; Description=&quot;Base Parameter profiles&quot; Visible = &quot;yes&quot;&gt;
+&lt;/Application&gt;
+&lt;/Discipline&gt;
+&lt;/Project&gt;</code></pre>
+      <p style="margin-bottom: 1em">The &lt;Resource&gt; entry shown in blue specifies 
+      the default feature dictionary containing user-defined profile features 
+      that will be available for all robots (irrespective of the controller 
+      type). Note that the default feature dictionary is always mapped to &quot;ALL&quot; 
+      in the Profiles.xml file.</p>
+      <p style="margin-bottom: 1em">The &lt;Resource&gt; entry shown in green 
+      specifies the feature dictionary specific to the controller type (shown 
+      above as ABB S4).</p>
+      <h3 style="margin-bottom: 1em">Setting the CATDisciplinePath Path</h3>
+      <p style="margin-bottom: 1em">Set the CATIA environment variable 
+      CATDisciplinePath to the location (the absolute directory path) of the 
+      Profiles.xml file to be used. For example: </p>
+      <pre style="margin-bottom: 1em"><code>CATDisciplinePath = &quot;..\BSF\Intel_a\startup\Igrip\ProjectData&quot; </code></pre>
+      <p style="margin-bottom: 1em">If the CATDisciplinePath variable is not set 
+      to a proper directory as mentioned above, an error message is displayed 
+      indicating that the command cannot proceed further.</td>
+    </tr>
+  </table>
+  <p align="center">&nbsp;<img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">&nbsp;</p>
+
+  </body>
+</html>
+
+

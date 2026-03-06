@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReconciliationCommands>
+
+   <!-- One block to define Reconciliator session -->
+
+   <Reconcile simul="Execute" statistics="Yes" >
+		<!-- Define what to be Reconciled. -->
+		
+		<input>
+			<file filename="c:\temp\RECV5_TEST1rootprc.CATProduct"/>
+		</input>
+
+		<!-- Checking operations  -->
+
+		<check numberOfDocs="3">
+		</check>
+		
+		<!-- Define how object mapping & rule setting will be done. -->
+		
+		<mapping structureExp="Yes" completeWithDefaultMapping="Yes" forceKeepExternal="No" allByDeltaMode="Yes" forceNewVersion="No">
+			<queryName name="Query by object Id"/>
+			<inxml name="sessionSave.xml"/>
+			<publication>
+				<document name="RECV5_TEST1_PART1.CATPart"/>
+			</publication>
+			<reload>
+				<document name="RECV5_TEST1_PART2.CATPart"/>
+				<document name="RECV5_TEST1_PART3.CATPart"/>
+			</reload>
+			<keepExternal>
+				<document name="RECV5_TEST1_PART4.CATPart"/>
+			</keepExternal>
+			<GR>
+			<MagicReconEV4 forceMapping="YES">
+				<GRFilter>
+					<FileName FileNameValue="RECV5_TEST1_PART"/>
+					<State StateValue="MAPPED"/>
+				</GRFilter>
+			</MagicReconEV4>
+			<Overwrite>
+				<GRFilter>
+					<FileName FileNameValue="RECV5_TEST1_PART2"/>
+					<State StateValue="MAPPED"/>
+				</GRFilter>
+			</Overwrite>
+			<GRInfo name="MagicRecon" queryName="Easy Query" ForcePersistency="Yes" ForceMapping="Yes" ForceRule="Yes"/>
+			</GR>
+		</mapping>
+         		
+		<!-- Define apply behaviors. -->
+		
+		<apply noDraftingUpdate="Yes" unlockViews="No" noPartUpdate="Yes">
+			<importInAssembly name="PRC_mySupplier"/>
+ 		</apply>
+         		
+         		
+		<!-- Define session outputs. -->
+		<output>
+			<xml name=""/>
+			<outputFileList name=""/>
+			<epexml name=""/>
+		</output>
+   </Reconcile>
+
+   <Reconcile>
+	<!-- Next block to define Another Reconciliator session -->
+   </Reconcile>
+
+</ReconciliationCommands>

@@ -1,0 +1,645 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" 
+xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Performing a Flat Region Analysis</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+</head>
+
+<body>
+
+<h1>Performing a Flat Region Analysis<a name="ICMCLADiag.FlatRegion"></a><a name="hj-top"></a>
+<a name="ix-command::Flat Region Analysis;Analysis::Flat Region;Flat Region Analysis"></a></h1>
+<table cellpadding="5" cellspacing="2">
+  <tr valign="top">
+    <td><img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td colspan="2">
+      <p class="task">This task describes how to analyze flat regions.</p>
+      Contents:&nbsp;
+      <ul class="st">
+        <li><kbd><a href="#WhatIsAFlatRegion">What is a flat region?</a></kbd>
+          <ul class="nd">
+            <li><a href="#AnalysisInterpretation">Analysis interpretation</a></li>
+            <li><a href="#DefinitionFlatness">Definition of flatness</a></li>
+            <li><a href="#FlatRegionCheckPractice">Flat region check in practice</a></li>
+          </ul>
+        </li>
+        <li><kbd><a href="#VerificationMethodsUsed">What are the verification methods used in the Flat Region Analysis?</a></kbd>
+          <ul class="nd">
+            <li><a href="#Chord">Ruler/disk method (Chord)</a></li>
+            <li><a href="#Local">Local method (Local)</a></li>
+            <li><a href="#ComparisonVerificationMethods">Comparison of the verification methods</a> </li>
+          </ul>
+        </li>
+        <li><kbd><a href="#RotationAngleImportance">Which importance has the rotation angle?</a></kbd></li>
+        <li><kbd><a href="#SubsequentDeviationAnalysisUsage">How is the subsequent deviation analysis used?</a></kbd>
+          <ul class="nd">
+            <li><a href="#ProceedingDeviationAnalysis">Proceeding of the deviation analysis</a></li>
+            <li><a href="#InterpretationAnalysisResult">Interpretation of the analysis result</a></li>
+          </ul>
+        </li>
+        <li><kbd><a href="#DialogBoxFlatRegion">The Dialog box Flat Region Analysis</a></kbd></li>
+      </ul>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td><img src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+    <td class="code" colspan="2">Note:
+      <ul class="st">
+        <li>The Flat Region Analysis cannot be used on surface clusters with non-manifold edges (common edges of adjacent surfaces 
+          deviating from each other, thus causing gaps or overlaps). If necessary, the surfaces must be joined using the command
+          <a href="page3191.html">Join</a> with an appropriate tolerance.</li>
+        <li>To be able to display the analysis, the display mode &#39;Shading with Material&#39; or &#39;Shading with Material and Edges&#39; must 
+          be activated.<br>
+          During execution of the Flat Region Analysis command, you can display the tesselation of the selected surface by activating 
+          the display mode &#39;Wireframe&#39;. <kbd>However, the display of the analysis result is not possible in this display mode!</kbd></li>
+        <li>The Flat Region Analysis can only be carried out temporarily and cannot be saved.</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<table cellpadding="5" cellspacing="2">
+  <tr>
+    <td><img src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+    <td>
+      <h2><a name="WhatIsAFlatRegion"></a>What is a flat region?</h2>
+    </td>
+    <td valign="bottom">
+      <p align="right"><a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></p>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">Car body parts need to have a certain minimum curvature. In surface areas that fail to meet this requirement, 
+      the sheet metal tends to spring back elastically after the forming process, so that the desired shape and aesthetics are not 
+      achieved in the manufacturing process. Exceedingly flat areas, therefore, need to be identified and adjusted before manufacturing 
+      the press tools.</td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">
+      <h4><a name="AnalysisInterpretation"></a>Analysis interpretation</h4>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">With this analysis, those critical areas can be graphically highlighted. Through suitable parameter settings you 
+      can discover whether the flatness is in one direction, or if there are regions where the panel is flat in several or even in 
+      all directions.
+      <p align="center"><img src="b35doc/english/online/icmug_c2/images/FlatRegion_example.gif" width="649" height="175"></p>
+      The result is a red-green analysis that first of all enables only a qualitative assessment. The following can be realized:
+      <br>
+      <br>
+      <table cellpadding="5" border="2" bordercolor="#000000">
+        <tr bgcolor="#e2e2e2">
+          <th>Color</th>
+          <th>Meaning</th>
+        </tr>
+        <tr>
+          <td>Red</td>
+          <td>The set criterion for the minimum curvature is not met in a specified sector (see <a href="#RotationAngleImportance">
+            Which importance has the rotation angle?</a>). The area has to be examined more closely. It is the user who has to decide 
+            whether it is a flat region or not.</td>
+        </tr>
+        <tr>
+          <td>Green</td>
+          <td>The criterion is met, there is no danger.</td>
+        </tr>
+      </table>
+      <br>
+      Using the subsequent manual deviation analysis you can additionally make a qualitative evaluation as this analysis also shows 
+      the actual curvature.</td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">
+      <h4><a name="DefinitionFlatness"></a>Definition of flatness</h4>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Experience has shown that the minimum curvature radius should be approximately 12500 mm. This corresponds to a minimum distance 
+      from the geometry of 0.1 mm over a chord length of 100 mm. These are the default settings of the options
+      <a href="#LengthDistance">Length, Distance</a> and <a href="#Radius">Radius</a> in the dialog box.<br>
+      The minimum curvature radius is defined by length and distance. </td>
+    <td align="center"><u>Definition of the minimum curvature radius</u><br>
+      <br>
+      <img src="b35doc/english/online/icmug_c2/images/FlatRegion_DefMinCurvRad.gif" width="397" height="283"></td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">
+      <h4><a name="FlatRegionCheckPractice"></a>Flat region check in practice</h4>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">The &#39;ruler/disk method&#39; is used in the car body manufacturing. To concave parts applies: If you move a ruler with 
+      a length of 100 mm across the car body surface, a minimum gap of 0.1 mm should remain between the surface and the middle of 
+      the ruler, no matter where you place it. To convex parts applies: If you place the middle of the ruler tangentially on any surface 
+      point, the gap remaining between the surface and the ends of the ruler should be at least the amount of 0.1 mm.<br>
+      See also figure <a href="#PrincipleRulerDiskMethod">Principle of the ruler/disk method</a>.</td>
+  </tr>
+</table>
+<table cellpadding="5" cellspacing="2">
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td>
+      <h2><a name="VerificationMethodsUsed"></a>What are the verification methods used in the Flat Region Analysis?</h2>
+    </td>
+    <td valign="bottom">
+      <p align="right"><a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></p>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">The analysis offers the ruler/disk method, and additionally a method performing a local check (options under
+      <a href="#Type">Type</a>), which are described in the following.<br>
+      In addition, you can execute a subsequent manual deviation analysis (see <a href="#SubsequentDeviationAnalysisUsage">How is 
+      the subsequent deviation analysis used?</a>) that enables an accurate assessment of the curvature situation at a specific surface 
+      point.</td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">
+      <h4><a name="Chord"></a>Ruler/disk method (Chord)</h4>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">
+      <ul class="st">
+        <li><kbd>Mode of operation</kbd>: The virtual ruler with a length of e. g. 100 mm is placed with its centre point tangentially 
+          on the surface to be verified and revolved about the centre point. The rotation axis coincides with the surface normal at 
+          this point. The rotation defines a planar disk with a radius of 50 mm touching exactly one facet point.<br>
+          The system now checks for this point whether - when revolving the ruler - the curvature lies below a specified minimum value 
+          at each position within the sector defined by the Rotation Angle. Only if this is the case in the entire sector, the point 
+          will be displayed in red.<br>
+          This procedure is executed for each individual facet point of the surface.<br>
+          Whether a point is displayed in red depends on the specified rotation angle. At 1&deg; a point can be red, at 10&deg; green.<br>
+          For a detailed description and illustrative figures about the definition of the rotation angle, please refer to
+          <a href="#RotationAngleImportance">Which importance has the rotation angle?</a>.</li>
+        <li><kbd>Advantages and disadvantages</kbd>: As the surfaces are analyzed as a whole, i. e. across patch boundaries, the ruler/disk 
+          method delivers a very precise result, but is considerably slower than the local method. Saddle points and other flat regions 
+          which are not relevant for sheet metal forming are not found but only real flat regions (see figure
+          <a href="#AnalysisResultRulerDiskMethod">Analysis result with the ruler/disk method</a>).</li>
+      </ul>
+      <p align="center"><u><a name="PrincipleRulerDiskMethod"></a>Principle of the ruler/disk method</u><br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/FlatRegion_RulerDiskPrinciple.gif" width="654" height="426"></p>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td></td>
+    <td colspan="2">
+      <h4><a name="Local"></a>Local method (Local)</h4>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">
+      <ul class="st">
+        <li><kbd>Mode of operation</kbd>: You can specify a curvature radius that shall not be exceeded, e. g. 12500 mm. In an infinitely 
+          small area around the evaluated facet point, the system mathematically calculates the actual curvature in the appropriate 
+          point and compares it with the defined minimum curvature. If the minimum curvature is kept, the point will be displayed 
+          in green. Whether the point is displayed in red depends on the set rotation angle.<br>
+          Topological relations are not relevant, i. e. the check is done only on the current surface.</li>
+        <li><kbd>Advantages and disadvantages</kbd>: The local method is set as default in the menu because it delivers a considerably 
+          quicker result than the ruler/disk method due to the faster facet creation. If all areas are displayed in green, there is 
+          maximum certainty that no flat regions exist.<br>
+          Red areas point out areas that have to be examined more closely. Not only real flat regions but also saddle points which 
+          are not relevant for the sheet metal forming process are detected (see figure <a href="#AnalysisResultLocalMethod">Analysis 
+          result with the local method</a>). Moreover, the results at boundaries between two surfaces (flat surface - surface with 
+          a stronger curvature) may be misleading. If areas having no relevance for the forming process should be excluded, the ruler/disk 
+          method has to be used.</li>
+      </ul>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">
+      <h4><a name="ComparisonVerificationMethods"></a>Comparison of the verification methods</h4>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">The following figures illustrate the different results of both verification methods. They show a surface that 
+      contains saddle points. The ruler/disk method does not find these areas, whereas the local method finds them.<br>
+      <p align="center"><u><a name="AnalysisResultRulerDiskMethod"></a>Analysis result with the ruler/disk method</u><br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/FlatRegion_RulerDiskResult.gif" width="710" height="224"><br>
+        <br>
+        <br>
+        <u><a name="AnalysisResultLocalMethod"></a>Analysis result with the local method</u><br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/FlatRegion_LocalResult.gif" width="723" height="380"></p>
+      <br>
+    </td>
+  </tr>
+</table>
+<table cellpadding="5" cellspacing="2">
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td>
+      <h2><a name="RotationAngleImportance"></a>Which importance has the rotation angle?</h2>
+    </td>
+    <td valign="bottom">
+      <p align="right"><a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></p>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">Flat regions can be in one, or several and all directions. With the <a href="#RotationAngle">Rotation Angle</a> 
+      you can determine which type of flatness is considered to be a risk. Thus you are deciding which opening angle of the ruler 
+      (sector) is the threshold at which sheet metal forming becomes problematic. Such a sector is identified by rotating the ruler 
+      tangentially about its centre point where it touches the surface, starting at the minimum curvature direction and pivoting to 
+      the left and right of this direction as far as exceedingly small curvatures are encountered. Only if this is the case at each 
+      position of the ruler within the sector, the point will be displayed in red.<br>
+      <br>
+      <img src="b35doc/english/online/icmug_c2/images/FlatRegion_RotationAngleDefinition.gif" width="669" height="269"><br>
+      <br>
+      The following types of flat regions are distinguished:<br>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <ul class="st">
+        <li><kbd>Flatness in one direction (Rotation Angle = 1&deg;)</kbd>: At a rotation angle of 1&deg; (slider position at the very left), 
+          the investigated surface point will be marked in red if the ruler revolving about its centre point detects a curvature value 
+          below the defined minimum in even a single direction (within this small sector of 1&deg;). Using this initial value will result 
+          in a maximum number of red regions.<br>
+          If the curvature of the material is less than the minimum curvature in only one direction, e. g. surfaces having the curvature 
+          of a cylinder, this may still be perfectly acceptable.</li>
+      </ul>
+    </td>
+    <td align="center"><u><a name="RotationAngle1deg"></a>Rotation Angle = 1&deg;</u><br>
+      <br>
+      <img src="b35doc/english/online/icmug_c2/images/FlatRegion_RotAng_1deg.gif" width="429" height="325"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <ul class="st">
+        <li><kbd>Flatness in a sector of directions (Rotation Angle between 1&deg; and 180&deg;)</kbd>: Sheet metal forming problems often 
+          do not arise until there is flatness not only in one direction, but in a sector of directions.<br>
+          The rotation from the direction of the minimum curvature direction to the left and right of e. g. 15&deg; degrees results in 
+          a sector of 30&deg; that can be swept by the rotating ruler without encountering the required minimum curvature value. If you 
+          increase the rotation angle, the number of areas marked in red decreases.</li>
+      </ul>
+    </td>
+    <td align="center"><u><a name="RotationAngle15deg"></a>Rotation Angle = 15&deg;</u><br>
+      <br>
+      <img src="b35doc/english/online/icmug_c2/images/FlatRegion_RotAng_15deg.gif" width="483" height="366"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <ul class="st">
+        <li><kbd>Flatness in all directions (Rotation Angle = 180&deg;)</kbd>: The extreme case, i. e. a perfectly flat region, exists 
+          if the ruler can fully revolve about its rotation axis (sector of 360&deg;) without encountering the minimum curvature value 
+          at any position. Such regions are always critical and should be avoided by all means.<br>
+          If you define a rotation angle of 180&deg; (slider position at the very right), the analysis should not show any red region 
+          at all if the evaluated part is ok.</li>
+      </ul>
+    </td>
+    <td align="center"><u><a name="RotationAngle180deg"></a>Rotation Angle = 180&deg;</u><br>
+      <br>
+      <img src="b35doc/english/online/icmug_c2/images/FlatRegion_RotAng_180deg.gif" width="334" height="222"></td>
+  </tr>
+</table>
+<table cellpadding="5" cellspacing="2">
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td>
+      <h2><a name="SubsequentDeviationAnalysisUsage"></a>How is the subsequent deviation analysis used?</h2>
+    </td>
+    <td valign="bottom">
+      <p align="right"><a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></p>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">The manual colored deviation analysis is an add-on to the Ruler/disk method (<a href="#Chord">Chord</a>). The 
+      difference between a B&eacute;zier surface replacing the disk and the surface covered by the disk will be measured by comparing the 
+      surfaces. This method enables a both qualitative and quantitative assessment of the curvature situation at the investigated 
+      surface point.<br>
+      As the facetisation of the surface model is displayed (view mode &#39;Wireframe&#39;), you may additionally assess whether the selected 
+      side length of the tessellation makes sense in relation to the disk.</td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">
+      <h4><a name="ProceedingDeviationAnalysis"></a>Proceeding of the deviation analysis</h4>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <ol class="task">
+        <li>
+          <p class="task">Carry out the analysis with the desired parameters: Ruler/disk method (<a href="#Chord">Chord</a>) or Local 
+            method (<a href="#Local">Local</a>).</p>
+        </li>
+        <li>
+          <p class="task">Select via the selection field &#39;Points&#39; within the red marked area which shall be examined more closely 
+            an existing point or create a point via the contextual menu.</p>
+        </li>
+        <li>
+          <p class="task">A disk is placed with its centre point directly in the surface point that has been picked (distance = 0 
+            in the centre point). The disk radius results from the specified <a href="#LengthDistance">Length</a> of the virtual ruler 
+            (50 mm at a default length of 100 mm). The disk radius adapts in its position to the underlying surfaces as good as possible. 
+            The disk normal is aligned at the surface normal in the point.</p>
+        </li>
+        <li>
+          <p class="task">The colored deviation analysis is shown on the circular surface. It is a real deviation analysis, but with 
+            an inverted color display. All points being nearer to the underlying surface than the specified value for
+            <a href="#LengthDistance">Distance</a> (default = 0.1 mm) will be displayed in red, the points further from the surface 
+            than that value in green.<br>
+            The minimum curvature radius is represented by a vector arrow.</p>
+        </li>
+        <li>
+          <p class="task">The disk can be moved across the surface at its centre point (left mouse button at the vector origin). In 
+            addition, the vector length, and thus the disk radius, can be modified (left mouse button at the handle on the arrow tip). 
+            This also changes the value <a href="#LengthDistance">Length</a> in the text field of the dialog box.</p>
+        </li>
+      </ol>
+    </td>
+    <td align="center"><u>Manual disk analysis</u><br>
+      <br>
+      <img src="b35doc/english/online/icmug_c2/images/FlatRegion_ManualDiskAnalysis.gif" width="340" height="190"></td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">
+      <h4><a name="InterpretationAnalysisResult"></a>Interpretation of the analysis result</h4>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">The direction of the smallest curvature, the flat region, in the selected surface point (centre point of the disk) 
+      is represented by a vector symbol (minimum curvature direction). It corresponds to the main direction of the red area.<br>
+      The shortest distance between disk and surface is measured and displayed in the following colors:<br>
+      <br>
+      <table cellpadding="5" border="2" bordercolor="#000000">
+        <tr bgcolor="#e2e2e2">
+          <th>Color</th>
+          <th>Meaning</th>
+        </tr>
+        <tr>
+          <td>Red</td>
+          <td>all surface points with the property: measured distance &lt; set value</td>
+        </tr>
+        <tr>
+          <td>Green</td>
+          <td>all surface points with the property: measured distance &gt; = set value</td>
+        </tr>
+        <tr>
+          <td>Blue</td>
+          <td>no result (the disk protrudes the surface edge)</td>
+        </tr>
+      </table>
+      <br>
+      <br>
+      At the arrow tip, that means at the disk edge and in the direction of the minimum curvature, the amount of the deviation between 
+      the circular periphery and the corresponding surface point is determined and displayed as numerical value.<br>
+      Flatness becomes critical not until the red area touches the circular periphery, and the curvature values are below the minimum 
+      curvature in the entire sector.<br>
+      <p align="center"><u>Detection of a critical area with the deviation analysis</u><br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/FlatRegion_CriticalArea.gif" width="661" height="259"></p>
+      <br>
+      The critical rotation angle can be identified from the size of the red sector. If the disk radius is modified, the criterion 
+      for the minimum curvature changes as well leading to a different analysis result.<br>
+      <br>
+      <p align="center"><u>Modification of the disk radius</u><br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/FlatRegion_ModDiskRadius.gif" width="633" height="345"></p>
+      <br>
+    </td>
+  </tr>
+</table>
+<table cellpadding="5" cellspacing="2">
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td>
+      <h2><a name="DialogBoxFlatRegion"></a>The Dialog box Flat Region Analysis</h2>
+    </td>
+    <td valign="bottom">
+      <p align="right"><a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></p>
+    </td>
+  </tr>
+  <tr>
+    <td><img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td colspan="2">Open the <a href="b35doc/english/online/icmug_c2/samples/FlatRegionAnalysis01.CATPart">FlatRegionAnalysis01.CATPart</a> document.</td>
+  </tr>
+  <tr valign="top">
+    <td><img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td>
+      <ol class="task">
+        <li>
+          <p class="task">Activate the display mode &#39;Shading with Material&#39; or &#39;Shading with Material and Edges&#39;.</p>
+        </li>
+        <li>
+          <p class="task">Click the <kbd>Flat Region</kbd> icon
+            <img src="b35doc/english/online/icons_C2/images/I_ICMDiagFlatRegionMainLT.gif" align="middle" width="22" height="22">.</p>
+          <p class="task">The &#39;Flat Region Analysis&#39; dialog box is displayed.</p>
+        </li>
+      </ol>
+    </td>
+    <td>
+      <p><img src="b35doc/english/online/icmug_c2/images/dbFlatRegionAnalysis.gif" width="375" height="325"></p>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <ol class="task">
+        <li value="3">
+          <p class="task">Select the element Surface.22.</p>
+        </li>
+      </ol>
+    </td>
+    <td><img src="b35doc/english/online/icmug_c2/images/FlatRegion01.gif" width="364" height="218"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <ol class="task">
+        <li value="4">
+          <p class="task">Use the following settings in the dialog box:</p>
+        </li>
+      </ol>
+    </td>
+    <td><img src="b35doc/english/online/icmug_c2/images/FlatRegion01_settings.gif" width="354" height="176" border="1"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <ol class="task">
+        <li value="5">
+          <p class="task">Click <kbd>Apply</kbd> to create the analysis.</p>
+        </li>
+      </ol>
+    </td>
+    <td><img src="b35doc/english/online/icmug_c2/images/FlatRegion02.gif" align="middle" width="363" height="216"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <ol class="task">
+        <li value="6">
+          <p class="task">&nbsp;Select Point.1 via the selection field <kbd>Points</kbd>.</p>
+        </li>
+      </ol>
+    </td>
+    <td><img src="b35doc/english/online/icmug_c2/images/FlatRegion03.gif" width="281" height="212"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+      <ol class="task">
+        <li value="7">
+          <p class="task">&nbsp;Click <kbd>Apply</kbd> to create the subsequent deviation analysis.</p>
+        </li>
+      </ol>
+    </td>
+    <td><img src="b35doc/english/online/icmug_c2/images/FlatRegion04.gif" width="305" height="283"></td>
+  </tr>
+</table>
+<table cellpadding="5" cellspacing="2">
+  <tr>
+    <td valign="top"><img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td valign="top" colspan="2">You can define the following options:
+      <ul class="st">
+        <li><kbd>Elements</kbd>: Selection of elements used for the Flat Region Analysis.<br>
+          Supported elements are:
+          <ul class="nd">
+            <li>Surfaces</li>
+            <li>Faces</li>
+            <li>Joins</li>
+          </ul>
+        </li>
+        <li><kbd>Points</kbd>: Selection of points for the subsequent deviation analysis (see
+          <a href="#SubsequentDeviationAnalysisUsage">How is the subsequent deviation analysis used?</a>).</li>
+      </ul>
+&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <ul class="st">
+        <li><kbd>Tessellation</kbd>: The Analysis is based on triangulated data. That means that surfaces are converted into a facet 
+          model before they are checked.
+          <ul class="nd">
+            <li><kbd>Facet length</kbd>: Maximum length of the facets, regardless of the surface curvature.<br>
+              Flat regions are identified precisely with this method, however, it requires more computing time. The smaller the value 
+              for the facet length, the more precise, but also slower is the computation.</li>
+            <li><kbd>Tolerance</kbd>: Maximum deviation of the facet model from the surface for a curvature dependent tessellation.<br>
+              The surfaces are subdivided into smaller facets until the distance of the planer facets from the surfaces is smaller 
+              than this value. Through this, large facets are created on areas with a lower curvature, and smaller ones on surfaces 
+              with a stronger curvature. this method delivers a quick result, but in flat regions it may lead to results that are 
+              hard to interpret.</li>
+          </ul>
+        </li>
+      </ul>
+    </td>
+    <td align="center"><u>Facet Length</u><br>
+      <br>
+      <img src="b35doc/english/online/icmug_c2/images/FlatRegion_FacetLength.gif" width="455" height="257"><br>
+      <br>
+      <br>
+      <u>Tolerance</u><br>
+      <br>
+      <img src="b35doc/english/online/icmug_c2/images/FlatRegion_Tolerance.gif" width="456" height="258"><br>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2"><kbd>Options</kbd>
+      <ul class="st">
+        <li><kbd><a name="Type"></a>Type</kbd>: Two analysis methods are available: the ruler/disk method (<a href="#Chord">Chord</a>) 
+          and the local method (<a href="#Local">Local</a>).<br>
+          For a detailed description of both methods please refer to <a href="#VerificationMethodsUsed">What are the verification 
+          methods used in the Flat Region Analysis?</a>.<br>
+          For performance reasons it is recommendable to start the computation with &#39;Local&#39; (default setting). This method delivers 
+          a considerably quicker result than &#39;Chord&#39;. If all surfaces are marked in green, there are definitely no flat regions. If 
+          red areas are found, you should definitely use &#39;Chord&#39; afterwards in order to exclude saddle points and other uncritical 
+          areas. This method delivers a very precise result, but is considerably slower than &#39;Local&#39;.<br>
+          The subsequent deviation analysis (Selection of points via selection field &#39;Points&#39;) also runs faster with the setting &#39;Local&#39; 
+          (see also <a href="#ProceedingDeviationAnalysis">Proceeding of the deviation analysis</a>).</li>
+        <li><kbd>Display: Both, Discs only</kbd>: Display mode for the analysis result: You may choose between display of surfaces 
+          and discs or discs only.</li>
+        <li><kbd><a name="LengthDistance"></a>Length, Distance</kbd>: Length of the virtual ruler (chord) and minimum distance between 
+          ruler and geometry for &#39;Chord&#39;. These parameters define the minimum curvature. Please refer to
+          <a href="#FlatRegionCheckPractice">Flat region check in practice</a> and <a href="#Chord">Ruler/disk method (Chord)</a>.</li>
+        <li><kbd><a name="Radius"></a>Radius</kbd>: Minimum curvature radius for &#39;Local&#39;. Please refer to
+          <a href="#DefinitionFlatness">Definition of flatness</a>, and <a href="#Local">Local method (Local)</a>.</li>
+        <li><kbd><a name="RotationAngle"></a>Rotation Angle</kbd>: With this slider you can determine, which type of flatness shall 
+          be found. The system checks within the sector defined by the rotation angle whether the minimum curvature is kept.<br>
+          For a detailed description of the rotation angle definition including illustrative figures please refer to
+          <a href="#RotationAngleImportance">Which importance has the rotation angle?</a>.<br>
+          The angle of rotation can also be specified directly in the text field.<br>
+          The following table shows how the rotation angle should be set in order to find the different types of flatness:<br>
+          <br>
+          <table cellpadding="5" border="2" bordercolor="#000000">
+            <tr bgcolor="#e2e2e2">
+              <th>Flatness Type</th>
+              <th>Slider Position</th>
+              <th>Rotation Angle</th>
+              <th>Figure</th>
+            </tr>
+            <tr>
+              <td colspan="1">flat regions in one direction</td>
+              <td colspan="1">at the very left</td>
+              <td colspan="1">1&deg;</td>
+              <td><a href="#RotationAngle1deg">Flatness in one direction (Rotation Angle = 1&deg;)</a></td>
+            </tr>
+            <tr>
+              <td>flat regions in a sector of directions</td>
+              <td>between left and right end</td>
+              <td>between 1&deg; and 180&deg;</td>
+              <td><a href="#RotationAngle15deg">Flatness in a sector of directions (Rotation Angle between 1&deg; and 180&deg;)</a></td>
+            </tr>
+            <tr>
+              <td>perfectly flat regions</td>
+              <td>at the very right</td>
+              <td>180&deg;</td>
+              <td><a href="#RotationAngle180deg">Flatness in all directions (Rotation Angle = 180&deg;)</a></td>
+            </tr>
+          </table>
+        </li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">Click &#39;More Info&#39; to display deviations and output results.</td>
+    <td valign="top"><img src="b35doc/english/online/icmug_c2/images/dbFlatRegionAnalysis_more.gif" width="244" height="48" border="1"></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td colspan="2">
+      <ul class="st">
+        <li><kbd>Display</kbd>: Depending on the options selected, values are displayed in the graphics area.</li>
+        <li><kbd>Dynamic, Static, None</kbd>: See <a href="page8769.html">Apply Modes</a>.</li>
+        <li><kbd>Deviation</kbd>:
+          <ul class="nd">
+            <li><kbd>Max. Distance</kbd>: Displays the maximum deviation between input element and resulting output geometry.</li>
+          </ul>
+        </li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<p align="center"><img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+</body>
+
+</html>
+

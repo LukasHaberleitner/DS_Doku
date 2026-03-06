@@ -1,0 +1,768 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/HTML; charset=iso-8859-1">
+ <title>Using the Loop Behavior</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="docCompliance" content="v 0.9; Tue Oct 18 10:20:44 2005">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Using the Loop Behavior<a name="ix-loop behavior"></a>
+ <a name="ix-using the loop behavior"></a>&nbsp;<a name="CATBehaviorCommandHeader.LoopBehaviorCmdHId"></a>
+ <a name="CATBehaviorCommandHeader.BindOutputToFatherImplementationCmdHId"></a>
+ </h1>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/ap3_title.gif" width="152" height="32"></p>
+ <table border="0" valign="top" cellpadding="2">
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>The aim of this scenario is to show the user how to use the loop 
+     behavior as a &quot;while&quot; object. The expert user defines rules and checks to 
+     set the instantiation context of dominoes and the loop is automatically 
+     stopped during its execution. The expert user defines a number of 
+     iterations which is too large and he wants to send a window to inform the 
+     user when and why the loop stops.<p>The scenario is divided into the 
+     following steps:</p>
+     <ul>
+       <li><font color="#000080">
+       <a href="#Creating technological types and their sub-components">Creating 
+       the technological type</a></font></li>
+       <li><font color="#000080"><a href="#dominoes set">Adding the 
+       &quot;Instantiation in Context&quot; sequence to the DominoesSet Technological Type</a></font></li>
+       <li><a href="#Creating the Loop of behaviors">Creating the Loop of 
+       behaviors</a></li>
+       <li><font color="#000080"><a href="#Generating the Workbench">Generating 
+       the Workbench</a></font></li>
+       <li><font color="#000080"><a href="#Testing the Workbench">Testing the 
+       Workbench</a></font></li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>Remember to:<ul>
+       <li>Save your .CATScript files in the startup&#092;automation 
+       directory and your .CATfct file in the directory corresponding to the 
+       CATGraphicPath environment variable.</li>
+       <li>Modify the path of the LoadDocument behavior if you use the provided 
+       .CATfct file. </li>
+       <li>To perform this scenario, you will need the following files:<div align="left">
+         <table border="0" cellpadding="2" id="AutoNumber24">
+           <tr>
+             <td>
+             <ul>
+               <li><a href="b35doc/english/online/bktug_c2/samples/BktUDFDomino.CATPart">BktUDFDomino.CATPart</a></li>
+               <li><a href="b35doc/english/online/bktug_c2/samples/BktInfo.CATScript">BktInfo.CATScript</a></li>
+               <li><a href="b35doc/english/online/bktug_c2/samples/BktDominoSystem.CATPart">
+               BktDominoSystem.CATPart</a></li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <h2><a name="Creating technological types and their sub-components">Create 
+     the technological type</a></h2>
+     <ol class="task">
+       <li>
+       <p class="Task">From the <kbd>Start&gt;Knowledgeware</kbd> menu, access the
+       <kbd>Business Process Knowledge Template</kbd> workbench.</li>
+       <li>
+       <p class="Task">Create the <kbd>DominoesSet </kbd>technological type. </p>
+       <div align="left">
+         <table border="0" cellpadding="2">
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>Click the <kbd>Create Technological Type</kbd> icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_FdeCreateSubClassP2.gif" width="24" height="24">) 
+               to create the technological type. The Create technological type 
+               dialog box is displayed. Enter DominoesSet.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">Click <kbd>OK</kbd> to validate.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <h2>
+     <a name="Adding the Creating the slab sequence to the Table Technological Type">
+     Add the &quot;Instantiation in Context&quot; Sequence to the DominoesSet 
+     Technological Type</a> <a name="dominoes set"></a></h2>
+     <ol class="task" start="3">
+       <li>
+       <p class="Task">Click the DominoesSet type and click the <kbd>Sequential 
+       Combination</kbd> behavior (<img border="0" src="b35doc/english/online/icons_C2/images/I_SequenceBehaviorP2.gif" width="24" height="24">) 
+       to create a combination of behaviors.&nbsp; </li>
+     </ol>
+     <ol class="task" start="4">
+       <li>
+       <p class="Task">Double-click the SequentialCombination in the Behaviors 
+       View and DominoesSet in the Behaviors tab to access the sequential 
+       combination.</li>
+       <li>
+       <p class="Task">Double-click the SequentialCombination node that is 
+       displayed in the Behaviors tab. (Expand the DominoesSet node if need be.)</li>
+       <li>
+       <p class="Task">Enter the name of the combination, <kbd>Instantiation in 
+       context</kbd> in this scenario, in the <kbd>Name</kbd> field of the 
+       opening dialog box and click <kbd>OK</kbd> to validate.</li>
+       <li>
+       <p class="Task">Select the <kbd>Instantiation in context</kbd> 
+       combination in the Behaviors tree and click the <kbd>Bind Object Behavior</kbd> 
+       icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_BindObjectImplementationP2.gif" width="24" height="24">).</li>
+       <li>
+       <p class="Task">Double-click the BindObject behavior. The Bind Object 
+       window is displayed. </p>
+       <div align="left">
+         <table border="0" cellpadding="2" id="AutoNumber9">
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>Enter Bind Part in the Name field.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>Enter ../../.. in the Relative Name field. Click <kbd>OK</kbd> 
+               to validate.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="Task">Select the <kbd>Instantiation in context</kbd> 
+       combination in the Behaviors tree and click the <kbd>Bind Object Behavior</kbd> 
+       icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_BindObjectImplementationP2.gif" width="24" height="24">).</p>
+       <div align="left">
+         <table border="0" cellpadding="2" id="AutoNumber10">
+           <tr>
+             <td>
+             <ul>
+               <li>Enter Bind PartBody in the Name field.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Click the Starting from field, expand the BindPart variables 
+               node and select the Link. =BindPart&#092;Link 
+               is displayed in the Starting from field.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Enter PartBody in the Relative Name field. Click <kbd>OK</kbd> 
+               to validate.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="Task">Select the <kbd>Instantiation in context</kbd> 
+       combination in the Behaviors tree and click the <kbd>Bind Object Behavior</kbd> 
+       icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_BindObjectImplementationP2.gif" width="24" height="24">).</li>
+       <li>
+       <p class="Task">Double-click the BindObject behavior. The Bind Object 
+       window is displayed. </p>
+       <div align="left">
+         <table border="0" cellpadding="2" id="AutoNumber11">
+           <tr>
+             <td>
+             <ul>
+               <li>Enter Sketch Support in the Relative Name field.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Click the Starting from field, expand the Bind PartBody 
+               variables node and select the Link. =Bind PartBody&#092;Link 
+               is displayed in the Starting from field. Click <kbd>OK</kbd> to 
+               validate.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <ol class="task" start="12">
+       <li>
+       <p class="Task">Select the <kbd>Instantiation in context</kbd> 
+       combination in the Behaviors tree and click the <kbd>Load Behavior</kbd> 
+       icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_LoadImplementationP2.gif" width="24" height="24">).</li>
+       <li>
+       <p class="Task">Double-click the LoadDocument node. The Load Document 
+       editor is displayed. </p>
+       <div align="left">
+         <table border="0" cellpadding="2" id="AutoNumber3">
+           <tr>
+             <td>
+             <ul>
+               <li>Click the ... button and select the
+               <a href="b35doc/english/online/bktug_c2/samples/BktUDFDomino.CATPart">BktUDFDomino.CATPart</a> 
+               in the File Selection dialog box and click <kbd>Open</kbd> when 
+               done.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Click <kbd>OK</kbd> to validate.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="Task">Select the <kbd>Instantiation in context</kbd> 
+       combination in the Behaviors tree and click the <kbd>Bind User Feature</kbd> 
+       icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_BindUDFImplementationP2.gif" width="24" height="24">).</li>
+       <li>
+       <p class="Task">Double-click the BindUserFeature in the Behaviors tree. 
+       The Bind User Feature editor is displayed.</p>
+       <div align="left">
+         <table border="0" cellpadding="2" id="AutoNumber12">
+           <tr>
+             <td>
+             <ul>
+               <li>Select the From object: field, expand the LoadDocument 
+               variables node and select the Document output. =LoadDocument&#092;Document 
+               is displayed in the From object: field.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Click <kbd>OK</kbd> to validate.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <h2><a name="Creating the Loop of behaviors">Create the Loop of Behaviors</a></h2>
+     <ol class="task" start="16">
+       <li>
+       <p class="Task">Select the <kbd>Instantiation in context</kbd> 
+       combination in the Behaviors tree and click the <kbd>Loop</kbd> icon (<img border="0" src="b35doc/english/online/bktug_c2/images/bktloopicon.gif" width="28" height="28">).</li>
+       <li>
+       <p class="Task">Double-click the Loop in the Behaviors tab. The Loop 
+       editor is displayed.</p>
+       <div align="left">
+         <table border="0" cellpadding="4" id="AutoNumber13">
+           <tr>
+             <td>
+             <ul>
+               <li>Enter the number of iterations: 15.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Click the Attributes tab and add the following attribute:<div align="left">
+                 <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber23">
+                   <tr>
+                     <td><font color="#000080">Name</font></td>
+                     <td>Inst_Ratio</td>
+                     <td><font color="#000080">Type</font></td>
+                     <td>Real</td>
+                     <td><font color="#000080">Quality</font></td>
+                     <td>Input</td>
+                     <td><font color="#000080">Value</font></td>
+                     <td>0.1</td>
+                   </tr>
+                 </table>
+               </div>
+               </li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Click <kbd>OK</kbd> to validate.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="Task">Select the <kbd>Loop</kbd> combination in the Behaviors 
+       tree and click the <kbd>Knowledge Relations&nbsp; Behavior</kbd> icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_KWRelationImplementationP2.gif" width="24" height="24">).</li>
+       <li>
+       <p class="Task">Double-click the KnowledgeRelations behavior. The 
+       Knowledge Relations editor is displayed.</li>
+       <li>
+       <p class="Task">Click the Attributes tab and add the following 
+       attributes:</li>
+     </ol>
+     <div align="left">
+       <table border="0" cellpadding="4" id="AutoNumber14">
+         <tr>
+           <td><font color="#000080">Name</font></td>
+           <td>TempRatio</td>
+           <td><font color="#000080">Type</font></td>
+           <td>Real</td>
+           <td><font color="#000080">Quality</font></td>
+           <td>Internal</td>
+           <td>&nbsp;</td>
+           <td>&nbsp;</td>
+         </tr>
+         <tr>
+           <td><font color="#000080">Name</font></td>
+           <td>RatioforUDF</td>
+           <td><font color="#000080">Type</font></td>
+           <td>Real</td>
+           <td><font color="#000080">Quality</font></td>
+           <td>Output</td>
+           <td>&nbsp;</td>
+           <td>&nbsp;</td>
+         </tr>
+         <tr>
+           <td><font color="#000080">Name</font></td>
+           <td>ratio</td>
+           <td><font color="#000080">Type</font></td>
+           <td>Real</td>
+           <td><font color="#000080">Quality</font></td>
+           <td>Input</td>
+           <td>&nbsp;</td>
+           <td>&nbsp;</td>
+         </tr>
+         <tr>
+           <td><font color="#000080">Name</font></td>
+           <td>UDF_Act</td>
+           <td><font color="#000080">Type</font></td>
+           <td>Boolean</td>
+           <td><font color="#000080">Quality</font></td>
+           <td>Output</td>
+           <td><font color="#000080">Value</font></td>
+           <td>False</td>
+         </tr>
+         <tr>
+           <td><font color="#000080">Name</font></td>
+           <td>Info_Act</td>
+           <td><font color="#000080">Type</font></td>
+           <td>Boolean</td>
+           <td><font color="#000080">Quality</font></td>
+           <td>Output</td>
+           <td><font color="#000080">Value</font></td>
+           <td>False</td>
+         </tr>
+       </table>
+     </div>
+     <ol class="task" start="21">
+       <li>
+       <p class="Task">In the Content tab, right-click the TempRatio attribute 
+       and select <kbd>Edit Formula</kbd>. The Formula editor is displayed.</li>
+       <li>
+       <p class="Task">Enter the following formula: <code>TempRatio=ratio + `DominoesSetMDL&#092;Instantiation 
+       in context&#092;Loop&#092;Iteration` 
+       / 2 * 0.1</code>. Click <kbd>OK</kbd> when done to close the editor.</li>
+       <li>
+       <p class="Task">Click the Content tab and click the Rule icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_RulesP2.gif" width="24" height="24">). 
+       Enter the following rule body into the rule editor, click <kbd>OK</kbd> 
+       when done and <kbd>OK</kbd> to exit the Knowledge Relations editor.</p>
+       <div align="left">
+         <table border="0" cellpadding="2" id="AutoNumber15">
+           <tr>
+             <td bgcolor="#F0F0F0"><code>if TempRatio &lt;= 1<br>
+             {<br>
+             RatioforUDF = TempRatio <br>
+             UDF_Act = TRUE<br>
+             Info_Act = FALSE<br>
+             }<br>
+             else<br>
+             {<br>
+             RatioforUDF = TempRatio<br>
+             `DominoesSetMDL&#092;Instantiation 
+             in context&#092;Loop&#092;NumberOfIterations` 
+             = `DominoesSetMDL&#092;Instantiation 
+             in context&#092;Loop&#092;Iteration`
+             <br>
+             UDF_Act = FALSE<br>
+             Info_Act = TRUE<br>
+             }</code></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="Task">Expand the Knowledge Relations variables node as well as 
+       the Loop variables node. </li>
+       <li>
+       <p class="Task">Right-click the ratio variable located below the 
+       Knowledge Relations node, select <kbd>ratio object&gt;Link To</kbd>, and 
+       click the Inst_Ratio variable located below the Loop node. Both variables 
+       are now linked.</li>
+       <li>
+       <p class="Task">Select the <kbd>Loop</kbd> combination in the Behaviors 
+       tree and click the <kbd>Instantiate Template&nbsp; Behavior</kbd> icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_PowerCopySpecificationImplementationP2.gif" width="24" height="24">).</p>
+       <div align="left">
+         <table border="0" cellpadding="2" id="AutoNumber16">
+           <tr>
+             <td>
+             <ul>
+               <li>Click the Template feature field, expand the BindUserFeature 
+               node and select the UserFeature. =BindUserFeature&#092;UserFeature 
+               is displayed in the Template feature field.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Click the Destination field, expand the Bind Part node and 
+               select the Link. =Bind Part&#092;Link 
+               is displayed in the Destination field.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Click <kbd>Add</kbd> in the Defined inputs and parameters 
+               field and add the following attributes:<div align="left">
+                 <table border="0" cellpadding="4" id="AutoNumber17">
+                   <tr>
+                     <td>Name: ratio, Type: Real, Quality: Input, Value: 0.1
+                     </td>
+                   </tr>
+                   <tr>
+                     <td>Name: Sketch.1, Type: Pointer, Quality: Input </td>
+                   </tr>
+                 </table>
+               </div>
+               </li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Click <kbd>OK</kbd> when done.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="Task">Expand the Instantiate Template variables node, 
+       right-click the ratio variable located below the Knowledge Relations 
+       node, select <kbd>ratio object&gt;Link To</kbd>, and click the RatioforUDF 
+       variable located below the Knowledge Relations node. </li>
+       <li>
+       <p class="Task">Right-click the Sketch.1 variable, select <kbd>Sketch.1 
+       object&gt;Link To</kbd>, expand the Bind Sketch Support variables node and 
+       select the Link.</li>
+       <li>
+       <p class="Task">Right-click the Activity variable, select <kbd>Activity 
+       object&gt;Link To</kbd>, and click the UDF_Act variable located below the 
+       Knowledge Relations node. </li>
+       <li>
+       <p class="Task">Select the <kbd>Loop</kbd> combination in the Behaviors 
+       tree and click the <kbd>Synchronize Parameters&nbsp; Behavior</kbd> icon 
+       (<img border="0" src="b35doc/english/online/icons_C2/images/I_BindOutputToFatherImplementationP2.gif" width="24" height="24">).</li>
+       <li>
+       <p class="Task">Double-click the SynchronizeParameters behavior in the 
+       Behaviors tree. The Synchronize Parameters editor opens:</p>
+       <div align="left">
+         <table border="0" cellpadding="2" id="AutoNumber18">
+           <tr>
+             <td>
+             <ul>
+               <li>Click the From Parameter field, expand the Knowledge 
+               Relations node and click the RatioforUDF variable. =KnowledgeRelations&#092;RatioforUDF 
+               is displayed in the From Parameter field.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Click the To Parameter field, expand the Loop node and click 
+               the Inst_Ratio variable. = Loop&#092;Inst_Ratio 
+               is displayed in the To Parameter field. </li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Click <kbd>OK</kbd> to validate.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="Task">Expand the SynchronizeParameters behavior node in the 
+       Behaviors tree. Right-click the Activity variable, select <kbd>Activity 
+       object&gt;Link To</kbd> and click the UDF_Act variable located below the 
+       Knowledge Relations node. </li>
+       <li>
+       <p class="Task">Select the <kbd>Loop</kbd> combination in the Behaviors 
+       tree and click the <kbd>Add To List&nbsp; Behavior</kbd> icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_ListAddImplementationP2.gif" width="24" height="24">).</li>
+       <li>
+       <p class="Task">Double-click the AddToList behavior. The AddToList editor 
+       is displayed:</p>
+       <div align="left">
+         <table border="0" cellpadding="2" id="AutoNumber19">
+           <tr>
+             <td>
+             <ul>
+               <li>Click the List field, expand the Loop variables node and 
+               select the List feature. = Loop&#092;List 
+               is displayed in the List field.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Click the Object: field, expand the BindUserFeature variables 
+               node and select the UserFeature. =BindUserFeature&#092;UserFeature 
+               is displayed in the Object field.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Click <kbd>OK</kbd> when done.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="Task">Expand the AddToList behavior node. Right-click the 
+       Activity variable, select <kbd>Activity object&gt;Link To</kbd> and click 
+       the UDF_Act variable located below the Knowledge Relations node. </li>
+       <li>
+       <p class="Task">Right-click the Index variable, select <kbd>Index&nbsp; 
+       object&gt;Link To</kbd> and click the Iteration variable located below the 
+       Loop node. </li>
+       <li>
+       <p class="Task">Select the&nbsp; <kbd>Loop</kbd> combination in the 
+       Behaviors tree and click the <kbd>VB Script Behavior</kbd> icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_VBScriptImplementationP2.gif" width="24" height="24">).</li>
+       <li>
+       <p class="Task">Double-click the VBScript behavior in the behaviors tree. 
+       The VBScript editor is displayed.</p>
+       <div align="left">
+         <table border="0" cellpadding="4" id="AutoNumber20">
+           <tr>
+             <td>
+             <ul>
+               <li>Click the <kbd>...</kbd> in the VB Name field and select the
+               <a href="b35doc/english/online/bktug_c2/samples/BktInfo.CATScript">BktInfo.CATScript</a> file.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Click <kbd>Add</kbd> in the Defined inputs and parameters 
+               field and add the following attributes:<div align="left">
+                 <table border="0" cellpadding="4" id="AutoNumber21">
+                   <tr>
+                     <td>
+                     <ul>
+                       <li>Name: Iteration, Type: Integer, Quality: Input, 
+                       Value: 1 </li>
+                     </ul>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td>
+                     <ul>
+                       <li>Name: Ratio, Type: Real, Quality: Input, Value: 0.1
+                       </li>
+                     </ul>
+                     </td>
+                   </tr>
+                   <tr>
+                     <td>
+                     <ul>
+                       <li>Name: NextRatio, Type: Real, Quality: Input, Value: 
+                       0.15</li>
+                     </ul>
+                     </td>
+                   </tr>
+                 </table>
+               </div>
+               </li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Click <kbd>OK</kbd> when done.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="Task">Expand the VBScript behavior node. Right-click the 
+       Iteration variable, select <kbd>Iteration object&gt;Link To</kbd> and click 
+       the Iteration variable located below the Loop node. </li>
+       <li>
+       <p class="Task">Right-click the Ratio variable, select <kbd>Ratio 
+       object&gt;Link To</kbd> and click the Inst_Ratio variable located below the 
+       Loop node. </li>
+       <li>
+       <p class="Task">Right-click the NextRatio variable, select <kbd>NextRatio 
+       object&gt;Link To</kbd> and click the RatioforUDF variable located below the 
+       Knowledge Relations node. </li>
+       <li>
+       <p class="Task">Right-click the Activity variable, select <kbd>Activity 
+       object&gt;Link To</kbd> and click the Info_Act variable located below the 
+       Knowledge Relations node. </li>
+     </ol>
+     <p class="Task">&nbsp;</p>
+     <div align="left">
+       <table border="0" cellpadding="4" cellspacing="1">
+         <tr>
+           <td valign="top"><img border="0" src="b35doc/english/online/bktug_c2/images/bktuser.gif" width="38" height="39"></td>
+           <td valign="top">At this stage of the scenario, the Behaviors tab is 
+           similar to the graphic opposite.</td>
+           <td valign="top"><img border="1" src="b35doc/english/online/bktug_c2/images/bktloop1NLS.gif" width="183" height="284"></td>
+         </tr>
+       </table>
+     </div>
+     <p>The definition of the behaviors is now over. Save your file and generate 
+     your workbench. (Click <a href="b35doc/english/online/bktug_c2/samples/BktLoop.CATfct">here</a> to display 
+     the generated .CATfct file).</p>
+     <h2><a name="Generating the Workbench">Generate the Workbench</a></h2>
+     <ol class="task" start="43">
+       <li>
+       <p class="Task">Click the <kbd>Applicative Workbench Generation</kbd> 
+       icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_UserWorkMenuP2.gif" width="24" height="24">) 
+       to generate a user workbench. Enter the name of the workbench in the <kbd>
+       Workbench name</kbd> field, Dominoes in this example, and select the 
+       workbench type, <kbd>Part</kbd> in this scenario.</li>
+     </ol>
+     <h2><a name="Testing the Workbench">Test the Workbench</a></h2>
+     <ol class="task" start="44">
+       <li>
+       <p class="Task">From the <kbd>Tools&gt;Options&gt;Knowledgeware&gt;Business 
+       Knowledge Template</kbd> menu, select <kbd>All Users</kbd> from the 
+       Access Rights scrolling list and click <kbd>OK</kbd> to work in a User 
+       environment.</li>
+       <li>
+       <p class="Task">Open the <a href="b35doc/english/online/bktug_c2/samples/BktDominoSystem.CATPart">
+       BktDominoSystem.CATPart</a> file.</li>
+       <li>
+       <p class="Task">Click the root of the specification tree, the
+       <img border="0" src="b35doc/english/online/bktug_c2/images/bktfingericon.gif" width="26" height="26"> icon, the root of the 
+       specification tree, and click the DominoesSet icon to type the product.
+       </li>
+       <li>
+       <p class="Task">Right-click DominoesSet (Part2) object and select <kbd>
+       DominoesSet(Part2) object&gt;Instantiation in Context</kbd>. The Dominoes 
+       are instantiated and a message is displayed indicating that the 
+       instantiation will stop at iteration 6.</p>
+       <div align="center">
+         <center>
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber22">
+           <tr>
+             <td>
+             <p align="center"><img border="1" src="b35doc/english/online/bktug_c2/images/bktloop2NLS.gif" width="321" height="286"></td>
+           </tr>
+         </table>
+         </center>
+       </div>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>For more information about:
+     <table border="0" cellpadding="0" cellspacing="0">
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>The Loop behavior, see<a href="page1734.html"> Loop Behavior: 
+           Data Sheet</a>.</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>The Add Item To List behavior, see <a href="page1738.html">Add 
+           item Behavior: Data Sheet Behavior</a>.</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>The workbench generation, see <a href="page1656.html">
+           Generating a User Workbench</a>.</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top" colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

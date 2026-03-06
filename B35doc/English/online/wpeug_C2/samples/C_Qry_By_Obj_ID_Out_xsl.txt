@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2006 -->
+<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/02/xpath-functions" xmlns:xdt="http://www.w3.org/2005/02/xpath-datatypes">
+
+  <xsl:output method = "xml" indent = "yes" /> 
+
+<!--  Define some internal XSL variables   --> 
+
+  <xsl:variable name="MyPrefix">
+    <xsl:value-of select="//Parameter[@Name='Prefix']/CurrentValue" /> 
+  </xsl:variable>	
+  <xsl:variable name="MyName">
+    <xsl:value-of select="//Parameter[@Name='Part ID']/CurrentValue" /> 
+  </xsl:variable>
+  
+  
+  <!-- Scan XML to rebuilt Parameter nodes inside the ParametersList node-->
+  <xsl:template match = "/"> 
+    <xsl:element name="ParametersList"> 
+      <xsl:apply-templates/> 
+    </xsl:element> 
+  </xsl:template> 
+
+  <xsl:template match = "//Parameter"> 
+    <xsl:choose>
+      <xsl:when test="@Name='Object Type'">
+        <xsl:element name="Parameter">
+          <xsl:attribute name="Name">Type</xsl:attribute> 
+          <xsl:attribute name="Type">String</xsl:attribute> 
+          <xsl:attribute name="Alias">Type</xsl:attribute> 
+          <xsl:attribute name="Shown">Yes</xsl:attribute> 
+          <xsl:attribute name="Mandatory">No</xsl:attribute> 
+          <xsl:attribute name="Sensitive">No</xsl:attribute> 
+          <xsl:attribute name="AccessMode">ReadWrite</xsl:attribute> 
+          
+          <!--  Current value selected   --> 
+          <xsl:element name="CurrentValue">
+            <xsl:copy-of select="./CurrentValue"/> 
+          </xsl:element>
+        </xsl:element>
+      </xsl:when>
+
+      <!--  Remove "Supplier Name" parameter added at input as information   --> 
+
+      <xsl:when test="@Name='Supplier Name'" />
+      
+      <!--  Remove "Prefix" parameter added at input as information   --> 
+      
+      <xsl:when test="@Name='Prefix'" /> 
+      
+      <!--  Concatenate Part Id & Version parameter Înside "Search string" parameter   --> 
+      <xsl:when test="@Name='Part ID'">         
+        <xsl:element name="Parameter">
+          <xsl:attribute name="Name">Search string</xsl:attribute> 
+          <xsl:attribute name="Type">String</xsl:attribute> 
+          <xsl:attribute name="Alias">Search string</xsl:attribute> 
+          <xsl:attribute name="Shown">Yes</xsl:attribute> 
+          <xsl:attribute name="Mandatory">No</xsl:attribute> 
+          <xsl:attribute name="Sensitive">No</xsl:attribute> 
+          <xsl:attribute name="AccessMode">ReadWrite</xsl:attribute> 
+
+          <!--  Current value selected   --> 
+          <xsl:element name="CurrentValue">
+            <xsl:value-of select="concat($MyPrefix,$MyName)" />
+          </xsl:element>
+        </xsl:element>
+      </xsl:when>
+      
+      
+      <!--  Other parameters are copied  without any modification   --> 
+      <xsl:otherwise>
+        <xsl:copy-of select="." /> 
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template> 
+
+</xsl:stylesheet>   

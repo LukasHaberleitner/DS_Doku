@@ -1,0 +1,106 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+	<head>
+	<meta http-equiv="Content-Language" content="en-us">
+	<meta name="MonocodingType" content="0">
+	<meta name="MonocodingFlag" content="C2D2">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Reference Compensation Point for the Gauges on Lathe Tool Assembly
+	</title>
+	<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+	<meta name="ProgId" content="FrontPage.Editor.Document">
+	<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+	</head>
+
+	<body>
+
+	<h1>
+	Reference 
+	Compensation Point for the Gauges on Lathe Tool Assembly</h1>
+	<p align="left">This document describes the reference tool compensation point 
+	on which the gauges values are defined.</p>
+	<p align="left">Output parameters are available to define in Lathe tool change 
+	and Lathe reference point modification syntaxes (linked to PP word table). The 
+	syntaxes are generated with parameter values that are automatically computed 
+	according to the active compensation point.</p>
+	<p align="left">so, the user can defined the reference compensation point linked 
+	to the Set X, Set Y, and Set Z values. The generated APT source will include 
+	the expected information generated for Tool Change and Tool change reference 
+	point change syntaxes defined in the PP word table.</p>
+	<h2 align="left">Behavior</h2>
+	<a name="ix-Reference compensation point"></a><p align="left">The <kbd>Reference 
+	Compensation</kbd> option is defined in the <kbd>Tool Assembly</kbd> tab
+	<img border="1" src="b35doc/english/online/lmgug_c2/images/TabTAG.gif" align="middle" width="36" height="22"> 
+	in the <kbd>Tooling</kbd> page
+	<img border="1" src="b35doc/english/online/lmgug_c2/images/TabToolingG.gif" align="middle" width="36" height="22">.</p>
+	<p align="left">
+	<img border="1" src="b35doc/english/online/lmgug_c2/images/dbTAEdit03NLS.gif" width="408" height="455"></p>
+	<p align="left">The Gauge values are defined for the specified tool compensation 
+	point (for example, P3).<br>
+	When the active tool compensation point is different from the reference tool 
+	compensation point (for example, P4), then output parameters of the gauges are 
+	computed according to the tool insert geometry.<br>
+	All insert types (round, diamond, square, triangular, trigon, and groove) are 
+	supported for computed parameters.</p>
+	<p align="left">The <kbd>Reference Compensation</kbd> option is also available 
+	for a Lathe Tool Change in the <kbd>Tool Assembly</kbd> tab
+	<img border="1" src="b35doc/english/online/lmgug_c2/images/TabTAG.gif" align="middle" width="36" height="22"> 
+	of the tool change editor (see&nbsp;
+	<a target="_blank" href="page11379.html">
+	Inserting Tool Changes</a> for more information).</p>
+	<h3 align="left">Example of square insert</h3>
+	<p align="left">
+	<img alt="" height="325" src="b35doc/english/online/lmgug_c2/images/RefCompPoint01.gif" width="232">&nbsp;</p>
+	<p align="left">On the tool assembly, reference compensation is defined for 
+	P7 compensation point and gauges (set X, set Y, set Z values) are defined for 
+	this point.<br>
+	When using another active compensation (Tool compensation defined in Strategy 
+	page
+	<img border="1" src="b35doc/english/online/lmgug_c2/images/TabStratG.gif" align="middle" width="36" height="22">) 
+	(P8 point), the computed X, Y, and Z gauges are output according to this point 
+	(P8 point).</p>
+	<h3 align="left">Example of Groove insert</h3>
+	<p align="left">
+	<img border="1" src="b35doc/english/online/lmgug_c2/images/RefCompPoint02.gif" width="299" height="297"></p>
+	<p align="left">On the tool assembly, reference compensation is defined for 
+	P9Left compensation point and gauges (set X, set Y, set Z values) are defined 
+	for this point.<br>
+	When using another active compensation (P9Right point), the computed X, Y, and 
+	Z gauges are output according to this point (P9Right point).</p>
+	<h2 align="left"><a name="OutFile"></a>Output File</h2>
+	<p align="left">The following parameters allow you to output the gauge values 
+	corresponding to the active tool compensation point.</p>
+	<p align="left">MFG_CMP_TL_SET_X: Computed Tool Assembly set length in X direction<br>
+	MFG_CMP_TL_SET_Y: Computed Tool Assembly set length in Y direction<br>
+	MFG_CMP_TL_SET_Z: Computed Tool Assembly set length in Z direction<br>
+	MFG_CMP_NOSE_RADIUS: Nose radius corresponding to the active compensation point 
+	(left or right). Nose radius could be different for groove insert (left radius, 
+	right radius), when changing the active compensation point automatically. For 
+	other inserts (diamond, square, and so on) the value is the insert radius.</p>
+	<p align="left">These parameters can be defined in NC_TOOL_CHANGE_LATHE or NC_CHANGE_REF_PT 
+	NC commands (see
+	<a target="_blank" href="page11460.html">
+	PP Tables and PP Word Syntaxes</a>) for more information.</p>
+	<p align="left"><b>Example of NC_CHANGE_REF_PT NC command defined in a PP word 
+	table:</b></p>
+	<p align="left">SWITCH/%%MFG_TL_COMP,%MFG_CMP_TL_SET_X, %MFG_CMP_TL_SET_Y,%MFG_CMP_TL_SET_Z,%MFG_CMP_NOSE_RADIUS</p>
+	<p align="left">Valuation of the syntax:<br>
+	SWITCH/9,55.000,0.000,23.000,0.5</p>
+	<p align="left">These parameters are computed for the active tool compensation 
+	point defined on the turning operation according to the tool geometry.</p>
+	<h2 align="left">Compatibility</h2>
+	<p align="left">Tool Assembly created prior to V5R18:<br>
+	When editing the tool assembly, the <kbd>Reference Compensation</kbd> option 
+	is initialized to P9 compensation point. This option can be modified to define 
+	the reference compensation point for the set length values.</p>
+	<p align="left">Previous parameters MFG_TL_SET_X, MFG_TL_SET_Y, MFG_TL_SET_Z 
+	and MFG_NOSE_RADIUS still exist. Valuations are done according to the gauges 
+	defined on the lathe tool assembly (without any computation). The reference 
+	tool compensation point is not taken into account to compute these parameters.</p>
+	<p align="left">Recommendation is to use the computed parameters described in
+	<a href="#OutFile">Output File</a> in the NC commands.</p>
+
+	</body>
+
+</html>
+

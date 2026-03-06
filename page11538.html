@@ -1,0 +1,450 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Multi-Slide Lathe Machine</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+</head>
+
+<body>
+
+<h1>Multi-Slide Lathe Machine</h1>
+<a name="ix-Multi-slide lathe machine"></a>
+<p>This section deals with the multi-slide lathe machine that is available when 
+the Multi-Slide Lathe Machining add-on product is installed in the Lathe Machining 
+workbench. It describes:</p>
+<ul>
+	<li><a href="#MachineCapabilities">machine capabilities</a></li>
+	<li><a href="#ResourceAttributes">resource attributes</a>.</li>
+</ul>
+<h2><a name="MachineCapabilities"></a>Machine Capabilities for the Multi-Slide Lathe 
+Machine</h2>
+<p>Multi-slide lathe machine comprises a number of spindles and turrets, which you 
+specify in the <kbd>Machine editor</kbd> dialog box.</p>
+<p>In the Turret and Spindle tabs of this dialog box, the presentation is similar:
+</p>
+<ul>
+	<li>On the left, the list of turrets and spindles with command buttons to add 
+	or remove these entities. <br>
+	There must always be a minimum of one turret and one spindle.</li>
+	<li>On the right, properties of the selected element are displayed.</li>
+</ul>
+<p>Note that addition of turrets and spindles is only possible when Multi-Slide 
+Lathe Machining is installed.</p>
+<h3>Turret Definition</h3>
+<p>Here is an example of the <kbd>Machine Editor&#39;s Turret</kbd> tab:</p>
+<p>
+<img border="1" src="b35doc/english/online/mlgug_c2/images/dbalggettingstartedMT03.gif" width="515" height="414"></p>
+<p>Each turret has a name, which will be displayed in the PPR tree next to the program 
+with which it is associated.</p>
+<p>Each turret has a number, which is output in APT output in place of MFG_CHANNEL_NUMBER 
+in the program header or synchronization syntax.</p>
+<p>You can specify the <kbd>Turning Tool Axis System</kbd> by clicking
+<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgTurningToolAxisSystem.gif" align="middle" width="22" height="22"> 
+in the dialog box.</p>
+<p><img border="1" src="b35doc/english/online/mlgug_c2/images/dbmlgturretaxis02.gif" width="390" height="481"></p>
+<p>The Axial and Radial axes of this axis system define the working plane of the 
+turret for turning operations: tool path, replay, and time based replay are represented 
+in this plane.<br>
+This axis system can be any axis system. However, the working plane must contain 
+the spindle axis that the turret works on.</p>
+<p>At the bottom of the <kbd>Turning Tool Axis System</kbd> dialog box:</p>
+<ul>
+	<li>The angle defines the incline of the Turret Plane with respect to the ZX 
+	plane of the first spindle (that is, the Setup axis system).</li>
+	<li>Radial and axial shift give the position of the origin of the axis system 
+	relative to the origin of the first spindle (that is, the origin of the Setup 
+	axis system).</li>
+</ul>
+<p>For more information, see <a href="page11540.html">Axis Systems for Part and 
+Turning Tool</a>.</p>
+<p>Tool Change point can be defined manually through its absolute coordinates (X,Y,Z). 
+Since this point might be considered as the origin of the Turning Tool Axis System, 
+you can use the button at the bottom of the <kbd>Machine Editor</kbd> to automatically set 
+it.</p>
+<h3>Spindle Definition</h3>
+<p>Here is an example of the <kbd>Machine Editor&#39;s Spindle</kbd> tab:</p>
+<p>
+<img border="1" src="b35doc/english/online/mlgug_c2/images/dbalggettingstartedMT02.gif" width="516" height="342"></p>
+<p>Each spindle has a name, which will be displayed at the bottom of operation editor. 
+Note that this is the case when there is more than one spindle on the machine. Otherwise 
+the single spindle is used by default. It is output in APT in place of MFG_SPINDLE_NAME.</p>
+<p>Each spindle has a number, which is written in valuated in APT in place of MFG_SPINDLE_NUMBER.</p>
+<p>Spindle name and number can be valuated in NC_MACHINING_AXIS and NC_ACTIVITY_HEADER 
+syntaxes .</p>
+<p>Part Axis System defines the plane where tool path, replay, and time based replay 
+are represented.<br>
+For more information, see <a href="page11540.html">Axis Systems for Part and Turning 
+Tool</a>.</p>
+<p>Maximum Spindle Speed is taken into account for time computation in Machining 
+Gantt Chart.</p>
+<h2><a name="R19CounterSpindle"></a>Counter Spindle Output</h2>
+<p>Counter spindle output is managed by the <kbd>Use Spindle Axis system according 
+to the Spindle involved on the Machining Operation</kbd> check box in the <kbd>Option</kbd> 
+tab of the <kbd>Part Operation</kbd> editor. This is for a Multi-slide lathe machine or a Mill-Turn 
+machine.</p>
+<ul>
+	<li>If this check box is selected, tool tip points are computed based on the 
+	spindle that is set on the machining operation. </li>
+	<li>If this check box is not selected, the main spindle axis is used. This is 
+	determined by the default reference machining axis system set on the Part Operation.<br>
+	Note: To get the tool path points with respect to Counter Spindle Part axis 
+	system, a workaround consists of having a Machining axis system on the Counter 
+	Spindle Part axis system.</li>
+</ul>
+<h3>Example of Using Spindle Axis System According to the Spindle on the Machining 
+Operation</h3>
+<p>This option provides tool path points or coordinates of the tool positions of 
+the tool path for machining operations defined on the Counter Spindle with respect 
+to Counter Spindle Part axis system. Machining Axis change definition is avoided.</p>
+<p>Here is a view of the Multi-Slide Lathe Machine setup showing main and counter 
+spindles:</p>
+<p>
+<img border="1" src="b35doc/english/online/mlgug_c2/images/CounterSpindleOutput01.gif" width="491" height="131"></p>
+<p>A program is defined with one machining operation defined on the main spindle, 
+and a second operation on the counter spindle:</p>
+<p>
+<img border="1" src="b35doc/english/online/mlgug_c2/images/CounterSpindleOutput02.gif" width="430" height="162"></p>
+<p>The counter spindle is set on the second operation:</p>
+<p>
+<img border="1" src="b35doc/english/online/mlgug_c2/images/CounterSpindleOutput03.gif" width="290" height="502"></p>
+<p>Replay of the machining operation defined on the counter spindle:</p>
+<p>
+<img border="1" src="b35doc/english/online/mlgug_c2/images/CounterSpindleOutput04.gif" width="595" height="364"></p>
+<p>Sample of the APT output obtained for the program:</p>
+<p>
+<img border="1" src="b35doc/english/online/mlgug_c2/images/CounterSpindleOutput05.gif" width="530" height="624"></p>
+<h3>Other Counter Spindle Capabilities</h3>
+<p>The following counter spindle capabilities are introduced in V5R19: </p>
+<ul>
+	<li>Prior to V5R19, Counter Spindle Axial axis needed to be parallel to Main 
+	Spindle Axial axis.<br>
+	Counter Spindle can now be defined at any angle to Main Spindle axis.</li>
+	<li>Prior to V5R19, the tool path could not be located in the Turret plane if 
+	the Counter Spindle Part axis system was rotated by an angle (that is, if Counter 
+	Spindle plane was not at zero degrees). Now the tool path on the Counter Spindle 
+	is in Turret plane.</li>
+</ul>
+<h2 align="left"><a name="CATKnowledge.CATEMfgMultiTurretLatheMachine"></a>
+<a name="ResourceAttributes"></a>Resource Attributes for the Multi-Slide Lathe Machine</h2>
+<a name="ix-MfgResourcePackage::CATEMfgMultiTurretLatheMachine"></a>
+<p>The Multi-Slide Lathe Machine (CATEMfgMultiTurretLatheMachine) resource attributes 
+are described below.</p>
+<h3>Base Attributes</h3>
+<p>These attributes provide general information.</p>
+<div align="left">
+	<table border="0" cellspacing="1">
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_NAME (Name)</code><br>
+			<a name="ix-MFG_NAME attribute::CATEMfgMultiTurretLatheMachine"></a>
+			Type:<code> String</code><br>
+			Specifies the name of the resource. </td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_COMMENT (Comment)</code><br>
+			<a name="ix-MFG_COMMENT attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> String</code><br>
+			Associates a comment to the resource. </td>
+		</tr>
+	</table>
+</div>
+<h3>Numerical Control Attributes</h3>
+<p>These attributes characterize the machine controller and have an impact on the 
+output format.</p>
+<div align="left">
+	<table border="0" cellspacing="1">
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_PP_WORD_TBL 
+			(Post Processor words table)</code><br>
+			<a name="ix-MFG_PP_WORD_TBL attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> String</code><br>
+			Specifies the name of the PP words table which is used for creating 
+			Post Processor word syntaxes. </td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_OUTPUT_TYPE 
+			(NC data type)</code><br>
+			<a name="ix-MFG_OUTPUT_TYPE attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> String</code><br>
+			Possible values:<br>
+			APT<br>
+			CLF-3000<br>
+			CLF-15000<br>
+			ISO<br>
+			Specifies the type of NC data output by the application. It can take 
+			the following values: APT (APT source, this is the default), CLF-3000 
+			(clfile record types 3000 and 5000 are output), CLF-15000 (clfile record 
+			type 15000 is output), ISO. </td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_OUTPUT_FRMT 
+			(NC data format)</code><br>
+			<a name="ix-MFG_OUTPUT_FRMT attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> String</code><br>
+			Possible values:<br>
+			POINT (Point (X,Y,Z))<br>
+			AXIS (Axis (X,Y,Z,I,J,K))<br>
+			Specifies the format of the NC data output. It can take the following 
+			values: POINT (X,Y,Z point coordinates, by default), AXIS (X,Y,Z,I,J,K 
+			point coordinates and tool axis components). </td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_STRT_PT_SYNT 
+			(Home point strategy)</code><br>
+			<a name="ix-MFG_STRT_PT_SYNT attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> String</code><br>
+			Possible values:<br>
+			FROM (FROM)<br>
+			GOTO (GOTO)<br>
+			Specifies the type of trajectory on the start point: GOTO or FROM
+			</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_MAX_FEEDRATE 
+			(Max machining feedrate)</code><br>
+			<a name="ix-MFG_MAX_FEEDRATE attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> Real</code><br>
+			Specifies the maximum machining feedrate. This is used in NC Manufacturing 
+			Verification Product Errors (tool collision with the stock) will be 
+			reported if the feedrate exceeds this value </td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_RAPID_FEED 
+			(Rapid feedrate)</code><br>
+			<a name="ix-MFG_RAPID_FEED attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> Real</code><br>
+			Specifies the rapid feedrate. This is used to compute the total machining 
+			time and may replace the RAPID instruction in output APT files.</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_AXIAL_RADIAL_MOVE 
+			(Axial/Radial movement)</code><br>
+			<a name="ix-MFG_AXIAL_RADIAL_MOVE attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> Boolean (Yes/No)</code><br>
+			Specifies the ability to generate automatically axial and radial movements 
+			to avoid collisions in axial operations </td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_INT_LIN_3D 
+			(3D linear interpol.)</code><br>
+			<a name="ix-MFG_INT_LIN_3D attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> Boolean (Yes/No)</code><br>
+			Specifies if the machine is able to make a 3D linear interpolation between 
+			2 points. </td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_INT_CIRC_2D 
+			(2D circular interpol.)</code><br>
+			<a name="ix-MFG_INT_CIRC_2D attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> Boolean (Yes/No)</code><br>
+			Specifies if the machine is able to make a 2D circular interpolation 
+			between 2 points. </td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_INT_CIRC_3D 
+			(3D circular interpol.)</code><br>
+			<a name="ix-MFG_INT_CIRC_3D attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> Boolean (Yes/No)</code><br>
+			Specifies if the machine is able to make a 3D circular interpolation 
+			between 2 points. </td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_R_MIN_CIRC 
+			(Min interpol. radius)</code><br>
+			<a name="ix-MFG_R_MIN_CIRC attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> Real</code><br>
+			Specifies the minimum radius of circular interpolation that the machine 
+			is able to achieve. </td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_R_MAX_CIRC 
+			(Max interpol. radius)</code><br>
+			<a name="ix-MFG_R_MAX_CIRC attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> Real</code><br>
+			Specifies the maximum radius of circular interpolation that the machine 
+			is able to achieve. </td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_MIN_DISC (Min 
+			discretization step)</code><br>
+			<a name="ix-MFG_MIN_DISC attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> Real</code><br>
+			Specifies the minimum distance between two consecutive points that the 
+			machine is able to achieve.<p><b>Note:</b><br>
+			The application compares the minimum discretization step and the machining 
+			tolerance. The larger of the two values is taken to be the minimum distance 
+			between two points. </p>
+			<p>When you generate NC data, any points that are spaced at a distance 
+			less than this value are eliminated from the output file.</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_MIN_ANGLE 
+			(Min discretization angle)</code><br>
+			<a name="ix-MFG_MIN_ANGLE attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> Real</code><br>
+			Specifies minimum angle between tool axis at two consecutive points 
+			that the machine is able to achieve. The application eliminates points 
+			whose tool axis orientation does not meet this criteria. </td>
+		</tr>
+	</table>
+</div>
+<h3>Spindle Attributes</h3>
+<p>These attributes provide information on the spindle and have an impact on spindle 
+capabilities.</p>
+<div align="left">
+	<table border="0" cellspacing="1">
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20">MfgLmtSpindleName (Spindle 
+			name)
+			<a name="ix-MfgLmtSpindleName attribute::CATEMfgMultiTurretLatheMachine">
+			</a>
+			<p>Defines the name of the spindle, output in NC code.</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20">MfgLmtSpindleNumber 
+			(Spindle number)
+			<a name="ix-MfgLmtSpindleNumber attribute::CATEMfgMultiTurretLatheMachine">
+			</a>
+			<p>Defines the number of the spindle, output in NC code.</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20">PAS (Part axis system)
+			<a name="ix-PAS attribute::CATEMfgMultiTurretLatheMachine"></a>
+			<p>Defines the Part axis system on a spindle.</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_LATHE_RAD_AX 
+			(Radial axis)</code><br>
+			<a name="ix-MFG_LATHE_RAD_AX attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> String</code><br>
+			Possible values:<br>
+			X<br>
+			Y<br>
+			Z<br>
+			Defines the radial axis, which is generally the X axis. <br>
+			Combined with the spindle axis, it defines the programming working plane, 
+			where the selected geometry is projected.</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_LATHE_SPN_AX 
+			(Spindle axis)</code><br>
+			<a name="ix-MFG_LATHE_SPN_AX attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> String</code><br>
+			Possible values:<br>
+			X<br>
+			Y<br>
+			Z<br>
+			Defines the spindle and C axes, which is generally the Z axis.<br>
+			Combined with the radial axis, it defines the programming working plane 
+			where the selected geometry is projected.</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20">MFG_LATHE_MAX_SPNDL_SPEED 
+			(Max spindle speed)<br>
+			<a name="ix-MFG_LATHE_MAX_SPNDL_SPEED attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> Real<br>
+			</code>Defines the maximum speed of the spindle. It is used in time 
+			computations when machining at constant cutting speed.</td>
+		</tr>
+	</table>
+</div>
+<h3>Turret Attributes</h3>
+<p>These attributes provide information on the turret definition and have an impact 
+on turret capabilities.</p>
+<div align="left">
+	<table border="0" cellspacing="1">
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20">MfgLmtTurretName (Turret 
+			name)
+			<a name="ix-MfgLmtTurretName attribute::CATEMfgMultiTurretLatheMachine">
+			</a>
+			<p>Defines the name of the turret, output in NC code.</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20">MfgLmtTurretNumber (Turret 
+			number)
+			<a name="ix-MfgLmtTurretNumber attribute::CATEMfgMultiTurretLatheMachine">
+			</a>
+			<p>Defines the number of the turret, output in NC code.</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20">Turret type
+			<p>Defines the turret type as:</p>
+			<ul>
+				<li>Rotary Turret (default setting)</li>
+				<li>Mill Turret, turret that has B-axis capability.</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20">TAS (Turning Tool axis 
+			system) <a name="ix-TAS attribute::CATEMfgMultiTurretLatheMachine">
+			</a>
+			<p>Defines the Turning Tool axis system on a turret.</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_LATHE_RAD_AX 
+			(Radial axis)</code><br>
+			<a name="ix-MFG_LATHE_RAD_AX attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> String</code><br>
+			Possible values:<br>
+			X<br>
+			Y<br>
+			Z<br>
+			For a given turret, it defines the radial axis of the Turning Tool axis 
+			system, which is generally the X axis. <br>
+			Combined with the axial axis, it defines the plane where Turning tooling 
+			is represented.</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20"><code>MFG_LATHE_AX_AX 
+			(Axial axis)</code><br>
+			<a name="ix-MFG_LATHE_SPN_AX attribute::CATEMfgMultiTurretLatheMachine">
+			</a>Type:<code> String</code><br>
+			Possible values:<br>
+			X<br>
+			Y<br>
+			Z<br>
+			Defines the axial axis of the Turning Tool axis system, which is generally 
+			the Z axis.<br>
+			Combined with the radial axis, it defines the plane where Turning tooling 
+			is represented.</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20">MFG_X_TOOL_POS (Tool 
+			change point X)<br>
+			Defines the X coordinate of the tool change point with respect to the 
+			reference machining axis system.</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20">MFG_Y_TOOL_POS (Tool 
+			change point Y)<br>
+			Defines the Y coordinate of the tool change point with respect to the 
+			reference machining axis system.</td>
+		</tr>
+		<tr>
+			<td style="padding-top: 10; padding-bottom: 20">MFG_Z_TOOL_POS (Tool 
+			change point Z)<br>
+			Defines the Z coordinate of the tool change point with respect to the 
+			reference machining axis system.</td>
+		</tr>
+	</table>
+</div>
+
+</body>
+
+</html>
+

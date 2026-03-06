@@ -1,0 +1,700 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Snapping Components using Multiple Constraints</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style>
+<!--
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman"
+	}
+-->
+ </style>
+ <meta name="Microsoft Border" content="none, default">
+ 
+<script type="text/javascript">
+
+function OpenLocation(link)
+
+{
+
+document.location.href = link;
+
+}
+
+</script>
+ 
+ 
+</head>
+
+ <body>
+
+ <a name="ix-snapping::components using multiple constraints;components::snapping using multiple constraints">
+ </a>
+ <h1>Snapping Components using Multiple Constraints
+ <a name="CATDMUSnapHeader.Snap"></a></h1>
+ <p align="center">
+ <img src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32"></p>
+ <p align="center">&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top">
+   <tr valign="top" BORDER="0">
+     <td height="209" width="32">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32">
+     </td>
+     <td height="209" width="697"><font size="2" face="Verdana">
+     Multiple-Constraints Snap consists in creating a series of constraints 
+     on-the-fly, thereby reducing the degrees of freedom of the components.
+     </font><font FACE="Courier New" SIZE="2">
+     <p>One distinguishes four states:&nbsp;</p>
+     <ul>
+       <li>selection of the component to be moved</li>
+       <li>selection of the 1st geometric element, belonging to the to-be-moved 
+       component</li>
+       <li>selection of the 2nd geometr<font size="2">ic element, belonging to 
+       the component to which the to-be-moved component will be snapped 
+       (henceforth referred to as the receiving component)&nbsp;</font></li>
+       <li><font size="2">a state where the user is asked to accept the proposed 
+       solution or to invert the snapping direction</font></li>
+     </ul>
+     <p></font></td>
+   </tr>
+   <tr>
+     <td width="32" valign="top" height="1419">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" width="697" height="1419">You can now choose among several 
+     input selection types in order to specify and filter the pre-selected 
+     geometries.<ul>
+       <li>Any geometry: The behavior is the same as the default behavior 
+       provided in previous versions.</li>
+       <li>Point only: Only points can be selected. Notice that when switching 
+       from Design mode to Visualization mode, some points (in fact vertex) are 
+       no longer selectable (neither highlighted). To select those points (in 
+       fact edge limits), you will have to use the&nbsp; Characteristic points 
+       option.</li>
+       <li>Line only: Only straight edges can be selected.</li>
+       <li>Plane only: Only planar surfaces can be selected. Notice that the 
+       plane representation displayed during pre-selection is now centered on 
+       the center of gravity.</li>
+       <li>Characteristic points: On curves (lines, circles and curves), you 
+       could want to select the mid-point or the extremity points. The 
+       pre-selected point is the closest point to the picking point.</li>
+       <li>Arc center: The center of the arc is selected.</li>
+       <li>Picking point: The point on geometry under the mouse cursor is 
+       selected.</li>
+       <li>Picking axis: An axis is built, with the picking point as origin and 
+       the normal of the picked face or the tangent of the picked edge as 
+       Z-axis.<br>
+&nbsp;</li>
+     </ul>
+     <p>The following table summarizes the behavior:</p>
+     <blockquote>
+       <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="75%" id="AutoNumber1">
+         <tr>
+           <td width="7%" bgcolor="#E0E0E0">
+           <p align="center"><b>Geometry type selected in combo</b></td>
+           <td width="13%" bgcolor="#E0E0E0">
+           <p align="center"><b>Detected geometry</b></td>
+         </tr>
+         <tr>
+           <td width="7%" bgcolor="#F2F2F2">Any geometry</td>
+           <td width="13%" bgcolor="#F2F2F2">line: line<br>
+           plane: plane (origin in COG)<br>
+           axis system: axis system<br>
+           circle, cylinder, cone: line (axis)<br>
+           sphere: center<br>
+           curve, surface, volume: picking point</td>
+         </tr>
+         <tr>
+           <td width="7%" bgcolor="#F2F2F2">Point only</td>
+           <td width="13%" bgcolor="#F2F2F2">point: point</td>
+         </tr>
+         <tr>
+           <td width="7%" bgcolor="#F2F2F2">Line only</td>
+           <td width="13%" bgcolor="#F2F2F2">line: line<br>
+           circle, cylinder, cone: line (axis)</td>
+         </tr>
+         <tr>
+           <td width="7%" bgcolor="#F2F2F2">Plane only</td>
+           <td width="13%" bgcolor="#F2F2F2">plane: plane (origin in COG)<br>
+           circle: plane containing the circle</td>
+         </tr>
+         <tr>
+           <td width="7%" bgcolor="#F2F2F2">Characteristic points</td>
+           <td width="13%" bgcolor="#F2F2F2">point: point<br>
+           line, circle, curve: start, middle, or endpoint (whichever is closest 
+           to picking point)<br>
+           plane: COG<br>
+           axis system: origin<br>
+           sphere: center </td>
+         </tr>
+         <tr>
+           <td width="7%" bgcolor="#F2F2F2">Arc center</td>
+           <td width="13%" bgcolor="#F2F2F2">circle: center</td>
+         </tr>
+         <tr>
+           <td width="7%" bgcolor="#F2F2F2">Picking point</td>
+           <td width="13%" bgcolor="#F2F2F2">all geometry types: point</td>
+         </tr>
+         <tr>
+           <td width="7%" bgcolor="#F2F2F2">Picking axis</td>
+           <td width="13%" bgcolor="#F2F2F2">line: Z-axis<br>
+           plane, cylinder, cone, sphere, surface, volume: Z-axis normal at 
+           picking point<br>
+           axis system, circle, curve: Z-axis tangent at picking point</td>
+         </tr>
+       </table>
+     </blockquote>
+     <p>&nbsp;</p>
+     <blockquote>
+       <table x:str border="0" cellpadding="0" cellspacing="0" style="border-collapse:
+ collapse;width:605px">
+         <colgroup>
+           <col width="23" style="width: 17pt">
+           <col width="53" style="width: 40pt">
+           <col width="76" style="width: 57pt">
+           <col width="54" style="width: 41pt">
+           <col width="47" style="width: 35pt">
+           <col width="63" style="width: 47pt">
+           <col width="98" style="width: 74pt">
+           <col width="43" style="width: 32pt">
+           <col width="59" style="width: 44pt">
+           <col width="81" style="width: 61pt">
+         </colgroup>
+         <tr height="17" style="height:12.75pt">
+           <td height="17" style="height: 12.75pt; width: 21px; font-size: 8.0pt; font-family: Verdana, sans-serif; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border: medium none; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+           </td>
+           <td style="width: 54px; font-size: 8.0pt; font-family: Verdana, sans-serif; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border: medium none; padding-left: 1px; padding-right: 1px; padding-top: 1px">&nbsp;</td>
+           <td colspan="8" style="width: 524px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; color: windowtext; font-style: normal; text-decoration: none; vertical-align: bottom; white-space: nowrap; border: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Selected Geometry Type </td>
+         </tr>
+         <tr height="56" style="height:42.0pt">
+           <td height="56" style="height: 42.0pt; font-size: 8.0pt; font-family: Verdana, sans-serif; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; text-align: general; vertical-align: bottom; white-space: nowrap; border: medium none; padding-left: 1px; padding-right: 1px; padding-top: 1px" width="21">&nbsp;</td>
+           <td style="width: 54px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border: medium none; padding-left: 1px; padding-right: 1px; padding-top: 1px">&nbsp;</td>
+           <td style="width: 59px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Any geometry</td>
+           <td style="width: 69px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Point only</td>
+           <td width="47" style="width: 35pt; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Line only</td>
+           <td style="width: 58px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Plane only</td>
+           <td style="width: 73px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Character-<br>
+           istic points</td>
+           <td style="width: 52px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Arc <br>
+           center</td>
+           <td style="width: 59px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Picking point</td>
+           <td style="width: 82px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Picking axis</td>
+         </tr>
+         <tr height="17" style="height:12.75pt">
+           <td rowspan="11" height="479" dir="LTR" style="height: 359.25pt; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; color: windowtext; font-style: normal; text-decoration: none; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: .5pt solid windowtext; border-bottom: .5pt solid black; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0" width="19">
+           D<br>
+           e<br>
+           t<br>
+           e<br>
+           c<br>
+           t<br>
+           e<br>
+           d<br>
+           <br>
+           g<br>
+           e<br>
+           o<br>
+           m<br>
+           e<br>
+           t<br>
+           r<br>
+           Y</td>
+           <td style="width: 54px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Point</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           point</td>
+           <td style="width: 69px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           point</td>
+           <td width="47" style="width: 35pt; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 58px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 73px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           point</td>
+           <td style="width: 52px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           point</td>
+           <td style="width: 82px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+         </tr>
+         <tr height="56" style="height:42.0pt">
+           <td height="56" style="height: 42.0pt; width: 54px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Line</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           line</td>
+           <td style="width: 69px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td width="47" style="width: 35pt; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           line</td>
+           <td style="width: 58px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 73px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           start, middle or end point (the closest to the picking point)</td>
+           <td style="width: 52px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           point</td>
+           <td style="width: 82px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           z axis</td>
+         </tr>
+         <tr height="42" style="height:31.5pt">
+           <td height="42" style="height: 31.5pt; width: 54px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Plane</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           plane (origin in COG)</td>
+           <td style="width: 69px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td width="47" style="width: 35pt; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 58px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           plane (origin in COG)</td>
+           <td style="width: 73px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           COG</td>
+           <td style="width: 52px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           point</td>
+           <td style="width: 82px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           z axis normal at picking point</td>
+         </tr>
+         <tr height="42" style="height:31.5pt">
+           <td height="42" style="height: 31.5pt; width: 54px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Axis system</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           axis system</td>
+           <td style="width: 69px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td width="47" style="width: 35pt; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 58px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 73px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           origin</td>
+           <td style="width: 52px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           point</td>
+           <td style="width: 82px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           z axis tangent at picking point</td>
+         </tr>
+         <tr height="56" style="height:42.0pt">
+           <td height="56" style="height: 42.0pt; width: 54px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Circle</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           line (axis)</td>
+           <td style="width: 69px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td width="47" style="width: 35pt; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           line (axis)</td>
+           <td style="width: 58px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           plane containing the circle</td>
+           <td style="width: 73px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           start, middle or end point (the closest to the picking point)</td>
+           <td style="width: 52px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           centre</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           point</td>
+           <td style="width: 82px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           z axis tangent at picking point</td>
+         </tr>
+         <tr height="42" style="height:31.5pt">
+           <td height="42" style="height: 31.5pt; width: 54px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Cylinder</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           line (axis)</td>
+           <td style="width: 69px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td width="47" style="width: 35pt; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           line (axis)</td>
+           <td style="width: 58px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 73px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 52px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           point</td>
+           <td style="width: 82px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           z axis normal at picking point</td>
+         </tr>
+         <tr height="42" style="height:31.5pt">
+           <td height="42" style="height: 31.5pt; width: 54px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Cone</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           line (axis)</td>
+           <td style="width: 69px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td width="47" style="width: 35pt; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           line (axis)</td>
+           <td style="width: 58px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 73px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 52px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           point</td>
+           <td style="width: 82px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           z axis normal at picking point</td>
+         </tr>
+         <tr height="42" style="height:31.5pt">
+           <td height="42" style="height: 31.5pt; width: 54px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Sphere</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           centre</td>
+           <td style="width: 69px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td width="47" style="width: 35pt; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 58px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 73px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           centre</td>
+           <td style="width: 52px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           point</td>
+           <td style="width: 82px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           z axis normal at picking point</td>
+         </tr>
+         <tr height="56" style="height:42.0pt">
+           <td height="56" style="height: 42.0pt; width: 54px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Curve</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           picking point</td>
+           <td style="width: 69px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td width="47" style="width: 35pt; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 58px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 73px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           start, middle or end point (the closest to the picking point)</td>
+           <td style="width: 52px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           point</td>
+           <td style="width: 82px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           z axis tangent at picking point</td>
+         </tr>
+         <tr height="42" style="height:31.5pt">
+           <td height="42" style="height: 31.5pt; width: 54px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Surface</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           picking point</td>
+           <td style="width: 69px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td width="47" style="width: 35pt; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 58px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 73px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 52px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           point</td>
+           <td style="width: 82px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           z axis normal at picking point</td>
+         </tr>
+         <tr height="42" style="height:31.5pt">
+           <td height="42" style="height: 31.5pt; width: 54px; font-size: 8.0pt; font-weight: 700; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#E0E0E0">
+           Volume</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           picking point</td>
+           <td style="width: 69px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td width="47" style="width: 35pt; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 58px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 73px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 52px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">&nbsp;</td>
+           <td style="width: 59px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           point</td>
+           <td style="width: 82px; font-size: 8.0pt; font-family: Verdana, sans-serif; text-align: center; vertical-align: middle; white-space: normal; color: windowtext; font-weight: 400; font-style: normal; text-decoration: none; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px" bgcolor="#F2F2F2">
+           z axis normal at picking point</td>
+         </tr>
+       </table>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td width="32" valign="top" height="74">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" title="aprereq.gif (1223 bytes)" width="32" height="32"></td>
+     <td valign="top" width="697" height="74">Open the <kbd>
+     SMART_TARGET.CATProduct</kbd> file from the cfysm samples folder:<blockquote>
+       <blockquote>
+         <p>
+         <a href="b35doc/english/online/cfysm_C2/samples/SMART_TARGET.CATProduct">
+         SMART_TARGET.CATProduct</a><br>
+         </p>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td height="55" width="32" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td height="55" width="697" valign="top">Before you launch the Snap 
+     command, you should be sure to select a component in the Specification Tree
+     <b>other than the root</b>.<br>
+     </td>
+   </tr>
+   <tr>
+     <td height="256" width="32" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="256" width="697" valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">Click the <kbd>Cumulative Snap</kbd> icon
+       <img src="b35doc/english/online/icons_C2/images/I_DMUSnapP2.gif" width="24" height="24">.<table border="0" cellpadding="0" style="border-collapse: collapse" id="table3">
+         <tr>
+           <td>The <kbd>Cumulative Snap</kbd> toolbar appears.<br>
+           The toolbar icons are grayed. If the two selected geometric elements 
+           are two lines, two planes, an axis system and a line or an axis 
+           system and a plane, the toolbar icons will be activated.
+           <p>
+           <a name="new_r17"></a>
+           <img border="0" src="b35doc/english/online/dmnug_c2/images/tbcumulativesnap_greyedNLS.gif" width="199" height="69"><p>
+           The Cumulative Snap toolbar 
+     enables you to invert by rotation around two axes: around the U axis (as 
+     was proposed in previous releases) and around the V axis. </td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     <p><br>
+     </td>
+   </tr>
+   <tr>
+     <td height="67" width="32" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td height="67" width="697" valign="top">The Cumulative Snap functionality 
+     does not take the UI-activated component into account. You must explicitly 
+     indicate the component to be moved. (If you wish to simulate the 
+     UI-activated behavior, you can select the UI-activated component in the 
+     specification tree.)<br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td height="3926" width="32" valign="top"></td>
+     <td height="3926" width="697" valign="top">
+     <ol class="task" start="2">
+       <li>
+       <p class="task">Select the component to be moved, e.g. the Disk cylinder.</p>
+       <table border="0" cellspacing="0" width="90%">
+         <tr>
+           <td width="100%"><img border="0" src="b35doc/english/online/dmnug_c2/images/cumulativesnap01.gif" width="468" height="287">
+           </td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     <ol class="task" start="3">
+       <li>
+       <p class="task">Select a geometric element (a point, line, plane or axis 
+       system) on the same to-be-moved component, e.g. a circle of which the 
+       center is the center of the entire Disk cylinder in the sample product.</p>
+       <table border="0" cellspacing="0" width="90%">
+         <tr>
+           <td width="100%"><img border="0" src="b35doc/english/online/dmnug_c2/images/cumulativesnap02.gif" width="479" height="307">
+           </td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     <ol class="task" start="4">
+       <li>
+       <p class="task">Select a geometric element on the component to which the 
+       to-be-moved component will be snapped, e.g. a circle of which the center 
+       is the center of the entire Rim cylinder in the sample product
+       <font size="3" face="Arial">(</font><font size="2" face="Verdana">henceforth 
+       referred to as the receiving component).</font><br>
+       The first constraint is created. The Disk cylinder is displaced in 
+       accordance with the first constraint. You can continue directly to the 
+       creation of the second constraint.</p>
+       <table border="0" cellspacing="0" width="90%">
+         <tr>
+           <td width="100%"><img border="0" src="b35doc/english/online/dmnug_c2/images/cumulativesnap03.gif" width="469" height="311">
+           </td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     <p class="task">&nbsp; </p>
+     <ol class="task" start="5">
+       <li>
+       <p class="task">Select a geometric element on the to-be-moved component, 
+       e.g. the axe passing through one of the nuts of the Disk cylinder.</p>
+       <table border="0" cellspacing="0" width="90%">
+         <tr>
+           <td width="100%"><img border="0" src="b35doc/english/online/dmnug_c2/images/cumulativesnap04.gif" width="474" height="308">
+           </td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     <ol class="task" start="6">
+       <li>
+       <p class="task">Select a&nbsp; geometric element on the receiving 
+       component, e.g. the axe passing through one of the nut holes of the Rim 
+       cylinder.<br>
+       The second constraint is created. The Disk cylinder is displaced in 
+       accordance with the second constraint. You can continue directly to the 
+       creation of the third constraint.</p>
+       <table border="0" cellspacing="0" width="90%">
+         <tr>
+           <td width="100%"><img border="0" src="b35doc/english/online/dmnug_c2/images/cumulativesnap05.gif" width="460" height="313">
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li value="7">
+       <p class="task">Select a geometric element on the to-be-moved component, 
+       e.g. the plane of the Disk cylinder containing the nuts.</p>
+       <table border="0" cellspacing="0" width="90%">
+         <tr>
+           <td width="100%">
+           <img border="0" src="b35doc/english/online/dmnug_c2/images/cumulativesnap061.gif" width="410" height="322">
+           </td>
+         </tr>
+       </table></li>
+     </ol>
+     <ol class="task" start="8">
+       <li>
+       <p class="task">Select a geometric element on the receiving component, 
+       e.g. the plane of the Rim cylinder containing the nut holes.<br>
+       The third constraint is created. The two components have been placed 
+       together as a function of the three constraints.</p>
+       <table border="0" cellspacing="0" width="90%">
+         <tr>
+           <td width="100%"><img border="0" src="b35doc/english/online/dmnug_c2/images/cumulativesnap062.gif" width="404" height="309">
+           <p><img border="0" src="b35doc/english/online/dmnug_c2/images/cumulativesnap063.gif" width="273" height="271"></td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     <blockquote>
+       <p><br>
+       </p>
+     </blockquote>
+     <ol class="task" start="9">
+       <li>
+       <p class="task">Rotate to verify that the snap has been implemented as 
+       desired.</p>
+       <table border="0" cellspacing="0" width="90%">
+         <tr>
+           <td width="100%">
+           <img border="0" src="b35doc/english/online/dmnug_c2/images/cumulativesnap09.gif" width="427" height="321"></td>
+         </tr>
+       </table></li>
+     </ol>
+     <blockquote>
+       <p class="task">&nbsp;</p>
+     </blockquote>
+     <table border="0" cellspacing="0" width="90%">
+       <tr>
+         <td width="100%">
+         <img border="0" src="b35doc/english/online/dmnug_c2/images/cumulativesnap10.gif" width="525" height="369"></td>
+       </tr>
+     </table>
+     <p class="task">&nbsp;</p>
+     <p class="task"><a name="hj-multiselect"></a></p>
+     <h2>Multi-selecting Components</h2>
+     </td>
+   </tr>
+   <tr>
+     <td width="32" valign="top" height="88">&nbsp;</td>
+     <td valign="top" width="697">The goal of this enhancement is to 
+     enable the selection of multiple components as input. You must the select 
+     all the components (in the product tree or in the 3D geometry) before 
+     launching the Cumulative Snap command. Once in the command, you will then 
+     be able to select the first geometry to snap from among any of the 
+     components belonging to the selected input. </td>
+   </tr>
+   <tr>
+     <td width="32" valign="top" height="99">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" title="aprereq.gif (1223 bytes)" width="32" height="32"></td>
+     <td valign="top" width="697">Note the following limitations:<ul>
+       <li>Multi-selection is only available before you launch the Cumulative 
+       Snap command. If you do not make a selection before you launch the 
+       command, the multi-selection will not be available.</li>
+       <li>Other objects currently handled (e.g. shuttles) will 
+       not be supported for multi-selection. </li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="32" valign="top" height="509">&nbsp;</td>
+     <td valign="top" width="697" height="509">
+     <h3>Multi-selecting Components with Ascendance Relation</h3>
+     <p>Consider the following structure:</p>
+     <p><img border="0" src="b35doc/english/online/dmnug_c2/images/cumsnap_multiselectNLS.gif" width="527" height="293"></p>
+     <p>If you select [P1.1, P1, P2], you will be able to select a first 
+     geometry belonging to P1 (geometry can belong to P1.1 or not) or P2, and a 
+     second geometry under P3. The transformation computed to snap the first 
+     geometry on the second geometry will then be applied to P1 only, highest 
+     father of the sub-set [P1, P1.1] and P2. This ensures that the set of 
+     components selected as input to the Cumulative Snap command will be kept as 
+     a rigid bloc along the definition of multiple constraints, which is a 
+     condition to the definition of a consistent constraints environment.<br>
+     </td>
+   </tr>
+   <tr>
+     <td width="32" valign="top" height="75">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" title="aprereq.gif (1223 bytes)" width="32" height="32"></td>
+     <td valign="top" width="697" height="75">Open the <kbd>
+     5cubes_with_data.CATProduct</kbd> file from the dmnug samples folder:<blockquote>
+       <blockquote>
+         <p><a href="b35doc/english/online/dmnug_c2/samples/5cubes_with_data.CATProduct">
+         5cubes_with_data.CATProduct</a></p>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td height="327" width="32" valign="top"></td>
+     <td height="327" width="697" valign="top">
+     <blockquote>
+       <blockquote>
+         <p><img border="1" src="b35doc/english/online/dmnug_c2/images/cumsnap_multiselect1NLS.gif" width="434" height="290"></p>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td height="948" width="32" valign="top"></td>
+     <td height="948" width="697" valign="top">&nbsp;<ol class="task">
+       <li>
+       <p class="task">Keeping the <kbd>Ctrl</kbd> key pressed, select <kbd>
+       Cube.Red</kbd>, <kbd>Cube.Blue</kbd> and <kbd>Shuttle.1</kbd> geometry 
+       using the selection trap (by dragging a rectangle to encompass the 
+       desired selection), select a face of <kbd>Cube.Green</kbd> in geometry, 
+       select <kbd>Cube.Grey</kbd>, <kbd>Product2.1</kbd>, <kbd>Product1</kbd> 
+       and <kbd>Camera 1</kbd> in the specification tree. <br>
+       You should have something like this:<br>
+       <img border="1" src="b35doc/english/online/dmnug_c2/images/cumsnap_multiselect2NLS.gif" width="511" height="314"><br>
+       </li>
+       <li>
+       <p class="task">Click the <kbd>Cumulative Snap</kbd> icon
+       <img src="b35doc/english/online/icons_C2/images/I_DMUSnapP2.gif" width="24" height="24">.<br>
+       The selection will be filtered and only the <kbd>Cube.Green</kbd>, <kbd>
+       Cube.Grey</kbd>, and <kbd>Product2.1</kbd> components will be 
+       highlighted.<br>
+       <img border="1" src="b35doc/english/online/dmnug_c2/images/cumsnap_multiselect3NLS.gif" width="471" height="299"></li>
+       <li>
+       <p class="task">Select the top face of <kbd>Cube.Blue</kbd> as the first 
+       geometry to snap.<br>
+       You will notice that selection of the first geometry is possible anywhere 
+       except on the yellow cube.</li>
+       <li>
+       <p class="task">Select the top face of <kbd>Cube.Yellow</kbd> as the 
+       second geometry to snap.<br>
+       You will notice that selection of the second geometry is possible only on 
+       the yellow cube.<br>
+       The highlighted components can now be moved as a rigid block.</li>
+     </ol>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td height="50" width="32" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" title="aprereq.gif (1223 bytes)" width="32" height="32"></td>
+     <td height="50" width="697" valign="top">In the Knowledge Base<br>
+		<br>
+		<a href="#" onClick="OpenLocation(' https://kb.dsxclient.3ds.com/360-mashup-ui/page/document?q=docid:QA00000007572')">
+		About V Axis and U Axis rotation of cumulative snap</a></td>
+   </tr>
+   <tr>
+     <td height="43" colspan="2" valign="top" width="731">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+ <p><br>
+ </p>
+
+ </body>
+
+</html>
+

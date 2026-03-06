@@ -1,0 +1,689 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Defining Reconciliation Rules</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none">
+	<style type="text/css">
+.style2 {
+	border: 1px solid #353A90;
+	background-color: #F7E7C6;
+}
+.style3 {
+	color: #353A90;
+	border: 1px solid #353A90;
+	background-color: #E0E0E0;
+}
+</style>
+	</head>
+
+ <body>
+
+ <h1>Defining Reconciliation Rules <a name="ix-reconciliation rules:defining">
+ </a></h1>
+ <p>&nbsp;</p>
+ <table border="0" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" height="0">
+   <tr>
+     <td width="40" valign="top" align="center">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" title="atarget.gif (1372 bytes)" width="32" height="32"></td>
+     <td valign="top" width="919">The scenario detailed below shows how to 
+     define the reconciliation rules available.<p>A Reconciliation Rule is a set 
+     of information required to reconcile the documents and/or Parts loaded in 
+     the CATIA session with the ones stored in the VPDM repository. You need to 
+     select one of the following reconciliation rules:</p>
+     <ul>
+			<li><kbd>Overwrite in VPDM</kbd>: The object loaded in the CATIA session 
+       overwrites the one stored in the VPDM.&nbsp;
+			<ul>
+					<li>The <kbd>Overwrite</kbd> rule is not authorized for 
+		CATMaterial documents unless they are not referenced by any other 
+		documents in the reconciliator session.</li>
+					<li>The <kbd>Overwrite</kbd> rule is not authorized for Catalog 
+		of catalogs with broken links.</li>
+					<li>The <kbd>Overwrite</kbd> rule is not authorized for 
+					proxy documents.</li>
+			</ul></li>
+			<li><kbd>Reload </kbd>from the database: The VPDM object is kept. <ul>
+					<li>The <kbd>Reload</kbd> rule is not authorized for Catalog 
+		documents except for Catlog of catalogs with broken links.</li>
+					<li>When using the <kbd>Reload</kbd> rule on an external catalog 
+		(that already exists in the VPDM), all links to that external catalog in 
+		other documents to be saved to the VPDM will be re-routed from the 
+		external catalog to the one stored in the VPDM.&nbsp; This is necessary 
+		because links cannot be maintained between the database and an external 
+		file system.&nbsp; As an example, a catalog is exported and sent to a 
+		supplier.&nbsp; The supplier creates a CATDrawing containing 2D 
+		component instances created from the catalog.&nbsp; When the supplier 
+		data is reconciled in the VPDM, the <kbd>New</kbd> rule is set on the 
+		newly created CATDrawing and the <kbd>Reload</kbd> rule is set on the 
+		CATDrawing catalog.&nbsp; When the data is saved to the VPDM the external links, 
+		that exist from the 2D component instances to the catalog (stored in the 
+		file system), are re-routed to the catalog in the VPDM.&nbsp;&nbsp; The 
+		result is the 2D component instances contained in the CATDrawing (in the 
+		VPDM) refer to the catalog (also in the VPDM).&nbsp; For more 
+		information on 2D components, please see the CATIA&nbsp; Drafting User 
+		Guide &gt; 2D Components.<ul>
+							<li>Links that can't be re-routed will be removed along with the 
+		local 2D component instance.</li>
+							<li>When a link is re-routed to a CATDrawing catalog (in the 
+		database), but the pointed object is not found then the link is seen as 
+		a broken link.</li>
+					</ul></li>
+					<li>
+					<p class="task">The <kbd>Reload</kbd> rule is not supported 
+					for use with analysis document models (*.model) on which 
+					CATAnalysis has been done.</p></li>
+			</ul></li>
+			<li><kbd>New Object in VPDM</kbd>: The reference object is considered as 
+       a new object in the VPDM.<ul>
+					<li>The <kbd>New</kbd> rule is not authorized for Catalog of catalogs 
+		with broken links.</li>
+					<li>The <kbd>New</kbd> rule is 
+     supported for V4 models when you are working with ENOVIA V5 VPM.&nbsp; It 
+					is not supported when working with ENOVIAvpm</li>
+			</ul></li>
+			<li><kbd>Keep External Reference</kbd>: Available only for documents that 
+			are not present. This rule enables you to ignore broken links in the 
+			reconciliation process. &nbsp;<kbd>Keep&nbsp; External Reference </kbd>is available 
+			for any type of document supported by the reconciliator that can be 
+			saved using the publication exposed mode in ENOVIA V5 VPM. As it is 
+			available at the document level, the rule cannot be applied to a 
+			single component in a CATProduct.&nbsp; Following are some examples 
+			of how broken links are managed by the reconciliation tool:<ul>
+					<li>If the missing document is either a CATPart or a 
+					CATProduct, with storage mode publication exposed, 
+					reconciling the document with the <kbd>Keep External 
+					Reference </kbd>rule will retain the&nbsp; 
+					reference to the external file. </li>
+					<li>If the missing document is a CATPart (for example, CATPartA) 
+					that is 
+					referenced by another CATPart (for example, CATPartB), then 
+					reconciling CATPartA with the&nbsp; <kbd>Keep External 
+					Reference </kbd>rule will result in CATPartB (stored in 
+					database) will continue to reference the external CATPart A 
+					file.</li>
+					<li>If there is a CATProduct, with storage mode structure 
+					exposed, that contains an instance of a CATPart or 
+					CATProduct that is missing, the instance will be removed 
+					upon save and the product structure will no longer have a 
+					reference to the instance or document.</li>
+			</ul>
+			</li>
+		</ul>
+		<p><strong>Note:</strong> In
+		ENOVIA VPM V4, the <kbd>Keep as External</kbd> rule will be applicable for both 
+		missing and loaded documents when the storage mode is <kbd>
+		Publication Exposed</kbd>.<br>
+		<img title="" src="b35doc/english/online/wpeug_c2/images/wd_3dviewtabs07NLS.gif" width="860" height="737"></p>
+     </td>
+   </tr>
+   <tr>
+     <td width="40" valign="top" align="center">
+     &nbsp;</td>
+     <td valign="top" width="919">
+		The <kbd>Keep as External</kbd><i><b> </b></i><span lang="EN-GB">rule 
+		</span>can also <span lang="EN-GB">be 
+			used on a Publication Exposed CATProduct document, </span>having
+		<span lang="EN-GB">some Children documents (aggregating some CATPart)</span>.
+		<span lang="EN-GB">In such </span>a <span lang="EN-GB">case, the CATProduct document will not be saved</span>. 
+		I<span lang="EN-GB">t will continue (on 
+			FILE) to point to the original CATPart (on FILE as well). As a 
+			consequence, when it </span>is<span lang="EN-GB"> reused later, after 
+		</span>the completion of<span lang="EN-GB"> 
+			reconciliation transaction, it </span>is<span lang="EN-GB"> loaded in CATIA with the 
+			original pointed CATPart documents. <br>
+		For you to identify this result after reconciliation, the reconcili</span>ator 
+			engine will implement the propagation of the <kbd>Keep as 
+			External</kbd>   rule from CATProduct to 
+			its children CATPart. <br>
+		<br>
+		<img alt="" src="b35doc/english/online/wpeug_c2/images/ReconsilatorNLS.png" width="1087" height="807"><br>
+		</td>
+   </tr>
+   <tr>
+     <td width="40" valign="top" align="center">
+     &nbsp;</td>
+     <td valign="top" width="919">
+		<ul>
+			<li><kbd>New Version</kbd>: When reconciling objects with 
+			ENOVIA V5 VPM, you can select the New Version option which is similar to the
+			<kbd>Overwrite </kbd>option 
+		except that when you save to ENOVIA V5 a new version of the part will be 
+			created along with a new revision of the part's geometry document.&nbsp; For more information 
+			about saving new versions, please see the VPM Navigator User Guide: 
+			VPM Configured Product Design&gt;Versioning/Revisioning.&nbsp; For more 
+			information about the Save In ENOVIA V5 dialog please see
+			the VPM Navigator User Guide: VPM Configured Product 
+			Design&gt;Saving Objects.<ul>
+			<li>This option is&nbsp; available for:<ul>
+			<li>CATPart and CATProduct 
+			objects whose storage mode is Publication Exposed.</li>
+			<li>Products saved in Structure Exposed mode as long they are 
+			not mapped to the Product Root Class (PRC).</li>
+		</ul>
+     		</li>
+			<li>The <kbd>New Version</kbd> rule is not authorized for 
+			CATDrawing, CATAnalysis, CATAnalysisComputations, CATAnalysisResult, 
+			CATMaterial, Catalog of catalogs, or empty Catalogs.</li>
+		</ul>
+     		</li>
+		</ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="40" valign="top" align="center">
+     &nbsp;</td>
+     <td valign="top" width="919">
+		<ul>
+			<li><kbd>New Revision</kbd>: When reconciling objects with ENOVIA V5 VPM, you can select the New 
+			Revision option which is similar to the
+			<kbd>Overwrite </kbd>option 
+		except that when you save to ENOVIA V5 a new revision of the selected 
+			document is created.&nbsp; For more information 
+			about saving new versions, please see the VPM Navigator User Guide: 
+			VPM Configured Product Design&gt;Versioning/Revisioning.&nbsp; For more 
+			information about the Save In ENOVIA V5 dialog please see
+			the VPM Navigator User Guide: VPM Configured Product 
+			Design&gt;Saving Objects.<ul>
+			<li>This option is available for CATPart and CATProduct objects 
+			whose storage mode is publication exposed as well as for CATDrawing, 
+			CATAnalysis, CATAnalysisComputations, CATAnalysisResult and CATMaterial.</li>
+			<li>The <kbd>&nbsp;New Revision</kbd> rule is not authorized for 
+			Catalog of catalogs with broken links.</li>
+		</ul>
+     		</li>
+		</ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="40" valign="top" align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" width="919">
+     <ul>
+       <li>You must define a rule for each Part/Document to be reconciled. The 
+       Supply Chain Engineering Exchange application deduces from the assembly structure 
+       comparison (between the CATIA and the VPDM assembly view) how the 
+       assembly structure is going to be saved in the VPDM repository. </li>
+		<li>New version and new revision options are available for ENOVIA VPM V4 
+		also, except in case if the mapping is done using Expand. This means, if 
+		mapping is done using &quot;Magic Reconciliation&quot; or &quot;Mapping Based on VPDM 
+		view&quot;, these rules will not be available for structure exposed 
+		CATProducts . <br>
+		One bypass in interactive mode is to select the S.E. CATProduct and 
+		re-run query only on this node (any query except &quot;Magic Reconciliation&quot; 
+		or &quot;Mapping Based on VPDM view&quot;).</li>
+       <li>You can simulate the product structure modification impact by 
+       activating the comparison evaluation to identify which instances will be 
+       created, deleted, or moved. See <a href="page15129.html">Simulating the 
+       Reconciliation</a>.</li>
+		<li>CATMaterial documents applied on CATProducts that are saved 
+		in structure exposed mode can be reconciled with the <kbd>New</kbd>,
+		<kbd>Overwrite</kbd>, <kbd>Reload</kbd> or New Revision rules, but note 
+		that when they are saved to the VPDM, the material data will not be 
+		retained.</li>
+		<li>CATMaterial documents with file based links will retain the 
+		file based links (i.e. the files will not be imported into the VPDM).<br>&nbsp;</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="40" valign="top" align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td valign="top" width="919">Before performing this scenario, make sure you 
+     have:<blockquote>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber14">
+         <tr>
+           <td>
+           <ul>
+             <li>activated the cache system (<kbd>Tools&nbsp;&gt;&nbsp;Options&nbsp;&gt;&nbsp;Infrastructure&nbsp;&gt;&nbsp;Product 
+             Structure&nbsp;&gt;&nbsp;Cache Management&nbsp;&gt;&nbsp;</kbd>check option<kbd> Work with the 
+             cache system</kbd>)</li>
+           </ul>
+           <ul>
+             <li>have invoked the reconciliation option (<kbd>View&nbsp;&gt;&nbsp;Toolbars&nbsp;&gt;&nbsp;Reconcile</kbd>)</li>
+             <li>have activated the ENOVIA V5 toolbar <kbd>(View &nbsp;&gt;&nbsp; 
+             Toolbars&nbsp;&gt;&nbsp;ENOVIAV5</kbd>)<kbd> </kbd></li>
+             <li>have connected to the ENOVIA V5 VPM database (click the <kbd>
+             Connect User to ENOVIA V5</kbd> icon
+             <img border="0" src="b35doc/english/online/wpeug_c2/images/I_TeamPDMConnectP2.gif" width="22" height="22">) </li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+     </blockquote>
+     <p>The <a href="b35doc/english/online/wpeug_c2/samples/Skate-100-ABC-1001.CATProduct">
+     Skate-100-ABC-1001.CATProduct</a> document and its sub-products must have 
+     been saved in the VPDM in mode Structure Exposed before you begin the 
+     reconciliation process. In the scenario described below, it corresponds to 
+     the skate board that the manufacturer sends to his supplier for 
+     modification. It consists of:</p>
+     <ul>
+       <li><a href="b35doc/english/online/wpeug_c2/samples/Axle-010-JKL-1031.CATPart">Axle-010-JKL-1031.CATPart</a></li>
+       <li><a href="b35doc/english/online/wpeug_c2/samples/Board-010-DEF-1009.CATPart">
+       Board-010-DEF-1009.CATPart</a></li>
+       <li><a href="b35doc/english/online/wpeug_c2/samples/Wheel-010-GHI-1021.CATPart">
+       Wheel-010-GHI-1021.CATPart</a></li>
+       <li><a href="b35doc/english/online/wpeug_c2/samples/Hub1-010-DEF-1001.CATProduct">
+       Hub1-010-DEF-1001.CATProduct</a></li>
+     </ul>
+     <p>The following documents are those that will be reconciled using the Work 
+     Package Exchange application, they correspond to the skate board and its 
+     components that the supplier sends back to the manufacturer after having 
+     done the necessary work:</p>
+     <ul>
+       <li><a href="b35doc/english/online/wpeug_c2/samples/Axle-010-JKL-1031.CATPart">Axle-010-JKL-1031.CATPart</a></li>
+       <li><a href="b35doc/english/online/wpeug_c2/samples/Board2-010-DEF-1011.CATPart">
+       Board2-010-DEF-1011.CATPart</a></li>
+       <li><a href="b35doc/english/online/wpeug_c2/samples/Wheel-010-GHI-1021.CATPart">
+       Wheel-010-GHI-1021.CATPart</a></li>
+       <li><a href="b35doc/english/online/wpeug_c2/samples/Wheel-Large-010-GHI-1026.CATPart">
+       Wheel-Large-010-GHI-1026.CATPart</a></li>
+       <li><a href="b35doc/english/online/wpeug_c2/samples/Hub1-010-DEF-1001.CATProduct">
+       Hub1-010-DEF-1001.CATProduct</a></li>
+       <li><a href="b35doc/english/online/wpeug_c2/samples/Hub2-010-DEF-1002.CATProduct">
+       Hub2-010-DEF-1002.CATProduct</a></li>
+       <li><a href="b35doc/english/online/wpeug_c2/samples/Skate2-100-ABC-1002.CATProduct">
+       Skate2-100-ABC-1002.CATProduct</a></li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="40" valign="top">
+     <h6 align="center">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" title="ascenari.gif (1364 bytes)" width="32" height="32"></h6>
+     </td>
+     <td valign="top" width="919">
+     <ol class="task">
+       <li>
+       <p class="task">Open the <a href="b35doc/english/online/wpeug_c2/samples/Skate2-100-ABC-1002.CATProduct">
+       Skate2-100-ABC-1002.CATProduct</a> file in design mode. </li>
+       <li>
+       <p class="task">Click the <kbd>Launch Reconciliation</kbd> icon
+       <img border="0" src="b35doc/english/online/wpeug_c2/images/I_TeamPDMReconcileP2.gif" width="21" height="21">. <br>
+       The Reconcile window is displayed.</li>
+       <li>
+       <p class="task">Click the root object (Skate2-100-ABC-1002) in the 
+       Objects to reconcile tree, select the <kbd>Query by object ID</kbd> query 
+       in the Query Criteria scrolling list and click <kbd>Query</kbd>.</li>
+       <li>
+       <p class="task">Enter <kbd>Skate*</kbd> in the <kbd>Search String</kbd> 
+       field and click <kbd>OK</kbd>. <br>
+       Skate-100-ABC-1001 is the unique result of the query.</li>
+       <li>
+       <p class="task">Click the <kbd>VPDM View</kbd> tab. <br>
+       The mapping has been established between Skate2-100-ABC-1002 and 
+       Skate-100-ABC-1001.<br>
+       The <kbd>Overwrite</kbd> mode has been automatically applied to 
+       Skate2-100-ABC-1002 in the CATIA View.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber13">
+         <tr>
+           <td>
+			<img border="1" src="b35doc/english/online/wpeug_c2/images/usecase1_03NLS.gif" width="715" height="177"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">The following items were re-designed by the supplier, and 
+       you want to save them. For each item, select it in the CATIA view and 
+       click the <kbd>New object in VPDM</kbd> icon
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_SaveAsNewP2.gif" width="24" height="24">.
+       </p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber10">
+           <tr>
+             <td>
+             <ul>
+               <li>Board2-010-DEF-1011: This is a new object and the 
+               manufacturer wants to keep the old board in the VPDM.</li>
+               <li>Hub2-010-DEF-1002: This object is new and does not exist in 
+               the VPDM.</li>
+               <li>Wheel-Large-010-GHI-1026: This object is new and does not 
+               exist in the VPDM.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Map the following item using the Queryand click the <kbd>Overwrite in VPDM</kbd> icon
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_OverwriteP2.gif" width="24" height="24">.</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber11">
+           <tr>
+             <td>
+             <ul>
+               <li>Skate2-100-ABC-1002: Overwrites the skate stored in the VPDM</li>
+				<li>Board2-010-DEF-1011: Overwrites the board stored in the VPDM</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+		<p class="task">Map the following item using the Query and click the
+		<kbd>New Version&nbsp; in VPDM</kbd> icon
+       	<img border="0" src="b35doc/english/online/wpeug_c2/images/I_NewVersion.gif" width="29" height="30">.
+       	</p>
+		<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="table4">
+			<tr>
+				<td>
+				<ul>
+					<li>Hub1-010-DEF-1001: Creates a new version of the Hub1 stored in the VPDM.</li>
+				</ul>
+				</td>
+			</tr>
+		</table></li>
+		<li>
+		<p class="task">Map the following item using the Query and click the
+		<kbd>New Revision in VPDM</kbd> icon
+       	<img border="0" src="b35doc/english/online/wpeug_c2/images/I_NewRevision.gif" width="30" height="30">&nbsp; .</p>
+		<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="table5">
+			<tr>
+				<td>
+				<ul>
+					<li>Axle-010-JKL-1031: Creates a new revision of the 
+					CATPart that represents the Axle</li>
+				</ul></td>
+			</tr>
+		</table></li>
+       <li>
+       <p class="task">Map the following item using the 
+       Query and click the <kbd>Reload from VPDM</kbd> icon
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_ReloadP2.gif" width="24" height="24">.</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber12">
+           <tr>
+             <td>
+             <ul>
+               <li>Wheel-010-GHI-1021: The manufacturer wants to keep the 
+               original wheel. </li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     	<li>
+		<p class="task">Click <kbd>Apply</kbd> to apply the reconciliation. 
+		</li>
+		<li>
+		<p class="task">Close the Reconciliation transaction and from the 
+		<kbd>File</kbd> menu, select the <kbd>Save in ENOVIA</kbd> command.&nbsp;
+		The Save in ENOVIA V5<i> </i>
+		dialog is displayed. Clicking&nbsp;
+		<img border="0" src="b35doc/english/online/wpeug_c2/images/MoreButton.gif" width="32" height="19"> 
+		displays detailed information on the data to be saved in ENOVIA VPM V5.<table border="0" style="border-collapse: collapse" width="100%" id="table3">
+			<tr>
+				<td>
+				<img title="" src="b35doc/english/online/wpeug_c2/images/SaveinENOVIANls.gif" width="804" height="412">&nbsp;</td>
+			</tr>
+		</table>
+		</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td width="40" valign="top">
+     &nbsp;</td>
+     <td valign="top" width="919">
+     <h2>
+     <img src="b35doc/english/online/icons_C2/common/anew.gif" width="32" height="32"><a name="hj-Reconciliator Settings"></a>Reconciliator 
+		Settings </h2>
+		</td>
+   </tr>
+   <tr>
+     <td width="40" valign="top">
+     
+           <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" width="919">
+     You can also customize the Reconciliator settings through xml. With <b>
+		<span lang="EN-GB" style="font-size:10.0pt;
+mso-bidi-font-size:12.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Courier New&quot;;color:#666666;letter-spacing:
+-.6pt;mso-ansi-language:EN-GB;mso-fareast-language:EN-US;mso-bidi-language:
+AR-SA">CATReconcileSettings.xml</span></b>, you can <ul><li>identify 
+		the differences between two sets of settings </li>
+		<li>compare configuration setting between two exchange sites</li>
+		<li>track&nbsp; evolutions between releases.</li>
+		</ul> 
+		<p>
+		The following table describes about the Reconciliator settings:</p>
+		<table style="width: 100%">
+			<tr>
+				<td class="style3" style="width: 290px"><strong>Name </strong>
+				</td>
+				<td class="style3" style="width: 56px"><strong>Type </strong>
+				</td>
+				<td class="style3" style="width: 89px"><strong>Default
+				</strong></td>
+				<td class="style3"><strong>Description</strong></td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px; height: 19px">
+				<strong>NbChar&nbsp; </strong> </td>
+				<td class="style2" style="width: 56px; height: 19px">integer</td>
+				<td class="style2" style="width: 89px; height: 19px">20&nbsp; </td>
+			<td class="style2" style="height: 19px">
+			
+			Number of characters taken into account for the query. Must be a not 
+			null positive value. </td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px"><strong>Environment&nbsp;
+				</strong> </td>
+				<td class="style2" style="width: 56px">
+				<span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: &quot;Times New Roman&quot;; mso-bidi-font-family: &quot;Times New Roman&quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+				string</span></td>
+				<td class="style2" style="width: 89px">ENOVIA5 </td>
+				<td class="style2">
+				
+				<p class="MsoNormal"><span style="mso-ansi-language:EN-US">VPDM 
+				Environments among the possible ones:</span></p>
+				<ul>
+					<li>
+					<p class="MsoNormal">ENOVIA5 for ENOVIA V5 VPM </p>
+					</li>
+					<li>
+					<p class="MsoNormal">VPM1 for ENOVIA VPM V4 </p>
+					</li>
+					<li>
+					<p class="MsoNormal">TeamPDM for SmarTeam </p>
+					</li>
+				</ul>
+				</td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px; height: 19px;"><strong>
+				NewRequestAuthorizationPublicationExposed</strong> </td>
+				<td class="style2" style="width: 56px; height: 19px;">
+				<span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: &quot;Times New Roman&quot;; mso-bidi-font-family: &quot;Times New Roman&quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+				boolean</span></td>
+				<td class="style2" style="width: 89px; height: 19px;">true </td>
+				<td class="style2" style="height: 19px">Enable to authorize <kbd>
+				New</kbd> rule for Publication exposed. </td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px"><strong>
+				LoadRequestAuthorizationPublicationExposed</strong>&nbsp; </td>
+				<td class="style2" style="width: 56px">
+				<span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: &quot;Times New Roman&quot;; mso-bidi-font-family: &quot;Times New Roman&quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+				boolean</span></td>
+				<td class="style2" style="width: 89px">true </td>
+				<td class="style2">Enable to authorize reload from <kbd>VPDM</kbd> 
+				rule for Publication exposed. </td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px"><strong>
+				OWriteRequestAuthorizationPublicationExposed</strong> </td>
+				<td class="style2" style="width: 56px">
+				<span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: &quot;Times New Roman&quot;; mso-bidi-font-family: &quot;Times New Roman&quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+				boolean</span></td>
+				<td class="style2" style="width: 89px">true </td>
+				<td class="style2">Enable to authorize <kbd>Overwrite</kbd> rule 
+				for Publication exposed. </td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px"><strong>
+				NewRequestAuthorizationStructureExposed</strong> </td>
+				<td class="style2" style="width: 56px">
+				<span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: &quot;Times New Roman&quot;; mso-bidi-font-family: &quot;Times New Roman&quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+				boolean</span></td>
+				<td class="style2" style="width: 89px">true </td>
+				<td class="style2">Enable to authorize <kbd>New</kbd> rule for 
+				Structure exposed. </td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px"><strong>
+				ReloadRequestAuthorizationStructureExposed&nbsp; </strong></td>
+				<td class="style2" style="width: 56px">
+				<span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: &quot;Times New Roman&quot;; mso-bidi-font-family: &quot;Times New Roman&quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+				boolean</span></td>
+				<td class="style2" style="width: 89px">true </td>
+				<td class="style2">Enable to authorize <kbd>Reload from VPDM</kbd> 
+				rule for Structure exposed. </td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px">&nbsp;<strong>OWriteRequestAuthorizationStructureExposed</strong></td>
+				<td class="style2" style="width: 56px">
+				<span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: &quot;Times New Roman&quot;; mso-bidi-font-family: &quot;Times New Roman&quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+				boolean</span></td>
+				<td class="style2" style="width: 89px">true </td>
+				<td class="style2">Enable to authorize Overwrite rule for 
+				Structure exposed. </td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px"><strong>
+				KeepExtRequestAuthorizationPublicationExposed</strong> </td>
+				<td class="style2" style="width: 56px">
+				<span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: &quot;Times New Roman&quot;; mso-bidi-font-family: &quot;Times New Roman&quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+				boolean</span></td>
+				<td class="style2" style="width: 89px">true </td>
+				<td class="style2">Enable to authorize <kbd>Keep as external</kbd> 
+				rule for Publication exposed. </td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px"><strong>
+				NewVersionRequestAuthorizationStructureExposed</strong> </td>
+				<td class="style2" style="width: 56px">
+				<span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: &quot;Times New Roman&quot;; mso-bidi-font-family: &quot;Times New Roman&quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+				boolean</span></td>
+				<td class="style2" style="width: 89px">true </td>
+				<td class="style2">Enable to authorize <kbd>New Version</kbd> 
+				rule for Structure exposed. </td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px"><strong>
+				NewRevisionRequestAuthorizationPublicationExposed</strong> </td>
+				<td class="style2" style="width: 56px">
+				<span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: &quot;Times New Roman&quot;; mso-bidi-font-family: &quot;Times New Roman&quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+				boolean</span></td>
+				<td class="style2" style="width: 89px">true </td>
+				<td class="style2">Enable to authorize <kbd>New Revision</kbd> 
+				rule for Publication exposed. </td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px"><strong>
+				NewVersionRequestAuthorizationPublicationExposed </strong></td>
+				<td class="style2" style="width: 56px">
+				<span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: &quot;Times New Roman&quot;; mso-bidi-font-family: &quot;Times New Roman&quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+				boolean</span></td>
+				<td class="style2" style="width: 89px">true </td>
+				<td class="style2">Enable to authorize <kbd>New Version</kbd> 
+				rule for Publication exposed. </td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px"><strong>
+				OverwriteByDeltaRequestAuthorizationStructureExposed</strong> </td>
+				<td class="style2" style="width: 56px">
+				<span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: &quot;Times New Roman&quot;; mso-bidi-font-family: &quot;Times New Roman&quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+				boolean</span></td>
+				<td class="style2" style="width: 89px">true </td>
+				<td class="style2">Enable to authorize <kbd>Overwrite by Delta</kbd> 
+				rule for Structure exposed. </td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px"><strong>
+				NewVersionByDeltaRequestAuthorizationStructureExposed</strong> </td>
+				<td class="style2" style="width: 56px">
+				<span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: &quot;Times New Roman&quot;; mso-bidi-font-family: &quot;Times New Roman&quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+				boolean</span></td>
+				<td class="style2" style="width: 89px">true </td>
+				<td class="style2">Enable to authorize <kbd>New Version by Delta</kbd> 
+				rule for Structure exposed. </td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px"><strong>
+				AuthorizeLockAutomaticAcquisition </strong></td>
+				<td class="style2" style="width: 56px">
+				<span style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: &quot;Times New Roman&quot;; mso-bidi-font-family: &quot;Times New Roman&quot;; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+				boolean</span></td>
+				<td class="style2" style="width: 89px">true </td>
+				<td class="style2">Authorize automatic lock acquisition. </td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px"><strong>InputXSL
+				</strong></td>
+				<td class="style2" style="width: 56px">URN </td>
+				<td class="style2" style="width: 89px">
+				<span lang="FR" style="mso-bidi-font-size: 12.0pt; mso-fareast-font-family: &quot;Times New Roman&quot;; mso-bidi-font-family: &quot;Times New Roman&quot;; mso-ansi-language: FR; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+				${CATInstallPath}\xsl\Reconcile\XMLReportTest.xsl</span></td>
+				<td class="style2">Enable to define XSL steel sheet to be used 
+				for Reconciliator reporting solution. </td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px"><strong>InputXSLPathType
+				</strong></td>
+				<td class="style2" style="width: 56px">integer</td>
+				<td class="style2" style="width: 89px">0 </td>
+				<td class="style2">Enable to define if XSL path is a logical or 
+				physical file. </td>
+			</tr>
+			<tr>
+				<td class="style2" style="width: 290px"><strong>OutputDirectory</strong> </td>
+				<td class="style2" style="width: 56px">URN </td>
+				<td class="style2" style="width: 89px">${CATTemp} </td>
+				<td class="style2">Enable to define default location where to 
+				save Reconciliator reports. </td>
+			</tr>
+		</table>
+		<p>
+		<span lang="EN-GB" style="font-size:10.0pt;font-family:
+&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:
+&quot;Times New Roman&quot;;color:black;mso-ansi-language:EN-GB;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA"><strong>Note:</strong> You can search for the </span><b>
+		<span lang="EN-GB" style="font-size:
+10.0pt;mso-bidi-font-size:12.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Courier New&quot;;color:#666666;letter-spacing:
+-.6pt;mso-ansi-language:EN-GB;mso-fareast-language:EN-US;mso-bidi-language:
+AR-SA">PVRProperties.xml </span></b>
+		<span lang="EN-GB" style="font-size:10.0pt;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-bidi-font-family:&quot;Times New Roman&quot;;color:black;mso-ansi-language:EN-GB;
+mso-fareast-language:EN-US;mso-bidi-language:AR-SA">&nbsp;under </span>
+		<code>
+		CATPDMReconcile\CNEXT\resources\SettingsMetadata</code>. </p>
+		<p>
+		For more information about customization of the Product View Result settings, see
+		<a href="page15088.html">Customizing Reconciliation Settings</a>. </p>
+     </td>
+   </tr>
+   <tr>
+     <td width="959" valign="top" colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="ascenari.gif (1364 bytes)" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

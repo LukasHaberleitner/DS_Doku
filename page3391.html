@@ -1,0 +1,220 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+		<head>
+		<meta name="MonocodingType" content="0">
+		<meta name="MonocodingFlag" content="C2D2E2L2O2">
+		<meta http-equiv="Content-Language" content="en-us">
+		<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+		<meta name="ProgId" content="FrontPage.Editor.Document">
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<title>HLR</title>
+		<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+		<meta name="Microsoft Border" content="none">
+		</head>
+
+		<body>
+
+		<h1>HLR</h1>
+		<table border="0" cellspacing="0" valign="top" width="100%" cellpadding="0" style="border-collapse: collapse" bordercolor="#111111" height="1347" id="table1">
+				<tr>
+						<td height="146">This section provides a description 
+						of the <kbd>Hidden Line Removal</kbd> rendering mode 
+						(also know as &quot;<kbd>HLR</kbd>&quot;) as well as the 
+						restrictions pertaining to its use:<ul>
+								<li>
+								<a href="#hj-definition">definition</a></li>
+								<li>
+								<a href="#hj-HLR algorithms">about HLR 
+								algorithms</a></li>
+								<li>
+								<a href="#hj-restrictions">restrictions</a></li>
+								<li>
+								<a href="#hj-behavior">behavior in specific 
+								applications</a></li>
+						</ul>
+						</td>
+				</tr>
+				<tr>
+						<td height="34">
+						<h2><a name="hj-definition"></a>Definition</h2>
+						<p><kbd>
+						Hidden Line Removal</kbd> (<kbd>HLR</kbd>) lets you 
+						print in vector mode the viewed edges and 
+						outlines of 3D objects.
+						It is an extension of the <kbd>Wireframe</kbd> rendering mode 
+						where (or segments of lines) visually occluded by surfaces are 
+						not drawn. Note that in <kbd>HLR</kbd> mode, the color 
+						of drawn edges is the color of the surface they belong 
+						to.</p>
+						</td>
+				</tr>
+				<tr>
+						<td height="230">
+						<h2><a name="hj-HLR algorithms"></a>About HLR Algorithms</h2>
+						<p>Two <kbd>HLR</kbd> algorithms can be used to compute a 
+						<kbd>HLR</kbd> 
+						scene: </p>
+						<ul>
+							<li>Exact mode which uses exact geometry</li>
+							<li>Polyhedral mode which enables to compute 
+							<kbd>HLR</kbd> on non-exact geometry that can be found in 
+							third-party data, in CGR files (when working with 
+							the cache system, for instance) or in specific 
+							Version 4 elements.</li>
+						</ul>
+						<p>The Exact mode is more CPU- and memory-intensive than the Polyhedral 
+						mode but gives a more accurate 
+						result.</p>
+						<p><kbd>HLR</kbd> and <kbd>Dynamic Hidden 
+						Line Removal</kbd> (<kbd>HRD</kbd>) are not computed the same way because 
+						<kbd>HRD</kbd> is primarily based on the 
+						graphics card. Therefore, discrepancies might appear 
+						between the two results.<br>
+						<span style="font-size: 10.0pt; font-family: Verdana,sans-serif">
+						For instance, on screen in <kbd>2D Layout for 3D Design</kbd> 
+						in <kbd>HRD</kbd> mode, the intersection profile of an 
+						object with a front cutting plane or a back clipping 
+						plane is not displayed. However, the <kbd>HLR</kbd> print 
+						result shows this intersection profile:</span></p></td>
+				</tr>
+				<tr>
+						<td height="380">
+						<table border="0" id="table2" width="525">
+							<tr>
+								<td width="160" align="center" bgcolor="#E0E0E0">
+								<kbd>Shading with Edges</kbd></td>
+								<td align="center" bgcolor="#E0E0E0" width="198">
+								<kbd>HRD</kbd></td>
+								<td align="center" bgcolor="#E0E0E0"><kbd>HLR</kbd></td>
+							</tr>
+							<tr>
+								<td width="160" align="center" bgcolor="#F2F2F2">
+								<img border="0" src="b35doc/english/online/cfyugbas_c2/images/aboutHLR01.gif" width="160" height="268"></td>
+								<td align="center" bgcolor="#F2F2F2" width="198">
+								<img border="0" src="b35doc/english/online/cfyugbas_c2/images/aboutHLR02.gif" width="161" height="267"></td>
+								<td align="center" bgcolor="#F2F2F2">
+								<img border="0" src="b35doc/english/online/cfyugbas_c2/images/aboutHLR03.gif" width="162" height="265"></td>
+							</tr>
+						</table>
+						<p>Regarding transparent faces,<kbd> HLR</kbd> 
+						algorithms consider them as opaque which means that 
+						objects behind these faces are hidden. On the contrary, 
+						the <kbd>HRD</kbd> rendering mode considers transparent 
+						faces as completely transparent by default. To force 
+						the <kbd>HRD</kbd> mode to consider transparent faces as opaque, 
+						use the
+						<kbd>Display transparent faces as opaque</kbd> option in
+						<kbd>Tools &gt; Options &gt; General &gt; Visualization</kbd>.</p>
+		<h3>Linetype</h3>
+		<p>From V5R18, the linetype and the line thickness of drawn edges are 
+		taken into account in <kbd>HLR</kbd> rendering mode. This means that the 
+		linetype displayed in the print preview is the one you see in the 
+		geometry area. For instance, if the linetype is defined as &quot;empty&quot;, 
+		edges will not be displayed.</td>
+				</tr>
+				<tr>
+						<td height="337">
+						<h2><a name="hj-restrictions"></a>Restrictions</h2>
+						<p>Note that:</p>
+						<ul>
+							<li><kbd>HLR</kbd> behaves badly when the <kbd>
+							Display all elements using Z-buffer depth</kbd> 
+							option is selected in <kbd>Tools &gt; Options... &gt; 
+							General &gt; Display &gt; Visualization</kbd>.</li>
+							<li><kbd>HLR</kbd> behaves badly with points, 
+							certain kinds of line, texts and images as soon as 
+							they are in Z mode (i.e. they participate in the 
+							Z-buffer).</li>
+							<li>Smooth edges cannot be removed when using <kbd>
+							HLR</kbd> if the three following conditions are 
+							fulfilled at the same time:<ul>
+								<li>The model has been designed in Version 5 
+								(e.g. a CATPart).</li>
+								<li>The model was first created before V5R16.</li>
+								<li>The V5 session uses the cache management 
+								option OR only the CGR file of the CATPart model 
+								is inserted in the Product, not the CATPart 
+								itself.</li>
+							</ul>
+							</li>
+							<li>Smooth edges cannot be removed when using <kbd>
+							HLR</kbd> if the window viewpoint is CONIC.</li>
+						</ul>
+						<h3>Exact mode</h3>
+						<p>As this mode is based on exact geometry, the result 
+						is more precise. However as explained above, this mode 
+						is CPU- and memory-intensive and some restrictions might 
+						occur in specific cases.<br>
+						For instance, you might encounter problems with clashing 
+						bodies because some geometrical elements might not be 
+						generated. To by-pass this limitation, you can manually 
+						resolve the intersection topology using an appropriate 
+						sequence of Boolean operations.</p>
+						<h3>Polyhedral mode</h3>
+						<p>In this mode, the geometry's complexity (in terms of 
+						number of triangles for each face of a surface) is 
+						limited. Attributes applied to edges, such as the 
+						linetype or the thickness, are those of the original 
+						edges as far as possible. When it is not possible to use 
+						the original attributes, default attributes are applied 
+						instead.</p>
+						<p>
+						<span style="font-size: 10.0pt; font-family: Verdana,sans-serif">
+						Regarding clashing bodies, the Polyhedral <kbd>HLR</kbd> 
+						mode is a lot more robust than the Exact mode although 
+						it does not strictly support all clashing 
+						configurations.</span></p>
+						<h3>
+						Example</h3>
+						<table border="0" id="table3" width="525">
+							<tr>
+								<td width="160" align="center" bgcolor="#E0E0E0">
+								<kbd>Exact Mode</kbd></td>
+								<td align="center" bgcolor="#E0E0E0" width="198">
+								<kbd>Polyhedral Mode</kbd></td>
+							</tr>
+							<tr>
+								<td width="160" align="center" bgcolor="#F2F2F2" style="height: 240px">
+								<img alt="" src="b35doc/english/online/cfyugbas_c2/images/aboutHLR04.png" width="308" height="238"></td>
+								<td align="center" bgcolor="#F2F2F2" width="198" style="height: 240px">
+								<img alt="" src="b35doc/english/online/cfyugbas_c2/images/aboutHLR05.png" width="308" height="238"></td>
+							</tr>
+							<tr>
+								<td align="left" bgcolor="#F2F2F2">
+								On top of the green cylinder, the Exact mode avoids SAG effects on 
+								printed curves.</td>
+								<td align="left" bgcolor="#F2F2F2">
+								The clash between the green and blue bodies is 
+								supported in Polyhedral mode only. </td>
+							</tr>
+						</table>
+						</td>
+				</tr>
+				<tr>
+						<td height="118">
+						<p><a name="hj-behavior"></a></p>
+						<p>&nbsp;</p>
+						<p>The result of the Boolean operator between the two 
+						blue pad bodies is supported in both Exact and 
+						Polyhedral modes:</p>
+						<p>
+						<img alt="" src="b35doc/english/online/cfyugbas_c2/images/aboutHLR06NLS.png" width="429" height="251"></p>
+						<h2>Behavior in Specific 
+						Applications</h2>
+						<p>When working with the <kbd>Clipping &gt; Activating clipping frame</kbd>,
+						the
+						<kbd>Clipping &gt; Clip View</kbd> or the <kbd>Insert &gt; Sectioning</kbd> command in 
+						a <kbd>2D Layout for 3D Design</kbd> or <kbd>DMU Sectioning</kbd> context, the polyhedral
+						<kbd>HLR</kbd> mode is used. See the <cite>Version 5 - 
+						2D Layout for 3D Design User's Guide</cite> for more 
+						information about clipping commands and the <cite>
+						Version 5 - DMU Sectioning User's Guide</cite> for more 
+						information about sectioning.</p></td>
+				</tr>
+				</table>
+		
+	
+ </body>
+
+</html>
+

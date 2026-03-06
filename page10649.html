@@ -1,0 +1,640 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Converting CATIA Version 4 Libraries into CATIA Version 5 Catalogs
+	</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Converting CATIA Version 4 Libraries into CATIA Version 5 
+ Catalogs</h1>
+ <table border="0" cellspacing="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" Width="0">
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td rowspan="1">This task shows you how to convert a CATIA Version 4 
+     library into a CATIA Version 5 catalog.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td rowspan="1">Before embarking on any conversion make sure you are 
+     familiar with the concepts described in &quot;About Catalogs&quot; in the <i>CATIA - 
+     Component Catalog Editor User's Guide</i>.
+     <p>It would also be instructive to read &quot;<a href="page10648.html"><font face="Verdana, Helvetica, sans serif">Converting 
+     CATIA Version 4 Library Objects into CATIA Version 5 CATPart Documents</font></a>&quot;.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td rowspan="1"><strong>Migrating the Data Structure</strong>
+     <p>The batch operation creates a catalog chapter for each <strong>DETAIL</strong> 
+     type library family (see&nbsp; Creating a Catalog in the <i>CATIA -
+     <font SIZE="2">Component Catalog Editor</font> User's Guide</i>).<br>
+     Other types of families (SYMBOL, SECTION, NCMILL, NCLATHE) <strong>cannot</strong> 
+     be converted.</p>
+     <p>The keywords relating to the library family are converted into catalog 
+     keywords as shown in the table below. These keywords define the associated 
+     chapter.</td>
+   </tr>
+   <tr>
+     <td></td>
+     <td rowspan="1" valign="middle" align="center">
+     <table border="0" width="54%" height="123" cellspacing="1">
+       <tr>
+         <td width="44%" bgcolor="#EOEOEO" height="19"><strong>V4 Keyword Type</strong></td>
+         <td width="56%" bgcolor="#EOEOEO" height="19"><strong>V5 Keyword Type</strong></td>
+       </tr>
+       <tr>
+         <td width="44%" bgcolor="#F2F2F2" height="18">Discrete</td>
+         <td width="56%" bgcolor="#F2F2F2" height="18">String</td>
+       </tr>
+       <tr>
+         <td width="44%" bgcolor="#F2F2F2" height="18">Alphanumeric</td>
+         <td width="56%" bgcolor="#F2F2F2" height="18">String</td>
+       </tr>
+       <tr>
+         <td width="44%" bgcolor="#F2F2F2" height="18">Numeric</td>
+         <td width="56%" bgcolor="#F2F2F2" height="18">Real (no unit retrieval)</td>
+       </tr>
+       <tr>
+         <td width="44%" bgcolor="#F2F2F2" height="20">Boolean</td>
+         <td width="56%" bgcolor="#F2F2F2" height="20">Boolean</td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>The Library structure is migrated into a catalog structure, with the 
+     following architecture:
+     <ul>
+       <li>one root catalog file containing the root chapter</li>
+       <li>one catalog file for each migrated family and specific files (CATParts 
+       and CATDrawings) for the actual data (see below: Migrating the Actual 
+       Data).</li>
+     </ul>
+     <p>The multi-file catalog has the following benefits:</p>
+     <ul>
+       <li>enhanced migration performance because of reduced catalog file size</li>
+       <li>enhanced catalog usage, for only the necessary subset of the catalog 
+       files will be loaded in the catalog browser for browsing and/or 
+       instantiation</li>
+       <li>the generated catalog families can easily and independently be reused 
+       to build other new catalogs.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td><strong>Migrating the Actual Data</strong><p>Bear in mind the 
+     following:</p>
+     <ul>
+       <li>No link is kept between the V4 library and the new V5 catalog.</li>
+       <li><a name="SPACE details"><b>
+       <font face="Verdana, Helvetica, sans serif">SPACE details</font></b></a> 
+       can be migrated to CATIA Version 5 i.e. converted into CATPart documents. 
+       Other library objects such as symbols, sections and tools cannot be 
+       migrated.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>
+     <ul>
+       <li><b>DRAW details</b> <a name="hj-DRAW details">
+       <font face="Verdana, Helvetica, sans serif"></font></a>can be migrated to 
+       CATIA Version 5 i.e. converted into CATDrawing documents.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td rowspan="1" valign="top">
+     <ul>
+       <li>If details reference other subdetails the whole of the geometry is 
+       exploded in one single CATPart document.</li>
+       <li>Only DETAIL type families are converted into a catalog chapter.</li>
+       <li>Regarding Solid Mockup copy/paste: when copying as CATIA_RESULT or 
+       when the solid mockup is isolated, it is stored in a .cgr format in the 
+       directory where the catalog is generated.</li>
+       <li>When the copy/paste of a solid is partial, an geometric set is created in 
+       the part.</li>
+     </ul>
+     <p>For more information about the copying of V4 data to V5, see
+     <font face="Verdana, Helvetica, sans serif">
+     <a href="page10684.html">Copying CATIA Version 4 Model Data to CATIA Version 
+		5</a></font>.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td rowspan="1"><a name="Consequences of Migration on Filenames"><strong>
+     <font face="Verdana, Helvetica, sans serif">Consequences of Migration on 
+     Filenames</font></strong></a>
+     <p>In Windows, it is extremely important to be aware of the consequences of 
+     migration on filenames. Before reading any further see &quot;<a href="page1384.html" target="_blank"><font face="Verdana, Helvetica, sans serif">About 
+     Filenames</font></a>&quot; in the <i>CATIA - Infrastructure User's Guide</i>. In 
+     view of the restrictions described in this section, the following default
+     <a href="b35doc/english/online/intug_c2/samples/table.txt"><font face="Verdana, Helvetica, sans serif">
+     conversion table</font></a> will apply to new CATPart documents converted 
+     from library objects:</p>
+     <div align="center">
+       <center>
+       <table border="0" cellspacing="1">
+         <tr>
+           <td width="183" bgcolor="#EOEOEO" align="center"><b>ASCII Code of 
+           the&nbsp;Original Character</b> </td>
+           <td width="163" bgcolor="#EOEOEO" align="center"><strong><nobr>
+           Character&nbsp;to be Replaced</nobr> </strong></td>
+           <td width="165" bgcolor="#EOEOEO" align="center"><strong><nobr>New 
+           Character String</nobr></strong></td>
+         </tr>
+         <tr>
+           <td width="183" bgcolor="#F2F2F2" align="center"><font size="2">0x22</font></td>
+           <td width="163" bgcolor="#F2F2F2" align="center"><font size="2">&quot;</font></td>
+           <td width="165" bgcolor="#F2F2F2" align="center"><font size="2">_Inch</font></td>
+         </tr>
+         <tr>
+           <td width="183" bgcolor="#F2F2F2" align="center"><font size="2">0x2a</font></td>
+           <td width="163" bgcolor="#F2F2F2" align="center"><font size="2">*</font></td>
+           <td width="165" bgcolor="#F2F2F2" align="center"><font size="2">x</font></td>
+         </tr>
+         <tr>
+           <td width="183" bgcolor="#F2F2F2" align="center"><font size="2">0x2f</font></td>
+           <td width="163" bgcolor="#F2F2F2" align="center"><font size="2">/</font></td>
+           <td width="165" bgcolor="#F2F2F2" align="center"><font size="2">_</font></td>
+         </tr>
+         <tr>
+           <td width="183" bgcolor="#F2F2F2" align="center"><font size="2">0x3a</font></td>
+           <td width="163" bgcolor="#F2F2F2" align="center"><font size="2">:</font></td>
+           <td width="165" bgcolor="#F2F2F2" align="center"><font size="2">_</font></td>
+         </tr>
+         <tr>
+           <td width="183" bgcolor="#F2F2F2" align="center"><font size="2">0x3c</font></td>
+           <td width="163" bgcolor="#F2F2F2" align="center"><font size="2">&lt;</font></td>
+           <td width="165" bgcolor="#F2F2F2" align="center"><font size="2">_</font></td>
+         </tr>
+         <tr>
+           <td width="183" bgcolor="#F2F2F2" align="center"><font size="2">0x3e</font></td>
+           <td width="163" bgcolor="#F2F2F2" align="center"><font size="2">&gt;</font></td>
+           <td width="165" bgcolor="#F2F2F2" align="center"><font size="2">_</font></td>
+         </tr>
+         <tr>
+           <td width="183" bgcolor="#F2F2F2" align="center"><font size="2">0x3f</font></td>
+           <td width="163" bgcolor="#F2F2F2" align="center"><font size="2">?</font></td>
+           <td width="165" bgcolor="#F2F2F2" align="center"><font size="2">_</font></td>
+         </tr>
+         <tr>
+           <td width="183" bgcolor="#F2F2F2" align="center"><font size="2">0x5c</font></td>
+           <td width="163" bgcolor="#F2F2F2" align="center"><font size="2">\</font></td>
+           <td width="165" bgcolor="#F2F2F2" align="center"><font size="2">_</font></td>
+         </tr>
+         <tr>
+           <td width="183" bgcolor="#F2F2F2" align="center"><font size="2">0x7c</font></td>
+           <td width="163" bgcolor="#F2F2F2" align="center"><font size="2">|</font></td>
+           <td width="165" bgcolor="#F2F2F2" align="center"><font size="2">_</font></td>
+         </tr>
+       </table>
+       </center>
+     </div>
+     <p>National characters will be replaced by default by _xxx where xxx is the 
+     ASCII code of the character replaced. The default correspondence table can 
+     be modified but you cannot avoid the replacement of these characters. If, 
+     for example, you delete the line l''*' the table will be declared invalid. 
+     The two characters most likely to occur are:</p>
+     <ul>
+       <li>0xb1</li>
+       <li>0xb4</li>
+     </ul>
+     <p>which correspond to the characters used in V4 model names as 
+     replacements for the blank character &quot; &quot; and slash character &quot;/&quot; 
+     respectively. To avoid excessively long document names it is advisable to 
+     modify the default conversion table.</p>
+     <p>Only national characters and those characters not supported by Windows 
+     can be declared in the correspondence table. For example, you cannot decide 
+     that you want to change all characters from &quot;a&quot; to &quot;w&quot;.</p>
+     <p>If you have declared all the national characters not supported by 
+     Windows, you can replace the national characters supported by Windows as 
+     follows:</p>
+     <div align="center">
+       <center>
+       <table border="0" cellspacing="1">
+         <tr>
+           <td width="45%" bgcolor="#EOEOEO" align="center"><strong><nobr>ASCII 
+           Code of the Original Character</nobr></strong></td>
+           <td width="41%" bgcolor="#EOEOEO" align="center"><strong><nobr>
+           Character to be Replaced</nobr></strong></td>
+           <td width="37%" bgcolor="#EOEOEO" align="center"><strong><nobr>New 
+           Character String</nobr></strong></td>
+         </tr>
+         <tr>
+           <td width="45%" bgcolor="#F2F2F2">
+           <p align="center"><font size="2">0x61</font></td>
+           <td width="41%" bgcolor="#F2F2F2">
+           <p align="center"><font size="2">a</font></td>
+           <td width="37%" bgcolor="#F2F2F2">
+           <p align="center"><font size="2">A</font></td>
+         </tr>
+       </table>
+       </center>
+     </div>
+     <p>As a consequence, &quot;a&quot; will be replaced by &quot;A&quot;.</p>
+     <p>The scenario described below shows the consequences of:</p>
+     <ul>
+       <li>data structure migration</li>
+       <li>actual data migration</li>
+       <li>consequences of migration on filenames.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td><a name="Consequences of Migration on Filenames"><strong>
+     <font face="Verdana, Helvetica, sans serif">Conversion of very large V4 
+     Libraries</font></strong></a>
+     <p><span style="mso-bidi-font-family: Courier New">The conversion of very 
+     large V4 libraries uses a lot of resources (memory, CPU and disk space for 
+     generated files). In case the batch fails before the end of the conversion 
+     due to any reason (lack of memory, individual detail conversion failure, 
+     disk full) you can restart it using the <b>Rattrap mode</b> that will 
+     continue the job starting from where it was just before the failure.</span></p>
+     <p><span style="mso-bidi-font-family: Courier New">Following are guidelines 
+     regarding this special process mode:</span></p>
+     <ul>
+       <li><span style="mso-bidi-font-family: Courier New">first, launch your 
+       CATIA V4 library conversion as usual (using MIGRATION mode)</span></li>
+       <li><span style="mso-bidi-font-family: Courier New">if it fails, modify 
+       the script so that the new mode is RATTRAP</span></li>
+       <li><span style="mso-bidi-font-family: Courier New">start the script 
+       again: the conversion will continue from where it stopped</span></li>
+       <li><span style="mso-bidi-font-family: Courier New">if it fails again for 
+       the same reason, start the script again until the whole library is 
+       converted</span></li>
+     </ul>
+     <p><span style="mso-bidi-font-family: Courier New">Take care not using this 
+     RATTRAP mode for any other reason.</span></p>
+     <p><span style="mso-bidi-font-family: Courier New">At any time, you are 
+     able to check the converted catalog, using the </span>
+     <span style="font-family: Arial; mso-bidi-font-family: Courier New"><kbd>
+     File / SaveAs</kbd></span><span style="mso-bidi-font-family: Courier New"> 
+     capability on the generated catalog file. Choosing &quot;txt&quot; format will output 
+     a printable text file that dumps the catalog structure, enabling to quickly 
+     identify missing converted details, for example.</span></td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol class="task">
+       <li>
+       <p class="task" style="line-height: 100%; margin-top: 0; margin-bottom: 0">
+       Open the document <a href="b35doc/english/online/intug_c2/samples/ConvertLibrary.CATScript">
+       <font face="Verdana, Helvetica, sans serif">ConvertLibrary.CATScript</font></a> 
+       It looks like this:</li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <p class="task">Abstract:<br>
+         Conversion batch of V4 Libraries in V5 Catalogs.</p>
+         <p class="task">The generated report file (*.report) is located in the 
+         same catalog directory with the same catalog name.</p>
+       </blockquote>
+     </blockquote>
+     <table border="0" cellpadding="0" cellspacing="0" width="100%">
+       <caption>
+       <blockquote>
+         <font face="Courier New" size="2">
+         <p>Language=&quot;VBSCRIPT&quot; </p>
+         <p>Sub CATMain() </p>
+         <p><font color="#FF0000">' The following valuated parameters (AS_SPEC = 
+         0<br>
+         ' and AS_RESULT = 1) define the conversion format<br>
+         ' option of the space details in parts. DO NOT MODIFY<br>
+         ' these values; they are mandatory and reserved for<br>
+         ' the running application.</font> </p>
+         <p>AS_SPEC = 0<br>
+         AS_RESULT = 1 </p>
+         <p><font color="#FF0000">' Choose a conversion format by specifying the 
+         value<br>
+         ' AS_SPEC or AS_RESULT<br>
+         ' (e.g. CONVERSION_FORMAT = AS_SPEC).</font> </p>
+         <p>CONVERSION_FORMAT = AS_SPEC </p>
+         <p><font color="#FF0000">' The following valuated parameters (MIGRATION 
+         = 0<br>
+         ' and SIMULATION = 1 and RATTRAP = 2) define the batch mode option.<br>
+         ' DO NOT MODIFY these values; they are mandatory<br>
+         ' and reserved for the running application.</font> </p>
+         <p>MIGRATION = 0<br>
+         SIMULATION = 1 </p>
+         <p>RATTRAP = 2 </p>
+         <p>&nbsp; </p>
+         <p><font color="#FF0000">' Choose the desired batch mode by specifying<br>
+         ' the value MIGRATION or SIMULATION<br>
+         ' (e.g. BATCH_MODE = MIGRATION).</font> </p>
+         <p>BATCH_MODE = MIGRATION </p>
+         <p><font color="#FF0000">' Specify the absolute UNIX directory of the 
+         V4<br>
+         ' library. In Windows, use the http protocol and<br>
+         ' take care of the / separator on UNIX<br>
+         ' (e.g. libraryDirectory<br>
+         ' = &quot;http://machine_name/../../FASTENERS&quot;).</font> </p>
+         <p>libraryDirectory = &quot;http://../../FASTENERS&quot; </p>
+         <p>&nbsp; </p>
+         <p><span style="mso-bidi-font-family: Courier New">'<br>
+         ' Specify the catalog name (with its extension)<br>
+         ' the catalog filename correspond to the name of the<br>
+         ' sub-directory containing the V4 libraries.<br>
+         ' This parameter is used to open the catalog in RATTRAP<br>
+         ' mode<br>
+         ' It will not be used in the others (MIGRATION or<br>
+         ' SIMULATION) modes<br>
+         ' e.g:<br>
+         ' if libraryDirectory is set to '/u/users/xxx/LIB'<br>
+         ' then, catalogName has to be set as 'LIB.catalog'</span> </p>
+         <p><span style="mso-bidi-font-family: Courier New">catalogName = &quot;LIB.catalog&quot;</span>
+         </p>
+         <p style="word-spacing: 0; line-height: 100%; margin-top: 0; margin-bottom: 0">
+         <font color="#FF0000">' Specify the absolute directory of the catalog. 
+         In<br>
+         ' Windows, take care of the \ separator<br>
+         ' (e.g. catalogDirectory = &quot;E:\..\..\catalog&quot;)</font> </p>
+         <p style="word-spacing: 0; line-height: 100%; margin-top: 0; margin-bottom: 0">
+         <font color="#FF0000">' All catalog files will be generated in this 
+         directory (one per family).</font> </p>
+         <p>catalogDirectory = &quot;E:\..\..\Catalog&quot; </p>
+         <p>&nbsp; </p>
+         <p><font color="#FF0000">' Specify the absolute UNIX directory of the 
+         V4 project<br>
+         ' if the V4 library needs one<br>
+         ' (e.g. projectDirectory<br>
+         ' = &quot;http://machine_name/../../project&quot;),<br>
+         ' otherwise, you have to specify an empty one<br>
+         ' (e.g. projectDirectory = &quot; &quot;).</font> </p>
+         <p>projectDirectory = &quot;http://../../Interop&quot;<br>
+         <font color="#FF0000">'projectDirectory = &quot; &quot;</font> </p>
+         <p><font color="#FF0000">' Specify the absolute path of the character<br>
+         ' conversion table to convert V4 file names of details<br>
+         ' and families in V5 file names of parts and chapters<br>
+         ' (e.g. tablePath = &quot;E:\..\..\table.txt&quot;), or indicate an<br>
+         ' empty one if you want to use the default installation<br>
+         ' (e.g. tablePath = &quot;&quot;).</font> </p>
+         <p>tablePath = &quot;E:\..\..\table.txt&quot; </p>
+         <p><font color="#FF0000">' Creates a CatalogDocument type document. DO<br>
+         ' NOT MODIFY the following declaration and valuated<br>
+         ' parameters<br>
+         ' (Dim Catalog As Document and<br>
+         ' Set Catalog =<br>
+         ' CATIA.Documents.Add(&quot;CatalogDocument&quot;)).</font> </p>
+         <p>Dim Catalog As Document </p>
+         </font>
+         <p><font size="3">
+         <span style="mso-fareast-font-family: Times New Roman; mso-bidi-font-family: Courier New; mso-ansi-language: FR; mso-fareast-language: EN-US; mso-bidi-language: AR-SA" lang="FR">
+         if ( BATCH_MODE = RATTRAP ) then<br>
+         Set Catalog = CATIA.Documents.Open(catalogDirectory &amp; &quot;/&quot; &amp; catalogName)<br>
+         else<br>
+         <span style="mso-fareast-font-family: Times New Roman; mso-bidi-font-family: Courier New; mso-ansi-language: FR; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+         Set Catalog = CATIA.Documents.Add(&quot;CatalogDocument&quot;)<br>
+         <span>end if</span></span></span></font> </p>
+         <font face="Courier New" size="2">
+         <p><font color="#FF0000">' Calls CreateCatalogFromLibrary method on 
+         Catalog.<br>
+         ' DO NOT MODIFY the following declaration related to<br>
+         ' previous variables<br>
+         ' (Catalog.CreateCatalogFromLibrary<br>
+         ' libraryDirectory,<br>
+         ' projectDirectory,<br>
+         ' catalogDirectory,<br>
+         ' tablePath,<br>
+         ' CONVERSION_FORMAT,<br>
+         ' BATCH_MODE).</font> </p>
+         <p>Catalog.CreateCatalogFromLibrary libraryDirectory, projectDirectory, 
+         catalogDirectory, tablePath, CONVERSION_FORMAT, BATCH_MODE </p>
+         <p><font color="#FF0000">' To perform automatically the close of the 
+         newly created<br>
+         ' catalog, decomment the Catalog.close command,<br>
+         ' otherwise put the command in comments.</font> </p>
+         <p>Catalog.Close </p>
+         <p>End Sub </p>
+       </blockquote>
+       </font></caption>
+     </table>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>
+     <ol class="task" start="2">
+       <li>
+       <p class="task">Adapt the CATScript file to your needs by selecting the 
+       settings you want to use (for CONVERSION_FORMAT and BATCH_MODE) and by 
+       providing the different paths required for the batch (libraryDirectory, 
+       catalogDirectory, projectDirectory and tablePath). The comments relating 
+       to these settings and paths are shown above in red.<br>
+       As you can see, this file, written in the VBScript language, contains the 
+       information required to batch-convert a V4 library into a V5 catalog file 
+       in the location you specify. It can be used on both Windows and UNIX. (Do 
+       not forget to use the http protocol on Windows to access the library and 
+       the PRJ file.)<br>
+       In the example above the CATScript file contains just one set of 
+       instructions to batch-convert a single library. However, a CATScript file 
+       can of course include several series of instructions for the conversion 
+       of several libraries.</li>
+       <li>
+       <p class="task">Close the file when you have finished.</li>
+       <li>
+       <p class="task">If you now wish to act on the information above and 
+       modify the string to replace one of the characters in the default 
+       conversion table, open the file table.txt and make the changes required.</li>
+       <li>
+       <p class="task">You are now ready to run the batch operation. Select the
+       <kbd>Tools &gt;Macro&gt;Macros</kbd> command.</li>
+       <li>
+       <p class="task">In the dialog box that appears, select the external file 
+       and the appropriate ConvertLibrary.CATScript file. Make sure that at the 
+       bottom of the box External File is selected indicating the location of 
+       the macro. Click on Run.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td bgcolor="#C0C0C0">
+     <blockquote>
+       <p><strong>Example</strong></p>
+       <p>Let us suppose you have a V4 library called FASTENERS on your UNIX 
+       machine. This library has two <strong>DETAIL</strong> type families: 
+       SCREWS and NUTS.&nbsp;</p>
+       <p>The migration will now create a chapter called FASTENERS in the 
+       document FASTENERS.catalog. For each DETAIL type family an end chapter 
+       will be created i.e. a chapter called SCREWS in the document 
+       SCREWS.catalog and a chapter called NUTS in the document NUTS.catalog. 
+       These end chapters are both referenced by the FASTENERS chapter which is 
+       the highest-level entry point in the catalog.</p>
+       <p>The migration does several things one of which is the conversion of 
+       the keywords of each V4 family to keywords in V5 that define the end 
+       chapters SCREWS and NUTS. The library family SCREWS, for example, has 
+       four keywords that are converted as follows:</p>
+       <table border="1" width="101%">
+         <tr>
+           <td width="58%" bgcolor="#B59BE3" height="31"><strong>Existing V4 
+           Library Family Keywords</strong></td>
+           <td width="42%" bgcolor="#B59BE3" height="31"><strong>Created V5 
+           Catalog Keywords</strong></td>
+         </tr>
+         <tr>
+           <td width="58%" bgcolor="#00FFFF" height="29"><i>REFERENCE</i><br>
+           an alphanumeric keyword</td>
+           <td width="42%" bgcolor="#00FFFF" height="29"><i>REFERENCE</i><br>
+           a string keyword</td>
+         </tr>
+         <tr>
+           <td width="58%" bgcolor="#00FFFF" height="14"><i>TYPE</i><br>
+           a discrete keyword with the possible values:<br>
+           CHC, FHC, H and HC</td>
+           <td width="42%" bgcolor="#00FFFF" height="14"><i>TYPE</i><br>
+           a string keyword</td>
+         </tr>
+         <tr>
+           <td width="58%" bgcolor="#00FFFF" height="45"><i>DIAMETER</i><br>
+           a numerical keyword with millimeter (mm) as the unit</td>
+           <td width="42%" bgcolor="#00FFFF" height="45"><i>DIAMETER</i><br>
+           a real keyword</td>
+         </tr>
+         <tr>
+           <td width="58%" bgcolor="#00FFFF" height="19"><i>LENGTH</i><br>
+           a numerical keyword with millimeter (mm) as the unit</td>
+           <td width="42%" bgcolor="#00FFFF" height="19"><i>LENGTH</i><br>
+           a real keyword</td>
+         </tr>
+       </table>
+       <p>It should be noted that discrete keywords are converted to strings and 
+       that units are NOT converted.</p>
+       <p>The migration then assigns the chapters as many descriptions as there 
+       are converted objects, retrieves the values of the keywords related to 
+       the object and establishes a reference to the Part resulting from the 
+       migration of the detail. For example, the object CHC M05*06 has the 
+       following characteristics:</p>
+       <table border="1" width="12%">
+         <tr>
+           <td width="76%" bgcolor="#80FF80" height="36">REFERENCE</td>
+           <td width="49%" bgcolor="#80FF80" height="36"><nobr>CHC M05*06</nobr></td>
+         </tr>
+         <tr>
+           <td width="76%" bgcolor="#80FF80" height="19">TYPE</td>
+           <td width="49%" bgcolor="#80FF80" height="19">CHC</td>
+         </tr>
+         <tr>
+           <td width="76%" bgcolor="#80FF80" height="14">DIAMETER</td>
+           <td width="49%" bgcolor="#80FF80" height="14">5,0</td>
+         </tr>
+         <tr>
+           <td width="76%" bgcolor="#80FF80" height="1">LENGTH</td>
+           <td width="49%" bgcolor="#80FF80" height="1">6,0</td>
+         </tr>
+       </table>
+       <p>The description in the chapter will have the same values.</p>
+       <p>The migration also converts the geometry of the detail into a Part 
+       whose name must be made up of V5-compliant characters (see
+       <a href="#Consequences of Migration on Filenames">
+       <font face="Verdana, Helvetica, sans serif">Consequences of Migration on 
+       Filenames</font></a> above). The asterisk is a character that is not 
+       supported by Windows and not available in V5 and so the Part cannot be 
+       named CHC M05*06.CATPart. The V4&gt;V5 correspondence table is therefore 
+       applied. If you had already supplied a conversion table containing:</p>
+       <div align="center">
+         <center>
+         <table border="1" cellspacing="1" width="184">
+           <tr>
+             <td width="60" align="center"><nobr>0x2a</nobr></td>
+             <td width="61" align="center"><nobr>*</nobr></td>
+             <td width="61" align="center"><nobr>x</nobr></td>
+           </tr>
+         </table>
+         </center>
+       </div>
+       <p>the part created will be given the name CHC M05x06.CATPart.</p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td rowspan="1">If, in the CATScript file,&nbsp;you chose <strong>
+     SIMULATION</strong> the batch operation will:
+     <ul>
+       <li>generate a report in the same location as the catalog file, allowing 
+       you to verify whether migration would be successful or not</li>
+       <li>detect errors in data migration</li>
+       <li>detect possible occurrences of V5 names following the conversion of 
+       V4 names into V5 names.</li>
+     </ul>
+     <p>
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"> 
+     If more than one occurrence of the same V5 name is detected the older 
+     CATPart documents are overwritten. You are therefore strongly advised to 
+     modify the conversion table so that CATParts are not created with the same 
+     name.</p>
+     <p>If, in the CATScript file, you chose <strong>MIGRATION</strong> the 
+     batch operation will generate:</p>
+     <ul>
+       <li>a report in the same location as the catalog file, allowing you to 
+       verify successful migration</li>
+       <li>a catalog with the name of the library.</li>
+     </ul>
+     <p>If a library is migrated to the same directory&nbsp;twice the catalog 
+     (both catalog and CATParts) generated by the previous migration is 
+     overwritten by the new one.</p>
+     <p><span style="mso-bidi-font-family: Arial">If, in the CATScript file, you 
+     chose <b>RATTRAP</b> the program locates the last converted objects then 
+     continues with the next ones. It will generate:</span> </p>
+     <ul>
+       <li><span style="mso-bidi-font-family: Arial">a report in the same 
+       location as the catalog files, allowing you to verify successful 
+       migration.</span></li>
+       <li><span style="mso-bidi-font-family: Arial">a catalog with the name 
+       given as input</span></li>
+     </ul>
+     <p><span style="mso-bidi-font-family: Arial">The library is migrated to the 
+     same directory and<span style="mso-spacerun:
+yes"> </span>the catalog files generated by the previous migration is 
+     overwritten by the new one.</span></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td rowspan="1">
+     <ol class="task" start="7">
+       <li>
+       <p class="task">If you want to open the catalog you have just created see 
+       &quot;Navigating Through a Catalog&quot;&nbsp;in the <i>CATIA - <font SIZE="2">Component 
+       Catalog Editor</font> User's Guide.</i></li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td colspan="2" rowspan="1" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

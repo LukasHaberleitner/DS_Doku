@@ -1,0 +1,222 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating Virtual Spring Bolt Tightening Connection Properties</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Creating Virtual Spring Bolt Tightening Connection Properties<a name="ix-commands::Virtual Spring Bolt Tightening Connection Property;tightening connection properties::virtual spring bolt;virtual spring bolt tightening connection properties;connection properties::virtual spring bolt tightening"></a></h1>
+ <table Border="0" CELLSPACING="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr>
+     <td align="center" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32">
+     </td>
+     <td rowspan="1"><a name="CATGPSCommandHeader.CATGPSVirtSpringBoltTighHdr">
+     </a>This task shows how to create a virtual spring bolt tightening 
+     connection between two parts. </td>
+   </tr>
+   <tr>
+     <td align="center" valign="top">
+     <img border="0" src="b35doc/english/online/estug_c2/images/icon_GAS.gif" width="32" height="32"></td>
+     <td align="left">
+     <ul>
+       <li>
+       <p class="task">Only available with the <b>Generative Assembly Structural 
+       Analysis (GAS)</b> product.</li>
+       <li>
+       <p class="task">To have precisions and to know restrictions, refer to
+       <a href="page7130.html#hj-PrecisionsRestrictions">About Connection 
+       Properties</a>.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+     <td>
+     <p class="task">Virtual Spring Bolt Tightening Connections are used to 
+     specify the boundary interaction between bodies in an assembled system. 
+     Once the geometric assembly positioning constraints are defined at the 
+     Product level, the user can specify the physical nature of the 
+     constraints.&nbsp;When creating this connection, both the coincidence 
+     constraints and the <b>Analysis Connections</b> workbench constraints can 
+     be selected.</p>
+     <p class="task">
+     <img border="0" src="b35doc/english/online/estug_c2/images/virtualspringboltpropNLS.gif" width="376" height="336"></p>
+     <p class="task"><i><b><font size="2">Surface 1 and surface 2 are supports 
+     for the assembly constraints of coincidence type.</font></b></i></p>
+     <p class="task">Virtual Spring Bolt Tightening Connection is a connection 
+     that takes into account pre-tension in a bolt-tightened assembly in which 
+     the bolt is not included. The computation is carried out according to the 
+     two-step traditional approach. In the first step of the computation, the 
+     model is submitted to tension forces relative to bolt tightening by 
+     applying opposite forces on the first surface (S1) and the second surface 
+     (S2) of the assembly constraint, respectively. Then, in the second step, 
+     the relative displacement of these two surfaces (obtained in the first 
+     step) is imposed while the model is submitted to user loads. The Virtual 
+     Spring Bolt Tightening Connection takes into account the elastic 
+     deformability of the surfaces and since bodies can be meshed independently, 
+     the Virtual Spring Bolt Tightening Connection is designed to handle 
+     incompatible meshes.</p>
+     <p class="task">The program proceeds as follows:</p>
+     <ul>
+       <li>
+       <p class="task">a central node is created at the centroid of each surface 
+       of the assembly constraint referenced as the support.</li>
+       <li>
+       <p class="task">for each surface/central node couple, a set of mean rigid 
+       body (constr-n) relations is generated to link the average displacement 
+       of the central nodes and the nodes of the surface.</li>
+       <li>
+       <p class="task">the first central node is linked to the duplicata of the 
+       second central node using a tightening element. This element generates:<ul>
+         <li>
+         <p class="task">a set of equality relations linking both nodes 
+         according to the rigid body motion except for the translation in the 
+         direction of the element.</li>
+         <li>
+         <p class="task">a cable inequality relation (the reverse of a contact 
+         element) in the direction of the element. This cable relation is used 
+         to enforce the relative displacement of both surfaces at the second 
+         step of the computation.</li>
+       </ul>
+       </li>
+       <li>
+       <p class="task">the second central node is linked to its duplicata using 
+       a spring element the characteristics of which are defined by the user.</li>
+     </ul>
+     <p class="task">To know more about the generated elements, refer to
+     <a href="page7588.html" target="ds_doc2">
+     Tightening Beam</a>,
+     <a href="page7586.html" target="ds_doc2">
+     Spring</a> and
+     <a href="page7591.html" target="ds_doc2">
+     Smooth Spider</a> in the <i>Finite Element Reference Guide</i>.</td>
+   </tr>
+   <tr>
+     <td align="center" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+     <td>
+     <p class="task">By default, when creating a virtual spring bolt tightening 
+     connection property, the stiffness rotations and translations are defined 
+     in a global axis system.</p>
+     <p class="task">To select a user axis system, use a user-defined distant 
+     connection property defined with the following combination:</p>
+     <ul>
+       <li>
+       <p class="task"><kbd>Smooth</kbd> as <kbd>Start</kbd> option</li>
+       <li>
+       <p class="task"><kbd>Spring-Rigid-Bolt</kbd> as <kbd>Middle</kbd> option</li>
+       <li>
+       <p class="task"><kbd>Smooth</kbd> as <kbd>End</kbd> option.</li>
+     </ul>
+     <p class="task">For more details about user-defined distant connection 
+     properties, refer to <a href="page7129.html">Creating User-defined 
+     Distant Connection Property</a> in this guide.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td align="center">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td rowspan="1">
+     <p class="task">Open the <a href="b35doc/english/online/estug_c2/samples/sample12.CATAnalysis">
+     sample12.CATAnalysis</a> document from the samples directory.</p>
+     <ul>
+       <li>
+       <p class="task">Make sure you created a Finite Element Model containing a 
+       Static Analysis Case from this assembly.</li>
+       <li>
+       <p class="task">Make sure you know all you need about
+       <a href="page7130.html#hj-PropertyType">what type of property you will 
+       use for what type of connection</a>.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">Click <kbd>Virtual Spring Bolt Tightening Connection 
+       Property</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_SamVirtualSpringBoltTighConnectP2.gif" width="24" height="24"> 
+       in the <kbd>Connection Properties</kbd> toolbar.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+         <tr>
+           <td>
+           <p class="task">The Virtual Spring Bolt Tightening Connection 
+           Property dialog box appears.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/dbvirtualspringboltprop01NLS.gif" width="352" height="294"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Select an analysis connection.</p>
+       <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber5">
+         <tr>
+           <td>
+           <p class="task">In this particular example, select the <kbd>General 
+           Analysis Connection.1</kbd> in the specification tree (under the <kbd>
+           Analysis Connection Manager.1</kbd> set).</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/stgeneralconnect02NLS.gif" width="227" height="80"></p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/dbvirtualspringboltprop02NLS.gif" width="352" height="294"></p>
+           <p class="task">A symbol representing the Virtual Spring Bolt 
+           Tightening Connection Property is visualized on the corresponding 
+           faces.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/VirtSpBoltTightConnectProp.gif" width="226" height="234"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Optionally modify the default value of the force and 
+       stiffness parameters. </li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd> in the Virtual Spring Bolt Tightening 
+       Connection Property dialog box. </p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4">
+         <tr>
+           <td>
+           <p class="task">Note that two elements appear in the specification 
+           tree: </p>
+           <ul>
+             <li>
+             <p class="task">A <kbd>Spring Virtual Bolt Connection Mesh.1</kbd> 
+             connection mesh part under the <kbd>Nodes and Elements</kbd> set</li>
+             <li>
+             <p class="task">A <kbd>Virtual Spring Bolt Tightening Connection 
+             Property.1</kbd> connection property under the <kbd>Properties.1</kbd> 
+             set.</li>
+           </ul>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/stvirtualspringboltpropNLS.gif" width="317" height="183"></td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

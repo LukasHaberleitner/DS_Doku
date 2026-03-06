@@ -1,0 +1,540 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Groove Milling Operations</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <a name="ix-Groove Milling operation"></a>
+ <h1>Groove Milling Operations</h1>
+ <p>The information in this section will help you create and edit <kbd>2.5 axis 
+ Groove Milling</kbd> operations in your manufacturing program. </p>
+ <p>Select <kbd>Groove Milling</kbd>
+ <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgGrooveMillingP2.gif" width="22" height="22"> then select the
+ <a href="#PCGeom">geometry</a> to be machined
+ <img border="1" src="b35doc/english/online/pmgug_c2/images/TabGeomG.gif" align="middle" width="36" height="22">.&nbsp;</p>
+ <p>Specify the <a href="#PCTool">tool</a> to be used
+ <img border="1" src="b35doc/english/online/pmgug_c2/images/TabToolG.gif" align="middle" width="36" height="22">, <a href="#PCMacros">
+ NC macros</a> <img border="1" src="b35doc/english/online/pmgug_c2/images/TabMacroG.gif" align="middle" width="36" height="22">, and<a href="#PCFandS"> 
+ feeds and speeds</a> <img border="1" src="b35doc/english/online/pmgug_c2/images/TabFeedG.gif" align="middle" width="36" height="22"> 
+ as needed.</p>
+ <p>A number of strategy parameters
+ <img border="1" src="b35doc/english/online/pmgug_c2/images/TabStratG.gif" align="middle" width="36" height="22"> are available for 
+ defining:</p>
+ <ul>
+   <li><a href="#PCmachining">machining criteria</a></li>
+ </ul>
+ <ul>
+   <li><a href="#PCstepover">axial and radial stepover conditions</a></li>
+ </ul>
+ <ul>
+   <li><a href="#PCfinish">finishing.</a></li>
+ </ul>
+ <p>The Machining direction (Top/Bottom, Bottom/Top) and Axial strategy 
+ (Standard, Middle, Middle alternate) parameters determine the tool path 
+ ordering for machining the groove as follows:</p>
+ <ul>
+   <li>The roughing pass ordering respects the Machining direction definition</li>
+   <li>If Side finish pass is defined: a side finish pass is done for each 
+   roughing level</li>
+   <li>If Top and/or Bottom finish passes are defined, Top and/or Bottom finish 
+   pass are done in order to minimize tool motion between levels.
+   <table border="0" cellspacing="1">
+     <tr>
+       <td width="100%"><b>For example, in Top/Bottom machining with Top and 
+       Bottom finish passes</b>, top finishing is done just after the first 
+       machining level and just before the second machining level.<br>
+       <img border="1" src="b35doc/english/online/pmgug_c2/images/groovemill01.gif" width="414" height="265"></td>
+     </tr>
+     <tr>
+       <td width="100%"><b>In Bottom/top machining with Top and Bottom finish 
+       passes</b>, bottom finishing is done just after the first machining level 
+       and just before the second machining level.<br>
+       <img border="1" src="b35doc/english/online/pmgug_c2/images/groovemill02.gif" width="400" height="221"></td>
+     </tr>
+   </table>
+   </li>
+   <li>The tool compensation point is taken into account for each pass. This 
+   point is switched automatically during a Return between levels macro whenever 
+   the next level to machine requires a different compensation point. </li>
+ </ul>
+ <h2>Groove Milling Strategy Parameters</h2>
+ <h3><a name="PCmachining"></a>Groove Milling: Machining Parameters</h3>
+ <table BORDER="0" CELLSPACING="1">
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="12"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="596"><b>Tool path 
+     style</b><br>
+     <a name="ix-Tool path style:Groove Milling parameter"></a>Indicates the 
+     cutting mode of the operation:
+     <ul>
+       <li><kbd>Zig Zag</kbd>: the machining direction is reversed from one path to the 
+       next</li>
+     </ul>
+     <ul>
+       <li><kbd>One way</kbd>: the same machining direction is used from one path to the 
+       next.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="12"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="596" rowspan="3"><b>
+     Direction of cut</b><br>
+     <a name="ix-Direction of cut:Groove Milling parameter"></a>Specifies how 
+     machining is to be done.
+     <ul>
+       <li>In <b>Climb milling</b>, the front of the advancing tool (in the 
+       machining direction) cuts into the material first.<br>
+       <img border="1" src="b35doc/english/online/pmgug_c2/images/helpDirofCut01.gif" align="middle" width="150" height="150"></li>
+     </ul>
+     <ul>
+       <li>In <b>Conventional </b>, the rear of the advancing tool (in the 
+       machining direction) cuts into the material first.<br>
+       <img border="1" src="b35doc/english/online/pmgug_c2/images/helpDirofCut02.gif" align="middle" width="150" height="150"></li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="12"></td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="12"></td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="12"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="596"><b>Machining 
+     tolerance</b><br>
+     <a name="ix-Machining tolerance:Groove Milling parameter"></a>Specifies the 
+     maximum allowed distance between the theoretical and computed tool path.
+     </td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="12"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="596"><b>Fixture 
+     accuracy</b><br>
+     <a name="ix-Fixture accuracy:Groove Milling parameter"></a>Specifies a 
+     tolerance applied to the fixture thickness. If the distance between the 
+     tool and fixture is less than fixture thickness minus fixture accuracy, the 
+     position is eliminated from the trajectory. If the distance is greater, the 
+     position is not eliminated. </td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="12"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="596"><b>Close tool 
+     path</b><br>
+     <a name="ix-Close tool path:Groove Milling parameter"></a>Specifies whether 
+     or not the program must close the tool path. <br>
+     <img border="1" src="b35doc/english/online/pmgug_c2/images/helpClosePath01.gif" width="150" height="150">
+     <img border="1" src="b35doc/english/online/pmgug_c2/images/helpClosePath02.gif" width="150" height="150"></td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="12"></td>
+     <td style="padding-top: 5; padding-bottom: 5" valign="top" width="593"><b>
+     Percentage overlap</b><br>
+     <a name="ix-Percentage overlap:Groove Milling parameter"></a>Specifies the 
+     amount that the tool must go beyond the end point of a closed tool path 
+     according to a percentage of the tool diameter. <br>
+     <img border="1" src="b35doc/english/online/pmgug_c2/images/helpPercentOverlap.gif" width="150" height="150"></td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="12"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="596"><b>
+     <a name="WNR13Cutcom"></a>Compensation output</b><br>
+     <a name="ix-Compensation output:Groove Milling parameter"></a>Allows you to 
+     manage the generation of Cutter compensation (CUTCOM) instructions.<p>The 
+     following options are proposed:</p>
+     <ul>
+       <li>If <b>2D Radial profile</b> is selected, both the tool tip and cutter 
+       profile will be visualized during tool path replay.&nbsp;Cutter compensation 
+       instructions are automatically generated in the NC data output. An 
+       approach macro must be defined to allow the compensation to be applied.</li>
+       <li>If <b>2D Radial tip</b> is selected, the tool tip will be visualized 
+       during tool path replay.&nbsp;Cutter compensation instructions are 
+       automatically generated in the NC data output. An approach macro must be 
+       defined to allow the compensation to be applied.</li>
+       <li>If <b>None</b> is selected, cutter compensation instructions are not 
+       generated in the NC data output. In this case, please refer to
+       <a href="page12421.html">How to generate CUTCOM syntaxes</a>.&nbsp;</li>
+     </ul>
+     <p>Any user-defined PP words in macros are added to the cutter compensation 
+     instructions generated in the NC data output. Therefore you should be 
+     careful when specifying CUTCOM instructions in macros.</p>
+     <p>A negative Offset on contour (parameter in Geometry tab page) is 
+     possible for 2D radial profile output.</p>
+     <p><img border="1" src="b35doc/english/online/pmgug_c2/images/OutputType01NLS.gif" width="427" height="221"> </td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="12"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="596"><b>Compensation 
+     on top / Compensation on bottom<br>
+     </b><a name="ix-Compensation on top:Groove Milling parameter"></a>
+     <a name="ix-Compensation on bottom:Groove Milling parameter"></a>Specifies 
+     the tool corrector identifiers to be used in the operation. This point is 
+     switched automatically during a Return between levels macro whenever the 
+     next level to machine requires a different compensation point.<p>The 
+     corrector type (P1, P2, P3, for example), corrector identifier, and 
+     corrector number are defined on the tool. When the NC data source is 
+     generated, the corrector number can be generated using specific parameters.&nbsp;
+     </td>
+   </tr>
+ </table>
+ <h3><a name="PCstepover"></a>Groove Milling: Axial/Radial Stepover Parameters</h3>
+ <table BORDER="0" CELLSPACING="1">
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="19"></td>
+     <td style="padding-top: 5; padding-bottom: 5" valign="top"><b>Machining 
+     direction</b><br>
+     <a name="ix-Machining direction:Groove Milling parameter"></a>Defines how 
+     the distance between two consecutive levels is to be computed:
+     <ul>
+       <li><kbd>Top/Bottom</kbd></li>
+       <li><kbd>Bottom/Top</kbd>.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="19"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="621"><b>Axial strategy</b><br>
+     <a name="ix-Axial strategy:Groove Milling parameter"></a>Defines how the 
+     tool path is to be ordered for machining the groove:
+     <ul>
+       <li><kbd>Standard</kbd></li>
+       <li><kbd>Middle</kbd><br>
+       Example: <b>Middle axial strategy with Bottom/Top machining </b><br>
+       <img border="1" src="b35doc/english/online/pmgug_c2/images/groovemill04.gif" width="413" height="246"><br>
+       Example: <b>Middle axial strategy with Top/Bottom machining </b><br>
+       <img border="1" src="b35doc/english/online/pmgug_c2/images/groovemill05.gif" width="424" height="242"></li>
+       <li><kbd>Middle alternate</kbd><br>
+       Example: <b>Middle alternate axial strategy with Top/Bottom machining </b>
+       <br>
+       <img border="1" src="b35doc/english/online/pmgug_c2/images/groovemill06.gif" width="405" height="266"></li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="19"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="621"><b>Axial mode</b><br>
+     <a name="ix-Axial mode:Groove Milling parameter"></a>Defines how the 
+     distance between two consecutive levels is to be computed:
+     <ul>
+       <li><kbd>Maximum depth of cut</kbd></li>
+     </ul>
+     <ul>
+       <li><kbd>Number of levels</kbd></li>
+     </ul>
+     <ul>
+       <li><kbd>Number of levels without top.</kbd></li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="19"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="621"><b>Maximum depth 
+     of cut</b><br>
+     <a name="ix-Maximum depth of cut:Groove Milling parameter"></a>Defines the 
+     maximum depth of cut in an axial strategy. </td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="19"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="621"><b>Number of 
+     levels</b><br>
+     <a name="ix-Number of levels:Groove Milling parameter"></a>Defines the 
+     number of levels to be machined in an axial strategy. </td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="19"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="621"><b>Breakthrough</b><br>
+     <a name="ix-Breakthrough:Groove Milling parameter"></a>Specifies the 
+     distance in the tool axis direction that the tool must go completely 
+     through the part. Breakthrough is applied on the bottom element, which must 
+     be specified as <i>soft</i>.&nbsp;</td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="19">&nbsp;</td>
+     <td style="padding-top: 5; padding-bottom: 5" valign="top"><b>Distance 
+     between paths</b><br>
+     <a name="ix-Distance between paths:Groove Milling parameter"></a>Defines 
+     the maximum distance between two consecutive tool paths in a radial 
+     strategy. <br>
+     <img border="1" src="b35doc/english/online/pmgug_c2/images/helpDistBtwnPaths.gif" width="150" height="150"></td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="19">&nbsp;</td>
+     <td style="padding-top: 5; padding-bottom: 5" width="621"><b>Number of 
+     paths</b><br>
+     <a name="ix-Number of paths:Groove Milling parameter"></a>Defines the 
+     number of tool paths in a radial strategy. </td>
+   </tr>
+ </table>
+ <h3><a name="PCfinish"></a>Groove Milling Finishing Parameters</h3>
+ <table BORDER="0" CELLSPACING="1">
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="20"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="745" colspan="2"><b>
+     Finishing mode</b><br>
+     <a name="ix-Finishing mode:Groove Milling parameter"></a>Indicates whether 
+     or not finish passes are to be generated on the sides, top and bottom of 
+     the area to machine. There are several possible combinations:<br>
+     <br>
+&nbsp;&nbsp;&nbsp; <img border="1" src="b35doc/english/online/pmgug_c2/images/Finish_Grooving.gif" width="282" height="52"><p><b>For 
+     example, Top/Bottom machining with side, top and bottom finish passes</b>:<br>
+     <img border="1" src="b35doc/english/online/pmgug_c2/images/groovemill03.gif" width="385" height="259"> </td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="20"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="373" valign="top">
+     <a name="ix-Side finish thickness:Groove Milling parameter"></a>
+     <a name="ix-Bottom finish thickness:Groove Milling parameter"></a>
+     <a name="ix-Top finish thickness:Groove Milling parameter"></a><b>Side 
+     finish thickness</b><br>
+     Specifies the thickness of material that will be machined when finishing 
+     the flank of the groove.</td>
+     <td style="padding-top: 5; padding-bottom: 5" width="372" valign="top">
+     <img border="1" src="b35doc/english/online/pmgug_c2/images/helpFinishThk02.gif" width="150" height="150"> </td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="20"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="373" valign="top"><b>
+     Bottom finish thickness</b><br>
+     Specifies the thickness of material that will be machined when finishing 
+     the bottom of the groove.</td>
+     <td style="padding-top: 5; padding-bottom: 5" width="372" valign="top">
+     <img border="1" src="b35doc/english/online/pmgug_c2/images/helpFinishThk03.gif" width="150" height="150"> </td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="20">&nbsp;</td>
+     <td style="padding-top: 5; padding-bottom: 5" width="745" valign="top" colspan="2">
+     <b>Bottom thickness on side finish</b><br>
+     <a name="ix-Bottom thickness on side finish:Groove Milling parameter"></a>
+     Specifies the bottom thickness used for last side finish pass, if side 
+     finishing is requested on the operation.<p>
+     <img border="1" src="b35doc/english/online/pmgug_c2/images/BottomThkOnSide01.gif" width="371" height="190"></td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="20"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="745" valign="top" colspan="2">
+     <b>Top finish thickness</b><br>
+     Specifies the thickness of material that will be machined when finishing 
+     the top of the groove.</td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="20"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="745" colspan="2"><b>
+     Top/bottom finish path style</b><br>
+     <a name="ix-Top/bottom finish path style:Groove Milling parameter"></a>
+     Defines the finish path style for the top and bottom finish passes: Zig zag 
+     or One way. </td>
+   </tr>
+   <tr>
+     <td style="padding-top: 5; padding-bottom: 5" width="20"></td>
+     <td style="padding-top: 5; padding-bottom: 5" width="745" colspan="2"><b>
+     Spring pass</b><br>
+     <a name="ix-Spring pass:Groove Milling parameter"></a>Indicates whether or 
+     not a spring pass is to be generated on the sides in the same condition as 
+     the previous Side finish pass. The spring pass is used to compensate the 
+     natural <i>spring</i> of the tool. </td>
+   </tr>
+ </table>
+ <h2><a name="PCGeom"></a>Groove Milling Geometry</h2>
+ <p>Tool follows a guiding contour between top and bottom of the groove while 
+ respecting user-defined geometry limitations and machining strategy parameters.</p>
+ <p>You can specify the following Geometry:</p>
+ <ul>
+   <li>Bottom (planar face or surface) with possible <kbd>Offset on Bottom</kbd>. 
+	Bottom may be <kbd>Hard</kbd> or <kbd>Soft</kbd>.</li>
+ </ul>
+ <ul>
+   <li>Top plane with possible <kbd>Offset on Top</kbd>. Top may be <kbd>Hard</kbd> or
+	<kbd>Soft</kbd>.</li>
+   <li>Open or closed guiding contour (edges or sketch) with possible <kbd>Offset on 
+   Contour</kbd>.</li>
+   <li>Start and Stop Relimiting elements with possible <kbd>Offsets</kbd>.&nbsp;</li>
+   <li>Fixture or check elements with possible <kbd>Offset on Check</kbd>.</li>
+ </ul>
+ <h3><a name="GuidCont"></a>Specifying Guiding Contours</h3>
+ <p>Guiding contours can be specified in several ways:</p>
+ <a name="ix-contextual command::Contour Detection;Contour Detection contextual command">
+ </a>
+ <a name="ix-contextual command::By Belt of Faces;By Belt of Faces contextual command">
+ </a>
+ <a name="ix-contextual command::By Boundary of Faces;By Boundary of Faces contextual command">
+ </a><a name="ix-contextual command::Sectioning;Sectioning contextual command">
+ </a>
+ <ul>
+   <li>if the <b>Contour Detection</b> contextual command is set, select the 
+   bottom element. The boundary of the selected face will be proposed as guiding 
+   contour. </li>
+ </ul>
+ <ul>
+   <li>select edges. In this case the
+   <a href="page11480.html#EdgeSelToolbar" target="ds_doc2">
+   Edge Selection toolbar</a> appears to help you specify the guiding contour.</li>
+ </ul>
+ <ul>
+   <li>select the <b>By Belt of Faces</b> or <b>By Boundary of Faces</b> 
+   contextual command. In this case the
+   <a href="page11480.html#FaceSelToolbar" target="ds_doc2">
+   Face Selection toolbar</a> appears to help you specify the guiding contour.</li>
+ </ul>
+ <ul>
+   <li>select the <b>Sectioning</b> contextual command. Please refer to
+   <a href="page4937.html" target="ds_doc2">
+   Sectioning</a> for details of how to use this capability.<br>
+   Please note that the sectioning selection method is not associative.</li>
+ </ul>
+ <h3><a name="WNR12RelimElem"></a>Specifying Relimiting Elements</h3>
+ <a name="ix-contextual command::Relimitation point detection;Relimitation point detection contextual command">
+ </a>
+ <a name="ix-contextual command::Add relimiting point;Add relimiting point contextual command">
+ </a>
+ <p>The guiding contour can be restricted by means of Start and Stop relimiting 
+ elements.&nbsp;The tool can be positioned <kbd>In</kbd>, <kbd>On</kbd> or <kbd>Out</kbd> with respect to a relimiting 
+ element. You can select a point or a curve as relimiting element.</p>
+	<p>You can use points created &quot;on the fly&quot; but be aware of the following 
+	recommendation. By deciding to use explicitly &quot;on the fly&quot; created points as 
+	limit, you discard any associativity with the part. Such points are only 
+	known via their XYZ coordinates. Since they are not part of the same Product 
+	as the part, we cannot ensure that their location is kept for each and any 
+	transformation applied to the part. </p>
+	<p>Basic scenario where points are created on the fly on part1, then part1 
+	is mounted on the machine once is supported. But Advanced scenario with 
+	several transformations (e.g. create the points on the fly on part1, mount 
+	part1, change part1 to part2, mount part2) are not supported. The usage of 
+	&quot;on the fly&quot; created points should be limited to machining scenario where 
+	there is no move, nor change of the part. </p>
+	<p>If you expect the limiting points to always follow the part location, the 
+	creation of CATPoint in the same product as the part is the correct 
+	methodology. </p>
+ <p>If you do not look for part associativity, a fast way to specify relimiting points is to right-click the guiding 
+ contour area in the sensitive icon of the dialog box and set the <b>
+ Relimitation point detection</b> contextual command.&nbsp; When you select a 
+ guiding contour, its extremities will be used as relimiting elements.</p>
+ <p>Note that a relimiting point can be created anywhere along the guiding 
+ contour by means of the <b>Add relimiting point </b>contextual command. Just 
+ right-click the relimiting element area in the sensitive icon of the dialog box 
+ and select any position along the guiding contour. </p>
+ <h3 align="left"><a name="R14CollChk"></a>
+ <a name="ix-Collision checking:Groove Milling parameter"></a>Checking for 
+ Collisions between Tool and Guide Elements during Macro Motions</h3>
+ <p align="left">Collision checking is done during macro motion. All guiding 
+ elements defined on the operation are taken into account during this 
+ verification. However, in some cases, it can be useful to deactivate collision 
+ checking with the guides (see example below). </p>
+ <p align="left">The Collision Avoidance capability allows you to manage this 
+ collision checking. </p>
+ <p align="left">When you select <b>Collision checking</b> on the <kbd>Geometry</kbd> tab 
+ page, the following dialog box appears. </p>
+ <p align="left">
+&nbsp;<img title="" src="b35doc/english/online/pmgug_c2/images/dbCollisionCheckingNLS.gif" width="267" height="154"></p>
+ <p align="left">When the <b>Include Guiding elements </b>check box is selected, 
+ guides are checked for collisions during macro motion. By default the check box 
+ is selected. When the check box is not selected, no collision verification is 
+ done with the guides during macro motions. By default the check box is selected. </p>
+	<p align="left">When the <kbd>Include Part from Part 
+	<a name="hj-Operation2">Operation</a></kbd><a name="hj-Operation2"> </a>check box 
+is selected, the part is retrieved from&nbsp;the <kbd>Part Operation</kbd> if part is not 
+defined at the Machining Operation level and used in collision check for 
+approach/retract macro.<br>
+		<img title="" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" width="13" height="13"> By default, the check box is not selected.<br>
+	<br>
+	When the  <kbd>Include only selected faces </kbd>check box is selected, 
+	faces are selected in the authoring window for collision checking. Face selection is activated only on selection of this check box, and the 
+selected faces are considered for collision checking with the macro.<br>
+	The <kbd>Include Part from Part 
+<a name="hj-Operation3">Operation</a></kbd> and &nbsp;<kbd>Include 
+	only selected faces</kbd> 
+	options are mutually exclusive.<br>
+<img title="" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" width="13" height="13"> By default, the check box is not selected.<br>
+	</p>
+ <h2><a name="PCTool"></a>Groove Milling Tools</h2>
+ <p>A Groove Milling operation uses a T-Slotter.</p>
+ <h2><a name="PCFandS"></a>Groove Milling Feeds and Speeds</h2>
+ <p>In the <kbd>Feeds and Speeds</kbd> tab page, you can specify feedrates for approach, 
+ retract, machining and finishing as well as a machining spindle speed.</p>
+ <p>Feedrates and spindle speed can be defined in linear or angular units.</p>
+ <p>A <kbd>Spindle output</kbd> check box is available for managing output of the SPINDL 
+ instruction in the generated NC data&nbsp; file. If the check box is selected, 
+ the instruction is generated. Otherwise, it is not generated.&nbsp;</p>
+ <p>Feeds and speeds of the operation can be updated automatically according to 
+ tooling data and the Rough or Finish quality of the operation. This is 
+ described in
+ <a href="page11449.html#FSUpdate" target="ds_doc2">
+ Update of Feeds and Speeds on Machining Operation</a>.</p>
+ <h4><a name="WNR10PCFeedReduction"></a>Feedrate Reduction in Corners</h4>
+ <a name="ix-Feedrate reduction in corners:Groove Milling parameter"></a>
+ <p>You can reduce feedrates in corners encountered along the tool path 
+ depending on values given in the <kbd>Feeds and Speeds</kbd> tab page:
+ <a name="ix-Reduction rate (feed reduction)"></a>
+ <a name="ix-Maximum radius (feed reduction)"></a>
+ <a name="ix-Minimum angle (feed reduction)"></a>
+ <a name="ix-Distance before corner (feed reduction)"></a>
+ <a name="ix-Distance after corner (feed reduction)"></a><kbd>reduction rate</kbd>, 
+	<kbd>maximum 
+	radius</kbd>, <kbd>minimum angle</kbd>, and <kbd>distances before and after the corner</kbd>.</p>
+ <div align="left">
+   <blockquote>
+     <table border="0">
+       <tr>
+         <td><img border="1" src="b35doc/english/online/pmgug_c2/images/dbFeedReduction01NLS.gif" width="260" height="154"></td>
+         <td>
+         <p align="left"><img border="1" src="b35doc/english/online/pmgug_c2/images/FeedReduction02NLS.gif" width="263" height="171"></td>
+       </tr>
+     </table>
+   </blockquote>
+ </div>
+ <p>Feed reduction is applied to corners along the tool path whose radius is 
+ less than the Maximum radius value and whose arc angle is greater than the 
+ Minimum angle value. Corners can be angled or rounded.</p>
+ <p>For Groove Milling, feedrate reduction applies to inside corners for 
+ machining or finishing passes. It does not apply for macros or default linking 
+ and return motions.</p>
+ <p>If a cornering is defined with a radius of 5mm and the Feedrate reduction in 
+ corners set to a lower radius value, the feedrate will not be reduced.</p>
+ <h2><a name="PCMacros"></a>Groove Milling NC Macros</h2>
+ <p>You can define transition paths in your machining operations by means of NC 
+ Macros.&nbsp;These transition paths are useful for providing approach, retract and 
+ linking motion in the tool path.&nbsp;</p>
+ <p>An <kbd>Approach</kbd> macro is used to approach the operation start point.</p>
+ <p>A <kbd>Retract</kbd> macro is used to retract from the operation end point.</p>
+ <p CLASS="0BodyContinued">A <kbd>Linking</kbd> macro may be used in several cases, for 
+ example: </p>
+ <ul>
+   <li>to link two non consecutive paths</li>
+ </ul>
+ <ul>
+   <li>to access finish and spring passes.</li>
+ </ul>
+ <p>A<kbd> Return on Same Level</kbd> macro is used in a multi-path operation to link two 
+ consecutive paths in a given level.</p>
+ <p>A <kbd>Return between Levels</kbd> macro is used in a multi-level machining operation 
+ to go to the next level.</p>
+ <p>A <kbd>Return to Finish Pass</kbd> macro is used in a machining operation to go to the 
+ finish pass.</p>
+ <p>A <kbd>Clearance</kbd> macro can be used in a machining operation to avoid a fixture, 
+ for example.</p>
+ <h2>Groove Milling P1/P2 Considerations</h2>
+ <p>Note that <b>P2 functionalities</b> for Groove Milling include all Finishing 
+ parameters, and Sectioning for guiding element selection.<br>
+ To edit in <b>P1</b> in a <kbd>Groove Milling</kbd> operation that was created in <b>P2</b>, 
+ the following parameter values must be set: </p>
+ <ul>
+   <li>Finishing Mode = No finish path</li>
+   <li>Side finish thickness = 0.0 mm</li>
+   <li>Top finish thickness = 0.0 mm</li>
+   <li>Bottom finish thickness = 0.0 mm</li>
+   <li>Spring pass = no.</li>
+ </ul>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,229 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Use Tolerances on Hole Design Features for Machining Processes</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Use Tolerances on Hole Design Features for Machining Processes</h1>
+ <a name="ix-Tolerance on Hole"></a>
+ <table border="0">
+   <tr>
+     <td valign="top" style="padding-bottom: 10">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" title="task target" width="32" height="32"></td>
+     <td valign="top" colspan="2" style="padding-bottom: 10">This task shows how 
+     to use tolerances on hole design features to apply a Machining Process with 
+     tolerancing considerations such as:<ul>
+       <li>validate a Reaming operation for an H7 hole</li>
+     </ul>
+     <ul>
+       <li>find a tool using a tolerance range</li>
+     </ul>
+     <ul>
+       <li>parameterize Circular milling parameters according to minimum and 
+       maximum values.</li>
+     </ul>
+     <p>This capability makes use of the Functional Tolerancing &amp; Annotations <b>
+     TPSPackage </b>Knowlegdeware package. You can load this package under <kbd>Tools</kbd> 
+     &gt; <kbd>Options</kbd> &gt; <kbd>General</kbd> &gt; <kbd>Parameters and Measures</kbd>. In the 
+		<kbd>Knowledge</kbd> tab page, 
+     select the <kbd>Load extended language libraries</kbd> check box and choose <b>
+     TPSPackage</b> as the package to load.<br>
+     See Functional Tolerancing &amp; Annotations User's Guide for more information.</td>
+   </tr>
+   <tr>
+     <td width="34" valign="top"></td>
+     <td width="35" valign="top"><font color="#1C1557"><b>1.</b></font></td>
+     <td width="830" valign="top" style="padding-bottom: 10">Select<code> </code>
+		<kbd>File 
+     &nbsp;&gt;&nbsp; Open</kbd><code> </code>then select the <a href="b35doc/english/online/pmgug_c2/samples/Tolerances.CATPart">
+     Tolerances.CATPart</a> document.
+     <p>The part is displayed in the <kbd>Part Design</kbd> workbench.</td>
+   </tr>
+   <tr>
+     <td width="34" valign="top"></td>
+     <td width="35" valign="top"><font color="#1C1557"><b>2.</b></font></td>
+     <td width="830" valign="top" style="padding-bottom: 10">Double click a 
+     tolerance of one of the toleranced holes (for example, Diameter 10 H7).<p>
+     The <kbd>Limit of Size Definition</kbd> dialog box appears.</p>
+     <blockquote>
+       <p><img border="1" src="b35doc/english/online/pmgug_c2/images/dbTolerForNC01NLS.gif" width="419" height="358"></p>
+     </blockquote>
+     <p>For the selected Diameter 10 H7 tolerance, the tabulated values are set 
+     to H7 and 0 / 0.018mm as minimum / maximum values.&nbsp;Click <kbd>OK</kbd> to quit the 
+     dialog box.</p>
+     <p>These values can be accessed in Knowledgeware expressions using the 
+     following functions:</p>
+     <ul>
+       <li>SemanticDimTabValue for the Hole quality (H7 in the example above)</li>
+     </ul>
+     <ul>
+       <li>ToleranceMin (or SemanticDimLowerLimit) for the minimum value (0mm in 
+       the example above)</li>
+     </ul>
+     <ul>
+       <li>ToleranceMax (or SemanticDimUpperLimit) for the maximum value 
+       (0.018mm in the example above).</li>
+     </ul>
+     <p>These functions can be used in Machining Processes (for example: <code>
+     ../startup/Manufacturing/Processes/MPWithToleranceControl.CATProcess).</code>
+     </p>
+     <p>The following steps are done in a Machining workbench.</td>
+   </tr>
+   <tr>
+     <td width="34" valign="top"></td>
+     <td width="35" valign="top"><font color="#1C1557"><b>3.</b></font></td>
+     <td width="722" valign="top"><b><u>Checks Editor</u></b><p>An example of 
+     use of Hole Quality in checks is shown below. </p>
+     <ul>
+       <li>Select <kbd>File &gt; Open </kbd>and select the <code>
+       MPWithToleranceControl.CATProcess </code>document.</li>
+     </ul>
+     <ul>
+       <li>Select <kbd>Machining Process View</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgMachiningProcessViewP2.gif" align="middle" width="22" height="22">.</li>
+     </ul>
+     <ul>
+       <li>Right click the <kbd>Reaming</kbd> operation and select <kbd>Edit Checks</kbd>.</li>
+     </ul>
+     <ul>
+       <li>Enter the expression in the <kbd>Checks Editor</kbd> as shown below and click
+		<kbd>OK</kbd>.<br>
+       Note that you must select the Diameter attribute before entering the <i>
+       SemanticDimTabValue=&quot;H7&quot;</i> string.</li>
+     </ul>
+     <blockquote>
+       <p><img border="1" src="b35doc/english/online/pmgug_c2/images/dbTolerForNC02NLS.gif" width="536" height="521"> </p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td width="34" valign="top"></td>
+     <td width="35" valign="top"><b>4.</b></td>
+     <td width="722" valign="top"><b><u>Tool Query</u></b>
+     <p>An example of use of Tolerance values for a Tool query is shown below.
+     </p>
+     <ul>
+       <li>Select <kbd>File &gt; Open</kbd> and select the <code>
+       MPWithToleranceControl.CATProcess </code>document.</li>
+     </ul>
+     <ul>
+       <li>Select <kbd>Machining Process View</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgMachiningProcessViewP2.gif" align="middle" width="22" height="22">.</li>
+     </ul>
+     <ul>
+       <li>Right click the Reaming operation's Tool Query and select <kbd>
+       Definition</kbd>.</li>
+     </ul>
+     <ul>
+       <li>Enter the expression in the <kbd>Tool Query Definition</kbd> dialog box as shown 
+       below and click <kbd>OK</kbd>.<br>
+       Note that you must select the <kbd>Diameter</kbd> attribute before entering the <i>
+       ToleranceMin </i>or <i>ToleranceMax</i> string.</li>
+     </ul>
+     <blockquote>
+       <p><img border="1" src="b35doc/english/online/pmgug_c2/images/dbTolerForNC03NLS.gif" width="527" height="595"> </p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td width="34" valign="top"></td>
+     <td width="35" valign="top"><b>5.</b></td>
+     <td width="722" valign="top"><b><u>Formula Editor</u></b>
+     <p>An example of use of Tolerance values in formulas is shown below. </p>
+     <ul>
+       <li>Select <kbd>File &gt; Open</kbd> and select the <code>
+       MPWithToleranceControl.CATProcess </code>document.</li>
+     </ul>
+     <ul>
+       <li>Select <kbd>Machining Process View</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgMachiningProcessViewP2.gif" align="middle" width="22" height="22">.</li>
+     </ul>
+     <ul>
+       <li>Right click the <kbd>Circular Milling</kbd> operation and select <kbd>Edit 
+       Formula</kbd>.</li>
+     </ul>
+     <ul>
+       <li>Enter the expression in the<kbd> Formula Editor</kbd> as shown below and click
+		<kbd>OK</kbd>.<br>
+       Note that you must select the <kbd>Diameter</kbd> attribute before entering the <i>
+       ToleranceMin </i>or <i>ToleranceMax</i> string.</li>
+     </ul>
+     <blockquote>
+       <p><img border="1" src="b35doc/english/online/pmgug_c2/images/dbTolerForNC04NLS.gif" width="544" height="597"> </p>
+     </blockquote>
+     <p>See
+     <a href="page11411.html" target="ds_doc2">
+     Create a Machining Process</a> for more information.</td>
+   </tr>
+   <tr>
+     <td width="34" valign="top"></td>
+     <td width="35" valign="top"><font color="#1C1557"><b>6.</b></font></td>
+     <td width="722" valign="top">Save the Machining Process in a catalog (for 
+     example: <code>../startup/Manufacturing/Processes/MP_demo.catalog)</code>.<p>
+     See
+     <a href="page11411.html" target="ds_doc2">
+     Organize Machining Processes</a> for more information.</td>
+   </tr>
+   <tr>
+     <td width="34" valign="top"></td>
+     <td width="35" valign="top"><b>7.</b></td>
+     <td width="722" style="padding-bottom: 10">Enter the desired Machining 
+     workbench and apply the Machining Process on toleranced holes as desired.
+     <blockquote>
+       <p><img border="1" src="b35doc/english/online/pmgug_c2/images/dbTolerForNC09NLS.gif" width="344" height="289"></p>
+     </blockquote>
+     <p>See
+     <a href="page11412.html" target="ds_doc2">
+     Apply a Machining Process</a> for more information.</td>
+   </tr>
+   <tr>
+     <td width="34" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" title="task target" width="32" height="32"></td>
+     <td width="35" valign="top"></td>
+     <td width="722" style="padding-bottom: 10">For the <kbd>Circular milling</kbd> 
+     operation, the machining tolerance is parameterized as shown by the <kbd>
+     f(x)</kbd> button.
+     <blockquote>
+       <p><img border="1" src="b35doc/english/online/pmgug_c2/images/dbTolerForNC05NLS.gif" width="390" height="448"></p>
+     </blockquote>
+     <p>Click the <kbd>f(x)</kbd> button to display the <kbd>Formula Editor</kbd>.</p>
+     <blockquote>
+       <p><img border="1" src="b35doc/english/online/pmgug_c2/images/dbTolerForNC06NLS.gif" width="591" height="248"> </p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td width="34" valign="top"></td>
+     <td width="35" valign="top"></td>
+     <td width="722" style="padding-bottom: 10">The hole diameter is 
+     parameterized as shown by the <kbd>f(x)</kbd> button on the <kbd>Edit Parameter
+		</kbd>dialog box.
+     <blockquote>
+       <p><img border="1" src="b35doc/english/online/pmgug_c2/images/dbTolerForNC08NLS.gif" width="428" height="514"></p>
+     </blockquote>
+     <p>Click the <kbd>f(x)</kbd> button to display the <kbd>Formula Editor</kbd>.</p>
+     <blockquote>
+       <p><img border="1" src="b35doc/english/online/pmgug_c2/images/dbTolerForNC07NLS.gif" width="671" height="230"> </p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td colspan="3" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="end of task" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,249 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Helix Approach Macro in Circular Milling</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style type="text/css">          		
+span.uicontrol { 
+	font-family: Verdana, Helvetica, sans serif; 
+	font-size: 8pt; 
+	letter-spacing: -0.05em; 
+	font-weight: bold; 
+	color: #666666;
+	}
+.style1 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+</head>
+
+<body>
+
+<h1><a name="HelixApproachMacroinCircularMilling0"></a><a name="top">Helix Approach Macro in Circular Milling</a></h1>
+<p>The information in this section guides you about the helix approach macro in 
+case of <kbd>Circular milling</kbd> operation.</p>
+<h2>Helix Motion Options</h2>
+<p>The following options are available for helix motion:</p>
+<ul>
+	<li><kbd>Helix Radius </kbd> </li>
+	<li><kbd>Helix Ramping Angle</kbd> </li>
+</ul>
+<table border="0" cellspacing="1" width="668">
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641">In case you 
+		have not specify the values of these parameters, then the default values 
+		would be considered. The default values are:
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641">
+		<ul>
+			<li><kbd>Helix radius </kbd>would be equal to 5mm, by default </li>
+			<li><kbd>Helix Ramping Angle</kbd> by default would be 5 deg.</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641">
+		The following parameters of the helix tool path would not be editable 
+		and would be computed by the operation.
+		<br>
+		<ul>
+			<li><kbd>Helix Height</kbd>: This would be calculated by the operation based on 
+			the hole depth and the number of levels as specified.</li>
+			<li><kbd>Helix axis</kbd>: This would be same as the tool axis. The helix will 
+			be at the centre of the hole. Arc radius of the arc joining the 
+			final circular motion: This values is not editable and would be same 
+			as the radius of the Helix specified.</li>
+		</ul>
+		<p>Tool path for the newly added Helix macro motions: 
+						When you select standard Machining mode in circular 
+						milling operation, the approach macro and Return between 
+						level approach macro would have an additional predefined 
+						motion. You can select this from <kbd>Mode</kbd> drop-down menu (<a href="page12398.html#PredefinedHelix">Creating 
+						a Circular Milling Operation</a>) and change the 
+						parameters of helix. </p>
+		</td>
+	</tr>
+	<tr>
+       <td style="height: 69px">
+       <h2>Tool Path for different Combinations of selected 
+						Helix Parameter</h2>
+		<p>The following sections shows the tool path for 
+						different combinations of selected helix parameter.</p>
+		<p>Note: All these motions are applicable only for 
+						Standard machining mode and Predefined-Helix mode.</p>
+		<h3>Scenario 1 </h3>
+		<p>Number of pass = 1 <br>
+						Number of levels = 1 </p>
+		<p>When the number pass and number of level both are 1, 
+						then the motion of the tool path would be as shown 
+						below:</p>
+		<p>
+		<img title="" src="b35doc/english/online/pmgug_c2/images/wnHelixMacroNLS6.gif" width="515" height="460" class="style1">&nbsp;</p>
+		<p>
+		When the number of pass is 1 and the number of levels is 1, then the 
+		motion of the tool path would consist of 8 sub -motions. The helix and 
+		the final circular motion would be concentric. There would be a straight 
+		line parallel to the hole bottom plane after the helix (See number 3 in 
+		above image) and a circular arc (See number 4 in above image) that would 
+		join the helix to the final finishing circle.</p>
+		<h3>
+		Scenario 2</h3>
+		<p>
+		Number of Pass = 2 or greater<br>
+		Number of levels = 1</p>
+		<p>
+		In this scenario the tool path would be as shown below. The number of 
+		passes (or multiple pass) would be applicable only to the finishing 
+		circular motion. The helix approach would be performed only once and the 
+		circular motion would be performed according to the number of paths.</p>
+		<p>
+		<img title="" src="b35doc/english/online/pmgug_c2/images/wnHelixMacroNLS7.gif" width="514" height="497" class="style1"></p>
+		<p>
+		The multiple pass would work in the same way as it was working earlier. 
+		The number of passes would be applicable only to the circular motion. In 
+		short, when the number of passes is more than 1, then there would be a 
+		return in al level approach macro ( line + arc) joining the new circular 
+		tool path. This is shown by 8 and 9 in the above image. The return again 
+		would be standard retract (arc + line) as shown with 11 and 12 in the 
+		above image. For the last level it would be retract. Else for 
+		intermediate levels, it would be return in a level retract.</p>
+		<p>
+		Circular motion is the only machining motion; multiple pass would be 
+		applied to circular motion only. Helical motion being a part of the 
+		approach and return between level approach motion, it will not 
+		participate in multiple pass.</p>
+		<h3>
+		Scenario 3</h3>
+		<p>
+		Number of pass = 1<br>
+		Number of levels = 2 or greater</p>
+		<p>
+		You can provide the number of levels from the <kbd>stepove</kbd>r tab in the 
+		geometry dialog box. Based on inputs, the number of levels will be used to 
+		calculate the tool path. When the number of levels is more than 1, then 
+		the tool path of scenario 1 above would be repeated for the number of 
+		levels as specified.</p>
+		<p>
+		The same is shown in the image below with number of levels as 2. The 
+		hole depth will be divided into two equal halves in this case. 
+		Similarly, the hole depth for each level would be altered based on the 
+		number of levels. Like for example, if the number of levels selected is 
+		4, then the hole depth would be split into four equal length totalling 
+		to the total hole depth and the tool path would be computed for those 
+		many levels.</p>
+		<p>
+		<img title="" src="b35doc/english/online/pmgug_c2/images/wnHelixMacroNLS8.gif" width="514" height="592" class="style1"></p>
+		<p>
+		As can be seen from above image, motion 6 and 7 are the return between 
+		level retract motions. After this motion is done, the return between 
+		level approach motions would be performed. If you selected a 
+		predefined-Helix mode for return between level approach too, then after 
+		motion 7, the same motions from 1 to 7 would be performed at a lower 
+		level.</p>
+		<p>
+		For the last level, the axial upward motion (8 in above image) would be 
+		performed.</p>
+		<h3>
+		Scenario 4</h3>
+		<p>
+		Number of passes = 2 or more<br>
+		Number of levels = 2 or more</p>
+		<p>
+		In this scenario, the motions of scenario 2 would be repeated as many 
+		times as the number of levels input given by the user. For the first 
+		level onwards (except the last level) the retract would be replaced by 
+		return between level retract and second level onwards, approach would be 
+		replaced by return between level approach. The image below shows the 
+		tool path motions for number of passes as 2 and number of levels as 2.</p>
+		<p>
+		<img title="" src="b35doc/english/online/pmgug_c2/images/wnHelixMacroNLS9.gif" width="513" height="646" class="style1"></p>
+		<p>
+		To summarize the entire tool path motion, the multiple pass would be 
+		applied to the circular motion only and the helix motion would be 
+		performed only once when the number of levels is 1. Based on the number 
+		of levels, the helix motion would be repeated with intermediate circular 
+		motion before starting the next helical movement.</p>
+       </td>
+       <td style="height: 69px"><a href="#top">
+       <img border="0" title="Back to top" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></td>
+     </tr>
+	<tr>
+       <td style="height: 69px">
+       <h2>Helix Radius Constraint</h2>
+       </td>
+       <td style="height: 69px"><a href="#top">
+       <img border="0" title="Back to top" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></td>
+     </tr>
+	<tr>
+       <td style="height: 69px">
+       <p>
+		If radius of the helix is same as that of the final circle, then the 
+		helix motion of the tool is followed by circular motion.</p>
+		<p>
+		The image below shows number of pass and number of levels as 1.</p>
+		<p>
+		<img title="" src="b35doc/english/online/pmgug_c2/images/wnHelixMacroNLS10.gif" width="515" height="385" class="style1"></p>
+		<p>
+		Similar logic would work for multiple pass and when number of levels is 
+		more than 1.</p>
+		<p>
+		If the helix radius given is more than the final circle radius for that 
+		particular part, then there would be an warning message thrown and the 
+		radius of helix would be set to the maximum possible (i.e. hole radius) 
+		by the operation. The warning message would be like this:<br>
+		The radius of Helical motion(s) in the macros used is greater than the 
+		smallest radius of the computed tool path. To avoid collisions, the 
+		macro radius has been set equal to the smallest tool path radius. </p>
+       </td>
+       <td style="height: 69px">&nbsp;</td>
+     </tr>
+	<tr>
+       <td style="height: 69px">
+       <h2>Helix Radius Value</h2>
+       </td>
+       <td style="height: 69px"><a href="#top">
+       <img border="0" title="Back to top" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></td>
+     </tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641">
+		<p>You have two options while providing the Helix radius value. You can 
+		either provide the Absolute Helix radius value or a value that will be 
+		relative to the final circular motion by selecting the particular 
+		check-box. Refer <a href="page12398.html#PredefinedHelix">Creating a 
+		Circular Milling Operation</a>.</p>
+		<p>If you select <kbd>Absolute Helix Radius</kbd> then the helix radius 
+		value will be the same as that provided on the radius manipulator.</p>
+		<p>If you select <kbd>Radius difference vs next path</kbd> then the 
+		helix radius will be internally computed and a difference with the next 
+		path radius will be given to the helix radius.</p>
+		<p>For example, suppose you have the path radius (radius of the circular 
+		motion) as 5mm. Now, when you give helix radius as 3mm and select <kbd>
+		Absolute Helix Radius</kbd>, then the radius of the helix motion would 
+		be 3mm. Thus, the actual radius provided by you will be the helix radius 
+		as you have selected the <kbd>Absolute Helix Radius</kbd> radio button.</p>
+		<p>If, for the same values as mentioned above, you select the <kbd>
+		Radius difference vs next path</kbd> radio button, then the helix radius 
+		will be calculated and it would be the difference between the radius of 
+		the circular motion and the radius value provided by you in the macro 
+		tool box. So in this case, the helix radius will be 5mm - 3mm = 2mm.</p>
+		<p>For the <kbd>Radius difference vs next path</kbd> option, the radius 
+		value provided by you will be subtracted from the radius of the circular 
+		motion and the result would be the radius of the Helix motion.</p>
+		</td>
+	</tr>
+	</table>
+
+</body>
+
+</html>
+

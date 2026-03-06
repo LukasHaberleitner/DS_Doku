@@ -1,0 +1,375 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+ <meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 6.0">
+ <meta NAME="ProgId" CONTENT="FrontPage.Editor.Document">
+ <meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+ <title>Computing Bundle Segments using the FLEX algorithm</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Computing<a name="ix-bundle segments::stiffness;FLEX algorithm;multi-branchable documents::bundle segment stiffness"></a> 
+ Bundle
+ <a name="ix-computation mode::FLEX algorithm;stiffness of bundle segments"></a>
+ Segments<br>
+ Using the FLEX Algorithm</h1>
+ <table BORDER="0" CELLSPACING="1" VALIGN="top">
+   <tr VALIGN="top" BORDER="0">
+     <td ALIGN="center">
+     <img src="b35doc/english/online/icons_C2/common/abasic.gif" width="32" height="32"></td>
+     <td VALIGN="middle">You can give your bundle segments a more realistic 
+     behavior that reflects bundle segment stiffness when designing your harness
+     <a href="#hj-scratch">from scratch</a> as well as when
+     <a href="#hj-existing">updating an existing design</a>.
+     <p>This is done using the FLEX algorithm. Based on bundle segment 
+     properties (length, diameter, etc.), CATIA computes the effective Young 
+     modulus and other input needed by the algorithm (cross section shape, 
+     flexibility). The algorithm takes into account protective coverings, 
+     internal splices as well 
+     as wires and wire groups:</p>
+     <ul>
+       <li>If no wires nor wire groups are routed, bundle segment stiffness is 
+       based on <a href="#hj-flex_slider">individual bundle segment flexibility</a></li>
+       <li>If wires and wire groups are routed, bundle segment stiffness is 
+       based on the properties of the wires and wire groups. In this case, 
+       individual bundle segment flexibility is ignored.</li>
+     </ul>
+     <p>If no FLEX solution can be found, a message informs the user and the 
+     standard algorithm is used.</p>
+     <p>The electrical designer can take advantage of all the benefits of the 
+     FLEX algorithm while working in exactly the same way as with the standard 
+     algorithm.</p>
+     <div align="left">
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5">
+         <tr>
+           <td>
+           <img border="0" src="b35doc/english/online/cfyugflexcable_C2/images/flex_comparison02.gif" width="267" height="189"></td>
+           <td style="padding-left: 10">Legend:<ul>
+             <li>standard algorithm: yellow</li>
+             <li>FLEX algorithm: blue</li>
+           </ul>
+           </td>
+         </tr>
+         <tr>
+           <td colspan="2">&nbsp;<p>Protective coverings add stiffness. This is 
+           taken into account by the FLEX algorithm.</td>
+         </tr>
+         <tr>
+           <td>Standard algorithm:</td>
+           <td style="padding-left: 10">FLEX algorithm:</td>
+         </tr>
+         <tr>
+           <td>
+           <img border="0" src="b35doc/english/online/cfyugflexcable_C2/images/geometric_behavior01NLS.gif" width="242" height="168"></td>
+           <td style="padding-left: 10">
+           <img border="0" src="b35doc/english/online/cfyugflexcable_C2/images/realistic_behavior01NLS.gif" width="223" height="165"></td>
+         </tr>
+         <tr>
+           <td>&nbsp;</td>
+           <td style="padding-left: 10">&nbsp;</td>
+         </tr>
+         <tr>
+           <td colspan="2"><a name="hj-wnr17"></a>Internal splices add 
+           stiffness. The FLEX algorithm takes into account the values for the 
+           length and equivalent thickness attributes entered when defining 
+           splices in <i>Electrical Library.</i><p>
+           
+           Notes:</p>
+           <ul>
+             <li>
+             
+             There is no visual change to the representation of the internal 
+             splice.</li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+     </div>
+     </td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td ALIGN="center">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td VALIGN="middle">These functionalities require a FLEX Physical 
+     Simulation license.<br>
+     For more information on this product, see
+     <a href="page3912.html">
+     Flex Physical Simulation Overview</a>.</td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td ALIGN="center">
+     <img src="b35doc/english/online/icons_C2/common/ainfo_custo.gif" width="32" height="32"></td>
+     <td VALIGN="middle">These functionalities are accessed by setting the
+     <a href="page0823.html#hj-computation">
+     bundle segment computation mode</a> to <kbd>FLEX algorithm</kbd> and 
+     adjusting the balance slider.</td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td colspan="2">
+     <h2><a name="hj-scratch"></a>Designing from Scratch</h2>
+     </td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol CLASS="task">
+       <li>
+       <p CLASS="task">Set the
+       <a href="page0823.html#hj-computation">
+       bundle segment computation mode</a> to <kbd>FLEX algorithm</kbd> and 
+       adjust the balance slider.</li>
+       <li>
+       <p CLASS="task">Select the <kbd>Work with one multi-branchable per 
+		geometrical bundle </kbd>&nbsp;option under <kbd>Tools &gt; Options &gt; Equipments &amp; Systems &gt; Electrical 
+		Harness Discipline &gt; Electrical Harness Installation &gt; Harness 
+		Management<span style="font-weight: 400"> </span></kbd>tab</li>
+       <li>
+       <p CLASS="task">Create a geometrical bundle.</li>
+       <li>
+       <p CLASS="task">Click Multi-Branchable Document
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_NewMultipleSegmentsP2.gif" width="24" height="24"> 
+       and set branch parameters in the dialog box that opens.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" id="AutoNumber2">
+           <tr>
+             <td colspan="2">The Electrical Harness Assembly workbench switches 
+             to the Electrical Harness Installation workbench. The <kbd>Branch 
+             Definition</kbd> dialog box opens:<p>
+             <img border="0" src="b35doc/english/online/ehiug_c2/images/db_branchdefinition01NLS.gif" width="291" height="418"></p>
+             <p>For information on standard options in the dialog box, see
+             <a href="page6644.html">Creating a New Multi-Branchable Document 
+             and First Branch</a>.</td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+             <td valign="top">Note that the final slack, length and bend values 
+             may not exactly correspond to the user input due to the fact that 
+             the <kbd>FLEX algorithm </kbd>is a finite-element algorithm. If 
+             this is the case, it can be seen when you change the build mode.<p>
+             Computing the length of bundle segments in Bend or Slack 
+             modes:</p>
+             <ul>
+               <li>In order to obtain the closest possible correspondence 
+               in length when using either standard or FLEX algorithms, the 
+               computed length in Bend and Slack modes takes into consideration 
+               the bend radius in order to obtain an even more realistic bundle 
+               segment shape.</li>
+               <li>Since the estimated shortest length (corresponding to 
+               a slack value of 0) is not directly computed using the FLEX 
+               algorithm, the user can enter a smaller input length when in 
+               Length mode. A negative slack value will be displayed in the 
+               Slack(%) box.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p CLASS="task">Click <kbd>Route Definition</kbd> and
+       <a href="page6656.html">route a bundle segment</a>.</li>
+       <li>
+       <p CLASS="task">Click <kbd>Apply</kbd> in the <kbd>Branch Definition</kbd> dialog 
+       box to compute the bend radius.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" id="AutoNumber3">
+           <tr>
+             <td colspan="2">
+             <h3>Computed Bend Radius</h3>
+             <p class="task">In FLEX mode, since the algorithm takes the 
+             physical properties of the bundle segment (such as diameter, etc.) 
+             as input, rather than purely mathematical parameters, CATIA 
+             computes the effective minimum bend radius. The bend radius, which 
+             is therefore no longer an input, is an attribute of the bundle 
+             segment used for checks and can be accessed in knowledge tools.</p>
+             <p class="task">Status lights show whether or not the computed bend 
+             radius satisfies the minimum bend radius entered.</p>
+             <p><img border="1" src="b35doc/english/online/ehiug_c2/images/db_branchdefinition02NLS.gif" width="291" height="106"></td>
+           </tr>
+           <tr>
+             <td>
+             <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+             <td>Another build mode becomes available after you have routed a 
+             bundle segment: Constrained length</td>
+           </tr>
+           <tr>
+             <td colspan="2">
+             <h3>Build Mode - Constrained Length</h3>
+             <p class="task">The constrained length mode helps you minimize the 
+             impact on manufacturing. For example, in this mode, modifying the 
+             position of a support in the 3D view will not modify the flattened 
+             view or the harness drawing.</p>
+             <p class="task">This mode lets you keep the same bundle segment 
+             length between points, branch points, supports and devices during 
+             harness design and modification, when moving, replacing or deleting 
+             a support, device or point.</td>
+           </tr>
+           <tr>
+             <td>&nbsp;</td>
+             <td>For example, move this support...<p>
+             <img border="0" src="b35doc/english/online/ehiug_c2/images/flex01.gif" width="224" height="65"></p>
+             <p>and the length of the bundle segment does not change:</p>
+             <p><img border="0" src="b35doc/english/online/ehiug_c2/images/flex02.gif" width="269" height="57"></td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <img src="b35doc/english/online/icons_C2/common/ainfo_custo.gif" width="32" height="32"></td>
+             <td>In this mode, you can set the percent
+             <a href="page0823.html#hj-computation">
+             tolerance</a> permitted between the initial and final bundle 
+             segment length. For example, if you set this value to 1 and the 
+             bundle segment is 100 mm long, then a final length of 101 mm will 
+             be tolerated.<p>Note: In Constrained Length mode, the default 
+				accuracy is set to a very high value so that same bundle segment 
+				length can be maintained. The value set for the balance slider is not 
+             taken into account.</td>
+           </tr>
+           <tr>
+             <td>&nbsp;</td>
+             <td>A message informs you if the modification in bundle segment 
+             length exceeds the tolerance and identifies for which branch this 
+             is the case.</td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <img src="b35doc/english/online/icons_C2/common/amethod.gif" width="32" height="32"></td>
+             <td>This build mode is recommended once you are well advanced in 
+             your design because, in this mode, you cannot:<ul>
+               <li>add slack, supports, devices or branch points</li>
+               <li>split bundle segments</li>
+               <li>modify the length of a branch </li>
+               <li>move a branch point</li>
+             </ul>
+             <p class="task">since these actions impact the length of the bundle 
+             segment and CATIA cannot figure out how the user intends to modify 
+             this length.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p CLASS="task">Click <kbd>Bundle Segment Definition</kbd> and set bundle 
+       segment parameters in the dialog box that opens.</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4">
+           <tr>
+             <td>
+             <p class="task"><a name="hj-flex_slider"></a>The Bundle Segment 
+             Definition dialog box opens. A Flexibility slider has been added in 
+             the right-hand pane of the dialog box:</p>
+             <p class="task">
+             <img border="1" src="b35doc/english/online/ehiug_c2/images/db_bnsdefinition01NLS.gif" width="240" height="32"></p>
+             <p class="task">This slider lets you set a value between 1 and 5 to 
+             define individual bundle segment stiffness. The lower the value, 
+             the stiffer the bundle segment. </p>
+             <p class="task"><b>Important</b>: This value is not taken into 
+             account if wires and/or wire groups have been routed. In this case, 
+             bundle segment stiffness is based on the properties of wires 
+             and/wire groups.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" hspace="0" width="32" height="32"></td>
+     <td>
+     <h3>Managing Slack Locally</h3>
+     <p CLASS="task">You can <a href="page6633.html">add slack locally</a> at 
+     a specific location using the <kbd>Local Slack</kbd> command
+     <img border="0" src="b35doc/english/online/icons_C2/images/I_ManageSlackP2.gif" width="24" height="24">. 
+     However, the <kbd>Ignore Slack</kbd> option is not supported by the <kbd>
+     FLEX algorithm</kbd> and is not available in the Local Slack Management 
+     dialog box.</td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top" colspan="2">
+     <h2 align="left"><a name="hj-existing"></a>Updating an Existing 
+     <a name="ix-commands::Recompute All Bundle Segments"></a>Harness</h2>
+     </td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" hspace="0" width="32" height="32"></td>
+     <td>This task shows you how to re-compute, using the FLEX algorithm, 
+     harness bundle segments designed using the standard algorithm.</td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol CLASS="task">
+       <li>
+       <p CLASS="task">Set the
+       <a href="page0823.html#hj-computation">
+       bundle segment computation mode</a> to FLEX algorithm and adjust the 
+       balance slider.</li>
+       <li>
+       <p CLASS="task">Select <kbd>Tools &gt; Recompute All Bundle Segments</kbd>.<br>
+       All bundle segments are highlighted in red in the geometry area. They 
+       need to be updated.</li>
+       <li>
+       <p CLASS="task">Select <kbd>Update</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_UpdateP2.gif" width="24" height="24"> 
+       to rebuild bundle segments using the FLEX algorithm.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" hspace="0" width="32" height="32"></td>
+     <td><ul>
+       <li>If no FLEX solution can be found, a message informs the user and the 
+       standard algorithm is used.</li>
+       <li>You can undo the recompute operation before or after the update.</li>
+       <li>If you update branches with internal splices that were 
+       designed in earlier releases, the branch shape may be slightly different 
+       from that obtained previously because the FLEX algorithm takes internal 
+       splices into account.</li>
+		<li><blink><span style="background-position: 0 0">
+		<a name="hj-updatealgosetting"></a>The branchable created with particular 
+		<kbd>Bundle Segment Computation</kbd> setting in </span>
+		<span style="background-position: 0 0"> <span style="letter-spacing: 0">
+				<font color="#000000"><span style="font-weight: 400"><kbd>Tools 
+				&gt; Options &gt; Equipment &gt; Wire Harness Assembly Design &gt; Harness</kbd></span></font></span>
+				<span style="letter-spacing: 0"><font color="#000000">
+				<span style="font-weight: 400"><kbd>Management (Standard or FLEX 
+				algorithm)</kbd></span></font></span> will have its electrical 
+		curve built / updated with the same algorithm throughout its lifecycle. 
+		Switching from one algorithm setting to another has no impact on the 
+		geometry of the existing electrical curves. If branchable is edited, 
+		then its curve will be updated based on its internal algotype
+		<a href="page3829.html#hj-Elec_AlgoType">attribute</a> value 
+		which is set during its creation.</span></blink> </li>
+		<li>
+		<p class="MsoNormal"><blink><span style="background-position: 0 0">Using <kbd>Recompute All Bundle Segments</kbd> 
+		command, you can switch the algorithm settings of all branchables 
+		according to the one specified in <kbd>Bundle Segment Computation</kbd> 
+		setting.</span></blink></li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top">&nbsp;</td>
+     <td>
+		<p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p ALIGN="center">
+ &nbsp;</p>
+
+ </body>
+
+</html>
+

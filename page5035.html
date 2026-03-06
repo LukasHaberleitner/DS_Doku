@@ -1,0 +1,202 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Using Generative View Styles</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none">
+</head>
+
+ <body>
+
+ <h1>Using Generative View <a name="ix-generative view styles"></a>Styles</h1>
+ <p>The generative view style (GVS) file is the key file for managing all the 
+ graphic options needed in workshop documents. <br>
+ All the feature properties as they are to be seen in the generated drawings are 
+ set in this in this file.</p>
+ <p>The GVS file allows you to create feature representations in a CATDrawing 
+ (for example, a Reference Line with desired graphic properties and layer 
+ information) and then reference it in a catalog.</p>
+ <p>When you extract a fabrication sketch, all graphic properties are read from 
+ the template representation and transferred to the generated representation.</p>
+ <p>You can visualize and modify graphic properties directly in the template 
+ representation. The link between a manufacturing feature and its graphic 
+ properties defined in a template representation is made in the GVS file.</p>
+ <p>The same XML style file is also used to set the graphic properties of the 3D 
+ representation of manufacturing features in the IPM (In-Process-Model) part.</p>
+ <p>The default GVS file is located in the PRM file as specified in
+ <a href="page5037.html">Managing Project Resources</a>.</p>
+ <p>You can <a href="page5036.html">access GVS parameters for browse or edit</a> 
+ using the <kbd>Tools &gt; Standards</kbd> command. <a name="hj-admin"></a>You (as 
+ administrator) can customize your own GVS file and save it at a new location. 
+ Then, any new graphic properties defined for the manufacturing features are 
+ considered in fabrication sketches and 3D IPM parts.</p>
+ <p>For information on how to create views using generative view styles, how to 
+ set view style parameters or more generally on administering generative view 
+ styles, see the <i>Generative Drafting User's Guide.</i></p>
+ <h2>Standard Types of Manufacturing Feature Representations</h2>
+ <p>The following standard types are provided.</p>
+ <ul>
+   <li>Margin</li>
+   <li>Fit-up</li>
+   <li>Edge Preparation</li>
+   <li>Weld Joint</li>
+   <li>Attachment Line</li>
+   <li>Positioning Symbols</li>
+   <li>Reference Line</li>
+   <li>Forming Line</li>
+   <li>Marking Line</li>
+   <li>Opening</li>
+   <li>Drill Opening</li>
+   <li>Shrinkage Compensation</li>
+   <li>Cutting Contour.</li>
+ </ul>
+ <p>These standard types have sub-types. You (as administrator) can create other 
+ sub-types from these standard types for better modularization and diversity of 
+ manufacturing feature representations. </p>
+ <p>Here are examples of standard sub-types.</p>
+ <p><b>Sub-types of Reference Line</b>:<br>
+ 1.Template location line<br>
+ 2.Template sight line.</p>
+ <p><b>Sub-types of Forming Line</b>:<br>
+ 1.Roll lines<br>
+ 2.Inverse bending curve<br>
+ 3.Tangency lines, etc.</p>
+ <p><b>Sub-types of Opening</b>:<br>
+ 1.Cut Opening<br>
+ 2.Marked Opening<br>
+ 3.Tabbed Opening<br>
+ 4.Bridged Opening.</p>
+ <p><b>Sub-types of Cutting Contour</b>:<br>
+ 1.External Cutting Contour<br>
+ 2. Internal Cutting Contour.</p>
+ <p>To add a sub-type, you (as administrator) must: </p>
+ <ul>
+   <li>create a family in the catalog</li>
+   <li>create a detailed view for this sub-type</li>
+   <li>in the GVS file, link the family to the detailed view, which becomes the 
+   template representation for this feature sub-type.</li>
+ </ul>
+ <h2><a name="catalog">Catalog File</a></h2>
+ <p>A corresponding catalog file contains families under a GVS chapter for all 
+ standard and user-defined types.</p>
+ <p><img border="0" src="b35doc/english/online/cfyugstructmfg_c2/images/gvs01NLS.gif" width="611" height="225"></p>
+ <p>This catalog points to a CATDrawing, which contains all the 2D 
+ representations of features with a complete definition. Each family points to a 
+ detailed view containing the corresponding representations. For example, for 
+ Reference Lines:</p>
+ <p><img border="0" src="b35doc/english/online/cfyugstructmfg_c2/images/gvs02NLS.gif" width="615" height="190"></p>
+ <p>Representations corresponding to Template Location Line are defined and 
+ stored in the CATDrawing.</p>
+ <p><img border="0" src="b35doc/english/online/cfyugstructmfg_c2/images/gvs03NLS.gif" width="264" height="327"></p>
+ <p>The text 2D detail contains values of what you want to see in the 
+ fabrication sketch. For example, if you want to see the &quot;Plane name&quot; for the 
+ Template location line, you must write this text in the template.</p>
+ <h2>GVS Nodes</h2>
+ <p>The points above describe how properties of each standard or user-defined 
+ type is to be declared in the CATDrawing and catalog files. The GVS file is 
+ also based on these concepts.</p>
+ <p>The GVS file contains nodes related to each standard and user-defined type.&nbsp; 
+ Each node has options to set family and drawing detail names taken from the 
+ catalog. This information is used to reference the drawing detail from which 
+ graphic properties are read.</p>
+ <h2>User Interface</h2>
+ <p>A GVS file called <kbd>DPMStructure_GVSSample.xml</kbd> is provided, 
+ containing the standard nodes.</p>
+ <p>To access this file:</p>
+ <ol>
+   <li>Select <kbd>Tools &gt; Standards</kbd> to display the Standard Definition 
+   dialog box</li>
+   <li>Select the generativeparameters category and the 
+   DefaultGenerativeStyle.xml file </li>
+   <li>Select the <kbd>DPMStructure</kbd> node in tree on the left hand side.</li>
+ </ol>
+ <p>Then, click on the desired node on the left side and modify a property value 
+ on the right side. For example, to change the text name, select a value in the 
+ Text combo box.</p>
+ <p><img border="0" src="b35doc/english/online/cfyugstructmfg_c2/images/dbGVS01NLS.gif" width="637" height="536"></p>
+ <p>Each node on the left side represents a standard type. On the right side, 
+ first combo shows list of all sub-types. For example, in case of the Opening 
+ type:</p>
+ <p><img border="0" src="b35doc/english/online/cfyugstructmfg_c2/images/gvs04NLS.gif" width="269" height="132"></p>
+ <p>Where the various openings (cut, marked, and so on) are standard sub-types. 
+ You (as administrator) can add your own sub-type in the <kbd>
+ DPMStructure_GVSSample.xml</kbd> file directly by declaring a new node.</p>
+ <p>For example, if you want to add a new Forming Line sub-type called Tangency 
+ line, you must add it as follows:</p>
+ <blockquote>
+   <p><code>&lt;std:enumdef name=&quot;TypesOfFormingLine&quot;&gt;<br>
+   &lt;std:strval&gt;Inverse bending curve&lt;/std:strval&gt;<br>
+   &lt;std:strval&gt;Roll line&lt;/std:strval&gt; <br>
+   <kbd>&lt;std:strval&gt;Tangency line&lt;/std:strval&gt;</kbd> <br>
+   &lt;/std:enumdef&gt;</code></p>
+ </blockquote>
+ <p>After declaring a new sub-type, you must define its graphic properties at 
+ the appropriate place in the XML file:</p>
+ <blockquote>
+   <p><code>&lt;std:node name=&quot;FormingLine&quot;&gt; <br>
+   &lt;std:node name=&quot;Sub-types&quot;&gt;<br>
+   &lt;std:enumval name=&quot;TypesOfFormingLine&quot;&gt;Tangency line&lt;/std:enumval&gt;<br>
+   &lt;/std:node&gt; <br>
+   &lt;std:node name=&quot;Curve&quot;&gt;Curve A&lt;/std:node&gt;<br>
+   &lt;std:node name=&quot;Text&quot;&gt;Text A&lt;/std:node&gt; <br>
+   &lt;std:node name=&quot;Symbol&quot;&gt;Symbol&lt;/std:node&gt; <br>
+   &lt;/std:node&gt;</code></p>
+ </blockquote>
+ <p>As shown below, each sub-type can be described by a maximum of three 
+ attributes: </p>
+ <ul>
+   <li>Curve: name of the curve template, which is in the catalog (if 
+   applicable)</li>
+   <li>Text: name of the text template, which is in the catalog (if applicable)</li>
+   <li>Symbol: name of the text template, which is in the catalog (if 
+   applicable).</li>
+ </ul>
+ <p>So, we assume that any manufacturing feature is one, or a combination of 2 
+ or 3 representations: Curve, Text and Symbol. For each of these 
+ representations, if applicable, you must define a drawing detail and reference 
+ it by means of the GVS file.</p>
+ <p>Below is a table that shows which representation is applicable for each 
+ standard type. </p>
+ <p><img border="0" src="b35doc/english/online/cfyugstructmfg_c2/images/gvs05NLS.gif" width="515" height="434"></p>
+ <p>Examples:<br>
+ An attachment line representation is made of a combination of three 
+ representations: a Curve (line), a Text (label of Attached Part), and a Symbol 
+ (Material throw orientation of attached part)<br>
+ An opening is a combination of a Curve (circle) and a Text (opening 
+ description, diameter).</p>
+ <p>Sub-types inherit these properties. You can use different drawing details 
+ for your sub-types. <br>
+ For example, if you define sub-types of an attachment line, you can set your 
+ customized curve, text and symbol for this sub-type only.</p>
+ <p>This GVS file is the main repository for storing graphic properties of 
+ standard or user-defined types and sub-types. All workshop documents use this 
+ file for graphic properties. All other properties related to workshop documents 
+ are in different XML style files for the various types of documents. See
+ <a target="_blank" href="page5037.html#WDgenerativeparameters">Generative 
+ Parameters for Workshop Documents</a> for more information.</p>
+ <p>Here is a typical fabrication sketch XML style file (in this case for 
+ profiles):</p>
+ <p><img border="0" src="b35doc/english/online/cfyugstructmfg_c2/images/gvs06NLS.gif" width="447" height="153"></p>
+ <ul>
+   <li><kbd>OutputFormats</kbd> allows you (as administrator) to set the output 
+   format of the workshop document. This option is available on the right side 
+   in the form of a combo where you can set the desired type.<br>
+   Different options: CATDrawing, DXF, XML, and so on.</li>
+   <li><kbd>TemplateDrawingDoc</kbd> allows you (as administrator) to set name 
+   of the template drawing, which is the template for the drawing generation.
+   </li>
+   <li><kbd>Scale </kbd>allows you (as administrator) to select either Fit to 
+   paper or 1:1.</li>
+ </ul>
+ <p>Here is a typical XML style file for XML data output (in this case for jig 
+ pin):</p>
+ <p><img border="0" src="b35doc/english/online/cfyugstructmfg_c2/images/gvs07NLS.gif" width="465" height="126"></p>
+
+ </body>
+
+</html>
+

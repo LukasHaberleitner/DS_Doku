@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv ="Content-Type" content ="text/html; charset=utf-8"/>
+  <meta http-equiv ="Content-Language" content ="en-us"/>
+  <title>Knowledge Base access</title>
+  <script type ="text/javascript">
+    function extractParamsFromLocation(locationObj) {
+      var args = new Array();
+      var varAndVals = locationObj.search.substr(1).split("&");
+      for (var i = 0; i < varAndVals.length; i++) {
+        var v = varAndVals[i].split("=");
+        args[unescape(v[0])] = unescape(v[1]);
+      }
+      if (locationObj.hash) {
+        args["ElemID"] = locationObj.hash;
+      }
+      return args;
+    }
+  </script>
+  <script type ="text/javascript">
+    function switchLocation() {
+      var args = extractParamsFromLocation(parent.location);
+      if (args["id"] == null) {
+        parent.location.href = 'https://kb.dsxclient.3ds.com/360-mashup-ui/page/searchi';
+      }
+      else {
+        var docid = args["id"];
+        parent.location.href = 'https://kb.dsxclient.3ds.com/360-mashup-ui/page/document?q=docid:' + docid;
+
+      }
+    }
+  </script>
+</head>
+
+<body onload ="switchLocation();">
+
+</body>
+</html>
+

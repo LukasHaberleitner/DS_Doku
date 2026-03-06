@@ -1,0 +1,446 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Starting a Session in a Language Other than English on UNIX</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+ </head>
+
+ <body>
+
+ <h1>Starting a Session in a Language Other than English on UNIX</h1>
+ <p align="center">
+ <a name="ix-starting a session::choosing the language on UNIX"></a></p>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" style="border-collapse: collapse" bordercolor="#111111">
+   <tr valign="top" BORDER="0">
+     <td valign="middle">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td rowspan="1" valign="middle" colspan="3">This task explains how to start 
+     Version 5 in a language other than English on UNIX.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <p align="left">&nbsp;</td>
+     <td rowspan="1" colspan="3">
+     <h3>Locales for which Version 5 delivers user interface files</h3>
+     <p>Installing Version 5 directly installs the user interface files (message 
+     catalogs) for the following languages: </p>
+     <ul>
+       <li>English (default language) </li>
+       <li>French </li>
+       <li>German</li>
+       <li>Japanese</li>
+       <li>Korean</li>
+       <li>Simplified Chinese</li>
+       <li>Italian.</li>
+     </ul>
+     <p>The user interface files for these languages are already translated for 
+     you. If you install in the default installation directory:</p>
+     <p><code>/usr/DassaultSystemes/B19/OS/</code></p>
+     <p>where &quot;OS&quot; is:<br>
+     aix_a<br>
+     hpux_b<br>
+     solaris_a</p>
+     <p>the following default environment is set up:</p>
+     <p><code>/usr/DassaultSystemes/B19/OS/resources/msgcatalog 
+     (containing&nbsp;the&nbsp;English&nbsp;files)</code> <br>
+     <code>/usr/DassaultSystemes/B19/OS/resources/msgcatalog/French</code> <br>
+     <code>/usr/DassaultSystemes/B19/OS/resources/msgcatalog/German</code> <br>
+     <code>/usr/DassaultSystemes/B19/OS/resources/msgcatalog/Japanese<br>
+     /usr/DassaultSystemes/B19/OS/resources/msgcatalog/Korean<br>
+     /usr/DassaultSystemes/B19/OS/resources/msgcatalog/Simplified_Chinese<br>
+     /usr/DassaultSystemes/B19/OS/resources/msgcatalog/Italian</code> </p>
+     <p>This default environment (/usr/DassaultSystemes/B19/OS/resources/msgcatalog) 
+     is pointed to by the environment variable: CATMsgCatalogPath.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td colspan="3">
+     <h4>Translating user interface files</h4>
+     <p>You can translate user interface files in a language for which Version 5 
+     does not deliver user interface files. For example, you can do the 
+     following:</p>
+     <ol>
+       <li>Open the following file:<p><code>/usr/DassaultSystemes/B19/aix_a/reffiles/NLS/SUPPLANG</code></p>
+       <p>Note that this file contain the following lines:</p>
+       <p><code>*AIX*<br>
+       . . .<br>
+       Portuguese Portugal pt_PT ISO8859-1<br>
+&nbsp;</code></li>
+       <li>Copy the message catalog folder from the installation folder to your 
+       folder:<p><code>cd /home/myadm<br>
+       cp -r /usr/DassaultSystemes/B19/aix_a/resources/msgcatalog <br>
+       /home/myadm/aix_a/resources<br>
+&nbsp;</code></li>
+       <li>Reference this new folder in the environment (by updating the 
+       CATMsgCatalogPath environment variable) so that it points to the 
+       preceding folder.<br>
+&nbsp;</li>
+       <li>Create a Portuguese folder in the CATMsgCatalogPath environment 
+       variable root folder:<p><code>cd /home/myadm/aix_a/resources/msgcatalog<br>
+       mkdir Portuguese<br>
+&nbsp;</code></li>
+       <li>Create translated versions of user interface files in the Portuguese 
+       language
+       <p>The General.CATNls user interface file, at least, must be translated. 
+       The files will be placed in the following folder:</p>
+       <p><code>/home/myadm/aix_a/resources/msgcatalog/Portuguese<br>
+&nbsp;</code></li>
+       <li>Export the LANG variable for the desired locale before starting a 
+       session.
+       <p>You will enter the following command on AIX:</p>
+       <p><code>export LANG=pt_PT<br>
+       this command on HP-UX:<br>
+       export LANG=pt_PT.iso88591<br>
+       this command on Sun Solaris:<br>
+       export LANG=pt_PT.ISO8859-1<br>
+&nbsp;</code></li>
+       <li>Start Version 5.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td rowspan="1" colspan="3">
+     <h2><strong style="font-weight: 400">What about fonts?</strong></h2>
+     <p>The installation also sets up in each language directory a file named &quot;Dialog.CATNls&quot;.</p>
+     <p>This file contains all the font declarations for use as is, for the 
+     language and locale you want to use (we have chosen the same fonts as used 
+     in Version 4 to facilitate the transition to Version 5).</p>
+     <p>If you want to use other fonts, comment out the previous font 
+     declarations and declare the new fonts.</p>
+     <p>The file also contains other user interface texts.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td rowspan="1" colspan="3">You then simply use your operating system tools 
+     to choose the locale in which you want to start your session. If no locale 
+     is chosen, your session will be started in English.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td rowspan="1" valign="middle" colspan="3">
+     <ol class="task">
+       <li>
+       <p class="task">Open a shell window.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td rowspan="1" colspan="3">
+     <ol class="task">
+       <li value="2">
+       <p class="task">Export the LANG variable for the desired locale before 
+       starting a session.</li>
+     </ol>
+     <blockquote>
+       <p>For example, for the French language, enter this command on AIX:</p>
+       <p><code>export LANG=fr_FR</code> </p>
+       <p>this command on HP-UX:</p>
+       <p><code>export LANG=fr_FR.iso88591</code></p>
+       <p>this command on Sun Solaris:</p>
+       <p><code>export LANG=fr</code></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td rowspan="1" colspan="3">
+     <ol class="task">
+       <li value="3">
+       <p class="task">Start Version 5.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td colspan="3">
+     <h2>Locales Whose Use with Version 5 has been Validated</h2>
+     <p>The locales whose use with Version 5 has been validated are as follows:</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td colspan="3">
+     <h2>IBM AIX</h2>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td align="left"><b>User Interface Name in English environment </b></td>
+     <td align="left"><b>$LANG environment variable</b></td>
+     <td align="left"><b>Language</b></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td>Czech ISO8859-2<br>
+     Danish ISO8859-1 <br>
+     Dutch Belgium ISO8859-1<br>
+     Dutch ISO8859-1<br>
+     English (United States) ISO8859-1<br>
+     English (United Kingdom) ISO8859-1<br>
+     Finish ISO8859-1<br>
+     French ISO8859-1<br>
+     French ISO8859-1<br>
+     French ISO8859-1<br>
+     French ISO8859-1<br>
+     German ISO8859-1<br>
+     German (Switzerland) ISO8859-1<br>
+     Icelandic ISO8859-1<br>
+     Italian ISO8859-1<br>
+     Japanese (PC) IBM-943<br>
+     Korean IBM-eucKR<br>
+     Norwegian ISO8859-1<br>
+     Polish ISO8859-2<br>
+     Portuguese ISO8859-1<br>
+     Russian ISO8859-5<br>
+     Chinese (Simplified EUC) IBM-eucCN<br>
+     Spanish ISO8859-1<br>
+     Swedish ISO8859-1<br>
+     Chinese (Traditional) IBM-eucTW</td>
+     <td>cs_CZ<br>
+     da_DK<br>
+     nl_BE <br>
+     nl_NL<br>
+     en_US<br>
+     en_GB<br>
+     fi_FI<br>
+     fr_BE<br>
+     fr_CA<br>
+     fr_FR <br>
+     fr_CH <br>
+     de_DE <br>
+     de_CH <br>
+     is_IS <br>
+     it_IT <br>
+     Ja_JP <br>
+     ko_KR <br>
+     no_NO <br>
+     pl_PL <br>
+     pt_PT <br>
+     ru_RU <br>
+     zh_CN <br>
+     es_ES <br>
+     sv_SE <br>
+     zh_TW</td>
+     <td>Czech<br>
+     Danish<br>
+     Dutch (Belgium)<br>
+     Dutch (Netherlands)<br>
+     English (United States) <br>
+     English (United Kingdom) <br>
+     Finnish<br>
+     French (Belgian) <br>
+     French (Canadian) <br>
+     French (Standard) <br>
+     French (Switzerland) <br>
+     German (Standard)<br>
+     German (Switzerland)<br>
+     Icelandic<br>
+     Italian (Standard)<br>
+     Japanese<br>
+     Korean<br>
+     Norwegian (Bokmal)<br>
+     Polish<br>
+     Portuguese (Portugal)<br>
+     Russian<br>
+     Chinese (PRC)<br>
+     Spanish (Spain, Traditional Sort)<br>
+     Swedish<br>
+     Chinese (Taiwan)</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td colspan="3">
+     <h2>HP-UX</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td align="left"><b>User Interface Name in English environment </b></td>
+     <td align="left"><b>$LANG environment variable</b></td>
+     <td align="left"><b>Language</b></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">cs_CZ.iso88592 <br>
+     da_DK.iso88591 <br>
+     nl_NL.iso88591 <br>
+     nl_NL.iso88591 <br>
+     en_US.iso88591 <br>
+     en_GB.iso88591 <br>
+     fi_FI.iso88591 <br>
+     fr_CA.iso88591 <br>
+     fr_FR.iso88591 <br>
+     de_DE.iso88591 <br>
+     de_DE.iso88591 <br>
+     is_IS.iso88591 <br>
+     it_IT.iso88591 <br>
+     ja_JP.SJIS <br>
+     ko_KR.eucKR <br>
+     no_NO.iso88591 <br>
+     pl_PL.iso88592 <br>
+     pt_PT.iso88591 <br>
+     ru_RU.iso88595 <br>
+     zh_CN.hp15CN <br>
+     es_ES.iso88591 <br>
+     sv_SE.iso88591 <br>
+     zh_TW.eucTW </td>
+     <td valign="top">cs_CZ.iso88592 <br>
+     da_DK.iso88591<br>
+     nl_NL.iso88591 <br>
+     nl_NL.iso88591 <br>
+     en_US.iso88591 <br>
+     en_GB.iso88591 <br>
+     fi_FI.iso88591 <br>
+     fr_CA.iso88591 <br>
+     fr_FR.iso88591 <br>
+     de_DE.iso88591 <br>
+     de_DE.iso88591 <br>
+     is_IS.iso88591 <br>
+     it_IT.iso88591 <br>
+     ja_JP.SJIS <br>
+     ko_KR.eucKR <br>
+     no_NO.iso88591 <br>
+     pl_PL.iso88592 <br>
+     pt_PT.iso88591 <br>
+     ru_RU.iso88595 <br>
+     zh_CN.hp15CN <br>
+     es_ES.iso88591 <br>
+     sv_SE.iso88591 <br>
+     zh_TW.eucTW </td>
+     <td valign="top">Czech<br>
+     Danish<br>
+     Dutch (Belgium)<br>
+     Dutch (Netherlands)<br>
+     English (United States)<br>
+     English (United Kingdom)<br>
+     Finnish<br>
+     French (Canadian)<br>
+     French (Standard)<br>
+     German (Standard)<br>
+     German (Switzerland)<br>
+     Icelandic<br>
+     Italian (Standard)<br>
+     Japanese<br>
+     Korean<br>
+     Norwegian<br>
+     Polish<br>
+     Portuguese (Portugal)<br>
+     Russian<br>
+     Chinese (PRC)<br>
+     Spanish (Spain, Traditional Sort)<br>
+     Swedish<br>
+     Chinese (Taiwan)</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" colspan="3">
+     <h3>SUN Solaris</h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td align="left"><b>User Interface Name in English environment </b></td>
+     <td align="left"><b>$LANG environment variable</b></td>
+     <td align="left"><b>Language</b></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">cs_CZ.ISO8859-2 <br>
+     da_DK.ISO8859-1 <br>
+     nl_BE.ISO8859-1 <br>
+     nl_NL.ISO8859-1<br>
+		en_US.ISO8859-1 <br>
+     en_CA.ISO8859-1 <br>
+     en_GB.ISO8859-1 <br>
+     fi_FI.ISO8859-1 <br>
+     fr_BE.ISO8859-1 <br>
+     fr_CA.ISO8859-1 <br>
+     fr_FR.ISO8859-1 <br>
+     de_DE.ISO8859-1 <br>
+     de_CH.ISO8859-1 <br>
+     is_IS.ISO8859-1 <br>
+     it_IT.ISO8850-1 <br>
+     ja_JP.PCK <br>
+     ko ------- Korean <br>
+     no_NO.ISO8859-1@bokmal <br>
+     no_NO.ISO8859-1@nynorsk <br>
+     pl_PL.ISO8859-2 <br>
+     pt_PT.ISO8859-1 <br>
+     ru_RU.ISO8859-5 <br>
+     zh ------- Simplified Chinese <br>
+     es_ES.ISO8859-1 <br>
+     sv_SE.ISO8859-1 <br>
+     zh_TW ---- Traditional Chinese </td>
+     <td valign="top">cs_CZ.ISO8859-2 <br>
+     da_DK.ISO8859-1 <br>
+     nl_BE.ISO8859-1 <br>
+     nl_NL.ISO8859-1<br>
+		en_US.ISO8859-1 <br>
+     en_CA.ISO8859-1 <br>
+     en_GB.ISO8859-1 <br>
+     fi_FI.ISO8859-1 <br>
+     fr_BE.ISO8859-1 <br>
+     fr_CA.ISO8859-1 <br>
+     fr_FR.ISO8859-1 <br>
+     de_DE.ISO8859-1 <br>
+     de_CH.ISO8859-1 <br>
+     is_IS.ISO8859-1 <br>
+     it_IT.ISO8850-1 <br>
+     ja_JP.PCK <br>
+     ko <br>
+     no_NO.ISO8859-1@bokmal <br>
+     no_NO.ISO8859-1@nynorsk <br>
+     pl_PL.ISO8859-2 <br>
+     pt_PT.ISO8859-1 <br>
+     ru_RU.ISO8859-5 <br>
+     zh <br>
+     es_ES.ISO8859-1 <br>
+     sv_SE.ISO8859-1 <br>
+     zh_TW </td>
+     <td valign="top">Czech<br>
+     Danish<br>
+     Dutch (Belgium)<br>
+     Dutch (Netherlands)<br>
+		English (United States)<br>
+     English (Canada)<br>
+     English (United Kingdom)<br>
+     Finnish<br>
+     French (Belgian)<br>
+     French (Canadian)<br>
+     French (Standard)<br>
+     German (Standard)<br>
+     German (Switzerland)<br>
+     Icelandic<br>
+     Italian (Standard)<br>
+     Japanese<br>
+     Korean<br>
+     Norwegian (Bokmal)<br>
+     Norwegian (nynorsk)<br>
+     Polish<br>
+     Portuguese (Portugal)<br>
+     Russian<br>
+     Chinese (PRC)<br>
+     Spanish (Spain, Traditional Sort)<br>
+     Swedish<br>
+     Chinese (Taiwan)</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="4" rowspan="1" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,616 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>About Materials and Laminates</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style type="text/css">
+.auto-style1 {
+	border-collapse: collapse;
+}
+</style>
+</head>
+
+<body>
+
+<h1 align="center">
+      About Materials and Laminates</h1>
+<div align="center">
+  <center>
+  <table border="0" id="AutoNumber1" class="auto-style1">
+    <tr>
+      <td valign="top" style="width: 75px">
+      <a name="ix-composites materials and laminates:in V5R18 and up"></a></td>
+      <td>
+      <h2><a name="ix-composites materials and laminates:before V5R18"></a>Before V5R18</h2>
+      <ul>
+        <li>Zones are linked, via the laminate, to materials inside a CATMaterial. <br>
+        If the CATMaterial is not available, the zone laminate is KO and the 
+        following cannot be created:
+        <ul>
+          <li>Plies from zones,</li>
+          <li>Solid/top surface from zones.</li>
+        </ul>
+        </li>
+        <li>Each ply is linked to a material inside the CATMaterial<br>
+        if the CATMaterial is not available, the ply is KO and the following 
+        cannot be created:
+        <ul>
+          <li>Solid from plies</li>
+          <li>Exploded surfaces</li>
+          <li>Producibility/ Flatten</li>
+          <li>etc. </li>
+        </ul>
+        </li>
+      </ul>
+      <p>In short, nothing can be done with a Composites CATPart if the 
+      corresponding CATMaterial is not available, <br>which causes numerous issues 
+      especially when sending models to a partner for example.</p>
+		<h2>In V5R18 and Above</h2>
+		<p>
+      Starting with V5R18, you can define the <kbd>Composites Parameters</kbd> by 
+      selecting only the required materials from one or several catalogs, 
+      <br>instead of selecting a whole material catalog. <br>This enables the <kbd>
+      Composites Parameters</kbd> to store a list of material cache features 
+      that will each have:</p>
+      <ul>
+        <li>a list of knowledgeware parameters corresponding to the material 
+        properties needed to update the CATPart even if the material catalog is 
+        not available,</li>
+        <li>a link to the corresponding material in a material catalog.</li>
+      </ul>
+      <p>Please note:</p>
+      <ul>
+        <li>Pre-V5R18 models need to be <a href="page5366.html">updated</a>.</li>
+        <li>You can define a material as 
+        <a href="page5385.html">NCF</a>.</li>
+        <li>Not all material parameters are stored in the <kbd>Composites Parameters</kbd>. 
+        <br>
+        This means that a FEA analysis cannot be 
+      performed if the catalog is not available.</li>
+        <li>The materials proposed in the commands defining zones and plies are 
+        only those defined in the <kbd>Composites Parameters</kbd>.</li>
+        <li>Instead of having an applied material like in previous releases, the 
+        ply will only a point to the corresponding material cache available in 
+        the composites parameters.<br>
+        You can no longer apply a material at a ply level.<br>
+        Replacing a material in all plies will be done through the
+        <a href="page5389.html#ix-composites parameters:reroute a material link">rerouting of the material link.</a></li>
+        <li>The laminate feature of zones will no longer point to the materials 
+        in the CATMaterial like in previous releases. <br>
+        It will now directly point to the Composites materials stored under the 
+        <kbd>Composites Parameters</kbd>. This will be transparent for the user.</li>
+      </ul>
+		<h3><a name="ix-composites materials and laminates:composites braiding">
+		</a>About Material in Composites Braiding</h3>
+	  <p>Most material catalogues have 
+	  a fabric width that matches the width of the material when used in a hand 
+	  lay-up. <br>When working in Composites Braiding, we recommend that you create 
+	  a material catalogue with the same materials, <br>but with thicknesses and 
+	  widths that match the tows used by the braiding machine. <p>As the dialog 
+	  box is populated with this data when you select a material, it is useful 
+	  to have a material catalogue that contains sensible default values. <br>The 
+	  dialog box will list materials with their name and width x thickness</p>
+	  <h3><a name="ix-composites laminates"></a>About Laminates</h3>
+		<p>The main input for the Composites designers are:</p>
+		<ul>
+						<li>The reference surface that supports the plies 
+						(main geometry),</li>
+						<li>The zone map and stacking table coming from the 
+						stress office, resulting from a FEA analysis.</li>
+					</ul>
+					<p>The stacking table (typically given as a spreadsheet) 
+					defines the requested laminate for each zone of the 
+					reference surface. <br>The laminates ensure that the structure 
+					will resist to the expected stress.</p>
+		<p>A laminate can be given as:</p>
+		<ul>
+						<li>A stacking sequence, that defines precisely the 
+						stacking as an up-down ordered list of layers, 
+						characterized by their material and orientation, </li>
+						<li>Or as a thickness law, that only indicates the 
+						number of layers for each couple of material/direction 
+						used. </li>
+					</ul>
+					<p>A thickness law can easily be retrieved from a stacking 
+					sequence, whereas several stacking sequences correspond to a 
+					same thickness law.</p>
+		<p>The laminate is dealt with differently by the Grid Approach and the 
+		Solid Approach:</p>
+		<ul>
+						<li>In the Solid Approach, the laminate is explicitly 
+						implemented as a feature visible in the specification 
+						tree, under each zone. <br>The laminate is defined for a 
+						given zone, and can only be edited as a thickness law: 
+						for one or several materials, the number of layers is 
+						given for each possible orientation. <br>Designers can 
+						select an existing laminate in the specification tree 
+						and fill in the thickness law directly from it.</li>
+					<li>In the Grid Approach, the laminate is not explicitly 
+					implemented as a feature, and is not visible in the 
+					specification tree. <br>For each cell of the grid, the laminate 
+					can be defined as a stacking sequence, or as a thickness 
+					law. <br>Two laminates can be defined: the reference one, and a 
+					modified one. <br>Laminates can be defined globally for all the 
+					cells by importing/exporting a grid definition file, and 
+					stacking can be propagated to several cells.</li>
+		</ul>
+		<h2><a name="ix-composites laminates:in V5-6R2013 and above"></a>In V5-6R2013 and Above</h2>
+		<p>Laminates have been enhanced to extended laminates:</p>
+		<ul>
+						<li>Extended laminates can be defined at the start of 
+						the design, using the <kbd>Composites Parameters</kbd> command, or 
+						later, while editing grids or zones.<ul>
+										<li>The extended laminates can be 
+										explicitly defined either as a stacking 
+										sequence or a thickness law, <br>using the 
+										<kbd>Composites Parameters</kbd> command, in both 
+										Grid Approach and Solid Approach.<br>
+										Definition as a stacking sequence is 
+										possible in Solid Approach, for 
+										compliance reasons. <br>However, the 
+										laminate is considered as defined by a 
+										thickness law, meaning the material is 
+										defined for a given zone and edited only 
+										as a thickness law.</li>
+									<li>They can also be implicitly defined when 
+									importing grid data from external data or 
+									from a virtual stacking: <br>extended laminates 
+									are created if existing ones do not cover 
+									the needs, <br>i.e. if the stacking used for a 
+									cell does not correspond to an existing 
+									extended laminate. 
+									</li>
+										<li>Both Excel and text file formats are 
+										supported to define the laminates 
+										through import/export capabilities.</li>
+									<li>New laminates can be created on the fly, 
+									without exiting the grid cell or zone 
+									definition commands. They will be visible 
+									under <kbd>Composites Parameters</kbd>.</li>
+										<li>Automatic 
+									creation of extended laminates with grid 
+									cell or zone definition commands can be 
+									de-activated, <br>to ensure that only validated 
+									extended laminates are used (e.g. to ensure 
+									compliancy with in-house rules).</li>
+										<li>Information is displayed when 
+										extended laminates have been created 
+										after an import, or when automatic 
+										creation is disabled and missing 
+										laminates are found.</li>
+									</ul>
+					</li>
+					<li>The list of laminates is visible at a glance under the 
+					<kbd>Composites Parameters</kbd> node in the specification tree. </li>
+						<li>Existing laminates are easy to re-use.</li>
+						<li>Laminates can be renamed to meet a company 
+						standards.</li>
+						<li>A color is associated to each laminate for a more 
+						stable 3D visualization.</li>
+						<li>Each cell of a grid (Grid Approach), or zone (Solid 
+						Approach) points to an extended laminate to define its 
+						local stacking. <br>A grid cell can point to two extended 
+						laminates (reference and modified).</li>
+					</ul>
+					<p>An automatic migration to extended laminates is started 
+					when you open an old model, that creates a laminate object 
+					for each stacking/laminate found in grids and zones. </p>
+	  <h2><a name="ix-composites master stacking sequence"></a>About Main Stacking Sequence</h2>
+	  <p >You can import a spreadsheet defining a Main Stacking Sequence and 
+	  all associated laminates to be used in a model (one laminate per column). 
+	  It looks like follows:</p>
+	  <table cellspacing="7" >
+		  <tr>
+			  <td><kbd>Material</kbd></td>
+			  <td><kbd>Laminate.1</kbd></td>
+			  <td><kbd>Laminate.2</kbd></td>
+			  <td><kbd>Laminate.3</kbd></td>
+			  <td><kbd>Laminate.4</kbd></td>
+			  <td><kbd>Laminate.5</kbd></td>
+			  <td><kbd>Laminate.6</kbd></td>
+		  </tr>
+		  <tr>
+			  <td style="width: 130px"><kbd>Unidir Material</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd>0</kbd></td>
+		  </tr>
+		  <tr>
+			  <td style="width: 130px"><kbd>Unidir Material</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+		  </tr>
+		  <tr>
+			  <td style="width: 130px"><kbd>Unidir Material</kbd></td>
+			  <td><kbd>90</kbd></td>
+			  <td><kbd>90</kbd></td>
+			  <td><kbd>90</kbd></td>
+			  <td><kbd>90</kbd></td>
+			  <td><kbd>90</kbd></td>
+			  <td><kbd>90</kbd></td>
+		  </tr>
+		  <tr>
+			  <td style="width: 130px"><kbd>Unidir Material</kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td><kbd>-45</kbd></td>
+		  </tr>
+		  <tr>
+			  <td style="width: 130px"><kbd>Unidir Material</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td>&nbsp;</td>
+			  <td>&nbsp;</td>
+			  <td>&nbsp;</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 130px"><kbd>Unidir Material</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td>&nbsp;</td>
+			  <td>&nbsp;</td>
+			  <td>&nbsp;</td>
+		  </tr>
+		  <tr>
+			  <td style="height: 19px; width: 130px;"><kbd>Unidir Material</kbd></td>
+			  <td style="height: 19px"><kbd>0</kbd></td>
+			  <td style="height: 19px"><kbd>0</kbd></td>
+			  <td style="height: 19px"></td>
+			  <td style="height: 19px"><kbd>0</kbd></td>
+			  <td style="height: 19px"></td>
+			  <td style="height: 19px"></td>
+		  </tr>
+		  <tr>
+			  <td style="width: 130px"><kbd>Unidir Material</kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td>&nbsp;</td>
+			  <td><kbd>-45</kbd></td>
+			  <td>&nbsp;</td>
+			  <td>&nbsp;</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 130px"><kbd>Unidir Material</kbd></td>
+			  <td><kbd>90</kbd></td>
+			  <td><kbd>90</kbd></td>
+			  <td>&nbsp;</td>
+			  <td><kbd>90</kbd></td>
+			  <td>&nbsp;</td>
+			  <td>&nbsp;</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 130px"><kbd>Unidir Material</kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td>&nbsp;</td>
+			  <td><kbd>-45</kbd></td>
+			  <td>&nbsp;</td>
+			  <td>&nbsp;</td>
+			  <td>&nbsp;</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 130px"><kbd>Unidir Material</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td>&nbsp;</td>
+			  <td><kbd>0</kbd></td>
+			  <td>&nbsp;</td>
+			  <td>&nbsp;</td>
+			  <td>&nbsp;</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 130px"><kbd>Unidir Material</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td>&nbsp;</td>
+			  <td>&nbsp;</td>
+			  <td>&nbsp;</td>
+			  <td>&nbsp;</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 130px"><kbd>Unidir Material</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td>&nbsp;</td>
+			  <td><kbd>0</kbd></td>
+			  <td>&nbsp;</td>
+			  <td>&nbsp;</td>
+			  <td>&nbsp;</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 130px"><kbd>Unidir Material</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td>&nbsp;</td>
+		  </tr>
+	  </table>
+	  <span >In the model, this import generates or updates:</span><ul >
+		  <li>A Main Stacking Sequence (first two columns), which is an 
+		  ordered list of layers, defined by a material and an orientation (as 
+		  shown in the red squares below) <br>and a layer level and a layer name 
+		  (optional, can be left blank). Once generated, the Main Stacking Sequence can be used 
+		  to create the virtual stacking.<br>Example of layer with layer level 
+		  and layer name:<br>
+		  <img height="194" src="b35doc/english/online/cpdug_c2/images/MSS03.png" width="172"></li>
+		  <li>Stacking sequence laminates (following columns) linked to the 
+		  Main Stacking Sequence as shown below, where:<ul>
+			  <li>The Main Stacking Sequence is on the left, the stacking 
+			  sequence laminate is on the right.</li>
+			  <li>The first column lists the materials while the second lists 
+			  the directions.<br>
+			  <img height="227" src="b35doc/english/online/cpdug_c2/images/MSS01.png" width="379"></li>
+			  <li>Optionally, the second line of the spreadsheet can contain a 
+			  color index for each laminate. <br>All color indices, if any, must be 
+			  unique. In that case, the format of the file changes slightly.<br>
+	  <table cellspacing="7">
+		  <tr>
+			  <td><kbd>Material</kbd></td>
+			  <td><kbd>Orientation</kbd></td>
+			  <td><kbd>Laminate.2</kbd></td>
+			  <td><kbd>Laminate.3</kbd></td>
+			  <td><kbd>Laminate.4</kbd></td>
+			  <td><kbd>Laminate.5</kbd></td>
+			  <td><kbd>Laminate.6</kbd></td>
+		  </tr>
+		  <tr>
+			  <td><kbd></kbd></td>
+			  <td><kbd>ColorIds</kbd></td>
+			  <td><kbd>16</kbd></td>
+			  <td><kbd>17</kbd></td>
+			  <td><kbd>18</kbd></td>
+			  <td><kbd>19</kbd></td>
+			  <td><kbd>20</kbd></td>
+		  </tr>
+		  <tr>
+			  <td><kbd>Unidir Material</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd>0</kbd></td>
+		  </tr>
+		  <tr>
+			  <td><kbd>Unidir Material</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+		  </tr>
+		  <tr>
+			  <td style="height: 25px"><kbd>Unidir Material</kbd></td>
+			  <td style="height: 25px"><kbd>90</kbd></td>
+			  <td style="height: 25px"><kbd>90</kbd></td>
+			  <td style="height: 25px"><kbd>90</kbd></td>
+			  <td style="height: 25px"><kbd>90</kbd></td>
+			  <td style="height: 25px"><kbd>90</kbd></td>
+			  <td style="height: 25px"><kbd>90</kbd></td>
+		  </tr>
+		  <tr>
+			  <td><kbd>Unidir Material</kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td><kbd>-45</kbd></td>
+		  </tr>
+		  <tr>
+			  <td><kbd>Unidir Material</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd></kbd></td>
+		  </tr>
+		  <tr>
+			  <td style="height: 18px"><kbd>Unidir Material</kbd></td>
+			  <td style="height: 18px"><kbd>45</kbd></td>
+			  <td style="height: 18px"><kbd>45</kbd></td>
+			  <td style="height: 18px"><kbd>45</kbd></td>
+			  <td style="height: 18px"></td>
+			  <td style="height: 18px"></td>
+			  <td style="height: 18px"></td>
+		  </tr>
+		  <tr>
+			  <td style="height: 19px"><kbd>Unidir Material</kbd></td>
+			  <td style="height: 19px"><kbd>0</kbd></td>
+			  <td style="height: 19px"><kbd>0</kbd></td>
+			  <td style="height: 19px"></td>
+			  <td style="height: 19px"><kbd>0</kbd></td>
+			  <td style="height: 19px"></td>
+			  <td style="height: 19px"></td>
+		  </tr>
+		  <tr>
+			  <td><kbd>Unidir Material</kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd></kbd></td>
+		  </tr>
+		  <tr>
+			  <td><kbd>Unidir Material</kbd></td>
+			  <td><kbd>90</kbd></td>
+			  <td><kbd>90</kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd>90</kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd></kbd></td>
+		  </tr>
+		  <tr>
+			  <td><kbd>Unidir Material</kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd>-45</kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd></kbd></td>
+		  </tr>
+		  <tr>
+			  <td><kbd>Unidir Material</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd></kbd></td>
+		  </tr>
+		  <tr>
+			  <td><kbd>Unidir Material</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd></kbd></td>
+		  </tr>
+		  <tr>
+			  <td><kbd>Unidir Material</kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd>0</kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd></kbd></td>
+			  <td><kbd></kbd></td>
+		  </tr>
+		  <tr>
+			  <td><kbd>Unidir Material</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd>45</kbd></td>
+			  <td><kbd></kbd></td>
+		  </tr>
+	  </table>
+	  		</li><li>Material ID and orientations must correspond to those 
+			  existing in the model.</li>
+			  <li>All orientations must be the same on a given line and one 
+			  orientation must be set for each line.</li>
+		  </ul>
+		  </li>
+	  </ul>
+	  
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" style="width: 75px">
+      &nbsp;</td>
+      <td>
+      <h3>
+	  <a name="ix-composites master stacking sequence:composites parameters">
+	  </a>Main Stacking Sequence and Composites Parameters</h3>
+	  <ul>
+		  <li>If defined for one line, the layer name must be defined for all, 
+		  and be unique.</li>
+		  <li>If defined for one line, layer level must be defined for all and 
+		  be a numerical value. </li>
+		  <li>Material ID and orientations must correspond to those existing in 
+		  the model.</li>
+		  <li>All orientations must be the same on a given line and one 
+		  orientation must be set for each line.</li>
+		  <li>All color indices, if any, must be unique.</li>
+		  <li>Laminates in the model are not deleted if not present in the 
+		  imported file.</li>
+		  <li>Imported laminates are displayed in the <kbd>Laminates</kbd> tab 
+		  and marked SS-MSS.</li>
+		  <li>Laminates previously defined from a Main Stacking Sequence, that 
+		  have become incompatible with the newly imported Main Stacking Sequence, 
+		  <br>are turned into standard stacking sequences. A warning is 
+		  displayed.</li>
+		  <li>If a virtual stacking had been created from a Main Stacking Sequence and has become incompatible with the newly imported main 
+		  sequence, <br>a warning is displayed and the link to the Main Stacking Sequence is lost.</li>
+		  <li>Existing laminates are updated with the information of imported 
+		  laminates with the same name.</li>
+		  <li>Each laminate receives a color index, the one contained in the import 
+		  file if it exists, an automatic one otherwise.</li>
+	  </ul>
+	  <p>If you re-import a Main Stacking Sequence, the current 
+	  Main Stacking Sequence and its associated laminate are updated.</p>
+	  <ul>
+		  <li>When an existing laminate corresponds to a re-imported one, it is 
+		  updated.</li>
+		  <li>When an existing laminate does not correspond to any re-imported 
+		  one, its compatibility is checked. <br>If it is compatible, it remains 
+		  associated to the Main Stacking Sequence, otherwise, it is changed 
+		  into a standard Stacking Sequence.</li>
+		  <li>A laminate is compatible with a new Main Stacking Sequence if 
+		  its layers are an ordered sub-set of all layers of the Main Stacking Sequence. </li>
+		  <li>When an existing laminate corresponds to a 
+		  re-imported one, it is updated at re-import (change of layer level 
+		  or sequence name).</li>
+		  <li>Swap of laminates, deletion of a laminate, change of a material or 
+		  orientation of a layer are not supported.</li>
+	  </ul>
+	  <h3><a name="ix-composites master stacking sequence:grid definition"></a>
+	  Main Stacking Sequence and Grid Definition</h3>
+	  <ul>
+		  <li>When these Stacking Sequences are used in Grid Definition, the 
+		  virtual stacking is created from the order of layers in the Main Stacking Sequence. <br>When defined, the layer lever and layer name 
+		  provide respectively the level data and sequence name of the generated 
+		  virtual sequence in the Virtual Stacking.</li>
+		  <li>Layer information (level and name) is applied to each virtual 
+		  sequence of the Virtual Stacking.</li>
+		  <li>Layer levels are stored on each virtual sequence. </li>
+		  <li>In the 
+		  Ply entity level view, the layer level is identical for each ply of 
+		  the same sequence.</li>
+		  <li>Information display in Virtual Stacking is adapted to the Main Stacking Sequence information.</li>
+		  <li>At ply generation, layer levels can be used as drop-off order, 
+		  enabling you to drive the staggering from layer levels defined 
+		  externally.</li>
+	  </ul>
+	  <h3><a name="ix-composites master stacking sequence:import/export"></a>Definition via Export/Import</h3>
+	  <p>You can define laminates by exporting their definition as an external 
+	  file, modifying it and re-importing it.<br>Both Excel and text files are 
+	  supported.<br><br>Example of definition:<br><br><kbd>Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TL.1<br>ColorIdx&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1<br>
+	  Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TL<br>Stacking&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp; 45&nbsp;&nbsp; -45&nbsp;&nbsp; 90<br>U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 18&nbsp; 6&nbsp;&nbsp;&nbsp;&nbsp; 6&nbsp;&nbsp;&nbsp;&nbsp; 4<br>
+	  </kbd>#<kbd><br>Name SS.1<br>
+	  ColorIdx&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2<br>Type SS<br>Stacking<br>U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0<br>U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 45<br>
+	  U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 45<br>U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 45<br>U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -45<br>U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -45<br>
+	  U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -45<br>U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 90<br>U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 90<br>U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -45<br>
+	  U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -45<br>U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -45<br>U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 45<br>U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 45<br>
+	  U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 45<br>U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	  0<br></kbd>#<kbd><br>Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TL.2<br>ColorIdx&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3<br>Type TL<br>
+	  Stacking&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp; 45&nbsp;&nbsp; -45&nbsp;&nbsp; 90<br>U174_T800&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 20&nbsp; 6&nbsp;&nbsp;&nbsp;&nbsp; 6&nbsp;&nbsp;&nbsp;&nbsp; 4<br>
+	  </kbd>#<br></p>
+	  
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <p align="center">
+      <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+    </tr>
+  </table>
+  </center>
+</div>
+
+</body>
+
+</html>
+

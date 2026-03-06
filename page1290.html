@@ -1,0 +1,708 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating the Enterprise Archive File</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1><a name="hj-LCAEARFileChanges"></a>
+ Creating the Enterprise Archive File</h1>
+ <table style="BORDER-COLLAPSE: collapse" cellSpacing="0" cellPadding="0" width="100%" border="0">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">This section describes how to generate and deploy the 
+     Enterprise Archive (EAR) file in the WebSphere Application Server (WAS), by 
+     using the <kbd><a name="ix-commands::WASSetupUI"></a>WASSetupUI</kbd> command<a name="ix-WASSetupUI command"></a> 
+     to start the <kbd>Deployment Wizard for V5 Web Applications</kbd>. You will be presented with two 
+     choices:<ul>
+       <li>automatic deployment</li>
+       <li>manual deployment.</li>
+     </ul>
+     <p>This scenario does NOT cover all possible deployment scenarios on a WAS 
+     ND (Network Deployment) cluster of machines. However, the generated JACL 
+     (defined later) can be used if all machines in the cluster have same image 
+     (OS, file systems, etc.). WAS ND lets you clone the installation of a 
+     single WAS node to all the clusters.</p>
+     <h3>A Few Definitions</h3>
+     <p><b>WAS </b>is an acronym for WebSphere Application Server, the IBM 
+     server infrastructure used to run WebTop applications.</p>
+     <p><b>EAR</b> is the short name for Enterprise Archive file. An EAR file 
+     contains a subset of the information required to deploy a WebTop 
+     application in WebSphere Application server: the application root URI, 
+     security on the URL handled by the application, persistency details, path 
+     to the ENOVIA installation directory.</p>
+     <p><b>WebTop</b>: WebTop applications are applications which are targeted 
+     to be used from a web browser, like Microsoft Internet Explorer or Mozilla. 
+     WebTop applications can be deployed on WAS or as 
+     Microsoft ASP.NET. The WebTop applications involved here is the 
+     <strong>LCA Navigator</strong>.</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td vAlign="top">For this task, you will need the following:<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="90%" id="AutoNumber2" height="886">
+		<tr>
+			<td valign="top">
+			<p align="center"><b>Input Variable</b></td>
+			<td valign="top">
+			<p align="center"><b>Signification</b></td>
+			<td valign="top">
+			<p align="center"><b>Source</b></td>
+		</tr>
+		<tr>
+			<td valign="top">&lt;<i>was_home</i>&gt;</td>
+			<td valign="top"><font face="Verdana">location of the 
+           WebSphere Application Server </font></td>
+			<td valign="top">WebSphere administrator</td>
+		</tr>
+		<tr>
+			<td valign="top"><i>&lt;install_path&gt;</i></td>
+			<td valign="top">location of the code installation</td>
+			<td valign="top">Unloading the Code</td>
+		</tr>
+		<tr>
+			<td valign="top"><i>&lt;os&gt;</i></td>
+			<td valign="top">operating system of the machine on which 
+           you've installed the code </td>
+			<td valign="top">
+			<p>Windows: </p>
+			<ul>
+				<li>intel_a</li>
+				<li><blink>win_b64</blink></li>
+			</ul>
+			<p>AIX: <br>
+			</p>
+			<ul>
+				<li>aix_a</li>
+				<li>aix_a64<br>
+				</li>
+			</ul>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top"><i>&lt;environment_name&gt;</i></td>
+			<td valign="top">the chosen environment filename</td>
+			<td valign="top">Unloading the Code</td>
+		</tr>
+		<tr>
+			<td valign="top"><i>&lt;environment_dir&gt;</i></td>
+			<td valign="top">the path to the directory of the 
+           environment filename</td>
+			<td valign="top">Unloading the Code</td>
+		</tr>
+		<tr>
+			<td valign="top"><i>&lt;db2_jdbc_driver_path&gt;</i></td>
+			<td valign="top">path of the directory containing DB2 
+           Universal JDBC driver files</td>
+			<td valign="top">Creating a DB2 Database for Settings 
+           Persistency</td>
+		</tr>
+		<tr>
+			<td valign="top"><i>&lt;oracle_jdbc_driver_path&gt;</i></td>
+			<td valign="top">path of the directory containing ORACLE&nbsp; JDBC 
+           driver files</td>
+			<td valign="top">Creating an ORACLE Database for Settings 
+           Persistency</td>
+		</tr>
+		<tr>
+			<td valign="top"><i>&lt;database_name&gt;</i></td>
+			<td valign="top">name of the database for settings persistency</td>
+			<td valign="top">If DB2: <br>
+           Creating a DB2 Database for Settings Persistency <br>
+           If ORACLE: <br>
+           Creating an ORACLE Database for Settings Persistency</td>
+		</tr>
+		<tr>
+			<td valign="top"><i>&lt;database_hostname&gt;</i></td>
+			<td valign="top">name of the machine hosting the database</td>
+			<td valign="top">If DB2: <br>
+           Creating a DB2 Database for Settings Persistency <br>
+           If ORACLE: <br>
+           Creating an ORACLE Database for Settings Persistency</td>
+		</tr>
+		<tr>
+			<td valign="top"><i>&lt;database_port&gt;</i></td>
+			<td valign="top">port number used by the database instance</td>
+			<td valign="top">If DB2: <br>
+           Creating a DB2 Database for Settings Persistency <br>
+           If ORACLE: <br>
+           Creating an ORACLE Database for Settings Persistency</td>
+		</tr>
+		<tr>
+			<td valign="top"><i>&lt;server_name&gt;</i></td>
+			<td valign="top">machine name of <font face="Verdana">the 
+           WebSphere Application Server</font></td>
+			<td valign="top">WebSphere administrator</td>
+		</tr>
+		<tr>
+			<td valign="top"><i>&lt;rootURI&gt;</i></td>
+			<td valign="top">name that appears in the URL your users 
+           will use to connect to the web application</td>
+			<td valign="top">WebSphere administrator</td>
+		</tr>
+		<tr>
+			<td valign="top"><b>DB2</b></td>
+			<td valign="top"></td>
+			<td valign="top"></td>
+		</tr>
+		<tr>
+			<td valign="top"><i>&lt;db2admin_username&gt;</i></td>
+			<td valign="top">user name of the DB2 administrator 
+           account</td>
+			<td valign="top">DB2 administrator</td>
+		</tr>
+		<tr>
+			<td valign="top"><i>&lt;db2admin_password&gt;</i></td>
+			<td valign="top">password of the DB2 administrator account</td>
+			<td valign="top">DB2 administrator</td>
+		</tr>
+		<tr>
+			<td valign="top"><b>ORACLE</b></td>
+			<td valign="top"></td>
+			<td valign="top"></td>
+		</tr>
+		<tr>
+			<td valign="top">&lt;<i>settings_username</i>&gt;</td>
+			<td valign="top">name of database user corresponding to 
+           settings persistency&nbsp; </td>
+			<td valign="top">Creating an ORACLE Database for Settings 
+           Persistency </td>
+		</tr>
+		<tr>
+			<td valign="top">&lt;<i>settings_password</i>&gt;</td>
+			<td valign="top">password of database user corresponding 
+           to settings persistency&nbsp; </td>
+			<td valign="top">Creating an ORACLE Database for Settings 
+           Persistency</td>
+		</tr>
+		</table>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">
+       <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="90%" id="AutoNumber1">
+         <tr>
+           <td valign="top" style="width: 24%">           <p align="center"><b>Output Variable</b></td>
+           <td height="19" style="width: 45%">
+           <p align="center"><b>Signification</b></td>
+           <td width="34%" height="19">
+           <p align="center"><b>Where Used</b></td>
+         </tr>
+         <tr>
+           <td style="width: 24%">&lt;<i>ear_file</i>&gt;</td>
+           <td style="width: 45%">absolute path to the Enterprise Archive file</td>
+           <td width="30%"><font face="Verdana">Installing the Enterprise 
+           Archive file in a WebSphere Application Server</font></td>
+         </tr>
+       </table>
+     </td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     &nbsp;</td>
+     <td vAlign="top">If the ENOVIA server host is different from the Web 
+     Application server host, you must decide whether you prefer to perform an 
+     ENOVIA installation on both machines or to mount the installation from the 
+     ENOVIA server host to the Web Application server host.</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td vAlign="top">
+     <ol class="task">
+       <li>
+       <p class="task"><font face="Verdana">Launch </font>the <kbd>WASSetupUI</kbd> 
+       command<font face="Verdana"> as follows:</font></li>
+     </ol>
+     <blockquote>
+       <p><b>On Windows</b></p>
+       <p>In a command prompt window, change directory to <br>
+       <br>
+       <code>&lt;install_path&gt;\intel_a\code\bin</code><br>
+       <br>
+       in the ENOVIA installation and launch the WASSetupUI command by typing:<br>
+       <br>
+       <code>WASSetupUI.exe </code></p>
+       <p>Warning: if the environment directory contains more that one 
+       environment file, you must launch the WASSetupUI command this way:<br>
+       <br>
+       <code>cd &lt;install_path&gt;/&lt;os&gt;/code/bin<br>
+       catstart.exe -env &lt;environment_name&gt; -dir &lt;environment_dir&gt; -run 
+       WASSetupUI<br>
+       </code><br>
+       where <code>&lt;environment_name&gt;</code> is the name of the environment file 
+       and <code>&lt;environment_dir&gt;</code> is the path to the environment file.</p>
+       <p><b>On UNIX</b></p>
+       <p>Launch the <kbd>WASSetupUI</kbd> command:</p>
+       <p><code>cd &lt;install_path&gt;/&lt;os&gt;/code/command<br>
+       ./catstart -env &lt;environment_name&gt; -dir &lt;environment_dir&gt; -run WASSetupUI</code></p>
+       <p>where <code>&lt;environment_name&gt; </code>is the name of the environment 
+       file and <code>&lt;environment_dir&gt; </code>is the path to the environment 
+       file.</p>
+       <p>The WASSetupUI interface will appear. You will now be on the <kbd>
+       <font face="Verdana">Source</font></kbd><font face="Verdana"> tab:</font></p>
+       <p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/WASSetupUI_SourceNLS.gif" width="809" height="419"></p>
+       <p><font face="Verdana">Normally, the </font><font face="Arial"><kbd>
+       <font face="Verdana">WASSetupUI</font></kbd></font><font face="Verdana"> 
+       command will automatically find and display the location of the runtime 
+       view of the installed code.</font></p>
+     </blockquote>
+     <ol class="task" start="2">
+       <li>
+       <p class="task"><font face="Verdana">If not, enter the location of the 
+       runtime view of your installed code.<br>
+       <br>
+       </font><code>&lt;install_path&gt;/&lt;os&gt; (UNIX)<br>
+       &lt;install_path&gt;\&lt;os&gt; (Windows)</code><font face="Verdana"><br>
+       <br>
+       In our example, this is:<br>
+       <br>
+       </font><code>
+       <strong>WindowsInstallPath</strong>\intel_a</code></li>
+     </ol>
+     <ol class="task" start="3">
+       <li>
+       <p class="task">Click the Next button.<br>
+       You will now be on the <kbd>Persistency</kbd> tab.<br>
+       The default is for IBM DB2:<br>
+       <br>
+       <img border="0" src="b35doc/english/online/basil_c2/images/WASSetupUI_PersistencyNLS.gif" width="809" height="419"></li>
+     </ol>
+     <ol class="task" start="5">
+       <li>
+       <p class="task">Click the <kbd>Driver Type</kbd> selection button and 
+       choose the Driver Type of your persistency database from the proposed 
+       list. You must choose either <kbd>IBM DB2</kbd> or <kbd>ORACLE</kbd>.<br>
+       <br>
+       The Oracle tab looks like this:<br>
+       <br>
+       <img border="0" src="b35doc/english/online/basil_c2/images/WASSetupUI_PersistencyOracleNLS.gif" width="809" height="419"><br>
+       <br>
+&nbsp;</li>
+       <li>
+       <p class="task">In the <kbd>JDBC Driver File</kbd> text-entry field, 
+       depending on the database you previously created for settings 
+       persistency:<br>
+       &nbsp;<br>
+       <b>DB2</b>:&nbsp; enter the path of the <i>db2jcc.jar</i> file which is 
+       part of the DB2 Universal JDBC Driver:<br>
+       &nbsp;<br>
+       <code>&lt;db2_jdbc_driver_path&gt;\db2jcc.jar (Windows)<br>
+       &lt;db2_jdbc_driver_path&gt;/db2jcc.jar (UNIX)</code><br>
+&nbsp; <br>
+       <b>ORACLE</b>: enter the path of the ORACLE JDBC driver:<br>
+       &nbsp;<br>
+       <code>&lt;oracle_jdbc_driver_path&gt;/ojdbc14.jar&nbsp; (Windows)<br>
+       &lt;oracle_jdbc_driver_path&gt;\ojdbc14.jar&nbsp; (UNIX)</code><br>
+&nbsp;</li>
+       <li>
+       <p class="task">In the <kbd>Database Name</kbd> (<b>DB2</b>) or <kbd>
+       ORACLE SID</kbd> (<b>Oracle</b>) text-entry field, enter the database 
+       name chosen for settings persistency, &lt;database_name&gt;</li>
+       <li>
+       <p class="task">In the <kbd>Database Host</kbd> text-entry field, enter 
+       the name of the machine hosting the database, <i>&lt;database_hostname&gt;.<br>
+       <br>
+       </i>The default is localhost: you can use the default if the database is 
+       on the same machine.</li>
+       <li>
+       <p class="task">In the <kbd>Database Port</kbd> text-entry field, enter 
+       the port number used by the database instance, <i>&lt;database_port&gt;.</i></li>
+       <li>
+       <p class="task">In the <kbd>User Name</kbd> text-entry field, depending 
+       on the database chosen for settings persistency: <br>
+       <br>
+       <b>DB2</b>: Enter the name of the database administrator, <i>
+       &lt;db2admin_username&gt;.</i><br>
+       <br>
+       <b>ORACLE</b>: Enter the name of the ORACLE user created for settings 
+       persistency, &lt;<i>settings_username</i>&gt;.</li>
+       <li>
+       <p class="task">In the <kbd>Password</kbd> text-entry field, depending on 
+       the database chosen for settings persistency: <br>
+       <br>
+       <b>DB2</b>: Enter the password of the database administrator, <i>
+       &lt;db2admin_password&gt;</i><br>
+       <br>
+       <b>ORACLE</b>: Enter the password of the ORACLE user created for settings 
+       persistency, &lt;<i>settings_password</i>&gt;.</li>
+       <li>
+       <p class="task">In the <kbd>JNDI Name</kbd> field, set the JNDI 
+       name for the JSystem data source, for 
+       example:<br>
+       <br>
+       <code>jdbc/JSystem</code></li>
+       <li>
+       <p class="task">Click the <kbd>Test Connection</kbd> button to test the 
+       connection with the database.<br>
+       <br>
+       A test connection to the persistency database will be performed. An 
+       additional <kbd>Output</kbd> tab is added displaying test connection 
+       execution output. If successful, a popup appears displaying the message:<br>
+       <br>
+       <code>Successful Database Connection</code><br>
+       <br>
+       If so, click OK to continue.</li>
+     </ol>
+     <ol class="task" start="13">
+       <li>
+       <p class="task">Click the <kbd>Next</kbd> button.<br>
+       You will now be on the <kbd>Target</kbd> tab:<br>
+       <br>
+       <img border="0" src="b35doc/english/online/basil_c2/images/WASSetupUI_TargetAutomaticNLS.gif" width="809" height="419"><br>
+&nbsp;</li>
+       <li>
+       <p class="task">Select a <kbd>Target Type</kbd>.<br>
+       The target type is the web application server in which you are deploying 
+       the web application. There is only one type: <kbd>WebSphere Application Server</kbd>.</li>
+       <li>
+       <p class="task">For the <kbd>WebSphere Application Server</kbd> 
+       target, specify the <kbd>IBM WebSphere Application Server Directory</kbd>:<br>
+       <br>
+       <code>&lt;was_home&gt;/AppServer (UNIX)<br>
+       &lt;was_home&gt;\AppServer (Windows)</code><br>
+       <br>
+       Normally, the <kbd>WASSetupUI</kbd> command will find it automatically. <br>
+       <b>On UNIX</b>: The IBM WebSphere Application Server Directory should be 
+       set to the location of your WebSphere installation. </li>
+       <li>
+       <p class="task">In the <kbd>Application Root URI</kbd> text-entry field, 
+       enter application root, <i>&lt;rootURI&gt;</i>.<br>
+       <br>
+       You can enter only alphanumeric characters and supported special 
+       characters, but no blanks.<br>
+       <br>
+       The <b>rootURI</b> of a WebTop application is part of the URL typed in 
+       the address bar of a web browser in order to access that application. 
+       Specifically, the general URL syntax to access a WebTop application is:<br>
+       <br>
+       <code>http://&lt;server name&gt;:&lt;port&gt;/&lt;rootURI&gt;/</code><br>
+       <br>
+       where:<br>
+       <br>
+       <code>&lt;server name&gt;</code> is the name of the machine running WAS<br>
+       <code>&lt;port&gt;</code> is the port number on which WAS is listening to 
+       run web applications<br>
+       <code>&lt;rootURI&gt;</code> is the application Root URI. A valid root 
+       URI is made of an alphanumerical string<br>
+       <br>
+       For example:<br>
+       <br>
+       <code><b>http://loug3dsy.dsy.ds:9043/ENOVIA_</b><strong>EnvNameSuffix</strong></code><br>
+       <br>
+       Note: It is very important for compatibility issues with future releases 
+       to choose a name that is based on the release number and not based only 
+       on a product name.</li>
+       <li>
+       <p class="task">Choose either <kbd>Automatic Deployment</kbd> or <kbd>
+       Manual Deployment</kbd>.<br>
+       The default is set to <kbd>Automatic Deployment</kbd>.</li>
+     </ol>
+     <blockquote>
+       <h3>Automatic Deployment</h3>
+       <p>This is by far the simplest solution for simple, rapid deployment of 
+       your web application in a single application server. This performs 
+       several operations that you had to perform manually in previous releases 
+       using the WAS administration console. Deployment is simplified by 
+       scripting, reducing the many interactions in WAS Admin Console to running 
+       a command.</p>
+       <p><b>Warning: </b>If automatic deployment mode is chosen, 
+     the <kbd>WASSetupUI</kbd> command runs the WebSphere command <kbd>wsadmin</kbd> 
+     which in turn tries to write its logs in subdirectories in:</p>
+       <p><code>
+     &lt;was_home&gt;/logs</code></p>
+     <p>Consequently, the following steps must be performed using a user who has 
+     the right to read and write files in the subdirectories of this WAS 
+     directory. For example, on UNIX, use the same user as the one used to 
+     install WebSphere Application Server.<p>To deploy automatically, simply click the <kbd>Finish</kbd> button. 
+       job execution is traced in the <kbd>Output</kbd> tab. When you see the 
+       popup:</p>
+       <p><code>Successful Execution. Quit?</code></p>
+       <p>it means that the EAR file has been successfully generated. Click Yes 
+       to quit.</p>
+       <p><font color="#FF0000"><b>Warning: deploying an ENOVIA web application 
+       removes any previously deployed ENOVIA web application.</b></font></p>
+       <p><b>WAS Admin Console</b> is the name for the Administration 
+       application of WAS. The WAS Admin Console is run in a web browser. It 
+       allows you to deploy, monitor, and perform error tracking and tuning 
+       tasks for the web applications run by WAS. </p>
+       <p>The operations performed by automatic deployment are:</p>
+       <ul>
+         <li>creation of data sources</li>
+         <li>set up of WebSphere server variables </li>
+         <li>installation of the EAR in WAS.</li>
+       </ul>
+       <p>Note: performing automatic deployment removes all ENOVIA applications 
+       and all previously created data sources, even those created on other WAS 
+       servers on the same machine resulting from the same WAS installation.</p>
+       <p>Once the web application has been deployed, you must restart WAS and 
+       run a first test of the web applications:</p>
+       <ul>
+         <li>SSO </li>
+         <li><strong>LCA Navigator</strong>.</li>
+       </ul>
+       <p><b>Limitation</b>: operations related to HTTP server 
+       configuration must also be done manually.</p>
+       <h3>Manual Deployment</h3>
+       <p>If you check the <kbd>Manual Deployment</kbd> option, the dialog box 
+       looks like this:</p>
+       <p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/WASSetupUI_TargetManualNLS.gif" width="809" height="419"></p>
+       <p>If you click the <kbd>Finish</kbd> button now, deployment will have to 
+       be performed exactly as in the previous release, involving all the manual 
+       steps inside the WebSphere environment. </p>
+       <p>The <kbd>Output EAR File</kbd> option specifies where the resulting 
+       EAR file is located. You will then have to install it in WebSphere 
+       exactly as before. In the <kbd>Output EAR File</kbd> text-entry field, 
+       enter the desired output location of the generated EAR file, &lt;<i>ear_file</i>&gt;. 
+       (Note that you must add the &quot;.ear&quot; extension, it will not be added 
+       automatically.). You can also click the <kbd>&quot;...&quot;</kbd> button to browse 
+       and specify the EAR file name and location.</p>
+       <p>However, if the <kbd>Generate JACL Property File</kbd> option is 
+       checked, a JACL Deployment script will be generated in the location 
+       specified by the <kbd>Output&nbsp; JACL Property File</kbd> field.</p>
+       <p><b>JACL</b> is the short name for JAva Command Language. JACL is a 
+       script language, supported by WAS for scripted installation and 
+       administration tasks. With an appropriate JACL script, deployment tasks 
+       for WebTop applications can amount to running the <kbd>wsadmin </kbd>
+       command, instead of manually performing several interactive steps using 
+       the WAS Admin Console. For experienced WebSphere administrators, this 
+       file can be customized to perform, for example, deployment on multiple 
+       machines.</p>
+       <p>In the case of deployment to WAS, the JACL script will configure the 
+       WAS server called <kbd>server1</kbd>.</p>
+       <p>If a JACL script was generated, you must use the <kbd>wsadmin</kbd> 
+       command, located in:</p>
+       <p><code>&lt;WebSphere application server install dir&gt;\bin (Windows)<br>
+       &lt;WebSphere application server install dir&gt;/bin (UNIX)</code></p>
+       <p>in order to run the JACL script.</p>
+       <p>If this option is not checked, the JACL file generation option will be 
+       inaccessible and grayed out.</p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td vAlign="top">&nbsp;</td>
+     <td vAlign="top">
+     <h3>Instructions for Manual Deployment</h3>
+     <p>If the manual deployment option is chosen instead of automatic 
+     deployment, there are two cases:</p>
+     <ul>
+       <li>either all WebSphere configuration steps for deployment will be 
+       performed using WebSphere Admin Console or <kbd>wsadmin</kbd><code> </code>scripting 
+       without recycling the JACL command that the <kbd>WASSetupUI</kbd> command 
+       can generate even without automatic deployment</li>
+       <li>or you selected <code>Generate JACL Property File</code> with a 
+       target path for this property file.</li>
+     </ul>
+     <h4>Fully Manual Deployment</h4>
+     <p>In this case, after running the <kbd>WASSetupUI</kbd> command, you must 
+     perform the following configuration on WAS (either through the WebSphere 
+     Admin Console or using <kbd>wsadmin</kbd> commands):</p>
+     <p>1. Declare a DB2 or ORACLE (database brand must be consistent with the 
+     one chosen in WASSetupUI) Data Source, with the following constraints:</p>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <ul>
+             <li>The JDNI name of the data source *must* precisely be this one 
+             (mind the capitalization): <br>
+             <br>
+             <code>jdbc/JSystem</code></li>
+             <li>If DB2 is used, the Data source must rely on the DB2 Universal 
+             Database Driver (db2jcc.jar) in Type 4 mode</li>
+             <li>If ORACLE is used, the Database must rely on the ORACLE JDBC 
+             Driver part of standard JDBC drivers choices in WebSphere Admin 
+             Console (which depend on the precise WAS version).</li>
+           </ul>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <p>2. You must choose a server (in WebSphere terminology: a server means a 
+     JVM &#045;Java Virtual Machine) and setup the following for this server.</p>
+     <p>The following environment variables are set for the chosen server:</p>
+     <h4>Windows</h4>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="657" id="AutoNumber7">
+             <tr>
+               <td height="15" width="218" align="center" valign="top"><b>
+               Variable name</b></td>
+               <td height="15" width="218" align="center" valign="top"><b>
+               Variable value</b></td>
+               <td height="15" width="219" align="center" valign="top"><b>
+               Comment</b></td>
+             </tr>
+             <tr>
+               <td width="218" valign="top">PATH</td>
+               <td width="218" valign="top">&lt;install path&gt;/intel_a/code/bin</td>
+               <td width="219" valign="top"><span style="font-family: Verdana">
+               <font size="2">Required for native code used by ENOVIA WebTop 
+               applications</font></span></td>
+             </tr>
+           </table>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <h4>AIX</h4>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="657" id="AutoNumber6">
+             <tr>
+               <td height="15" width="218" align="center" valign="top"><b>
+               Variable name</b></td>
+               <td height="15" width="218" align="center" valign="top"><b>
+               Variable value</b></td>
+               <td height="15" width="219" align="center" valign="top"><b>
+               Comment</b></td>
+             </tr>
+             <tr>
+               <td height="15" width="218" valign="top">LIBPATH</td>
+               <td height="15" width="218" valign="top">&lt;install 
+               path&gt;/aix_a/code/bin</td>
+               <td height="15" width="219" valign="top">
+               <span style="font-family: Verdana"><font size="2">Required for 
+               native code used by ENOVIA WebTop applications</font></span></td>
+             </tr>
+           </table>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <p>3. The EAR file generated by WASSetupUI must be installed on the chosen 
+     server, without modification on the Role mapping.</p>
+     <p>4. WAS must be restarted after all these changes to run the web 
+     applications.</p>
+     <h4>Manual Deployment based on the JACL property file generated by 
+     WASSetupUI</h4>
+     <p>The last deployment option, which is to select <kbd>Manual deployment</kbd> 
+     and <kbd>Generate JACL property file</kbd> is meant for advanced users who 
+     master the JACL scripting language in WAS. Using the JACL scripts which are 
+     part of ENOVIA runtime and the generate JACL property file, advanced users 
+     can customize the deployment to their specific needs.</p>
+     <p>For example, if the machine on which the <kbd>WASSetupUI</kbd> command 
+     is run is not the same as the targeted machine for WAS, advanced users can 
+     copy the JACL and property files and run the deployment on the WAS machine 
+     using the <kbd>wsadmin</kbd> command. The best way to take advantage of 
+     this is to run the <kbd>WASSetupUI</kbd> command in automatic mode at least 
+     once, and see how the <kbd>wsadmin</kbd> commands are launched in the log 
+     text area (this can be copy-pasted to a text editor for later inspection). 
+     On the remote machine, some paths will probably need to be modified in 
+     order to successfully run <kbd>wsadmin</kbd> with real file locations, as 
+     well as some properties in the JACL file (call, node and server name must 
+     match the targeted WAS real names).</p>
+     <p>Another usage pattern is to copy the JACL files and edit them in order 
+     to implement some specific deployment topology not externalized in the JACL 
+     property file.</td>
+   </tr>
+   <tr>
+     <td vAlign="top">&nbsp;</td>
+     <td vAlign="top">
+     <h3>Using the More Button</h3>
+     <p>Click the <kbd>More</kbd> button to display the following information:</p>
+     <p>
+     <img border="1" src="b35doc/english/online/basil_c2/images/WASSetupUI_TargetMoreNLS.gif" width="681" height="28"></p>
+     <p>In automatic mode, the software assumes that the name of the WAS profile 
+     is the default profile (the profile field is grayed out because WAS was not 
+     installed on the machine on which the screen shot was made), the WAS cell 
+     and WAS node are the same as the name of the machine hosting the WAS, and 
+     that the server name is <kbd>server1</kbd>. You set the profile, cell, node and 
+     server names when installing WAS. If the default names are not correct, 
+     reset the correct names using the combo box showing relevant choices (in 
+     automatic mode), before clicking the <kbd>Finish</kbd> button.</p>
+     <p>On UNIX, hitting the &quot;More&quot; button lets you choose the X11 display 
+     setting (machine:1.0 for example) which is interesting when deploying on a 
+     machine without X11 (for example, big servers) or to use the Virtual Frame 
+     Buffer:</p>
+     <p>
+     <img border="0" src="b35doc/english/online/basil_c2/images/WASSetupUI_TargetMore02NLS.gif" width="802" height="70"></p>
+     <p>Note that the WAS profile is the default profile: it is displayed 
+     because WAS was installed on the UNIX machine on which the screen shot was 
+     made.</p>
+           <h3>Generate response file </h3>
+     <p>The <kbd>Generate response file </kbd>option generates the 
+           response file corresponding to all options selected in an interactive 
+           WASSetupUI session until the <kbd>Finish</kbd> button is clicked. The 
+           response file can be used by people in charge of web application 
+           deployment as a template for silent mode (i.e., non interactive) 
+           deployment. </p>
+     <h3>Executing the Command</h3>
+     <p>Once you have made your choice, click the <kbd>Finish</kbd> button now. 
+     The <kbd>Output</kbd> tab is then displayed containing the execution 
+     results.</p>
+     <p>If you selected the <kbd>Automatic Deployment</kbd> option, the 
+     application will be deployed automatically in the WebSphere Application 
+     Server. To start the application, refer to
+     <a href="page1293.html">Launching the Web Application</a>.</td>
+   </tr>
+   <tr>
+     <td vAlign="top">&nbsp;</td>
+     <td vAlign="top"><b>Note</b>: if the WebSphere Application Server was still 
+     running when you launched the command, restart the server once the command 
+     has been executed.</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     &nbsp;</td>
+     <td vAlign="top">
+     <h3><a name="hj-WASSSetupUIBatch"></a>WASSetupUI Command Options</h3>
+		<p>There are several options for the WASSetupUI command 
+		</p>
+		<ul>
+			<li><code><font size="2"><b>-i</b></font></code>:&nbsp; 
+			indicates path of a file containing strings to initialize fields for 
+			the user interface</li>
+			<li><code><font size="2"><b>-o</b></font></code>: log file of 
+			the utility (all data written to the Output tab of WASSetupUI are 
+			also written in the log file as well as the text displayed for 
+			information/error messages</li>
+			<li><code><font size="2"><b>-generateInput</b></font></code>: 
+			indicates the file where all user interface fields are dumped. This 
+			file can be used as input (<code><b>-i </b></code>option) for later 
+			WASSetupUI execution</li>
+			<li><code><font size="2"><b>-silent</b></font></code>: 
+			indicates the &quot;silent&quot; mode of the utility, which means that the 
+			user interface is not displayed and the <kbd>Finish</kbd> button is 
+			automatically selected. This option should of course be used with 
+			the <code><b>-o</b></code> option to obtain a trace of utility 
+			execution.</li>
+		</ul>
+		</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     &nbsp;</td>
+     <td vAlign="top">
+     <h2>Using the Security Tab</h2>
+     <p>The <kbd>Security</kbd> tab is designed to secure your WebSphere 
+     Application Server by allowing you to enter the information you usually 
+     enter using the WebSphere Administrative console. This means that your 
+     WebSphere Application Server can be secured and your Enterprise Archive 
+     file can be deployed at the same time.</p>
+     <p>For full details about how to do so, refer to 
+     <a href="page1294.html">Securing the WebSphere 
+     Application Server</a>.</td>
+   </tr>
+   <tr>
+     <td vAlign="top" colSpan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" border="0" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

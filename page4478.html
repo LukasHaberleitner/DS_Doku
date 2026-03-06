@@ -1,0 +1,108 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>About Least Squares Calibration</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+ </head>
+
+ <body bgcolor="#FFFFFF" text="#000000" link="#3366FF" vlink="#0080FF" alink="#990000">
+
+ <h1 align="center">About Least Squares Calibration<a name="ix-about::least squares calibration"></a></h1>
+ <table border="0" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/abasic.gif" width="32" height="32"></td>
+     <td valign="top">Calibration features in DELMIA products allow the user to 
+     identify the sources of position inaccuracy and to modify the simulation 
+     world to match the real world. This correction allows a generic simulation 
+     developed in DELMIA products to be downloaded to different workcells that 
+     are nominally identical but which differ slightly in the locations of their 
+     parts and devices, their tool offsets, and their robot signatures.<p>The 
+		least squares mathematical fitting algorithm is designed for high 
+		accuracy convergence in the presence of measurement data noise, but 
+		assumes a reasonably close starting position (especially orientation) as 
+		the guess to be used by the method. If there is a large mismatch in the 
+		positions and orientations before fitting, the algorithm will 
+		automatically pre-calculate a good starting guess based on a 3-point 
+		method (which is a geometric approach such that the positions of the 
+		second point of each set is made coincident, the first and second point 
+		of each set is made collinear, and the third point is moved into the 
+		plane defined by the second set of points.). </p>
+		<p>Note: The 3-point pre-calculation not applied if you manually change 
+		any of the xyzwpr values, as it is expected that you will manually 
+		preposition the part to be calibrated into the correct starting position 
+		and orientation. </p>
+		<p>Least 
+     square calibration is intended to adjust the six degrees-of-freedom (DOF) 
+     locations of a device in a DELMIA simulation based on measurements from the 
+     workcell. The device is assumed to be a non-kinematic part such as a 
+     fixture, table, or workpiece. The purpose of calibration is to locate the 
+     part in the simulation so that its parameters [X, Y, Z, Yaw, Pitch, Roll] 
+     with respect to the robot matches the real workcell. After such a 
+     calibration, the robot program developed in the simulation will contain the 
+     corrected robot locations that may be downloaded to the actual robot 
+     workcell.</p>
+     <p>Unless the resource is known to be aligned with an axis or on a plane, 
+     the [X, Y, Z] parameters should all be set &quot;Free&quot; during calibration. The 
+     measurement noise need only be an order of magnitude estimate, for example 
+     0.1 mm or 1.0 mm. </p>
+     <p>The least square <a name="ix-least squares:calibration method">
+     calibration method</a> adjusts the position of a resource based on the 
+     measurement of multiple points. The points are input as tag points in two 
+     tag groups: one tag group representing the pristine CAD data locations, and 
+     the other tag group representing the uploaded experimental robot tool 
+     locations. The calibration also requires the following information from the 
+     user:<br>
+&nbsp;</p>
+     <ul>
+       <li><i>Translate X, Y, Z (Free/Fixed)</i>: specifies the directions in 
+       which the resource may be translated during adjustment.</li>
+       <li><i>Rotate X, Y, Z (Free/Fixed)</i>: specifies the directions in which 
+       the resource may be rotated during adjustment.</li>
+       <li><i>Estimated measurement noise</i>: an estimate of the uncertainty of 
+       the positional measurements during the calibration experiment.</li>
+     </ul>
+     <p>Unless the resource is known to be aligned with an axis or on a plane, 
+     the parameters [X, Y, Z, Yaw, Pitch, Roll] should all be set to &quot;Free&quot; 
+     during calibration. The measurement noise need only be an order of 
+     magnitude estimate, for example 0.1 mm or 1.0 mm.</p>
+     <p>Based on the selections, the resource is then moved in an attempt to get 
+     the first set of points to match up with the second set. The algorithm 
+     works by minimizing the mean square positional error between the 
+     corresponding points while maintaining the constraints of the Translate X, 
+     Y, Z and Rotate X, Y, Z selection.</p>
+     <p>Upon convergence, an analysis of the results is displayed:<br>
+&nbsp;</p>
+     <ul>
+       <li><i>Number of iterations</i>: the number of iterations required by the 
+       numerical identification method.</li>
+       <li><i>Number of fitting points</i>: the number of points used for the 
+       least squares fitting procedure.</li>
+       <li><i>Root mean square fitting error</i>: the root mean square fitting 
+       error on the points after adjusting the resource to the best fit 
+       possible. </li>
+       <li><i>Max Uncertainties</i>: the maximum of the uncertainties for the 
+       fit on the parameters to be identified. Large uncertainty values are an 
+       indication that the experimental observation strategy was flawed - even 
+       if the RMS fitting error was small.</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

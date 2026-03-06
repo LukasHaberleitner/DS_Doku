@@ -1,0 +1,158 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Uploading or Importing Motoman MRC/XRC Robot Programs</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Uploading or Importing Motoman MRC/XRC Robot Programs<a name="ix-uploading::Motoman;importing::Motoman;Motoman::uploading or importing"></a></h1>
+ <table border="0" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111" id="table1">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">This procedure describes how to 
+		upload or import a Motoman MRC/XRC robot program.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td valign="top">
+     Open the
+		<a href="b35doc/english/online/cfyugolp_c2/samples/delmia_d5/motoman_data/MotomanUpload/MotomanUpload.CATProcess">
+		MotomanUpload.CATProcess</a> file.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+          
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top">
+		Uploading reads an INFORM II (robot language) file and creates the 
+		corresponding activities in the PPR tree. The following steps take 
+		place: <ul>       
+		<li>The INFORM II file is read and an XML file is generated. The 
+		commands in the INFORM II file are mapped to elements in the XML file. 
+		The generated XML file is independent of the robot language.</li>
+		<li>The XML file is read and the required activities, actions, sequences 
+		or other items are generated as specified.</li>
+		</ul>
+		<p>For relative job programs, object frame profiles used in the programs 
+		need to exist for uploaded tasks to work properly. These profiles can be 
+		created manually or automatically from the file UFRAME.CND during 
+		upload. </p>
+		<p>To create object frame profiles automatically, put the file 
+		UFRAME.CND in the same folder with the program file to be uploaded and 
+		select radio button <kbd>Delete existing profiles</kbd> to remove 
+		existing object frame profiles and to create the new ones. </p>
+		<p>The following Object Frame Profiles are created:</p>
+		<ul>
+				<li>ROBOT (with zero offsets)</li>
+				<li>BASE (with very small offsets, 0.001 mm)</li>
+				<li>User frames <kbd>Object.NUM</kbd>, where NUM is the number 
+				from the line <kbd>//UFRAME NUM</kbd> in the file UFRAME.CND.</li>
+		</ul>
+		<p>Similarly, a Motoman robot either needs to have Tool Profiles created before 
+		uploading, or Tool Profiles can be uploaded from a Motoman tool file 
+		TOOL.CND in the same folder with the robot program.&nbsp; The Tool 
+		Profiles are in the following format: </p>
+		<blockquote>
+				<p><code>//TOOL 0 <br>///NAME <br>0.000,0.000,0.000,0.00,0.00,0.00 
+				<br>0.000,0.000,0.000 <br>0.000 </code></p>
+				<p><code>//TOOL 1 <br>///NAME TL1 <br>
+				0.000,0.000,169.500,0.00,0.00,0.00 <br>
+				X,Y,Z,Yaw,Pitch,Roll <br>
+				0.000,0.000,0.000 &lt;- centroid <br>
+				0.000 &lt;- mass <br>
+				0.000,0.000,0.000 &lt;- inertia (XRC only) <br>
+				0,0 &lt;- reserved (XRC only) ...</code></p>
+		</blockquote>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top">
+          
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" vspace="15"></td>
+     <td valign="top">
+		<ol class="task">
+       <li>
+       <p class="task">Click <kbd>Import Robot Program</kbd>&nbsp;
+		<img border="0" src="b35doc/english/online/icons_C2/images/I_DNBIgpOlpImportCmdP2.gif" width="24" height="24"> 
+		in the <kbd>Offline Programming </kbd>toolbar. </li>
+		<li>
+       <p class="task">Select robot SK6.1 in the PPR tree. <br>
+		A <kbd>File 
+		Selection</kbd> dialog box appears.</p></li>
+		<li>
+		<p class="task">In the <kbd>File Selection</kbd> dialog box, navigate to 
+		the desired program file, e.g., SK6Tsk1.jbi and 
+		select <kbd>Motoman.jar</kbd>. <br>The <kbd>Uploading Method</kbd> dialog box 
+		opens.<br>&nbsp;<img border="0" src="b35doc/english/online/cfyugolp_c2/images/dbUpldNLS.gif" width="283" height="130"></p></li>
+		<li>
+		<p class="task">Select <kbd>Robot Base Coordinates</kbd> and click <kbd>OK</kbd>.</p>
+		</li>
+		<li>
+		<p class="task">The program <kbd>SK6Tsk2.jbi</kbd> called from <kbd>SK6Tsk1.jbi</kbd> is also 
+		uploaded, and a separate task created.</p>
+		</li>
+		<li>
+       <p class="task">Repeat the above steps for robot <kbd>SK16.1</kbd> and select 
+		the program <kbd>SK16Tsk1.jbi </kbd>to upload.</p>
+		<p class="task">		
+		<img border="0" src="b35doc/english/online/cfyugolp_c2/images/dbUpld3NLS.gif" width="453" height="420"></p>
+		<p class="task">		
+		Note: Daihen will be replaced by Motoman MRC Inform II, P001.ASC by 
+		SK6Tsk1.jbi and P002.ASC by SK6Tsk2.jbi in the above dialog box.</p>		
+		</li>
+		<li>
+		<p class="task">Switch to <kbd>Workcell Sequencing</kbd> workbench<kbd>.</kbd></p>
+		<table border="0" width="100%" cellspacing="3" cellpadding="3" style="border-collapse: collapse" id="table2">
+			<tr>
+				<td width="32">
+				<img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+				<td>You may have to open
+				<a href="b35doc/english/online/cfyugolp_c2/samples/delmia_d5/motoman_data/MotomanUpload/MotomanUpload.CATProcess">
+		MotomanUpload.CATProcess</a> once again after the switch is performed.</td>
+			</tr>
+		</table>
+		</li>
+		<li>
+		<p class="task">Click <kbd>Multiple Resource Simulation  
+		<img border="0" src="b35doc/english/online/icons_C2/images/I_DNBMultiTaskSimulationCmdP2.gif" width="24" height="24"></kbd>
+		in the <kbd>Simulation</kbd> toolbar.<br>
+		The <kbd>Multi Resource Simulation</kbd> dialog box appears.<br>
+		<img border="0" src="b35doc/english/online/cfyugolp_c2/images/dbMotoMultiResSimulNLS.gif" width="195" height="138"></p>
+		</li>
+		<li>
+		<p class="task">Choose the device tasks shown above and click <kbd>OK</kbd>.<br>
+		The <kbd>Process Simulation </kbd>toolbar appears.</p></li>
+		<li>
+		<p class="task">Click <kbd>Play</kbd>
+		<img border="0" src="b35doc/english/online/icons_C2/images/I_DNBPlayP2.gif" width="24" height="24"> 
+		in the <kbd>Process Simulation</kbd> toolbar to simulate the process.</p>
+		</li>
+
+     </ol></td>
+   </tr>
+   </table>
+   
+	<p align="center">
+ 	<img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+	
+
+ </body>
+
+</html>
+

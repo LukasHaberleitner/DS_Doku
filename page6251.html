@@ -1,0 +1,142 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>Creating an Excavation Surface</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="docCompliance" content="v0.5; Wed Jul  6 15:38:50 2005">
+</head>
+
+<body>
+
+<h1>
+Creating an Excavation Surface<a name="CATStylingHeaderCmd.CATStyExcavationHdr"></a></h1>
+<p>&nbsp;</p>
+<div align="left">
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+    <tr>
+      <td valign="top">
+      <img src="b35doc/english/online/icons_C2/common/atarget.gif" title="task target" width="32" height="32"></td>
+      <td>This task shows you how to create an excavation surface.<p>The output 
+		is a standard V5 feature.</td>
+    </tr>
+    <tr>
+      <td valign="top">
+      <img src="b35doc/english/online/icons_C2/common/aprereq.gif" title="aprereq.gif (1231 bytes)" width="32" height="32"></td>
+      <td valign="top">Open the <a href="b35doc/english/online/dssug_c2/samples/Excavation01.CATPart">
+		Excavation01.CATPart</a> 
+      model the from the samples directory.<br>
+		It includes:<ul>
+		<li><kbd>Dam</kbd>, representing the dam you want to build across the valley, and 
+		its axis (<kbd>DamAxis</kbd>)</li>
+		<li><kbd>LandSurface</kbd>, representing the top soil layer,</li>
+		<li><kbd>RockLayer</kbd>, representing the rock layer underneath the 
+		<kbd>LandSurface</kbd>,</li>
+		<li><kbd>MeshIntersection</kbd>, that is the scan resulting from the intersection of 
+		the <kbd>RockLayer</kbd> and the <kbd>Dam</kbd>.</li>
+		</ul>
+		<p>The excavation surface lets you compute the volume of soil to dig 
+		out, delimited by the excavation surface, the <kbd>LandSurface </kbd>and 
+		the <kbd>RockLayer</kbd>.</td>
+    </tr>
+    <tr>
+      <td valign="top">
+      <img src="b35doc/english/online/icons_C2/common/ascenari.gif" title="scenario" width="32" height="32"></td>
+      <td valign="top" align="justify">
+      <ol class="task">
+        <li>
+        <p class="task">Click <kbd><a name="ix-commands:Excavation">Excavation</a></kbd>&nbsp;
+        <img border="0" src="b35doc/english/online/icons_C2/images/I_CldExcavation.png" width="22" height="22"> 
+		in the <kbd>Terrain Modeling</kbd> toolbar.<br>
+        The <kbd>Excavation</kbd> dialog box is displayed:<br>
+        <img border="0" src="b35doc/english/online/dssug_c2/images/dbExcavation01NLS.png"></li>
+        <li>
+        <p class="task">Select the <kbd>
+        Scan </kbd>you want to process.<table border="0" id="table3">
+			<tr>
+				<td>This scan is the intersection between:<ul>
+					<li>The mesh representing the building for which you want to compute the 
+		excavation, </li>
+					<li>The mesh representing the layer on which the building is 
+		built, here the rock layer. </li>
+				</ul>
+				<p>It is usually a closed scan.<br>In our example <kbd>MeshIntersection.1</kbd>.<br>
+				<img border="0" src="b35doc/english/online/dssug_c2/images/Excavation01.png"></td>
+			</tr>
+		</table>
+		</li>
+		<li>
+        <p class="task">If required, modify the <kbd>Parameters</kbd>:<table border="0" id="table1">
+			<tr>
+				<td>
+				<ul>
+					<li><kbd><a name="ix-excavation:height"></a>Height</kbd>: height of the resulting mesh,</li>
+					<li><kbd><a name="ix-excavation:slope"></a>Slope</kbd>: slope of the resulting mesh, defined as follows:<br>
+					<img border="1" src="b35doc/english/online/dssug_c2/images/Excavation02NLS.png" width="300" height="124"></li>
+					<li><kbd>Height</kbd>=10, <kbd>Slope</kbd>=1:<br>
+					<img border="0" src="b35doc/english/online/dssug_c2/images/ExcavationH10S1.png"></li>
+					<li><kbd>Height</kbd>=20, <kbd>Slope</kbd>=1:<br>
+					<img border="0" src="b35doc/english/online/dssug_c2/images/ExcavationH20S1.png" width="464" height="279"></li>
+					<li><kbd>Height</kbd>=10, <kbd>Slope</kbd>=2:<br>
+					<img border="0" src="b35doc/english/online/dssug_c2/images/ExcavationH10S2.png" width="428" height="209"></li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		</li>
+      	<li>
+		<p class="task"><a name="ix-excavation:axis"></a>According to your needs, select or clear the <kbd>Axis</kbd> check box.		
+		<br>
+		By default, it is selected.<table border="0" id="table2">
+			<tr>
+				<td>
+				<p>The axis is the axis of the building for which 
+				you are computing the excavation. It must be a curve, not 
+				necessarily a straight line.</p>
+				<p>
+				The excavation surface is computed between two guides:</p>
+				<ul>
+					<li>The bottom one is defined by the points of the 
+				scan selected, </li>
+					<li>The top one is defined by the transformations of the 
+				bottom scan points.</li>
+				</ul>
+				<p>
+				<img border="0" src="b35doc/english/online/dssug_c2/images/Excavation05.png" width="214" height="369"><br>
+				These transformations are computed through a plane, which is defined as 
+				follows:</p>
+				<ul>
+					<li>Check box <kbd>Axis</kbd> cleared (no axis selected):<br>The plane goes through the scan point, and the normal to this 
+				plane is the tangent to the scan for this given point.<br>
+					<img border="1" src="b35doc/english/online/dssug_c2/images/Excavation03NLS.png" width="274" height="348"><br>
+					<img border="0" src="b35doc/english/online/dssug_c2/images/ExcavationWithoutAxis.png" width="158" height="326"></li>
+					<li>Check box <kbd>Axis</kbd> selected:<br>The plane goes through the scan point, its normal projection on 
+				the axis, and the Z-axis of the given point.<br>
+					<img border="1" src="b35doc/english/online/dssug_c2/images/Excavation04NLS.png" width="296" height="379"><br>
+					<img border="0" src="b35doc/english/online/dssug_c2/images/ExcavationWithAxis.png" width="238" height="381"></li>
+					</ul>
+				</td>
+			</tr>
+		</table>
+		</li>
+      </ol>
+		</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <p align="center">
+      <img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="end of task" width="64" height="32"></td>
+    </tr>
+  </table>
+</div>
+
+</body>
+
+</html>
+

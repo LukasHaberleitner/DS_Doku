@@ -1,0 +1,164 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>How to Update Input Stock</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>How to Update Input Stock<br>
+ <img src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32"></h1>
+ <table border="0">
+   <tr>
+     <td>When you create a new turning operation, you can generate geometry from 
+     the previous operations in your program then use that geometry as stock for 
+     the new operation.<p>This is done using the
+     <a name="ix-command::Update Input Stock;Update Input Stock command"></a><b>
+     <kbd>Update Input Stock</kbd> </b>command in the machining operation 
+     editor. The Stock computation is done before you select geometry (stock or 
+     part) in your new operation. It creates a sketch that highlights the 
+     remaining material on the part. The computation takes into account all 
+     complete operations in the program before the one being edited.</p>
+     <p>Stock computation is based on the stock solid specified in the Part 
+     Operation dialog box. The primitives of the material removed by each 
+     previous operation are subtracted from this stock. The removed area 
+     computation takes the parameters of the machining operations into account. 
+     Stored or locked tool paths are not taken into account.</p>
+     <p>The result of the computation is a sketch which contains the view of the 
+     remaining material in the working plane.&nbsp;</p>
+     <p>The operations taken into account for Stock computation are: </p>
+     <ul>
+       <li>Rough Turning</li>
+       <li>Groove Turning</li>
+       <li>Recess Turning</li>
+       <li>Profile Finish Turning</li>
+       <li>Groove Finish Turning</li>
+       <li>Sequential Turning</li>
+       <li>Ramp Rough Turning and Ramp Recess Turning</li>
+       <li>All Drilling operations along the spindle axis.</li>
+     </ul>
+     <p>Thread Turning operations are not taken into account.</p>
+     <h2>Defining the Machine and Stock</h2>
+     <p>Firstly, you need to define a stock and a lathe machine on the Part 
+     Operation. </p>
+     <p>Double-click the <kbd>Part Operation</kbd> in the tree to display the
+		<kbd>Part 
+     Operation </kbd>dialog box. </p>
+     <p>Click the <kbd>Machine</kbd> icon in the dialog box the select a horizontal lathe 
+     machine. You must set up the spindle and radial axes correctly (that is, 
+     spindle to Z and radial axis to X in this example).<br>
+     Click the <kbd>Stock</kbd> icon then select a solid representing the stock. 
+     Double-click on the background to leave the geometry selection mode.</p>
+     <p>The dialog box is updated with the name of the selected machine and 
+     stock. </p>
+     <p><img border="1" src="b35doc/english/online/lmgug_c2/images/LmgActualStock01NLS.gif" width="357" height="485"></p>
+     <p><b>Note:&nbsp; </b></p>
+     <blockquote>
+       <p>The generation of the stock is based on In Process Models (IPM).</p>
+       <p>For each stock part specified in the <kbd>Part Operation</kbd> dialog box, an IPM 
+       will be generated. The name of the IPM part will be the same as the 
+       reference stock part name with the prefix &quot;IPM_&quot;. The IPM part will be 
+       created in the same location as the corresponding design part (the design 
+       part is considered instead of the stock part because often the stock part 
+       is just a body inside the design part).</p>
+       <p>For file system users, this means that the CATProduct that contains 
+       the design part will be modified with the addition of the IPM CATPart 
+       (under the root node of the CATProduct).&nbsp; <br>
+       The&nbsp; CATProcess must be linked to a CATProduct that include the 
+       design part. The input stock calculation cannot be done if the CATProcess 
+       is not linked to the CATProduct.<br>
+       The IPM CATPart is dedicated to the input stock calculation. No other 
+       geometry must be created in this CATPart. </p>
+       <p>For PPR hub users, the IPM CATPart is inserted under the &quot;Subassembly&quot; 
+       node of the corresponding design part. </p>
+     </blockquote>
+     <h2>Computing Stock</h2>
+     <p>The following figure illustrates Stock computation after a Drilling 
+     (along the spindle axis) and a Roughing operation. Here is the tool path of 
+     the Roughing operation:&nbsp;</p>
+     <p><img border="1" src="b35doc/english/online/lmgug_c2/images/ActualBeforeCompute.gif" width="554" height="497"></p>
+     <p>When creating a new Roughing operation after Roughing.1, click the <b>
+     Update Input Stock</b> icon
+     <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgUpdateInputStock.gif" align="middle" width="22" height="22"> in 
+     the dialog box of the new Roughing operation.&nbsp;</p>
+     <p>The following figure shows the result of the computation. The Stock has 
+     been created in orange. It is located in a sketch whose identifier is the 
+     name of the last operation taken into account for the computation 
+     (Roughing.1) plus the item StockSketch and the time of the computation. </p>
+     <p>The Stock sketch has been created in a body with the same name, in a 
+     part named IPM_xxx (where xxx is the name of the selected stock solid). The 
+     part is located in a product with the same name.</p>
+     <p><img border="1" src="b35doc/english/online/lmgug_c2/images/ActualAfterCompute.gif" width="719" height="546"></p>
+     <p>You can now select elements of the Stock sketch as new Part or Stock of 
+     the Roughing.2 operation.</p>
+     <h2>Stock Sketches, IPM Bodies and Primitives&nbsp; </h2>
+     <p>The Stock computation automatically creates an IPM body (CATPart). </p>
+     <p>In order to create the Stock, some primitives are created in the IPM 
+     body. Once the stock sketch is created, the sketch is no longer linked to 
+     them.</p>
+     <p>The sketch of the input stock is linked to the operation. When editing 
+     the operation the sketch is in Show mode. When the operation editor is 
+     closed, the sketch is in Hide mode.</p>
+     <p>By right-clicking the <kbd>Input stock status</kbd> field in the 
+     Geometry tab page of the operation editor, it is possible to remove the 
+     stock sketch. In this case the sketch is deleted. </p>
+     <p>A primitive is created for each Turning operation. Each primitive takes 
+     the machining paths of the tool trajectory into account. 
+		<a name="R18MacroIntoAccount"></a>Note that while lead-in and lift-off 
+		motions are taken into account in the computation of the operation's 
+		primitive, the approach macro and retract macro are not considered. </p>
+     <p>If you use the Stock computation again, the existing primitives will 
+     speed up the computation. They will be used if the operations to which they 
+     are linked have not been modified since the Stock computation. Otherwise 
+     they will be modified.</p>
+     <p>
+     <a name="ix-contextual command::Clean Computed Stock Data;Clean Computed Stock Data contextual command">
+     </a>If you have finished your Part Operation, you can remove these 
+     primitives by using the <kbd>Clean Computed Stock Data</kbd> contextual 
+     command on the Part Operation. This command removes each primitive of the 
+     IPM body linked to the operations in the Part Operation.&nbsp; It does not 
+     remove the Stock sketches or the IPM body.</p>
+     <p>For a CATProcess created in a previous version, the previous IPM body 
+     will be migrated automatically. An IPM CATPart will be created for each 
+     solid selected as stock. </p>
+     <h2>Considerations for Machining Local Recesses</h2>
+     <a name="ix-Update Input Stock restrictions"></a>
+     <p>The <b><kbd>Update Input Stock</kbd> </b>functionality is best suited to 
+     operations in which the stock is to be updated globally.</p>
+     <p>For a local recesses or grooves like the one shown below, you may be 
+     advised to update the input stock manually. </p>
+     <p><img border="1" src="b35doc/english/online/lmgug_c2/images/ActualStockLimitationExpected.gif" width="599" height="420"></p>
+     <p>For example, the <i>expected area to machine</i> (in green) above may be 
+     interpreted by the program as the <i>area to be machined</i> (in green) 
+     below.</p>
+     <p><img border="1" src="b35doc/english/online/lmgug_c2/images/ActualStockLimitationComputed.gif" width="598" height="420"></p>
+     <p>This is due to the ambiguity that arises due to the shape the selected 
+     stock profile.</p>
+     <h2>Stock Computation: Hybrid Bodies in the IPM Part</h2>
+     <p>From V5R14 on, bodies that are created automatically when computing the 
+     stock in the IPM part are <i>hybrid</i>, unless the <kbd>Enable hybrid 
+     design</kbd> option is unchecked in Tools &gt; Options &gt; Infrastructure &gt; Part 
+     Infrastructure &gt; Part Document (in that case, created bodies are <i>
+     non-hybrid</i>).<br>
+     It is recommended not to mix Hybrid and non-hybrid bodies in the IPM part, 
+     otherwise some incorrect coloring of faces of the IPM will occur. </p>
+     <p>If the IPM part was created before V5R14, then the <kbd>Enable hybrid 
+     design</kbd> option should be unchecked, so that the IPM part will contain 
+     non-hybrid bodies only. </p>
+     <p>If the IPM part was created from V5R14 on, the <kbd>Enable hybrid design</kbd> 
+     option should remain selected (this is the default), in order to have 
+     hybrid bodies only in the IPM part.</td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

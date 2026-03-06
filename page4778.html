@@ -1,0 +1,142 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2E2L2O2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Flipping Edges</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="docCompliance" content="v0.5; Thu Jul  7 11:32:00 2005">
+<meta name="Microsoft Border" content="none">
+</head>
+
+<body>
+
+<h1><a name="CATCloudStlHeaderCmd.CATStlReshaperHdr"></a>Flipping Edges<a name="CATCloudEditorHeaderCmd.CloudReshaper"></a></h1>
+<p align="center">
+<img border="0" src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32"></p>
+<table Border="0" CELLSPACING="0" valign="top">
+  <tr valign="top" BORDER="0">
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td><a name="ix-commands::Flip Edges"></a>This task shows you how to flip 
+    edges of triangles of a mesh, for a better respect of sharp edges, <br>
+    by rotating the triangles common edges without modifying their vertices. <br>
+    The meshing may become less harmonious but will provide a better respect of 
+    the shape of the part <br>
+    because the triangles will be oriented in the direction of the shape, in 
+    particular for sharp edge fillets. <br>
+    This is particularly important for milling operations that may follow.
+    <p>This action reorganizes the meshing without modifying the geometry 
+    because the vertices are not recomputed.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>
+    <ul>
+      <li>The new mesh inherits the graphic properties and display mode of the 
+      initial mesh.</li>
+      <li>During the process, the mesh is displayed in Flat Shading mode.</li>
+      <li>This action cannot be used on meshes with non-manifold edges.</li>
+      <li>Undo/Redo are available.</li>
+      <li>You may create several Flip_Edge.x elements in the specification tree,
+      <br>
+      corresponding to various degrees of reorganization of a given mesh. <br>
+      You may then delete any of them, according to your needs.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td rowspan="1">Open the
+    <a href="b35doc/english/online/cfysm_C2/samples/Flipedge.CATPart">
+    Flipedge.CATPart</a> model the from the samples directory. </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32">
+    <p>&nbsp;</td>
+    <td>
+    <ol class="task">
+      <li>
+      <p class="task">For a better view, set the <kbd>
+      <a href="page4761.html">Display Modes Properties</a></kbd> to <kbd>Flat</kbd>.</li>
+      <li>
+      <p class="task">Click <kbd>Flip Edges</kbd>
+      <img border="0" src="b35doc/english/online/icons_C2/images/I_CloudFlipEdgeP2.gif" width="24" height="24"> 
+      and select the mesh. The dialog box is displayed.<br>
+          <img border="0" src="b35doc/english/online/cfyugrvs_c2/images/flipedge03NLS.gif" width="208" height="98"></p>
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+        <tr>
+          <td>
+          <img border="0" src="b35doc/english/online/cfyugrvs_c2/images/flipedge02.gif" width="286" height="237"></td>
+        </tr>
+      </table>
+      </li>
+    </ol>
+    <ol class="task" start="3">
+      <li>
+      <p class="task">Eventually, set the value of <kbd>Depth</kbd>, that 
+      determines the amplitude of the reorganization of the mesh:&nbsp;<a name="ix-flip edges:depth"></a>
+      </p>
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+        <tr>
+          <td>
+          <ul>
+            <li>
+            The value of <kbd>Depth</kbd> ranges from 0 to 10.</li>
+            <li>
+           The default value is 2.</li>
+            <li>
+            When the value of <kbd>Depth</kbd> is 0, the action 
+            processes a triangle and its direct neighbors.</li>
+            <li>
+            When the value of <kbd>Depth</kbd> is 1, the action 
+            processes a triangle, its direct neighbors and their direct 
+            neighbors, <br>
+            and so on as you increase the value of Depth.</li>
+            <li>
+            This may lead to a temporary degradation of the 
+            energy function of the mesh, but results in a final optimal 
+            solution.</li>
+            <li>
+           The computation time depends on the value of <kbd>
+            Depth</kbd>, and on the size of the mesh to process.</li>
+          </ul>
+          </td>
+        </tr>
+      </table>
+      </li>
+   <li>
+      <p class="task">Click <kbd>Apply</kbd> to start the first reorganization 
+      iteration. <br>
+      Click <kbd>Apply</kbd> again to start another iteration. You may repeat 
+      this step as many times as you wish.<br>
+          <img border="0" src="b35doc/english/online/cfyugrvs_c2/images/flipedge01.gif" width="282" height="240"></p>
+      </li>
+      <li>
+      <p class="task">Click <kbd>OK</kbd> to validate the result. A <kbd>
+      Flip_Edge.x</kbd> element is created in the specification tree. <br>
+      The initial mesh is sent to the No Show.</li>
+    </ol>
+    <p align="center"></td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td colspan="2" valign="top">
+    <p align="center">
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+    </td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

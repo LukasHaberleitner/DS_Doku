@@ -1,0 +1,310 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>About Mitsubishi Translators</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>About Mitsubishi Translators</h1>
+ <table border="0" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/anew.gif" width="32" height="32"></td>
+     <td valign="top">This section provides basic information about the 
+		Mitsubishi translator. The information includes:&nbsp;<ul>       
+       <li>Supported Activities</li>
+       <li>Syntax Map</li>
+       <li>Parameter Data</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h2>Supported Activities</h2>
+     <p>The following activities are supported in Download and Upload for the 
+		Mitsubishi CRnQ/CRnD Controller. Mitsubishi program files(.prg) are 
+		listed for upload selection.<br>
+&nbsp;</p>
+     <ul>
+       <li>Move Activity</li>
+       <li>Delay Activity</li>
+       <li>I/O Activities (Set and Wait Signal)</li>
+		<li>Call Task Activity</li>
+		<li>Comments</li>
+     </ul>
+     </td>
+     </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h2>Syntax map</h2>
+		<p style="margin-bottom: 1em">The following table details the mapping 
+		among Mitsubishi MELFA-BASIC commands, XML elements, and V5 task 
+		activities.</p>
+		<p></p><table border="1" cellspacing="3" cellpadding="3">
+		<tr>
+			<td class="code">
+			<b>MELFA-BASIC Commands</b></td>
+			<td class="code"><b>XML Element</b></td>
+			<td class="code"><b>V5 Task Activity</b></td>
+		</tr>
+		<tr>
+			<td class="code2">MOV P1|J1<br>
+			*Note</td>
+			<td class="code2">DNBRobotMotionActivity<br>
+			with MotionType Joint</td>
+			<td class="code2">RobotMotion<br>
+			with MotionType JNT</td>
+		</tr>
+		<tr>
+			<td class="code2">MVS P1|J1<br>
+			*Note</td>
+			<td class="code2">DNBRobotMotionActivity<br>
+			with MotionType Linear</td>
+			<td class="code2">RobotMotion<br>
+			with MotionType LIN</td>
+		</tr>
+		<tr>
+			<td class="code2">MVR P1|J1, P2|J2, P3|J3<br>
+			*Note</td>
+			<td class="code2">DNBRobotMotionActivity<br>
+			with MotionType Linear to P1, CircularVia to P2, and Circular to P3</td>
+			<td class="code2">RobotMotion<br>
+			with MotionType LIN, CIRV, CIR</td>
+		</tr>
+		<tr>
+			<td class="code2">Cnt 0<br>
+			Cnt 1, number</td>
+			<td class="code2">AccuracyProfile<br>
+			with FlyBy Off<br>
+			with FlyBy On, accuracy value=number</td>
+			<td class="code2">AccuracyProfile used in subsequent moves</td>
+		</tr>
+		<tr>
+			<td class="code2">Ovrd v</td>
+			<td class="code2">MotionProfile<br>
+			with percentage speed v</td>
+			<td class="code2">MotionProfile used in subsequent moves</td>
+		</tr>
+		<tr>
+			<td class="code2">JOvrd vPercent</td>
+			<td class="code2">MotionProfile<br>
+			with percentage speed v*vPercent</td>
+			<td class="code2">MotionProfile used in subsequent moves</td>
+		</tr>
+		<tr>
+			<td class="code2">Spd vAbsolute</td>
+			<td class="code2">MotionProfile<br>
+			with absolute speed v*vAbsolute</td>
+			<td class="code2">MotionProfile used in subsequent moves</td>
+		</tr>
+		<tr>
+			<td class="code2">Accel rate</td>
+			<td class="code2">MotionProfile<br>
+			with acceleration set to rate</td>
+			<td class="code2">MotionProfile used in subsequent moves</td>
+		</tr>
+		<tr>
+			<td class="code2">Position variable<br>
+			P1=(X,Y,Z,A,B,C,L1,L2)(FL1,FL2)</td>
+			<td class="code2">robot motion targets<br>
+			(X,Y,Z,Yaw,Pitch,Roll), L1 and L2 are auxiliary axis values and FL1 
+			denotes configuration and FL2 denotes joint turns</td>
+			<td class="code2">(data used to create targets for motion 
+			activities)</td>
+		</tr>
+		<tr>
+			<td class="code2">Joint variable<br>
+			J1=(j1,j2,j3,j4,j5,j6,j7,j8)</td>
+			<td class="code2">robot motion targets<br>
+			Joint target with robot joint values and auxiliary joint values.</td>
+			<td class="code2">(data used to create joint target for motion 
+			activities)</td>
+		</tr>
+		<tr>
+			<td class="code2">M_Out(PortNumber)=1|0</td>
+			<td class="code2">DNBSetSignalActivity<br>
+			with PortNumber and SignalName</td>
+			<td class="code2">Set IO Operation</td>
+		</tr>
+		<tr>
+			<td class="code2">Wait M_In(PortNumber)=1|0</td>
+			<td class="code2">DNBWaitSignalActivity<br>
+			with PortNumber and SignalName</td>
+			<td class="code2">Wait IO Operation</td>
+		</tr>
+		<tr>
+			<td class="code2">CALLP &quot;prognumber&quot;</td>
+			<td class="code2">DNBIgpCallRobotTask<br>
+			with CallName prognumber</td>
+			<td class="code2">Call Task activity</td>
+		</tr>
+		<tr>
+			<td class="code2">DLY timeinsec</td>
+			<td class="code2">DelayActivity</td>
+			<td class="code2">DelayActivity</td>
+		</tr>
+		<tr>
+			<td class="code2">TOOL (x,y,z,a,b,c)</td>
+			<td class="code2">(set toolprofile for next robot motion operation)</td>
+			<td class="code2">ToolProfile used in subsequent moves</td>
+		</tr>
+		<tr>
+			<td class="code2">HOpen *</td>
+			<td class="code2">Action GrabActivity<br>
+			(all parameters upload as a type string attribute)</td>
+			<td class="code2">Operation Pick</td>
+		</tr>
+		<tr>
+			<td class="code2">HClose hand_num</td>
+			<td class="code2">Action ReleaseActivity<br>
+			(parameter hand_num uploads as a type string attribute)</td>
+			<td class="code2">Operation Drop</td>
+		</tr>
+		<tr>
+			<td rowspan="2" class="code2">Rem comment<br>
+			OR<br>
+			' comment </td>
+			<td class="code2">When parameter OLPStyle=General<br>
+			AttributeList to the following Activity with AttributeValue comment</td>
+			<td class="code2">Activity attribute</td>
+		</tr>
+		<tr>
+			<td class="code2">When parameter OLPStyle=OperationComments<br>
+			Operation with AttributeValue comment</td>
+			<td class="code2">Operation</td>
+		</tr>
+		<tr>
+			<td class="code2">Unsupported Mitsubishi statements</td>
+			<td class="code2">Operation type Activity element with attribute set 
+			to the Mitsubishi statement</td>
+			<td class="code2">Operation with attribute set to the Mitsubishi 
+			statement</td>
+		</tr>
+		</table>
+		<p>Note: Targets can appear directly in the move commands (Mov, Mvs, and 
+		Mvr) as position/joint constants. They are uploaded into DELMIA as 
+		Cartesian/Joint targets without tag names.</td>
+     </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h2>Robot Parameter Map </h2>
+		<p style="margin-bottom: 1em">&nbsp;<table border="1" cellspacing="3" cellpadding="3">
+		<tr>
+			<td class="code">
+			<b>Name</b></td>
+			<td class="code"><b>Type</b></td>
+			<td class="code"><b>Usage</b></td>
+			<td class="code"><b>Default Value</b></td>
+			<td class="code"><b>Description</b></td>
+		</tr>
+		<tr>
+			<td class="code2">ProgramFileEncoding</td>
+			<td class="code2">string</td>
+			<td class="code2">Download <br>
+			and Upload</td>
+			<td class="code2">UTF-8</td>
+			<td class="code2">The parameter specifies the encoding of the robot 
+			program to be uploaded or to be created. Commonly used are 
+			ISO-8859-1 (West European), and SHIFT_JIS (Japanese)</td>
+		</tr>
+		<tr>
+			<td class="code2">OLPStyle</td>
+			<td class="code2">string</td>
+			<td class="code2">Upload</td>
+			<td class="code2">OperationComments</td>
+			<td class="code2">This parameter is used to determine whether a 
+			comment in a robot program is uploaded as an attribute of a motion 
+			activity or an individual operation. Valid values are 'General' or 'OperationComments'.</td>
+		</tr>
+		<tr>
+			<td class="code2">CommentWaitSignal</td>
+			<td class="code2">boolean</td>
+			<td class="code2">Upload</td>
+			<td class="code2">true</td>
+			<td class="code2">By default, WAIT IO statements are commented out 
+			during upload. If this is not desired, set this parameter to 
+			&quot;false&quot;.</td>
+		</tr>
+		<tr>
+			<td class="code2">IOName</td>
+			<td class="code2">string</td>
+			<td class="code2">Upload</td>
+			<td class="code2">DO[]</td>
+			<td class="code2">This parameter specifies the output signal names 
+			for Set-IO activities. These IOs must be there before upload. If the 
+			parameter ends with a pair of square brackets(&quot;[]&quot;), the signal 
+			names would be &lt;io_name&gt;[&lt;port_number&gt;]; otherwise the signal names 
+			would be &lt;io_name&gt;&lt;port_number&gt;.</td>
+		</tr>
+		<tr>
+			<td class="code2">GrabPart</td>
+			<td class="code2">string</td>
+			<td class="code2">Upload</td>
+			<td class="code2">The gripper mounted on robot</td>
+			<td class="code2">This parameter specifies the tool used to grab a 
+			part for action MitsubishiHClose.</td>
+		</tr>
+		<tr>
+			<td class="code2">PartGrabbed</td>
+			<td class="code2">string</td>
+			<td class="code2">Upload</td>
+			<td class="code2">-</td>
+			<td class="code2">This parameter specifies the part being grabbed or 
+			released for the actions MitsubishiHClose and MitsubishiHOpen.</td>
+		</tr>
+		<tr>
+			<td class="code2">OrentMode</td>
+			<td class="code2">string</td>
+			<td class="code2">Upload</td>
+			<td class="code2">2_axis</td>
+			<td class="code2">This parameter specifies the orient mode for 
+			linear and circular motions uploaded. Valid values are &quot;1_axis&quot;, 
+			&quot;3_axis&quot;, and &quot;wrist&quot;.</td>
+		</tr>
+		<tr>
+			<td class="code2">PickHome</td>
+			<td class="code2">string</td>
+			<td class="code2">Upload</td>
+			<td class="code2">Home position name starts with &quot;C&quot; of the mounted 
+			gripper</td>
+			<td class="code2">This parameter specifies the name of the gripper 
+			close home position.</td>
+		</tr>
+		<tr>
+			<td class="code2">DropHome</td>
+			<td class="code2">string</td>
+			<td class="code2">Upload</td>
+			<td class="code2">Home position name starts with &quot;O&quot; of the mounted 
+			gripper</td>
+			<td class="code2">This parameter specifies the name of the gripper 
+			open home position.</td>
+		</tr>
+		</table>
+		</td>
+     </tr>
+   	</table>
+
+ </body>
+
+</html>
+

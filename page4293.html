@@ -1,0 +1,506 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Design Table Methods</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1><a name="ix-dictionary::design table methods"></a>Design Table Methods<a name="ix-design table methods"></a>
+ <a name="top"></a>&nbsp;</h1>
+ <table border="0" cellpadding="4" cellspacing="0" width="85%" style="border-collapse: collapse" bordercolor="#111111">
+   <tr>
+     <td width="33%" bgcolor="#F0F0F0"><nobr><a href="#CloserSupConfig Method">
+     CloserSupConfig&nbsp;Method</a></nobr></td>
+     <td width="33%" bgcolor="#F0F0F0"><nobr><a href="#CloserInfConfig">
+     CloserInfConfig&nbsp;Function</a></nobr></td>
+     <td width="34%" bgcolor="#F0F0F0"><nobr><a href="#CloserValueSupInColumn">
+     CloseValueSupInColumn&nbsp;Method</a></nobr></td>
+   </tr>
+   <tr>
+     <td width="33%" bgcolor="#F0F0F0"><nobr><a href="#CloserValueInfInColumn">
+     CloseValueInfInColumn&nbsp;Method</a></nobr></td>
+     <td width="33%" bgcolor="#F0F0F0"><nobr><a href="#MinInColumn Method">
+     MinInColumn&nbsp;Function</a></nobr></td>
+     <td width="34%" bgcolor="#F0F0F0"><nobr><a href="#MaxInColumn">MaxInColumn&nbsp;Method</a></nobr></td>
+   </tr>
+   <tr>
+     <td width="33%" bgcolor="#F0F0F0"><nobr><a href="#LocateInColumn">
+     LocateInColumn&nbsp;Method</a></nobr></td>
+     <td width="33%" bgcolor="#F0F0F0"><nobr><a href="#CellAsString">
+     CellAsString&nbsp;Function</a></nobr></td>
+     <td width="34%" bgcolor="#F0F0F0"><nobr><a href="#CellAsBoolean">
+     CellAsBoolean&nbsp;Method</a></nobr></td>
+   </tr>
+   <tr>
+     <td width="33%" bgcolor="#F0F0F0"><nobr><a href="#CellAsReal">CellAsReal&nbsp;Method</a></nobr></td>
+     <td width="33%" bgcolor="#F0F0F0"><a href="#SetCell Method">SetCell Method</a></td>
+     <td width="34%" bgcolor="#F0F0F0"><a href="#LocateInRow Method">LocateInRow 
+     Method</a></td>
+   </tr>
+   <tr>
+     <td width="33%" bgcolor="#F0F0F0"><a href="#Sheet.CloserConfig">
+     Sheet.CloserConfig</a></td>
+     <td width="33%" bgcolor="#F0F0F0">&nbsp;</td>
+     <td width="34%" bgcolor="#F0F0F0">&nbsp;</td>
+   </tr>
+ </table>
+ <h2><a name="CATKnowledge.CloserSupConfig">CloserSupConfig</a>()<b>
+ <a name="ix-CloserSupConfig method"></a>&nbsp;<a name="CloserSupConfig Method"></a></b></h2>
+ <p>Applies to a design table sheet. Returns the configuration which contains 
+ the smallest&nbsp; values greater or equal to the values of the given 
+ arguments. When several configurations meet this condition, the method sorts 
+ out the possible configurations with respect to the column order as it is 
+ specified in the argument list.&nbsp;</p>
+ <h3>Syntax</h3>
+ <p>sheet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>CloserSupConfig</b>(<i>columnName</i>: String, <i>minValue</i>: 
+ Literal, ...): Integer</p>
+ <p>The <b>CloserSupConfig </b>function takes the following arguments:</p>
+ <table border="1" cellspacing="0" width="85%" style="border-collapse: collapse" cellpadding="0">
+   <tr>
+     <td><em><b>Arguments</b></em></td>
+     <td><em><b>Description</b></em></td>
+   </tr>
+   <tr>
+     <td><i>columnName</i></td>
+     <td>Must be put in quotes. It must correspond to a name of a column of the 
+		table</td>
+   </tr>
+   <tr>
+     <td><i>minValue</i></td>
+     <td>Required. You must specify the units.</td>
+   </tr>
+ </table>
+ <p>You can use this method with one couple (column name / value) or several 
+	couples. </p>
+	<h3>Example</h3>
+ <p>Given the design table below:</p>
+ <table border="1" cellspacing="0" width="85%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr>
+     <td width="35">&nbsp;</td>
+     <td align="left" width="150">SketchRadius(mm)</td>
+     <td align="left" width="131">PadLim1(mm)</td>
+     <td align="left" width="128">PadLim2(mm)</td>
+   </tr>
+   <tr>
+     <td width="35">1</td>
+     <td align="left" width="150">120</td>
+     <td align="left" width="131">60</td>
+     <td align="left" width="128">10</td>
+   </tr>
+   <tr>
+     <td width="35">2</td>
+     <td align="left" width="150">130</td>
+     <td align="left" width="131">50</td>
+     <td align="left" width="128">30</td>
+   </tr>
+   <tr>
+     <td width="35">3</td>
+     <td align="left" width="150">120</td>
+     <td align="left" width="131">60</td>
+     <td align="left" width="128">25</td>
+   </tr>
+   <tr>
+     <td width="35">4</td>
+     <td align="left" width="150">140</td>
+     <td align="left" width="131">50</td>
+     <td align="left" width="128">40</td>
+   </tr>
+ </table>
+ <p>The expression below:</p>
+ <p><font size="2" face="Courier10 BT"><nobr><kbd>Relations&#092;DesignTable1&#092;sheet_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CloserSupConfig(&quot;PadLim1&quot;, 
+ 60mm, &quot;SketchRadius&quot;, 120mm, &quot;PadLim2&quot;, 20mm)</kbd></nobr></font></p>
+ <p>returns 3</p>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2><a name="CATKnowledge.CloserInfConfig">CloserInfConfig</a>()<b>
+ <a name="ix-CloserInfConfig method"></a>&nbsp;<a name="CloserInfConfig"></a></b></h2>
+ <p>Applies to a design table sheet. Returns the configuration which contains 
+ the largest values less or equal to the values of the given arguments. When 
+ several configurations meet this condition, the method sorts out the possible 
+ configurations with respect to the column order as it is specified in the 
+ argument list.</p>
+ <h3>Syntax</h3>
+ <p><i>sheet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><b>CloserInfConfig</b>(<i>columnName</i>: String, <i>maxValue</i>: 
+ Literal, ...):Integer</p>
+ <p>The <b>CloserInfConfig </b>method takes the following arguments:</p>
+ <table border="1" cellspacing="0" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr>
+     <td><em><b>Arguments</b></em></td>
+     <td><em><b>Description</b></em></td>
+   </tr>
+   <tr>
+     <td><i>columnName</i></td>
+     <td>Must be put in quotes. </td>
+   </tr>
+   <tr>
+     <td width="158" valign="top"><i>maxValue</i></td>
+     <td width="525">Required. You must specify the units.</td>
+   </tr>
+ </table>
+ <p style="font-size: 10.0pt; font-family: Verdana,sans-serif; margin-left: 0in; margin-right: 0in; margin-bottom: 2.0pt">
+	<span style="color:black">You can use this method with one couple (column 
+	name / value) or several couples. </span></p>
+	<h3>Example</h3>
+ <p>Given the design table below:</p>
+ <table border="1" cellspacing="0" width="85%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr>
+     <td width="35">&nbsp;</td>
+     <td align="left" width="150">SketchRadius(mm)</td>
+     <td align="left" width="131">PadLim1(mm)</td>
+     <td align="left" width="128">PadLim2(mm)</td>
+   </tr>
+   <tr>
+     <td width="35">1</td>
+     <td align="left" width="150">120</td>
+     <td align="left" width="131">60</td>
+     <td align="left" width="128">10</td>
+   </tr>
+   <tr>
+     <td width="35">2</td>
+     <td align="left" width="150">130</td>
+     <td align="left" width="131">50</td>
+     <td align="left" width="128">30</td>
+   </tr>
+   <tr>
+     <td width="35">3</td>
+     <td align="left" width="150">120</td>
+     <td align="left" width="131">60</td>
+     <td align="left" width="128">20</td>
+   </tr>
+   <tr>
+     <td width="35">4</td>
+     <td align="left" width="150">140</td>
+     <td align="left" width="131">50</td>
+     <td align="left" width="128">40</td>
+   </tr>
+ </table>
+ <p>The statement below:<br>
+ <nobr><font face="Courier10 BT" size="2"><kbd>Relations&#092;DesignTable1&#092;sheet_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CloserInfConfig(&quot;PadLim1&quot;, 
+ 60mm,&nbsp;&quot;SketchRadius&quot;, 130mm, &quot;PadLim2&quot;, 40mm)<br>
+ </kbd></font></nobr>returns 3.</p>
+ <p><b><i>Explanations</i></b></p>
+ <p>The values of lines 1 , 2 and 3 are all less or equal to the values 
+ specified in the method arguments.</p>
+ <ul>
+   <li>As the first parameter specified in the argument list is &quot;PadLim1&quot;, the 
+   method scans the lines 1, 2 and&nbsp; 3 and searches for the largest 
+   &quot;PadLim1&quot; value which is less or equal to 60 mm. Two configurations meet the 
+   condition: configuration 1 and&nbsp; configuration 3.</li>
+   <li>As the second parameter specified is &quot;SketchRadius&quot;, the method scans the 
+   configurations 1 and 3 and searches for the largest&nbsp; &quot;SketchRadius&quot; 
+   value less or equal to 130 mm. Again, the function finds two configurations 
+   meeting the criteria.</li>
+   <li>Then it rescans lines 1 and 3 and searches for the largest &quot;PadLim2&quot; 
+   value less or equal to 40mm. The result is line 3.</li>
+ </ul>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2><a name="CATKnowledge.CloserValueSupInColumn">CloserValueSupInColumn</a>()
+ <a name="ix-CloserValueSupInColumn method"></a>&nbsp;<a name="CloserValueSupInColumn"></a></h2>
+ <p>Applies to a design table sheet. Scans the values of a column and returns 
+ the greatest cell value which is the nearest to a specified one. Returns 0 if 
+ no value is found or if the method arguments are not properly specified.</p>
+ <h3>Syntax</h3>
+ <p><i>sheet</i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CloserValueSupInColumn(</b><i>columnIndex: </i>Integer<i>, 
+ Value: </i>Real<b>)</b></p>
+ <p>The <b>CloserValueSupInColumn </b>method takes two arguments:</p>
+ <table border="1" cellpadding="4" cellspacing="4" width="85%" style="border-collapse: collapse" bordercolor="#111111">
+   <tr>
+     <td><em><b>Arguments</b></em></td>
+     <td><em><b>Description</b></em></td>
+   </tr>
+   <tr>
+     <td><i>columnIndex</i></td>
+     <td>Required. Index of the table column. Integer from 1 to n.</td>
+   </tr>
+   <tr>
+     <td><i>Value</i></td>
+     <td>Required. Value searched for. Must be a real.</td>
+   </tr>
+ </table>
+ <h3>Example</h3>
+ <div align="left">
+   <table border="0" cellpadding="0" cellspacing="0" bgcolor="#E5E5E5" width="100%">
+     <tr>
+       <td bgcolor="#F0F0F0">
+       <pre><code>ValueSup=Relations&#092;DesignTable1&#092;sheet_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CloserValueSupInColumn(1, 80mm)
+Message(&quot;Closest sup value is # (0.08 is expected)&quot;, ValueSup)</code></pre>
+       </td>
+     </tr>
+   </table>
+ </div>
+ <p align="center">&nbsp; </p>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2><a name="CATKnowledge.CloserValueInfInColumn">CloserValueInfInColumn</a>()<b>
+ <a name="ix-CloserValueInfInColumn method"></a>&nbsp;<a name="CloserValueInfInColumn"></a></b></h2>
+ <p>Applies to a design table sheet. Scans the values of a column and returns 
+ the smallest cell value which is the nearest to a specified one. Returns 0 if 
+ no value is found or if the method arguments are not properly specified.</p>
+ <h3>Syntax</h3>
+ <p><i>sheet</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>CloserValueInfInColumn</b>(<i>columnIndex</i>: Integer, <i>
+ value</i>: Real): Real</p>
+ <p>The <b>CloserValueInfInColumn </b>function has two arguments:</p>
+ <table border="1" cellspacing="0" width="85%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr>
+     <td><em><b>Arguments</b></em></td>
+     <td><em><b>Description</b></em></td>
+   </tr>
+   <tr>
+     <td><i>columnIndex</i></td>
+     <td>Required. Number or index of the table column. Integer from 1 to n.</td>
+   </tr>
+   <tr>
+     <td><i>value</i></td>
+     <td>Required. Value searched for. Must be a real.</td>
+   </tr>
+ </table>
+ <h3>Example</h3>
+ <p><nobr><font size="2" face="Courier10 BT"><kbd>Message(&quot;Closest inf value is 
+ # &quot;, Relations&#092;DesignTable1&#092;sheet_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CloserValueInfInColumn(2,41mm))</kbd></font></nobr></p>
+ <p align="center">&nbsp; </p>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2><a name="CATKnowledge.MinInColumn">MinInColumn</a>()
+ <a name="ix-MinInColumn method"></a>&nbsp;<a name="MinInColumn Method"></a></h2>
+ <p>Applies to a design table sheet. Returns the smallest of a column values.&nbsp; 
+ Returns 0 if the column specified is out of range.</p>
+ <h3>Syntax</h3>
+ <p><i>sheet</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>MinInColumn</b>(<i>columnIndex</i> : Index): Real</p>
+ <p>where <i>columnIndex</i> is the column number.</p>
+ <h3>Example</h3>
+ <div align="left">
+   <table border="0" cellpadding="0" cellspacing="0" width="85%" bgcolor="#E5E5E5" style="border-collapse: collapse" bordercolor="#111111">
+     <tr>
+       <td bgcolor="#F0F0F0">
+       <pre><code>MinimumValue=sheet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MinInColumn(3)
+Message(&quot;Minimum value is # (0  is expected)&quot;, MinimumValue)
+/* you can use also */
+Message(&quot;Minimum value is # (0 is expected)&quot;, MinInColumn(3))</code></pre>
+       </td>
+     </tr>
+   </table>
+ </div>
+ <h3>Sample</h3>
+ <p>
+ <a href="b35doc/english/online/cfysm_C2/samples/Advisor/KwrProgramDT.CATPart">
+ KwrProgramDT.CATPart</a>&nbsp;&nbsp; </p>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2><a name="CATKnowledge.MaxInColumn">MaxInColumn</a>()<b>
+ <a name="ix-MaxInColumn method"></a>&nbsp;<a name="MaxInColumn"></a></b></h2>
+ <p>Applies to a design table sheet. Returns the greatest of a column values.&nbsp; 
+ Returns 0 if the column does not contain numerical values or if the method 
+ arguments are not properly specified.</p>
+ <h3>Syntax</h3>
+ <p><i>sheet</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>MaxInColumn</b>(<i>columnIndex</i>: Integer): Real</p>
+ <h3>Example</h3>
+ <pre><code>MaximumValue=Relations&#092;DesignTable1&#092;sheet_name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MaxInColumn(1)
+Message(&quot;Maximum value is # (0.150 is expected)&quot;, MaximumValue)</code></pre>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2><a name="CATKnowledge.LocateInColumn">LocateInColumn</a>()<b><a name="ix-LocateInColumn method"></a>
+ <a name="LocateInColumn"></a></b></h2>
+ <p>Applies to a design table sheet. Returns the index of the first row which 
+ contains a specified value.&nbsp; Returns zero if the value is not found or if 
+ the method arguments are not properly specified.</p>
+ <h3>Syntax</h3>
+ <p><i>sheet</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>LocateInColumn</b>(<i>columnIndex</i>: Integer, <i>value</i>: 
+ Literal) : Integer</p>
+ <p>The <b>LocateInColumn </b>method has two arguments:</p>
+ <table border="1" cellpadding="4" cellspacing="4">
+   <tr>
+     <td><em><b>Arguments</b></em></td>
+     <td><em><b>Description</b></em></td>
+   </tr>
+   <tr>
+     <td><i>ColumnNumber</i></td>
+     <td>Required. Number or index of the table column. Integer from 1 to n.</td>
+   </tr>
+   <tr>
+     <td><i>Value</i></td>
+     <td>Required. Value searched for. Can be a string or a boolean</td>
+   </tr>
+ </table>
+ <h3>Example</h3>
+ <div align="left">
+   <table border="0" cellpadding="0" cellspacing="0" bgcolor="#E5E5E5" width="85%" style="border-collapse: collapse" bordercolor="#111111">
+     <tr>
+       <td bgcolor="#F0F0F0">
+       <pre><code>Line=Relations&#092;DesignTable1&#092;sheet_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LocateInColumn(4,11mm)
+if (Line == 0)
+{
+Message(&quot;No value found !!!&quot;)
+}</code></pre>
+       </td>
+     </tr>
+   </table>
+ </div>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2><a name="CATKnowledge.CellAsString">CellAsString</a>()<b>
+ <a name="ix-CellAsString method"></a>&nbsp;<a name="CellAsString"></a></b></h2>
+ <p>Applies to a design table sheet. Returns the contents of a cell located in a 
+ column.&nbsp; Returns an empty string if the cell is empty or if the method 
+ arguments are not properly specified.</p>
+ <h3>Syntax</h3>
+ <p><i>sheet</i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CellAsString(</b><i>rowIndex: </i>Integer<b>, c</b><i>olumnIndex:
+ </i>Integer<b>): </b>String</p>
+ <p>where <i>rowIndex</i> is the configuration number and <b>c</b><i>olumnIndex</i> 
+ the column number<i>.</i></p>
+ <h3>Example</h3>
+ <div align="left">
+   <table border="0" cellpadding="0" cellspacing="0" bgcolor="#E5E5E5" width="85%" style="border-collapse: collapse" bordercolor="#111111">
+     <tr>
+       <td bgcolor="#F0F0F0"><font face="Courier10 BT" size="2"><code>CString=Relations&#092;DesignTable1&#092;sheet_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CellAsString(1,5)<br>
+       if (CString == &quot;&quot;)<br>
+       &nbsp;{<br>
+&nbsp;&nbsp; Message(&quot;No value read !!!&quot;)<br>
+       &nbsp;}</code></font></td>
+     </tr>
+   </table>
+ </div>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2><a name="CATKnowledge.CellAsBoolean">CellAsBoolean</a>()<b>
+ <a name="ix-CellAsBoolean method"></a>&nbsp;<a name="CellAsBoolean"></a></b></h2>
+ <p>Applies to a design table sheet. Returns the contents of a cell located in a 
+ column intended for boolean values. Returns false if the cell does not contain 
+ a boolean or if the method arguments are not properly specified.</p>
+ <h3>Syntax</h3>
+ <p>sheet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>CellAsBoolean</b>(<i>rowIndex</i>: Integer, <i>columnIndex</i>: 
+ Integer): Boolean</p>
+ <p>The <b>CellAsBoolean</b> method has two arguments:</p>
+ <table border="1" cellpadding="4" cellspacing="4">
+   <tr>
+     <td><em><b>Arguments</b></em></td>
+     <td><em><b>Description</b></em></td>
+   </tr>
+   <tr>
+     <td><i>rowIndex</i></td>
+     <td>Required. Configuration number. Integer from 1 to n.</td>
+   </tr>
+   <tr>
+     <td><i>columnIndex</i></td>
+     <td>Required. Index of the table column. Integer from 1 to n.</td>
+   </tr>
+ </table>
+ <h3>Example</h3>
+ <div align="left">
+   <table border="0" cellpadding="0" cellspacing="0" bgcolor="#E2E2E2" width="85%" style="border-collapse: collapse" bordercolor="#111111">
+     <tr>
+       <td bgcolor="#F0F0F0">
+       <pre><code>Boolean2=Relations&#092;DesignTable1&#092;sheet_name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CellAsBoolean(1,5)
+if (Boolean2 &lt;&gt; true)
+{
+  Message(&quot;Error !!!&quot;)
+}</code></pre>
+       </td>
+     </tr>
+   </table>
+ </div>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2><a name="CATKnowledge.CellAsReal">CellAsReal</a>()<b>
+ <a name="ix-CellAsReal method"></a>&nbsp;<a name="CellAsReal"></a></b></h2>
+ <p>Applies to a design table sheet. Returns the contents of a cell located in a 
+ column intended for real values.&nbsp; Returns zero if the cell does not 
+ contain a real or if the method arguments are not properly specified.</p>
+ <h2>Syntax</h2>
+ <p><i>sheet</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>CellAsReal</b>(<i>rowIndex</i>: Integer, <i>columnIndex</i>: 
+ Integer): Real</p>
+ <p>where <i>rowIndex </i>is the<i> </i>configuration number (integer from 1 to 
+ n) and <i>columnIndex </i>the column number<i>.</i></p>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2><a name="CATKnowledge.SetCell">SetCell</a>() <a name="ix-SetCell method">
+ </a>&nbsp;<a name="SetCell Method"></a></h2>
+ <p>Enables you to fill in a cell at a given position in an Excel file or a tab 
+ file.</p>
+ <p>Note: the index must start at 1 for the (1,1) cell to be located at the left 
+ top corner.</p>
+ <h3>Syntax</h3>
+ <p><i>sheet</i><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SetCell(</b><i>IndexRow:Integer, IndexColumn:Integer, 
+ CellValue:Literal</i><b>): </b>Void&nbsp; </p>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2><a name="CATKnowledge.LocateInRow">LocateInRow</a>()
+ <a name="ix-LocateInRow method"></a>&nbsp;<a name="LocateInRow Method"></a> </h2>
+ <p>Applies to a design table sheet. Returns the index of the first row which 
+ contains a specified value.&nbsp; Returns zero if the value is not found or if 
+ the method arguments are not properly specified.</p>
+ <h3>Syntax</h3>
+ <p><i>sheet</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>LocateInRow</b>(<i>rowIndex</i>: Integer, <i>value</i>: 
+ Literal) : Integer</p>
+ <p>The <b>LocateInRow </b>method has two arguments:</p>
+ <table border="1" cellpadding="4" cellspacing="4">
+   <tr>
+     <td><em><b>Arguments</b></em></td>
+     <td><em><b>Description</b></em></td>
+   </tr>
+   <tr>
+     <td><i>RowNumber</i></td>
+     <td>Required. Number or index of the table row. Integer from 1 to n.</td>
+   </tr>
+   <tr>
+     <td><i>Value</i></td>
+     <td>Required. Value searched for. Can be a string or a boolean</td>
+   </tr>
+ </table>
+ <p align="right"><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></p>
+ <h2>Sheet.CloserConfig()<a name="Sheet.CloserConfig"></a>
+ <a name="CATKnowledge.CloserConfig"></a></h2>
+ <p>Method enabling you to find the closest configuration of a design table 
+ according to criteria that mix greater than (or equal to) and smaller than (or 
+ equal to).</p>
+ <p>Where:</p>
+ <ul>
+   <li>The columnName&lt;index&gt; arguments match the columns names in the design 
+   table source file.</li>
+   <li>The sortMethod&lt;index&gt; are strings that can only take the following values 
+   : &#034;&lt;&#034;, &#034;&lt;=&#034;, &#034;&gt;&#034;, &#034;&gt;=&#034;, &#034;==&#034;, &#034;!=&#034;</li>
+   <li>The value&lt;index&gt; arguments can be either numerical values (the magnitude 
+   must correspond to the magnitude of a given column), or string values. If 
+   string values are used, the exact value is retrieved from the cells (the 
+   sortMethod is used only if it is &#034;==&#034; 
+   or &#034;!=&#034;.) 
+   If sortmethod is not &#034;==&#034; 
+   or &#034;!=&#034;, &#034;==&#034; 
+   is assumed.</li>
+ </ul>
+ <p>Example:</p>
+ <p><code>Sheet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CloserConfig(&#034;column1&#034;, &#034;&lt;&#034;, 
+ 10mm, &#034;column2&#034;, &#034;&gt;=&#034;, 
+ 20deg, &#034;column3&#034;, 
+ &#034;!=&#034;, &#034;standard&#034;)
+ </code>that can be interpreted as follows:<br>
+ Find the configuration where:</p>
+ <ul>
+   <li>the value in column1 is strictly smaller than 10mm, </li>
+   <li>where the value in column2 is greater than or equal to 20deg</li>
+   <li>where the value in column3 is different from the standard string.</li>
+ </ul>
+ <p>Note that:</p>
+ <ul>
+   <li>If several configurations are valid, you will find the configuration 
+   whose values are as close as possible to the&nbsp; &#034;bounds&#034;. 
+   If still several configurations are valid, the first valid one is returned.</li>
+   <li>If no configuration is valid, the returned value is 0.</li>
+ </ul>
+ <p align="right"><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></p>
+
+ </body>
+
+</html>
+

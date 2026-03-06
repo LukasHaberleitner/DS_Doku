@@ -1,0 +1,135 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Accessing the Expert Check in the Check Body</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="Microsoft Border" content="none, default">
+ <meta name="docCompliance" content="v 0.9; Mon Oct 17 11:10:07 2005">
+ </head>
+
+ <body>
+
+ <h1>Accessing the Expert Check in the Check Body&nbsp;&nbsp;<a name="ix-accessing the expert rule in the rule body"></a>
+ <a name="ix-expert rule::accessing the expert rule in the rule body"></a></h1>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32"></p>
+ <table border="0" cellpadding="4" cellspacing="0">
+   <tr>
+     <td valign="top" align="center">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" title="atarget.gif (1372 bytes)" width="32" height="32"></td>
+     <td valign="top">The task described below explains how to access the check 
+     itself in the check body by using&nbsp; the &quot;Thischeck&quot; variable.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top">&quot;Thischeck&quot; and &quot;Thisrule&quot; are variables created to help 
+     you write rules and checks. These 2 variables enable you to automatically 
+     reference the check or the rule you are working with. It enables you to:
+     <table border="0" cellpadding="0" cellspacing="0">
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>Access the parameters located below the rule or the check (see 
+           scenario below),</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>Compare various elements.</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <h6>
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" title="ascenari.gif (1364 bytes)" width="32" height="32"></h6>
+     </td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task" style="mso-layout-grid-align:none;text-autospace:none">
+       Create a pad containing holes or open the
+       <a href="b35doc/english/online/kwxug_c2/samples/KwxThisCheck.CATPart">KwxThisCheck.CATPart</a> file.</li>
+       <li>
+       <p class="task" style="mso-layout-grid-align:none;text-autospace:none">
+       Create a parameter of <kbd>Length </kbd>type (Length.1) and set its value 
+       to 15mm.</li>
+       <li>
+       <p class="task">Access the Knowledge Expert workbench and click the <kbd>
+       Expert Check</kbd> icon (<img src="b35doc/english/online/icons_C2/images/I_ExpertCheckP2.gif" title="kwxWKChecks.gif (1236 bytes)" width="24" height="24">).</li>
+       <li>
+       <p class="Task">Change the name of the Check (ExpertCheck in this 
+       scenario), select the KWE language (by default) and click <kbd>OK</kbd>. 
+       The Check Editor opens.</li>
+       <li>
+       <p class="Task">In the Check Editor, enter the script indicated in the 
+       column &quot;<kbd>With the ThisCheck</kbd> <kbd>method</kbd>&quot; (see table 
+       below). Click <kbd>OK</kbd>.</li>
+     </ol>
+     <table border="0" cellpadding="4" cellspacing="1">
+       <tr>
+         <td bgcolor="#F2F2F2">
+         <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+         <td bgcolor="#F2F2F2">This script enables you to check that the 
+         diameters of the holes contained in this CATPart file are superior to 
+         15 mm.</td>
+       </tr>
+     </table>
+     <div align="center">
+       <center>
+       <table border="0" cellpadding="4" cellspacing="1">
+         <tr>
+           <td align="center" bgcolor="#F2F2F2" bordercolorlight="#000000">With 
+           the ThisCheck method</td>
+           <td align="center" bgcolor="#F2F2F2" bordercolorlight="#000000">
+           Without the ThisCheck method</td>
+         </tr>
+         <tr>
+           <td bgcolor="#FFFFFF" valign="top"><code>For all field:&nbsp; P:Hole
+           </code>
+           <p><code>P.Diameter &gt; ThisCheck &gt; GetAttributeReal<br>
+           (&quot;Length.1&quot;)</code></p>
+           <p>&nbsp;</td>
+           <td bgcolor="#FFFFFF" valign="top"><code>For all field:&nbsp; P:Hole 
+           ; C1:KWECheck </code>
+           <p><code>C1.Name == &quot;CATKWECheck.1&quot; /*Indicate the name of the 
+           check*/<br>
+           =&gt;<br>
+           P.Diameter &gt; C1 &gt; GetAttributeReal (&quot;Length.1&quot;)</code></td>
+         </tr>
+       </table>
+       </center>
+     </div>
+     <ol start="6" class="task">
+       <li>
+       <p class="task" style="mso-layout-grid-align:none;text-autospace:none">
+       Click the <kbd>Solve</kbd> icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_UpdateP2.gif" width="24" height="24">). 
+       The rule set lights turn to green indicating that the check could be run 
+       correctly.</li>
+       <li>
+       <p class="task">Click <a href="b35doc/english/online/kwxug_c2/samples/KwxThisCheck2.CATPart">here</a> to 
+       display the result of the scenario.</li>
+     </ol>
+     </td>
+   </tr>
+ </table>
+ <p align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="aendtask.gif (1477 bytes)" width="64" height="32">
+ </p>
+
+ </body>
+
+</html>
+

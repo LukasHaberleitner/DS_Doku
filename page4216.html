@@ -1,0 +1,349 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>About Iterative Alignment</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#0080FF" alink="#990000">
+
+ <h1 align="center">About Iterative Alignment</h1>
+ <div align="left">
+   <table border="0" width="100%" cellspacing="3" cellpadding="3">
+     <tr>
+       <td width="5%" valign="top">
+       <img border="0" src="b35doc/english/online/icons_C2/common/amethod.gif" width="32" height="32"></td>
+       <td width="90%" valign="top" colspan="2">This section provides an 
+       overview of what iterative alignment does and how DMIS handles it.</td>
+     </tr>
+     <tr>
+       <td width="5%" valign="top">&nbsp;</td>
+       <td width="90%" valign="top" colspan="2">The PPR tree below is an example 
+       of inspection activities used with an iterative alignment.<p>
+       <img border="0" src="b35doc/english/online/cfyuginspect_c2/images/wnItAlgnANLS.gif" width="219" height="254"></td>
+     </tr>
+     <tr>
+       <td width="5%" valign="top">&nbsp;</td>
+       <td width="90%" valign="top" colspan="2">The loop-on activities would 
+       typically be:
+       <ol class="task">
+         <li>
+         <p class="task">Define and measure features.<br>
+&nbsp;</li>
+         <li>
+         <p class="task">Construct alignment.<br>
+&nbsp;</li>
+         <li>
+         <p class="task">Calculate deviation (between measure and defined 
+         activity of same feature) of alignment features in constructed 
+         alignment.<br>
+&nbsp;</li>
+         <li>
+         <p class="task">Evaluate against threshold value.</li>
+       </ol>
+       <blockquote>
+         <blockquote>
+           <blockquote>
+             <blockquote>
+               <ul>
+                 <li>
+                 <p class="task">If one of the actual values is out of the 
+                 threshold value, redo alignment (re-execute the loop).&nbsp; 
+                 Otherwise, continue.</li>
+                 <li>If the maximum counter is reached, exit the loop.</li>
+               </ul>
+             </blockquote>
+           </blockquote>
+         </blockquote>
+       </blockquote>
+       </td>
+     </tr>
+     <tr>
+       <td width="5%" valign="top">
+       <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+       <td width="90%" valign="top" colspan="2">The last 2 steps are only 
+       happening at the CMM. In the process document, we are dealing with 
+       nominal data (perfect dimensions). Therefore, the calculated deviation is 
+       always null and the loop will never happen. The main effect of this 
+       activity will be seen in the DMIS-generated code.&nbsp;</td>
+     </tr>
+     <tr>
+       <td width="5%" valign="top"></td>
+       <td width="90%" valign="top" colspan="2">
+       <p class="num"></p>
+       <h2>Overview of DMIS Process without Iterative Alignment</h2>
+       </td>
+     </tr>
+     <tr>
+       <td width="5%" valign="top"></td>
+       <td width="90%" valign="top" colspan="2"><kbd><font face="Courier">- 
+       Manual mode <br>
+       - Send operator instruction <br>
+       - Define point1 <br>
+       - Define point2 <br>
+       - Define point3 <br>
+       - Define circle <br>
+       - Define slot <br>
+       - Define tolerance1, tolerance2<br>
+       - Measure point1 <br>
+       - Measure point2 <br>
+       - Measure point3 <br>
+       - Construct Cplane (point1, point2, point3) <br>
+       - Measure circle <br>
+       - Measure slot <br>
+       - Construct Cline (circle and slot) <br>
+       - Construct alignment CALIGN (Cplane, Cline and circle) <br>
+       - Activate alignment <br>
+       - <br>
+       - <br>
+       - </font></kbd></td>
+     </tr>
+     <tr>
+       <td width="5%" valign="top"></td>
+       <td width="90%" valign="top" colspan="2">
+       <p class="num"></p>
+       <h2>Overview of DMIS Process with Iterative Alignment</h2>
+       </td>
+     </tr>
+     <tr>
+       <td width="5%" valign="top"></td>
+       <td width="90%" valign="top" colspan="2"><kbd><font face="Courier">- 
+       Manual mode <br>
+       - Send operator instruction <br>
+       - Define point1 <br>
+       - Define point2 <br>
+       - Define point3 <br>
+       - Define circle <br>
+       - Define slot <br>
+       - Define tolerance1, tolerance2</font></kbd></td>
+     </tr>
+     <tr>
+       <td width="5%" valign="top"></td>
+       <td width="3%" valign="top">&nbsp;</td>
+       <td width="87%" valign="top"><code><font face="Courier">DECL / INTGR , 
+       XVAR //<font color="#0000FF">declaration of variables </font><br>
+       DECL / INTGR , YVAR <br>
+       DECL / INTGR , ZVAR <br>
+       DECL / INTGR , COUNT <br>
+       DECL / BOOL , ALIGN_RESULT<br>
+       <br>
+       T(X_THRESHOLD)= TOL / CORTOL, XAXIS, -.0500, .0500 //<font color="#0000FF">For 
+       a threshold value of 0.1</font><br>
+       T(Y_THRESHOLD)= TOL / CORTOL, YAXIS, -.0500, .0500 //<font color="#0000FF">For 
+       a threshold value of 0.1</font><br>
+       T(Z_THRESHOLD)= TOL / CORTOL, ZAXIS, -.0500, .0500 //<font color="#0000FF">For 
+       a threshold value of 0.1</font> <br>
+       COUNT = ASSIGN/0<br>
+       $$====================================== <br>
+       (ITER_START) <br>
+       $$====================================== <br>
+       ALIGN_RESULT = ASSIGN/.TRUE. <br>
+       COUNT = ASSIGN/COUNT+ </font></code></td>
+     </tr>
+     <tr>
+       <td width="5%" valign="top"></td>
+       <td width="90%" valign="top" colspan="2">
+       <p class="num"></p>
+       <p><kbd><font face="Courier">- Measure point1 <br>
+       - Measure point2 <br>
+       - Measure point3 <br>
+       - Construct Cplane (point1, point2, point3) <br>
+       - Measure circle <br>
+       - Measure slot <br>
+       - Construct Cline (circle and slot) <br>
+       - Construct alignment CALIGN (Cplane, Cline and circle) <br>
+       - Activate alignment </font></kbd></td>
+     </tr>
+     <tr>
+       <td width="5%" valign="top"></td>
+       <td width="3%" valign="top">&nbsp;</td>
+       <td width="87%" valign="top"><code><font face="Courier">$$FEATURE
+       <font color="#FF0000"><b>point1</b></font><br>
+       $$=========================== <br>
+       OUTPUT / FA(<font color="#FF0000"><b>point1</b></font>), TA(X_THRESHOLD) 
+       //<font color="#0000FF">evaluates feature and deviation XVAR</font> 
+       =VALUE/TA(X_THRESHOLD),INTOL //<font color="#0000FF">checks if in or out 
+       of tol </font><br>
+       IF/(XVAR .EQ. 0) <br>
+       ALIGN_RESULT = ASSIGN/.FALSE. //<font color="#0000FF">set flag if out of 
+       tolerance</font> <br>
+       TEXT / OPER ,'<font color="#FF0000"><b>point1</b></font> out of tolerance 
+       along X' <br>
+       ENDIF <br>
+       OUTPUT / FA(<font color="#FF0000"><b>point1</b></font>), TA(Y_THRESHOLD)
+       <br>
+       YVAR =VALUE/TA(Y_THRESHOLD),INTOL $$ checks if in or out of tol <br>
+       IF/(YVAR .EQ. 0) <br>
+       ALIGN_RESULT = ASSIGN/.FALSE. <br>
+       TEXT / OPER ,'<font color="#FF0000"><b>point1</b></font> out of tolerance 
+       along Y' <br>
+       ENDIF </font></code>
+       <p><code><font face="Courier">OUTPUT / FA(<font color="#FF0000"><b>point1</b></font>), 
+       TA(Z_THRESHOLD) <br>
+       ZVAR =VALUE/TA(Z_THRESHOLD),INTOL $$ checks if in or out of tol <br>
+       IF/(ZVAR .EQ. 0) <br>
+       ALIGN_RESULT = ASSIGN/.FALSE. <br>
+       TEXT / OPER ,'<font color="#FF0000"><b>point1</b></font> out of tolerance 
+       along Z' <br>
+       ENDIF </font></code></p>
+       <p><code><font face="Courier">$$FEATURE <font color="#FF0000"><b>point2
+       </b></font><br>
+       $$=========================== <br>
+       OUTPUT / FA(<font color="#FF0000"><b>point2</b></font>), TA(X_THRESHOLD)
+       <br>
+       XVAR =VALUE/TA(X_THRESHOLD),INTOL $$ checks if in or out of tol <br>
+       IF/(XVAR .EQ. 0) <br>
+       ALIGN_RESULT = ASSIGN/.FALSE. <br>
+       TEXT / OPER , '<font color="#FF0000"><b>point2 </b></font>out of 
+       tolerance along X' <br>
+       ENDIF </font></code></p>
+       <p><code><font face="Courier">OUTPUT / FA(<font color="#FF0000"><b>point2</b></font>), 
+       TA(Y_THRESHOLD) <br>
+       YVAR =VALUE/TA(Y_THRESHOLD),INTOL $$ checks if in or out of tol <br>
+       IF/(YVAR .EQ. 0) <br>
+       ALIGN_RESULT = ASSIGN/.FALSE. <br>
+       TEXT / OPER , '<font color="#FF0000"><b>point2</b></font> out of 
+       tolerance along Y' <br>
+       ENDIF</font></code></p>
+       <p><code><font face="Courier">OUTPUT / FA(<font color="#FF0000"><b>point2</b></font>), 
+       TA(Z_THRESHOLD) <br>
+       ZVAR =VALUE/TA(Z_THRESHOLD),INTOL $$ checks if in or out of tol <br>
+       IF/(ZVAR .EQ. 0) <br>
+       ALIGN_RESULT = ASSIGN/.FALSE. <br>
+       TEXT / OPER , '<font color="#FF0000"><b>point2</b></font> out of 
+       tolerance along Z' <br>
+       ENDIF</font></code></p>
+       <p><code><font face="Courier">&nbsp;<br>
+       $$FEATURE <font color="#FF0000"><b>point3</b></font> <br>
+       $$=========================== <br>
+       OUTPUT / FA(<font color="#FF0000"><b>point3</b></font>), TA(X_THRESHOLD)
+       <br>
+       XVAR =VALUE/TA(X_THRESHOLD),INTOL $$ checks if in or out of tol <br>
+       IF/(XVAR .EQ. 0) <br>
+       ALIGN_RESULT = ASSIGN/.FALSE. <br>
+       TEXT / OPER , '<font color="#FF0000"><b>point3</b></font> out of 
+       tolerance along X' <br>
+       ENDIF </font></code></p>
+       <p><code><font face="Courier"><br>
+       OUTPUT / FA(<font color="#FF0000"><b>point3</b></font>), TA(Y_THRESHOLD)
+       <br>
+       YVAR =VALUE/TA(Y_THRESHOLD),INTOL $$ checks if in or out of tol <br>
+       IF/(YVAR .EQ. 0) <br>
+       ALIGN_RESULT = ASSIGN/.FALSE. <br>
+       TEXT / OPER , '<font color="#FF0000"><b>point3 </b></font>out of 
+       tolerance along Y' <br>
+       ENDIF </font></code></p>
+       <p><code><font face="Courier"><br>
+       OUTPUT / FA(<font color="#FF0000"><b>point3</b></font>), TA(Z_THRESHOLD)
+       <br>
+       ZVAR =VALUE/TA(Z_THRESHOLD),INTOL $$ checks if in or out of tol <br>
+       IF/(ZVAR .EQ. 0) <br>
+       ALIGN_RESULT = ASSIGN/.FALSE. <br>
+       TEXT / OPER , '<font color="#FF0000"><b>point3</b></font> out of 
+       tolerance along Z' <br>
+       ENDIF </font></code></p>
+       <p><code><font face="Courier"><br>
+       $$FEATURE <font color="#FF0000"><b>circle</b></font> <br>
+       $$=========================== <br>
+       OUTPUT / FA(circle), TA(X_THRESHOLD) <br>
+       XVAR =VALUE/TA(X_THRESHOLD),INTOL $$ checks if in or out of tol <br>
+       IF/(XVAR .EQ. 0) <br>
+       ALIGN_RESULT = ASSIGN/.FALSE. <br>
+       TEXT / OPER , '<font color="#FF0000"><b>circle</b></font> out of 
+       tolerance along X' <br>
+       ENDIF </font></code></p>
+       <p><font face="Courier"><br>
+       </font><code><font face="Courier">OUTPUT / FA(<font color="#FF0000"><b>circle</b></font>), 
+       TA(Y_THRESHOLD) <br>
+       YVAR =VALUE/TA(Y_THRESHOLD),INTOL $$ checks if in or out of tol <br>
+       IF/(YVAR .EQ. 0) <br>
+       ALIGN_RESULT = ASSIGN/.FALSE. <br>
+       TEXT / OPER , '<font color="#FF0000"><b>circle</b></font> out of 
+       tolerance along Y' <br>
+       ENDIF</font></code></p>
+       <p><code><font face="Courier"><br>
+       OUTPUT / FA(<font color="#FF0000"><b>circle</b></font>), TA(Z_THRESHOLD)
+       <br>
+       ZVAR =VALUE/TA(Z_THRESHOLD),INTOL $$ checks if in or out of tol <br>
+       IF/(ZVAR .EQ. 0) <br>
+       ALIGN_RESULT = ASSIGN/.FALSE. <br>
+       TEXT / OPER , '<font color="#FF0000"><b>circle</b></font> out of 
+       tolerance along Z' <br>
+       ENDIF </font></code></p>
+       <p><code><font face="Courier"><br>
+       $$FEATURE <font color="#FF0000"><b>slot</b></font> <br>
+       $$=========================== <br>
+       OUTPUT / FA(slot), TA(X_THRESHOLD) <br>
+       XVAR =VALUE/TA(X_THRESHOLD),INTOL $$ checks if in or out of tol <br>
+       IF/(XVAR .EQ. 0) <br>
+       ALIGN_RESULT = ASSIGN/.FALSE. <br>
+       TEXT / OPER , '<font color="#FF0000"><b>slot</b></font> out of tolerance 
+       along X' <br>
+       ENDIF </font></code></p>
+       <p><code><font face="Courier"><br>
+       OUTPUT / FA(<font color="#FF0000"><b>slot</b></font>), TA(Y_THRESHOLD)
+       <br>
+       YVAR =VALUE/TA(Y_THRESHOLD),INTOL $$ checks if in or out of tol <br>
+       IF/(YVAR .EQ. 0) <br>
+       ALIGN_RESULT = ASSIGN/.FALSE. <br>
+       TEXT / OPER , '<font color="#FF0000"><b>slot</b></font> out of tolerance 
+       along Y' <br>
+       ENDIF </font></code></p>
+       <p><font face="Courier"><br>
+       </font><code><font face="Courier">OUTPUT / FA(<font color="#FF0000"><b>slot</b></font>), 
+       TA(Z_THRESHOLD) <br>
+       ZVAR =VALUE/TA(Z_THRESHOLD),INTOL $$ checks if in or out of tol <br>
+       IF/(ZVAR .EQ. 0) <br>
+       ALIGN_RESULT = ASSIGN/.FALSE. <br>
+       TEXT / OPER , '<font color="#FF0000"><b>slot</b></font> out of tolerance 
+       along Z' <br>
+       ENDIF </font></code></p>
+       <p><code><font face="Courier"><br>
+       IF/( ALIGN_RESULT .EQ. .FALSE.) <br>
+       TEXT / OPER , 'ITERATION RESULT' <br>
+       TEXT / OPER , '========================' <br>
+       TEXT / OPER , '*** Alignment did not converge***' <br>
+       ELSE <br>
+       JUMPTO / (ITER_END) <br>
+       ENDIF </font></code></p>
+       <p><code><font face="Courier"><br>
+       IF/((COUNT .LE. 5) // <font color="#0000FF">in this case, max iteration 
+       is 5 </font><br>
+       JUMPTO / (ITER_ START) <br>
+       ENDIF </font></code></p>
+       <p><code><font face="Courier"><br>
+       (ITER_END) <br>
+       TEXT / OPER , '=============================' <br>
+       TEXT / OPER , '= SUCCESSFUL ALIGNMENT =' <br>
+       TEXT / OPER , '=============================' </font></code></td>
+     </tr>
+     <tr>
+       <td width="5%" valign="top"></td>
+       <td width="90%" valign="top" colspan="2">
+       <p class="num"></p>
+       <p><kbd>- <br>
+       - <br>
+       - </kbd></td>
+     </tr>
+   </table>
+ </div>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+ </p>
+
+ </body>
+
+</html>
+

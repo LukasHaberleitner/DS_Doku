@@ -1,0 +1,224 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Performing a Cut Analysis</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="Microsoft Border" content="none, default">
+<style type="text/css">
+.auto-style1 {
+	border-style: solid;
+	border-width: 1px;
+}
+.auto-style2 {
+	font-weight: bold;
+	color: #666666;
+}
+</style>
+</head>
+
+<body>
+
+<h1><a name="CATDieFaceDesignAppWkb.DFDTrimLineCheck"></a>Performing a Cut Analysis</h1>
+<table border="0">
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td valign="top">This task shows you how <span>to check that a surface or a 
+	3D curve can be cut out. </span><br></td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td valign="top">Open <a href="b35doc/english/online/tdfug_c2/samples/TrimLineCheck01.CATPart">
+	TrimLineCheck01.CATPart</a> from the samples directory.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td valign="top">
+    <ol class="task">
+    <li>
+      <p class="task"><a name="ic-commands::Cut Analysis"></a>Click <kbd>Cut 
+	  Analysis&nbsp;
+	  <img height="24" src="b35doc/english/online/icons_C2/images/I_DFDObtuseP2.png" width="24"></kbd>&nbsp;
+      in the<kbd> Analysis </kbd>toolbar.<br>If the check box <kbd>
+	  Display detailed text in dialog</kbd> in <kbd>Tools/Options/Mechanical 
+	  Design/Die Face Design</kbd> is cleared, the dialog box looks like this:<br>
+	  <img class="auto-style1" src="b35doc/english/online/tdfug_c2/images/dbCutoutAnalysis2NLS.png"><br>If the check box <kbd>Display detailed text in dialog</kbd> in <kbd>
+	  Tools/Options/Mechanical Design/Die Face Design</kbd> is selected,<br>the 
+	  dialog box looks like this:<br>
+	  <img class="auto-style1" src="b35doc/english/online/tdfug_c2/images/dbCutoutAnalysis2TextNLS.png"><br>
+		<br>
+	  </p>
+      </li>
+		<li>
+        <p class="task">Select an axis system (stamping direction).<a name="ix-performing a cut analysis:stamping direction"></a><br>Its 
+		Z-Axis represents the cutting tool axis.</p>
+      </li>
+		<li>
+        <p class="task">Select the surface or 3D curve to analyze with respect 
+		to a maximum cutout angle.<a name="ix-performing a cut analysis:input element"></a><br>If you have selected a 3D curve, select a 
+		surface.<br>The normal of the 3D curve with respect to this surface are 
+		retrieved.<br>
+		<img src="b35doc/english/online/tdfug_c2/images/TrimLineCheck01.png"></p>
+      </li>
+		<li>
+        <p class="task">If needed, invert the direction of the normals.<a name="ix-performing a cut analysis:reverse normals"></a></p>
+      </li>
+		<li>
+        <p class="task">To change the selection, either exit 
+		<span class="auto-style2">CutAnalysis </span>and restart with another output, <br>or edit the mesh 
+		surface in the specification tree.</p>
+      </li>
+		<li>
+        <p class="task">If you have selected a 3D curve, select a surface.
+        <br>The normals of the 3D curve with respect to this surface are 
+		retrieved.</p>
+      </li>
+		<li>
+        <p class="task">Select an analysis method from the list:<a name="ix-performing a cut analysis:method"></a>.<table style="width: 100%">
+			<tr>
+				<td>
+				<ul>
+						<li>    <kbd>Analyze Normals</kbd>: Computes the angle between the normals (Of the surface, or of the curve with respect to its support surface) and the Z Axis of the stamping direction.
+</li>
+						<li>    <kbd>Analyze Shear Angle</kbd>: Computes the shear angle (Angle between the tangents of the trim line and the tool direction).
+</li>
+						<li>    <kbd>Analyze 2D Angles</kbd>
+						<ul>
+							<li>Projects the trim line on the plane normal to the stamping direction.
+        					</li>
+							<li>Then computes the angle between the tangents of the projected trim lines and the Z Axis of the stamping direction.
+    						</li>
+						</ul>
+</li>
+						<li><kbd>Analyze 3D Angles</kbd>: Computes the trim angle (Angle between the normals of the trim line and the tool direction).
+						</li>
+						<li><kbd>Analyze Insertion Depth</kbd>: Checks that the 
+						travel of the cutting tool ensures a complete cut of the 
+						material. The cam direction can be optimized according 
+						to this analysis.</li>
+					</ul>
+					</li>
+					
+				</td>
+			</tr>
+		</table>
+		<br>
+		</p>
+      </li>
+		<li>
+        <p class="task">Enter required parameters values.</p>
+      </li>
+		<li><p class="task">
+
+		Set the <kbd>Mesh Behavior</kbd>.<table style="width: 100%">
+			<tr>
+				<td><ul><li><kbd>Maximum Size</kbd> is the step of the mesh. Its 
+					default value is 0. Modify it to have a more regular mesh.</li>
+					<li><kbd>Lay Down Tolerance</kbd>.<br>
+					</li></ul>Analyses in Die Face Design are done on meshed surfaces. 
+				Once the surfaces are meshed, they are shared by all analyses.<br>
+				However, <kbd>Radius Analysis</kbd> uses its own sag value to 
+				mesh the surfaces (minimum allowed sag/3). As a consequence, once 
+					you enter the <kbd>Radius Analysis</kbd>, existing shared meshes are 
+					modified, other analyses are updated.</td>
+			</tr>
+		</table></li>
+		<li>
+        <p class="task">Select 
+		more analysis options:<table style="width: 100%">
+			<tr>
+				<td>
+				<ul>
+					<li><kbd>Compute Areas</kbd>:Computes connected areas 
+					instead of displaying a number of faces.<a name="ix-performing a cut analysis:compute areas"></a></li>
+					<li><kbd>Fly Analysis</kbd>: 
+					<a name="ix-performing a cut analysis:fly analysis"></a>Displays precise analysis 
+					values while hovering over the shape.</li>
+					<li><kbd>Extract Invalid Edges.<a name="ix-performing a cut analysis:extract invalid edges"></a></kbd></li>
+					<li><kbd>Color mode</kbd>:<a name="ix-performing a cut analysis:color mode"></a><ul>
+						<li><kbd>Smooth</kbd>: Displays analysis results as a 
+					global color gradient applied to the selected shape.<br>Allowed values and draft settings are not used.</li>
+						<li><kbd>Face</kbd>/<span class="auto-style2">Edge</span>: Displays analysis results as 
+					colors, applied face by face on the shapes.</li>
+						<li><kbd>Detailed</kbd>: Displays analysis results as 
+					colors, applied precisely on the shapes.</li>
+					</ul>
+					</li>
+					<li><kbd>View Mode</kbd> to display the analysis:<a name="ix-performing a cut analysis:view mode"></a><ul>
+						<li>    <kbd>Mesh</kbd></li>
+						<li>    <kbd>Vectors</kbd> used to compute the cutout angle.
+</li>
+						<li>    <kbd>Planes</kbd> used to compute the cutout angle.
+</li>
+						<li>    <kbd>Dots</kbd></li>
+						<li>    <kbd>Acute/Obtuse Dots.</kbd></li>
+					</ul>
+					</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		</p>
+      </li>
+				<li> <p class="task">
+Under <kbd>Extract Geometry</kbd>, convert the results of the displayed analysis into dead geometry.<table style="width: 100%">
+					<tr>
+						<td><ul><li><kbd>Extract Areas</kbd> stores the results as dead 
+					geometries and 3D labels.</li>
+					<li><kbd>Extract Direction</kbd> extracts the Z-Axis on each 
+					analyzed point.</li>
+					<li><kbd>Extract Geometries as Points</kbd>, <kbd>Vectors</kbd> 
+					or <kbd>Boundaries</kbd></li>
+					<li><kbd>Extract Values as Tags</kbd> or <kbd>Points</kbd></li>
+					<li><kbd>Extract Points number using Full</kbd>, <kbd>Minima 
+					and Maxima</kbd> or <kbd>User Selection</kbd>.</li>
+				</ul>
+						</td>
+					</tr>
+				</table>
+      </li>
+		<li>
+        <p class="task">Check the completion status of key indicators for 
+		undercut and vertical areas. </p>
+      </li>
+		<li><p class="task">
+		<span class="uicontrol">Review the areas in error.<table style="width: 100%">
+			<tr>
+				<td>
+		<span class="uicontrol"><ul><li>
+					Click one face in the area to review the area.</li>
+					<li>Pick a face and create an annotation on the area.</li></ul>
+				</span>
+		&nbsp;&nbsp;</td>
+			</tr>
+		</table>
+				</span>
+      </li>
+	</ol>
+	<p class="task">An <kbd>Analysis</kbd> set is created. 
+	<a name="ix-performing a cut analysis:features"></a> 
+	<br>It contains a <kbd>Cutout Analysis</kbd> feature with a mesh of the analyzed element and the cutout 
+		analysis.<br></p>
+		</td>
+  </tr>
+  <tr>
+    <td colspan="2">
+    <p align="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+<p align="center"></p>
+
+</body>
+
+</html>
+

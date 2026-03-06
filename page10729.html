@@ -1,0 +1,300 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2E2O2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>3D IGES: Trouble Shooting</title>
+<script language="JavaScript">
+  </script>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="docCompliance" content="v0.5; Tue Jul  5 17:25:10 2005">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1>3D IGES: Trouble Shooting<a name="ix-IGES:trouble shooting"></a></h1>
+<h2>Import<a name="hj-import"></a></h2>
+<table Border="0" CELLSPACING="0" valign="top" bordercolor="#111111" cellpadding="0">
+  <tr valign="top" BORDER="0">
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td>This task shows you how to recover on transfer failures or 
+    limitations after importing the data contained in an IGES file into a 
+    CATPart document.&nbsp;<br>
+    Once imported, the data can be handled just as if it 
+    were created as a CATPart. Sometimes, some entities are degenerated during 
+    the transfer and it is characterized by a loss of<kbd> geometry</kbd>. In 
+    this case, the missing geometry must be re-created.<p>In this tutorial you are going to learn how to:
+    </p>
+    <ul>
+      <li><a href="#hj-Open">Open an IGES file</a></li>
+      <li><a href="#hj-Repair">Repair KO Faces</a></li>
+    </ul>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>The whole scenario is built up with IGES data but it can also be 
+    performed with a <kbd>STEP file</kbd>. And if you want to know more about 
+    STEP characteristics, see <a href="page10725.html">STEP: Trouble Shooting&nbsp;</a>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top"></td>
+    <td>
+    <h2><a name="hj-Open"></a>Open the IGES file</h2>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td>
+    <ol class="task">
+      <li>
+      <p class="task">Open the IGES file <a href="b35doc/english/online/itfug_c2/samples/FaceKO.IGS">FaceKO.IGS</a> 
+      into your desktop.</li>
+      <li>
+      <p align="left" class="task">When you open this document, the conversion 
+      of the IGES file is progressive and you can visualize the process through 
+      this panel:</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber1">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt011NLS.gif" width="396" height="142"></td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p align="left" class="task">Eventually, once the transfer is completed 
+      (see
+      <a href="page0981.html#ix-3D IGES:show/noshow completion dialog box">
+      Show/NoShow Completion Dialog Box</a> for more details), a message similar 
+      to this one appears: </p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber2">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt012NLS.gif" width="642" height="144"></td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p align="left" class="task">Click OK to continue.</li>
+      <li>
+      <p align="left" class="task">All the faces reported as KO are put in the 
+      geometrical set GeometryFailure.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber3">
+        <tr>
+          <td>For each face KO, you will find a FaceKO.xx geometrical set under 
+          GeometryFailure. This geometrical set contains the geometric elements 
+          of the face. By default it is sent to the NoShow. </td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/KOFeatureNLS.gif" width="224" height="257"></td>
+        </tr>
+      </table>
+      <p align="left" class="task">&nbsp;</li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td rowspan="1" align="center" valign="top">
+    <h2><a name="hj-Repair"></a>Repair KO faces</h2>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="center">
+    <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td>
+    <ol class="task">
+      <li>
+      <p class="task">Recall FaceKO#BND_SRF1 from the NoShow and expand it if 
+      necessary.&nbsp; It contains the support surface and boundary curves 
+      corresponding to the face. <br>
+      The reason of the failure is that the inner boundary is 
+      described before the outer boundary, in contradiction with the IGES 
+      standard. <br>
+      <img border="0" src="b35doc/english/online/itfug_c2/images/FaceKO.gif" width="326" height="323"></p>
+      </li>
+      <li>
+      <p class="task">In Generative Shape Design (for example), select the Join 
+      icon <img border="0" src="b35doc/english/online/itfug_c2/images/bt003.gif" width="31" height="28">. </li>
+      <li>
+      <p class="task">Select the curves of the outer boundary:</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber5">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt017NLS.gif" width="645" height="372"></td>
+        </tr>
+        <tr>
+          <td>Click OK. A Join.1 is created under FaceKO.1.</td>
+        </tr>
+      </table>
+      </li>
+    <li>
+      <p align="left" class="task">Repeat this step with the curves of the inner 
+      boundary:</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber6">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt016NLS.gif" width="632" height="351"></td>
+        </tr>
+        <tr>
+          <td>A Join.2 is created under FaceKO.1.</td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p class="task">Select the Split icon
+      <img border="0" src="b35doc/english/online/icons_C2/images/I_SplitSurfacesP2.gif" width="24" height="24">.</li>
+      <li>
+      <p class="task">Select the surface and Join.1</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber7">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt027NLS.gif" width="597" height="377"></td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p class="task">Push the <kbd>Other side</kbd> button to keep the inside 
+      of the surface.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber8">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt018NLS.gif" width="601" height="374"></td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p class="task">Click OK. The surface is split by the outer boundary. 
+      Split.1 is created under FaceKO.1.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber9">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/SplitFaceKO.gif" width="303" height="300"></td>
+        </tr>
+      </table>
+      </li>
+   <li>
+      <p class="task">Repeat this step with Join.2 and Split.1</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber10">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt019NLS.gif" width="658" height="392"></td>
+        </tr>
+        <tr>
+          <td>Split.2 is created, corresponding to the repaired face.</td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/FaceKOrepaired.gif" width="300" height="279"></td>
+        </tr>
+      </table>
+      </li>
+    </ol>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>Before splitting the surface, as no associativity is needed, you can use 
+    the Create Datum mode by selecting the Create Datum icon. <br>
+    <img border="0" src="b35doc/english/online/itfug_c2/images/bt020NLS.gif" width="287" height="60"></td>
+  </tr>
+  <tr>
+    <td valign="top" align="center">&nbsp;</td>
+    <td valign="top">
+    <ol class="task" start="5">
+      <li value="9">
+      <p class="task">If necessary, you can move the result surface Split.2 to 
+      another geometrical set: Right click the result surface and select <kbd>
+      Split.2 object &gt; Change geometrical set... </kbd>to move the resulting 
+      surface to another geometrical set.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber11">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt021NLS.gif" width="430" height="156"></td>
+        </tr>
+        <tr>
+          <td>The following dialog box opens. Choose the destination geometrical 
+          set: </td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt022NLS.gif" width="220" height="153"></td>
+        </tr>
+      </table>
+      </li>
+    </ol>
+    <ol class="task" start="10">
+      <li>
+      <p class="task">Delete the FaceKO#BND_SRF1 geometrical set. All these 
+      elements are however present within the No Show space.</li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td valign="top">
+    <h2>Another possible cause of failure:</h2>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td valign="top">
+    <p class="task">The splitting operation has kept the wrong side of the 
+    boundary.</p>
+    <ul>
+      <li>
+      <p class="task">Recreate the correct face by Fill
+      <img border="0" src="b35doc/english/online/icons_C2/images/I_FillP2.gif" width="24" height="24"> 
+      (in datum mode). <br>
+      As a result, a Surface.xx is created.<br>
+      You may also extract the surface boundary 
+          and untrim the surface to use Split.</p>
+      </li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td valign="top">You are now ready to create the topology. For more 
+    information:
+    <ul>
+      <li>please refer to the next chapter entitled
+      <a href="page10730.html#ix-IGES:how to create a topology">IGES: Best 
+      Practices - How to create a topology</a></li>
+      <li>or use the application Healing Assistant for more complex cases.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td colspan="2" valign="top">
+    <p align="center">
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+<h2>Export:<a name="hj-export"></a></h2>
+<table Border="0" CELLSPACING="0" valign="top">
+  <tr>
+    <td valign="top"></td>
+    <td valign="top">Exporting V4 data does not provide the expected result: 
+    data placed in the NoShow in V5, or changes of colors or graphic attributes 
+    are not taken into account, e.g. if you have sent a V4 element to the 
+    NoShow, it will be kept since it is its V4 status that is taken into 
+    account. To make those changes effective, you need to make those changes in 
+    a V4 session, save the data in V4 and re-import them to V5. </td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td valign="top"></td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td colspan="2" valign="top">
+    <p align="center">
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+<p align="center"></p>
+
+</body>
+
+</html>
+

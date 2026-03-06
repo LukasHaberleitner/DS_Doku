@@ -1,0 +1,156 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+	<head>
+	<meta name="MonocodingType" content="0">
+	<meta name="MonocodingFlag" content="C2D2">
+	<meta http-equiv="Content-Language" content="en-us">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+	<meta name="ProgId" content="FrontPage.Editor.Document">
+	<title>NC Synchronization in Manufacturing Hub Context</title>
+	<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+	</head>
+
+	<body>
+
+	<h1><a name="CATMfgPPRHubHeader.MfgNCSynchro"></a>NC Synchronization 
+	in Manufacturing Hub Context</h1>
+	<p>This section discusses NC Synchronization in the Manufacturing Hub context.</p>
+	<p>This capability enables you to delete at least one Part belonging to the 
+	NC Setup Assembly or replace the current version of it by a new version. You 
+	can manually or automatically synchronize the Process with the new version of 
+	the Part.</p>
+	<h2>Detecting Synchronization Problems</h2>
+	<p><b>New Not Synchronous Symbol on Activity in the Graph </b></p>
+	<p>The following status values are possible for an activity:</p>
+	<ul>
+		<li>Up To Date: In this case, no specific symbol is displayed.</li>
+		<li>Not Up To Date: In this case, an Update symbol
+		<img border="0" src="b35doc/english/online/icons_C2/images/I_MaskToUpdate.gif" width="10" height="10">&nbsp; 
+		is displayed on the graph node of this activity. This symbol appears when 
+		the geometry pointed has been modified (for example, if you made a new revision 
+		of the Part and, in this revision, you have modified a surface that is used 
+		by a facing operation).</li>
+		<li>Not Complete: In this case, an Exclamation symbol
+		<img border="0" src="b35doc/english/online/icons_C2/images/I_MaskUnresolved.gif" width="10" height="10">&nbsp; 
+		is displayed on the graph node of this activity. This symbol appears when 
+		the geometry pointed has been deleted (example: You made a new revision 
+		of the Part. In this revision you have deleted a surface that is used by 
+		a facing operation).</li>
+		<li>Not Synchronous: In this case, a Red cross symbol
+		<img border="0" src="b35doc/english/online/icons_C2/images/I_MaskNotSynchronous.gif" width="10" height="10"> 
+		is displayed (as from V5R16). This symbol will appear, when the geometry 
+		pointed belongs to a Document which does not correspond to the Product instance 
+		pointed in the ProductList. <br>
+		<br>
+		<b>Example</b>: You have made a new version of the Part and you have replaced 
+		it in the Product, but you have saved the Product without versioning. So 
+		in the ProductList the new version of the Part is visualized but the operation 
+		still points on the old Part.</li>
+	</ul>
+	<p>As for the other statuses, the Not synchronous symbol will be visualized 
+	automatically only if the <kbd>Update activity status automatically</kbd> option 
+	is active. Otherwise, it will be displayed only if the user refreshes the activity 
+	status.</p>
+	<p>The priorities between the different statuses are the following.</p>
+	<ul>
+		<li>First, a check is done to see if the activity is synchronous, otherwise 
+		the symbol is displayed.</li>
+		<li>Then, a check is done to see if the activity is complete, otherwise 
+		the symbol is displayed.</li>
+		<li>Finally, a check is done to see if the activity is up to date, otherwise 
+		the symbol is displayed.</li>
+	</ul>
+	<p><b>New Color of Geometry Manipulators</b></p>
+	<p>In order to help the user to understand the status defined on the operation, 
+	different colors are customizable to display the geometry manipulators in the 
+	editors.</p>
+	<p>By default, Up to date geometries are displayed in green, Not up to date 
+	geometries are displayed in brown, Not Found geometries are displayed in purple, 
+	and Not synchronous geometries are displayed in dark mauve.<br>
+	All these colors are customizable in Tools/Options.</p>
+	<p><b>New Status in Process Table</b></p>
+	<p>In the Process Table, an operation can have the following statuses:</p>
+	<ul>
+		<li>Up To Date if the operation is up to date</li>
+		<li>Not Up To Date if the operation is not up to date</li>
+		<li>Missing Information if the operation is not complete</li>
+		<li>Not Synchronous if the operation points on a design that does not correspond 
+		to the one defined in the Product List.</li>
+	</ul>
+	<p><b>New Status in Analyze Geometry Dialog Box</b></p>
+	<p>The following statuses are displayed for each geometric element in the 
+	<kbd>Analyze 
+	Geometry</kbd> dialog box: </p>
+	<ul>
+		<li>Up to date</li>
+		<li>Not up to date </li>
+		<li>Not found</li>
+		<li>Not synchronous.</li>
+	</ul>
+	<h2>Manual and Automatic Synchronization</h2>
+	<p><b>Manual Synchronization</b></p>
+	<p>Prior to V5R16, when an operation was not synchronous, the only way to synchronize 
+	it was to remove all geometry links and manually select the new geometry.
+	<br>
+	It is still possible to synchronize this manually but it is easier to know the 
+	geometry links that need to be reselected thanks to the Not Synchronous color 
+	of the geometry manipulator and the Not Synchronous status in the <kbd>Analyze Geometry</kbd> 
+	dialog box.</p>
+	<p><b>Automatic Synchronization</b></p>
+	<p>As from V5R16, you can synchronize the CATProcess automatically with <kbd>
+	Synchronize Process</kbd>
+	<img border="0" src="b35doc/english/online/icons_C2/images/I_SynchronizeProcess.gif" width="26" height="26" align="middle"> 
+	in the <kbd>Auxiliary Commands</kbd> toolbar. The synchronization is global to the CATProcess.
+	<br>
+	This command takes into account the <kbd>Optimized detection of design changes</kbd> 
+	option. It is possible to undo the synchronization.</p>
+	<p>Synchronization corresponds to reconciliation between the operation and the 
+	document present in the Product List.</p>
+	<p><b>Concerning Geometry</b></p>
+	<p>Reroute will be possible in the following cases:</p>
+	<ul>
+		<li>Geometric element is not published and the Part A&#39; is a <kbd>Save As</kbd> 
+		of the Part A.</li>
+		<li>Geometric element pointed in Part A is published in Part A itself (not 
+		in the product).</li>
+	</ul>
+	<p>In these cases, reroute will also take into account the <kbd>Optimized detection 
+	of design changes</kbd> option.</p>
+	<p>Reroute will not be possible and operation will be disconnected in the following 
+	cases:</p>
+	<ul>
+		<li>Part A has been removed from the Product.</li>
+		<li>Geometric element is not published and the Part A&#39; is not a <kbd>Save 
+		As</kbd> of Part A.</li>
+		<li>Geometric element pointed in Part A was published in Product context 
+		but not directly in Part A.</li>
+	</ul>
+	<p><b>Concerning Formula</b></p>
+	<p>When a formula points on a parameter defined in a document that is not present 
+	in the Product List, two cases may be considered:</p>
+	<ol>
+			<li>If it is possible to find the equivalent parameter in one of the 
+			documents of the Product List, we reroute the formula on it.</li>
+			<li>If it is not possible, we create a clone of the old parameter set 
+			with its previous value in the formula. In this case, the formula is 
+			not parameterized any more.</li>
+	</ol>
+	<h2>Compute Tool Path, Replay, Simulation and CATMFG</h2>
+	<p>When an activity is not synchronous the integrity of the computed tool path 
+	cannot be guaranteed. It is considered as not complete. Therefore, if an activity 
+	is not synchronous, then compute tool path, replay, simulation and CATMFG will 
+	not be available except if the tool path or the activity is locked.</p>
+	<p>In CATMFG a message is generated in the Log file to indicate the Not synchronous 
+	status of this activity.</p>
+	<h2>Examples of Scenarios Resulting in a Non Synchronized Process</h2>
+	<p>Refer to <a target="_blank" href="page11444.html#metho03">New Versioning 
+	of NC Setup Assembly</a><b> </b>(Methodology 1) and
+	<a target="_blank" href="page11444.html#metho04">New Versioning of Part when 
+	the Subassembly is Split into Subelements</a><b> </b>(Methodology 1) for detail 
+	about scenarios which cause the de-synchronization of NC geometry.</p>
+
+	</body>
+
+</html>
+

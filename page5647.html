@@ -1,0 +1,868 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <script type="text/javascript">
+
+ function OpenLocation(link)
+
+ {
+
+ document.location.href = link;
+
+ }
+
+ </script>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Running the CATDMUUtility Batch Process</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+	<style type="text/css">
+.style1 {
+	background-color: #E0E0E0;
+}
+</style>
+</head>
+
+ <body>
+
+ <a name="ix-running::CATDMUUtility batch process;batch processes::CATDMUUtility;utility::CATDMUUtility batch process">
+ </a>
+ <h1>Running the CATDMUUtility&nbsp;<br>
+ Batch Process <a name="CATDMUUtility.BatchInfra"></a></h1>
+ <table Border="0" CELLSPACING="0" valign="top" style="border-collapse: collapse" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="47">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top" height="47">The CATDMUUtility is a batch process enabling 
+     the generation of&nbsp;cgr, 3dmap, hcg, wrl and NCGM formats from a CATIA 
+     file or from a MULTICAD file. It can also process files accessed in a PDM 
+     database, e.g. ENOVIA<font size="1">VPM </font>or ENOVIA V5 VPM.&nbsp; </td>
+   </tr>
+   <tr>
+     <td valign="top" height="46">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" height="46">
+		<table style="width: 100%">
+			<tr>
+				<td>
+				<ul>
+					<li>All paths indicated in the CATDMUUtility 
+     command line must be absolute paths.&nbsp;</li>
+					<li>Input file directory and temporary directory must be 
+					different.</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top" height="64" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td valign="top" height="64" width="545">When using input data that 
+     contains references to a PDM system, it is imperative that you be connected 
+     to that PDM system while the CATDMUUtility process is running. </td>
+   </tr>
+   <tr>
+     <td valign="top" height="35" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/anew.gif" width="32" height="32"></td>
+     <td valign="top" height="35" width="545"><a name="new_r19"></a>The 
+		<a href="#hj-navrep">-NavRep</a> option enables you to 
+		generate Navigation Representations.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="35" width="32">
+     &nbsp;</td>
+     <td valign="top" height="35" width="545">The -3dxml option enables you to 
+     generate 3D XML files for&nbsp;CATParts.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="42">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top" height="42">
+     <ol class="task">
+       <li>
+       <p class="task">Prepare the Input file defining conversion parameters.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="567"></td>
+     <td valign="top" height="567">A typical computation parameters file looks 
+     like this:<br>
+     <br>
+     <b>Example 1:</b><p><kbd>CATDMUUtility -f inputfile -cgr outputfile1 [-nolod] 
+     [-sag value] [-3dmap outputfile2] [-vox value2] [-unit value3] </kbd></p>
+     <p><b>Example 2:</b> </p>
+     <p><kbd>CATDMUUtility&nbsp;&nbsp; -l inputliste&nbsp;&nbsp; -db VPM&nbsp; 
+     -user username&nbsp; -pwd password -server servername&nbsp;<br>
+     -cgr -cache</kbd> </p>
+     <p><b>Example 3:</b> </p>
+     <p>&nbsp;<kbd>CATDMUUtility&nbsp;&nbsp; -l inputliste -cgr&nbsp; -wrl&nbsp; 
+     -cache </kbd>&nbsp; </p>
+     <p><b>Example of input file:</b></p>
+     <ul>
+       <li><b>Under WINDOWS&nbsp;</b></li>
+     </ul>
+     <p>&quot;e:&#092;New 
+     A&#092;CRIC_BRANCH_1.CATPart&quot;<br>
+     e:&#092;B15doc&#092;online&#092;dmnug&#092;samples&#092;CRIC_BRANCH_1.CATPart<br>
+     e:&#092;B15doc&#092;online&#092;dmnug&#092;samples&#092;GARDENAATOMIZER.model
+     </p>
+     <p>&nbsp;</p>
+     <ul>
+       <li><b>Under UNIX</b></li>
+     </ul>
+     <p>/usr/B05doc/online/dmnug/samples/CRIC_BRANCH_1.CATPart</td>
+   </tr>
+   <tr>
+     <td valign="top" height="291">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" height="291">It is possible to use DLNames. The use of a 
+     DLName is indicated in the CATDMUUtility by the following string:&nbsp; <b>
+     CATDLN://</b>
+     <p>Examples:</p>
+     <p>UNIX:&nbsp;</p>
+     <ul>
+       <li><kbd>CATDMUUtility -f CATDLN://TEST/model.model -cgr -cache</kbd></li>
+     </ul>
+     <p>Windows:</p>
+     <ul>
+       <li><kbd>CATDMUUtility -f CATDLN://TEST&#092;model.model 
+       -cgr CATDLN://model.cgr</kbd></li>
+       <li><kbd>CATDMUUtility -f CATDLN://TEST&#092;model.model 
+       -cgr e:&#092;tmp&#092;model.cgr</kbd></li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="68">&nbsp;</td>
+     <td valign="top" height="68">DLNames are supported for CATIA file 
+     definition in the CATDMUUtility. For more information on DLNames, see the 
+     Infrastructure Guide,
+     <a href="page1200.html"><i>
+     Administrating Data Using the DLName Mechanism</i></a><i>.</i></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="243">&nbsp;</td>
+     <td valign="top" height="243">However, DLNames are supported only for CATIA 
+     files, i.e. in order to indicate a .txt file as an input parameter, it is 
+     necessary to supply an absolute path, e.g.&nbsp;<blockquote>
+       <p><kbd>CATDMUUtility -l /tmp/list.txt -cgr -cache</kbd>&nbsp;</p>
+       <p>(<kbd>CATDMUUtility -l CATDLN://TEST/list.txt -cgr -cache</kbd> would 
+       not work.)</p>
+     </blockquote>
+     <p>&nbsp;The <kbd>.txt </kbd>file, of course,&nbsp; can contain DLNames, e.g.&nbsp;</p>
+     <blockquote>
+       <p><kbd>CATDLN://TESTDLN/model.model&nbsp;<br>
+       /tmp/users/mypart.CATPart&nbsp;<br>
+       CATDLN://DLN/mycgr.cgr</kbd></p>
+     </blockquote>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="67">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" height="67">Note: Special characters <kbd>[] </kbd>
+     identify optional parameters.<br>
+     Please find below the different options available input, output:
+     <p>&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="67">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" height="67">If you specify an extension in the output file 
+     name which isn't the correct extension for the output <br>
+     option used, the correct extension is added to the output filename. The 
+     only exception to this feature is the <kbd>-box</kbd> output option, with 
+     which you can choose any extension you wish.<p>Example: <br>
+&nbsp; If you type: CATDMUUtility -f .../MyPart.CATPart -cgr .../MyResult.CATPart<br>
+&nbsp; the resulting output file will be: .../MyResult.CATPart.cgr<br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="66">&nbsp;</td>
+     <td valign="top" height="66">
+     <h3>Input Options</h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="43"></td>
+     <td valign="top" height="43"><b>-f</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 
+     Input file with appropriate extension. A path must follow the option. <br>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="80"></td>
+     <td valign="top" height="80">It is now possible to convert a V4 cgr file to 
+     a V5 cgr file. The -f input file should be a V4 cgr file and the -cgr 
+     output file should specify the name of what will be the new V5 cgr file. 
+     The -f option is mandatory,&nbsp; the -cache option cannot be used for the 
+     conversion of cgr files.&nbsp;<br>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="276"></td>
+     <td valign="top" height="276"><b>&nbsp;-l</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 
+     Input list of model with <b>-f,</b> or database identifiers with <b>-db</b> 
+     option (note: the <b>-cache</b> option is mandatory in case the database 
+		identifiers are used).
+     <p><b>&nbsp;-db</b>&nbsp;&nbsp;: Input database type: For processing data stored in a PDM 
+     database. For details on using the -db option, see
+     <a href="page5657.html">Accessing Data in a PDM Database</a>.</p>
+     <blockquote>
+       <p>It is mandatory to use either: </p>
+       <ul>
+         <li>the <b>-l </b>option</li>
+         <li>for database type ENOVIA<font size="1">VPM</font>, the <b>-coid</b>,<b> 
+         -compid</b>,<b> -catenv </b>and<b> -cattab </b>options</li>
+         <li>for database type ENOVIA V5 VPM, an appropriate identifier</li>
+       </ul>
+       <p>You cannot use the <b>-f</b> option with the -db option.</p>
+     </blockquote>
+     <p>Generic example for CATDMUUtility: </p>
+     <p>CATDMUUtility -db VPM -user $user_db -pwd $pwd_db -server $server_name -coid 
+     $coid_nb -compid $compid_nb -cattab $table_name -catenv $env_name -cgr (if 
+     you want to tessellate into a cgr) $output_file_path or -cache (if you want 
+     the outputfile to be placed in the cache) </p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="223">&nbsp;</td>
+     <td valign="top" height="223"><b>-coid</b> : Input identifier of the ENOVIA<font size="1">VPM</font> 
+     data to convert. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The <b>-db</b>,
+     <b>-compid</b>, <b>-catenv</b> and <b>-cattab</b> options are mandatory.<p>
+     <b>-compid</b> : Input identifier of the ENOVIA<font size="1">VPM</font> 
+     data to convert. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     The <b>-db</b>, <b>-coid</b>, <b>-catenv</b> and <b>-cattab</b> options are 
+     mandatory.</p>
+     <p><b>-catenv</b> : Input identifier of the ENOVIA<font size="1">VPM</font> 
+     data to convert. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     The <b>-db</b>,<b> -coid</b>, <b>-compid</b> and <b>-cattab</b> options are 
+     mandatory.</p>
+     <p><b>-cattab</b> : Input identifier of the ENOVIA<font size="1">VPM</font> 
+     data to convert. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     The <b>-db</b>, <b>-coid</b>, <b>-compid</b> and <b>-catenv</b> options are 
+     mandatory.</p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="66">&nbsp;</td>
+     <td valign="top" height="66">
+     <h3>Output Options</h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="80"></td>
+     <td valign="top" height="80"><b>&nbsp;-cgr</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     : Output file for cgr corresponding to the input file.&nbsp;A path must be 
+     indicated after the option. If no output file name is mentioned, output 
+     file will be generated in input file directory.<br>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="91"></td>
+     <td valign="top" height="91"><b>&nbsp;-jpg</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     : Output file for jpg corresponding to the input file. The input file can 
+     be of format CATPart, model or cgr. This option cannot be used with <kbd>
+     -db</kbd>, <kbd>-cache</kbd> or <kbd>-mp</kbd> options. If no output file name is 
+     mentioned, output file will be generated in input file directory.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="549">&nbsp;</td>
+     <td valign="top" height="549">The following options are now available for 
+     specifying jpg output. These options can only be used with the <b>-jpg</b> 
+     option.
+     <p><b>-xsize</b> : Specifies the horizontal size of the generated jpg file 
+     in pixels. An integer value is required.<br>
+     <b>-ysize</b> : Specifies the vertical size of the generated jpg file in 
+     pixels. An integer value is required.</p>
+     <blockquote>
+       <p>Note: The default jpg size is 140 pixels * 120 pixels. Accordingly, if 
+       only one of the two parameters is specified, the other parameter be 
+       valuated to its default size.</p>
+     </blockquote>
+     <p><b>-camera</b> : Specifies the camera (viewpoint) used to generate the 
+     jpg file. A camera name is required. The specified viewpoint can be a 
+     standard view or a camera. A viewpoint name containing blanks should be 
+     surrounded by quotation marks, e.g. -camera &quot;* iso&quot;.</p>
+     <blockquote>
+       <p>Examples:</p>
+       <p>-camera &quot;* iso&quot;<br>
+       -camera &quot;Camera 1&quot;</p>
+     </blockquote>
+     <p><b>-viewmode</b> : Specifies the view mode {shading, shadingedges, 
+     wireframe, material}. A mode name is required.</p>
+     <blockquote>
+       <p>- shading for display shading representation <br>
+       - shadingedges for display shading with edges representation<br>
+       - wireframe for display wireframe representation <br>
+       - material for display material representation</p>
+     </blockquote>
+     <p><b>-bk</b> : Specifies the background color of the generated jpg file. 
+     The color can be either white of the background color currently defined via
+     <kbd>Tools &nbsp;&gt;&nbsp; Options &nbsp;&gt;&nbsp; General &nbsp;&gt;&nbsp; Visualization</kbd>:</p>
+     <blockquote>
+       <p>Examples:</p>
+       <p>-bk 0 (specifies the currently defined background color)<br>-bk 1 (specifies a white background)</p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="564"></td>
+     <td valign="top" height="564"><b>&nbsp;-hcg</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     : Output file for hcg corresponding to the input file.&nbsp; A path must be 
+     indicated after the option, if no path is specified the output will be 
+     written into&nbsp; the cache by using<b> </b><kbd>-cache</kbd> option. If 
+     no output file name is mentioned, output file will be generated in input 
+     file directory.<p><b>&nbsp;-3dmap&nbsp;</b>: Output file for 3dmap corresponding to the input file. 
+     A path must be indicated after the option,&nbsp; if no path is specified 
+     the output will be written into the cache by using <kbd>-cache</kbd> 
+     option. If no output file name is mentioned, output file will be generated 
+     in input file directory.</p>
+     <p><b>&nbsp;-wrl&nbsp;&nbsp;&nbsp;</b>&nbsp;&nbsp; : Output file for vrml corresponding to the 
+     input file. A path must be indicated after the option,&nbsp;&nbsp;if no path is 
+     specified the output will be written into the cache by using <kbd>-cache</kbd> 
+     option. If no output file name is mentioned, output file will be generated 
+     in input file directory. Note: In batch mode, as there is no editor, the 
+     wrl file will not contain any viewpoints.</p>
+     <p><b>&nbsp;-product </b>: Output file for CATProduct documents generation from 
+     an assembly (MultiCAD or&nbsp;CATIA). The linked documents will be computed&nbsp; 
+     if -cgr, -3dmap ... options are specified.<br>
+     <br>
+     Example: <b>&nbsp; </b></p>
+     <p><code>CATDMUUtility -f E:&#092;Assembly.asm 
+     -product E:&#092;Assembly.CATProduct 
+     -cgr -cache</code> </p>
+     <p><b>&nbsp;-box</b> : Switch to generate the bounding box corresponding to the 
+     input file. The <b>-f</b> option is mandatory. If the input file is not a 
+     cgr file, then the -cgr option is necessary. This option is not compatible 
+     with the <kbd>-cache</kbd> option.</p>
+     <p>Examples: </p>
+     <p><code>CATDMUUtility -f e:&#092;tmp&#092;mycgr.cgr 
+     -box e:&#092;tmp&#092;mycgr.cgr</code></p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="65">
+     &nbsp;</td>
+     <td valign="top" height="65">
+     <b>-vps</b> : Output file for vps corresponding to the input file.<p>
+     The voxel size value can be specified using the &#8211;vox 
+     option. If the option &#8211;vox is omitted, the voxel size value will be 
+     retrieved from the CATSettings (default value = 5mm). The minimum voxel 
+     size value is 1mm.</p>
+     <p>The vps files accuracy can be specified using the &#8211;vpssag 
+     option. If the &#8211;vpssag option is specified, vps files are generated with 
+     the voxel size and triangle accuracy. If the option is omitted, computation 
+     is performed with only voxel size.</p>
+     <p>Example:</p>
+     <p><code>CATDMUUtility -f e:\tmp\mypart.CATPart -vps &#8211;vox 10 &#8211;cache 
+     -vpssag</code><p><a name="new_r18"></a></td>
+   </tr>
+   <tr>
+     <td valign="top" height="65">
+     &nbsp;</td>
+     <td valign="top" height="65">
+     <b>-3dxml</b> : Output file for 3D XML. The generation of a 3D XML 
+     file is only possible for input file of type .CATPart.<p>Example:</p>
+     <p><code>CATDMUUtility -f e:\tmp\mypart.CATPart -3dxml &#8211;cache</code></td>
+   </tr>
+   <tr>
+     <td valign="top" height="80">
+     <img border="0" src="b35doc/english/online/icons_C2/common/anew.gif" width="32" height="32"></td>
+     <td valign="top" height="80"><b>&nbsp;<a name="hj-navrep"></a>-NavRep</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		: Output file for Navigation Representations corresponding to the input file.&nbsp;A path must be 
+     indicated after the option. If no output file name is mentioned, output 
+     file will be generated in input file directory (NavReps cannot be generated 
+		into the cache). It is possible to use CATProducts and CATParts both 
+		from file and database.<br>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="65">&nbsp;</td>
+     <td valign="top" height="65">
+     <h3>Computing Options</h3>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="109"></td>
+     <td valign="top" height="109"><b>-mp</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 
+     CATDMUUtility batch will be launched in multi-process mode. Multi-process 
+     parameters must be set in : <kbd>
+     <a href="page0741.html">
+     <span style="font-weight: 400">Tools &nbsp;&gt;&nbsp; Options &nbsp;&gt;&nbsp; Digital MockUp &nbsp;&gt;&nbsp; 
+     Multiprocess Settings</span></a></kbd>. The -l and -cache options are 
+     mandatory.&nbsp;
+     <p>Example: <kbd>CATDMUUtility -l e:&#092;tests&#092;lists&#092;list1.txt 
+     -cgr -cache -mp</kbd></td>
+   </tr>
+   <tr>
+     <td valign="top" height="66">&nbsp;</td>
+     <td valign="top" height="66"><b>-timeout</b> :&nbsp; -timeout time: set the 
+     time out. After this time, child processes will be killed, on the 
+     assumption that they've entered a CPU loop. Available with multi-process 
+     mode (-mp) only.<br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="66">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ap2.gif" width="32" height="32"></td>
+     <td valign="top" height="66"><b>-process</b> number_of_processes : set the 
+     number of child processes. Available with multi-process mode (-mp) only.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="66">&nbsp;</td>
+     <td valign="top" height="66"><b>-filter</b> :&nbsp; -filter &lt;filter.txt&gt; : 
+     . This option is only available if the input file is a model, CATPart or 
+     CATProduct. The output file must be a cgr, wrl or hcg. The file <kbd>
+     filter.txt</kbd> is a list of filter rules. See
+     <a href="page1546.html">Using 
+     Visualization Filters</a>.<p><a name="hj-inputoption_apps"></a></td>
+   </tr>
+   <tr>
+     <td valign="top" height="66">&nbsp;</td>
+     <td valign="top" height="66"><b>-apps</b> : Enables eventual access to V4 
+     comment pages and V4 layers and filters in visualization mode : {com | lnf}
+     <blockquote>
+       <p>The type of appended data must follow the -apps option:</p>
+       <ul>
+         <li>com for V4 comment pages</li>
+         <li>lnf for V4 layers and filters</li>
+         <li>all for V4 comment pages, layers and filters</li>
+       </ul>
+       <p>The <b>-cgr</b> and <b>-cache</b> options are mandatory.</p>
+     </blockquote>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="104" width="33"></td>
+     <td valign="top" height="104" width="779"><a name="hj-voxeloption"><b>-vox</b>&nbsp; 
+     : Switch to generate 3map with a specified voxel value. Its use is 
+     mandatory after -3dmap option. A float value is required.<br>
+     &nbsp;<b>-sag&nbsp;</b>&nbsp; :&nbsp; Optional switch to generate cgr with a 
+     specified sag value. A float value is required. Default value is defined in 
+     the settings.</a>
+     <p>Note: The sag option does not work with certain V4 models (e.g. solids).<br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="287"></td>
+     <td valign="top" height="287">&nbsp;<b>-sagon</b>: Optional switch enabling you 
+     to re-generate a cgr with a specified sag value. A float value is required. 
+     Available only with the -cache and -sag options. Works only for input files 
+     that are .CATPart or .model. The default value is defined in the settings.&nbsp;<br>
+     Previously, if you modified the sag value, the cgr was not updated in the 
+     cache.<p>Example:</p>
+     <p><kbd>CATDMUUtility -f e:&#092;tmp&#092;model.model 
+     -cgr -sag 0.2 -cache&nbsp;</kbd><br>
+     Then <kbd>CATDMUUtility -f e:&#092;tmp&#092;model.model 
+     -cgr -sag 0.4 -cache</kbd>&nbsp;<br>
+     In the cache, you would find your cgr still had a sag value of 0.2.&nbsp;</p>
+     <p>Now, if you modify the sag value using the -sagon option, CATDMUUtility 
+     will take the new value into account.<br>
+     <kbd>CATDMUUtility -f e:&#092;tmp&#092;model.model 
+     -cgr -sag 0.4 -sagon -cache&nbsp;</kbd><br>
+     In the cache, you will find your cgr now has a sag value of 0.4</p>
+     <p><br>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="208">&nbsp;</td>
+     <td valign="top" height="208">&nbsp;<b>-keepsag</b>: Activate this switch to 
+     re-tessellate a cgr, keeping the same sag value. The <b>-force</b> option 
+     is mandatory when using -keepsag.&nbsp; You should <b>not</b> use <b>-sag</b> 
+     option with -keepsag.<p>If cgr doesn't exist, it is created with default 
+     sag value ( settings ). </p>
+     <p>Examples : </p>
+     <p><kbd>CATDMUUtility -f e:&#092;tests&#092;CATPart&#092;cylinder.CATPart 
+     -cgr e:&#092;tmp&#092;keepsag.cgr 
+     -keepsag -force <br>
+     CATDMUUtility -f e:&#092;tests&#092;CATPart&#092;cylinder.CATPart 
+     -cgr -cache -keepsag -force <br>
+     CATDMUUtility -l e:&#092;tests&#092;list&#092;list.txt 
+     -cgr -cache -keepsag -force</kbd></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="143" width="33"></td>
+     <td valign="top" height="143" width="779">&nbsp;<b>-nolod</b>&nbsp; : Optional 
+     switch to generate CGR without Level Of Detail (LOD)
+     <p>&nbsp;<b>-unit</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : Optional switch to compute 
+     in the appropriate unit { mm, cm, m, inch, foot }<br>
+     Default value is input millimeter : mm </p>
+     <p>&nbsp;<b>-cache</b>&nbsp; : Optional switch to generate files directly in the 
+     cache directory (note: this option is mandatory if you are using the -l 
+     option).</td>
+   </tr>
+   <tr>
+     <td valign="top" height="527"></td>
+     <td valign="top" height="527"><b>&nbsp;-log</b>: Store all the error messages in 
+     a log file. If no log file is specified, CATDMUUtility creates one in the 
+     temporary directory&nbsp;<p>Examples :&nbsp;</p>
+     <p><kbd>CATDMUUtility -f e:&#092;tmp&#092;model.model 
+     -cgr -cache -log e:&#092;tmp&#092;logfile.txt 
+     CATDMUUtility -f e:&#092;tmp&#092;model.model 
+     -cgr -cache -log</kbd></p>
+     <p><b>&nbsp;-force</b>: Rebuild the output file if the option is activated (You 
+     have generated an output file, and you want to update it : use the -force 
+     option) Limitation : Only available with -cache option&nbsp;</p>
+     <p>Examples :&nbsp;</p>
+     <p>Test 1 : <kbd>CATDMUUtility -f e:&#092;tmp&#092;model.model 
+     -cgr -cache</kbd>&nbsp;<br>
+     It generates a cgr file in the cache, (at 12h00min).<br>
+     Then : <kbd>CATDMUUtility -f e:&#092;tmp&#092;model.model 
+     -cgr -cache -force</kbd>&nbsp;<br>
+     It rebuilds a cgr file in the cache (at 12h02min).</p>
+     <p>If the options are different, CATDMUUtility takes it into account :&nbsp;</p>
+     <p>Test 2 : <kbd>CATDMUUtility -f e:&#092;tmp&#092;model.model 
+     -cgr -sag 0.2 -cache</kbd>&nbsp;<br>
+     This generates a cgr file in the cache, with a sag of 0.2&nbsp;&nbsp;<br>
+     Then <kbd>CATDMUUtility -f e:&#092;tmp&#092;model.model 
+     -cgr -sag 0.6 -cache -force</kbd> &nbsp;<br>
+     It forces the generation of a cgr file in the cache, with a sag of 0.6&nbsp;</p>
+     <p>Test 3 : <kbd>CATDMUUtility -f e:&#092;tmp&#092;model.model 
+     -3dmap -vox 20 -cache</kbd>&nbsp;<br>
+     This generates a 3dmap file in the cache, with a voxel size of 20 mm.<br>
+     Then <kbd>CATDMUUtility -f e:&#092;tmp&#092;model.model 
+     -3dmap -vox 10 -cache</kbd>&nbsp;<br>
+     This forces the generation of a 3dmap file in the cache, with a voxel size 
+     of 10 mm.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" width="33" height="94"></td>
+     <td valign="top" width="779" height="94"><b>Note: </b>The contents of the 
+     input file list for the ENOVIA<font size="1">VPM</font> database must be 
+     formatted as follows:
+     <blockquote>
+       <p><kbd>COID1 COMPID1 CATENV1 CATAB1<br>
+       COID2 COMPID2 CATENV2 CATAB2<br>
+       ...</kbd> </p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" width="33" height="77">
+     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td valign="top" width="779" height="77">To use this option, make sure you 
+     work with the Cache system. For this:&nbsp;<br>
+     select <kbd>Tools&nbsp;&gt;&nbsp;Options&nbsp;&gt;&nbsp;<font size="2">Infrastructure</font>&nbsp;&gt;&nbsp;Cache 
+     Management<br>
+     </kbd></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" width="33" height="56">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" width="779" height="56">For more detailed information, see 
+     the <i>Infrastructure User's Guide,</i>
+     <a href="page1076.html" target="_blank">
+     <i>Cache Management</i></a>.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" width="33" height="366"></td>
+     <td valign="top" width="779" height="366">
+     <ol class="task" start="2">
+       <li>
+       <p class="task">Run the following shell to start the batch process: </li>
+     </ol>
+     <p><strong>On UNIX</strong>: </p>
+     <ul>
+       <li>Place yourself in the following directory:<kbd><br>
+       cd $install_path/code/command</kbd></li>
+       <li>Run the command:<br>
+       <kbd>&nbsp;./catstart -run &quot;CATDMUUtility -f inputfile -cgr outputfile1&quot;</kbd></li>
+     </ul>
+     <p>&nbsp;</p>
+     <p><strong>On Windows</strong>:</p>
+     <ul>
+       <li>Write a shell script containing the following lines:<br>
+       <kbd>cd $install_path&#092;code&#092;bin<br>
+       CATDMUUtility -f inputfile -cgr outputfile1</kbd></li>
+       <li>Run the shell.</li>
+     </ul>
+     <p>&nbsp;</p>
+     <p>Note: The <kbd>$install_path</kbd> is the path of the installation 
+     directory or folder. For more information on installing DMU, see the<em> 
+     Installation User's Guide</em>.</p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="32" width="32">&nbsp;</td>
+     <td valign="top" height="32" width="545">A user interface is now available 
+     for running the CATDMUUtility batch.<ol class="task">
+       <li>
+       <p class="task">In the menu bar, select <kbd>Tools &nbsp;&gt;&nbsp; Utility</kbd>.<br>
+       The <kbd>Batch Monitor</kbd> dialog box appears.</li>
+     </ol>
+     <p><img alt="" src="b35doc/english/online/dmnug_c2/images/dmuutility1NLS.gif" width="699" height="501">&nbsp;</p>
+     <ol class="task" start="2">
+       <li>
+       <p class="task">Select the <kbd>CATDMUUtility</kbd> batch from the 
+       proposed list.</li>
+     </ol>
+     <blockquote>
+       <p>A dialog box will appear in which you can enter the same information 
+       you would otherwise have entered in a line command:</p>
+       <ul>
+         <li>Input documents</li>
+         <li>Output options</li>
+         <li>Output location</li>
+         <li>Advanced options (accessed by clicking <kbd>Advanced</kbd> button)</li>
+       </ul>
+     </blockquote>
+     <p><img alt="" src="b35doc/english/online/dmnug_c2/images/dmuutility2NLS.gif" width="579" height="466">&nbsp;</p>
+     <p>&nbsp;</p>
+     <ol class="task" start="3">
+       <li>
+       <p class="task">Click the <kbd>Save</kbd> button to save all input data 
+       in an XML file for later use.</li>
+       <li>
+       <p class="task">Click the <kbd>Run</kbd> button to run the batch job 
+       immediately. </li>
+       <li>
+       <p class="task">In the <kbd>Batch Monitor</kbd> dialog box, click the
+       <kbd>Processes</kbd> tab to monitor the batch job execution.</li>
+     </ol>
+     <p>
+     <img border="1" src="b35doc/english/online/dmnug_c2/images/dmuutility3NLS.gif" width="582" height="324"><br>
+     </p>
+     <p>For more information on using the Batch Monitor, see the <i>
+     <a href="page1538.html">Infrastructure 
+     User's Guide, Basic Tasks, Running Batches, Running Batches Using the Batch 
+     Monitor</a></i>.</p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2" width="820" height="53">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="aendtask.gif (1477 bytes)" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+ <p>&nbsp; <a name="hj-conversionformats"></a><b>More About the Conversion 
+ Formats supported:</b></p>
+	<p>&nbsp;</p>
+	<table style="width: 63%">
+		<tr>
+       <td bgcolor="#E0E0E0" height="19" class="code" style="width: 191px"><b>File 
+       Extensions </b></td>
+       <td bgcolor="#E0E0E0" height="19" class="code" style="width: 19px">&nbsp;</td>
+       		<td class="style1" style="width: 263px">&nbsp;<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			CONVERSION TO</b>&nbsp;<br>
+			</td>
+		</tr>
+	</table>
+   <table border="0" cellpadding="3" bgcolor="#000000" style="width: 782px">
+     <tr>
+       <td bgcolor="#F2F2F2" class="code1" style="width: 195px">
+       <p align="center">&nbsp;</td>
+       <td bgcolor="#F2F2F2" class="code1" style="width: 15px">&nbsp;</td>
+       <td bgcolor="#F2F2F2" class="code1"><b>&nbsp;cgr</b></td>
+       <td bgcolor="#F2F2F2" class="code1"><b>3dmap</b></td>
+       <td bgcolor="#F2F2F2" class="code1"><b>hcg</b></td>
+       <td bgcolor="#F2F2F2" class="code1"><b>hsf</b></td>
+       <td bgcolor="#F2F2F2" class="code1"><b>vps</b></td>
+       <td bgcolor="#F2F2F2" class="code1"><b>VRML</b></td>
+       <td bgcolor="#F2F2F2" class="code1">
+       <p align="center"><b>CAT<br>
+       Product</b></td>
+       <td bgcolor="#F2F2F2" class="code1"><b>CAT<br>
+       Part</b></td>
+       <td bgcolor="#F2F2F2" class="code1">
+       <p align="center"><b>CAT<br>
+       Drawing</b></td>
+     </tr>
+     <tr>
+       <td align="center" bgcolor="#F2F2F2" class="code1" style="width: 195px">
+       <b>CATIA</b></td>
+       <td align="left" bgcolor="#F2F2F2" class="code1" style="width: 15px">&nbsp;</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">&nbsp;</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">&nbsp;</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">&nbsp;</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">&nbsp;</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">&nbsp;</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">&nbsp;</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">&nbsp;</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">&nbsp;</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">&nbsp;</td>
+     </tr>
+     <tr>
+       <td align="center" bgcolor="#F2F2F2" class="code1" style="width: 195px">
+       .model</td>
+       <td align="left" bgcolor="#F2F2F2" class="code1" style="width: 15px">&nbsp;</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+     </tr>
+     <tr>
+       <td align="center" bgcolor="#F2F2F2" class="code1" style="width: 195px">
+       .CDMA.model</td>
+       <td align="left" bgcolor="#F2F2F2" class="code1" style="width: 15px">&nbsp;</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+     </tr>
+     <tr>
+       <td align="center" bgcolor="#F2F2F2" class="code1" style="width: 195px">
+       .cgr</td>
+       <td align="left" bgcolor="#F2F2F2" class="code1" style="width: 15px">&nbsp;</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+     </tr>
+     <tr>
+       <td align="center" bgcolor="#F2F2F2" class="code1" style="width: 195px">
+       .CATPart</td>
+       <td align="left" bgcolor="#F2F2F2" class="code1" style="width: 15px">&nbsp;</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+     </tr>
+     <tr>
+       <td align="center" bgcolor="#F2F2F2" class="code1" style="width: 195px">
+       .CATProduct</td>
+       <td align="left" bgcolor="#F2F2F2" class="code1" style="width: 15px">&nbsp;</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+     </tr>
+     <tr>
+       <td align="center" bgcolor="#F2F2F2" class="code1" style="width: 195px">
+       CATPSLayout</td>
+       <td align="left" bgcolor="#F2F2F2" class="code1" style="width: 15px">&nbsp;</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       yes</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+       <td align="center" bgcolor="#F2F2F2" class="code1">
+       -</td>
+     </tr>
+   </table>
+ <p>Note: For supported Multi-CAD formats, see the sections <i>Requirements</i> and <i>
+ Methodologies and Advice</i> in the corresponding documentation:</p>
+ <blockquote>
+   <blockquote>
+     <ul>
+       <li>MULTICAx ID Plug-In User's Guide (IDEAS) </li>
+       <li>MULTICAx PD Plug-In User's Guide (Pro/Engineer) </li>
+       <li>MULTICAx UD Plug-In User's Guide (Unigraphics) </li>
+       <li>MULTICAx D5 Plug-In User's Guide (DELMIA D5 Integration) </li>
+       <li>MULTICAx Solidworks Plug-In User's Guide (Solidworks) </li>
+       <li>MULTICAx SE Plug-In User's Guide (SolidEdge) </li>
+       <li>MULTICAx AD Plug-In User's Guide (Acis/DXF3D) </li>
+       <li>MULTICAx IGES Plug-In User's Guide (IGES)</li>
+       <li>MULTICAx STEP Plug-In User's Guide (STEP) </li>
+     </ul>
+   </blockquote>
+ </blockquote>
+
+ <table style="width: 100%">
+	<tr>
+		<td style="width: 25px" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+		<td>In the Knowledge Base<br>
+		<br>
+		<a href="#" onClick="OpenLocation(' https://kb.dsxclient.3ds.com/360-mashup-ui/page/document?q=docid:QA00000021227')">
+		License required for running CATDMUUtility</a></td>
+	</tr>
+	</table>
+
+ </body>
+
+</html>
+

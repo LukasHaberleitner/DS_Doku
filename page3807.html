@@ -1,0 +1,117 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+ <meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 5.0">
+ <meta NAME="ProgId" CONTENT="FrontPage.Editor.Document">
+ <title>Considering External Data Routing in Greater Depth</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Considering External Data Routing<br>
+ in Greater Depth</h1>
+ <table BORDER="0" CELLSPACING="1" VALIGN="top">
+   <tr>
+     <td ALIGN="center" VALIGN="top">
+     <p style="margin-top: 5">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" hspacewidth= "32"height= "32"> </td>
+     <td ROWSPAN="1" VALIGN="middle">
+     <p class="task">This section explains how information is retrieved from 
+     external data to perform <a href="#hj-wiregroup">wire group</a>, wire or 
+     equipotential routing in CATIA. We assume that the placement and/or linkage 
+     of the devices is already correctly performed.</td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top" rowspan="2">
+     <p class="task">
+     <img src="b35doc/english/online/icons_C2/common/areference.gif" hspacewidth= "32"height= "32"> </td>
+     <td VALIGN="middle">
+     <p class="task">In the exchange data model, the wire or equipotential 
+     extremities are used as a link between the routable (wire or equipotential) 
+     and a device entity (connectors, equipment, pins).<br>
+     This link relies on the <kbd>Id</kbd> attribute, which represents a unique 
+     identifier shared between ECAD and MCAD.<br>
+     Please refer to <a href="page3804.html">Electrical Data 
+     Exchange Format</a> as well as <cite>Electrical Library User's Guide</cite> 
+     - User Tasks - Reconciling External Systems and Physical Data.</td>
+   </tr>
+   <tr>
+     <td VALIGN="middle">
+     <p class="task">To know if the wire or equipotential is ready to be routed, 
+     CATIA queries the object that represents its extremities. Several 
+     alternatives exist:</p>
+     <ul>
+       <li>The extremity is a pin:<ul>
+         <li>Either the <kbd>Id</kbd> attribute is found in the 3D session, this 
+         pin is considered as an extremity,</li>
+         <li>Or, the <kbd>Id</kbd> attribute is not found for the pin in the 3D 
+         session, then, thanks to the connectivity information imported with the 
+         external data, the system queries for the parent object (a connector) 
+         and this connector is considered as the extremity.</li>
+       </ul>
+       <p style="margin-top: 0; margin-bottom: 3pt">This means that, even if you 
+       decide not to create and map the pin on the 3D devices, the system will 
+       be smart enough to take these devices as extremities.<br>
+       The 3D data may not go down to the pin level but the routing process can 
+       be performed.<ul>
+         <li>If the <kbd>Id</kbd> attribute of the pin and of its parent is not 
+         found, then the extremity is considered as missing.</li>
+       </ul>
+       </li>
+       <li>The extremity is a device:<ul>
+         <li>Either the <kbd>Id</kbd> attribute is found in the 3D session, and 
+         this device is considered as an extremity,</li>
+         <li>Or, the extremity is missing and the routing cannot be performed.</li>
+       </ul>
+       </li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td VALIGN="top">
+     <p class="task">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspacewidth= "32"height= "32"> </td>
+     <td VALIGN="top">
+     <p class="task">To conclude, if any of the extremity is missing for a wire 
+     or an equipotential, the status for this extremity is <kbd>Missing</kbd> in 
+     the Wire List and the routing process cannot be done for this wire or 
+     equipotential.</td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td>
+     <p class="task">&nbsp;</td>
+     <td>
+     <p class="task">Then, once the system knows what the extremities are for a 
+     wire or an equipotential, the routing process is run, with the following 
+     steps:</p>
+     <ul>
+       <li>A network is built based on bundle connectivity</li>
+       <li>Entry points in the network are retrieved based on bundle connection 
+       points</li>
+       <li>Checks are performed between electrical and geometrical bundles to 
+       know where the wires have to be created</li>
+       <li>The algorithm is launched to find the route for all the wires/equipotentials</li>
+       <li>The wires are created in the correct electrical bundle with the route 
+       found.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr VALIGN="top" BORDER="0">
+     <td>&nbsp;</td>
+     <td>
+     <h3><a name="hj-wiregroup"></a>Wire Group Routing</h3>
+     <p>A wire group is ready for routing if all its constituent wires and wire 
+     groups are ready for routing. This means in particular that all extremities 
+     of constituent wires are correctly mapped.</td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

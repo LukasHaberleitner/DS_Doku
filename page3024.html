@@ -1,0 +1,1657 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Batch Mode: Export</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style type="text/css">
+.auto-style1 {
+	border-collapse: collapse;
+}
+.auto-style2 {
+	font-weight: normal;
+	color: #000000;
+}
+.auto-style4 {
+	border-style: solid;
+	border-width: 1px;
+}
+.auto-style5 {
+	border-width: 1px;
+}
+.auto-style6 {
+	border-style: solid;
+	font-weight: bold;
+	border-width: 1px;
+}
+.auto-style7 {
+	font-family: "Courier New", Courier;
+	color: #976970;
+}
+</style>
+</head>
+
+<body>
+
+<h1 align="center">
+Batch Mode: Export</h1>
+<table border="0" id="AutoNumber1" class="auto-style1">
+  <tr>
+    <td>
+    
+    <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td>This task shows how to export the layup files in batch mode.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img height="32" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32"></td>
+    <td>
+    You need access to Composites Design and Composites Link.<br>The batch 
+	process is as follows:<ul>
+		<li>Composites Design:
+		<ul>
+			<li>Creates the ply design in the stacking.</li>
+		</ul>
+		</li>
+		<li>Simulayt CLBatch
+		<span style="font-size:10.0pt;line-height:115%;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-fareast-theme-font:minor-fareast;mso-bidi-font-family:Verdana;color:#333333;
+mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA">(</span><span style="font-size:10.0pt;line-height:115%;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-theme-font:minor-fareast;
+mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA">CATSLTAnaTranBatchCore</span><span style="font-size:10.0pt;line-height:115%;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-theme-font:minor-fareast;
+mso-bidi-font-family:Verdana;mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA">.<span style="color:#333333">exe):</span></span><ul>
+			<li>Reads the ply stacking for the CATIA part file.</li>
+			<li>Exports the layup file based on tessellation.</li>
+		</ul>
+		</li>
+		<li>FEA:<ul>
+			<li>Maps the layup file on the existing mesh, for example, using 
+			Composites Modeler.</li>
+		</ul>
+		</li>
+	</ul>
+	<p>Layup files are created using a command file that sets the parameters 
+	needed for the translation.<br>The command file can be created with any text 
+	editor.<br>Note that the syntax is very important:</p>
+	<ul>
+		<li>Be careful with quotes.</li>
+		<li>Enclose names containing blank within triple quotes, for example:
+		<br>
+		<span style="font-size:10.0pt;line-height:115%;
+font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-fareast-theme-font:minor-fareast;mso-bidi-font-family:Verdana;color:black;
+mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA">
+		<code>-ExportFileName &quot;&quot;&quot;C:\Documents and Settings\username\My 
+		Documents\test_actual.Layup&quot;&quot;&quot; </code></span><br></li>
+	</ul>
+	  </td>
+  </tr>
+  <tr>
+    <td valign="top">
+          
+      <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td>
+    <ol class="task">
+		<li>
+		<p class="task">Create the command file (for example CLBATCH.cmd) to run 
+		CATIA using CLBATCH instead of CNEXT.exe.<br>Example:<blockquote>
+		<blockquote class="auto-style2">
+			<code>C:\Program Files\Dassault 
+			Systemes\B19\intel_a\code\bin\CATSTART.exe&nbsp; -env 
+			Dev19+SLT+CL+AFM <br>-direnv &quot;C:\Documents and 
+			Settings\XXX\Application Data\DassaultSystemes\CATEnv&quot;<br>-run 
+			&quot;CATSLTAnaTranBatchCore.exe -CLCommand ExportPlies -CATPartName 
+			S05_Blade_DesignPly_R19.CATPart -Mesh SurfaceTesselation 
+			-FiberAngles RegeneratedTheoretical -ExportFileFormat Layup 
+			-ExportFileName ./blade_batch.Layup&quot; </code>
+		</blockquote>
+		</blockquote>
+	<tr>
+    <td valign="top">
+          
+      &nbsp;</td>
+    <td class="auto-style5">
+    <h2>CATSLTAnaTranBatchCore Command Line Parameters </h2>
+	<br>The parameters and possible values are listed below.<br>We recommend you 
+	create a text file with the parameters and values you need, <br>and use the 
+	option <code>-DefaultOptionsFile options_file <br></code>where <code>
+	options_file </code>is a text file containing the parameters and their 
+	values<br>(one line per parameter, -parameter_name = parameter_value).<br>Example:
+	<blockquote>
+		<code>-OutputExtrusionOption = NONE<br>&nbsp;&nbsp; -OutputFirstCoordID 
+		= 1<br>&nbsp;-OutputFirstElementID = <br>&nbsp;&nbsp;&nbsp; 
+		-OutputFirstGPlyID = 1000</code></blockquote>
+	<ul>
+		<li>Parameters names and values are case sensitive.</li>
+		<li>If the file contains a parameter without a set value, the default 
+		value is used.</li>
+		<li>Parameters starting with Output apply to the options for solvers 
+		(the output is not a layup). </li>
+		<li>Parameters controlling IDs specify the start point of numbering in 
+		the output file.<br>If left blank or negative, the translator 
+		automatically set an appropriate ID.</li>
+	</ul>
+	<p>
+	<table cellpadding="5" cellspacing="0">
+		<tr>
+			<td valign="top" style="height: 21px" class="auto-style6">
+			<p><strong>Parameter</strong></p>
+			</td>
+			<td valign="top" style="height: 21px" class="auto-style6">
+			<p><strong>Type</strong></p>
+			</td>
+			<td valign="top" style="height: 21px; width: 147px;" class="auto-style6">
+			<p><strong>Valid values</strong></p>
+			</td>
+			<td valign="top" style="height: 21px" class="auto-style6">
+			<p><strong>Default</strong></p>
+			</td>
+			<td valign="top" style="height: 21px; width: 348px;" class="auto-style6">
+			<p><strong>Comments</strong></p>
+			</td>
+		</tr>
+		<tr>			<td valign="top" class="auto-style4">
+			<p>
+			<code>CLCommand</code></p>
+			</td>
+			<td valign="top" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>ExportPlies</code></p>
+			</td>
+			<td valign="top" class="auto-style4">
+			<p>
+			<code>ExportPlies</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Batch command name</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" class="auto-style4">
+			<p>
+			<code>CATPartName</code></p>
+			</td>
+			<td valign="top" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>(user supplied)</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Name of CATPart</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" style="height: 21px" class="auto-style4">
+			<p>
+			<code>SelectGroup</code></p>
+			</td>
+			<td valign="top" width="45" style="height: 21px" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="top" style="height: 21px; width: 147px;" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" width="105" style="height: 21px" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" style="height: 21px; width: 348px;" class="auto-style4">
+			<p>
+			Selected ply groups, separated by commas. <br>If no groups are 
+			selected, the entire stacking is exported. </p>
+			</td>
+		</tr>
+		<tr style="mso-yfti-irow:4">
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>ExcludeMaterial</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Materials to be excluded, separated by commas</p>
+			</td>
+		</tr>
+		<tr style="mso-yfti-irow:5">
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>MaterialRenameFile</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Name of material rename file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>Mesh</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>SurfaceTessellation, CoreSampling</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>SurfaceTessellation</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			-</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>MeshFile</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Name of the file that contains the external mesh <br>(if 'CoreSampling' is selected)</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>MeshFileFormat</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>BDF, Layup, CDB, INP</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>BDF</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Source format of the external mesh<br>(if 'CoreSampling' is selected)</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>CoreSampleDistance</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Double</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>&gt;0</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>10.0</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Distance from centroid to look for plies</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>IncludeCores</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Integer </p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>0, 1</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Specify whether solids defined as 'cores' are included in Composites 
+			Design</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>TessellationSagValue</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Double</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>&gt;1.0e-6</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>0.05</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Tessellation sag value in mm</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>TessellationStepValue</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Double</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>&gt;0</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>0.0</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Tessellation step value in mm</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>ExportOffsets</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Integer</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>0, 1</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>0</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Flag to export surface offset</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>IgnoreWarnings</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Integer</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>0, 1</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>0</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Flag to ignore core sample warnings. <br>Set to 1 to force 
+			writing of output despite errors.</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>FiberAngles</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>RegeneratedTheoretical, RegeneratedActual,<br>CoreSampleTheoretical,<br>CoreSampleActual</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>RegeneratedTheoretical</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Method to define the fiber angles</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>ExportFileFormat</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>Layup, Abaqus, Nastran, Ansys, SimXpert, AnsysXML</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>Layup</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Format of export file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>ExportFileName</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>(user-supplied, including extension)</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Name of export file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputMatOrientation</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>MCID, THETA</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>THETA</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Method to define the coordinates system in the output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputMatCoordSystem</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Name of the coordinates system in the output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputAngleTolerance</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Double</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>&gt;0.0</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>5.0</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Angle tolerance in the output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputThickTolerance</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Double</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>&gt;0.0</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Thickness tolerance in the output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputIgnoreThickness</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Integer </p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>0, 1</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>1</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Specify whether to ignore thickness changes in output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputEquallySpacedData</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Integer</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>0, 1</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>0</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Use equal spacing when grouping data</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputWriteGlobalPlies</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Integer</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>0, 1</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>0</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Use global ply IDs in output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputSectionOffset</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>DEFAULT, TOP, MIDDLE, BOTTOM</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Offset of section in output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputWritePlyComponents</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Integer</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>0, 1</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>0</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Write ply components in output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputWriteMatComponents</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Integer</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>0, 1</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>0</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Write material components in output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputFirstPlyID</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Integer</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>&gt;0</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Starting ID for plies in output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputFirstGPlyID</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Integer</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>&gt;0</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Starting ID for global plies in output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputFirstCoordID</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Integer</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>&gt;0</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Starting ID for coodinates in output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputFirstSectionID</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Integer</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>&gt;0</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Starting ID for sections in output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputFirstMatID</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Integer</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>&gt;0</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Starting ID for materials in output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputFirstNodeID</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Integer</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>&gt;0</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Starting ID for nodes in output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputFirstElementID</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Integer</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>&gt;0</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Starting ID for elements in output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputReverseElements</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			Integer</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>0, 1</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>0</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Reverse elements in output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputPartName</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Part name in output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" width="123" class="auto-style4">
+			<p>
+			<code>OutputExtrusionOption</code></p>
+			</td>
+			<td valign="top" width="45" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 147px">
+			<p>
+			<code>NONE, SINGLE</code></p>
+			</td>
+			<td valign="top" width="105" class="auto-style4">
+			<p style="width: 68px; height: 31px">
+			<code>NONE</code></p>
+			</td>
+			<td valign="top" class="auto-style4" style="width: 348px">
+			<p>
+			Extrusion for output file</p>
+			</td>
+		</tr>
+	</table>
+	</p>
+		</td>
+  </tr>
+  <tr>
+    <td valign="top">
+          
+      &nbsp;</td>
+    <td>
+    <h3>Example of a Batch Export</h3>
+	<h4>CLBATCH Command</h4>
+	<blockquote>
+		<code>SLTClkBatch.exe -CLCommand ExportPlies -CATPartName 
+		S05_Blade_DesignPly_R19.CATPart -Mesh SurfaceTesselation -FiberAngles 
+		RegeneratedTheoretical -ExportFileFormat Layup -ExportFileName 
+		./blade_batch.Layup</code></blockquote>
+	<h4>Data</h4>
+	<ul>
+		<li>Input file (CATIA V5 CATPart)<br><code>-CATPartName 
+		S05_Blade_DesignPly_R19.CATPart </code><br>
+		<img height="261" src="b35doc/english/online/cclug_c2/images/Batch01NLS.png" width="400"></li>
+		<li>Output file: blade_batch.Layup<br><code>-ExportFileName 
+		./blade_batch.Layup</code> <br>
+		<img height="237" src="b35doc/english/online/cclug_c2/images/Batch02NLS.png" width="400"></li>
+	</ul>
+	<p>As the exported file is based on a tessellated model, a mapping is 
+	required in the analysis tool, or use Composites Link Executable (CLX) (see 
+	below) to map this into a Nastran mesh.</p>
+	<h4>Default Options File</h4>
+	<p><code>-CATPartName = c:\work\myComponent.CATPart<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-CLCommand = ExportPlies<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-CoreSampleDistance = 7.5<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-ExcludeMaterial =<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-ExportFileFormat = Nastran<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-ExportFileName = c:\work\myComponent.bdf<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-ExportOffsets =<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-FiberAngles = RegeneratedTheoretical<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-IgnoreWarnings = 1<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-IncludeCores = 0<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -MaterialRenameFile = 
+	c:\work\myComponent\renameMaterials.csv<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-Mesh = CoreSampling<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-MeshFile = c:\work\externalMesh.bdf<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-MeshFileFormat = BDF<br>&nbsp;&nbsp;&nbsp; -OutputAngleTolerance = 5.0<br>
+	&nbsp;-OutputEquallySpacedData = 0<br>&nbsp;&nbsp; -OutputExtrusionOption = NONE<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-OutputFirstCoordID = 1<br>&nbsp;&nbsp;&nbsp; -OutputFirstElementID = 2<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-OutputFirstGPlyID = 1000<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-OutputFirstMatID = <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-OutputFirstNodeID = <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-OutputFirstPlyID = <br>&nbsp;&nbsp;&nbsp; -OutputFirstSectionID = <br>&nbsp;&nbsp; 
+	-OutputIgnoreThickness = 1<br>&nbsp;&nbsp;&nbsp; -OutputMatCoordSystem = <br>&nbsp;&nbsp;&nbsp; 
+	-OutputMatOrientation = THETA<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-OutputPartName = &quot;AbaqusPartName&quot;<br>&nbsp;&nbsp; -OutputReverseElements = 
+	0<br>&nbsp;&nbsp;&nbsp;&nbsp; -OutputSectionOffset = DEFAULT<br>&nbsp;&nbsp;&nbsp; 
+	-OutputThickTolerance = 5.0<br>&nbsp; -OutputWriteGlobalPlies = 0<br>
+	-OutputWriteMatComponents = 0<br>-OutputWritePlyComponents = 0<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	-SelectGroup =<br>&nbsp;&nbsp;&nbsp; -TessellationSagValue = 0.1<br>&nbsp;&nbsp; 
+	-TessellationStepValue = 0.1</code></p>
+	<h2>Composites Link Executable (CLX)</h2>
+	<p>The purpose of this executable is to map an existing layup file, usually 
+	created by Composites Link) onto an existing Nastran Buld Data file (bdf), 
+	as a shell mesh.<br>CLX transfers data as follows:<br>
+	<img height="166" src="b35doc/english/online/cclug_c2/images/Batch03NLS.png" width="400"></p>
+	<dl>
+		<dt>Simulayt Composites Link</dt>
+		<dd>Exports the layup file based on a tessellation.</dd>
+		<dt>FEA</dt>
+		<dd>Exports a mesh in bdf format.</dd>
+		<dt>Simulayt CLX.EXE</dt>
+		<dd>Reads the layup and mesh.<br>Maps the layup onto a mesh, creates 
+		properties.<br>Writes the mesh and properties as a bdf file</dd></dl>
+		<h3>Template or Macro Updating</h3>
+		<p>CLS can also be used to create a Nastran file with the laminate 
+		(PCOMPs and MATs) set to comply with a set of design rules.<br>This is 
+		done by using a template and a macro as input of CLX.<br>
+		<img height="225" src="b35doc/english/online/cclug_c2/images/Batch04NLS.png" width="400"></p>
+		<dl>
+			<dt>Template</dt>
+			<dd>Material and properties file</dd>
+			<dt>Macro</dt>
+			<dd>Laminate variation file</dd>
+			<dt>Template/Macro process</dt>
+			<dd>
+			<table style="width: 100%">
+				<tr>
+					<td>
+					<ul>
+						<li>Read the mesh file, identify the BasePID, delete 
+					existing laminates and materials.</li>
+						<li>Import materials and 
+					laminate from the material and properties file, set BasePID</li>
+						<li>Create variations of laminate using the rules found in the 
+					laminate variations file.<ul>
+							<li>The closest laminate variation is identified.</li>
+						</ul>
+						</li>
+						<li>Assign closest laminate to element, based on draping 
+						angle:<ul>
+							<li>Non-zero angles in base laminate are identifies, 
+							for example 45, -45, 90</li>
+							<li>On each element, draped angles for plies with 
+							nominal angles equal to these angles are identified, 
+							for examples 32.7, -48.9, 90 <br>(Here, there is no 
+							ply with a 90 angle, so the angle is not changed).</li>
+							<li>Angles not specified in the laminate vairations 
+							file are unchanged.</li>
+						</ul>
+						</li>
+						<li>Delete redundant laminates:<ul>
+							<li>Unreferenced laminates (pcomps) in output file 
+							are deleted for brevity and clarity.</li>
+							<li>Use Isolated Property Reduction if applicable.</li>
+						</ul>
+						</li>
+					</ul>
+					</td>
+				</tr>
+			</table>
+			</dd></dl>
+			<h3>CLX Command Line Parameters</h3>
+	<p>The used parameters mirror the inputs requried on the nastran Export 
+	graphic user interface, plus come additional ones to support the template.</p>
+	<p>
+	<table cellpadding="6" cellspacing="0">
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+			<strong>Parameter</strong></p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			<strong>Type</strong></p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<strong>Values</strong></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<strong>Default</strong></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+			<strong>Comments</strong></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			&nbsp;</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+			<code>MessageFile </code> </p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<o:p><code>&nbsp;</o:p></span>-</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+			Name of message 
+			file (optional)</p>
+			</td>
+			<td class="auto-style4" rowspan="10" style="width: 398">
+			Files specify the data flow.<br>Mapping tolerances are used for 
+			mapping.</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+			<code>InputFile</code></p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<o:p><code>&nbsp;</o:p></span>-</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<o:p><code>&nbsp;</code></o:p><code></span>-</code></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+			Name of input file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+			<code>InputFileFormat</code></p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<code>Nastran</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<code>Nastran</code></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+			Format of input file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+			<code>OutputFile </code> </p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<o:p><code>&nbsp;</o:p></span>-</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<o:p><code>&nbsp;</code></o:p><code></span>-</code></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+			Name of output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+			<code>OutputFileFormat</code></p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<code>Nastran</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<code>Nastran</code></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+			Format of output file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+			<code>MapFile </code> </p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<o:p><code>&nbsp;</code></o:p><code></span>-</code></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+			Name of map file</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+			<code>MapFileFormat </code> </p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			String </p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<code>Layup </code> </p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<code>Layup </code> </p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+			Format of map file </p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+			<code>MapAngleTolerance
+  </code>
+  </p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			Real</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<code>&gt;= 0.0</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<code>45 </code> </p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+			Mapping tolerance
+  </p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+			
+			<code>MapDistanceTolerance
+  </code>
+  </p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			Real</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<code>&gt;= 0.0</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<code>10 </code> </p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+			Mapping tolerance</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+			
+			<code>MaterialOrientation
+  </code>
+  </p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			String</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<code>(Existing,THETA)</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<code>THETA</code></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+			<o:p>&nbsp;</o:p></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+			
+			<code>AngleTolerance
+  </code>
+  </p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			Real</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<code>&gt;= 
+			0.0</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<code>15</code></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+			
+			Property merge tolerance</p>
+			</td>
+			<td class="auto-style4" rowspan="6" style="width: 398">
+			These parameters control the transfer from the ply layup to the 
+			laminate definition.<br>They correspond to the interactive ones.</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+			
+			<code>ThicknessTolerance
+  </code>
+  </p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			Real</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<code>&gt;= 
+			0.0</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<code>15</code></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+						Property merge tolerance</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+						<code>FirstPID</code></p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			
+			Integer</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<code>&gt;0</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<code>1</code></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+			
+			First PID of created property sets</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+						<code>FirstGPlyId</code></p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			
+			Integer</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<code>&gt;=0</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<code>1001</code></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+			If 
+			0, creates PCOMPs</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+						<code>IgnoreThickening</code></p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			Bool</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			
+			<code>(0,1)</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<code>1</code></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+						Ignore thickening due to shear</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+						<code>EquallySpacedVariables</code></p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			Bool</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			
+			<code>(0,1)</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<code>1</code></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+						0,15,&#8230;</p>
+			</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+			
+			<code>LaminateReduceIters</code></p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			Integer</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<code>&gt;=0</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<code>0</code></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+			Remove isolated laminate refs</p>
+			</td>
+			<td class="auto-style4" style="width: 398">
+			&nbsp;</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+						<code>LaminateFile</code></p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+						String</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+						Nastran file with MATs &amp; PCOMPs</p>
+			</td>
+			<td class="auto-style4" rowspan="2" style="width: 398">
+			Only used in the alternative template/macro approach.</td>
+		</tr>
+		<tr>
+			<td valign="bottom" width="143" class="auto-style4">
+			<p>
+						<code>LaminateVariationsFile</code></p>
+			</td>
+			<td valign="bottom" width="52" class="auto-style4">
+			<p>
+			
+			String</p>
+			</td>
+			<td valign="bottom" width="106" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="bottom" width="56" class="auto-style4">
+			<p>
+			<code>-</code></p>
+			</td>
+			<td valign="bottom" class="auto-style4" style="width: 398px">
+			<p>
+						Macro for expanding<span style="mso-spacerun:yes">&nbsp;</span>PCOMP</p>
+			</td>
+		</tr>
+	</table>
+	</p>
+		<dl>
+			<dt>MessageFile</dt>
+			<dd>Reflects the commands in a message file (useful for debugging 
+			purposes)<blockquote><code>$</code><span class="auto-style7">#<code> 
+			Layup Lib 20100621 API 20100621 File 20091126<br>$# Message file 
+			opened<br>$# CLX 1.0<br>$#&nbsp; -MessageFile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: ./Mesh.msg<br>$#&nbsp; -InputFile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: ./Mesh.bdf<br>$#&nbsp; -InputFileFormat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: Nastran<br>$#&nbsp; -OutputFile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: ./Mesh+Mats+Props_makro_reduce99.bdf<br>$#&nbsp; -OutputFileFormat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: Nastran<br>$#&nbsp; -MapFile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: ./Layup.Layup<br>$#&nbsp; -MapFileFormat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: Layup<br>$#&nbsp; -MapAngleTolerance&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: 45<br>$#&nbsp; -MapDistanceTolerance&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: 10<br>$#&nbsp; -MaterialOrientation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: THETA<br>$#&nbsp; -AngleTolerance&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: 0<br>$#&nbsp; -ThicknessTolerance&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: 0<br>$#&nbsp; -FirstPID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: 1<br>$#&nbsp; -FirstGPlyId&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: 1<br>$#&nbsp; -IgnoreThickening&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: 0<br>$#&nbsp; -EquallySpacedVariables&nbsp;&nbsp;&nbsp;&nbsp; : 0<br>
+			$#&nbsp; -LaminateReduceIters&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: 99<br>$#&nbsp; -LaminateFile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			: ./Mats+Prop.bdf<br>$#&nbsp; -LaminateVariationsFile&nbsp;&nbsp;&nbsp;&nbsp; 
+			: ./LaminateVariations_15x15.txt</code></span></blockquote>
+			</dd><dt><code>MapAngleTolerance</code> and <code>MapDistanceTolerance</code></dt><dd>In 
+			general, the input file containing the analyis mesh and the map file 
+			containing the layup are on dissimilar meshes. <br>A mapping is 
+			required.<br><code>MapAngleTolerance</code> and <code>MapDistanceTolerance </code>define the maximum allowed angle and distance between the source and destination meshes.</dd>
+			<dt><code>MaterialOrientation</code></dt>
+			<dd>Material orientations are defined either from the one existing 
+			in the mesh file, or by computing an angle with respect to the first 
+			edge of each element (<code>THETA</code>).<br>With the <code>THETA</code> option, the 
+			orientation of the lowest ply on each element with a nominal 
+			direction of 0 degree is used to define the angle.<br>Otherwise, the 
+			orientation of the lowest ply of an arbitraty direction is used.</dd>
+			<dt><code>AngleTolerance</code> and <code>ThicknessTolerance</code></dt>
+			<dd>PCOMP/PCOMPG cards are created to reflect the stacking with 
+			respect to the material orientation.<br>Cards are merged whenever 
+			possible using <code>AngleTolerance</code> and <code>ThicknessTolerance</code> values defined 
+			in degrees and percentage respectively.</dd>
+			<dt><code>FirstPID</code></dt>
+			<dd>The first PID value defines the value of the PID of the first 
+			property card.<br>Usually, PID values correspond to different parts 
+			of a model.</dd>
+			<dt><code>FirstGPlyId</code></dt>
+			<dd>You can specify a first GPlyID corresponding to the first ply in 
+			the stacking. This value is exported via PCOMPG cards.<br>With a 0 
+			value, no GPlyIDs are set. PCOMP cards are written insted.</dd>
+			<dt><code>IgnoreThickening</code></dt>
+			<dd>Ignores thickening due to shearing, thus reducing the number of 
+			properties.</dd>
+			<dt><code>EquallySpacedVariables</code></dt>
+			<dd>When this option is selected, only angles and thicknesses that 
+			are an integer multiple of the input tolerances are used. <br>For 
+			example, if the Angle Tolerance is 15 degrees, only PCOMP layer 
+			angles of 0, 15, 30,... degrees are allowed.</dd>
+			<dt><span class="auto-style7"><code> 
+			LaminateReduceIters</code></span></dt>
+			<dd>Reduces isolated properties:<ul><li>If an element with 4(3) 
+				sides has 3(2) neighbors sharing the same PID, the element is 
+				assigned that PID.</li>
+				<li>Can be run several times, until no further changes are made.</li></ul></dd>
+	</dl>
+	  </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+    <p align="center">
+    
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

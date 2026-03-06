@@ -1,0 +1,230 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2E2L2O2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>About DXF Standards</title>
+<meta content="Microsoft FrontPage 6.0" name="GENERATOR">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="docCompliance" content="v0.5; Tue Jul  5 17:13:29 2005">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1>About DXF Standards</h1>
+<table cellSpacing="0" border="0" valign="top" bordercolor="#111111" cellpadding="0">
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+    <p>Standards are defined by your administrator in XML (Extensible Markup 
+    Language) files and 
+    let you set default values for element properties. In the case of the 
+    DXF/DWG:</p>
+    <ul>
+      <li>standard files apply to all the sessions using them, <br>
+      thus controlling the company standard at the import process.</li>
+      <li>the DXF.xml file is a standard that sets the default mapping between 
+      DXF/DWG and V5 elements, for the color to thickness, line types and text 
+		fonts. </li>
+		<li>the V5 elements used in the mappings customized in the DXF standard 
+      are those defined in the Drafting standard. This ensures the consistency between the DXF/DWG 
+      interface and the Drawings.</li>
+		<li>the standard files above are delivered by default in V5. You can 
+      customize them or create new 
+      standard files to meet your needs.</li>
+    </ul></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+    <h2>User Access to Standards</h2>
+    <p>You can choose the standard you want to use via the settings available 
+    through <a href="page0980.html">
+    Tools/Options/General/Compatibility/DXF </a><br>
+    <img border="1" src="b35doc/english/online/bascuitf_c2/images/DXF-Std-03NLS.gif" width="169" height="93"></p>
+    </td>
+  </tr>
+ 
+	<tr>
+    <td width="32">&nbsp;</td>
+    <td width="535">
+    <h2>Description of the Standard Parameters</h2>
+	<p>All the parameters are in the category DXF Import. </p>
+	<h3>Line Type Mapping </h3>
+	<p>Allows to associate a V5 Line type for any given DXF line type: </p>
+	<ol class="task">
+		<li>
+		<p class="task">Select DXF line types by their name. </li>
+		<li>
+		<p class="task">Select V5 line types by their number. </li>
+	</ol>
+	<p>If a name of line type found in the DXF file is not present in the list, 
+	the default V5 line type will be applied to the imported entity. </p>
+	<p>The <kbd>USED MAPPINGS</kbd> section of the report file lists the 
+	associations for Line Types used during the import of the DXF file. </p>
+	<h3>Color To Thickness Mapping </h3>
+	<p>Allows to associate a V5 line thickness for any given DXF color. </p>
+	<p>This capability is useful for DXF files up to the version AutoCAD-R14 in 
+	which the line thickness was not defined, and for which the color may be 
+	used to define a line thickness. </p>
+	<ol class="task">
+		<li>
+		<p class="task">Select DXF colors by their number. </li>
+		<li>
+		<p class="task">Select V5 line thicknesses by their number. </li>
+	</ol>
+	<p>The <kbd>USED MAPPING</kbd> section of the report file lists the 
+	associations for color to thickness used during the import of the DXF file 
+	in the part. </p>
+	<h3>Text Font Mapping </h3>
+	<p>Allows to associate a V5 text font for any given DXF text font: </p>
+	<ol class="task">
+		<li>
+		<p class="task">Select DXF text fonts by their name. </li>
+		<li>
+		<p class="task">Select V5 text fonts by their number. </li>
+		<li>
+		<p class="task">Associate a X scale factor to reframe a font with a 
+		different geometry (characters too wide or too narrow) to achieve the 
+		best possible alignment.</li>
+		<li>
+		<p class="task">Define a default font to be used when there is no 
+		mapping for a DXF font. </li>
+		<li>
+		<p class="task">Define a default KANJI font, other than SSS4, to be used 
+		when the BigFont DXF font is not mapped. </li>
+	</ol>
+	<p>If a name of text font found in the DXF file is not present in the list, 
+	the given default V5 text font will be applied to the imported text. </p>
+	<p>The USED MAPPINGS section of the report file lists the associations for 
+	text fonts used during the import of the DXF file. </p>
+	<h3>Thick Polyline Mapping </h3>
+	<p>Allows to control the way polylines with adjustable width are imported.
+	</p>
+	<p>Those polylines do not use the standard lineweight attribute, but use 
+	either <kbd>Constant width </kbd>attribute, or <kbd>Start segment width</kbd> 
+	and <kbd>End segment Width</kbd> for each vertex of the polyline. They can 
+	be imported as lines and arcs or as area fills depending on the value of
+	<kbd>CreateAreaFill</kbd> and <kbd>MinThicknessForAreaFill</kbd> in the <kbd>
+	ThickPolylineMapping</kbd> standard. </p>
+	<p>When the width of the polyline is not null: </p>
+	<ul>
+		<li><kbd>CreateAreaFill=yes</kbd> authorizes the area fill creation. <br>
+		In this case, if width is greater than the value of <kbd>
+		MinThicknessForAreaFill</kbd>, an area fill that represents the exact 
+		geometry of the thick polyline is created. </li>
+		<li><kbd>CreateAreaFill=No</kbd>, or if width is lower than the value of
+		<kbd>MinThicknessForAreaFill</kbd>, the lines and arcs are created with 
+		a line thickness mapped from the polyline width. </li>
+	</ul>
+	<p>The value taken for the width is the greater one of <kbd>startWidth</kbd> 
+	or <kbd>endWidth</kbd> for each segment of the polyline. </p>
+	<p>The report file indicates how the thick polylines are mapped. </p>
+	<p>Limitations: </p>
+	<ul>
+		<li>When an area fill is created, the line type of the polyline is not 
+		taken into account. This applies only when the width is greater than the 
+		value of <kbd>MinThicknessForAreaFill </kbd>given in the DXF standard.
+		</li>
+		<li>When no area fill is created, in the case of polyline with constant 
+		width, arcs or lines will be created for each segment, but no V5 
+		polyline. </li>
+	</ul>
+	<p>The report file indicates if a thick polyline mapping has been applied 
+	during the import of the DXF file. </p>
+	<h3>Color Mapping </h3>
+	<p>Allows to control the adaptation of <kbd>Black</kbd> and <kbd>White</kbd> 
+	colors to the background color. </p>
+	<p>By default, the sheet background is dark blue in <cite>2D Layout for 3D 
+	Design</cite>, since it is white in <cite>Drafting</cite>. The consequence 
+	is that black lines that are the most frequent in DXF files are not, or only 
+	hardly visible. </p>
+	<p>To improve the visibility of the result of the import in <cite>2D Layout 
+	for 3D Design</cite>, a new section <kbd>Color mapping</kbd> is added in the DXF standard 
+	file with three parameters: </p>
+	<ul>
+		<li><kbd>Adapt to Background</kbd>:
+		<ul>
+			<li><kbd>Yes</kbd> (default value): the <kbd>Black</kbd> and <kbd>
+			White</kbd> colors will be changed, either to black or to white 
+			depending on the background color and the second parameter</li>
+			<li><kbd>No</kbd>: the <kbd>White</kbd> and <kbd>Black</kbd> colors 
+			from DXF will not be changed: they may be not or almost not visible.
+			</li>
+		</ul>
+		</li>
+		<li><kbd>Dark background luminosity (0..255):</kbd><ul>
+			<li>If <kbd>Adapt to Background=No</kbd>: this parameter has no 
+			effect. </li>
+			<li>If <kbd>Adapt to Background=Yes</kbd>: this parameters defines 
+			at which luminosity value of the background the <kbd>Black</kbd> color is switched to 
+			white:
+			<ul>
+				<li>If Background luminosity is lower than the given value, that 
+				means the background is dark and the <kbd>Black</kbd> color from 
+				DXF will be changed to white.</li>
+				<li>If Background luminosity is greater than the given value, 
+				the <kbd>Black</kbd> color from DXF remains black.</li>
+				<li>The default value is 100.</li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+		<li><kbd>Light background luminosity (0..255)</kbd>:<ul>
+			<li>If <kbd>Adapt to Background=No</kbd>, this parameter has no 
+			effect.</li>
+			<li>If <kbd>Adapt to Background=Yes</kbd>, this parameters defines 
+			at which luminosity value of the background the <kbd>White</kbd> 
+			color is switched to black:
+			<ul>
+				<li>If Background luminosity is higher than the given value, 
+				that means the background is light and the <kbd>White</kbd> 
+				color from DXF will be changed to black,</li>
+				<li>If Background luminosity is lower than the given value, the
+				<kbd>White</kbd> color from DXF remains white</li>
+				<li>The default value is 200.</li>
+			</ul>
+			</li>
+			<li>In other words, when the parameter <kbd>Adapt to Background=Yes:</kbd>
+			<ul>
+				<li>If the Background luminosity is lower than the value given 
+				by <kbd>Dark background luminosity</kbd>, the <kbd>Black</kbd> 
+				color from DXF is changed to white (so, both <kbd>Black</kbd> 
+				and <kbd>White</kbd> are white).</li>
+				<li>If the Background luminosity is between the values given by 
+				<kbd>Low Luminosity</kbd> threshold and <kbd>High Luminosity</kbd> 
+				threshold, no color is changed </li>
+				<li>If the Background luminosity is higher than the value given 
+				by <kbd>Light background luminosity</kbd>, the <kbd>White</kbd> 
+				color from DXF is changed to black (so, both <kbd>Black</kbd> 
+				and <kbd>White</kbd> are black). </li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+	</ul>
+	<p><kbd>Dark background luminosity</kbd> and <kbd>Light background 
+	luminosity</kbd> should be between 0 and 255. </p>
+	<p><kbd>Dark background luminosity</kbd> must be lower than or equal to <kbd>
+	Light background luminosity</kbd>. If it is not the case the <kbd>Light 
+	background luminosity</kbd> is set to <kbd>Dark background luminosity</kbd>.
+	</p>
+	<p>When a change of <kbd>Black</kbd> or <kbd>White</kbd> color is done 
+	during the conversion because of the <kbd>Adapt to Background</kbd> mapping, the information is 
+	given in the report file of the DXF conversion. </p>
+	<p>When the DXF standard does not contain these parameters, the default 
+	values are taken. The report file indicates if the adaptation to background 
+	color has been applied during the import of the DXF file.</p>
+	</td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

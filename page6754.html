@@ -1,0 +1,453 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+ <meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+ <title>Managing Links from External Data</title>
+ <meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 6.0">
+ <meta NAME="ProgId" CONTENT="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Managing Links from External Data
+ <a NAME="CATEdlPrdCommandHeaderWithCSO.EdlExternalReconcile"></a></h1>
+ <table BORDER="0" CELLSPACING="1" VALIGN="top">
+   <tr>
+     <td ALIGN="center" valign="top">
+     <p class="task">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" hspace="0" width="32" height="32"></td>
+     <td>
+     <p class="task">This task explains how to
+     <a NAME="ix-placing devices::managing links;commands::Manage Links;managing links">
+     </a>place electrical components from the <a name="ix-XML file"></a>external 
+     device list managing the cavity placement:</p>
+     <ul>
+       <li><a href="#ix-placing contacts in cavities">Automatic creation of 
+       assembly during placement from external data</a></li>
+       <li><a href="#hj-mounting">Placing equipment in cavities of mounting 
+       equipment with label display</a>.</li>
+     </ul>
+     <p class="task">This working mode is only proposed if the component to be 
+     placed has a cavity connection point. Otherwise the standard placement is 
+     performed (placement at the origin 0,0) and the
+     <a href="#ix-cavity placement">step 6</a> is avoided.</td>
+   </tr>
+   <tr>
+     <td VALIGN="top">
+     <h2>&nbsp;</h2>
+     </td>
+     <td VALIGN="top">
+     <h2>Automatic Creation of Assembly during Placement from External Data<a name="ix-placing connectors in cavities"></a></h2>
+     </td>
+   </tr>
+   <tr>
+     <td VALIGN="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+     <td VALIGN="top">
+     <p class="task">The automation of assembly creation is a highly productive 
+     method that lets you get the most out of placement from external data.</p>
+     <p class="task">Hence, it is possible to describe in the external data 
+     (i.e. XML file):</p>
+     <ul>
+       <li>How connectors are assembled in an item of equipment</li>
+       <li>How contacts are assembled in a single insert connector.</li>
+     </ul>
+     <p class="task">This description is used to automatically create:</p>
+     <ul>
+       <li>The assembly of connectors in the equipment cavities when the 
+       equipment is placed</li>
+       <li>The assembly of contacts in the single insert connector cavities when 
+       the single insert connector is placed.</li>
+     </ul>
+     <p class="task">In order to enable this automatic assembly, there must be 
+     some mapping between the XML description and the V5 electrical references 
+     in the catalog definition.</td>
+   </tr>
+   <tr>
+     <td VALIGN="top">&nbsp;</td>
+     <td VALIGN="top">
+     <p class="task">For a connector to be correctly placed in the right cavity 
+     of an item of equipment:</p>
+     <ul>
+       <li>The equipment and connector <kbd>PartNumber</kbd> in the XML file 
+       must correspond to items in the V5 catalog.</li>
+       <li>The equipment must have a cavity with a defined name in the V5 
+       catalog.</li>
+       <li>The connector name in the XML file must correspond to a cavity name 
+       of the V5 equipment.<table border="1" cellspacing="1" id="AutoNumber3" bordercolorlight="#F2F2F2" width="85%">
+         <tr>
+           <td class="code">
+           <h3>XML File</h3>
+           </td>
+           <td class="code">
+           <h3>V5 Catalog</h3>
+           </td>
+         </tr>
+         <tr>
+           <td>
+           <p class="task">XML Equipment (PartNumber1)</p>
+           <p class="task">&nbsp;|</p>
+           <p class="task">&nbsp;|</p>
+           <p class="task">&nbsp;|</p>
+           <p class="task">&nbsp; -- XML Connector (Name, PartNumber2) </td>
+           <td>
+           <p class="task">-&nbsp;&gt;&nbsp; V5 Equipment (PartNumber1)</p>
+           <p class="task">&nbsp;|</p>
+           <p class="task">&nbsp;|-- Cavity (Name)</p>
+           <p class="task">&nbsp; </p>
+           <p class="task">-&nbsp;&gt;&nbsp; V5 Connector (PartNumber2)</td>
+         </tr>
+       </table>
+       </li>
+     </ul>
+     <p><a name="ix-placing contacts in cavities"></a>Similarly for a contact to 
+     be correctly placed in the right cavity of a connector:</p>
+     <ul>
+       <li>The connector <kbd>PartNumber</kbd> in the XML file must correspond 
+       to a connector in the V5 catalog.</li>
+       <li>Each pin <kbd>PartNumber</kbd> in the XML file must correspond to a 
+       contact in the V5 catalog</li>
+       <li>The cavity name in the XML file to which a pin is connected must 
+       correspond to a cavity name of the V5 single insert connector.<table border="1" cellspacing="1" id="AutoNumber4" width="85%" bordercolorlight="#F2F2F2">
+         <tr>
+           <td class="code">
+           <h3>XML File</h3>
+           </td>
+           <td class="code">
+           <h3>V5 Catalog</h3>
+           </td>
+         </tr>
+         <tr>
+           <td>
+           <p class="task">XML Connector (PartNumber1)</p>
+           <p class="task">&nbsp;|</p>
+           <p class="task">&nbsp;|-- XML Cavity (Name) </p>
+           <p class="task">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</p>
+           <p class="task">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -- XML Pin 
+           (PartNumber2) </td>
+           <td>
+           <p class="task">-&nbsp;&gt;&nbsp; V5 Single Insert Connector (PartNumber1)</p>
+           <p class="task">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+           |</p>
+           <p class="task">-&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |-- Cavity (Name)</p>
+           <p class="task">&nbsp; </p>
+           <p class="task">-&nbsp;&gt;&nbsp; V5 Contact (PartNumber2)</td>
+         </tr>
+       </table>
+       </li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top">
+     <p STYLE="margin-top: 6">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo_custo.gif" width="32" height="32"></td>
+     <td>
+     <ul>
+       <li>
+       <p STYLE="line-height: 100%; margin-top: 10; margin-bottom: 0" class="task">
+       In the <kbd>Tools &gt; Options... &gt; Equipment &amp; Systems &gt; Electrical Process 
+       Interfacing</kbd> tab:<ul>
+         <li>
+         <p STYLE="line-height: 100%; margin-top: 10; margin-bottom: 0" class="task">
+         Make sure the <kbd>Enable External System Interfacing</kbd> is enabled.</li>
+         <li>
+         <p STYLE="line-height: 100%; margin-top: 0; margin-bottom: 0" class="task">
+         Select <code>...&#092;online&#092;cfysm_C2&#092;samples&#092;ElectricalManageLinks
+         </code>as <kbd>System Repository</kbd>.</li>
+       </ul>
+       </li>
+       <li>
+       <p STYLE="line-height: 100%; margin-top: 0; margin-bottom: 3" class="task">
+       In the <kbd>Tools &gt; Options... &gt; Equipment &amp; Systems &gt; Electrical Mapping</kbd> 
+       tab:<ul>
+         <li>
+         <p STYLE="line-height: 100%; margin-top: 0; margin-bottom: 0" class="task">
+         Select <code>...&#092;online&#092;cfysm_C2&#092;samples&#092;ElectricalManageLinks&#092;CatalogOfDevices.catalog
+         </code>as <kbd>Working Catalog</kbd>.</li>
+         <li>
+         <p STYLE="line-height: 100%; margin-top: 0; margin-bottom: 0" class="task">
+         Define the mapping for the electrical objects.</li>
+       </ul>
+       </li>
+     </ul>
+     <p STYLE="margin-top: 6; margin-bottom: 3" class="task">Refer to the
+     <a href="page6777.html">Customizing </a>documentation.</td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top">
+     <p class="task">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol CLASS="task">
+       <li>
+       <p CLASS="task" STYLE="line-height: 150%">Click <kbd>Select External 
+       Systems</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_EabExtSystemsSelectionP2.gif" width="24" height="24">.<br>
+       Select the only system available and validate: PlaceAssemblyfromXML.</li>
+       <li>
+       <p CLASS="task">Click <kbd>Manage Links </kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_EdlPlaceFromExternalP2.gif" width="24" height="24"> 
+       to display the list of the devices to be placed.</p>
+       <table BORDER="0" CELLSPACING="1">
+         <tr>
+           <td>The device list displays.</td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/elbug_c2/images/managelinks11NLS.gif" hspace="0" width="465" height="307"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p CLASS="task">Select the equipment: <kbd>PAC012-Z</kbd></p>
+       <table BORDER="0" CELLSPACING="1">
+         <tr>
+           <td>The <kbd>Place</kbd> button is activated.</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p CLASS="task">Click <kbd>Place</kbd>.</p>
+       <table BORDER="0" CELLSPACING="1">
+         <tr>
+           <td colspan="2">Since a mapping has been defined and the part number retrieved 
+           from the external data, the catalog browser opens with the predefined 
+           equipment:</td>
+         </tr>
+         <tr>
+           <td colspan="2"><img border="0" src="b35doc/english/online/elbug_c2/images/managelinks13NLS.gif" hspace="0" width="397" height="303"></td>
+         </tr>
+         <tr>
+           <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+           <td><span style="background-position: 0 0"><a name="hj-CES">
+			</a>If 
+				the <kbd>Enable</kbd> <kbd>Sourcing</kbd> <kbd>access</kbd> 
+				option is selected in the <kbd>Tools</kbd> &gt; <kbd>Options</kbd> 
+				&gt; <kbd>Equipment</kbd> <kbd>&amp;</kbd> <kbd>Systems</kbd> &gt; <kbd>
+				Electrical</kbd> <kbd>Harness</kbd> <kbd>Discipline</kbd> &gt; <kbd>
+				Electrical</kbd> <kbd>Assembly</kbd> <kbd>Design</kbd> &gt; <kbd>
+				General</kbd> tab, the Collaborative Enterprise Sourcing (CES) 
+				environment is enabled, and the <kbd>Sourcing Search</kbd> dialog box is 
+				displayed instead of the <kbd>Catalog Browser</kbd> dialog box.</span>&nbsp;
+			<br>
+&nbsp;</td>
+         </tr>
+         <tr>
+           <td valign="top">&nbsp;</td>
+           <td>
+			<img border="2" src="b35doc/english/online/elbug_c2/images/dbsourcingsearchNLS_small.gif" title="Click to enlarge this image" width="100" height="81"><br>
+&nbsp; <script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+           </script></td>
+         </tr>
+         <tr>
+           <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspacewidth= "32"height= "32"> </td>
+           <td><span style="background-position: 0 0" lang="EN-GB">For a 
+			given part number defined in iXFElec file, there must be one and 
+			only one part found after the query on </span>
+			<span style="background-position: 0 0"><kbd>Internal Item Number
+			</kbd></span><span style="background-position: 0 0" lang="EN-GB">criteria, else there would be an ambiguity.</span></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p CLASS="task">Select this equipment and click <kbd>OK</kbd>.</p>
+       <table BORDER="0" CELLSPACING="1">
+         <tr>
+           <td><img border="0" src="b35doc/english/online/elbug_c2/images/managelinks12NLS.gif" hspace="0" width="397" height="303"></td>
+         </tr>
+         <tr>
+           <td>The catalog closes. The equipment and connectors are placed.</td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/elbug_c2/images/managelinks14NLS.gif" hspace="0" width="440" height="195"></td>
+         </tr>
+         <tr>
+           <td>The device list is updated: the equipment and connectors now are 
+           referenced as <kbd>Linked</kbd>.</td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/elbug_c2/images/managelinks16NLS.gif" hspace="0" width="465" height="304"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p CLASS="task">Click <kbd>Close</kbd> when you are done.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td VALIGN="top" colspan="2">
+     <h2>Placing Equipment in Cavities of Mounting Equipment<a name="hj-mounting"></a></h2>
+     </td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top">
+     <p STYLE="margin-top: 6">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo_custo.gif" width="32" height="32"></td>
+     <td>
+     <ul>
+       <li>
+       <p STYLE="line-height: 100%; margin-top: 10; margin-bottom: 0" class="task">
+       In the <kbd>Tools &gt; Options... &gt; Equipment &amp; Systems &gt; Electrical Process 
+       Interfacing</kbd> tab:<ul>
+         <li>
+         <p STYLE="line-height: 100%; margin-top: 10; margin-bottom: 0" class="task">
+         Make sure the <kbd>Enable External System Interfacing</kbd> is enabled.</li>
+         <li>
+         <p STYLE="line-height: 100%; margin-top: 0; margin-bottom: 0" class="task">
+         Select <code>...&#092;online&#092;elbug_C2&#092;samples&#092;managelinks
+         </code>as <kbd>System Repository</kbd>.</li>
+       </ul>
+       </li>
+       <li>
+       <p STYLE="line-height: 100%; margin-top: 0; margin-bottom: 3" class="task">
+       In the <kbd>Tools &gt; Options... &gt; Equipment &amp; Systems &gt; Electrical Mapping</kbd> 
+       tab:<ul>
+         <li>
+         <p STYLE="line-height: 100%; margin-top: 0; margin-bottom: 0" class="task">
+         Select <code>...&#092;online&#092;elbug_C2&#092;samples&#092;managelinks&#092;CatalogOfDevices.catalog
+         </code>as <kbd>Working Catalog</kbd>.</li>
+         <li>
+         <p STYLE="line-height: 100%; margin-top: 0; margin-bottom: 0" class="task">
+         Define the mapping for the electrical objects.</li>
+       </ul>
+       </li>
+     </ul>
+     <p STYLE="margin-top: 6; margin-bottom: 3" class="task">Refer to the
+     <a href="page6777.html">Customizing </a>documentation.</td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td>Open the <a href="b35doc/english/online/elbug_c2/samples/managelinks/P404.CATProduct">P404</a> 
+     document.</td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top">
+     <p class="task">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol CLASS="task">
+       <li>
+       <p CLASS="task" STYLE="line-height: 150%">Click <kbd>Select External 
+       Systems</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_EabExtSystemsSelectionP2.gif" width="24" height="24">.<br>
+       Select the only system available and validate.</li>
+       <li>
+       <p CLASS="task">Click <kbd>Manage Links </kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_EdlPlaceFromExternalP2.gif" width="24" height="24"> 
+       to display the list of the devices to be placed.</p>
+       <table BORDER="0" CELLSPACING="1">
+         <tr>
+           <td>The device list displays.</td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/elbug_c2/images/bt_managelinks01NLS.gif" hspace="0" width="487" height="301"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p CLASS="task">Select an equipment: <kbd>P212-1</kbd></p>
+       <table BORDER="0" CELLSPACING="1">
+         <tr>
+           <td>The <kbd>Place</kbd> button is activated.</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p CLASS="task">Click the <kbd>Place</kbd> button.</p>
+       <table BORDER="0" CELLSPACING="1">
+         <tr>
+           <td>Since a mapping has been defined and the part number retrieved 
+           from the external data, the catalog browser opens with the predefined 
+           equipment:</td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/elbug_c2/images/bt_managelinks03NLS.gif" hspace="0" width="335" height="303"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p CLASS="task">Select this equipment and click <kbd>OK</kbd>.</p>
+       <table BORDER="0" CELLSPACING="1">
+         <tr>
+           <td><img border="0" src="b35doc/english/online/elbug_c2/images/bt_managelinks02NLS.gif" hspace="0" width="335" height="303"></td>
+         </tr>
+         <tr>
+           <td>The catalog closes.</td>
+         </tr>
+         <tr>
+           <td>Moving the cursor over the device displays the cavities available 
+           for placement:</td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/elbug_c2/images/bt_managelinks04NLS.gif" hspace="10" width="235" height="296"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p CLASS="task">Click the <a name="ix-cavity placement"></a>cavity you 
+       want to use:</p>
+       <table border="0" cellspacing="1" id="AutoNumber1">
+         <tr>
+           <td><img border="0" src="b35doc/english/online/elbug_c2/images/bt_managelinks05NLS.gif" hspace="10" width="245" height="285"></td>
+         </tr>
+         <tr>
+           <td>The equipment is placed.</td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/elbug_c2/images/bt_managelinks07NLS.gif" hspace="10" width="480" height="390"></td>
+         </tr>
+         <tr>
+           <td>The device list is updated: the equipment is now referenced as
+           <kbd>Linked</kbd>.</td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/elbug_c2/images/bt_managelinks06NLS.gif" hspace="0" width="487" height="301"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p CLASS="task">Repeat these steps for the second equipment:</p>
+       <table border="0" cellspacing="1" id="AutoNumber2">
+         <tr>
+           <td><b>Note</b> that the cavity, where you have previously placed the 
+           equipment, now shows in red. It is not available for placement.</td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/elbug_c2/images/bt_managelinks08NLS.gif" hspace="10" width="243" height="285"></td>
+         </tr>
+         <tr>
+           <td>Click the last cavity available: the equipment is placed, the 
+           device list and the specification tree are updated.</td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/elbug_c2/images/bt_managelinks10NLS.gif" hspace="0" width="487" height="301"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p CLASS="task">Click <kbd>Close</kbd> when you are done.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td ALIGN="center" VALIGN="top">&nbsp;</td>
+     <td><b>Note</b> that if you click in the free space to place the device and 
+     not a cavity, it will be placed at the origin (0,0).</td>
+   </tr>
+ </table>
+ <p ALIGN="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+ </p>
+
+ </body>
+
+</html>
+

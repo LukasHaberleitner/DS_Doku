@@ -1,0 +1,969 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Installing the Vault Server Manually</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Installing the Vault Server Manually</h1>
+ <p align="left"><a name="hj-VaultServer"></a>This task will show you how to 
+ install manually a vault server on UNIX.&nbsp;<a name="ix-Vault Server::setting up manually on UNIX"></a></p>
+ <p align="left">On Windows, we recommend that you install a vault server using 
+ the interactive tools provided.</p>
+ <h2 style="margin-top:12.0pt;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none"><font color="#282187">Data 
+ Structure Creation</font></h2>
+ <p align="left">Beware: Each Vault Server is supposed to have its own data 
+ structure. Do not share Vault Server data structure between several Vault 
+ Server!</p>
+ <p align="left">You will find the reference files for the data structure 
+ creation (tables, index, etc.) under the following directory:</p>
+ <blockquote>
+   <p align="left"><code>YourUnloaddir/$OSDS/reffiles/DBMS/ddl</code></p>
+ </blockquote>
+ <p align="left">The $OSDS value could be either aix_a or <blink>aix_a64</blink> 
+ depending on your operating system.</p>
+ <p align="left">The suffix of these reference files is .clp for DB2 and .sql 
+ for Oracle.</p>
+ <p align="left">They are named:</p>
+ <p style="margin-left:.5in;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none" align="left">VPM_VAULTFILE.clp 
+ and VPM_VAULTFILE.sql when creating tables&nbsp;</p>
+ <p style="margin-left:.5in;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">grant_VPM_VAULTFILE.clp and 
+ grant_VPM_VAULTFILE.sql when creating grants on tables&nbsp;</p>
+ <p align="left">You can also use the drop_VPM_VAULTFILE.xxx and the 
+ revoke_VPM_VAULTFILE.xxx files to remove respectively tables and grants on 
+ tables.</p>
+ <p align="left">When creating your data structure, you have to customize the 
+ above-mentioned files.</p>
+ <p align="left">To do so:</p>
+ <p align="left">1. Duplicate the following files and rename them as indicated 
+ below:</p>
+ <blockquote>
+   <p style="margin-top:0in;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.25in" align="left">
+   <b>&nbsp;&nbsp;&nbsp;&nbsp; Original file name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+   Duplicated file name:</b></p>
+ </blockquote>
+ <p style="margin-left:45.0pt;line-height:12.0pt;tab-stops:0in 45.0pt 1.0in 1.5in 2.0in 2.5in 243.0pt;
+mso-layout-grid-align:none;text-autospace:none"><code>VPM_VAULTFILE.xxx&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ VPM_VAULTFILE_MyVault.xxx</code></p>
+ <p style="margin-left:45.0pt;line-height:12.0pt;tab-stops:0in 45.0pt 1.0in 1.5in 2.0in 2.5in 243.0pt;
+mso-layout-grid-align:none;text-autospace:none"><code>grant_VPM_VAULTFILE.xxx&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ grant_VPM_VAULTFILE_MyVault.xxx</code></p>
+ <p style="margin-left:45.0pt;line-height:12.0pt;tab-stops:0in 45.0pt 1.0in 1.5in 2.0in 2.5in 243.0pt;
+mso-layout-grid-align:none;text-autospace:none"><code>drop_VPM_VAULTFILE.xxx&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ drop_VPM_VAULTFILE_MyVault.xxx</code></p>
+ <p style="margin-left:45.0pt;line-height:12.0pt;tab-stops:0in 45.0pt 1.0in 1.5in 2.0in 2.5in 243.0pt;
+mso-layout-grid-align:none;text-autospace:none"><code>revoke_VPM_VAULTFILE.xxx&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ revoke_VPM_VAULTFILE_MyVault.xxx</code></p>
+ <p align="left">2. Change the name of the structure owner (the default owner is 
+ VPMADM) and the tablespaces name if necessary. In the case of the grant file, 
+ we advise you to change the &quot;to public&quot; right into &quot;to vault_structure_owner&quot;.</p>
+ <p align="left">3. Execute the VPM_VAULTFILE_MyVault.xxx file and the related 
+ grant file (grant_VPM_VAULTFILE_My_Vault.xxx) on your database:</p>
+ <p align="left">a. Logon to the database as Database Administrator</p>
+ <blockquote>
+   <p align="left">For DB2:</p>
+   <p align="left">b. Under the DB2 prompt, run the command:<br>
+&nbsp; <code>db2 -tvf file_fullpathname.clp</code></p>
+   <p align="left">For Oracle:</p>
+   <p align="left">b. Under sqlplus, run the command:<br>
+   &nbsp;<code>start file_fullpathname.sql</code></p>
+ </blockquote>
+ <h2 style="margin-top:.25in;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none"><font color="#282187">Register 
+ the New Vault Server on the Orbix daemon</font></h2>
+ <p>1. Execute the following command:</p>
+ <p><code>IT_CONFIG_PATH= install_dir/startup/orbix<br>
+ export IT_CONFIG_PATH </code></p>
+ <p>Run it using <kbd>catstart</kbd>, or export the environment before like 
+ this:<br>
+ <br>
+ <code>catstart &#045;env &#045;direnv &#045;run 
+ &quot;/bin/ksh&quot;</code></p>
+ <p><code>Putit -h machine_name -shared VaultServerName &quot;install_dir/code/command/catstart 
+	-env \&quot;env_name\&quot; -direnv \&quot;env_dir\&quot; -run install_dir/code/command/runENOVVaultStarter 
+	-object \&quot; MyVaultOwner_UID MyVaultOwner_GID env_name env_dir\ &quot;&quot;</code></p>
+	<p><code>chmodit VaultServerName i+all<br>
+ chmodit VaultServerName l+all</code></p>
+ <p>The values for the parameters are:</p>
+ <p><code>VaultServerName</code>: name of the CORBA service for the VaultServer.</p>
+ <p>Beware:'_' are not allowed in the Vault server name and the Vault server 
+ alias name!</p>
+ <p><code>MyVaultOwner_UID</code>: UNIX user id of the vault administrator user.<br>
+ <code>MyVaultOwner_GID</code>: UNIX group id of the vault administrator user.<br>
+ <code>IT_CONFIG_PATH</code>: path of the iona.cfg file under the installation. 
+ On a standard installation, this file is under startup/orbix directory.</p>
+ <p>Example:</p>
+ <p>With the values below:<br>
+ <br>
+ <code>Install_dir: 
+ <strong>UNIXInstallPath</strong>/aix_a<br>
+ Machine: reverdsy<br>
+ VaultServerName: ENOVIAVaultServer<br>
+ Env_name:
+ <strong>ENOVIAV5VPMEnvironmentName</strong><br>
+ Env_dir: /CATEnv<br>
+ MyVaultOwner_UID: 1400<br>
+ MyVaultOwner_GID: 360 </code></p>
+ <p>We get:</p>
+ <p><code>IT_CONFIG_PATH= 
+ <strong>UNIXInstallPath</strong>/aix_a/startup/orbix<br>
+ export IT_CONFIG_PATH </code></p>
+ <p><code>Putit &#045;h 
+ reverdsy &#045;shared 
+ ENOVIAVaultServer &#034;<strong>UNIXInstallPath</strong>/aix_a/startup/orbix/code/command/catstart 
+ &#045;env 
+ \&quot;&#034;<strong>ENOVIAV5VPMEnvironmentName</strong>&quot;\&#034; &#045;direnv 
+ \&#034;&quot;/CATEnv&#034;\&quot; 
+	-&#045;run 
+ <strong>UNIXInstallPath</strong>/aix_a/startup/orbix/code/command/runENOVVaultStarter 
+ &#045;object 
+ \&#034;&quot;1400 
+ 360 <strong>ENOVIAV5VPMEnvironmentName</strong> /CATEnv\&#034;&#034;&quot;&quot;</code></p>
+ <p><code>chmodit ENOVIAVaultServer i+all<br>
+ chmodit ENOVIAVaultServer l+all</code></p>
+ <p style="margin-top:0in;tab-stops:.5in 1.0in 1.5in 1.75in 135.0pt 3.0in">&nbsp;</p>
+ <p style="margin-top:0in;tab-stops:.5in 1.0in 1.5in 1.75in 135.0pt 3.0in">If 
+ all is OK, you should have a ENOVIAVaultServer.imp file under the following 
+ directory:</p>
+ <blockquote>
+   <p style="margin-top:0in;tab-stops:.5in 1.0in 1.5in 1.75in 135.0pt 3.0in">
+   <code>YourUnloaddir/$OSDS/startup/orbix/config/Repositories/ImpRep</code></p>
+ </blockquote>
+ <p style="margin-top:0in;tab-stops:.5in 1.0in 1.5in 1.75in 135.0pt 3.0in">Then 
+ you have created the Orbix service name ENOVIAVaultServer.</p>
+ <p style="margin-top:0in;tab-stops:.5in 1.0in 1.5in 1.75in 135.0pt 3.0in">&nbsp;</p>
+ <p style="margin-top:0in;tab-stops:.5in 1.0in 1.5in 1.75in 135.0pt 3.0in">The 
+ above command will generate a file named <code>ENOVaultServer.imp</code> in the 
+ directory:</p>
+ <blockquote>
+   <p style="margin-top:0in;tab-stops:.5in 1.0in 1.5in 1.75in 135.0pt 3.0in">
+   <code>/home/DS/<strong>EnvNameSuffix</strong>/aix_a/startup/orbix/config/Repositories/ImpRep.</code></p>
+ </blockquote>
+ <p style="margin-top:0in;tab-stops:.5in 1.0in 1.5in 1.75in 135.0pt 3.0in">The 
+ file <code>ENOVaultServer.imp</code> looks like this:</p>
+ <p style="margin-left:.5in;mso-layout-grid-align:none;
+text-autospace:none"><code>Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : ENOVaultServer&nbsp;<br>
+ Comms&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : cdr/tcp&nbsp;<br>
+ Activation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : shared&nbsp;<br>
+ Owner&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 
+ root<br>
+ Launch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 
+ ;all;<br>
+ Invoke&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 
+ ;all;<br>
+ ImpRep Version&nbsp;&nbsp;&nbsp; : 2<br>
+ no. of servers&nbsp;&nbsp;&nbsp; : 1<br>
+ server's port&nbsp;&nbsp;&nbsp;&nbsp; : 0</code></p>
+ <p style="margin-top:0in;tab-stops:.5in 1.0in 1.5in 1.75in 135.0pt 3.0in">
+ <code>Marker Launch Command * /home/DS/<strong>EnvNameSuffix</strong>/aix_a/code/command/runENOVVaultStarter 
+ 1415 363</code></p>
+	<p style="tab-stops:.5in 1.0in 1.5in 1.75in 135.0pt 3.0in">
+ <b>Note about Orbix On AIX</b></p>
+	<p style="tab-stops:.5in 1.0in 1.5in 1.75in 135.0pt 3.0in">
+ The Orbix connection from an ENOVIA App Server launched by an Orbix Daemon A to 
+	a Vault Server fails if the Vault Server is running on the same machine and 
+	has not been launched by the same Orbix Daemon A.<br>
+	<br>
+	The recommended by-pass is to deploy the Vault Server on a dedicated machine 
+	which is not shared with the ENOVIA App Servers. If it is not possible to 
+	have a dedicated machine, then the same Orbix daemon has to be used for 
+	ENOVIA App Server and the Vault Server.</p>
+ <h2 style="line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none"><font color="#282187">Vault 
+ Settings Creation</font></h2>
+ <p>The new Vault Setting software is based on an extended JAVA properties 
+ mechanism. So the Vault Setting file looks like a java property file. When the 
+ Vault tries to get a property, the search order is:</p>
+ <p style="margin-left:.5in;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">1. in system properties (java 
+ only: &quot;-D&quot; option in launch command line)</p>
+ <p style="margin-left:.5in;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">2. in environment (shell 
+ variables)</p>
+ <p style="margin-left:.5in;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">3. in vault properties file.</p>
+ <p style="margin-top:12.0pt;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ There are two kinds of Vault settings: server and client.</p>
+ <h3 style="margin-top:12.0pt;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ <font color="#282187"><a name="hj-VaultServerSettings"></a>Vault Server Settings</font></h3>
+ <p style="margin-top:12.0pt;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ Each Vault Server is supposed to have its own Vault Server properties file. Do 
+ not mix properties of two Vault Server in the same properties file. It is not 
+ supported!</p>
+ <p style="margin-top:12.0pt;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ The default location of the Vault server settings file is:</p>
+ <p style="margin-top:12.0pt;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ <code>install_dir/docs/java</code></p>
+ <p style="margin-top:12.0pt;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ The default filename is no longer VaultServer.properties, but:</p>
+ <p style="margin-top:12.0pt;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ <code>VaultServerName.properties</code></p>
+ <p style="margin-top:12.0pt;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ <b>VaultServer setting purpose</b></p>
+ <p style="margin-top:12.0pt;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ VaultServer settings are used to manage:</p>
+ <ul>
+   <li>ORB parameters (Orbix implementation)</li>
+   <li>Database connection and connection pool parameters</li>
+   <li>Vault repositories</li>
+   <li>Thread number</li>
+   <li>Trace activation</li>
+   <li>Optional behaviors: NFS mode, Cache, DB2 DATALINK.</li>
+ </ul>
+ <p style="margin-top:12.0pt;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ Here are keys used by a VaultServer:</p>
+ <p style="margin-top:12.0pt;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ <b>Mandatory Keys</b></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 3.0in 225.0pt"><code>VaultServer_Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : vault server Orbix service name<br>
+ VaultServer_HostName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : vault server host name<br>
+ VaultServer_DaemonPort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 
+ Orbix daemon listen port<br>
+ VaultServer_TimeOut&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : vault server timeout (unit: milli second)<br>
+ VaultServer_ThreadNumber&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : number of thread 
+ waiting for client request<br>
+ VaultServer_DBMINPoolSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp; minimum 
+ number of connections for the vault server database connection pool<br>
+ VaultServer_DBMAXPoolSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : maximum number of 
+ connections for the vault server database connection pool<br>
+ VaultServer_TimeZoneRawOffset&nbsp; : time zone offset (unit: milli second), 
+ used for document creation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ and modification date<br>
+ VaultServer_DBName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : name of the database where vault tables are<br>
+ VaultServer_DBVendor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : database vendor pertaining to the database name above<br>
+ VaultServer_DBUser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ :&nbsp; database connection user<br>
+ VaultServer_DBSchema&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : database structures owner<br>
+ VaultServer_DBPassword&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 
+ database connection user password</code></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 3.0in 225.0pt">For detailed 
+ information about how to generate the password, refer to the description of the 
+ GenVaultPassword command in
+ <a href="page1243.html#hj-GenVaultPassword">Database 
+ password encryption for the Vault Server properties file</a>.</p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 3.0in 225.0pt"><code>
+ VaultServer_NumOfRepo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 
+ number of Vault Server repositories<br>
+ VaultServer_Repo_x_Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : name of the Vault 
+ Server repository<br>
+ VaultServer_Repo_x_Path&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : path of the 
+ Vault Server repository </code></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 3.0in 225.0pt">For more information, 
+ refer to <a href="#hj-MultiOS">Multiple File System Support</a>.</p>
+ <p style="margin-top:0in">&nbsp;</p>
+ <p style="margin-top:0in">Beware: the following keys are no longer valid since 
+ release V5R8:</p>
+ <p style="margin-top:0in"><code>VaultServer_Default_Secured_StorageLocation&nbsp;&nbsp; 
+ : default vault secured path for files<br>
+ VaultServer_Default_Tmp_StorageLocation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 
+ default vault temporary path for files</code></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 2.0in 3.0in 225.0pt">Those keys are 
+ still allowed but they can't be mixed with the keys replacing them (<code>VaultServer_NumOfRepo, 
+ &#133;</code>), 
+ it is not supported!</p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 2.0in 3.0in 225.0pt"><b>Optional Keys</b></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 2.0in 3.0in 225.0pt">Standard optional 
+ Keys:</p>
+ <p style="margin-top:6.0pt;tab-stops:0in .5in .75in 1.0in 1.5in 2.0in 2.5in 3.75in">
+ <code>VaultServer_TmpFilesAccessRights&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ :&nbsp; file access rights under temporary path (default: 600)<br>
+ VaultServer_SecuredFilesAccessRights&nbsp;&nbsp;&nbsp;&nbsp; : file access 
+ rights under secured path (default: 400)<br>
+ VaultServer_LogRemovedFiles&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : trigger logging of delete operations (default: false)<br>
+ VaultServer_RemoveFiles&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : trigger file delete on disk (default: true)<br>
+ VaultServer_IsDBPasswordEncrypted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 
+ trigger password encryption use (default: true)<br>
+ VaultServer_DBURL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ :&nbsp; JDBC connection string<br>
+ VaultServer_DBDriver&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : JDBC driver class to load<br>
+ VaultServer_DBTransIsoLevel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : database transaction isolation level<br>
+ VaultServer_FDSMIN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : free disk space threshold<br>
+ VaultServer_Repo_x_ReadOnly&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : trigger read only mode on a Repo (default: false)<br>
+ VaultServer_Repo_x_Priority&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ :&nbsp; modifies use frequency (unit: double, default: 1.0)<br>
+ VaultServer_Repo_x_NumOfSecDir&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ :&nbsp; number of secured directories for the repository number x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ (default: 1)<br>
+ VaultServer_Repo_x_TmpDirName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ :&nbsp; name of the tmp directory for the repository number x (default:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ tmp)<br>
+ VaultServer_Repo_x_SecDirName_y&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : name of the secured directory for the repository number x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ (default: securedy)<br>
+ VaultServer_ENOVIStorageLocation_Implementation: class to load for storage 
+ location user exit<br>
+ VaultServer_ENOVIDocIndexation_Implementation&nbsp;&nbsp;: class to load for document 
+ indexation user exit<br>
+ VaultServer_MilliSecondTimestamp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ :&nbsp; trigger timestamp millisecond precision (default: true on DB2 and false 
+ on ORACLE)<br>
+ </code><code>VaultServer_ReadOnly :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ trigger read only mode on the whole</code> <code>vault<br>
+ VaultServer_Trace&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: trigger trace (default: OFF)<br>
+ VaultServer_LicenseName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: forces the use of a particular 
+ license (instead of VAR); this license must be an authorized&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ license for the VSA product<br>
+	</code><blink><code>VaultServer_ClientRequestTimeout: CORBA request 
+	timeout for outgoing CORBA request from Vault Server to a Vault Cache 
+	(default: 60000) (unit: millisecond) </code></blink></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 2.0in 3.25in 243.0pt"><b>Optional Keys 
+ for DB2 DATALINK</b></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 2.0in 3.25in 243.0pt"><code>
+ VaultServer_DB2DATALINK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ :&nbsp; trigger datalink mode (default: false)<br>
+ VaultServer_DLFMHostServerName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : datalink file manager host server name&nbsp;(only for datalink mode)</code></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 2.0in 3.25in 243.0pt"><b>Optional Keys 
+ for a Cache VaultServer</b></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 2.0in 3.25in 243.0pt"><code>
+ VaultServer_Cache&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : trigger cache mode (default: false)<br>
+ VaultServer_Cache_MaxSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : Maximum size of Vault Cache (unit: kb)<br>
+ VaultServer_Cache_CleanThreshold&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 
+ threshold for cleaning file (percent of cache max size)<br>
+ VaultServer_Cache_CleanRate&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : targeted size after cleaning (percent of cache max size)<br>
+ VaultServer_Cache_CleanEnabled&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : trigger cleaning mode on (default: true)<br>
+ VaultServer_Cache_TimeoutForClean&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : time between 
+ two cleaning (unit: milli second)</code></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 3.25in 243.0pt"><b>Standard 
+ VaultServer properties file example</b></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 3.25in 243.0pt"><code>## Vault Server 
+ Properties File<br>
+ ## Orbix parameters</code></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 3.25in 243.0pt"><code>VaultServer_Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = ENOVIAVaultServerOrbSrv<br>
+ VaultServer_HostName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = regis<br>
+ VaultServer_DaemonPort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 
+ 1572<br>
+ VaultServer_TimeOut&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = 36000000</code></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 3.25in 243.0pt"><code>## Request 
+ execution parameters<br>
+ VaultServer_ThreadNumber&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 2<br>
+ VaultServer_TimeZoneRawOffset&nbsp;&nbsp; = 3600000</code></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 3.25in 243.0pt"><code>## Database 
+ connection pool parameters<br>
+ VaultServer_DBMINPoolSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 4<br>
+ VaultServer_DBMAXPoolSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 6</code></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 3.25in 243.0pt"><code>## Database 
+ connection parameters<br>
+ VaultServer_DBName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = AIXINT8<br>
+ VaultServer_DBVendor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = oracle<br>
+ VaultServer_DBUser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = tacr<br>
+ VaultServer_DBPassword&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 
+ ******</code></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 3.25in 243.0pt"><code>## VaultServer 
+ file repositories parameters</code></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 3.25in 243.0pt"><code>
+ VaultServer_NumOfRepo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = 2<br>
+ VaultServer_Repo_0_Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = Repo0<br>
+ VaultServer_Repo_0_Path&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 
+ /VAULTCXR8/Repo0<br>
+ VaultServer_Repo_0_NumOfSecDir&nbsp; = 2<br>
+ VaultServer_Repo_0_TmpDirName&nbsp;&nbsp; = TmpDirectory<br>
+ VaultServer_Repo_0_SecDirName_0 = SecuredDirectory0<br>
+ VaultServer_Repo_0_SecDirName_1 = SecuredDirectory1<br>
+ VaultServer_Repo_1_Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = Repo1<br>
+ VaultServer_Repo_1_Path&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 
+ /VAULTCXR8/Repo1</code></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 3.25in 243.0pt"><code>## Trace 
+ parameter<br>
+ VaultServer_Trace&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = OFF</code></p>
+ <p style="margin-top:30.0pt"><b>&nbsp;Explanation of Example</b></p>
+ <p>This properties file is corresponding to a standard VaultServer (no DATALINK 
+ or VaultCache) running on a workstation named &quot;regis&quot;. The Orbix service name, 
+ which is the name declared is registered on the Orbix daemon, is 
+ ENOVIAVaultServerOrbSrv. The Orbix daemon is listening on port 1572 on this 
+ workstation. The VaultServer timeout is exactly ten hours. Two request 
+ execution threads and four database connections are created at start time. The 
+ server time zone is GMT+1. The database used is an Oracle database named 
+ AIXINT8 and the connection user is tacr. Two Vault repositories are declared.</p>
+ <h3 style="margin-top:30.0pt"><font color="#282187">Vault Client Settings</font></h3>
+ <p>Several Vault Clients can use the same Vault Client properties file.</p>
+ <p><b>VaultClient setting purpose</b></p>
+ <p>VaultClient settings are used for:</p>
+ <ul>
+   <li>&nbsp;Client/Server communication parameters</li>
+   <li>Trace activation</li>
+   <li>Accessible VaultServer declaration through the VaultAliasName notion.</li>
+ </ul>
+ <p style="margin-top:12.0pt">VaultAliasName concept:</p>
+ <p style="margin-top:12.0pt">The VaultAliasName is the way for VaultClient 
+ applications to identify a VaultServer. A VaultClient application needs three 
+ data to connect a VaultServer. It needs VaultServer Orbix service name, Orbix 
+ listen port on the remote workstation where VaultServer is running and the 
+ remote workstation name. VaultClient properties file is used to link a given 
+ VaultAliasName to the three data identifying a given VaultServer.</p>
+ <p style="margin-top:12.0pt">Here are the keys used by a VaultClient:</p>
+ <p style="margin-top:12.0pt"><b>Mandatory Keys</b></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 2.0in 189.0pt 2.75in"><code>
+ VaultClient_DefaultAliasName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : default vault 
+ alias name<br>
+ VaultClient_ReadProtocol&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : number of allowed read protocol<br>
+ VaultClient_ReadProtocol_0&nbsp;&nbsp;&nbsp;&nbsp; : first read protocol<br>
+ VaultClient_ReadProtocol_1&nbsp;&nbsp;&nbsp;&nbsp; : second read protocol<br>
+ VaultClient_WriteProtocol&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : 
+ number of allowed write protocol<br>
+ VaultClient_WriteProtocol_0&nbsp;&nbsp;&nbsp;&nbsp; : first write protocol<br>
+ VaultClient_BlockSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : size in bytes of block for read and write operation</code></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 2.0in 189.0pt 2.75in 3.0in"><b>
+ Optional Keys</b></p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 207.0pt"><code>
+ VaultClient_Active_ReadProtocol&nbsp;&nbsp; : file transfer protocol to use for 
+ read operation<br>
+ VaultClient_Active_WriteProtocol&nbsp; : file transfer protocol to use for 
+ write operation<br>
+ VaultClient_ReadOnly : trigger read only mode (default: false)<br>
+ VaultClient_Trace&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ : traces activation (java only, default: OFF)</code></p>
+ <p style="margin-top:12.0pt"><b>How to catalog a new VaultServer</b></p>
+ <p style="margin-top:12.0pt">In order to do that, you have to declare a new 
+ VaultAliasName pertaining to the VaultServer you want to catalog. As read and 
+ write operations are separate, you have to add six data by VaultAliasName which 
+ are:&nbsp;</p>
+ <p style="margin-top:12.0pt"><code>
+ VaultClient_MyVaultAliasName_ReadVaultServerName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ :&nbsp;<br>
+ Orbix service name of the target vault server for read operation</code></p>
+ <p style="margin-top:12.0pt"><code>
+ VaultClient_MyVaultAliasName_ReadVaultServerHostName&nbsp;&nbsp;&nbsp; :&nbsp;<br>
+ Host name of the target vault server for read operation</code></p>
+ <p style="margin-top:12.0pt"><code>
+ VaultClient_MyVaultAliasName_ReadVaultServerDaemonPort&nbsp; :&nbsp;<br>
+ Orbix listen port of the target vault server for read operation<br>
+ <br>
+ VaultClient_MyVaultAliasName_WriteVaultServerName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ :&nbsp;<br>
+ Orbix service name of the target vault server for write operation</code></p>
+ <p style="margin-top:12.0pt"><code>
+ VaultClient_MyVaultAliasName_WriteVaultServerHostName&nbsp;&nbsp; :&nbsp;<br>
+ Host name of the target vault server for write operation</code></p>
+ <p style="margin-top:12.0pt"><code>
+ VaultClient_MyVaultAliasName_WriteVaultServerDaemonPort :&nbsp;<br>
+ Orbix listen port of the target vault server for write operation</code></p>
+ <p style="margin-top:12.0pt">These keys are mandatory for the default alias 
+ name.</p>
+ <p style="margin-top:0in">You can catalog as many VaultServers as you want in a 
+ VaultClient properties file. But do not declare a VaultAliasName twice. Only 
+ the first entry will be taken into account.</p>
+ <p style="margin-top:0in">&nbsp;</p>
+ <p style="margin-top:0in">VaultClient properties file example:</p>
+ <p style="margin-top:0in">&nbsp;</p>
+ <p style="margin-top:0in"><code>## Vault Client Properties File<br>
+ VaultClient_DefaultAliasName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = Vault1<br>
+ <br>
+ VaultClient_ReadProtocol&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = 2<br>
+ VaultClient_ReadProtocol_0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = CORBA<br>
+ VaultClient_ReadProtocol_1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = NFS</code></p>
+ <p style="margin-top:0in"><code>VaultClient_WriteProtocol&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = 2<br>
+ VaultClient_WriteProtocol_0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = CORBA<br>
+ VaultClient_WriteProtocol_0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = NFS</code></p>
+ <p style="margin-top:0in"><code>VaultClient_BlockSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = 262144</code></p>
+ <p style="margin-top:0in"><code>VaultClient_Trace&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = OFF</code></p>
+ <p style="margin-top:0in"><code>## Vault1 alias entry<br>
+ VaultClient_Vault1_ReadVaultServerName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = Vault1OrbSrv<br>
+ VaultClient_Vault1_ReadVaultServerHostName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 
+ laureen<br>
+ VaultClient_Vault1_ReadVaultServerDaemonPort&nbsp;&nbsp; = 1570</code></p>
+ <p style="margin-top:0in"><code>VaultClient_Vault1_WriteVaultServerName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = Vault1OrbSrv<br>
+ VaultClient_Vault1_WriteVaultServerHostName&nbsp;&nbsp;&nbsp;&nbsp; = laureen<br>
+ VaultClient_Vault1_WriteVaultServerDaemonPort&nbsp; = 1570</code></p>
+ <p style="margin-top:0in"><code>## Vault2 alias entry<br>
+ VaultClient_Vault2_ReadVaultServerName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = Vault2OrbSrv<br>
+ VaultClient_Vault2_ReadVaultServerHostName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 
+ floydsy<br>
+ VaultClient_Vault2_ReadVaultServerDaemonPort&nbsp;&nbsp; = 1572</code></p>
+ <p style="margin-top:0in"><code>VaultClient_Vault2_WriteVaultServerName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = Vault2OrbSrv<br>
+ VaultClient_Vault2_WriteVaultServerHostName&nbsp;&nbsp;&nbsp;&nbsp; = floydsy<br>
+ VaultClient_Vault2_WriteVaultServerDaemonPort&nbsp; = 1572</code></p>
+ <p style="margin-top:0in"><code>## Vault3 alias entry<br>
+ VaultClient_Vault3_ReadVaultServerName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = Vault3OrbSrv<br>
+ VaultClient_Vault3_ReadVaultServerHostName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 
+ bayeux<br>
+ VaultClient_Vault3_ReadVaultServerDaemonPort&nbsp;&nbsp; = 1576</code></p>
+ <p style="margin-top:0in"><code>VaultClient_Vault3_WriteVaultServerName&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = Vault3OrbSrv<br>
+ VaultClient_Vault3_WriteVaultServerHostName&nbsp;&nbsp;&nbsp;&nbsp; = bayeux<br>
+ VaultClient_Vault3_WriteVaultServerDaemonPort&nbsp;&nbsp; = 1576</code></p>
+ <p style="margin-left:0in;tab-stops:0in 1.0in 1.5in 2.0in 2.5in 3.0in"><b>
+ Explanation of Example</b></p>
+ <p style="margin-left:0in;tab-stops:0in 1.0in 1.5in 2.0in 2.5in 3.0in">This 
+ VaultClient properties file declares three VaultAliasName that are Vault1, 
+ Vault2 and Vault3. The VaultServer Vault1OrbSrv Orbix service name is 
+ associated to the Vault1 alias name. This VaultServer is running on a 
+ workstation named laureen and the Orbix daemon listen port is 1570. The 
+ VaultServer Vault2OrbSrv Orbix service name is associated to the Vault2 alias 
+ name. The VaultServer Vault3OrbSrv Orbix service name is associated to the 
+ Vault3 alias name.</p>
+ <p style="margin-left:0in;tab-stops:0in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ Properties file access path:</p>
+ <p style="margin-left:0in;tab-stops:0in 1.0in 1.5in 2.0in 2.5in 3.0in">The 
+ vault application default access path for properties file is:&nbsp;</p>
+ <p style="margin-left:0in;tab-stops:0in 1.0in 1.5in 2.0in 2.5in 3.0in"><code>
+ unload_dir/$OSDS/docs/java</code></p>
+ <p style="margin-left:0in;tab-stops:0in 1.0in 1.5in 2.0in 2.5in 3.0in">You can 
+ change this behavior by exporting the keys below in your environment:</p>
+ <p style="margin-left:0in;tab-stops:0in 1.0in 1.5in 2.0in 2.5in 3.0in"><code>
+ VaultServer_PropertiesFilePath&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp; Path 
+ of the vault server properties file<br>
+ VaultServer_PropertiesFileName&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp; Name 
+ of the vault server properties file<br>
+ VaultClient_PropertiesFilePath&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp;&nbsp; Path 
+ of the vault client properties file<br>
+ VaultClient_PropertiesFileName&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp; Name of the vault 
+ client properties file</code></p>
+ <p style="margin-left:0in;tab-stops:0in 1.0in 1.5in 2.0in 2.5in 3.0in">For 
+ instance:</p>
+ <p style="margin-left:0in;tab-stops:0in 1.0in 1.5in 2.0in 2.5in 3.0in"><code>
+ VaultServer_PropertiesFilePath=/u/lego/VAULTServer/Properties<strong>VersionNumber</strong><br>
+ export VaultServer_PropertiesFilePath<br>
+ VaultServer_PropertiesFileName=CustomVaultServer.properties<br>
+ export VaultServer_PropertiesFileName<br>
+ VaultClient_PropertiesFilePath=/u/lego/VAULTClient/Properties<strong>VersionNumber</strong><br>
+ export VaultClient_PropertiesFilePath<br>
+ VaultClient_PropertiesFileName=CustomVaultClient.properties<br>
+ export VaultClient_PropertiesFileName</code></p>
+ <p style="margin-left:0in;tab-stops:0in 1.0in 1.5in 2.0in 2.5in 3.0in">Beware: 
+ '_' are not allowed in Vault server name and Vault server alias name!</p>
+ <h2 style="margin-top:24.0pt;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none"><font color="#282187">
+ <a name="hj-MultiOS"></a>Multiple File System Support</font></h2>
+ <p style="margin-top:6.0pt">In order to allow declaration of tmp and secured 
+ directories on several file systems, the concept of Vault Server Repository has 
+ been introduced. A Vault Server Repository is defined by a name, a tmp 
+ directory and a set of secured directories. These directories have to be on the 
+ same file system for a given Vault Server Repository. It is necessary to 
+ improve performances and reliability. The following Vault Server properties 
+ have been added to support this new feature.</p>
+ <p style="margin-top:12.0pt"><b>Vault Server Repository Definition Keys</b></p>
+ <p style="line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none"><b>Mandatory Keys</b></p>
+ <p style="margin-top:6.0pt;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">Number of Vault Server 
+ Repositories: <code>VaultServer_NumOfRepo.</code></p>
+ <p style="margin-top:0in;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ For instance, the line:</p>
+ <p style="margin-top:0in;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ <code>VaultServer_NumOfRepo = 2</code></p>
+ <p style="margin-top:0in;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ means that two Vault Server Repositories are defined below.</p>
+ <p style="margin-top:6.0pt;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">Repository name: <code>
+ VaultServer_Repo_x_Name</code></p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ (x stands for the repository index rank. It begins at 0)</p>
+ <p style="margin-top:0in;tab-stops:9.0pt .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ For instance, the line:</p>
+ <p style="margin-top:0in;tab-stops:9.0pt .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ <code>VaultServer_Repo_0_Name = Repo0&nbsp;</code></p>
+ <p style="margin-top:0in;tab-stops:9.0pt .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ means that the name of the Vault Server Repository number 0 is Repo0.</p>
+ <p style="margin-top:6.0pt;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">Repository path: <code>
+ VaultServer_Repo_x_Path</code></p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ (x stands for the repository index rank. It begins at 0)</p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ This property defines the root path under which tmp and secured directories are 
+ supposed to be created.&nbsp;</p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ For instance:</p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ <code>VaultServer_Repo_0_Path = /VAULTCXR8/Repo0&nbsp;</code></p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ means that tmp and secured directories are created under the directory 
+ /VAULTCXR8/Repo0</p>
+ <p style="margin-top:.25in"><b>Optional Keys</b></p>
+ <p style="margin-top:6.0pt;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">Minimum free disk space 
+ threshold (unit: kb): <code>VaultServer_FDSMIN.</code></p>
+ <p style="margin-top:6.0pt;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">For instance, the line:</p>
+ <p style="margin-top:6.0pt;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none"><code>VaultServer_FDSMIN = 1000&nbsp;</code></p>
+ <p style="margin-top:6.0pt;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">means that the Vault Server will 
+ not use&nbsp; a file system any more if there is less than 1000 free kb on it. 
+ Default value for this property is: 0.</p>
+ <p>Tmp directory name: <code>VaultServer_Repo_x_TmpDirName</code></p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ (x stands for the repository index rank. It begins at 0)</p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ For instance, the line:</p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ <code>VaultServer_Repo_0_TmpDirName = tmpDir0&nbsp;</code></p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ means that the tmp directory for Vault Server repository named Repo0 is 
+ /VAULTCXR8/Repo0/tmpDir0. The default value for this property is: tmp.</p>
+ <p style="margin-top:6.0pt;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">Number of secured directories 
+ definition key: <code>VaultServer_Repo_x_NumOfSecDir</code></p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ (x stands for the repository index rank. It begins at 0)</p>
+ <p style="margin-top:0in;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ For instance the line:</p>
+ <p style="margin-top:0in;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ <code>VaultServer_Repo_0_NumOfSecDir = 2</code></p>
+ <p style="margin-top:0in;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ means that two secured directories are defined below. The default value for 
+ this property is: 1.</p>
+ <p style="margin-left:0in">Secured directory name: <code>
+ VaultServer_Repo_x_SecDirName_y</code></p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ (x stands for the repository index rank. It begins at 0; y stands for the 
+ secured directory index rank. It begins at 0)</p>
+ <p style="margin-top:0in;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ For instance, the line:</p>
+ <p style="margin-top:0in;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ <code>VaultServer_Repo_0_SecDirName_0 = secDir0</code></p>
+ <p style="margin-top:0in;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ means the the first secured directory for Vault Server Repository named Repo0 
+ is /VAULTCXR8/Repo0/secDir0. The default value for this property is: securedy 
+ (where y stands for the secured directory index rank. It begins at 0)</p>
+ <p style="margin-top:6.0pt;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">Read only feature: <code>
+ VaultServer_Repo_x_ReadOnly</code></p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ (x stands for the repository index rank. It begins at 0)</p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ For instance, the line:</p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ <code>VaultServer_Repo_0_ReadOnly = true</code></p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ means that the Vault Server repository named Repo0 is read only. The default 
+ value for this property is: false.</p>
+ <p style="margin-top:6.0pt;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">Priority feature: <code>
+ VaultServer_Repo_x_Priority</code></p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ (x stands for the repository index rank. It begins at 0)</p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ For instance, the line:</p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ VaultServer_Repo_0_Priority = 2.0</p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ means that the Vault Server repository named Repo0 is two-time more used than 
+ it would be by default when creating new documents. The default value for this 
+ property is: 1.0.</p>
+ <p align="left" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ Example:</p>
+ <p style="margin-top:0in;tab-stops:0in .25in 1.0in 1.5in 2.0in 2.5in 3.0in"><b>
+ Vault Server properties file example</b></p>
+ <p style="margin-left:.5in"><code># Vault Server Repositories</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt"><code># Number of Vault Server 
+ Repositories</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 225.0pt 243.0pt">
+ <code>VaultServer_NumOfRepo = 3</code></p>
+ <p style="margin-left:.5in"><code># First Vault Server Repo</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 225.0pt 243.0pt">
+ <code>VaultServer_Repo_0_Name = Repo0</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 225.0pt 243.0pt">
+ <code>VaultServer_Repo_0_Path = /VAULTCXR8/DirOfRepo0</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 225.0pt 243.0pt">
+ <code>VaultServer_Repo_0_TmpDirName = TmpDirOfRepo0</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 225.0pt 243.0pt">
+ <code>VaultServer_Repo_0_NumOfSecDir = 2</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 225.0pt 243.0pt">
+ <code>VaultServer_Repo_0_SecDirName_0 = SecDir0OfRepo0</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 225.0pt 243.0pt">
+ <code>VaultServer_Repo_0_SecDirName_1 = SecDir1OfRepo0</code></p>
+ <p style="margin-left:.5in"><code># Second Vault Server Repo</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 225.0pt 243.0pt">
+ <code>VaultServer_Repo_1_Name = Repo1</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 225.0pt 243.0pt">
+ <code>VaultServer_Repo_1_Path = /VAULTCXR8/DirOfRepo1</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 225.0pt 243.0pt">
+ <code>VaultServer_Repo_1_NumOfSecDir = 3</code></p>
+ <p style="margin-left:.5in"><code># Third Vault Server Repo</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 225.0pt 243.0pt">
+ <code>VaultServer_Repo_2_Name = Repo2</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 225.0pt 243.0pt">
+ <code>VaultServer_Repo_2_Path = /VAULTCXR8/DirOfRepo2</code></p>
+ <p style="tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">The lines above 
+ mean that the following directories are supposed to be created for Repo0, Repo1 
+ and Repo2:</p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt;tab-stops:.5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ <code>Repo0:</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.75in;margin-bottom:.0001pt;tab-stops:.75in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ <code>/VAULTCXR8/DirOfRepo0/TmpDirOfRepo0</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.75in;margin-bottom:.0001pt;tab-stops:.75in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ <code>/VAULTCXR8/DirOfRepo0/SecDir0OfRepo0</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.75in;margin-bottom:.0001pt;tab-stops:.75in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ <code>/VAULTCXR8/DirOfRepo0/SecDir1OfRepo0</code></p>
+ <p style="margin-left:.5in;tab-stops:.5in 1.0in 1.5in 2.0in 2.5in 3.0in"><code>
+ Repo1</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.75in;margin-bottom:.0001pt;tab-stops:1.0in 1.5in 2.0in 2.5in 3.0in">
+ <code>/VAULTCXR8/DirOfRepo1/tmp</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.75in;margin-bottom:.0001pt;tab-stops:1.0in 1.5in 2.0in 2.5in 3.0in">
+ <code>/VAULTCXR8/DirOfRepo1/secured0</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.75in;margin-bottom:.0001pt;tab-stops:1.0in 1.5in 2.0in 2.5in 3.0in">
+ <code>/VAULTCXR8/DirOfRepo1/secured1</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.75in;margin-bottom:.0001pt;tab-stops:1.0in 1.5in 2.0in 2.5in 3.0in">
+ <code>/VAULTCXR8/DirOfRepo1/secured2</code></p>
+ <p style="margin-left:.5in;tab-stops:.5in 1.0in 1.5in 2.0in 2.5in 3.0in"><code>
+ Repo2</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.75in;margin-bottom:.0001pt;tab-stops:.75in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ <code>/VAULTCXR8/DirOfRepo2/tmp</code></p>
+ <p style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:.75in;margin-bottom:.0001pt;tab-stops:.75in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ <code>/VAULTCXR8/DirOfRepo2/secured0</code></p>
+ <p style="margin-top:24.0pt"><b>File dispatching rules</b></p>
+ <p style="margin-top:24.0pt">A user exit mechanism (ENOVIStorageLocation 
+ interface) is used to know where to write new or modified files into vault 
+ repository directories. If you want to code your own user exit, keep in mind 
+ that the code has to be thread safe.</p>
+	<p style="margin-top:24.0pt">The default user exit implementation we supply 
+ dispatches files depending on free disk space on file system. The more free disk 
+ space you have on a file system, the more you will have new or modified files 
+ written on it.</p>
+ <p style="margin-top:24.0pt">The file dispatching rule is not verified with one 
+ single file but it is a statistic rule. For example, there are two vault 
+ repositories (REPO1 and REPO2) such that REPO2 free disk is space equal to 2 
+ times REPO1 then the file distribution will be such that 1/3rd of files will go 
+ in REPO1 and 2/3rd will go in REPO2.</p>
+ <p style="margin-top:24.0pt">So If you have 3000 files you will have 1000 files 
+ in REPO1 and 2000 in REPO2. Of course this rule can not verified if you have 
+ only 1 file. </p>
+ <p style="margin-top:24.0pt">On a given Vault repository, there is no 
+ preference between secured directories. The free disk space is not computed per 
+ secured directory but it is calculated per Vault repository. So if there are 
+ 1000 files in a Vault Repo with 10 secured directories (all created at Vault 
+ repository creation time) then you will have 100 files stored per secured 
+ directory.</p>
+	<p><b>Here is how the file dispatch algorithm works on several Vault 
+	repositories</b></p>
+	<p>When the application needs a repo to store a file, the following steps 
+	are done: </p>
+	<ol>
+		<li>Free disk space is calculated for each repo. </li>
+		<li>Then, the percentage of the sum of the above disk space is 
+		calculated for each repo.</li>
+		<li>Then, a range between 1-100 is associated to each repo depending on 
+		the percentage above. </li>
+		<li>A random number between 1 and 100 is obtained by a call to the java 
+		method <code>Math.random </code></li>
+		<li>The repo in which the file will be stored is selected following the 
+		random number above and the range of each repo determined by step 3.
+		</li>
+	</ol>
+	<p></p>
+	<p>So the files are dispatched according to statistical rules. </p>
+	<p></p>
+	<p>Example: </p>
+	<p>Case with three Vault repositories : Repo1, Repo2, Repo3 </p>
+	<p></p>
+	<p>Assumptions: </p>
+	<ul>
+		<li>Free disk space for Repo1 is 25000 KB</li>
+		<li>Free disk space for Repo2 is 25000 KB</li>
+		<li>Free disk space for Repo3 is 50000 KB</li>
+	</ul>
+	<p></p>
+	<p>Percentage and range for each repo: </p>
+	<ul>
+		<li>percentage for Repo1: 25 % </li>
+		<li>range for Repo1: 1 - 25 </li>
+		<li>percentage for Repo2: 25 % </li>
+		<li>range for Repo2: 26 - 50 </li>
+		<li>percentage for Repo3: 50 % </li>
+		<li>range for Repo3: 51 - 100 </li>
+	</ul>
+	<p></p>
+	<p>So by applying the statistical rules, the Repo3 will be chosen twice more 
+	than Repo1 or Repo2.</p>
+ <h2 style="margin-top:24.0pt"><font color="#282187"><font color="#282187">
+ Creating Storage Directories</font></font></h2>
+ <p>Creation of secured and tmp directory for VaultServer.</p>
+ <p>For each defined Vault Server repository create tmp and secured directories:</p>
+ <ol>
+   <li>Log on as VaultOwner OS user.</li>
+   <li><code>mkdir&nbsp;&nbsp;&nbsp; -p&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+   directory_to_create</code></li>
+   <li><code>chmod +rw just_created_directory</code></li>
+ </ol>
+ <h2 style="margin-top:24.0pt"><font color="#282187">Setting Up Your Environment</font></h2>
+ <p style="margin-top:24.0pt">CLASSPATH issue on vault client and vault server 
+ side: the Vault client and server software component are based on JNI 
+ operations for file access rights management. So, make sure the JNIVAULT.jar 
+ file is in your CLASSPATH.</p>
+ <p style="margin-top:24.0pt"><b>DB2</b> mandatory environment variables for 
+ JDBC use (vault server side only):</p>
+ <blockquote>
+   <p style="margin-top:24.0pt">DB2INSTANCE has to be set. For instance:&nbsp;</p>
+   <p style="margin-top:24.0pt"><code>DB2INSTANCE=admclien<br>
+   export DB2INSTANCE</code></p>
+   <p style="margin-top:24.0pt">CLASSPATH issue on vault server side for JDBC 
+   use: add &nbsp;d<code>b2client_home_directory/sqllib/java/db2java.zip</code> to 
+   your CLASSPATH (see db2profile shell in the DB2 client installation to set 
+   the value of this variable properly).</p>
+   <p style="margin-top:24.0pt">LIBPATH (or LD_LIBRARY_PATH ...) issue on vault 
+   server side for JDBC use: <code>db2client_home_directory/sqllib/lib</code> 
+   has to be in LIBPATH (see db2profile shell in the DB2 client installation to 
+   set the value of this variable properly).</p>
+ </blockquote>
+ <p style="margin-top:24.0pt"><b>ORACLE</b> mandatory environment variables for 
+ JDBC use (vault server side only)</p>
+ <blockquote>
+   <p style="margin-top:24.0pt">NLS_LANG has to be set (US7ASCII, WE8DEC, 
+   WE8ISO8859P1, UTF8, ...). This variable is set by default by the Oracle 
+   installation. So, you can just keep the default value. For instance:</p>
+   <p style="margin-top:24.0pt"><code>NLS_LANG=FRENCH_FRANCE.WE8ISO8859P1<br>
+   export NLS_LANG</code></p>
+   <p style="margin-top:24.0pt">ORACLE_HOME has to be set. For instance:</p>
+   <p style="margin-top:24.0pt"><code>ORACLE_HOME=/u/env/oracle/SunOS<br>
+   export ORACLE_HOME</code></p>
+   <p style="margin-top:24.0pt">TNS_ADMIN has to be set. For instance:</p>
+   <p style="margin-top:24.0pt"><code>TNS_ADMIN=/u/env/oracle/SunOS/network/admin&#181;<br>
+   export TNS_ADMIN</code></p>
+   <p style="margin-top:24.0pt">CLASSPATH issue on vault server side for JDBC 
+   use:</p>
+   <blockquote>
+     <p>UNIX:</p>
+     <p>Add <code>$ORACLE_HOME/jdbc/lib/classes111.zip</code> and <code>$ORACLE_HOME/jdbc/lib/nls_charset11.zip</code> 
+     to your CLASSPATH</p>
+     <p style="tab-stops:.5in 1.0in 1.5in 2.0in 2.5in 3.0in">Windows <blink>Server (64 
+		bit)</blink>:&nbsp;</p>
+     <p style="tab-stops:.5in 1.0in 1.5in 2.0in 2.5in 3.0in">Add <code>[ORACLE_HOME]&#092;jdbc&#092;lib&#092;classes111.zip</code> 
+     and <code>[ORACLE_HOME]&#092;jdbc&#092;lib&#092;nls_charset11.zip</code> 
+     to your CLASSPATH.&nbsp;</p>
+     <p style="tab-stops:.5in 1.0in 1.5in 2.0in 2.5in 3.0in">Set THREAD_FLAG 
+     variable to native value: <code>THREAD_FLAG=native</code></p>
+   </blockquote>
+   <p style="tab-stops:.5in 1.0in 1.5in 2.0in 2.5in 3.0in">LIBPATH (or 
+   LD_LIBRARY_PATH ...) issue on vault server side for JDBC use:</p>
+   <blockquote>
+     <p style="tab-stops:.5in 1.0in 1.5in 2.0in 2.5in 3.0in">Unix:</p>
+     <p style="tab-stops:.5in 1.0in 1.5in 2.0in 2.5in 3.0in"><code>$ORACLE_HOME/lib:$ORACLE_HOME/jdbc/lib</code> 
+     has to be in LIBPATH.</p>
+     <p style="tab-stops:.5in 1.0in 1.5in 2.0in 2.5in 3.0in">Windows <blink>Server (64 
+		bit)</blink>:</p>
+     <p style="tab-stops:.5in 1.0in 1.5in 2.0in 2.5in 3.0in">Add [ORACLE_HOME]&#092;lib:[ORACLE_HOME]&#092;jdbc&#092;lib 
+     to your PATH.</p>
+   </blockquote>
+ </blockquote>
+ <p style="tab-stops:.5in 1.0in 1.5in 2.0in 2.5in 3.0in"><b>Dealing with OS 
+ limit parameters</b></p>
+ <p style="tab-stops:.5in 1.0in 1.5in 2.0in 2.5in 3.0in">The communications 
+ between the Vault Client and Vault Server are using TCP/IP sockets. Each socket 
+ represents a file descriptor on the Vault Server process. If the file 
+ descriptor limit per process is set too low, attempts to open socket 
+ connections may be unsuccessful. To resolve this condition, increase the file 
+ descriptor limit for the user from which the Orbixd process is started 
+ (normally root). Edit the .profile for the user, and add the following:</p>
+ <p style="tab-stops:.5in 1.0in 1.5in 2.0in 2.5in 3.0in"><code>ulimit -n 1024</code></p>
+ <p style="tab-stops:.25in 1.0in 1.5in 2.0in 2.5in 3.0in">Depending on the 
+ number of connections needed, this number may need to be increased more. For 
+ this change to take effect, you do not have to reboot. Just logoff and then 
+ logon again.</p>
+ <p><b><a name="hj-VaultServerAIXonDB2"></a>Specific use case</b></p>
+ <p><b>Important warning for the installation of a vault running on an AIX 
+ server and a local DB2 database</b></p>
+ <p>You have to implement a client/server database connection for the vault, 
+ because of a limitation in the number of JDBC connections that the VaultServer 
+ can open. </p>
+ <p>Otherwise an SQL1224N error is triggered when the vault is started.</p>
+ <p>So, if you had initially an AIX vault with a local DB2 server (resulting 
+ from a standard installation, a migration of a former configuration, ...) you 
+ need to modify the database connectivity for the vault.</p>
+ <p>You will have to run the appropriate db2 commands to catalog your local 
+ database under an alias which will be accessible through a client/server 
+ connection. (typically, &quot;db2 catalog tcpip node&quot; + &quot;db2 catalog database at 
+ node&quot; statements)</p>
+ <p>Then you will have to update your Vault server java properties, referencing 
+ the new db2 alias as the VaultServer_DBName parameter.</p>
+ <p>Here is how to by-pass this limitation:</p>
+ <ol>
+   <li>Install a DB2 client on the AIX server.</li>
+   <li>Catalog the Vault database on the DB2 client.</li>
+   <li>Set up the VaultServer in order to connect the database through the DB2 
+   client instead of the DB2 server.</li>
+ </ol>
+ <h3>Modifying the Vault Server to Use Java Runtime 
+     Environment (JRE)</h3>
+     <h4>On UNIX</h4>
+     <p>Edit the runENOVVaultServer shell:</p>
+     <p>$<code>InstallPath/$OSDS/code/command/runENOVVaultServer</code></p>
+     <p>and make the following changes.</p>
+     <p>Add the following before the echo &quot;Starting ENOVIA V5 VAULT SERVER..... 
+     statement </p>
+     <p><code>export JAVA_HOME=/usr/java5</code> (where /usr/java5 is the 
+     install path for the JRE 1.5 code) </p>
+     <p><code>export PATH=$JAVA_HOME/bin:$PATH </code></p>
+     <p>Stop the Vault Server, if running, to ensure it will use the JRE 1.5 the 
+     next time it starts.
+
+ </body>
+
+</html>
+

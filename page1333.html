@@ -1,0 +1,159 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Recovering Custom Fonts Developed Using CATIA V4</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Recovering Custom Fonts Developed Using CATIA V4</h1>
+ <p align="center"><a name="ix-fonts::Version 4"></a></p>
+ <table Border="0" CELLSPACING="1" valign="top" height="1411">
+   <tr valign="middle" BORDER="0">
+     <td valign="middle" height="48">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td rowspan="1" height="48">This task explains how to use CATIA V4 
+     FONT files and set them up in your V5 environment. For more 
+     information about CATIA V4 FONT files, refer to your CATFONT V4 utility 
+		documentation.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="1240">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td rowspan="1" height="1240">
+     <ol class="task">
+       <li>
+       <p class="task">Make sure that the fonts you created are in the FONT 
+       format (described using the UNICODE code key) and not in the FONTDATA 
+       format (described using the EBCDIC code key).</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+           <tr>
+             <td>The internal font format we recommend from CATIA V4 
+             Release 1.8 onwards is described using UNICODE codes.
+             <p>If you did not already migrate your user FONTDATA files to FONT 
+             files and FONT CODE files, you must do so using the CATFONT utility 
+             using, as a minimum level, CATIA Version 4 Release 1.8. Regarding 
+             FONT CODE names, refer to your CATFONT utility documentation for 
+             more details.</p>
+             <p>Note that the following is no longer supported:</p>
+             <ul>
+               <li>The font described with proportional format</li>
+               <li>The grid defined by five numbers.</li>
+             </ul>
+             <p>In both cases, the associated orders are ignored. Note that none 
+             of the CATIA V4 basic delivered fonts used any of these 
+             options. </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="2">
+       <p class="task">Copy the V4 FONT files to your V5 
+       environment in:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+           <tr>
+             <td><code><em style="font-style: normal">install_folder</em>&#092;resources&#092;fonts&#092;Stroke</code>
+             <p>where &quot;<em style="font-style: normal">install_folder</em>&quot; is 
+             the installation folder (Windows) or directory (UNIX). </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="3">
+       <p class="task">Copy the FONT CODE files to your V5 environment 
+       in:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3" height="30">
+           <tr>
+             <td height="27"><code><em style="font-style: normal">install_folder</em>&#092;reffiles&#092;NLS&#092;fontcode</code>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="4">
+       <p class="task">Rename these FONT CODE files using the following syntax:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4" height="256" width="949">
+           <tr>
+             <td height="219" colspan="2" width="945"><code>XXXX.fontcode </code>
+             renamed to<code> FCUSERn.fontcode</code><p>where &quot;<code>XXXX.fontcode</code>&quot; 
+             represents the V4 font code file and &quot;<code>n</code>&quot; the increment 
+             (16 being the maximum number).&nbsp;</p>
+             <p>For instance:</p>
+             <p><code>ABBK.fontcode </code>renamed to<code> FCUSER1.fontcode<br>
+             HEL1.fontcode </code>renamed to<code> FCUSER2.fontcode<br>
+             HEL2.fontcode </code>renamed to<code> FCUSER3.fontcode<br>
+             SPEC.fontcode </code>renamed to<code> FCUSER4.fontcode<br>
+             TIME.fontcode </code>renamed to<code> FCUSER5.fontcode</code> </td>
+           </tr>
+           <tr>
+             <td height="34" width="18" bgcolor="#E0E0E0">
+             <img src="b35doc/english/online/icons_C2/common/ainfo.gif" title="awarning.gif (1007 bytes)" width="32" height="32"></td>
+             <td height="34" width="910" bgcolor="#E0E0E0">The names <code>
+             FCUSER1</code> to <code>FCUSER12</code> are reserved for SBCS font 
+             codes whereas <code>FCUSER13</code> to <code>FCUSER16</code> are 
+             reserved for DBCS font codes. </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="5">
+       <p class="task">Edit the V4FontInteroperability file in:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5">
+           <tr>
+             <td><code><em style="font-style: normal">install_folder</em>&#092;resources&#092;fonts&#092;</code>
+             <p>by adding your V4 FONTLIB names to the list. </p>
+             <p>This file maps to a V4 FONTLIB name, the FONT and FONT 
+             CODE associated with it. </p>
+             <p>The example below shows two fonts (ABBK and TIME) added to 
+             V4FontInteroperability with their corresponding font code: </td>
+           </tr>
+           <tr>
+             <td><img border="1" src="b35doc/english/online/basug_c2/images/fonts02.gif" width="413" height="416"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="81"></td>
+     <td height="81">
+     <blockquote>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber6" height="40">
+           <tr>
+             <td height="38" bgcolor="#E0E0E0">Regarding Korean fonts, since 
+             there are differences in Korean ideogram UNICODE codes between the 
+             UNICODE used in V4 and V5, no V4 user-defined 
+             Korean font can be used directly in V5. </td>
+           </tr>
+         </table>
+       </div>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="2" rowspan="1" valign="top" height="37">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

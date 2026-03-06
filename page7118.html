@@ -1,0 +1,191 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating Slider Connection Properties</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Creating Slider Connection Properties<a name="ix-commands::Slider Connection Property;connection properties:slider"></a></h1>
+ <table Border="0" CELLSPACING="1" valign="top">
+   <tr>
+     <td valign="top" align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32">
+     </td>
+     <td>
+     <p class="task"><a name="CATGPSCommandHeader.CATGPSSliderConnectionHdr">
+     </a>This task shows how to create a Slider Connection Property between two 
+     parts.</td>
+   </tr>
+   <tr>
+     <td align="center" valign="top">
+     <img border="0" src="b35doc/english/online/estug_c2/images/icon_GAS.gif" width="32" height="32"></td>
+     <td align="left">
+     <ul>
+       <li>
+       <p class="task">Only available with the <b>Generative Assembly Structural 
+       Analysis (GAS)</b> product.</li>
+       <li>
+       <p class="task">To have precisions and to know restrictions, refer to
+       <a href="page7130.html#hj-PrecisionsRestrictions">About Connection 
+       Properties</a>.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+     <td>
+     <p class="task">A slider connection is the link between two bodies which 
+     are constrained to move together in the local normal direction at their 
+     common boundary, and will behave as if they were allowed to slide relative 
+     to each other in the local tangential plane. Since bodies can be meshed 
+     independently, the slider connection is designed to handle incompatible 
+     meshes.&nbsp;</p>
+     <p class="task">The slider connection relations take into account the 
+     elastic deformability of the interfaces.</p>
+     <p class="task">The program proceeds as follows:</p>
+     <ul>
+       <li>
+       <p class="task">each node of the finer surface mesh (mesh with the 
+		greatest number of nodes) is projected parallel 
+       to the local outer normal of the first surface onto the second surface 
+       mesh.</li>
+       <li>
+       <p class="task">a projection point is located whenever possible at the 
+       intercept of the projection direction with the second surface mesh 
+       (extrapolated at the face boundary by roughly half an element width).</li>
+       <li>
+       <p class="task">if a projection point exists, the start node is connected 
+       by a kinematical spider element to all nodes of the element face on which 
+       the projection point has landed.</li>
+       <li>
+       <p class="task">a set of join-type relations (involving interpolation 
+       using element shape functions and a rig-beam relations) is computed 
+       between the start node degrees of freedom and the connected nodes degrees 
+       of freedom.</li>
+       <li>
+       <p class="task">these relations are projected on the local normal 
+       direction yielding a single scalar relation between the start node 
+       degrees of freedom and the connected nodes degrees of freedom. </li>
+     </ul>
+     <p class="task">Thus, the slider connection generates at most as many 
+     spider kinematical elements as there are nodes on the finer surface mesh 
+     for which a projection onto the opposite surface mesh exists.&nbsp;</p>
+     <p class="task">To know more about the Slider Join element, refer to
+     <a href="page7593.html" target="ds_doc2">
+     Slider Join</a> in the <i>Finite Element Reference Guide</i>.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td>
+     <p class="task">Open the <a href="b35doc/english/online/estug_c2/samples/sample16.CATAnalysis">
+     sample16.CATAnalysis</a> document: you applied constraints to the assembly 
+     (<b>Assembly Design</b> workbench).&nbsp; </p>
+     <ul>
+       <li>
+       <p class="task">Make sure you created a Finite Element Model containing a 
+       Static Analysis Case from this assembly.</li>
+       <li>
+       <p class="task">Make sure you know all you need about
+       <a href="page7130.html#hj-PropertyType">what type of property you will 
+       use for what type of connection</a>.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol class="task">
+       <li>
+       <p class="task">Click <kbd>Slider Connection Property</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_SliderConnectionP2.gif" width="24" height="24"> 
+       in the <kbd>Connection Properties</kbd> toolbar.</p>
+       <table border="0" cellspacing="1" id="AutoNumber1">
+         <tr>
+           <td>
+           <p class="task">The Slider Connection Property dialog box appears.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/dbsliderpropNLS.gif" width="221" height="117"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Select an assembly constraint previously created in the 
+       Assembly Design workbench.</p>
+       <table border="0" cellspacing="1" id="AutoNumber2">
+         <tr>
+           <td align="center" valign="top">
+           <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+           <td>
+           <p class="task">The only allowed constraint type is Contact between 
+           surfaces.</td>
+         </tr>
+         <tr>
+           <td colspan="2">
+           <p class="task">A symbol representing the slider connection property 
+           is visualized on the corresponding faces. </p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/ConnectionSlider.gif" width="369" height="217"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd>.</p>
+       <table border="0" cellspacing="1" id="AutoNumber3">
+         <tr>
+           <td>
+           <p class="task">Note that two elements appear in the specification 
+           tree: </p>
+           <ul>
+             <li>
+             <p class="task">A <kbd>Slider Connection Mesh.1</kbd> connection 
+             mesh part under the <kbd>Nodes and Elements</kbd> set</li>
+             <li>
+             <p class="task">A <kbd>Slider Connection Property.1</kbd> 
+             connection property under the <kbd>Properties.1</kbd> set.</li>
+           </ul>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/stsliderpropNLS.gif" width="258" height="182"></td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" title="ainfo.gif (980 bytes)" width="32" height="32"></td>
+     <td>
+     <ul>
+       <li>
+       <p class="task">The Finite Element Model contains two Mesh objects, one 
+       for each part of the assembly.</li>
+       <li>
+       <p class="task">The sizes of the two meshes are different as can be seen 
+       by comparing the Mesh Size symbols.&nbsp;</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td colspan="2">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

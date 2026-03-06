@@ -1,0 +1,462 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head><meta name="MonocodingType" content="0"></meta>
+	  <meta name="MonocodingFlag" content="C2"></meta>
+	  <meta http-equiv="Content-Language" content="en-us"></meta>
+	  <meta name="GENERATOR" content="Microsoft FrontPage 6.0"></meta>
+	  <meta name="ProgId" content="FrontPage.Editor.Document"></meta>
+  	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	  <title>Constraints</title>
+          <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+          
+	 </head><body onload="newPage('pt02ch07s01.html');" ondblclick="newSelection();" bgcolor="#FFFFFF" text="#000000" vlink="#FF5113" alink="#004D48" link="#004D48" class="TEXT"><div class="sect1" id="ath-gen-prt-constraints">
+    <a name="ath-gen-prt-constraints"></a>
+
+    <div class="titlepage">
+      
+
+      <div class="title">
+        <h3>Constraints</h3>
+      </div>
+    </div>
+
+    <p>Constraints are defined on the analysis degrees of freedom
+    between regions of a model. The following sections discuss the
+    constraints available in Nonlinear Structural Analysis:</p>
+
+    <p class="indent"><b><img src="b35doc/english/online/anlug_c2/images/ABQ_I_RigidBodyConstraint.gif"></img><a href="page0483.html#ath-gen-prt-rigidbodyconstraint">Creating
+    Rigid Body Constraints</a></b>:&nbsp;Constrains the motion of
+    regions of a part so that the relative positions of points in
+    the region remain constant throughout the analysis, prohibiting
+    deformation.</p>
+
+    <p class="indent"><b><img src="b35doc/english/online/anlug_c2/images/ABQ_I_RigidCoupling.gif"></img><a href="page0483.html#ath-gen-prt-rigidcoupling">Creating Rigid
+    Couplings</a></b>:&nbsp;Constrains selected degrees of freedom
+    of a region of a part by coupling the motion of the region to
+    the rigid body motion of a handler point.</p>
+
+    <p class="indent"><b><img src="b35doc/english/online/anlug_c2/images/ABQ_I_SmoothCoupling.gif"></img><a href="page0483.html#ath-gen-prt-smoothcoupling">Creating Smooth
+    Couplings</a></b>:&nbsp;Constrains selected degrees of freedom
+    of a region of a part by coupling the motion of the region to
+    the translation and rotation of a handler point.</p>
+
+    <div class="sect2" id="ath-gen-prt-rigidbodyconstraint">
+      <a name="ath-gen-prt-rigidbodyconstraint"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Creating Rigid Body
+          Constraints</h3>
+        </div>
+      </div>
+
+      <p><a name="CATCommandHeader.ABQRigidBodyConstraintHdr"></a>A rigid body constraint allows you to constrain the motion
+      of selected parts and points so that the relative positions
+      of points in the body remain constant throughout the
+      analysis, prohibiting deformation. A rigid body will,
+      therefore, have three free translational and three free
+      rotational motions; these motions can be prescribed by
+      applying boundary conditions to the rigid body. If no
+      boundary conditions are applied, the body will behave as a
+      free rigid body.</p>
+
+      <p>Rigid bodies can consist of three-dimensional bodies,
+      groups of points, or a combination of bodies and points. The
+      points can be connected to other, deformable bodies. Points
+      that are part of a rigid body can be defined as either tie
+      nodes or pin nodes. A tie node transmits both translational
+      and rotational degrees of freedom to any body to which it is
+      attached. A pin node transmits only translational degrees of
+      freedom to any body to which it is attached. <a href="page0483.html#afc-rigidbody-tie-pin">Figure
+      7&#8211;1</a> illustrates the difference between the two
+      node types. Points on either end of the octagonal rigid body
+      are connected to deformable bodies. When the rigid body is
+      rotated, the deformable bodies attached to tie nodes rotate
+      as well, while the deformable bodies attached to pin nodes
+      displace while retaining their rotational orientation.</p>
+
+      <div class="figure">
+        <p><a name="afc-rigidbody-tie-pin"></a><b><span class="gentxt_dkgry">Figure 7&#8211;1</span></b> Rigid body with
+        tie node and pin node connections.</p>
+
+        <div class="graphic" id="d0">
+          <p><img src="b35doc/english/online/anlug_c2/images/afc-rigidbody-tie-pin.png"></img></p>
+        </div>
+      </div>
+
+      <p>You can specify the handler, or reference point, for the
+      rigid body constraint by selecting a vertex or by selecting a
+      point group (containing a single point). You can instruct
+      Nonlinear Structural Analysis to redefine the handler point
+      at a point corresponding to the calculated center of mass of
+      the rigid body during the analysis; any boundary conditions
+      applied to the handler point will then act on the rigid
+      body's center of mass. If you do not specify a handler point,
+      Nonlinear Structural Analysis creates it at the approximate
+      centroid of the selected parts;the solver moves the handler
+      from the approximate centroid to the calculated center of
+      mass during the analysis.</p>
+
+      <p>Rigid body constraints are available only in the Nonlinear
+      Structural Analysis workbench.</p>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to create a rigid body
+      constraint.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Click the Rigid Body Constraint icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_RigidBodyConstraint.gif"></img>.</p>
+
+            <p>The <span class="guitext"><b class="guititle">Rigid
+            Body Constraint</b></span> dialog box appears. A Rigid
+            Body Constraint object appears in the specification
+            tree under the Connections objects set for the
+            Initialization step, and a Rigid Body Constraint
+            Connection Mesh appears under the Nodes and Elements
+            objects set.</p>
+          </li>
+
+          <li>
+            <p>You can change the identifier of the constraint by
+            editing the <span class="guitext"><b class="guilabel">Name</b></span> field.</p>
+          </li>
+
+          <li>
+            <p>If desired, select the part or parts to constrain in
+            the window or in the specification tree.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">Support</b></span> field is updated to
+            reflect your selection.</p>
+          </li>
+
+          <li>
+            <p>If desired, select vertices or points to act as pin
+            nodes in the rigid body.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">Pin
+            points support</b></span> field is updated to reflect
+            your selection.</p>
+          </li>
+
+          <li>
+            <p>If desired, select vertices or points to act as tie
+            nodes in the rigid body.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">Tie
+            points support</b></span> field is updated to reflect
+            your selection.</p>
+          </li>
+
+          <li>
+            <p>If desired, select a vertex or point group to
+            represent the handler point.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">Handler</b></span> field is updated to
+            reflect your selection.</p>
+          </li>
+
+          <li>
+            <p>To move a selected handler point to the center of
+            mass of the rigid body during the analysis, toggle on
+            <span class="guitext"><b class="guilabel">Move to
+            center of mass</b></span>.</p>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">OK</b></span> in the <span class="guitext"><b class="guititle">Rigid Body
+            Constraint</b></span> dialog box.</p>
+
+            <p>Symbols representing the rigid body constraint
+            appear on the corresponding parts.</p>
+          </li>
+        </ol></div><span id="ath-gen-prt-rigidbodyconstraint"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div>
+
+    <div class="sect2" id="ath-gen-prt-rigidcoupling">
+      <a name="ath-gen-prt-rigidcoupling"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Creating Rigid
+          Couplings</h3>
+        </div>
+      </div>
+
+      <p><a name="CATCommandHeader.ABQRigidCouplingHdr"></a>A rigid coupling allows you to eliminate selected degrees
+      of freedom from a part or from regions of a part by coupling
+      the motion of a region to the motion of a handler, or
+      reference point. You can use a rigid coupling to model end
+      conditions; for example, modeling a rigid end plate or
+      modeling plane sections of a solid to remain planar. If you
+      eliminate all three translational degrees of freedom, the
+      part or region behaves as a rigid body.</p>
+
+      <p><a href="page0483.html#afc-prt-pcoupling">Figure 7&#8211;2</a> shows a part that was twisted by
+      creating a rigid coupling between a handler point and a
+      surface at one end of the part and then rotating the handler
+      point about the axis of a local cylindrical coordinate
+      system. The rigid coupling was defined using the same
+      coordinate system, and the nodes on the surface at the end of
+      the part are free to move in the radial direction.</p>
+
+      <div class="figure">
+        <p><a name="afc-prt-pcoupling"></a><b><span class="gentxt_dkgry">Figure 7&#8211;2</span></b> Applying a
+        rigid coupling constraint.</p>
+
+        <div class="graphic" id="d0">
+          <p><img height="351" width="632" src="b35doc/english/online/anlug_c2/images/pcoupling_kinematic-nls.png"></img></p>
+        </div>
+      </div>
+
+      <p>You can specify the handler for a rigid coupling by
+      selecting a vertex, a point, or a point group (containing a
+      single point). If you do not specify the handler point,
+      Nonlinear Structural Analysis selects one of the vertices
+      from the part or region.</p>
+
+      <p>After you have selected the support regions for the rigid
+      coupling, you can exclude subregions from your selection. For
+      example, you can select a face as the support region and then
+      exclude one or more edges of the face from the rigid
+      coupling. You can exclude an edge by selecting it directly or
+      by excluding a second face that shares the same edge. If
+      necessary, you can exclude a region to avoid overconstraining
+      your model. For example, you may need to exclude regions that
+      you defined as rigid bodies and regions to which you have
+      applied boundary conditions.</p>
+
+      <p>Rigid couplings are available only in the Nonlinear
+      Structural Analysis workbench.</p>
+
+      <p>By default, the constrained degrees of freedom are
+      associated with the global, rectangular Cartesian axis
+      system. You can specify a local coordinate system for the
+      degrees of freedom, and you can define the local system as a
+      Cartesian, cylindrical, or spherical axis system. Local
+      coordinate systems are defined in the CATIA Part Design
+      workbench.</p>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to create a rigid coupling.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Click the Rigid Coupling icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_RigidCoupling.gif"></img>.</p>
+
+            <p>The <span class="guitext"><b class="guititle">Rigid
+            Coupling</b></span> dialog box appears. A Rigid
+            Coupling object appears in the specification tree under
+            the Connections objects set for the Initialization
+            step, and a Rigid Body Coupling Connection Mesh appears
+            under the Nodes and Elements objects set.</p>
+          </li>
+
+          <li>
+            <p>You can change the identifier of the constraint by
+            editing the <span class="guitext"><b class="guilabel">Name</b></span> field.</p>
+          </li>
+
+          <li>
+            <p>In the window or in the specification tree, select
+            the geometry support. Any selectable geometry is
+            highlighted when you pass the cursor over it. You can
+            select several supports to apply the rigid coupling to
+            all supports simultaneously.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">Supports</b></span> field is updated to
+            reflect your selection.</p>
+          </li>
+
+          <li>
+            <p>Select regions from which the rigid coupling will be
+            excluded.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">Exclusion Regions</b></span> field is
+            updated to reflect your selection.</p>
+          </li>
+
+          <li>
+            <p>Select a vertex, point, or point group to represent
+            the handler point.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">Handler</b></span> field is updated to
+            reflect your selection.</p>
+          </li>
+
+          <li>
+            <p>Toggle on a degree of freedom to constrain it.
+            Toggle off a degree of freedom to leave it
+            unconstrained.</p>
+          </li>
+
+          <li>
+            <p>If desired, toggle on <span class="guitext"><b class="guilabel">Selected local
+            system</b></span>, and select a coordinate system to
+            define local directions.</p>
+
+            <p>You can also select the orientation of the local
+            system. Choose from <span class="guitext"><b class="guilabel">Cartesian</b></span>, <span class="guitext"><b class="guilabel">Cylindrical</b></span>,
+            or <span class="guitext"><b class="guilabel">Spherical</b></span>. See <a href="page0462.html">Using Local Coordinate
+            Systems</a> for more information.</p>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">OK</b></span> in the <span class="guitext"><b class="guititle">Rigid Coupling</b></span>
+            dialog box.</p>
+          </li>
+        </ol></div><span id="ath-gen-prt-rigidcoupling"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div>
+
+    <div class="sect2" id="ath-gen-prt-smoothcoupling">
+      <a name="ath-gen-prt-smoothcoupling"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Creating Smooth
+          Couplings</h3>
+        </div>
+      </div>
+
+      <p><a name="CATCommandHeader.ABQSmoothCouplingHdr"></a>A smooth coupling is similar to a rigid coupling in that
+      it couples the motion of a region to the motion of a handler,
+      or reference point. A rigid coupling allows you to eliminate
+      both rotational and translational degrees of freedom. In
+      contrast, a smooth coupling allows you to eliminate only
+      rotational degrees of freedom&#8212;it always constrains the
+      translational degrees of freedom. In addition, a smooth
+      coupling constraint distributes loads such that the
+      resultants of the forces (and moments) in the selected region
+      are equivalent to the forces and moments at the handler
+      point. A smooth coupling is enforced in an average sense in a
+      way that enables control of the transmission of loads through
+      weight factors at the selected region. Nonlinear Structural
+      Analysis applies a uniform weight factor (1.0) to the
+      region.</p>
+
+      <p><a href="page0483.html#afc-prt-smoothcoupling-example">Figure 7&#8211;3</a> shows a part that was
+      twisted by creating a smooth coupling between a handler point
+      and a surface at one end of the part and then rotating the
+      handler point about the <i class="replaceable">Z</i>-axis.
+      The surface at the end of the part warps and deforms along
+      the <i class="replaceable">Z</i>-axis, although the resultant
+      of all the forces on the surface is zero. If you applied a
+      rigid coupling in a similar manner, the surface at the end of
+      the part would remain planar, and it would simply rotate
+      about the <i class="replaceable">Z</i>-axis.</p>
+
+      <div class="figure">
+        <p><a name="afc-prt-smoothcoupling-example"></a><b><span class="gentxt_dkgry">Figure 7&#8211;3</span></b> Applying a
+        smooth coupling constraint.</p>
+
+        <div class="graphic" id="d0">
+          <p><img height="350" width="508" src="b35doc/english/online/anlug_c2/images/pcoupling_distributing-nls.png"></img></p>
+        </div>
+      </div>
+
+      <p>You can specify the handler for a smooth coupling by
+      selecting a vertex, point, or point group (containing a
+      single point). If you do not specify the handler point,
+      Nonlinear Structural Analysis selects one of the vertices
+      from the part or region.</p>
+
+      <p>After you have selected the support regions for the smooth
+      coupling, you can exclude subregions from your selection. For
+      example, you can select some faces as the support regions and
+      then exclude the edges of those faces from the smooth
+      coupling. If necessary, you can exclude a region to avoid
+      overconstraining your model. For example, you may need to
+      exclude regions that you defined as rigid bodies and regions
+      to which you have applied boundary conditions. You can select
+      an exclusion region that touches the support region but does
+      not intersect it. For example, if two faces touch along a
+      common edge and you selected one face as the support region
+      and the second face as the exclusion region, the effect is to
+      exclude the common edge.</p>
+
+      <p>Smooth couplings are available only in the Nonlinear
+      Structural Analysis workbench.</p>
+
+      <p>By default, the constrained degrees of freedom are
+      associated with the global, rectangular Cartesian axis
+      system. You can specify a local coordinate system for the
+      degrees of freedom, and you can define the local system as a
+      Cartesian, cylindrical, or spherical axis system. Local
+      coordinate systems are defined in the CATIA Part Design
+      workbench.</p>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to create a smooth coupling.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Click the Smooth Coupling icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_SmoothCoupling.gif"></img>.</p>
+
+            <p>The <span class="guitext"><b class="guititle">Smooth
+            Coupling</b></span> dialog box appears. A Smooth
+            Coupling object appears in the specification tree under
+            the Connections objects set for the Initialization
+            step, and a Smooth Coupling Connection Mesh appears
+            under the Nodes and Elements objects set.</p>
+          </li>
+
+          <li>
+            <p>You can change the identifier of the constraint by
+            editing the <span class="guitext"><b class="guilabel">Name</b></span> field.</p>
+          </li>
+
+          <li>
+            <p>In the window or in the specification tree, select
+            the geometry support. Any selectable geometry is
+            highlighted when you pass the cursor over it. You can
+            select several supports to apply the smooth coupling to
+            all supports simultaneously.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">Supports</b></span> field is updated to
+            reflect your selection.</p>
+          </li>
+
+          <li>
+            <p>Select regions from which the smooth coupling will
+            be excluded.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">Exclusion Regions</b></span> field is
+            updated to reflect your selection.</p>
+          </li>
+
+          <li>
+            <p>Select a vertex, point, or point group to represent
+            the handler point.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">Handler</b></span> field is updated to
+            reflect your selection.</p>
+          </li>
+
+          <li>
+            <p>Toggle on a rotational degree of freedom to
+            constrain it. Toggle off a rotational degree of freedom
+            to leave it unconstrained. All translational degrees of
+            freedom are constrained.</p>
+          </li>
+
+          <li>
+            <p>If desired, toggle on <span class="guitext"><b class="guilabel">Selected local
+            system</b></span>, and select a coordinate system to
+            define local directions.</p>
+
+            <p>You can also select the orientation of the local
+            system. Choose from <span class="guitext"><b class="guilabel">Cartesian</b></span>, <span class="guitext"><b class="guilabel">Cylindrical</b></span>,
+            or <span class="guitext"><b class="guilabel">Spherical</b></span>. See <a href="page0462.html">Using Local Coordinate
+            Systems</a> for more information.</p>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">OK</b></span> in the <span class="guitext"><b class="guititle">Smooth
+            Coupling</b></span> dialog box.</p>
+          </li>
+        </ol></div><span id="ath-gen-prt-smoothcoupling"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div><span id="ath-gen-prt-constraints"></span>
+  </div></body></html>
+

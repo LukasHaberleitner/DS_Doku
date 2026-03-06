@@ -1,0 +1,180 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Creating a Trim Partition</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="Microsoft Border" content="none, default">
+<style type="text/css">
+.auto-style4 {
+	border-style: solid;
+	border-width: 1px;
+}
+.auto-style5 {
+	font-weight: bold;
+	color: #666666;
+}
+</style>
+</head>
+
+<body>
+
+<h1>
+    Creating a Trim Partition<a name="CATDieFaceDesignAppWkb.DFDCurvePartition"></a></h1>
+<table border="0">
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td valign="top" style="width: 794px">This task shows you how to
+	cut a surface boundary or 3D curve into several areas.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td valign="top" style="width: 794px">Open
+	<a href="b35doc/english/online/tdfug_c2/samples/TrimPartition_InitP1.CATPart">TrimPartition_InitP1.CATPart</a> 
+	from the samples directory.<br>You can see 
+	the result in <a href="b35doc/english/online/tdfug_c2/samples/TrimPartition_EndP1.CATPart">
+	TrimPartition_EndP1.CATPart</a>.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td valign="top">
+    <ol class="task">
+    <li>
+      <p class="task"><a name="ix-commands:Trim Partition"></a>Click <kbd>
+	  Trim Partition&nbsp; </kbd>
+	  <img border="0" src="b35doc/english/online/icons_C2/images/I_DFDProcessPartitionGeomSetCurvesP2.png" width="24" height="24">
+      in the<kbd> Process Part Separation </kbd>toolbar.<br>
+	  <img class="auto-style4" src="b35doc/english/online/tdfug_c2/images/dbTrimPartitionNLS.png"><br>
+		</p>
+      </li>
+		<li>
+        <p class="task"><a name="ix-creating a trim partition:input"></a>Select the 
+		elements to split.<table style="width: 100%">
+			<tr>
+				<td>
+				<ul>
+					<li>A surface: The boundary of the surface is 
+					computed. Each domain of the boundary is added as a 
+					geometrical result. <br>The bigger loop (usually the outside 
+					boundary) is the <kbd>Cutting Line</kbd>. 
+					Others are typed as <kbd>Positioning 
+					Holes</kbd>.</li>
+					<li>A stamping direction: The boundary of the shape 
+					that is the input of the stamping direction is considered. 
+					<br>For each part of this boundary that is associated to a tool 
+					direction, cutting lines are computed for the external 
+					boundary and positioning holes for the other edges. <br>Cutting 
+					lines and positioning holes are computed for the other 
+					parts, the same way.  </li>
+					<li>A surface partition: An inner join is computed 
+					with all the partition elements, using the associated 
+					unfolded view of each <kbd>Folded Surface</kbd> 
+					geometrical result, if any.<br>Then, the computation is the 
+					same as for a surface.</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		</p>
+      </li>
+		<li>
+        <p class="task"><a name="ix-creating a trim partition:cutting elements">
+		</a>Select the splitting elements.<br>
+		<img height="239" src="b35doc/english/online/tdfug_c2/images/TrimPartitionCutElements.png" width="194"><table style="width: 100%">
+			<tr>
+				<td>
+				<ul>
+					<li>3D curves: They cut the surface boundary directly.</li>
+					<li>Sketches: An internal extrude of the sketch is 
+					computed, in the plane direction. Its intersection with the 
+					surface boundary is used to cut the boundary.</li>
+					<li>A plane and create a sketch on the selected plane from 
+					the contextual toolbar.</li>
+				</ul>
+				<p>The elements that split the curve are automatically trimmed at 
+				the intersection with the boundary, only their longest part is 
+				kept.<ul><li>Each domain of the input wireframe is trimmed by 
+					the trim elements. The kept side is either the one with the 
+					most intersections with trim elements, or the longest side.</li>
+					<li>The resul of the trim is a Scrap Cutter.</li></ul><br>The partition of the boundary is created. Each part of the 
+				boundary is kept, ensuring the whole part is cut by all the 
+				cutting elements.</td>
+			</tr>
+		</table>
+		</p>
+      </li>
+		<li>
+        <p class="task">Select the Scrap Cutters elements 
+		(wireframe).<br>Depending on the geometries inside the sketch that 
+		defines the scrap cutters, geometries are extracted and computed with a 
+		type (Scrap Hole or Scrap Line). This type can be changed from the 
+		contextual menu.<br>Existing older trim partitions are updated to create 
+		scrap cutters types.</p>
+      </li>
+		<li>
+        <p class="task">Check the result under P<span class="auto-style5">artition</span>.<table style="width: 100%">
+			<tr>
+				<td>
+				<ul>
+					<li>Select one element.<br>It is 
+					highlighted in the work area.					</li>
+					<li>Optional: Change 
+					its type from the contextual toolbar.</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		</p>
+      </li>
+		<li>
+        <p class="task"><a name="ix-creating a trim partition:tolerances"></a>Edit the minimum and maximum tolerances of the curves as required.
+		<br>For more information, see 
+		<a href="page1138.html">Tools &gt; Options</a>.</p>
+		
+      </li>
+		<li>
+        <p class="task">
+		<a name="ix-creating a trim partition:intermediate geometries"></a>Choose intermediate geometries to associate to the 
+		selected element.<br>The table of results is updated.</p>
+      </li>
+	</ol>
+	<p><a name="ix-creating a trim partition:features"></a>A <kbd>Partition Set</kbd> is created.
+	<br>such as
+	the blue lines and blue boundaries of green holes.<br>
+	<img height="302" src="b35doc/english/online/tdfug_c2/images/ResultTrimPartition.png" width="465"><br><img height="753" src="b35doc/english/online/tdfug_c2/images/TrimPartitionTree.png" width="182"></p>
+	<p>Result areas are stored under geometrical sets:</p>
+	<ul>
+		<li><kbd>Planned Elements</kbd> (Associated to a 
+		process action)</li>
+		<li><kbd>Not Planned Elements</kbd> (Not associated 
+		to any process action)</li>
+		<li><kbd>Ignored Elements</kbd> (Not used by the 
+		process).</li>
+	</ul>
+	as<ul>
+		<li><kbd>Positioning Hole</kbd></li>
+		<li><kbd>Painting Hole</kbd></li>
+		<li><kbd>Cutting Line</kbd></li>
+		<li><kbd>Intermediate - name</kbd>.</li>
+	</ul>
+			</tr>
+  <tr>
+    <td colspan="2">
+    <p align="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

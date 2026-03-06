@@ -1,0 +1,850 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating Swept Surfaces
+	</title>
+ <meta name="Microsoft Border" content="none, default">
+	<style>
+<!--
+div.Section1
+	{page:Section1;}
+.style1 {
+	color: #666666;
+}
+-->
+</style>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+</head>
+
+ <body>
+
+ <h1><a name="CATCCSModelHeader.CATHybridPartSweep"></a>Creating Swept Surfaces<a name="CATShapeDesignCommandHeader.CATShapeDesignSweep"></a></h1>
+ <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+   <tr>
+     <td>&nbsp;</td>
+     <td>You can create a swept surface<a name="CATShapeDesignCommandHeader.CATShapeDesignSweep"></a> 
+     by sweeping out a profile in planes normal to a spine curve while taking 
+		other user-defined parameters (such as guide curves and reference 
+		elements) into account.<p>You can sweep an <a href="page13115.html">
+     <strong style="font-weight: 400">explicit profile</strong></a>:</p>
+     <ul>
+       <li>along one or two&nbsp;guide curves (in this case the first guide curve is 
+		used as the spine by default)</li>
+       <li>along one or two guide curves while respecting a specified spine.</li>
+     </ul>
+     <p>The profile is swept out in planes normal to the spine.</p>
+     <p>In addition, you can control the positioning of the profile while it is 
+		being swept by means of a&nbsp;reference surface.<br>
+     The profile position may be fixed with respect to the guide curve 
+		(positioned profile) or user-defined in the first sweep plane. </p>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ap2.gif" width="32" height="32"></td>
+     <td>You can sweep an<a href="page13118.html">
+     <strong style="font-weight: 400">implicit linear profile</strong></a> along 
+		a spine. This profile is defined by:<ul>
+       <li>two guide curves and two length values for extrapolating the profile</li>
+       <li>a guide curve and a middle curve</li>
+       <li>a guide curve, a reference curve, an angle and two length values for 
+		extrapolating the profile</li>
+       <li>a guide curve, a reference surface, an angle and two length values 
+		for extrapolating the profile</li>
+       <li>a guide curve, and a reference surface to which the sweep is to be 
+		tangent</li>
+       <li>a guide curve and a draft direction</li>
+       <li>two tangency surfaces.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ap2.gif" width="32" height="32"></td>
+     <td>You can sweep an <a href="page13119.html">
+     <strong style="font-weight: 400">implicit circular profile</strong></a> 
+     along a spine. This profile is defined by:<ul>
+       <li>three guide curves</li>
+       <li>two guide curves and a radius value</li>
+       <li>a center curve and two angle values defined from a reference curve 
+		(that also defines the radius)</li>
+       <li>a center curve and a radius</li>
+       <li>two guides and tangency surface</li>
+       <li>one guide and tangency surface</li>
+       <li>a limit curve and a tangency surface</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ap2.gif" width="32" height="32"></td>
+     <td>You can sweep an <a href="page13120.html">
+     <strong style="font-weight: 400">implicit conical profile</strong></a> 
+     along a spine. This profile is defined by:<ul>
+       <li>two guide curves</li>
+       <li>three guide curves</li>
+       <li>four guide curves</li>
+       <li>five guide curves</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>
+     <ul>
+       <li>Generally speaking, the sweep operation has a derivative effect, 
+		meaning that there may be a continuity loss when sweeping a profile 
+		along a spine. If the spine presents a curvature continuity, the surface 
+		presents at least a tangency continuity. If the spine presents a 
+		tangency continuity, the surface presents at least a point continuity.</li>
+       <li>Generally speaking, the spine must present a tangency continuity.<br>
+       However, in a few cases, even though the spine is not tangent continuous, 
+		the swept surface is computed:<ul>
+         <li>when the <a name="RI 431256">spine is by default the guide curve
+         </a>and is planar, as the swept surface is extrapolated then trimmed to 
+			connect each of its segments. Note that <a name="RI 442241">if a 
+			spine is added by the user</a>, the extrapolation and trim 
+			operations are not performed.</li>
+         <li>when consecutive segments of the resulting swept surface do not 
+			present any gap.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+           <tr>
+             <td><font>
+             <img border="0" src="b35doc/english/online/sdgug_c2/images/sweepconnex01.gif" align="left" width="211" height="93"></font></td>
+             <td>&nbsp;</td>
+             <td><img border="0" src="b35doc/english/online/sdgug_c2/images/sweepconnex02.gif" align="left" width="215" height="86"></td>
+           </tr>
+           <tr>
+             <td><i>Tangency discontinuous spine<br>
+             with connex swept segments<br>
+             (the sweep is created)</i></td>
+             <td>&nbsp;</td>
+             <td><i>Tangency discontinuous spine<br>
+             with non connex swept segments<br>
+             (the sweep is not created)</i></td>
+           </tr>
+         </table>
+         </li>
+       </ul>
+       </li>
+     	<li>In case of multiple solutions, the solution number displayed in the 
+		dialog box may not always be the same but the geometrical solution (that 
+		is the result of the sweep) remains the same.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>
+     <h2>Defining Laws<a name="hj-law"></a> </h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>Whatever the type of sweep, whenever a value is requested (angle or 
+		length) you can click <kbd>Law</kbd> to display the Law Definition 
+		dialog box. It allows you to define your own law to be applied rather 
+		than the absolute value.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td><img border="0" src="b35doc/english/online/sdgug_c2/images/dblawNLS.gif" width="328" height="515"></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">
+     <p class="task" style="margin-top: 0"><a name="hj-V5R10bis"></a>The Law 
+		Viewer allows you to:</p>
+     <ul>
+       <li>
+       <p class="task" style="margin-top: 0; margin-bottom: 0">visualize the law 
+		evolution and the maximum and minimum values,</li>
+       <li>
+       <p class="task" style="margin-top: 0; margin-bottom: 0">navigate into the 
+		viewer by panning and zooming (using to the mouse),</li>
+       <li>
+       <p class="task" style="margin-top: 0; margin-bottom: 0">trace the law 
+		coordinates by using the manipulator,</li>
+       <li>
+       <p class="task" style="margin-top: 0; margin-bottom: 0">change the viewer 
+		size by changing the dialog box size,</li>
+       <li>
+       <p class="task" style="margin-top: 0; margin-bottom: 0">fit all in by 
+		using the viewer contextual menu, </li>
+       <li>
+       <p class="task" style="margin-top: 0; margin-bottom: 0">change the law 
+		evaluation step by using the viewer contextual menu (from 0.1 (10 
+		evaluations) to 0.001 (1000 evaluations)).</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">Four types of laws are available:<ul>
+       <li><kbd>Constant</kbd>: a regular law, only one value is needed.</li>
+       <li><kbd>Linear</kbd>: a linear progression law between the <kbd>Start</kbd> 
+       and <kbd>End</kbd> indicated values</li>
+       <li><kbd>S type</kbd>: an S-shaped law between the two indicated values</li>
+       <li><kbd>Advanced</kbd>: allowing to select a Law element as defined in
+       <a href="page13131.html">Creating Laws</a>. </li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <blockquote>
+       <blockquote>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4">
+           <tr>
+             <td valign="top" class="normal">
+             <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+             <td class="normal">
+             <ul>
+               <li>
+               <p style="margin-top: 0; margin-bottom: 0">For <kbd>Linear</kbd>, <kbd>
+				S type</kbd> 
+				and<span class="uicontrol"> </span><kbd>Advanced</kbd> law 
+				types, only one solution is proposed in opposition to <kbd>
+				Constant</kbd> 
+				law type which gives four solutions (For further information, 
+				refer to Preview the Angular Value in the
+				<a href="page13115.html#hj-previewangularvalue">Creating Swept 
+				Surfaces Using an Explicit Profile</a> and
+				<a href="page13118.html#hj-previewangularvalue">Creating Swept 
+				Surfaces Using a Linear Profile</a>).</li>
+				<li>
+               <p style="margin-top: 0; margin-bottom: 0">You can check the <kbd>
+               Inverse law<a name="hj-inverselaw_V5R6"></a></kbd> button to 
+				reverse the law as defined using the above options.</li>
+               <li>
+               <p style="margin-top: 0; margin-bottom: 0"><a name="hj-V5R11">
+               </a>The law can be negative, providing the curves are curvature 
+				continuous.</li>
+               <li>
+               <p style="margin-top: 0; margin-bottom: 0">You can also apply 
+				laws created with the <i>Knowledge<a name="hj_RI329124"></a> 
+               Advisor</i> workbench to swept surfaces. </li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top" class="normal">&nbsp;</td>
+             <td class="normal">&nbsp;</td>
+           </tr>
+           <tr>
+             <td valign="top" class="normal">
+             <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+             <td class="normal">This capability is available with all types of 
+				swept surfaces, except for:<ul>
+               <li>explicit profile: <kbd>With pulling direction </kbd>subtype
+               </li>
+               <li>linear profile: <kbd>Limit and middle</kbd>,<kbd> With 
+				tangency surface</kbd> and <kbd>With two tangency surfaces</kbd> 
+               subtypes</li>
+               <li>circular profile: <kbd>Three guides</kbd> and <kbd>Two guides 
+				and tangency</kbd> <kbd>surface</kbd> subtypes</li>
+               <li>conical profile:<kbd> Five guide curves</kbd> subtype.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h2><a name="hj-relimiters"></a>Defining Relimiters</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">You can define relimiters (points or planes) in order to 
+		longitudinally reduce the domain of the sweep, if the swept surface is 
+		longer than necessary for instance.<br>
+     Below is an example with a plane as Relimiter 1.<br>
+     When there is only one relimiter, you are able to choose the direction of 
+		the sweep by clicking the green arrow.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <blockquote>
+       <p><img border="0" src="b35doc/english/online/sdgug_c2/images/sweeprelimiterNLS.gif" width="287" height="284"></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="bottom">&nbsp;</td>
+     <td valign="top">
+     <blockquote>
+       <blockquote>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber15">
+           <tr>
+             <td valign="top" class="normal">
+             <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+             <td class="normal">
+             <ul>
+               <li>Relimiters can be selected on a closed curve (curve, spine, 
+				or default spine). In that case, you are advised to define 
+				points as relimiters, as plane selection may lead to unexpected 
+				results due to multi-intersection.</li>
+               <li>You can relimit the default spine, thus avoiding to split it 
+				to create the swept surface.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ap2.gif" width="32" height="32"></td>
+     <td valign="top">
+     <h2><a name="hj-smoothing"></a>Smoothing</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><img border="1" src="b35doc/english/online/sdgug_c2/images/dbsweptdef19NLS.gif" width="274" height="74"></td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <p style="margin-top: 0; margin-bottom: 70">&nbsp;</td>
+     <td valign="top">
+     <ul>
+       <li>In the Smooth sweeping section, you can check:
+       <ul>
+         <li dir="ltr">
+         <p dir="ltr"><kbd>Angular correction</kbd> to smooth the sweeping 
+			motion along the reference surface.&nbsp; This may be necessary when 
+			small discontinuities are detected with regards to the spine 
+			tangency or the reference surface's normal. The smoothing is done 
+			for any discontinuity which angular deviation is smaller than the 
+			input value, and therefore helps generating better quality for the 
+			resulting swept surface.<br>
+         Over 0.01 degree, the smoothing is cancelled.<br>
+         By default, the angular correction is set to 0.5 degree.</li>
+         <li dir="ltr">
+         <p dir="ltr"><kbd>Deviation from guide(s)</kbd> to smooth the sweeping 
+			motion by deviating from the guide curve(s). A
+         <a href="page3156.html">smoothing</a> is performed using correction 
+			default parameters in tangency and curvature. <br>
+         By default, the deviation is set to 0.001mm, as defined in <kbd>Tools &gt; 
+			Options</kbd>. Refer to
+         <a href="page1102.html">General 
+			Settings</a> for more information.<br>
+         This option is not available with <kbd>With tangency surface</kbd> 
+         subtype.</li>
+       </ul>
+       </li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+           <td class="normal" valign="top">
+           <p class="task" style="margin-top: 0; margin-bottom: 0">
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+           <td class="normal">If the Tolerant laydown option is activated in <kbd>
+			Tools &gt; Options</kbd>, the guide curve is laid on the support in 
+			order to create the swept surface. However, the resulting surface is 
+			not based on the laid guide curve but on the initial guide curve. To 
+			get a swept surface based on the laid guide curve, the initial guide 
+			curve first needs to be projected.</td>
+         </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     &nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h2><a name="newR12"></a>&nbsp;<a name="hj-V5R16"></a>Removing Twisted Areas</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">During creation or edition, you can generate swept 
+		surfaces that have a twisted area by delimiting the portions of the 
+		swept surface to be kept. The generated surface is therefore composed of 
+		several unconnected parts.</td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+     <td>
+		<img border="1" src="b35doc/english/online/sdgug_c2/images/dbsweptdef26NLS.gif" width="324" height="151"></td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+     <td>&nbsp;</td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+     <td>In the Twisted areas management section, the<kbd>
+     Remove cutters on Preview</kbd> option lets you remove the cutters each 
+		time you click on <kbd>Preview</kbd>.</td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+     <td><span style="background-position: 0 0">
+		<a name="twist_management"></a>The <kbd>Setback</kbd>&nbsp;slider allows you 
+		to define a distance to move all the cutters from the twisted areas. It 
+		is defined as a percentage of the guide length from 0 to 20%. Its 
+		default value is 2%.</span></td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+     <td><span style="background-position: 0 0">The <kbd>Fill twisted areas</kbd> 
+		check box allows you to fill the twisted zones. It is activated by 
+		default.</span><table border="0" cellpadding="0" style="border-collapse: collapse" id="table2">
+		<tr>
+			<td valign="top">
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+			<td>
+			<ul>
+				<li><span style="background-position: 0 0">When you select this 
+				check box, the <kbd>Setback</kbd>&nbsp;slider affects only the 
+				cutters that have not been previously moved.</span></li>
+				<li><span style="background-position: 0 0">If you have not 
+				manually moved any cutter, and if you replace the main guide of 
+				the sweep, the twisted areas are filled with the defined 
+				setback. </span></li>
+			</ul>
+			</td>
+		</tr>
+		</table>
+		</td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+     <td>The <kbd>Compute C0 vertices as twisted areas</kbd> check box allows 
+		you to fill the C0 vertices areas taking into account the setback value.<br>
+		C0 vertices are the vertices on the input curve where there are tangency 
+		discontinuities. <br>
+		<img title="" src="b35doc/english/online/sdgug_c2/images/Sweptsurface02NLS.png" width="551" height="292"><br>
+		By selecting this option, C0 vertices that prevent from 
+		building the sweep correctly are computed, and the area around these 
+		vertices can be filled as standard twisted areas. You can use the 
+		Setback slider or the green manipulators to enlarge or reduce the area 
+		around the vertices.<br>
+		Below is an example with filled C0 vertices area.<br>
+		<img title="" src="b35doc/english/online/sdgug_c2/images/Sweptsurface01NLS.png" width="425" height="220"><br>
+		By default, this option is selected.<br>
+		<br>
+		Note: This option is unavailable with the <kbd>With tangency surface</kbd> 
+		and <kbd>With two tangency surfaces</kbd> subtypes of the linear 
+		profile, and <kbd>One guide and tangency surface</kbd> subtype of the 
+		circular profile.<table border="0" width="100%" id="table7">
+		<tr>
+			<td width="31">
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+			<td>When you select this check box and the <kbd>Fill twisted areas</kbd> 
+			check box is not selected, the C0 vertices areas are removed taking 
+			into account the setback value.</td>
+		</tr>
+		</table>
+	</td>
+   </tr>
+   <tr>
+     <td height="130">&nbsp;</td>
+     <td height="130"><span style="background-position: 0 0">The <kbd>Connection 
+		strategy</kbd> drop-down list enables you to choose the connection mode 
+		for the filled areas. The 3 options are:</span><ul>
+		<li><kbd><span style="background-position: 0 0">Automatic</span></kbd><span style="background-position: 0 0">: 
+		this mode chooses the best connection strategy depending on the 
+		geometry.</span></li>
+		<li><kbd><span style="background-position: 0 0">Standard</span></kbd><span style="background-position: 0 0">: 
+		this mode maintains the sweep profile.</span></li>
+		<li><span style="background-position: 0 0"> 
+		<kbd>Similar to guide</kbd>: this mode maintains the point continuity.</span><table border="0" cellpadding="0" style="border-collapse: collapse" id="table5" height="42">
+			<tr>
+				<td>
+           <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+				<td>
+				<ul>
+					<li>T<span style="background-position: 0 0">hese modes force 
+					the chosen connection.</span></li>
+					<li><span style="background-position: 0 0">If <kbd>Similar 
+					to guide</kbd> fails then the 
+					<kbd>Standard</kbd> 
+					connection strategy is applied. If this mode also fails, no 
+					connection strategy is applied.</span></li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		</li>
+		</ul>
+		</td>
+   </tr>
+   <tr>
+     <td height="66">&nbsp;</td>
+     <td height="66"><span style="background-position: 0 0">The <kbd>Add cutter</kbd> 
+		button allows you to create cutters on the main guide of the sweep.<br>
+		Note:<table style="width: 100%">
+		<tr>
+			<td>
+			<ul>
+				<li>If<span style="background-position: 0 0"> you add cutters, 
+				some points are automatically created along the guide curve of the sweep.</span><table style="width: 100%">
+					<tr>
+						<td>Using these points, you can split the guide curve 
+						into multiple pieces and work on each piece of the sweep 
+						individually.</td>
+					</tr>
+				</table>
+				</li>
+				<li><span style="background-position: 0 0">If you want to select 
+				the whole sweep (all the pieces of surfaces), select it directly 
+				in the specification tree.</span></li>
+				<li><kbd><span class="style1">Add cutter</span></kbd> works also 
+				for filling or removing a twisted area.</li>
+			</ul>
+			</td>
+		</tr>
+		</table>
+		</span><table border="0" cellpadding="0" style="border-collapse: collapse" id="table3" height="41">
+		<tr>
+			<td valign="top">
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+			<td>If <kbd><span style="background-position: 0 0">Fill twisted 
+			areas</span></kbd> 
+			is checked, while the <kbd><span style="background-position: 0 0">
+			Add</span></kbd>
+			<kbd><span style="background-position: 0 0">cutter</span></kbd>
+			button is clicked, the created cutters define a filled area. 
+			Otherwise, the cutters define a cutting zone.</td>
+		</tr>
+		</table>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top">
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td>C<span style="background-position: 0 0">learing <kbd>Fill twisted areas</kbd> 
+		disables the <kbd>Connection</kbd> <kbd>strategy</kbd> 
+		mode.</span></td>
+   </tr>
+   <tr>
+     <td valign="top">
+           &nbsp;</td>
+     <td>&nbsp;</td>
+   </tr>
+   <tr>
+     <td>
+             &nbsp;</td>
+     <td valign="top">
+		<h2><a name="hj-canonical_portion"></a>&nbsp;Detecting Canonical Portions for 
+		Surfaces</h2>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top">
+           &nbsp;</td>
+     <td>
+		<img border="1" src="b35doc/english/online/sdgug_c2/images/CanonicalDetectionNLS.gif" width="304" height="25"></td>
+   </tr>
+   <tr>
+     <td valign="top">
+           &nbsp;</td>
+     <td><font face="Verdana" size="2">This check box allows you to compute 
+		automatically the regular shapes like cylinders, cones, and spheres.</font><font face="Trebuchet MS" color="green" size="2"><span style="FONT-SIZE: 11pt; COLOR: green; FONT-FAMILY: 'Trebuchet MS'">
+		</span></font><font face="Trebuchet MS" size="2">
+		<span style="font-family: Verdana">Moreover, it can automatically detect 
+		planer surfaces if they exist in the swept surface. These planer 
+		surfaces could be used as support for other features.</span></font><br>
+		&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td>This option is unavailable for the following profile types:<ul>
+		<li><span style="background-position: 0 0"><kbd>Explicit</kbd></span></li>
+		<li><kbd><span style="background-position: 0 0">Linear</span></kbd><span style="background-position: 0 0"> 
+		for subtypes:</span><ul>
+			<li><kbd>
+			<span style="background-position: 0 0">
+			With tangency surface</span></kbd></li>
+			<li><kbd>
+			<span style="background-position: 0 0">
+			With two tangency surface</span></kbd></li>
+		</ul>
+		</li>
+		<li><span style="background-position: 0 0"><kbd>Circular </kbd>
+		for subtype <kbd>One guide and tangency surface</kbd></span>.</li>
+		</ul>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top">
+           &nbsp;</td>
+     <td>&nbsp;</td>
+   </tr>
+   <tr>
+     <td>
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td>Open the <a href="b35doc/english/online/sdgug_c2/samples/Sweep-Twist.CATPart">Sweep-Twist.CATPart</a> 
+     document.</td>
+   </tr>
+   <tr>
+     <td>&nbsp;</td>
+     <td>Let's take an example by creating a swept surface with an implicit 
+		linear profile.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"><p style="margin-top: 1100">
+		&nbsp;</td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">Click <kbd>Sweep</kbd>
+       <img src="b35doc/english/online/icons_C2/images/I_SweepP2.gif" width="24" height="24">.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5">
+         <tr>
+           <td>The <kbd>Swept Surface Definition</kbd> dialog box appears.</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task" style="margin-top: 0; margin-bottom: 0">Click the <kbd>
+		Line</kbd> 
+       profile icon and choose the <kbd>With reference</kbd> <kbd>surface</kbd> 
+       subtype.</li>
+       <li>
+       <p class="task" style="margin-top: 0; margin-bottom: 0">Select <kbd>
+		Curve.1</kbd> as the <kbd>Guide Curve 1</kbd>.</li>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0" class="task">Select the <kbd>
+		xy plane</kbd> as the reference surface.</li>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0" class="task">Define <kbd>
+		Length 1</kbd> 
+		as 30 mm and a <kbd>Length 2</kbd> as 10 mm.</li>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0" class="task">Deselect <kbd>
+       Remove cutters on Preview</kbd>.</li>
+		<li>
+       <p style="margin-top: 0; margin-bottom: 0" class="task">
+		Deselect <kbd>
+		Fill twisted areas</kbd>.</li>
+       <li>
+       <p class="task" style="margin-top: 0; margin-bottom: 0">Click <kbd>
+       Preview</kbd>.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber6">
+         <tr>
+           <td>An error message is displayed advising you to use a guide with a 
+			smaller curvature and two manipulators (&quot;cutters&quot;) appear for each 
+			untwisted zone. Their default positions are the maximal zone 
+			delimiters out of which they cannot be dragged. This maximal zone 
+			corresponds to the larger untwisted portion of the swept surface. </td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/sdgug_c2/images/sweeptwist01NLS.gif" width="264" height="259"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task" style="margin-top: 0; margin-bottom: 0">Use these 
+		manipulators to delimit the portions of the swept surface you want to 
+		keep. These cutters are stored in the model as points on curve with 
+		ratio parameters when the guide curve is not closed. </p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber8">
+         <tr>
+           <td class="normal" height="34">
+           <img src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+           <td class="normal" height="34">We advise you cut a bit less than the 
+			maximal zone to delimit a safety area around the twisted portion.</td>
+         </tr>
+         <tr>
+           <td class="normal">
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+           <td class="normal">When you move the manipulators, the <kbd>
+			Remove cutters on Preview</kbd> option is automatically unchecked to 
+			prevent the loss of manual adjustments after clicking <kbd>Preview</kbd>.</td>
+         </tr>
+         <tr>
+           <td colspan="2">A contextual menu is available on the manipulators:</td>
+         </tr>
+         <tr>
+           <td colspan="2">
+           <ul>
+             <li>
+             <p class="task" style="margin-top: 0; margin-bottom: 0"><kbd>Reset 
+				to initial position</kbd>: sets the manipulators back to their 
+				default positions, that is the position defined as the maximal 
+				zone.</li>
+             <li>
+             <p style="margin-top: 0; margin-bottom: 0"><kbd>Remove twisted 
+				areas management</kbd>: removes the manipulators and performs 
+				the swept surface generation again.</li>
+           </ul>
+           </td>
+         </tr>
+         </table>
+       </li>
+       <li>
+       <p class="task" style="margin-top: 0; margin-bottom: 0">Click <kbd>
+       Preview</kbd> again in the <kbd>Swept Surface Definition</kbd> dialog 
+		box.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber10">
+         <tr>
+           <td colspan="2">The swept surface is generated.</td>
+         </tr>
+         <tr>
+           <td colspan="2"><img border="0" src="b35doc/english/online/sdgug_c2/images/sweeptwist02NLS.gif" width="366" height="311"></td>
+         </tr>
+         <tr>
+           <td class="normal">
+           <p class="task" style="margin-top: 0; margin-bottom: 0">
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+           <td class="normal">If you modify the length value after clicking <kbd>
+           Preview</kbd>, and the swept surface to be generated has no twisted 
+			area, the generated swept surface will still be cut. Use the <kbd>
+           Remove twisted areas management</kbd> option to start the operation 
+			again.</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p style="margin-top: 0; margin-bottom: 0" class="task">Check <kbd>Remove 
+		cutters on Preview</kbd> and click <kbd>Preview</kbd>.</p>
+       <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber13">
+         <tr>
+           <td>The error message is displayed again.</td>
+         </tr>
+         <tr>
+           <td>This option amounts to using the <kbd>Remove twisted areas 
+			management </kbd>contextual command before clicking on Preview: the 
+			swept surface is recomputed without the green relimiters each time 
+			you click on Preview.</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task" style="margin-top: 0; margin-bottom: 0">Enter 15mm for 
+       <kbd>Length 1</kbd> to reduce the swept surface width.</li>
+       <li>
+       <p class="task" style="margin-top: 0; margin-bottom: 0">Click <kbd>
+       Preview</kbd> again.</p>
+       <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber14">
+         <tr>
+           <td>The surface has no twisted areas any more nor any hole introduced 
+			by a previous cusp or twist detection.</td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/sdgug_c2/images/sweeptwist04NLS.gif" width="334" height="249"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task" style="margin-top: 0; margin-bottom: 0">Click <kbd>OK</kbd> 
+       to create the swept surface.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber11">
+         <tr>
+           <td colspan="2"><img border="0" src="b35doc/english/online/sdgug_c2/images/sweeptwist03.gif" width="139" height="197"></td>
+         </tr>
+         <tr>
+           <td valign="top" class="normal">
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+           <td valign="top" class="normal">This capability is available with all 
+			types of swept surfaces, except for the <kbd>With tangency surface</kbd> 
+			and <kbd>With two tangency surfaces</kbd> 
+           subtypes of the linear profile, and the <kbd>One guide and tangency 
+			surface</kbd> of the circular profile.</td>
+         </tr>
+         <tr>
+           <td valign="top" class="normal">&nbsp;</td>
+           <td valign="top" class="normal">&nbsp;</td>
+         </tr>
+         <tr>
+           <td valign="top" class="normal">
+           <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+           <td valign="top" class="normal">
+           <ul>
+			<li>
+			<p class="task" style="margin-top: 0; margin-bottom: 0">
+			<span style="background-position: 0 0">If the
+			<kbd>Fill twisted areas </kbd>option is selected, then when you 
+			click <kbd>OK</kbd>, if there are some areas that could not be 
+			filled, an error message is displayed and these areas remain empty.</span><table border="0" width="100%" cellpadding="0" style="border-collapse: collapse" id="table4">
+				<tr>
+					<td width="32">
+           <img src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+					<td><span style="background-position: 0 0">Use the displayed 
+					3D cutters to enlarge the zone in order to correctly build 
+					the missing area.</span></td>
+				</tr>
+			</table>
+			</li>
+			<li>
+			<p class="task" style="margin-top: 0; margin-bottom: 0">If the 
+			generated surface is composed of several unconnected part, the 
+			Multi-result management dialog box opens. For further information, 
+			refer to
+           	<a href="page3214.html">
+			Managing Multi-Result Operations</a>.</li>
+			</ul>
+			</td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p dir="ltr">&nbsp;</p>
+
+ </body>
+
+</html>
+

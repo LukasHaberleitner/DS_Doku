@@ -1,0 +1,205 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>About Rosette and Rosette Transfer Type</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style type="text/css">
+.style1 {
+				border-style: solid;
+				border-width: 1px;
+}
+.auto-style2 {
+	font-weight: bold;
+	color: #666666;
+}
+</style>
+</head>
+
+<body>
+
+<h1 align="center">
+About Rosette and Rosette Transfer Type</h1>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+  <tr>
+    <td valign="top">
+    &nbsp;</td>
+    <td valign="top">
+    The rosette is an object that defines where the 0� orientation of the fibers 
+	is. This is done at design level. <br>A rosette transfer type feature is 
+	associated to the rosette feature. <br>This combination of features is defined 
+	in the Composites Parameters. <br>It is referred to as &quot;rosette feature&quot;, and 
+	replaces the former structure where you had to select an axis system and 
+	then specify a rosette transfert type.<p>STEP format does not support the 
+	rosette transfer type:<ul><li>Only the axis system referenced by the rosette 
+		feature is exported. <br>This axis system is retrieved at import, a rosette 
+		feature is created from it, always with the cartesian transfer type, and 
+		associated to the ply.</li></ul><p>
+    The rosette is an axis system positioned somewhere on the part. <ul><li>It is defined 
+		in <kbd>Composites Parameters</kbd>.</li>
+		<li>Its representation in the 3D looks like this<br>
+		<img src="b35doc/english/online/cpdug_c2/images/RosetteRepresentation.png"></li>
+		<li>The represented orientations depend on those defined in Composites 
+		Parameters.</li>
+		<li>Only orientations between -180� and 180� are represented.</li>
+		<li>Within that range, each orientation is represented by an arrow and 
+		its value.<ul>
+			<li>There is only one arrow per orientation value.</li>
+			<li>The color of the arrow matches that of the orientation.</li>
+		</ul>
+		</li>
+		<li>Standard <kbd>Reframe On</kbd> and <kbd>Center tree</kbd> commands 
+		are available.</li>
+		<li>Edition of the rosette is available by double-click.</li>
+		<li>You can define the rosette zoom behavior.</li>
+	</ul><p>The <kbd>Rosette 
+	Transfer</kbd> defines how the rosette is positioned at any location of the 
+	reference surfaces of the Composites design. <br>At this location, the X-axis of 
+	the rosette corresponds to the 0� orientation of the fiber. This information 
+	is of high value for the designer.<ul><li>The rosette transfer type is 
+		defined during the rosette definition.</li>
+		<li>It can be edited to allow the selection of multiple geometric 
+		entities of the specification of parameters.</li>
+		<li>It cannot be updated, but an update error is displayed when an input 
+		is missing.</li>
+		<li>It does not have a 3D representation.</li></ul><p>Composites Design proposes 
+	several&nbsp; types of 
+	rosette transfer:<ul>
+		<li><kbd>Cartesian</kbd><table style="width: 100%">
+			<tr>
+				<td>
+				<ul>
+					<li>At a given point, the rosette is transferred on a plane 
+					tangent to the reference surface. <br>The computation is 
+					performed only by geometric transformations of vectors.<br>
+					<img height="298" src="b35doc/english/online/cpdug_c2/images/Rosette14.png" width="432"></li>
+					<li>
+					The Z-axis of the transferred rosette 
+					is the normal at the seed point (ZTrans=N*(Orientation 
+					value)) on the reference surface (shown by the dotted blue 
+					arrow).
+					</li>
+					<li>
+					The orientation value used to make 
+					the angle between the Z-axis of the initial rosette and the 
+					Z-axis of the transferred rosette is lower than 180�.
+					</li>
+					<li>
+					The rosette is brought in a plane 
+					tangent to the surface at point P, using the X-axis 
+					direction of the rosette.
+					</li>
+					<li>
+					The transfer of the rosette is 
+					computed as follows, where ^ is the vector product.<br>X, Y 
+					are transferred if ZTrans is not parallel to the X-axis of 
+					the rosette<br>YTrans = ZTrans ^ XRosette<br>XTrans = YTrans 
+					^ ZTrans.
+					</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		</li><li>G<span class="auto-style2">uided by Curve</span><table style="width: 100%">
+			<tr>
+				<td>The X-axis of the rosette sweeps along the guide 
+				curve (neutral fiber) to be brought to the plane tangent to the 
+				reference surface at this point.<br>
+				<img height="238" src="b35doc/english/online/cpdug_c2/images/Rosette16.png" width="450"><ul>
+					<li>The seed point is projected on the guide curve 
+					(projection shown by the purple arrow).</li>
+					<li>The tangent to the guide curve is computed at the 
+					projected point. It is the XRef direction.</li>
+					<li>The rosette is brought in the plane tangent to the 
+					surface at the point P, with respect to the XRef direction 
+					computed for the guide curve.</li>
+					<li>The transfer of the rosette is computed as follows, 
+					where ^ is the vector product.<br>YTrans = ZTrans ^XRef (on 
+					neutral fiber)<br>XTrans = YTrans ^ZTrans<br>
+					ZTrans=N*(Orientation value), where N is the normal to the 
+					surface at the projected point (shown by the dotted blue 
+					arrow).</li>
+				</ul>
+				<p>Two options are proposed:</p>
+				<ul>
+					<li>0� guided by curve where the tangent to the guide curve 
+					is the 0� orientation, i.e. the X-axis of the rosette.</li>
+					<li>90� guided by curve where the tangent to the guide curve 
+					is the 90� orientation.</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		</li><li><kbd>External<br></kbd>Dedicated to external CAA users.</li>
+	</ul>
+	<h2>Cartesian vs Guided by Curve</h2>
+	<p>With the <kbd>Cartesian</kbd> type, if the angle between ZTrans and X is small (less 
+	than 10�), the result of the scalar product may vary a lot as in the example 
+	below. <br>The reason is that the X-axis of the rosette is locally closed to the 
+	normal of the surface at the point.</p>
+	<p>In the example below, the white axis system is the initial rosette, the 
+	red circle shows the transferred rosettes.<br>
+	<img height="296" src="b35doc/english/online/cpdug_c2/images/Rosette1B.png" width="432"></p>
+	<p>The pertinency of the rosette transfer depends on the position of the 
+	point on the surface, and on the shape of the surface. <br>For U-shaped 
+	surfaces, we recommend you use the guided by curve transfer type: The 
+	transferred rosettes are more stable, thanks to the neutral fiber.</p>
+	<p>In the example below, the red circle shows the rosettes transferred in 
+	relation with the neutral fiber, shown by the red arrow. <br>
+	<img height="294" src="b35doc/english/online/cpdug_c2/images/Rosette1E.png" width="431"></p>
+	<h2>Older Models</h2>
+	<p>When opening an older model, you will be asked to upgrade it to the new 
+	rosette feature. This upgrade is done in two steps:<ul><li>Migration to the
+		<a href="page5386.html">extended laminates</a>.</li>
+		<li>Migration to the new rosette feature. This step is only available 
+		after the first one has been completed.</li>
+		<li>A report is available at the end of the migration.</li>
+		<li>You must migrate both Engineering and Manufacturing stackings, or 
+		mirror parts, or stackings to merge before synchronization.</li>
+	</ul>
+	<p>The migration to the new rosette feature is done as follows:</p>
+	<ul>
+		<li>Only non identical rosette features are created (identical rosette 
+		features have the same axis system, the same rosette transfer type and 
+		the same transfer type inputs).</li>
+		<li>A rosette feature is created for each axis system referenced by a 
+		Composites entity. This axis system becomes an input of the rosette.</li>
+		<li>The rosette transfer type of this rosette feature is given by the 
+		grid panel, or the plies group, or the zone group.</li>
+		<li>If two transfer types exist for one single axis system, one rosette 
+		feature is created for each axis system/transfer type couple.</li>
+		<li>If a ply has a different axis system than its ply group, an 
+		additional rosette feature will be created with the axis system of the 
+		ply and the rosette transfer type of the ply group. This also applies to 
+		cut-pieces/ply, zone/zones group and virtual ply/grid panel.</li></ul>
+	<h2>Examples</h2>
+	<p>The impact of the rosette transfer is quite visible in <kbd>Fiber Direction</kbd>. 
+	<br>In the images below, the rosette is the white axis system. <br>The other axis 
+	systems are transferred rosettes, at different locations on the surface. <br>In 
+	those axis systems, the green line is the X-axis of the transferred rosette, 
+	and the white line its Y-axis. <br>The green line corresponds to the 0� 
+	orientation of the fiber. <br>In this example, the 45� orientation of the fiber 
+	is represented by the blue line.<br>
+	<img src="b35doc/english/online/cpdug_c2/images/RosetteE.png"><br>
+	<img height="238" src="b35doc/english/online/cpdug_c2/images/Rosette10.png" width="372"></p>
+	<p>With <kbd>Producibility</kbd>, the rosette is transferred on the seed 
+	point.<br><img height="312" src="b35doc/english/online/cpdug_c2/images/Rosette13.png" width="384"></p>
+	  </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+    <p align="center">
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

@@ -1,0 +1,511 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Vault Administration Tools</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Vault Administration Tools</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td rowspan="1"><a name="ix-Vault Server::vault administration tools"></a>
+     There are two vault administration tools. The purpose of the first one is 
+     to encrypt database password for the Vault Server properties file, and the 
+     second one is about how to administrate a Vault Server from a remote 
+     workstation. The remote workstation requires an 
+     <strong>LCA Classic</strong> 
+     installation (VPC) or Vault Administration (VAR) configuration.<p>This 
+     vault administration tools are available on both UNIX and Windows. This 
+     section illustrates the commands on UNIX.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td>Conventions for command syntax:</td>
+   </tr>
+ </table>
+ <p align="left">&nbsp;</p>
+ <table border="1" width="100%">
+   <tr>
+     <td width="22%" align="center"><b>Feature</b></td>
+     <td width="22%" align="center"><b>Example</b></td>
+     <td width="56%" align="center"><b>Explanation</b></td>
+   </tr>
+   <tr>
+     <td width="22%">Bold text</td>
+     <td width="22%">START&nbsp;</td>
+     <td width="56%">Enter text exactly as written</td>
+   </tr>
+   <tr>
+     <td width="22%">Lowercase italics</td>
+     <td width="22%">user_name&nbsp;</td>
+     <td width="56%">A clause value; substitute an appropriate value.</td>
+   </tr>
+   <tr>
+     <td width="22%">Vertical bar</td>
+     <td width="22%">&nbsp;|&nbsp;</td>
+     <td width="56%">Separate alternative syntax elements that may be optional 
+     or mandatory.</td>
+   </tr>
+   <tr>
+     <td width="22%">Brackets</td>
+     <td width="22%">[OFF | ON]</td>
+     <td width="56%">One or more optional items. If two items appear separated 
+     by |, enter one of them. Do not enter the brackets or |.</td>
+   </tr>
+   <tr>
+     <td width="22%">Braces</td>
+     <td width="22%">{OFF | ON}</td>
+     <td width="56%">A choice of mandatory items. If two items appear separated 
+     by |, enter one of them. Do not enter the braces or |.</td>
+   </tr>
+ </table>
+ <p align="left">&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td rowspan="1">
+     <h4><font color="#282187"><a name="hj-GenVaultPassword"></a>Database 
+     password encryption for the Vault Server properties file</font></h4>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td>
+     <p class="MsoBodyText" style="tab-stops: .25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+     You can generate the database password to put in the Vault Server properties 
+     file by using the following command logged as root:</p>
+     <blockquote>
+       <p class="MsoBodyText" style="tab-stops: .25in .5in 1.0in 1.5in 2.0in 2.5in 3.25in; margin-right: 0in; margin-top: 6.0pt; margin-bottom: .0001pt">
+       <code>./catstart&nbsp; -run &quot;GenVaultPasswd -UserName user_name -Passwd 
+       user_database_password&quot;</code> </p>
+     </blockquote>
+     <p class="MsoBodyText" style="tab-stops: .25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; margin-right: 0in; margin-top: 12.0pt; margin-bottom: .0001pt">
+     Then, you can copy and paste the password from the output into the 
+     properties file. The pertaining key is VaultServer_DBPassword.</p>
+     <p class="MsoBodyText" style="tab-stops: .25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; margin-right: 0in; margin-top: 12.0pt; margin-bottom: .0001pt">
+     Some usage help will be provided if you execute:</p>
+     <blockquote>
+       <p class="MsoBodyText" style="tab-stops: .25in 171.0pt 2.5in 3.0in">
+       <code>./catstart&nbsp; -run&nbsp; GenVaultPasswd</code></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <h4><font color="#282187">VaultServer administration tool</font></h4>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td>
+     <p class="MsoBodyText" style="tab-stops: 171.0pt 2.5in 3.0in; margin-right: 0in; margin-top: 12.0pt; margin-bottom: .0001pt">
+     In order to allow remote administration services on Vault Server, a tool 
+     called <code>vsadm,</code> which stands for Vault Server Administration, has 
+     been supplied. Some usage help will be provided if you execute:</p>
+     <blockquote>
+       <p class="MsoBodyText" style="tab-stops: 171.0pt 2.5in 3.0in; margin-right: 0in; margin-top: 12.0pt; margin-bottom: .0001pt">
+       <code>./catstart&nbsp; -run&nbsp; vsadm</code></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <h4><font color="#282187">How to start/stop a Vault Server from a remote 
+     workstation</font></h4>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td>
+     <p class="MsoBodyText" style="tab-stops: .5in 1.0in 1.5in 2.0in 2.5in 3.0in; margin-right: 0in; margin-top: 12.0pt; margin-bottom: .0001pt">
+     You can start a remote Vault Server by using the following command logged on 
+     as root: </p>
+     <blockquote>
+       <p class="MsoBodyText" style="tab-stops: .5in 1.0in 1.5in 2.0in 2.5in 3.0in; margin-right: 0in; margin-top: 12.0pt; margin-bottom: .0001pt">
+       <code>./catstart&nbsp; -run&nbsp; &quot;vsadm&nbsp; START&nbsp;{ALIAS&nbsp;vaultserver_alias_name</code>
+       </p>
+     </blockquote>
+     <p class="MsoBodyText" style="margin-left:.5in;tab-stops:2.75in 3.0in">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <code>VAULT&nbsp;vaultserver_name</code></p>
+     <p class="MsoBodyText" style="margin-left:.5in;tab-stops:2.75in 3.0in">
+     <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     HOST&nbsp;&nbsp;vaultserver_host</code></p>
+     <p class="MsoBodyText" style="margin-left:.5in;tab-stops:2.75in 3.0in">
+     <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     PORT&nbsp;&nbsp;vaultserver_port }&quot;</code> </p>
+     <p class="MsoBodyText" style="tab-stops: .5in 1.0in 1.5in 2.0in 2.5in 3.0in; margin-right: 0in; margin-top: .25in; margin-bottom: .0001pt">
+     You can stop a remote Vault Server by using the following command:</p>
+     <p class="MsoBodyText" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt;tab-stops:.5in 1.0in 1.5in 2.0in 2.25in 171.0pt 189.0pt 2.75in">
+     .<code>/catstart&nbsp; -run &quot;vsadm&nbsp; STOP&nbsp;{ALIAS vaultserver_alias_name&nbsp; 
+     |</code></p>
+     <p class="MsoBodyText" style="tab-stops: 2.75in 3.0in"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     VAULT vaultserver_name</code></p>
+     <p class="MsoBodyText" style="tab-stops: 2.75in 3.0in"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     HOST&nbsp; vaultserver_host</code></p>
+     <p class="MsoBodyText" style="tab-stops: 2.75in 3.0in"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     PORT&nbsp; vaultserver_port }&quot;</code> </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <h4><font color="#282187">How to refresh Vault Server properties from a 
+     remote workstation</font></h4>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td>
+     <p class="MsoBodyText" style="tab-stops: .25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; margin-right: 0in; margin-top: 24.0pt; margin-bottom: .0001pt">
+     You can reload Vault Server properties by using the following command logged 
+     on as root: </p>
+     <p class="MsoBodyText" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt;tab-stops:.5in 1.0in 1.5in 2.0in 2.25in 171.0pt 3.5in 261.0pt 297.0pt">
+     <code>./catstart&nbsp; -run&nbsp; &quot;vsadm&nbsp; REFRESH&nbsp;PROPERTIES
+     </code></p>
+     <p class="MsoBodyText" style="margin-left:.5in;tab-stops:.5in 207.0pt 3.5in">
+     <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     VAULT&nbsp;&nbsp;&nbsp;vaultserver_name</code></p>
+     <p class="MsoBodyText" style="margin-left:.5in;tab-stops:.5in 207.0pt 3.5in">
+     <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     HOST&nbsp;&nbsp;&nbsp;&nbsp;vaultserver_host</code></p>
+     <p class="MsoBodyText" style="margin-left:.5in;tab-stops:.5in 207.0pt 3.5in">
+     <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     PORT&nbsp;&nbsp;&nbsp;&nbsp;vaultserver_port }&quot;</code> </p>
+     <p>Here is the list of VaultServer properties you can modify and reload:</p>
+     <blockquote>
+       <p><code>VaultServer_ThreadNumber<br>
+       VaultServer_Trace<br>
+       VaultServer_DBMINPoolSize<br>
+       VaultServer_DBMAXPoolSize<br>
+       VaultServer_FDSMIN<br>
+       VaultServer_NumOfRepo<br>
+       VaultServer_Repo_x_Name<br>
+       VaultServer_Repo_x_Path<br>
+       VaultServer_Repo_x_ReadOnly<br>
+       VaultServer_Repo_x_TmpDirName<br>
+       VaultServer_Repo_x_Priority<br>
+       VaultServer_Repo_x_NumOfSecDir<br>
+       VaultServer_Repo_x_SecDireName_y</code></p>
+     </blockquote>
+     <p class="MsoBodyText" style="tab-stops: .5in 171.0pt 2.5in 3.0in; margin-right: 0in; margin-top: .25in; margin-bottom: .0001pt">
+     If you are using a VaultCache, you can modify and reload the following 
+     additional properties:</p>
+     <blockquote>
+       <p><code>VaultServer_Cache_MaxSize<br>
+       VaultServer_Cache_CleanThreshold<br>
+       VaultServer_Cache_Rate<br>
+       VaultServer_Cache_Enabled<br>
+       VaultServer_Cache_TimeoutForClean</code></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <h4><font color="#282187">How to enable Vault Server tracing from a remote 
+     workstation</font></h4>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td>
+     <p class="MsoBodyText" style="tab-stops: .25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; margin-right: 0in; margin-top: 24.0pt; margin-bottom: .0001pt">
+     You can enable tracing on a Vault Server by using the following command 
+     logged as root: </p>
+     <p class="MsoBodyText" style="margin-top:6.0pt;margin-right:0in;margin-bottom:
+0in;margin-left:.5in;margin-bottom:.0001pt;tab-stops:.5in 1.0in 1.5in 2.0in 171.0pt 189.0pt 2.75in 243.0pt 297.0pt">
+     <code>./catstart&nbsp; -run&nbsp;&quot;vsadm&nbsp; TRACE&nbsp;{ALIAS 
+     vaultserver_alias_name&nbsp; |</code></p>
+     <p class="MsoBodyText" style="margin-left:.5in;tab-stops:.5in 2.75in 243.0pt">
+     <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		VAULT&nbsp;&nbsp;&nbsp;&nbsp;vaultserver_name</code></p>
+     <p class="MsoBodyText" style="margin-left:.5in;tab-stops:.5in 2.75in 243.0pt">
+     <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		HOST&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vaultserver_host</code></p>
+     <p class="MsoBodyText" style="margin-left:.5in;tab-stops:.5in 2.75in 243.0pt">
+     <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		PORT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vaultserver_port }</code> </p>
+     <p class="MsoBodyText" style="margin-left:.5in;tab-stops:.5in 189.0pt 2.75in">&nbsp; 
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     {ON&nbsp; | OFF }&quot;</code> </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <h4><font color="#282187"><a name="hj-newtools"></a>How to list 
+     VaultAliasName</font></h4>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td>You can list the whole set of VaultAliasName entries by using the 
+     following command logged on as root:
+     <blockquote>
+       <p><code>./catstart&nbsp; -run&nbsp; &quot;vsadm&nbsp; LIST&nbsp;ALIAS&quot;</code></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <h4><font color="#282187">How to get Vault Client configuration parameters 
+     on the local workstation</font></h4>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td>You can get Vault Client parameters configuration by using the following 
+     command logged on as root:
+     <blockquote>
+       <p><code>./catstart&nbsp; -run&nbsp; &quot;vsadm&nbsp; GET&nbsp;CLIENT&nbsp;CFG&quot;</code></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <h4><font color="#282187">How to get Vault Server configuration parameters 
+     from a remote workstation</font></h4>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td>You can get Vault Server configuration parameters by using the following 
+     command logged on as root:
+     <blockquote>
+       <p><code>./catstart&nbsp; -run&nbsp; &quot;vsadm&nbsp; GET&nbsp;SERVER&nbsp;CFG&nbsp;FOR {ALIAS&nbsp;&nbsp; vaultserver_alias_name|</code></p>
+       <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VAULT&nbsp;&nbsp; vaultserver_name</code></p>
+       <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HOST&nbsp;&nbsp;&nbsp; vaultserver_host </code></p>
+       <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORT&nbsp;&nbsp;&nbsp; vaultserver_port}&quot;</code></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <h4><font color="#282187">How to have a Vault Server online/offline from a 
+     remote workstation</font></h4>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td>
+     <p align="left">You can have a Vault Server online/offline by using the 
+     following command logged on as root:</p>
+     <p align="left"><code>./catstart&nbsp; -run&nbsp; &quot;vsadm&nbsp; TAKE {&nbsp; 
+     ALIAS&nbsp;&nbsp; vaultserver_alias_name&nbsp; |</code></p>
+     <p align="left"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VAULT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vaultserver_name</code></p>
+     <p align="left"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HOST&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vaultserver_host</code></p>
+     <p align="left"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vaultserver_port }</code></p>
+     <p align="left"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ONLINE&nbsp; |&nbsp; OFFLINE }&quot;</code></p>
+     <p align="left">When a Vault Server is offline, all database connections are 
+     released and client requests receive a specific answer which is a dedicated 
+     error message. However, client/server orbix connections are kept. Thus, the 
+     client applications do not need to be restarted when the Vault Server is put 
+     back online.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <h4><font color="#282187">How to test a Vault Server from a remote 
+     workstation</font></h4>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>
+     <p align="left">You can test if a Vault Server is OK by using the following 
+     command logged as root:</p>
+     <p align="left"><code>./catstart&nbsp; -run&nbsp; &quot;vsadm&nbsp; TEST&nbsp; 
+     ALIAS&nbsp;&nbsp; vaultserver_alias_name&quot;</code></p>
+     <p>This test creates a file in the vault and reads it. The creation of the 
+     file confirms that the vault is running correctly.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <h4><font color="#282187">How to get Vault Server request queues state from 
+     a remote workstation</font></h4>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td>
+     <p align="left">You can get Vault Server request queues state by using the 
+     following command logged on as root:</p>
+     <p align="left">.<code>/catstart&nbsp; -run&nbsp; &quot;vsadm&nbsp; GET&nbsp;SERVER&nbsp;REQUEST&nbsp;STATE&nbsp;FOR</code> <code>{ ALIAS 
+     vaultserver_alias_name|</code></p>
+     <p align="left"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VAULT vaultserver_name</code></p>
+     <p align="left"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HOST&nbsp; vaultserver_host</code></p>
+     <p align="left"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORT&nbsp; vaultserver_port }&quot;</code><p>
+		When a request arrives on the Vault Server it is dispatched to a 
+		dedicated queue for execution, depending on the request type. </p>
+		<p>There is a dedicated queue to manage the commit request (<code>commit 
+		priority</code>). The commit command releases some critical resources 
+		such as a DB connection on the Vault Server; that is why there is a 
+		dedicated pipe to manage it. </p>
+		<p>There is a dedicated queue to manage <code>high priority</code> 
+		requests such as shutdown. Some commands have to be executed 
+		immediately; that is why there is a dedicated pipe to manage them. </p>
+		<p>There is a default queue for all other request types (<code>standard 
+		priority</code>). For instance, the request used to create a Vault 
+		document is a standard priority request. </p>
+		<p>Most of the time you should not have more than two or three for each 
+		priority queue. Otherwise, it means that you may have a lack of CPU or a 
+		lack of execution thread.</p>
+		<p>For instance when you have:</p>
+		<p><code>Standard priority request queue state: &lt;12&gt;; </code></p>
+		<p>it means that 11 remote users are waiting to have their request 
+		executed on the Vault Server. </p>
+		<p><b>Bad elapse time</b> </p>
+		<p>The first thing to do is to check the CPU consumption. If the CPU 
+		consumption on the machine is more than 70%, additional processors have 
+		to be added on the machine. If the CPU consumption is low, then the:</p>
+		<p><code>VaultServer_ThreadNumber</code></p>
+		<p>parameter should be increased.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td>
+     <h2><font color="#282187">Commands for Vault Cache Management</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <h4>How to force documents refresh between Vault Cache and Vault Servers from 
+     a remote workstation</h4>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>
+     <p align="left">You can force document refresh between Vault Cache and all 
+     Vault Servers by using the following command logged as root:</p>
+     <p align="left">.<code>/catstart&nbsp; -run&nbsp; &quot;vsadm&nbsp; REFRESH 
+     DOCUMENTS VAULT vaultserver_name</code></p>
+     <p align="left"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HOST&nbsp; vaultserver_host</code></p>
+     <p align="left"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORT&nbsp; vaultserver_port </code></p>
+     <p align="left"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [FETCHSIZE fetch_size_value]&quot;</code></p>
+     <p align="left">The command above trigger a document version check and 
+     refresh for the Whole set of document hold by the Vault Cache regarding all 
+     the Vault Server cached by the Vault Cache. You can specify your own 
+     fetchsize if you want.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <h4>How to force documents refresh between Vault Cache and a given 
+     Vault Server from a remote workstation</h4>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>
+     <p align="left">You can force document refresh between Vault Cache and a 
+     given Vault Server identified by an alias by using the following command 
+     logged as root:</p>
+     <p align="left">.<code>/catstart&nbsp; -run&nbsp; &quot;vsadm&nbsp; REFRESH 
+     DOCUMENTS VAULT vaultserver_name</code></p>
+     <p align="left"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HOST&nbsp; vaultserver_host</code></p>
+     <p align="left"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PORT&nbsp; vaultserver_port </code></p>
+     <p align="left"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FROM ALIAS vaultserver_alias_name</code></p>
+     <p align="left"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     [FETCHSIZE fetch_size_value]&quot;</code></p>
+     <p align="left">The command above triggers a document version check and 
+     refresh for the whole set of documents held by the Vault Cache regarding a 
+     given Vault Server. You can specify your own fetchsize if you want.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <h4>How to add new documents into Vault Cache and force document refresh 
+     from an input file containing a list of Vault document URLs</h4>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td>You can add new documents and force document refresh between Vault Cache 
+     and a given Vault Server by using the following command logged as root:<p>
+     <code>./catstart -run &quot;vsadm REFRESH DOCUMENTS VAULT vaultserver_name</code></p>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <blockquote>
+             <blockquote>
+               <blockquote>
+                 <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HOST vaultserver_host</code></p>
+                 <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PORT vaultserver_port</code></p>
+                 <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FROM FILE file_full_path_name</code></p>
+                 <p><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                 [ FETCHSIZE fetch_size_value]&quot;</code></p>
+               </blockquote>
+             </blockquote>
+           </blockquote>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <p>The command above triggers a document version check and refresh for the 
+     list of vault document URL specify by the input file. If a document is 
+     missing in the Vault Cache, it is added automatically. You can specify your 
+     own fetchsize if you want.<p>The <code>FROM FILE</code> file which needs to 
+     be used should be a text file and should contain a list of Vault URLs, and 
+     the format of Vault URLs should look like this:<p><code>vault://VaultAliasName/VaultDocumentOIDinHexa</code><p>
+     For example, for the documents handled by Content Management, the Vault URL 
+		can be found within the V_VaultDoc attribute of the VPMDocSecuredFile 
+		type.<p>
+     For example, create a file, for instance <code>VDocURLColl.txt</code> in 
+     which the entries look like this:<p><code>.....<br>
+     vault://VaultServerINT18/6CCBDB530000183045E439AD00000004<br>
+     vault://VaultServerINT18/6CCBDB530000183045E439AD00000005<br>
+     vault://VaultServerINT18/6CCBDB530000183045E439AD00000006<br>
+     vault://VaultServerINT18/6CCBDB530000183045E439AD00000007<br>
+     .....</code><p>and then provide the path of the same file while using the 
+     command below.<p><code>./catstart -run &quot;vsadm REFRESH DOCUMENTS<br>
+     VAULT vaultserver_name<br>
+     HOST vaultserver_host<br>
+     PORT vaultserver_port<br>
+     FROM FILE file_full_path_name<br>
+     [ FETCHSIZE fetch_size_value]&quot;</code></td>
+   </tr>
+   <tr>
+     <td colspan="2" rowspan="1" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <table>
+ </table>
+ <p>&nbsp;</p>
+
+ </body>
+
+</html>
+

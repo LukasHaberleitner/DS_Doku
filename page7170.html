@@ -1,0 +1,241 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating Mapping Properties</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Creating Mapping Properties<a name="ix-mapping properties;properties::mapping;commands::Mapping Property"></a></h1>
+ <table Border="0" CELLSPACING="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr>
+     <td align="center" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>
+     <p class="task"><a name="CATGPSCommandHeader.CATGPSMappedPropertyHdr"></a>
+     This task shows you how to create a mapping property.
+     This property allows you to apply in one shot finite element properties to 
+     all the elements of a part (1D elements, 2D elements or 3D elements).</p>
+     <p class="task">The identification of each element and the associated 
+     property characteristics are listed in an XML (Extensible Markup Language) 
+     file. This file must respect a particular syntax and format. For more 
+     details on syntax of the mapping property file, refer to
+     <a href="page7247.html">Mapping File Syntax</a> in this guide.
+     Each time the property is updated (using the <kbd>Compute</kbd> command) 
+     the whole file is parsed and the properties are applied to elements.</p>
+     <p class="task">To know more about finite element properties, refer to the
+     <a href="page7563.html" target="ds_doc2">
+     Physical Properties</a> chapter in the <cite>Finite Element Reference Guide</cite>.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="center"><img border="0" src="b35doc/english/online/estug_c2/images/icon_EST.gif" width="32" height="32"></td>
+     <td>
+     <p class="task">Only available with the <b>ELFINI Structural Analysis (EST)</b> 
+     product.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td>
+     <ul>
+       <li>The mapping property is dedicated to analyses that are 
+       made on a part (the .CATAnalysis document must refer to a .CATPart 
+       document). In consequence, the only selectable support of the mapping 
+       property is the part on which the analysis is made. It is not possible to 
+       select a product or several parts.</li>
+       <li>All references made in the XML file that do not belong to 
+       the .CATAnalysis document must belong to the selected part (geometries, 
+       axes).</li>
+       <li>After applying a mapping property, any interactive 
+       modification of a feature referenced in the XML file will be taken 
+       into account by the mapping property only if this modification invalidates the <kbd>Nodes and Elements</kbd> set (if the <kbd>Nodes and 
+       Elements</kbd> set is invalidated, the
+           <img border="0" src="b35doc/english/online/estug_c2/images/symbolupdate.gif" width="11" height="9"> 
+       symbol appears in the specification tree and the images belonging to this 
+       set are deactivated).<br>
+       This can be the case for some axes, group definitions, materials or 
+       geometrical features whose modifications do not invalidate the <kbd>Nodes 
+       and Elements</kbd> set.<br>
+       To take into account a modification that does not invalidate the <kbd>
+       Nodes and Elements</kbd> set, the mapping property must be deleted and 
+       re-created.</li>
+       <li>Creating, editing and removing mapping properties invalidate the
+       <kbd>Nodes and Elements</kbd> and <kbd>Groups</kbd> sets.</li>
+       <li>You cannot create several mapping properties per <kbd>.CATAnalysis</kbd> 
+       document.</li>
+       <li>If other properties already exists in the <kbd>Properties</kbd> 
+       set, the mapping property must be stored at the last position.<br>
+       To change the order of the <kbd>Properties</kbd> set elements, you can 
+       use the <kbd>Reorder Children</kbd> contextual menu. <br>
+       For more details, refer to
+       <a href="page3306.html" target="ds_doc2">
+       Reordering Analysis Children</a>.</li>
+       <li>Only analysis <kbd>User Material</kbd> can be referenced in the XML 
+       file.<br>
+       For more details about analysis user material, refer to
+       <a href="page7167.html">Creating User Material</a>.</li>
+       <li>Do not use the <kbd>Mapping Property</kbd> command to 
+       simulate a connection property.</li>
+		<li>If there are duplicate elements in the XML file (duplicate elements 
+		are elements that share the same nodes and belong to same mesh part and 
+		the same group) 
+		then the mapping property command detects only one element and ignores 
+		the others (for instance: in case of V4 imported mesh parts). As a result only one of the duplicate
+		element has a property. An error message saying that some elements does 
+		not have any property appears when you launch a computation.<br>
+&nbsp;</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td align="center">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td>
+     <p class="task">Open the <a href="b35doc/english/online/estug_c2/samples/sample27.CATAnalysis">
+     sample27.CATAnalysis</a> document from the samples directory. </td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol class="task">
+       <li>
+       <p class="task">Click <kbd>Mapping Property</kbd>
+       <img src="b35doc/english/online/icons_C2/images/I_MappingPropertyP2.gif" width="24" height="24"> 
+       in the <kbd>Model Manager</kbd> toolbar.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+         <tr>
+           <td>
+           <p class="task">The Mapping Property dialog box appears.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/dbmappingproperty01NLS.gif" width="200" height="162"></p>
+           <ul>
+             <li><kbd>Name</kbd>: lets you change the name of the property.</li>
+             <li><kbd>Support</kbd>: lets you select a part as support. The part 
+             selection is not mandatory if the XML associated file only contains
+             <a href="page7247.html#hj-elementid">spatial identification</a> 
+             (no reference to any part feature name).<br>
+             For example, if the model only contain orphan meshes, you do not 
+             need to select a part.</li>
+             <li><kbd>File</kbd>:
+             <ul>
+               <li><kbd>Browse</kbd>: this button lets you select the xml file 
+               that will define the mapping property.<table border="0" cellspacing="1" id="AutoNumber7">
+                 <tr>
+                   <td align="center" valign="top">
+                   <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                   <td>
+                   <p class="task">Reading the path you define in this dialog 
+                   box is the only way to access the XML file.</p>
+                   <p class="task">If you move the CATAnalysis and the XML 
+                   documents then you must modify the path of the XML file.<br>
+                   To do this, edit the mapping property and enter the new path 
+                   of the XML file (even if the content of the XML file has not 
+                   been modified).</td>
+                 </tr>
+               </table>
+               </li>
+             </ul>
+             </li>
+             <li><kbd>Synchronize file</kbd>: this button lets you take into 
+             account modifications you performed on a selected xml file.<br>
+             After synchronizing the mapping property is no more up-to-date. You 
+             have to launch a <kbd>Mesh only</kbd> computation to update the 
+             property.<div align="left">
+               <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber5">
+                 <tr>
+                   <td align="center" valign="top">
+                   <img src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                   <td>
+                   <p class="task">This button is available only if the XML 
+                   associated file has been modified since the last update.</td>
+                 </tr>
+               </table>
+             </div>
+             </li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Select the part to be applied the property.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+         <tr>
+           <td>
+           <p class="task">In this particular example, select <kbd>Part.1</kbd>.</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Click <kbd>Browse</kbd> and select the desired xml file.</p>
+       <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4">
+         <tr>
+           <td>
+           <p class="task">In this particular example, select the <kbd>
+           mapping01.xml</kbd> file.</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd> in the Mapping Property dialog box.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+         <tr>
+           <td>
+           <p class="task">The specification tree is updated: the <kbd>Mapping 
+           Property.1</kbd> feature is displayed.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/stmappingproperty01NLS.gif" width="162" height="116"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Click <kbd>Compute</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_CalculatorP2.gif" width="24" height="24">.</li>
+       <li>
+       <p class="task">Select the <kbd>Mesh Only</kbd> option and click <kbd>OK</kbd> 
+       in the Compute dialog box.</li>
+       <li>
+       <p class="task">Right-click the <kbd>Properties.1</kbd> set in the 
+       specification tree and select <kbd>Generate Image</kbd>.</li>
+       <li>
+       <p class="task">Select the desired images.</p>
+       <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber6">
+         <tr>
+           <td>
+           <p class="task">To know more about the Image Generation dialog box, 
+           refer to <a href="page7170.html">Generating Images</a>.</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd>.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>
+     <p class="task">You can manually add and delete mapping properties.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

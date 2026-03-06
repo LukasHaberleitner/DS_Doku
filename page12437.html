@@ -1,0 +1,200 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+	<head>
+	<meta name="MonocodingType" content="0">
+	<meta name="MonocodingFlag" content="C2D2">
+	<meta http-equiv="Content-Language" content="en-us">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Intermediate Stock</title>
+	<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+	<meta name="ProgId" content="FrontPage.Editor.Document">
+	<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+	</head>
+
+	<body>
+
+	<a name="ix-Intermediate Stock"></a><h1>Intermediate Stock</h1>
+	<p>The information in this section will help you create and use intermediate 
+	stock in your program. </p>
+	<p>You can also refer to the user task <a href="page12405.html">Using Intermediate 
+	Stock</a> which shows how to compute and visualize intermediate stock in a program.</p>
+	<p>This capability is enabled by selecting the <kbd>Intermediate stock for milling 
+	and turning operations</kbd> check box in the <kbd>Option</kbd> tab of the
+	<a href="page11409.html#Optiontab">Part Operation 
+	editor</a>.</p>
+	<p>Input and output intermediate stock can be created and visualized for all 
+	types of machining operations. Different types of operation can be mixed in 
+	your program. Also a milling operation is allowed after a turning operation 
+	and, inversely, a turning operation is allowed after a milling operation.<br>
+	The stock is taken into account to optimize and compute a collision free tool path.</p>
+	<p><b>Input Intermediate Stock</b>: solid corresponding to the machined part 
+	before the machining operation.</p>
+	<p><b>Output Intermediate Stock</b>: solid corresponding to the machined part 
+	after the machining operation.</p>
+	<p><b>Input Stock contour</b>: profile corresponding to the maximum turning 
+	envelope of the Input Intermediate Stock.</p>
+	<p><b>Output Stock contour</b>: profile corresponding to the maximum turning 
+	envelope of the Output Intermediate Stock.</p>
+	<p><b>Stock synchronized with the operation</b>: To manage the life cycle the 
+	stock is linked with a specific version of the tool path of the operation. If 
+	the tool path is changed, the stock is no longer synchronized.</p>
+	<p>Note: The intermediate stock bodies and contours are not stored. They are 
+	available only during the session of the CATProcess. The process must be linked 
+	to a CATProduct.</p>
+	<p>A user task showing how to compute and visualize intermediate stock in a 
+	program is provided in <a href="page12405.html">Using Intermediate Stock</a>.</p>
+	<h2>Visualization Recommendations</h2>
+	<p>Machining options to manage Intermediate Stock display color and transparency 
+	are available in
+	<a href="page1014.html#InterStock">Tool 
+	&gt; Options &gt; Machining &gt; General</a>.</p>
+	<p>In order to visualize transparency variations you have to set the transparency 
+	quality to High (Alpha Blending) in <kbd>Tools</kbd> &gt; <kbd>Options</kbd> &gt; 
+	<kbd>Display</kbd> &gt; <kbd>Performance</kbd>.</p>
+	<p>In a Lathe context, while editing the operations, the Intermediate Stock 
+	contour is computed. In order to display this contour correctly, you have to 
+	set the pixel culling parameters to 0 in <kbd>Tools</kbd> &gt; <kbd>Options</kbd> &gt; 
+	<kbd>Display</kbd> &gt; <kbd>Performance</kbd>.
+	</p>
+	<h2>Turning Operations</h2>
+	<p>Lathe operations can be mixed with milling operations.</p>
+	<p>Input and Output stock can be computed on any turning operation</p>
+	<ul>
+		<li>An Input Stock contour is used as the default rough stock of the operation.</li>
+		<li>The Stock contours are created by computing the maximum turning envelope 
+		of the Intermediate Stock. In this way, stock contours can be computed from 
+		non-symmetrical stock bodies.</li>
+	</ul>
+	<p>Note: The activation of intermediate stock option the
+	<a href="page11409.html#Optiontab">Part Operation 
+	editor</a> means that the <kbd>Automatic stock selection for turning operations</kbd> 
+	capability is deactivated.</p>
+	<h2>Axial Operations</h2>
+	<p><b>Drilling Point</b><br>
+	Drilling entry point is computed on the stock.<br>
+	If this computed point is above the selected one, it will replace the selected 
+	one.<br>
+	If a Top element is selected and the computed point is above the Top element, 
+	then the Top element will not be taken into account.</p>
+	<p><img border="1" src="b35doc/english/online/pmgug_c2/images/IntermediateStock07NLS.gif" width="405" height="169"></p>
+	<p>All axial operations (Drilling, Spot Drilling, Circular Milling, and so on) 
+	support intermediate stock.</p>
+	<p><b>Linking motions</b><br>
+	The linking motions between drilling points are computed according to intermediate 
+	stock.<br>
+	Linking macro motion is done up to the intermediate stock.<br>
+	Collisions are checked with the tool along the linking motion.<br>
+	The <kbd>Stock Clearance</kbd> defined on the Part operation is used to define motion without collision with the current stock.</p>
+	<p><img border="1" src="b35doc/english/online/pmgug_c2/images/IntermediateStock08NLS.gif" width="432" height="187"></p>
+	<p>All axial operations (Drilling, Spot Drilling, Circular Milling, and so on) 
+	support intermediate stock.</p>
+	<h2>Milling Operations</h2>
+	<p><b>Top Plane</b><br>
+	The top plane of the intermediate stock is automatically computed in the machining 
+	area by relimiting the input stock with the machining area:</p>
+	<ul>
+		<li>If there is no user-defined plane, the automatically computed plane 
+		defines the top plane of the operation</li>
+		<li>If a user-defined plane is set, it is taken into account if it is higher 
+		than the automatically computed plane along tool axis direction.</li>
+	</ul>
+	<p>All milling operations support intermediate stock. However, the following 
+	operations support intermediate stock and automatic top plane computation:</p>
+	<blockquote>
+			<p>Pocketing<br>
+			Facing<br>
+			Profile contouring <br>
+			Prismatic roughing<br>
+			Roughing<br>
+			Plunge milling<br>
+			Cavities roughing.</p>
+	</blockquote>
+	<p>The following operations support intermediate stock and tool path 
+	optimization:</p><blockquote>
+			<p>Pocketing<br>Facing<br>Prismatic roughing<br>Roughing<br>Plunge milling<br>Cavities roughing.</p>
+	</blockquote>
+	<p><b>Tool path optimization in pocketing operation</b><br>
+	On each level the machining area is delimited by the stock, to avoid air cutting 
+	passes.</p>
+	<p><img border="1" src="b35doc/english/online/pmgug_c2/images/IntermediateStock09NLS.gif" width="340" height="266"></p>
+	<p>Tool path is optimized to avoid air cutting.</p>
+	<p><img border="1" src="b35doc/english/online/pmgug_c2/images/IntermediateStock10NLS.gif" width="444" height="195"></p>
+	<h2>Macro Motions</h2>
+	<p>There are no RAPID motion inside intermediate stock. Macro motions are managed 
+	to avoid RAPID tool motion inside the material.</p>
+	<p>Macro motions are automatically updated when a collision (in RAPID mode) 
+	is detected with the cutter during tool path computation by:</p>
+	<ul>
+		<li>automatic extrapolation of macro motion</li>
+		<li>automatic feedrate modification.</li>
+	</ul>
+	<p>In the examples below, the various feedrates are represented as follows:</p>
+	<p><img border="1" src="b35doc/english/online/pmgug_c2/images/IntermediateStock15NLS.gif" width="95" height="83"></p>
+	<p><b>Update approach macro motion feedrate to avoid RAPID motion inside the 
+	stock</b></p>
+	<p><img border="1" src="b35doc/english/online/pmgug_c2/images/IntermediateStock11NLS.gif" width="550" height="260"></p>
+	<p><b>Additional AXIAL macro motion (in Approach feedrate) is added to start 
+	outside the stock</b></p>
+	<p><img border="1" src="b35doc/english/online/pmgug_c2/images/IntermediateStock12NLS.gif" width="550" height="260"></p>
+	<p><b>Specific case for ramping and helix approach macros</b></p>
+	<p>Macro motion parameter (height) is automatically computed to start outside 
+	the stock<br>
+	This is done at tool path computation step. Macro motion parameter is not modified 
+	on the macro specified by the user.</p>
+	<p><img border="1" src="b35doc/english/online/pmgug_c2/images/IntermediateStock13NLS.gif" width="550" height="164"></p>
+	<p><b>Update Retract motion feedrate to avoid RAPID motion inside the stock</b></p>
+	<p><img border="1" src="b35doc/english/online/pmgug_c2/images/IntermediateStock16NLS.gif" width="506" height="137"></p>
+	<p><b>Additional Axial macro motion (in Retract feedrate) is added to finish 
+	outside the stock</b></p>
+	<p><img border="1" src="b35doc/english/online/pmgug_c2/images/IntermediateStock17NLS.gif" width="510" height="139"></p>
+	<p><b>Linking motion between retract and approach</b><br>
+	As for axial operations, linking motions are computed according to intermediate 
+	stock.<br>
+	Linking macro motion is done up to the intermediate stock.<br>
+	Tool collisions are checked along the linking motion.<br>
+	The <kbd>Stock clearance</kbd> in the
+	<a href="page11409.html#Optiontab">Part Operation 
+	editor</a> is used to define motion without collision with the current stock.</p>
+	<p><img border="1" src="b35doc/english/online/pmgug_c2/images/IntermediateStock14NLS.gif" width="420" height="138"></p>
+	<p>This is supported by the following prismatic operations:</p>
+	<blockquote>
+			<p>Roughing<br>
+			Plunge Milling<br>
+			Cavities Roughing<br>
+			Pocketing<br>
+			Facing<br>
+			Profile Contouring (all modes)<br>
+			Curve Following<br>
+			Groove Milling.</p>
+	</blockquote>
+	<h2>Life Cycle</h2>
+	<p><b>Status of the Input intermediate stock</b><br>
+	The Input intermediate stock status is up to date:</p>
+	<blockquote>
+			<p>If the Input intermediate stock is already computed<br>
+			If all previous operations have a tool path and are up to date or have 
+			a locked tool path.<br>
+			If all previous Output Intermediate stocks are synchronized with the 
+			operations.<br>
+			If the stock assigned in the Part operation has not changed.</p>
+	</blockquote>
+	<p>In other cases the stock is not up to date.</p>
+	<p><b>Intermediate stock status</b><br>
+	The Output intermediate stock status is up to date if it is already computed.</p>
+	<p>The Input intermediate stock status is up to date if the operation has a 
+	tool path and is up to date or has a locked tool path.</p>
+	<p>In other cases the intermediate stock is not up to date.</p>
+	<p><b>How to update the Input intermediate stock</b><br>
+	You can update the stock as follows:</p>
+	<blockquote>
+			<p>- click the Input Stock button<br>
+			- click the Output Stock button<br>
+			- compute the tool path.</p>
+	</blockquote>
+	<p>After the computation of the last machining operation of a part operation, 
+	all input stocks of the operations of the part operation will be up to date.</p>
+
+	</body>
+
+</html>
+

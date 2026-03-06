@@ -1,0 +1,621 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>Creating a Network of Curves</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="docCompliance" content="v 0.9; Tue Jul 12 09:35:25 2005">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1><a name="CATCloudQsrHeaderCmd.CATQsrCurveNetworkHdr"></a>Creating a Network 
+of Curves</h1>
+<table Border="0" CELLSPACING="0" valign="top" cellpadding="0">
+  <tr valign="top" BORDER="0">
+    <td valign="top" align="left">
+    <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td valign="top" align="left">This task will show you how to 
+    create a network of constrained curves to be used <br>
+    in the <a href="page12768.html">surfaces network</a> command.<p>On a first 
+    step, you have created characteristic curves on the cloud. <br>
+    These curves are often approximate and require some preparation:</td>
+  </tr>
+  <tr>
+    <td valign="top" align="left"></td>
+    <td valign="top" align="left">
+    <ul>
+      <li>Slicing that cuts curves or edges in several pieces, according to a 
+      pseudo-intersection: <br>
+      there is a pseudo-intersection between two curves if they intersect each 
+      other in the view direction <br>
+      (but not really), and if the mini 3D distance between them at this cutting 
+      point is lower than <br>
+      the parameter <kbd>
+      <a href="page12749.html#ix-slicing curves:max distance">Max. Distance</a></kbd>.&nbsp;</li>
+    </ul>
+    <blockquote>
+      <ul>
+        <li>
+        <p align="left">Pseudo-intersection of two curves in the view direction.<br>
+        <img border="0" src="b35doc/english/online/qsrug_c2/images/sc004.gif" width="122" height="125"></li>
+      </ul>
+    
+      <ul>
+        <li>
+        <p align="left">Pseudo-intersection of two curves in another view. <br>
+        <img border="0" src="b35doc/english/online/qsrug_c2/images/sc005.gif" align="bottom" width="126" height="53"><br>
+        in the picture below, the arrows point at the 
+      minimum distance between the 2 curves.<br>
+        <img border="0" src="b35doc/english/online/qsrug_c2/images/sc006.gif" width="232" height="269"></p>
+        </li>
+      </ul>
+    </blockquote>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">&nbsp;</td>
+    <td valign="top" align="left">
+    <ul>
+      <li>Deburring to remove undesirable small curve pieces, based on a
+      <a href="page12749.html#ix-slicing curves:filtering">Min length</a> 
+      criterion.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">&nbsp;</td>
+    <td valign="top" align="left">Then, you can create a network 
+    from these cleaned curves according to the following:<ul>
+      <li>A network is a set of closed and connected contours, named wires.</li>
+      <li>A contour is a set of connected edges, it is necessarily closed but 
+		not limited to 3 or 4 sides.</li>
+      <li>An edge belongs to one contour (free border edge) or 2 contours 
+		(common edge).</li>
+      <li>If there are no free border edges, the network is closed.</li>
+      <li>A node is the topological encounter point of two or more edges. <br>
+      These edges may belong to different contours.</li>
+    </ul>
+    <p>Once the action has detected the topology (node, contours, free border 
+	edges)<br>
+    <img border="0" src="b35doc/english/online/qsrug_c2/images/CvNetwork01NLS.gif" width="320" height="175"></p>
+    <p>the curves are adapted to the network internal constraints such as:</p>
+    <ul>
+      <li>Connection constraints on nodes <br>
+      (all edges ending on a common node must be connected on this point).<br>
+      <img border="0" src="b35doc/english/online/qsrug_c2/images/CvNetwork02NLS.gif" width="312" height="149"></li>
+      <li>Tangency constraints between two edges on a node. </li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td valign="top" align="left">Open the
+    <a href="b35doc/english/online/qsrug_c2/samples/SurfNetwork.CATPart">SurfNetwork.CATPart</a> from the 
+    samples directory.</td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"><p>&nbsp;</td>
+    <td valign="top" align="left" rowspan="3">
+    <ol class="task">
+      <li>
+      <p class="task">Click <kbd><a name="ix-commands::Curves Network">Curves 
+      Network</a></kbd>
+      <img border="0" src="b35doc/english/online/icons_C2/images/I_QsrCurveNetworkP2.gif" width="24" height="24">. 
+      The dialog box is displayed.<br>
+      <img border="0" src="b35doc/english/online/qsrug_c2/images/dbCvNetworkNLS.gif" width="298" height="321"></p>
+      </li>
+      <li>
+      <p class="task">It consists of 4 tab pages:<table border="0" cellpadding="0" style="border-collapse: collapse" id="table1">
+        <tr>
+          <td>
+          <ul>
+            <li>
+            <a href="#Curves Network:Preparation">Preparation</a></li>
+            <li>
+            <a href="#ix-curves network:constraints">Constraints</a></li>
+            <li>
+            <a href="#ix-curves network:freeze">Freeze</a></li>
+            <li>
+            <a href="#ix-curves network:display">Display</a>.</li>
+          </ul>
+          <p>Stay in the <kbd><a name="Curves Network:Preparation">Preparation</a></kbd> 
+          tab and select the curves to clean. <br>They are displayed in the dialog box. 
+          </td>
+        </tr>
+      </table>
+          <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber41">
+            <tr>
+              <td valign="top">
+              <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+              <td>You can:
+              <ul>
+                <li>Select a CleanContour, a Curves network or a Join of curves,
+                <br>
+                their curves will be added to the list.</li>
+                <li>
+                Remove a curve from the list: 
+                <blockquote>
+                  <ul>
+                    <li>
+                   Pick the curve again in the graphic area, or</li>
+                    <li>
+                    Pick the curve again in the specification 
+                    tree, or</li>
+                    <li>
+                    Pick the curve you want to remove in the 
+                    list of the dialog box and <br>
+                    use the contextual menu <kbd>Remove</kbd>.<br>
+                    <img border="0" src="b35doc/english/online/qsrug_c2/images/dbCvNetwork05NLS.gif" width="298" height="321"></li>
+                    <li>
+                    Select additional curves, they will be added 
+                    to the list.</li>
+                  </ul>
+                </blockquote>
+                </li>
+              </ul>
+              </td>
+            </tr>
+          </table>
+        
+      
+    
+   <li>
+      <p align="left" class="task">Select the mesh as the
+      <a name="ix-curves network:support"><kbd>Support</kbd></a>. Click <kbd>
+      Apply</kbd>. </p>
+      <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber31" height="870">
+        <tr>
+          <td height="43">
+          <p align="left" class="task">Before computing the network, the action 
+          searches <a name="ix-curves network:overlapping curves">overlapping 
+          curves</a>. <br>
+          If some are detected, a message is displayed:</td>
+        </tr>
+        <tr>
+          <td height="119"><img border="0" src="b35doc/english/online/qsrug_c2/images/CvNetwork10NLS.gif" width="462" height="119"></td>
+        </tr>
+        <tr>
+          <td height="16">The overlapping curves are displayed in magenta</td>
+        </tr>
+        <tr>
+          <td height="77"><img border="0" src="b35doc/english/online/qsrug_c2/images/CvNetwork11.gif" width="262" height="54"></td>
+        </tr>
+        <tr>
+          <td height="16">The wires are then computed and displayed. The button
+          <a name="ix-curves network:deleting wire"><kbd>Deleting wire</kbd></a> 
+          is now available.</td>
+        </tr>
+        <tr>
+          <td height="321"><img border="0" src="b35doc/english/online/qsrug_c2/images/dbCvNetwork02NLS.gif" width="298" height="321"></td>
+        </tr>
+        <tr>
+          <td height="80">A wire is computed on each &quot;loop&quot; of curves, plus a 
+          large one on the &quot;loop&quot; formed by <br>
+          the external curves because the network is considered as closed by 
+          default. <br>
+          If your network does not form a closed volume, you usually do not need 
+          this large wire <br>
+          (it would create an additional surface as you create surfaces from the 
+          curves network).<br>
+          In the same way, you can remove wires corresponding to holes in your 
+          part.<br>
+          <img border="0" src="b35doc/english/online/qsrug_c2/images/CvNetwork03.gif" width="234" height="134"></td>
+        </tr>
+        </table>
+      </li>
+    </ol>
+    <ol class="task" start="4">
+      <li>
+      <p align="left" class="task">Click <kbd>Deleting wire</kbd> to activate 
+      the wire selection. The large wire is highlighted <br>
+      and a <kbd><a name="ix-curves network:delete wire">Delete wire</a></kbd> 
+      button becomes available.</p>
+      <p align="left" class="task"><img border="1" src="b35doc/english/online/qsrug_c2/images/CvNetwork04NLS.gif" width="236" height="137"></p>
+      </li>
+    </ol>
+    <ol class="task" start="5">
+      <li>
+      <p align="left" class="task">Click <kbd>Delete wire</kbd> button to remove 
+      this wire.<br>
+      <img border="0" src="b35doc/english/online/qsrug_c2/images/CvNetwork05.gif" width="229" height="137"></p>
+      </li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td valign="top" align="left">
+    <ul>
+      <li>
+      <p align="left">In the cases where you want to create a surface on a 
+      network of curves with a hole in it, <br>
+      i.e. without filling one or several wires, use the <kbd>Deleting wire</kbd> 
+      button to activate the wire selection, <br>
+      select the wire by picking two of its edges, and Click <kbd>Delete wire</kbd>.</li>
+      <li>
+      <p align="left">If you do not remove the large wire, an information 
+      message is displayed as you Click OK.</p>
+      <div align="left">
+        <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber12">
+          <tr>
+            <td><img border="0" src="b35doc/english/online/qsrug_c2/images/CvNetwork08NLS.gif" width="405" height="119"></td>
+            <td>&nbsp;<p>&nbsp;</td>
+          </tr>
+        </table>
+      </div>
+      </li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">&nbsp;</td>
+    <td valign="top" align="left">
+    <ul>
+      <li>
+      <p align="left">The <a name="ix-curves network:max distance"></a>
+      parameters <a href="page12749.html#ix-slicing curves:max distance">Max 
+      distance</a> <a name="ix-curves network:min length"></a>and
+      <a href="page12749.html#ix-slicing curves:filtering">Filtering </a>are 
+      those used in the Curves Slice command.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="center">&nbsp;</td>
+    <td valign="top" align="left">
+    <ol class="task" start="6">
+      <li>
+      <p align="left" class="task">Go to the <kbd>
+      <a name="ix-curves network:constraints">Constraints</a></kbd> tab to 
+      define constraints. The existing constraints are highlighted, <br>
+      as a green dot for continuity constraints on nodes, as a blue line for 
+      tangency constraints, <br>
+      as a red curve for frozen curves.</p>
+      <div align="left">
+        <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber13" style="border-collapse: collapse" bordercolor="#111111">
+          <tr>
+            <td colspan="2"><img border="1" src="b35doc/english/online/qsrug_c2/images/dbCvNetwork04NLS.gif" width="301" height="463"></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>
+            <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+            <td>
+            <ul>
+              <li>
+              <p align="left">The constraints are applied globally on the whole 
+              network.</li>
+              <li>
+              <p align="left">Continuity constraints on nodes are implicit and 
+              cannot be removed. </li>
+            </ul>
+            </td>
+            <td>&nbsp;</td>
+          </tr>
+        </table>
+      </div>
+      </li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="center">&nbsp;</td>
+    <td valign="top" align="left">
+    <ol class="task" start="7">
+      <li>
+      <p align="left" class="task">The <kbd>
+      <a name="ix-curves network:node tolerance">Node tolerance</a></kbd> 
+      defines the maximum distance between edges extremities to consider <br>
+      these edges connected on a node. <br>
+      You can modify this value, but it cannot be smaller than the <kbd>Max 
+      distance</kbd> parameter.<br>
+      The <kbd>Node tolerance</kbd> is visualized as a green sphere whose radius 
+      is equal to the <kbd>Node tolerance</kbd>. <br>
+      The size of this sphere is updated when you modify the <kbd>Node tolerance</kbd> 
+      value. <br>
+      You can move the sphere using the cursor.</li>
+      <li>
+      <p align="left" class="task">Tangency constraints are activated by the
+      <a name="ix-curves network:automatic tangency"><kbd>Automatic tangency</kbd></a> 
+      select box. <br>
+      You can edit the value of the tangency angle. Click <kbd>Apply </kbd>after 
+      each modification.</li>
+      <li>
+      <p align="left" class="task">Select <kbd>
+      <a name="ix-curves network:projection on support">Projection on support</a></kbd> 
+      to compute the network from the projections of the curves on the mesh. <br>
+      The curves projected are smoothed, with the <kbd>
+      <a name="ix-curves network:smoothing tolerance">Smoothing tolerance</a></kbd>. 
+      This parameter can be edited.<br>
+      It is applied to all curves.</li>
+      <li>
+      <p align="left" class="task">You can choose between a global or a local 
+      deformation constraint <br>
+      (available for all deformable edges). <br>
+      This constraint is applied during the geometric adaptation step. <br>
+      If the <kbd>Global deformation</kbd> select box is set, edges deformations 
+      are done along the entire length <br>
+      of the edges.</p>
+      <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber32">
+        <tr>
+          <td>Example of global deformation:</td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/qsrug_c2/images/CvNetworkGlobaldeformation.gif" width="558" height="141"></td>
+        </tr>
+        <tr>
+          <td>Example of local deformation:</td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/qsrug_c2/images/CvNetworkLocaldeformation.gif" width="558" height="170"></td>
+        </tr>
+      </table>
+      </li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td valign="top" align="left">
+    <p align="left">Click <kbd><a name="ix-curves network:default constraints">
+    Default constraints</a></kbd> to revert to the default constraints.</td>
+  </tr>
+  <tr>
+    <td valign="top" align="center">&nbsp;</td>
+    <td valign="top" align="left">
+    <ol class="task" start="7">
+      <li value="11">
+      <p align="left" class="task">Go to the <a name="ix-curves network:freeze">
+      <kbd>Freeze</kbd></a> tab page to select curves that must remain frozen.</li>
+    </ol>
+    <ol class="task" start="12">
+      <li>
+      <p align="left" class="task">Pick a curve to freeze it. It is displayed in 
+      red in the graphic area and displayed in the dialog box. <br>
+      Pick it again or use the contextual menu <kbd>Remove</kbd> to free it.</p>
+      <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber33">
+        <tr>
+          <td colspan="2">
+          <img border="0" src="b35doc/english/online/qsrug_c2/images/CvNetwork07.gif" width="233" height="134"></td>
+        </tr>
+        <tr>
+          <td valign="top">
+          <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+          <td>
+          <ul>
+            <li>
+            <p align="left">You can freeze only curves that have been selected 
+            in the preparation tab.</li>
+            <li>
+            <p align="left">An edge of a face is automatically and definitely 
+            frozen.</li>
+            <li>
+            <p align="left">Free border edges are frozen by default but you can 
+            free them.</li>
+            <li>
+            <p align="left">The action provides a constraint solver to search 
+            conflicts between constraints.</li>
+            <li>
+            <p align="left">A message is displayed at the end of the search.<br>
+            <img border="0" src="b35doc/english/online/qsrug_c2/images/dbCvNetwork03NLS.gif" width="314" height="119"></li>
+            <li>
+            <p align="left">When all constraints have been selected, conflicts 
+            are highlighted in magenta.<br>
+            <img border="0" src="b35doc/english/online/qsrug_c2/images/CvNetwork09NLS.gif" width="494" height="119"><br>
+            <img border="0" src="b35doc/english/online/qsrug_c2/images/CvNetwork06.gif" width="234" height="138"></li>
+            <li>Modify the constraints to solve the existing conflicts before 
+            creating the wires.</li>
+          </ul>
+          </td>
+        </tr>
+      </table>
+      </li>
+    </ol>
+    <ol class="task">
+      <li value="13">
+      <p align="left" class="task">If necessary, go to the
+      <a name="ix-curves network:display"><kbd>Display</kbd></a> tab page to 
+      visualize defects or gaps on the curves.</p>
+      <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber35">
+        <tr>
+          <td><img border="1" src="b35doc/english/online/qsrug_c2/images/dbCvNetwork06NLS.gif" width="274" height="228"></td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p align="left" class="task">Select <kbd>Distances at nodes</kbd> to 
+      display the minimum 3D distance between two curves at <br>
+      their pseudo-intersection. </p>
+      <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber36">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/qsrug_c2/images/CvNetwork12NLS.gif" width="296" height="145"></td>
+        </tr>
+        <tr>
+          <td>They are displayed in yellow with the exception of the greatest 
+          minimum distance found <br>
+          that is displayed in black. <br>
+          Click this black label to update the
+          <a href="#ix-curves network:max distance">Max distance</a> in the <kbd>
+          Preparation</kbd> tab with a value <br>
+          that will take all curves pseudo-intersection into account.</td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p align="left" class="task">Select <kbd>Spikes</kbd> to display deviation 
+      or curvatures spikes:</p>
+      <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber37">
+        <tr>
+          <td>
+          <ul>
+            <li>Click
+            <img border="0" src="b35doc/english/online/icons_C2/images/I_QsrCN_crv_crvP2.gif" width="24" height="24"> 
+            to display the deviation spikes between the network curves <br>
+            and the input curves.<br>
+            <img border="0" src="b35doc/english/online/qsrug_c2/images/SpikeCurveCurve.gif" width="241" height="139"></li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>
+          <ul>
+            <li>Click
+            <img border="0" src="b35doc/english/online/icons_C2/images/I_QsrCN_crv_plgP2.gif" width="24" height="24"> 
+            to display the deviation spikes between the network curves <br>
+            and the support mesh.<br>
+            <img border="0" src="b35doc/english/online/qsrug_c2/images/SpikeCurveMesh.gif" width="249" height="136"></li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>
+          <ul>
+            <li>Click
+            <img border="0" src="b35doc/english/online/icons_C2/images/I_QsrCN_curvatureP2.gif" width="24" height="24"> 
+            to display the curvature spikes on the network curves.<br>
+            Spikes within the tolerance are displayed in green, <br>
+            spikes exceeding the tolerance are displayed in red.<br>
+            <img border="0" src="b35doc/english/online/qsrug_c2/images/SpikeCurvature.gif" width="304" height="186"></li>
+          </ul>
+          </td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p align="left" class="task">Use the <kbd>Spikes scale</kbd> slider to 
+      define the size of the spikes.</p>
+      <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber38">
+        <tr>
+          <td valign="top"><img border="0" src="b35doc/english/online/qsrug_c2/images/SpikeScale01NLS.gif" width="109" height="73"></td>
+          <td><img border="0" src="b35doc/english/online/qsrug_c2/images/SpikeScale02NLS.gif" width="105" height="89"></td>
+        </tr>
+        </table>
+      </li>
+      <li>
+      <p align="left" class="task">Use the <kbd>Spikes density</kbd> slider to 
+		define their density.</p>
+      <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber39">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/qsrug_c2/images/Spikedensity01NLS.gif" width="178" height="134"></td>
+          <td><img border="0" src="b35doc/english/online/qsrug_c2/images/Spikedensity02NLS.gif" width="204" height="128"></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p align="left" class="task">Select <kbd>Max deviation</kbd> and:</p>
+      <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber40">
+        <tr>
+          <td>
+          <ul>
+            <li>
+            <p align="left">Click
+            <img border="0" src="b35doc/english/online/icons_C2/images/I_QsrCN_crv_crvP2.gif" width="24" height="24"> 
+            to display the maximum deviation between the network curves and <br>
+            the input curves.</li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/qsrug_c2/images/MaxDevCurveCurve.gif" width="317" height="229"></td>
+        </tr>
+        <tr>
+          <td>
+          <ul>
+            <li>
+            <p align="left">Click
+            <img border="0" src="b35doc/english/online/icons_C2/images/I_QsrCN_crv_plgP2.gif" width="24" height="24"> 
+            to display the maximum deviation spikes between the network curves
+            <br>
+            and the support mesh.</li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/qsrug_c2/images/MaxDevCurveMesh.gif" width="313" height="140"></td>
+        </tr>
+      </table>
+      </li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td valign="top" align="left">
+    <ul>
+      <li>
+      <p align="left">You can combine<kbd> Spikes </kbd>and <kbd>Max deviation</kbd>.</p>
+      <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber28">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/qsrug_c2/images/SpikeDeviation.gif" width="325" height="228"></td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p align="left">When <kbd>Max deviation</kbd> alone is selected, the 
+      greatest corresponding spike is displayed.</p>
+      <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber29">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/qsrug_c2/images/MaxDevCurveCurve.gif" width="317" height="229"></td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p align="left">The <kbd>Max deviation</kbd> is not relevant for the
+      <img border="0" src="b35doc/english/online/icons_C2/images/I_QsrCN_curvatureP2.gif" width="24" height="24"> 
+      curvature. </li>
+      <li>
+      <p align="left">Although this is possible, we recommend that you do not 
+      combine <kbd>Max deviation</kbd> <br>
+      with <kbd>Distances at nodes</kbd> as it would be difficult to read the 
+      combined information. <br>
+      You should select these check boxes in turn.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="center">&nbsp;</td>
+    <td valign="top" align="left">
+    <ol class="task" start="7">
+      <li value="19">
+      <p align="left" class="task">Click OK to validate the network and exit the 
+      dialog box. <br>
+      A <kbd>CurvesNetwork </kbd>element is created in the specification tree.</li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" valign="top" align="left">
+    <p align="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

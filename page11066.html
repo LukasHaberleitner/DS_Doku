@@ -1,0 +1,142 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating Rules and Checks in VB Script</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="Microsoft Border" content="none, default">
+ <meta name="docCompliance" content="v 0.9; Mon Oct 17 11:10:07 2005">
+ </head>
+
+ <body>
+
+ <h1>&nbsp;Creating Rules and Checks in VB Script
+ <a name="ix-specifying rules and checks in vb script"></a></h1>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32"></p>
+ <table border="0" cellpadding="2">
+   <tr>
+     <td valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" title="atarget.gif (1372 bytes)" width="32" height="32"></td>
+     <td valign="top">The scenario below illustrates how to use a variable and 
+     specify a return value.&nbsp;
+     <p>Instead of writing the body of expert rules and checks in the Knowledge 
+     Expert language, you can write it in VB script. There are some adjustments 
+     to be done:</p>
+     <table border="0" cellpadding="2" cellspacing="0">
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>The variable declared in the (<i>for all</i>) field can be used 
+           as an object.</li>
+         </ul>
+         <ul>
+           <li>The indicated type name in Knowledge Expert Language may change 
+           in VB script.</li>
+         </ul>
+         <ul>
+           <li>To specify that a check is valid or not, set the Value attribute 
+           of the returnValue object ( 1 if the check is valid, 0 if the check 
+           is invalid).</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <h6>
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" title="ascenari.gif (1364 bytes)" width="32" height="32"></h6>
+     </td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">Open the<a href="b35doc/english/online/kwxug_c2/samples/KwxUseCase1.CATPart"> 
+       KwxUseCase1.CATPart </a>document. </li>
+       <li>
+       <p class="task">Access the Knowledge Expert workbench, then click the
+       <img src="b35doc/english/online/icons_C2/images/I_ExpertCheckP2.gif" title="kwxWKChecks.gif (1236 bytes)" width="24" height="24">&nbsp; 
+       icon. In the dialog box which is displayed, enter a check name and a 
+       comment. Select the Visual Basic language (KWE language is the default 
+       language), then click <kbd>OK</kbd>. The three tab editor is displayed.</li>
+       <li>
+       <p class="task">Select the Condition tab and enter the check as shown below,</p>
+		<ul class="task">
+			<li>
+			<p class="task">Define the Variables (e.g. H:Hole, P:Pad). In this 
+			scenario, define the below given variable.<br>
+			<font face="Courier10 BT" size="2"><code> 
+			<span style="background-color: #E0E0E0"><br>
+&nbsp;H:Hole&nbsp; </span></code></font></p></li>
+			<li>
+			<p class="task">Define the Body of the Script (Do 
+       not use comments starting with /* and ending with&nbsp; */. Remove these 
+       comments).</p></li>
+		</ul>
+       <div align="left">
+         <table border="0" cellspacing="0" bgcolor="#E6E6E6" cellpadding="0">
+           <tr>
+             <td bgcolor="#F0F0F0"><font face="Courier10 BT" size="2"><code> Dim diam As Length<br>
+             Set diam = H.Diameter<br>
+             <br>
+             if (diam.Value &gt;= 10.0 ) then<br>
+             returnValue.Value = 1<br>
+             else<br>
+             returnValue.Value = 0<br>
+             end if</code></font></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <table border="0" cellpadding="2" cellspacing="0">
+       <tr>
+         <td valign="top" bgcolor="#F2F2F2">
+         <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+         <td bgcolor="#F2F2F2">
+         <table border="0" cellpadding="2" cellspacing="0">
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">If no unit is indicated in VB script, the default 
+               unit will be mm; and m in Knowledge Expert Language.&nbsp;</li>
+             </ul>
+             <ul>
+               <li>
+               <p class="task">It is highly recommended not to add any comments 
+               (between '..') in VB script or a syntax error will be returned.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+         </td>
+       </tr>
+     </table>
+     <ol class="task" start="4">
+       <li>
+       <p class="task">Click <kbd>OK</kbd> to add the check to the rule base, 
+       then click the
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_UpdateP2.gif" width="24" height="24"> 
+       icon to solve the rule base. In the specification tree, the check icon is 
+       green. This indicates that all the part holes have a diameter greater 
+       than or equal to 10mm.</li>
+     </ol>
+     </td>
+   </tr>
+ </table>
+ <p align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="awarning.gif (1007 bytes)" width="64" height="32">
+ </p>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,119 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Migrating the V4 Model</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="b">
+</head>
+
+ <body><!--msnavigation--><table dir="ltr" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><!--msnavigation--><td valign="top">
+
+ <h1>Migrating the V4 Model</h1>
+ <table cellspacing="0" width="100%" border="0" valign="top">
+   <tr>
+     <td valign="middle" width="38" height="30">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="middle" width="872" colspan="2" height="30">This task shows how 
+     to migrate V4 models<font face="Arial, Arial, Helvetica" color="#282187">
+     </font>to V5. This task should only be attempted after all the other tasks 
+     in this section have been completed.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32">
+     <p><a name="ix-V4 to V5 integration::migrating the model"></a></p>
+     <p><a name="ix-V4 migration::migrating model"></a></td>
+     <td valign="middle" width="872" colspan="2" height="30">Before performing 
+     this task you should make sure that options are correctly set in your 
+     project resource management file. These options help you control which 
+     portions of a model you want to migrate - if you want to migrate only 
+     certain parts of it. If your V4 model has data from Piping and 
+     Instrumentation Diagrams, Piping Design, HVAC Design, Structures and 
+     Equipment Arrangement, you can decide which type of data you want to 
+     migrate by setting these options. If you choose to only migrate Tubing 
+     data, then you can do so. See <a href="page14763.html#AEC Migration">
+     Understanding Project Resource Management</a>, AEC V4 V5 Migration section, 
+		on how to set the options.&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" width="38" height="45">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top" width="35" height="45"><strong>1.</strong></td>
+     <td valign="top" width="837" height="45">Move your V4 model (by ftp or any 
+     other means) to the same platform as V5, in this case Windows.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="38" height="45"></td>
+     <td valign="top" width="35" height="45"><strong>2.</strong></td>
+     <td valign="top" width="837" height="45">Set the following environment variables. 
+		(In Unix, you &quot;export&quot; instead of &quot;set&quot;.)<ul>
+		<li><kbd>CATDisciplinePath=XXX&#092;intel_a&#092;startup&#092;EquipmentandSystems&#092;ProjectData</kbd> 
+     where XXX is the directory path to your installation. </li>
+		<li><kbd>AECMIGR_PROJECT = ProjectXXX</kbd> where ProjectXXX is the name 
+		of your project resource management file.</li>
+		<li><kbd>MIGRATION_MASTER_APPLI = AEC_MDLR&nbsp; </kbd><i>For Tubing 
+		Design leave the second value out. Enter only MIGRATION_MASTER_APPLI =</i></li>
+		</ul>
+     <p>For <b>Tubing Design, </b>when migrating models, the project resource 
+     management file must reference a proper tube dimensions table in order to 
+     map outside diameter to nominal size. In the PRM file find the 'TubingDimensions' 
+     entry and correct the location if necessary.<p>To migrate a V4 tubing 
+		bendable to V5 so that the centerline is a polyline, the value of the 
+		PRM resource called <kbd>BendablePolyLine</kbd> must be set to 1. This 
+		resource name must be in the PRM file under the discipline called <kbd>
+		CATAECV4V5Migration</kbd> - you must add it if it does not appear in 
+		your PRM file under this discipline.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="38" height="45">
+		<a name="ix-V4 migration::launching migration batch"></a></td>
+     <td valign="top" width="35" height="45"><b>3.</b></td>
+     <td valign="top" width="837" height="45">You now need to launch the V4 to 
+		V5 migration batch (the DataLifeCycle batch). Launching the batch is 
+		explained in the Infrastructure documentation: <kbd>
+		Infrastructure&gt;V4Integration&gt;Migrating from V4 to V5 in Batch Mode&gt;How 
+		to Launch the V4 to V5 Migration Batch.</kbd><p>NOTE: The Migration 
+		Interface pane of the <kbd>Migration Outputs</kbd> dialog box must show 
+		as the interface: <kbd>CATIAecMigration</kbd>. The <kbd>Migration 
+		Outputs</kbd> dialog box settings are explained in the task Migration 
+		Batch, which you can get to through the link given above.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="38" height="32"></td>
+     <td valign="top" width="35" height="32"><b>4.</b></td>
+     <td valign="top" width="837" height="32">The V4 model will be migrated as 
+     several documents, and each one will display in the specifications tree 
+     when you expand it.. Each object in the document will be in a separate 
+     document. To open the document click File - Open on the application menu 
+     bar and navigate to the directory you specified in the Target Directory 
+     field. The document with the same name as the V4 document is the &quot;master&quot; 
+     document, which contains (references to) all the components. Other 
+     documents underneath it will have identifying letters - such as EQ for 
+     Equipment - to indicate what they contain. The document will contain 
+     references to all parts - piping or tubing documents, for instance, will 
+     contain references to all parts that are in the piping or tubing line. 
+     Similarly, equipment documents will contain references to parts and nozzles 
+     that make up the equipment. You need all the files to recreate the 
+     document.</td>
+   </tr>
+   <tr>
+     <td width="950" colspan="3" height="1">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" border="0" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p>&nbsp; </p>
+
+ <!--msnavigation--></td></tr><!--msnavigation--></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td>
+
+
+
+</td></tr><!--msnavigation--></table></body>
+
+</html>
+

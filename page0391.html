@@ -1,0 +1,981 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+	<head>
+	<meta name="MonocodingType" content="0">
+	<meta name="MonocodingFlag" content="C2">
+	<meta http-equiv="Content-Language" content="en-us">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Multi-Axis Flank Contouring Operations</title>
+	<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+	<meta name="ProgId" content="FrontPage.Editor.Document">
+	<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+	</head>
+
+	<body>
+
+	<a name="ix-Multi-Axis Flank Contouring operation"></a><h1>Multi-Axis 
+	Flank Contouring Operations</h1>
+	<p>The information in this section will help you create and edit <kbd>Multi-Axis 
+	Flank Contouring</kbd> operations in your manufacturing program.</p>
+	<p>Select the <kbd>Multi-Axis 
+	Flank Contouring</kbd> operation
+	<img border="0" src="b35doc/english/online/icons_C2/images/I_Mfg5AxisFlankContouringP2.gif" width="22" height="22" align="middle"> 
+	icon then select the <a href="#PCGeometry">geometry</a>
+	<img border="1" src="b35doc/english/online/amgug_c2/images/TabGeomG.gif" align="middle" width="36" height="22"> 
+	to be machined.</p>
+	<p>A number of <kbd>strategy</kbd> parameters
+	<img border="1" src="b35doc/english/online/amgug_c2/images/TabStratG.gif" align="middle" width="36" height="22"> 
+	are available for defining:</p>
+	<ul>
+		<li><a href="#PCmachining">machining criteria</a></li>
+		<li><a href="#PCstepover">axial and radial stepover conditions</a></li>
+		<li><a href="#PCfinish">finishing</a></li>
+		<li><a href="#PCtoolaxis">tool axis guidance</a></li>
+		<li><a href="#PChsm">high-speed milling</a></li>
+		<li><a href="#PCcutcom">cutter compensation</a>.</li>
+	</ul>
+	<p>Specify the <a href="#PCTool">tool</a> to be used
+	<img border="1" src="b35doc/english/online/amgug_c2/images/TabToolG.gif" align="middle" width="36" height="22">,
+	<a href="#PCFandS">feeds and speeds</a>
+	<img border="1" src="b35doc/english/online/amgug_c2/images/TabFeedG.gif" align="middle" width="36" height="22">, 
+	and<a href="#PCMacro"> NC macros</a>
+	<img border="1" src="b35doc/english/online/amgug_c2/images/TabMacroG.gif" align="middle" width="36" height="22"> 
+	as needed.</p>
+	<p>The following user tasks illustrate some of this operation&#39;s capabilities:</p>
+	<ul>
+		<li><a href="page0368.html">Tanto Fan</a> tool axis mode</li>
+		<li><a href="page0369.html">Combin Tanto</a> tool axis mode</li>
+		<li><a href="page0370.html">Local modifications</a> </li>
+		<li><a href="page0371.html">Non-contiguous drives</a>.</li>
+	</ul>
+	<h2>Multi-Axis Flank Contouring: Strategy Parameters</h2>
+	<h3><a name="PCmachining"></a>Multi-Axis Flank Contouring: Machining Parameters</h3>
+	<table border="0" cellspacing="1">
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="746">
+					<b>Machining tolerance</b><br>
+					<a name="ix-Machining tolerance:Multi-Axis Flank Contouring parameter">
+					</a>Specifies the maximum allowed distance between the theoretical 
+					and computed tool path. </td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="746">
+					<b>Maximum discretization step</b><br>
+					<a name="ix-Maximum discretization step:Multi-Axis Flank Contouring parameter">
+					</a>Defines the maximum allowed distance between two points 
+					on the tool path. It is used to ensure linearity between points 
+					that are far apart.<br>
+     <img border="0" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" width="13" height="13"> 
+     				By default, value is 100 m.</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="746">
+					<b>Maximum discretization angle</b><br>
+					<a name="ix-Maximum discretization angle:Multi-Axis Flank Contouring parameter">
+					S</a>pecifies the maximum angular change of tool axis between 
+					tool positions. It is used to add more tool positions (points 
+					and axis) if value is exceeded.<br>
+     <img border="0" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" width="13" height="13"> 
+     				By default, value is 180 degrees.</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="746">
+					<b>Note:</b> The Maximum discretization step and Maximum discretization 
+					angle influence the number of points on the tool path. The values 
+					should be chosen carefully if you want to avoid having a high 
+					concentration of points along the tool trajectory. <br>
+					These parameters also apply to macro paths that are defined 
+					in machining feedrate. They do not apply to macro paths that 
+					do not have machining feedrate (RAPID, Approach, Retract, User, 
+					and so on).</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="746">
+					<b>Close tool path</b><br>
+					<a name="ix-Close tool path:Multi-Axis Flank Contouring parameter">
+					</a>For a closed contour, specifies that the first drive is 
+					also to be used as the last drive. </td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="746">
+					<b>Maximum distance between steps</b><br>
+					<a name="ix-Maximum distance between steps:Multi-Axis Flank Contouring parameter">
+					Specifies the maximum distance between points. It is used to 
+					detect the end of drive elements.</a> </td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="746">
+					<b>Manual direction</b><br>
+					<a name="ix-Manual direction:Multi-Axis Flank Contouring parameter">
+					</a>Specifies the direction on the first drive.<br>
+					Otherwise, it is determined automatically depending on the reference 
+					position. </td>
+			</tr>
+	</table>
+	<h3><a name="PCstepover"></a>Multi-Axis Flank Contouring: Stepover Parameters</h3>
+	<table border="0" cellspacing="1">
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="746">
+					<b>Tool path style</b><br>
+					<a name="ix-Tool path style:Multi-Axis Flank Contouring parameter">
+					</a>Indicates the cutting mode of the operation:
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+									<td valign="top" width="100%">
+									<b>Zig Zag</b>: the machining direction is reversed 
+									from one path to the next</td>
+							</tr>
+							<tr>
+									<td valign="top" width="100%">
+									<b>One Way</b>: the same machining direction 
+									is used from one path to the next.</td>
+							</tr>
+					</table>
+					</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="621">
+					<b>Sequencing</b><br>
+					<a name="ix-Sequencing:Multi-Axis Flank Contouring parameter">
+					</a>Specifies the order in which machining is to be done:
+					</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" valign="top">
+					<ul>
+						<li><b>Axial</b>: axial machining is done first then radial<br>
+						<img border="1" src="b35doc/english/online/amgug_c2/images/helpSequence02.gif" width="150" height="150"></li>
+					</ul>
+					</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" valign="top">
+					<ul>
+						<li><b>Radial</b>: radial machining is done first then axial.<br>
+						<img border="1" src="b35doc/english/online/amgug_c2/images/helpSequence01.gif" width="150" height="150"></li>
+					</ul>
+					</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="621">
+					<b>Distance between paths (radial)</b><br>
+					<a name="ix-Distance between paths (radial):Multi-Axis Flank Contouring parameter">
+					</a>Defines the maximum distance between two consecutive tool 
+					paths in a radial strategy. </td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="621">
+					<b>Number of paths</b><font face="Courier New" size="2"><br>
+					</font>
+					<a name="ix-Number of paths:Multi-Axis Flank Contouring parameter">
+					</a>Defines the number of tool paths in a radial strategy.
+					</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="621">
+					<b>Axial strategy mode</b><br>
+					<a name="ix-Axial strategy mode:Multi-Axis Flank Contouring parameter">
+					</a>Defines how the distance between two consecutive levels 
+					is to be computed. </td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="621">
+					<b>Distance between paths (axial) </b><br>
+					<a name="ix-Distance between paths (axial):Multi-Axis Flank Contouring parameter">
+					</a>Defines the maximum distance between two consecutive tool 
+					paths in an axial strategy. </td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="621">
+					<b>Number of levels</b><br>
+					<a name="ix-Number of levels:Multi-Axis Flank Contouring parameter">
+					</a>Defines the number of levels to be machined in an axial 
+					strategy. </td>
+			</tr>
+	</table>
+	<h3><a name="PCfinish"></a>Multi-Axis Flank Contouring: Finishing Parameters</h3>
+	<div align="left">
+		<table border="0" cellspacing="1">
+				<tr>
+						<td style="padding-top: 10; padding-bottom: 10" width="745">
+						<b>Finishing mode</b><br>
+						<a name="ix-Finishing mode:Multi-Axis Flank Contouring parameter">
+						</a>Indicates whether or not finish passes are to be generated 
+						on the sides and bottom of the area to machine. Side finishing 
+						can be done at each level or only at the last level of the 
+						operation. </td>
+				</tr>
+				<tr>
+						<td style="padding-top: 10; padding-bottom: 10" width="745">
+						<b>Side finish thickness</b><br>
+						<a name="ix-Side finish thickness:Multi-Axis Flank Contouring parameter">
+						</a>Specifies the thickness used for side finishing.
+						</td>
+				</tr>
+				<tr>
+						<td style="padding-top: 10; padding-bottom: 10" width="745">
+						<b>Side finish thickness on bottom</b><br>
+						<a name="ix-Side finish thickness on bottom:Multi-Axis Flank Contouring parameter">
+						</a>Specifies the thickness used for the last side finish 
+						pass at the end of the operation. </td>
+				</tr>
+				<tr>
+						<td style="padding-top: 10; padding-bottom: 10" width="745">
+						<b>Bottom finish thickness</b><br>
+						<a name="ix-Bottom finish thickness:Multi-Axis Flank Contouring parameter">
+						</a>Specifies the thickness used for bottom finishing.
+						</td>
+				</tr>
+				<tr>
+						<td style="padding-top: 10; padding-bottom: 10" width="745">
+						<a name="WNR10FinishStyle"></a><b>Bottom finish path style</b><br>
+						<a name="ix-Bottom finish path style:Multi-Axis Flank Contouring parameter">
+						</a>Defines the bottom finish path style: Zig zag or One 
+						way. </td>
+				</tr>
+				<tr>
+						<td style="padding-top: 10; padding-bottom: 10" width="745">
+						<b>Spring pass</b><br>
+						<a name="ix-Spring pass:Multi-Axis Flank Contouring parameter">
+						</a>Indicates whether or not a spring pass is to be generated 
+						on the sides in the same condition as the previous Side 
+						finish pass. The spring pass is used to compensate the natural 
+						`spring&#39; of the tool. </td>
+				</tr>
+		</table>
+	</div>
+	<h3><a name="PCtoolaxis"></a>Multi-Axis Flank Contouring: Tool Axis Parameters</h3>
+	<table border="0" width="666">
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="664" colspan="3">
+					<b>Tool axis guidance</b><br>
+					<a name="ix-Tool axis guidance:Multi-Axis Flank Contouring parameter">
+					</a>Specifies how the tool axis is to be guided. </td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="664" colspan="3">
+					<a name="ix-Multi-Axis Flank Contouring tool axis guidance:Tanto Fan">
+					</a><ul>
+						<li><b><a name="TantoFan"></a>Tanto Fan: </b>The tool is 
+						tangent to the drive surface at a given contact height, 
+						and the tool axis is interpolated between the start and 
+						end positions.</li>
+					</ul>
+					<blockquote>
+							<p align="left">
+							<img border="1" src="b35doc/english/online/amgug_c2/images/AmgFCStratTantoFan.gif" width="380" height="250"></p>
+					</blockquote>
+					</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="664" colspan="3">
+					<a name="ix-Multi-Axis Flank Contouring tool axis guidance:Combin Tanto">
+					</a>
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+									<td valign="top" width="100%">
+									<ul>
+										<li><b><a name="CombinTanto"></a>Combin 
+										Tanto: </b>This strategy combines three 
+										phases:<ul>
+											<li>tool fans over a given Leave distance</li>
+											<li>tool is tangent to the drive surface 
+											at a given Contact height and is contained 
+											in a plane normal to forward direction</li>
+											<li>tool fans over a given Approach 
+											distance.</li>
+										</ul>
+										</li>
+									</ul>
+									</td>
+							</tr>
+					</table>
+					<blockquote>
+							<p align="left">
+							<img border="1" src="b35doc/english/online/amgug_c2/images/AmgFCStratCombinTanto.gif" width="380" height="250"></p>
+					</blockquote>
+					</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="664" colspan="3">
+					<a name="ix-Multi-Axis Flank Contouring tool axis guidance:Combin Parelm">
+					</a>
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+							<a name="ix-Multi-Axis Flank Contouring tool axis guidance:Combin Parelm">
+							</a><tr>
+									<td valign="top" width="100%">
+									<ul>
+										<li><b><a name="CombinParelm"></a>Combin 
+										Parelm: </b>This strategy combines three 
+										phases:<ul>
+											<li>tool fans over a given Leave distance</li>
+											<li>tool is tangent to the drive surface 
+											at a given Contact height and follows 
+											the surface isoparametrics</li>
+											<li>tool fans over a given Approach 
+											distance.</li>
+										</ul>
+										</li>
+									</ul>
+									</td>
+							</tr>
+					</table>
+					<blockquote>
+							<p align="left">
+							<img border="1" src="b35doc/english/online/amgug_c2/images/AmgFCStratCombinParelm.gif" width="380" height="250"></p>
+					</blockquote>
+					</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="664" colspan="3">
+					<a name="ix-Multi-Axis Flank Contouring tool axis guidance:Mixed Combin">
+					</a>
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+									<td valign="top" width="100%">
+									<ul>
+										<li><b><a name="MixedCombin"></a>Mixed Combin:
+										</b>Either Combin Parelm or Combin Tanto 
+										is applied depending on the drive surface 
+										geometry. Combin Tanto is applied for cylindrical 
+										and planar drives. Combin Parelm is applied 
+										for other drive surface geometry.</li>
+									</ul>
+									</td>
+							</tr>
+					</table>
+					</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="664" colspan="3">
+					<a name="ix-Multi-Axis Flank Contouring tool axis guidance:Fixed">
+					</a>
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+									<td valign="top" width="100%">
+									<ul>
+										<li><b><a name="Fixed"></a>Fixed: </b>The 
+										orientation of the tool axis is fixed.
+										</li>
+									</ul>
+									</td>
+							</tr>
+					</table>
+					<blockquote>
+							<p align="left">
+							<img border="1" src="b35doc/english/online/amgug_c2/images/AmgFCStratFixed.gif" width="380" height="250">
+							</p>
+					</blockquote>
+					</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="664" colspan="3">
+					<a name="ix-Multi-Axis Flank Contouring tool axis guidance:Normal to Part">
+					</a>
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+									<td valign="top" width="100%">
+									<ul>
+										<li><b><a name="NorToPart"></a>Normal to 
+										Part: </b>The tool axis remains normal to 
+										the Part Surface while the tool remains 
+										in contact with the drive surface. </li>
+									</ul>
+									</td>
+							</tr>
+					</table>
+					<blockquote>
+							<p>
+							<img border="1" src="b35doc/english/online/amgug_c2/images/AmgFCStratNormaltoPart.gif" width="380" height="250"></p>
+					</blockquote>
+					</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="664" colspan="3">
+					<a name="ix-Multi-Axis Flank Contouring tool axis guidance:Tanto">
+					</a>
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+									<td valign="top" width="100%">
+									<ul>
+										<li><a name="Tanto"></a><b>Tanto: </b>This 
+										mode can only be assigned <b>locally</b> 
+										to a drive and not globally to the operation. 
+										The tool is tangent to the drive surface 
+										at a given contact height, and the tool 
+										axis is contained in a plane normal to forward 
+										direction. </li>
+									</ul>
+									</td>
+							</tr>
+					</table>
+					<blockquote>
+							<p>
+							<img border="1" src="b35doc/english/online/amgug_c2/images/AmgFCStratTanto.gif" width="384" height="254"></p>
+					</blockquote>
+					</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="664" colspan="3">
+					<b>Contact height</b><br>
+					<a name="ix-Contact height:Multi-Axis Flank Contouring parameter">
+					</a>Determines a point on the drive surface where the tool must 
+					respect tangency conditions. The Contact height is measured 
+					from the tool tip along the tool axis. The point on the drive 
+					is computed such that its projection normal to the drive onto 
+					the tool axis respects the Contact height value. <blockquote>
+							<p>
+							<img border="1" src="b35doc/english/online/amgug_c2/images/AmgContact01.gif" width="265" height="250">
+							</p>
+					</blockquote>
+					</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="664" colspan="3">
+					<b>Leave fanning distance</b><br>
+					<a name="ix-Leave fanning distance:Multi-Axis Flank Contouring parameter">
+					</a>Specifies a distance at the start of a motion over which 
+					tool fanning takes place. </td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="664" colspan="3">
+					<b>Approach fanning distance</b><br>
+					<a name="ix-Approach fanning distance:Multi-Axis Flank Contouring parameter">
+					</a>Specifies a distance at the end of a motion over which tool 
+					fanning takes place. </td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="664" colspan="3">
+					<b>Disable fanning</b><br>
+					<a name="ix-Disable fanning:Multi-Axis Flank Contouring parameter">
+					</a>For operations with Combin Tanto, Combin Parelm and Mixed 
+					Combin tool axis guidance, it is possible to disable fanning 
+					at Start element, at Stop element, or at both these limiting 
+					elements. </td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="664" colspan="3">
+					<b>Control fanning using tool parameter</b><br>
+					<a name="ix-Control fanning using tool parameter:Multi-Axis Flank Contouring parameter">
+					</a>
+					<a name="ix-Useful cutting length:Multi-Axis Flank Contouring parameter">
+					</a>When this option is selected, a <b>Useful cutting length</b> 
+					can be defined on the current tool. This parameter is helpful 
+					for controlling tool fanning or the offset distance when approaching 
+					drive surfaces with negative draft angles, without needing to 
+					modify the tool chosen in the database. <p>Otherwise, the default 
+					standard cutting length value (Lc) of the tool will be used.</p>
+					</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="664" colspan="3">
+					<a name="WNR13Guidecrv"></a>An auxiliary guide curve can be 
+					selected in order to modify the tool axis strategy. It is mainly 
+					used to avoid collisions at the top of drive elements or to 
+					keep a safety distance on these elements. The following parameters 
+					can be used if a guide curve is selected the guide curve. <p>
+					<a name="ix-Position on guide curve:Multi-Axis Flank Contouring parameter">
+					</a><b>Position on guide curve</b><br>
+					Tool positioning with respect to the guide curve: Auto/Right/Left/On. 
+					Auto lets the program determine the best position regarding 
+					the curve.</p>
+					<p>
+					<a name="ix-Offset on guide curve:Multi-Axis Flank Contouring parameter">
+					</a><b>Offset on guide curve</b><br>
+					Offset to be applied to the guide curve.</p>
+					<p>
+					<a name="ix-Use of guide curve:Multi-Axis Flank Contouring parameter">
+					</a><b>Use of guide curve</b><br>
+					Tool can be made to respect the guide curve either <b>Always</b> 
+					or <b>If needed</b> (that is, only where there is a risk of 
+					collision with the drive element).</p>
+					<p>For example, for the following geometry:</p>
+					<p align="center">
+					<img border="1" src="b35doc/english/online/amgug_c2/images/AmgFCGuideCrv01NLS.gif" width="249" height="341"></p>
+					</td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10">
+					A collision occurs if top auxiliary guide curve is not defined:<br>
+					<img border="1" src="b35doc/english/online/amgug_c2/images/AmgFCGuideCrv02NLS.gif" width="260" height="340"></td>
+					<td style="padding-top: 10; padding-bottom: 10" width="25">
+&nbsp;</td>
+					<td style="padding-top: 10; padding-bottom: 10">
+					Collision is avoided if top auxiliary guide curve is defined:<br>
+					<img border="1" src="b35doc/english/online/amgug_c2/images/AmgFCGuideCrv03NLS.gif" width="260" height="340"></td>
+			</tr>
+	</table>
+	<h3><a name="PChsm"></a>Multi-Axis Flank Contouring: High Speed Milling (HSM) 
+	Parameters</h3>
+	<p>In a Multi-Axis Flank Contouring, cornering for HSM applies to all corners 
+	for machining or finishing passes. It does not apply to macros or default linking 
+	and return motions.</p>
+	<table border="0" cellspacing="1">
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="694">
+					<b>Cornering</b><br>
+					<a name="ix-Cornering:Multi-Axis Flank Contouring parameter">
+					Specifies whether or not cornering is to be done on the trajectory 
+					for HSM.</a> </td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" valign="top">
+					<b>Corner radius</b><br>
+					<a name="ix-Corner radius:Multi-Axis Flank Contouring parameter">
+					Specifies the radius used for rounding the corners along the 
+					trajectory of a HSM operation.</a> Value must be smaller than 
+					the tool radius. <br>
+					<img border="1" src="b35doc/english/online/amgug_c2/images/helpHSMCornerRad.gif" width="150" height="150"></td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="694">
+					<b>Cornering on side finish path</b><br>
+					<a name="ix-Cornering on side finish path:Multi-Axis Flank Contouring parameter">
+					Specifies whether or not tool path cornering is to be done on 
+					side finish paths</a>. </td>
+			</tr>
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="694">
+					<b>Corner radius on side finish path</b><br>
+					<a name="ix-Corner radius on side finish path:Multi-Axis Flank Contouring parameter">
+					</a>Specifies the corner radius used for rounding the corners 
+					along the side finish path of a HSM operation. Value must be 
+					smaller than the tool radius. </td>
+			</tr>
+	</table>
+	<h3><a name="PCcutcom"></a>Multi-Axis Flank Contouring: Cutter Compensation 
+	Parameters</h3>
+	<p>In the
+	<a target="_blank" href="page11418.html">
+	Machine Editor</a>, the Compensation tab contains options for: </p>
+	<ul>
+		<li>globally defining the 3D contact cutter compensation mode: None/Contact/Tip 
+		and Contact</li>
+		<li>imposing the compensation mode to all operations supporting the selected 
+		mode whatever the choice defined at machining operation level.</li>
+	</ul>
+	<p>If the options are set as follows, compensation can be managed at machining 
+	operation level.</p>
+	<p><img border="1" src="b35doc/english/online/amgug_c2/images/dbPOCutCom01NLS.gif" width="467" height="83"></p>
+	<p>In this case a Compensation tab appears in the Strategy page of the machining 
+	operation editor, and the following options are available.</p>
+	<table border="0" cellspacing="1">
+			<tr>
+					<td style="padding-top: 10; padding-bottom: 10" width="746">
+					<b><a name="WNR13RadComp"></a>Compensation output</b><br>
+					<a name="ix-Compensation output:Multi-Axis Flank Contouring parameter">
+					</a>Allows you to manage the generation of Cutter compensation 
+					(CUTCOM) instructions in the NC data output:<p>The following 
+					options are proposed:</p>
+					<ul>
+						<li><a href="#3drad">3D radial (PQR)</a></li>
+						<li><a href="#2Drad">2D radial tip</a></li>
+						<li><a href="#noComp">None</a>.</li>
+					</ul>
+					<p><b><a name="3drad"></a>3D Radial (PQR)</b></p>
+					<p>You can generate 3D radial compensation data (Vector &lt;P,Q,R&gt;) 
+					in the APT output.</p>
+					<p>The Radial compensation data output can be activated or not 
+					on each Multi Axis Flank Contouring cycle of a program.</p>
+					<p>For all tool positions of the machining passes, for the last 
+					motion of each approach macro, and for the first motion of each 
+					retract macro, the &lt;PQR&gt; vector is added to the APT statement 
+					(which contains the Tip position and the Tool Axis.<br>
+					Before the first position with &lt;PQR&gt; data, two APT statements 
+					: CUTCOM/SAME,NORMDS and CUTCOM/NORMDS are automatically added, 
+					after the last position with &lt;PQR&gt; data, a CUTCOM/OFF statement 
+					is automatically added.</p>
+					<p>These PQR statements are supported and can be translated 
+					by Multi-Axis Post Processors provided NC manufacturing Workbenches.</p>
+					<p><b>A sample APT output is given below:</b></p>
+					<blockquote>
+							<p><code>MULTAX/ ON<br>
+							PARTNO/ 0001 TEST G29 <br>
+							PPRINT/ %0001<br>
+							MACHIN/ N76TO1, 1.0000, 1.0000<br>
+							LOADTL/ 1.0000, LENGTH, 100.0000<br>
+							FROM/ 0.0000, 0.0000, 100.0000, $<br>
+							0.0000, 0.0000, 1.0000<br>
+							RAPID<br>
+							GOTO/ -20.0000, -20.0000, 100.0000, $<br>
+							0.0000, 0.0000, 1.0000<br>
+							FEDRAT/ 150.0000,MMPM<br>
+							RAPID<br>
+							GOTO/ -20.0000, -20.0000, 5.0000, $<br>
+							0.0000, 0.0000, 1.0000<br>
+							RAPID<br>
+							GOTO/ -20.0000, -20.0000, 5.0000, $<br>
+							0.1711, 0.1711, 0.9703<br>
+							CUTCOM/ SAME, NORMDS<br>
+							CUTCOM/ NORMDS<br>
+							RAPID<br>
+							GOTO/ -5.0000, -14.7721, 2.6047, $<br>
+							0.1711, 0.1711, 0.9703, $<br>
+							0.9806, -0.1247, -0.1509<br>
+							RAPID<br>
+							FEDRAT/ 150.0000,MMPM<br>
+							GOTO/ -4.9039, -13.8115, 2.4353, $<br>
+							0.1711, 0.1711, 0.9703, $<br>
+							0.9440, -0.3105, -0.1117<br>
+							GOTO/ -4.6194, -12.8878, 2.2725, $<br>
+							0.1711, 0.1711, 0.9703, $<br>
+							0.8718, -0.4852, -0.0682<br>
+							GOTO/ -4.1573, -12.0365, 2.1223, $<br>
+							0.1711, 0.1711, 0.9703, $<br>
+							0.7661, -0.6423, -0.0218<br>
+							<br>
+							.../...<br>
+							<br>
+							GOTO/ -12.8878, -4.6194, 2.2725, $<br>
+							0.1711, 0.1711, 0.9703, $<br>
+							-0.4852, 0.8718, -0.0682<br>
+							GOTO/ -13.8115, -4.9039, 2.4353, $<br>
+							0.1711, 0.1711, 0.9703, $<br>
+							-0.3105, 0.9440, -0.1117<br>
+							GOTO/ -14.7721, -5.0000, 2.6047, $<br>
+							0.1711, 0.1711, 0.9703, $<br>
+							-0.1247, 0.9806, -0.1509<br>
+							CUTCOM/ OFF<br>
+							FEDRAT/ 150.0000,MMPM<br>
+							GOTO/ -34.7721, -5.0000, 2.6047, $<br>
+							0.1711, 0.1711, 0.9703<br>
+							RAPID<br>
+							GOTO/ -33.0612, -3.2891, 12.3076, $<br>
+							0.1711, 0.1711, 0.9703<br>
+							RAPID<br>
+							GOTO/ -33.0612, -3.2891, 12.3076, $<br>
+							0.0000, 0.0000, 1.0000<br>
+							RAPID<br>
+							GOTO/ -33.0612, -3.2891, 100.0000, $<br>
+							0.0000, 0.0000, 1.0000</code></p>
+					</blockquote>
+					<p><b>A sample of NC data file is given below:</b></p>
+					<blockquote>
+							<p><code>%0001<br>
+							N1(TOTAL MACHINING TIME : 0 HOURS AND 4 MINUTES)<br>
+							N1( 0001 TEST G29 21-May-2001 14:05:10.00)<br>
+							/N3E62001=-100000<br>
+							N5E30008=100000<br>
+							N7E30009=100000D0<br>
+							N9G52T1M6M36<br>
+							N11D1<br>
+							/N13M0<br>
+							$(RP0001)<br>
+							N15G0X0Y0Z351A0B0<br>
+							N17X-20Y-20<br>
+							N19G0Z256<br>
+							N21X22.947Y22.947Z248.541A-10.001B9.852<br>
+							N23G29X37.947Y28.175Z246.145A-10.001B9.852U.171V.171W.97P-980.6Q124.7R150.9<br>
+							N25G94F150G1X38.043Y29.136Z245.976A-10.001B9.852U.171V.171W.97P-944Q310.5R111.7<br>
+							N27X38.328Y30.059Z245.813A-10.001B9.852U.171V.171W.97P-871.8Q485.2R68.2<br>
+							N29X38.79Y30.911Z245.663A-10.001B9.852U.171V.171W.97P-766.1Q642.3R21.8<br>
+							N31X39.412Y31.657Z245.532A-10.001B9.852U.171V.171W.97P-630.6Q775.7R-25.6<br>
+							N33X40.169Y32.269Z245.424A-10.001B9.852U.171V.171W.97P-469.8Q879.8R-72.3<br>
+							N35X41.034Y32.724Z245.343A-10.001B9.852U.171V.171W.97P-289.9Q949.9R-116.4<br>
+							N37X41.972Y33.004Z245.294A-10.001B9.852U.171V.171W.97P-98Q982.9R-156<br>
+							N39X42.947Y33.099Z245.277A-10.001B9.852U.171V.171W.97P0Q984.8R-173.6<br>
+							N41G93F1.5X121.562Y33.572Z248.01A-10.001B4.928U.086V.173W.981P0Q984.8R-173.6<br>
+							<br>
+							.../...<br>
+							<br>
+							N89X30.911Y38.79Z245.663A-10.001B9.852U.171V.171W.97P642.3Q-766.1R21.8<br>
+							N91X30.059Y38.328Z245.813A-10.001B9.852U.171V.171W.97P485.2Q-871.8R68.2<br>
+							N93X29.136Y38.043Z245.976A-10.001B9.852U.171V.171W.97P310.5Q-944R111.7<br>
+							N95X28.175Y37.947Z246.145A-10.001B9.852U.171V.171W.97P124.7Q-980.6R150.9<br>
+							N97G40<br>
+							N99F150X8.175<br>
+							N101G0X9.886Y39.658Z255.848<br>
+							N103X-33.061Y-3.289Z263.308A0B0<br>
+							N105Z351<br>
+							N107M2</code></p>
+					</blockquote>
+					<p><b><a name="2Drad"></a>2D Radial Tip</b></p>
+					<p>The tool tip will be visualized during tool path replay. 
+					Cutter compensation instructions are automatically generated 
+					in the NC data output. An approach macro must be defined to 
+					allow the compensation to be applied.<br>
+					Example of generated APT source:</p>
+					<blockquote>
+							<p><code>$$ Start generation of : Multi-Axis Flank Contouring.1<br>
+							FEDRAT/ 1000.0000,MMPM<br>
+							SPINDL/ 70.0000,RPM,CLW<br>
+							CUTCOM/LEFT<br>
+							$$ START CUTCOM PLANAR XT, YT, ZT, I, J, K<br>
+							GOTO / 100.00000, -125.00000, 10.00000, 0.0000, 0.0000, 
+							1.0000<br>
+							GOTO / 0.00000, -125.00000, 10.00000, 0.0000, 0.0000, 
+							1.0000<br>
+							CUTCOM/OFF<br>
+							$$ END CUTCOM PLANAR XT, YT, ZT, I, J, K<br>
+							$$ End of generation of : Multi-Axis Flank Contouring.1</code></p>
+					</blockquote>
+					<p><b><a name="noComp"></a>None</b></p>
+					<p>Cutter compensation instructions are not automatically generated 
+					in the NC data output. However, CUTCOM instructions can be inserted 
+					manually. For more information, please refer to
+					<a href="page12421.html" target="ds_doc2">
+					How to generate CUTCOM syntaxes</a>. </p>
+					</td>
+			</tr>
+	</table>
+	<h2><a name="PCGeometry"></a>Multi-Axis Flank Contouring: Geometry</h2>
+	<p>You can specify the following Geometry:</p>
+	<ul>
+		<li>Part with possible Offset on Part<br>
+		See note below about <a href="#negPartOffset">negative part offset and collision 
+		checking on checks</a>.</li>
+		<li>Drives surfaces with possible Offset on Drive.</li>
+		<li>Start and Stop limiting elements with possible Offset on Start and Offset 
+		on Stop.<br>
+		The tool can be positioned with respect to the start and Stop elements by 
+		selecting one of the proposed options: On, In, Out, or Tangent to Drive.
+		</li>
+		<li>Fixture or check elements with possible Offset on Check.</li>
+		<li>Offset along Tool Axis.</li>
+	</ul>
+	<h3>Drive Elements </h3>
+	<p>Surfaces or planes can be selected and they are taken into account according 
+	to their order of selection. The tool path starts on the first drive and ends 
+	on the last drive, except when <b>Close tool path </b>is set (in this case, 
+	the first drive is also used as the last drive).</p>
+	<p>The Face Selection toolbar appears to help you select faces or belts of faces.</p>
+	<p>
+	<img border="1" src="b35doc/english/online/amgug_c2/images/tbfaceselectNLS.gif" width="273" height="60"></p>
+	<p>Please refer to
+	<a target="_blank" href="page11480.html#FaceSelToolbar">
+	Face Selection</a> for a description of these commands.</p>
+	<p><a name="R18MultiSelFac"></a>For some parts, you may need to select 
+	the same face as a drive element more than once. For this, you can use <kbd>Multi-selection 
+	of Contours</kbd>
+	<img border="0" src="b35doc/english/online/icons_C2/images/I_MultiSelContours.gif" width="22" height="22">, 
+	which allows multi-selection of faces when selecting drive elements.</p>
+	<p>In this case, the same drive has more than one annotation. To improve 
+	visualization of selected drives, the annotation is positioned at the edge (and 
+	not in the middle) of the drive.</p>
+	<p><img border="1" src="b35doc/english/online/amgug_c2/images/MultiSelDrives.gif" width="443" height="265"></p>
+	<p>Note that, when selecting drives, a warning message may appear about 
+	the possible creation of a second belt of faces if you forget to select a face.</p>
+	<p>Drives can be adjusted using the
+	<a name="ix-contextual command::Local Modifications;Local Modifications contextual command">
+	</a><b>Local Modifications</b> contextual command. For example, this allows 
+	you to make the following <a href="page0370.html">local modifications</a> 
+	to a drive:</p>
+	<ul>
+		<li>use a different guiding strategy</li>
+		<li>set different offsets</li>
+		<li>imposed a 4-axis constraint.</li>
+	</ul>
+	<p>The program automatically determines the stopping and restarting conditions 
+	between contiguous drives. If drives are not adjacent, those values must be 
+	set manually with the Local Modifications capability. The program automatically 
+	detects fillets and joggles (features comprising 3 contiguous drives) to manage 
+	the choice of suitable elements for stopping.</p>
+	<h3>Use Curves as Part</h3>
+	<p>
+	<a name="ix-contextual command::Use Curves as Part;Use Curves as Part contextual command">
+	</a>You can select edges that are boundaries of the drive elements as part elements. 
+	To do this, right click the part surface area in the sensitive icon and select 
+	the <b>Use Curves as Part</b> contextual command.</p>
+	<h3>Start and Stop Elements</h3>
+	<p><a name="ix-start element"></a><a name="ix-stop element"></a>You can select 
+	vertices, edges, planes and faces as limiting elements. If a vertex or edge 
+	is selected, a virtual plane is computed on the vertex or at the middle of the 
+	edge perpendicular to the current drive and part.</p>
+	<p><a name="ix-contextual command::Switch;Switch contextual command"></a>You 
+	can right click the start or stop element in the sensitive icon and select the
+	<b>Switch</b> contextual command to swap the Start and Stop labels on the selected 
+	elements. This does not reverse the direction of the tool path. </p>
+	<h3>Start Position and Optional Reference Point</h3>
+	<a name="ix-Reference point"></a><a name="ix-Start position"></a><p>A typical 
+	start element is a plane/almost planar surface that is normal to the drive, 
+	and normal to the part. This allows the program to use an automatic reference 
+	point.</p>
+	<p>It is recommended to select an edge or vertex that will automatically simulate 
+	a correct plane.</p>
+	<p>In the case of a manually selected reference point, you have to imagine that 
+	the tool makes a virtual move from a <i>Reference position</i> to the Start 
+	position, which is the end position of that move. The Reference position is 
+	defined by the reference point and the tool axis at that point.</p>
+	<p>The tool move moves from the Reference position to an intermediate position 
+	then on to the Start position when Part, Drive and Check surfaces are specified.
+	</p>
+	<p align="left">
+	<img border="1" src="b35doc/english/online/amgug_c2/images/AmgRefPosition01.gif" width="603" height="193"></p>
+	<p>The intermediate position is defined as being the normal projection of the 
+	Reference point on the Drive surface. </p>
+	<p>Reference position is not taken into account for tool path computation of 
+	the machining operation. It is only a reference location that helps to specify 
+	the Start position related to the Part, Drive and potentially Check surfaces 
+	that are specified by the user.</p>
+	<p>Expected results are obtained by respecting a reference position close to 
+	this end location (but at a distance greater than the tool radius value).</p>
+	<p>Selecting the fillet of the joggle as starting element is not a good choice. 
+	Because the elements are always seen as infinite, the extension of this fillet 
+	is parallel to the first drive. If these two elements do not have a common boundary, 
+	select a starting element whose extensions are not parallel to the drive (drive 
+	also seen as infinite).</p>
+	<h3>Local Drive Surface Conditions</h3>
+	<p>Local <a name="ix-Restarting direction"></a><b>Restarting direction</b>:
+	<b>Auto / Left / Right / Forward</b>. This is a relative direction, seen from 
+	a cutter point of view. You should set the value according to the direction 
+	of the cutter at the end of the previous motion. In Auto mode, the program applies 
+	either Left, Right or Forward according to local geometry conditions. </p>
+	<p>Local <a name="ix-Stopping condition"></a><b>Stopping condition</b>: <b>Auto 
+	/ To / On / Past / Tangent DS</b>. You should set the value according to how 
+	you want the cutter to reach the next drive. In Auto mode, the program applies 
+	either To, Past or Tangent DS according to local geometry conditions. In 
+	some cases, the stopping condition may be ignored (for example, if the drive 
+	to reach is located after the Past position of the current drive).</p>
+	<p>Local <a name="ix-Tool side on drive"></a><b>Tool side on drive</b>:<b> Same 
+	as first / Swap / On</b>. You should keep in mind that the reference side is 
+	the one set on the first drive as indicated by the displayed arrow. This 
+	parameter is predominant compared the local <b>Stopping condition. </b> </p>
+	<p>Stopping and Restarting conditions must be defined on non contiguous drives.
+	</p>
+	<p>User defined settings may lead to bad tool paths. So you should ensure the 
+	consistency of the chosen collection of drive surfaces. For example, a gap between 
+	the end of a motion and the beginning of the next motion would generate a simple 
+	straight-line path, which is generally not suitable. </p>
+	<p>In order to machine some gaps, you may have to create extra geometry. A typical 
+	example is two drive elements that are tangent but not contiguous, lying on 
+	the same surface. </p>
+	<h3>Geometry and Tool</h3>
+	<p>Keep in mind that a geometric element is always extended to infinity, vertically 
+	and horizontally.</p>
+	<p>The cutting length of the tool should not be too great compared to the height 
+	of the drives. This can lead to bad results or failure in corners.</p>
+	<p>For negative draft angles the top of the cutting part of the tool is taken 
+	into account to define the fanning areas, if necessary along the vertical extension 
+	of the drive.</p>
+	<p>It is preferable to specify the cutting length of the tool in the <kbd>Useful 
+	cutting length</kbd> parameter.</p>
+	<h3>Geometry Recommendations</h3>
+	<p>Do not set the <kbd>Close tool path</kbd> option if the first drive is not 
+	to be machined as the last drive also.</p>
+	<p>Do not use a manual reference point if its use is not clearly defined. Prefer 
+	an automatic reference point, using a plane/planar surface as start element, 
+	normal to the drive1 and normal to the part (select an edge or a vertex that 
+	will simulate this plane without geometry creation).</p>
+	<p>Use a cutter whose cutting length (Lc) is nearly the height of the drive 
+	elements (use the <kbd>Useful cutting length</kbd> parameter, do not modify 
+	the tool).</p>
+	<p>Always keep in mind that all geometrical elements are seen as infinite elements, 
+	extended in all directions: horizontal and vertical. Also drive elements are 
+	machined in the order of selection, one after another.</p>
+	<p>Select the <kbd>OUT</kbd> condition to end after a joggle, or use a plane/edge/vertex 
+	as end element.</p>
+	<p><a name="negPartOffset"></a>If a negative part offset is used and its absolute 
+	value is bigger than the tool body radius, <br>
+	this is not compatible with collision checking on checks.<br>
+	If you really want to perform collision checking on checks you must use a smaller 
+	negative offset on parts. <br>
+	Otherwise unselect check elements.</p>
+	<h2><a name="PCTool"></a>Multi-Axis Flank Contouring: Tool</h2>
+	<p>Recommended tools for Multi-Axis Flank Contouring are End Mills and Conical 
+	Mills.</p>
+	<h2><a name="PCFandS"></a>Multi-Axis Flank Contouring: Feeds and Speeds</h2>
+	<p>In the<kbd> Feeds and Speeds</kbd> tab page, you can specify feedrates for approach, 
+	retract, and machining as well as a machining spindle speed.</p>
+	<p>Feedrates and spindle speed can be defined in linear or angular units.</p>
+	<p>A <kbd>Spindle output</kbd> check box is available for managing output of the SPINDL 
+	instruction in the generated NC data file. If the check box is selected, the 
+	instruction is generated. Otherwise, it is not generated. </p>
+	<p>Feeds and speeds of the operation can be updated automatically according 
+	to tooling data and the Rough or Finish quality of the operation. This is described 
+	in
+	<a href="page11449.html#FSUpdate" target="ds_doc2">
+	Update of Feeds and Speeds on Machining Operation</a>.</p>
+	<h3><a name="WNR10PCFeedReduction"></a>Feedrate Reduction in Corners</h3>
+	<a name="ix-Feedrate reduction in corners:Multi-Axis Flank Contouring parameter">
+	</a><p>You can reduce feedrates in corners encountered along the tool path depending 
+	on values given in the <kbd>Feeds and Speeds</kbd> tab page:
+	<a name="ix-Reduction rate (feed reduction)"></a>
+	<a name="ix-Maximum radius (feed reduction)"></a>
+	<a name="ix-Minimum angle (feed reduction)"></a>
+	<a name="ix-Distance before corner (feed reduction)"></a>
+	<a name="ix-Distance after corner (feed reduction)"></a>reduction rate, maximum 
+	radius, minimum angle, and distances before and after the corner.</p>
+	<div align="left">
+		<blockquote>
+				<table border="0">
+						<tr>
+								<td>
+								<img border="1" src="b35doc/english/online/amgug_c2/images/dbFeedReduction01NLS.gif" width="260" height="154"></td>
+								<td>
+								<p align="left">
+								<img border="1" src="b35doc/english/online/amgug_c2/images/FeedReduction02NLS.gif" width="263" height="171"></p>
+								</td>
+						</tr>
+				</table>
+		</blockquote>
+	</div>
+	<p>Feed reduction is applied to corners along the tool path whose radius is 
+	less than the Maximum radius value and whose arc angle is greater than the Minimum 
+	angle value. Corners can be angled or rounded.</p>
+	<p>For Multi-Axis Flank Contouring, feedrate reduction applies to inside corners 
+	for machining or finishing passes. It does not apply to macros or default linking 
+	and return motions.</p>
+	<p>If a cornering is defined with a radius of 5mm and the Feedrate reduction 
+	in corners is set with a smaller radius value, the feedrate will not be reduced.</p>
+	<h3><a name="WNR17localfeedred"></a>Feedrate Reduction in Corners Combined with 
+	Local Slowdown Rate</h3>
+	<p>If the <kbd>Feedrate reduction in corners</kbd> option is selected and local Slowdown 
+	rates are applied to drives, the general rule is that the corner feedrate Reduction 
+	rate is applied after the local Slowdown rate on the current feedrate. For a 
+	machining feedrate the feedrate will be equal to (machining feedrate * local 
+	Slowdown rate * corner Reduction rate).</p>
+	<p>For example if the local Slowdown rate is 80% on the first drive, 40% on 
+	the second drive and the corner feedrate Reduction rate is 50%, the feedrate 
+	sequence is: </p>
+	<ul>
+		<li>80% then 40% along the first drive</li>
+		<li>20% then 40% along the second drive.</li>
+	</ul>
+	<p>Feedrate reduction in corners with no Local Slowdown on drives:<span style="font-family: Verdana; font-size: 8pt"><br>
+	</span>
+	<img border="1" src="b35doc/english/online/amgug_c2/images/FeedReduction03NLS.gif" width="240" height="139"></p>
+	<p>Feedrate reduction in corners combined with Local Slowdown on drives:<br>
+&nbsp;<img border="1" src="b35doc/english/online/amgug_c2/images/FeedReduction04NLS.gif" width="240" height="140"></p>
+	<h2><a name="PCMacro"></a>Multi-Axis Flank Contouring: NC Macros</h2>
+	<p>You can define transition paths in your machining operations by means of 
+	NC Macros. These transition paths are useful for providing approach, retract 
+	and linking motion in the tool path. </p>
+	<p>An Approach macro is used to approach the operation start point.</p>
+	<p>A Retract macro is used to retract from the operation end point.</p>
+	<p class="0BodyContinued">A Linking macro may be used in several cases, for 
+	example: </p>
+	<ul>
+		<li>to link two non consecutive paths</li>
+		<li>to access finish and spring passes.</li>
+	</ul>
+	<p>A Return on Same Level macro is used in a multi-path operation to link two 
+	consecutive paths in a given level.</p>
+	<p>A Return between Levels macro is used in a multi-level machining operation 
+	to go to the next level.</p>
+	<p>A Return to Finish Pass macro is used in a machining operation to go to the 
+	finish pass.</p>
+	<p>A Clearance macro can be used in a machining operation to avoid a fixture, 
+	for example.</p>
+	<h2>
+	<a name="R18MultiEdit"></a>Editing 
+	Parameters of Several Multi-Axis Flank Contouring Operations</h2>
+	<p>You can modify the parameters of several <kbd>Multi-Axis Flank Contouring</kbd> operations 
+	in one shot as follows: </p>
+	<ul>
+		<li>Select two or more <kbd>Multi-Axis Flank Contouring</kbd> operations either in 
+		the Specification tree or in the <kbd>Process table</kbd>.</li>
+		<li>Right-click the highlighted operations and select <kbd>Selected Objects 
+		&gt; Definition...</kbd>&nbsp; <br>
+		The <kbd>Multi-Axis Flank Contouring</kbd>dialog box appears.</li>
+		<li>Modify any of the parameters that are available for edition.<br>
+		<b>Note</b>: Geometry and macro definitions can be edited if all the selected 
+		operations already have identical values.<br>
+		Some parameters may not be available for edition. Tool parameters cannot 
+		be edited and the <kbd>Replay</kbd> icon is disabled.</li>
+		<li>Click <kbd>OK</kbd> to apply the modified parameters of all the selected operations.</li>
+	</ul>
+
+	</body>
+
+</html>
+

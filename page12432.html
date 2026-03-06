@@ -1,0 +1,1475 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>2.5 to 5-Axis Drilling Operations</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style type="text/css">
+.style1 {
+	background-color: #E5F3FF;
+}
+.style2 {
+	border-style: solid;
+	border-width: 1px;
+}
+.style3 {
+	font-weight: bold;
+	color: #666666;
+}
+</style>
+</head>
+
+<body>
+
+<h1>2.5 to 5-Axis Drilling Operations</h1>
+<p>The information in this section will help you create and manage the drilling 
+(or <i>axial machining</i>) operations in your manufacturing program. The following 
+topics are dealt with:</p>
+<ul>
+	<li><a href="#PKTaxial01">Axial Machining Strategy Parameters</a><ul>
+		<li><a href="#genparam">General Parameters</a></li>
+		<li><a href="#PKTaxial04">Specific Thread Milling Parameters</a></li>
+		<li><a href="#PKTaxial03">Specific Circular Milling Parameters</a></li>
+		<li><a href="#R19HelicalInterpolCirThrdMill">Helical Interpolation for Circular 
+		Milling and Thread Milling</a></li>
+	</ul>
+	</li>
+	<li><a href="#axialgeom">Axial Machining Geometry Considerations</a>:
+	<ul>
+		<li><a href="#ax01">Machining Patterns</a>
+		<ul>
+			<li><a href="#ax02">Pattern Ordering Modes</a></li>
+			<li><a href="#WNR12PatternManage">Managing Pattern Points</a></li>
+			<li><a href="#WNR12ReveresePattern">Inversing Pattern Ordering</a></li>
+		</ul>
+		</li>
+		<li><a href="#ax03">Overall Tool Axis Orientation</a></li>
+		<li><a href="#ax04">Projection and Top Element Modes</a></li>
+		<li><a href="#BtmPln">Bottom Plane</a></li>
+		<li><a href="#ax07">Origin Offset</a></li>
+		<li><a href="#JumpDist">Jump Distance</a></li>
+		<li><a href="#WNHoleDepths">Holes at Different Levels</a></li>
+		<li><a href="#WNSpecResult">Machining Different Depths</a></li>
+		<li><a href="#WNR11RelimitHoleOrigin">Relimiting Hole Origins</a></li>
+		<li><a href="#hj-Drilling">Drill through Stock upto bottom</a></li>
+		<li><a href="#hj-Spot">Spot Drill to Part</a></li>
+		<li><a href="#WNR14DiffDiams">Machining Different Diameters</a></li>
+		<li><a href="#WNT14BlindThru">Managing Blind and Through Holes</a></li>
+	</ul>
+	</li>
+	<li><a href="#axialmacros">Macros in Axial Machining Operations</a></li>
+	<li><a href="#axialcyclesyntax">CYCLE Syntaxes in Axial Machining Operations</a></li>
+	<li><a href="#R20MultiEdit">Editing Parameters of Several Axial Machining Operations</a></li>
+</ul>
+<p><a name="WNMADrilling"></a>Note that the commands and capabilities included in 
+the <kbd>Geometry</kbd> tab page of the <kbd>Axial Machining Operation</kbd> dialog box allow support 
+of multi-axis as well as fixed axis drilling.</p>
+<h2><a name="PKTaxial01"></a>Axial Machining Strategy Parameters</h2>
+<p>Strategy parameters are managed in the <kbd>Strategy</kbd> tab page
+<img border="1" src="b35doc/english/online/pmgug_c2/images/TabStratG.gif" align="middle" width="36" height="22">.</p>
+<h3><a name="genparam"></a>General Parameters</h3>
+<table border="0" cellspacing="1" width="668">
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>
+		<a name="R20Function_005704"></a>Power</kbd><br>
+		<a name="ix-Power: Axial Machining parameter">
+		</a>Enables you to define the <kbd>P</kbd><span class="style3">ower
+		</span>parameter value at Axial machining 
+		operation level. In this way you can have different Power values for different 
+		operations under a single tool change. You can output this POWER syntax 
+		in the APTsource for the operation and use this output in setting up the 
+		machine. <br>
+		This can help to utilize the full potential of multi-task drill tool holders, 
+		and effectively improve productivity and performance.<br>
+		A parameter <kbd>Po</kbd><span class="style3">wer</span> i<span class="style1">s available in </span>
+		the <kbd>strategy</kbd> dialog box of all the Axial Operations.&nbsp; <br>
+		<br>
+		
+		<img src="b35doc/english/online/pmgug_c2/images/dbPowerNLS.gif" width="404" height="330" class="style2"><p>You 
+		can select one of the following values for this parameter from <kbd>
+		Power</kbd> drop-down menu:</p>
+		<ul>
+			<li><kbd>From Tool Assembly</kbd><br>
+			If this option is selected, then the POWER value defined in the tool 
+			assembly would be taken into consideration for that operation. In the 
+			APTsource this value is output as DEFAULT for MFG_MO_TOOL_POW.</li>
+			<li><kbd>Fixed</kbd><br>
+			If this option is selected, then in APTsource this value is output 
+			as TURN for MFG_MO_TOOL_POW. This value would be specific to the operation 
+			and there would be no impact of the POWER value chosen for tool assembly.</li>
+			<li><kbd>Powered</kbd><br>
+			If this option is selected, then in APTsource this value is output 
+			as MILL for MFG_MO_TOOL_POW. This value would be specific to the operation 
+			and there would be no impact of the POWER value chosen for tool assembly.
+			</li>
+		</ul>
+		<p>The POWER parameter value is editable in below mentioned axial operations:<br>
+Drilling, Spot Drilling, Drilling Dwell Delay, Drilling Deep Hole, 
+		Drilling Break Chips, Tapping, Reverse Threading, Thread without Tap 
+		Head, Boring, Boring and Chamfering, Reaming, Counter Boring, Counter 
+		Sinking, Chamfering Two Sides, and Sequential Axial.<br>
+		<br>
+		If you wants to use the functionality as it was there then you have to 
+		select <kbd>From Tool Assembly</kbd> as the <kbd>POWER</kbd> option in the operation. If you 
+		select any option other than <kbd>From Tool Assembly</kbd> and outputs the 
+		MFG_MO_TOOL_POW parameter in Aptsource then you would get the POWER 
+		value selected in the operation outputted in Aptsource irrespective to 
+		the POWER value selected in the Tool assembly.<br>
+		</p>
+		<p>The POWER parameter value is set to <kbd>Powered</kbd> for Boring Spindle 
+		Stop, Back Boring, T-Slotting, Circular Milling, Thread Milling, and Sequential 
+		Groove operations. This is because the tool motion is not purely axial for 
+		these operations, so the parameter value cannot be <kbd>Fixed</kbd>.</p>
+		<p> At Tool Assembly you have the freedom of selecting 
+		Fixed or Powered value for Boring Spindle Stop, Back Boring, 
+		T-Slotting, Circular Milling, Thread Milling, and Sequential Groove 
+		operations.
+		You have to notice if you outputs the MFG_TOOL_ASS_POW (CAA parameter or 
+		POWER in tool assembly) for tool change and MFG_MO_TOOL_POW (CAA 
+		parameter for POWER in operation) for machining operation simultaneously 
+		then you would get both the values in Aptsource, former for tool change 
+		and later for machining operation. But the value of MFG_MO_TOOL_POW 
+		would be independent of the POWER value selected for assembly.</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>Approach 
+		clearance (A)</kbd><br>
+		<a name="ix-Approach clearance: Axial Machining parameter"></a>Defines a 
+		safety distance along the tool axis for approaching the hole reference.<br>
+		The manufacturing attribute is MFG_CLEAR_TIP. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>Approach 
+		clearance 2 (A2)</kbd><br>
+		<a name="ix-Approach clearance 2: Axial Machining parameter"></a><b>Only 
+		for Boring and Chamfering, Chamfering Two Sides, and Back Boring operations</b>, 
+		this parameter defines a safety distance along the tool axis for approaching 
+		the chamfering or back boring pass. <br>
+		The manufacturing attribute is MFG_CLEAR_TIP_2. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641">
+		<a name="ix-Breakthrough: Axial Machining parameter"></a><kbd>Breakthrough 
+		(B)</kbd><br>
+		Defines the distance in the tool axis direction that the tool goes completely 
+		through the part.<br>
+		The manufacturing attribute is MFG_BREAKTHROUGH. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>Plunge mode</kbd><br>
+		<a name="ix-Plunge mode: Axial Machining parameter"></a>Allows you to specify 
+		an axial plunge from the hole reference at plunge feedrate prior to machining.
+		<blockquote>
+			<p align="left">
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/Plungemode01.gif" width="145" height="145">&nbsp;&nbsp;&nbsp;&nbsp;
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/Plungemode02.gif" width="145" height="145"></p>
+		</blockquote>
+		<p>The overall plunge distance is determined as follows:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <kbd>Approach clearance + (Plunge depth - Plunge 
+		offset)</kbd><br>
+		where Plunge depth is determined by a tool tip or tool diameter value.
+		</p>
+		<p>The manufacturing attribute is MFG_PLUNGE_MODE. </p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>Plunge offset 
+		(Po)</kbd><br>
+		<a name="ix-Plunge offset: Axial Machining parameter"></a>Specifies the 
+		plunge offset value.<br>
+		The manufacturing attribute is MFG_PLUNGE_OFFST. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>Plunge diameter 
+		(Pd)</kbd><br>
+		<a name="ix-Plunge diameter: Axial Machining parameter"></a>Specifies the 
+		plunge diameter value.<br>
+		The manufacturing attribute is MFG_PLUNGE_DIAMETER. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>Plunge tip 
+		(Pt)</kbd><br>
+		<a name="ix-Plunge tip: Axial Machining parameter"></a>Specifies the plunge 
+		tip distance.<br>
+		The manufacturing attribute is MFG_PLUNGE_TIP. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>Plunge for 
+		chamfering </kbd><br>
+		<a name="ix-Plunge for chamfering: Axial Machining parameter"></a><b>For 
+		a Boring and Chamfering operation</b>, if a Plunge mode is selected (By 
+		Tip or By Diameter), you can deactivate the plunge motion for the Chamfering 
+		phase of the operation by deselecting the <kbd>Plunge for chamfering</kbd> 
+		checkbox. In this case, the plunge motion will be done for the boring phase 
+		only.</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>Depth mode</kbd><br>
+		<a name="ix-Depth mode: Axial Machining parameter"></a>Defines how the depth 
+		computation is to be done.<br>
+		Depending on the type of operation this can be done as a function of the 
+		tool tip, shoulder, diameter or a distance value. The manufacturing attribute 
+		is MFG_DEPTH_MODE. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>Dwell mode</kbd><br>
+		<a name="ix-Dwell mode: Axial Machining parameter"></a>Defines the dwell 
+		by means of a number of revolutions or time duration.
+		<ul>
+			<li><kbd>Revolutions</kbd>: Specifies the number of revolutions for 
+			the dwell</li>
+			<li><kbd>Time</kbd>: Specifies the time duration of the dwell.</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>Shift mode</kbd><br>
+		<a name="ix-Shift mode:Axial Machining parameter"></a>
+		<a name="ix-Shift mode:polar coordinates"></a>
+		<a name="ix-Shift mode:linear coordinates"></a>Specifies the shift mode 
+		used to offset the tool just before retracting.
+		<ul>
+			<li><kbd>By linear coordinates</kbd><br>
+			Shift along X: Specifies the shift along X <br>
+			Shift along Y: Specifies the shift along Y <br>
+			Shift along Z: Specifies the shift along Z</li>
+		</ul>
+		<ul>
+			<li><kbd>By polar coordinates</kbd><br>
+			Shift distance: Specifies the shift distance <br>
+			Shift angle: Specifies the shift angle</li>
+		</ul>
+		<ul>
+			<li><kbd>None.</kbd></li>
+		</ul>
+		<p>The values entered for the selected shift mode determine the angle at 
+		which the active part of the boring bar stops and the amount of the tool 
+		displacement. </p>
+		<p>For a shift defined by <a name="polarcoords"></a>polar coordinates (90deg, 
+		1.5mm), the tool is displaced 1.5mm as indicated by the arrow in the figure 
+		below.</p>
+		<p align="left">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/shiftmode.gif" width="317" height="300"></p>
+		<p align="left">The same shift motion could be obtained by the
+		<a name="linearcoords"></a>linear coordinates (0mm, 1.5mm, 0mm).</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>Max depth 
+		of cut (Dc)</kbd><br>
+		<a name="ix-Max depth of cut (Dc): Axial Machining parameter"></a>Defines 
+		the maximum depth of cut for:
+		<ul>
+			<li>each peck in a <b>Drilling Deephole operation</b></li>
+		</ul>
+		<ul>
+			<li>each break chips pass in a <b>Drilling Break Chips operation</b>.</li>
+		</ul>
+		<p>The manufacturing attribute is MFG_AXIAL_DEPTH. </p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>Retract</kbd><br>
+		Defines the retract clearance after the machining pass in a <b>Back Boring 
+		operation</b>.<p>The manufacturing attribute is MFG_RETRACT_CLEAR_TIP.
+		</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>Retract offset 
+		(Or)</kbd><br>
+		<a name="ix-Retract offset: Axial Machining parameter"></a>Defines the value 
+		of:
+		<ul>
+			<li>the back motion used to break chips after each drilling pass in 
+			a <b>Drilling Break Chips operation</b></li>
+		</ul>
+		<ul>
+			<li>the offset where machining feedrate starts before each new peck 
+			in a <b>Drilling Deephole operation</b>.</li>
+		</ul>
+		<p>The manufacturing attribute is MFG_OFFSET_RET. </p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>Decrement 
+		rate</kbd><br>
+		<a name="ix-Decrement rate: Axial Machining parameter"></a>In a <b>Drilling 
+		Deephole operation</b>, this parameter decreases the effective depth of 
+		cut at each new peck until the total depth is reached.
+		<p>Depth of peck 1 = Max depth of cut (Dc)<br>
+		Depth of peck 2 = Dc * (1-Decrement rate)<br>
+		Depth of peck 3 = Dc * (1-2*Decrement rate)<br>
+		and so on.</p>
+		<p>If Decrement rate is equal to zero, the Maximum depth of cut is applied 
+		at each new peck as a constant step.<br>
+		The manufacturing attribute is MFG_DEPTH_DEC. </p>
+		<p><kbd>Decrement limit</kbd><br>
+		<a name="ix-Decrement limit: Axial Machining parameter"></a>Coefficient 
+		used to determine the maximum allowed depth of cut for a peck in a <b>Drilling 
+		Deephole operation</b>. </p>
+		<p>The depth of a new peck never becomes smaller than the Maximum depth 
+		of cut multiplied by the Decrement limit. </p>
+		<p>That is:<br>
+		Depth of current peck &gt; Maximum depth of cut * Decrement limit.</p>
+		<p>When:<br>
+		Depth of current peck = Maximum depth of cut * Decrement limit<br>
+		this depth is kept for all remaining pecks until the total depth is reached.</p>
+		<p>The value of Decrement limit must be greater than zero.<br>
+		The manufacturing attribute is MFG_DEPTH_LIM. </p>
+		<p><kbd><a name="ExDecrementValues"></a></kbd><u>Example of Decrement rate 
+		and Decrement limit:</u></p>
+		<p>A Drilling Deephole operation uses the following parameters:<br>
+		Maximum depth of cut = 10mm<br>
+		Decrement rate = 0.1<br>
+		Decrement limit = 0.8</p>
+		<p>Therefore, depth of current peck will always be greater than 8mm (that 
+		is, 10mm*0.8).</p>
+		<p>Depth of peck 1 = 10mm<br>
+		Depth of peck 2 = 9mm<br>
+		Depth of peck 3 = 8mm<br>
+		Depth of remaining pecks = 8mm. </p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641">
+		<a name="WNR11AutoROTABL"></a><kbd>Automatic ROTABL</kbd><br>
+		<a name="ix-Automatic ROTABL: Axial Machining parameter"></a>Allows the 
+		generation of rotation motions between drilling points that have different 
+		tool axes. This capability works with a 3-axis milling machine with rotary 
+		table when ROTABL/ output is requested.<p>Rotary motions are displayed during 
+		Replay.<br>
+		ROTABL/ instructions are generated in the output file.<br>
+		Facilitates environment setup by minimizing the requirement on post processors 
+		(avoids having to deal with X, Y, Z, I, J, K outputs for rotary tables).<br>
+		Provides the NC programmer with a more accurate tool path simulation for 
+		machine tools with rotary table.</p>
+		<p><b>Note:</b> No rotary motion is performed if a linking macro motion 
+		is defined (and activated) on the drilling operation. If activated, the 
+		linking macro is always performed between the points to machine.</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>Output CYCLE 
+		syntax </kbd><br>
+		<a name="ix-Output CYCLE syntax: Axial Machining parameter"></a>Specifies 
+		how the NC output is to be generated: output in CYCLE mode or in GOTO mode.
+		<p><a name="WNSyntax"></a>If you want to generate CYCLE statements, you 
+		must select the <kbd>Output CYCLE syntax</kbd> check box in the Strategy 
+		tab page and set the
+		<a href="page11463.html#SyntaxUsed" target="_default">
+		Syntax Used</a> option to Yes in the NC Output generation dialog box.<br>
+		Otherwise, GOTO statements will be generated. </p>
+		<p>Note that when several axis orientations are present in a machining pattern, 
+		output of the components of the tool axis orientation is possible whenever 
+		the NC data format is set to Axis (X, Y, Z, I, J, K) in the Part Operation&#39;s 
+		Machine Editor. </p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>First compensation</kbd><br>
+		<a name="ix-First compensation: Axial Machining parameter"></a>Specifies 
+		the first tool compensation number for the operation. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>Second compensation</kbd><br>
+		<a name="ix-Second compensation: Axial Machining parameter"></a><b>For Boring 
+		and Chamfering and Chamfering Two Sides operations</b>, this parameter specifies 
+		the second tool compensation number for the operation.</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641">
+		<span class="style3">DeepHole 
+		LeadIn</span><br>
+		<a name="ix-Second compensation: Axial Machining parameter">S</a>pecifies 
+		the start point of the feeds and speeds reduction.</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5; height: 43px;" width="641">
+		<span class="style3">DeepHole 
+		LeadOut</span><br>
+		<a name="ix-Second compensation: Axial Machining parameter">S</a>pecifies 
+		the end point of the feeds and speeds reduction.</td>
+	</tr><tr>
+		<td style="padding-top: 5; padding-bottom: 5; height: 43px;" width="641">
+		<span class="style3">No Retract</span><br>Specifies 
+		that the drill tool will move continuously across already drilled hole.</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="641"><kbd>
+		<a name="R18CompenAppliMode"></a>Compensation application mode</kbd><br>
+		<a name="ix-Compensation application mode: Axial Machining parameter">
+		</a>Specifies how the corrector type specified on the tool (P1, P2, P3, 
+		for example) is used to define the position of the tool: Output point or 
+		Guiding point.<ul>
+			<li><kbd>Output point</kbd>: the tool compensation point is generated 
+			in the output file. The tool path computation is done according to the 
+			tool tip.</li>
+			<li><kbd>Guiding point</kbd>: the tool motion is computed according 
+			to the tool compensation point and the tool compensation point is generated 
+			in the output file.</li>
+		</ul>
+		<p>Note that the tool compensation point is defined on the tool and used 
+		on the operation. <br>
+		The Compensation application mode defines the tool position to reach.</p>
+		<p><u>Tool path computation and Output Point</u></p>
+		<p>If Compensation Application Mode is set to Output point then Depth mode 
+		option (Tip/Shoulder or Distance/Diameter) is taken into account for tool 
+		path computation.</p>
+		<p>Examples:<br>
+		P2 compensation is defined on the tool and used on the drilling operation.
+		<br>
+		Compensation application mode = Output point.</p>
+		<table border="0" width="86%" id="table2">
+			<tr>
+				<td width="275">
+				<img border="1" src="b35doc/english/online/pmgug_c2/images/CompAllploMode01.gif" width="258" height="272"></td>
+				<td>
+				<img border="1" src="b35doc/english/online/pmgug_c2/images/CompAllploMode02.gif" width="260" height="228"></td>
+			</tr>
+			<tr>
+				<td width="275">
+				<p align="center">Depth mode = Tip</p>
+				</td>
+				<td>
+				<p align="center">Depth mode = Shoulder</p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">The active compensation point (blue dot in figures 
+				above) is only used as output point in the generated file (APTsource).</td>
+			</tr>
+		</table>
+		<p><u>Tool path computation and Guiding Point</u></p>
+		<p>When Compensation application mode is set to Guiding point, the tool 
+		compensation point selected on the operation is taken into account to respect 
+		the depth to machined on the operation.</p>
+		<p>All the points to reach with the tool are computed with respect to the 
+		activated compensation point. In this case Depth mode (Tip/Shoulder or Distance/Diameter) 
+		is no longer taken into account. <br>
+		Only the tool compensation point is used to compute the different tool positions 
+		to reach during the cycle.</p>
+		<p>Example:<br>
+		P2 compensation is defined on the tool and used on the drilling operation.<br>
+		Compensation application mode = Guiding point.</p>
+		<table border="0" width="86%" id="table3">
+			<tr>
+				<td width="275">
+				<img border="1" src="b35doc/english/online/pmgug_c2/images/CompAllploMode03.gif" width="273" height="409"></td>
+				<td>
+				<img border="1" src="b35doc/english/online/pmgug_c2/images/CompAllploMode04.gif" width="254" height="237"></td>
+			</tr>
+			<tr>
+				<td colspan="2">The active compensation point is represented by 
+				the blue dot in figures above.</td>
+			</tr>
+		</table>
+		<p>If Compensation application mode is set to Output point then tool path 
+		computation is done without modification: Depth mode option (Tip/Shoulder 
+		or Distance/Diameter) is applied, if it exists on the operation.</p>
+		<p><u>Tool Path Output</u></p>
+		<ul>
+			<li>GOTO statements output:<br>
+			The tool compensation point is always generated in the output file.
+			<br>
+			There is no influence of the Output point or Guiding point option.</li>
+			<li>CYCLE statement output<br>
+			Coordinates of points between CYCLE/ and CYCLE/OFF statements are always 
+			the coordinates of the points to machine.</li>
+		</ul>
+		<p><u>Output File Generation</u></p>
+		<p>Cycle parameters (%MFG_TOTAL_DEPTH, %MFG_TOTAL_DEPTH_COMP) valuation 
+		depends on the Compensation application mode defined on the operation.</p>
+		<p>%MFG_TOTAL_DEPTH and %MFG_TOTAL_DEPTH_COMP are computed parameters.</p>
+		<ul>
+			<li>MFG_TOTAL_DEPTH: Total depth machined by the operation. This includes 
+			the hole depth, breakthrough, and tool tip length.</li>
+			<li>MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation up to 
+			the tool compensation point selected for the operation. This includes 
+			hole depth, breakthrough and tool tip length up to the compensation 
+			point.</li>
+		</ul>
+		<p>Then the value depends on the tool compensation used on the operation 
+		(if Compensation application mode is set to Guiding point).</p>
+		<p>The parameter %MFG_COMPENSATION_MODE (1: output point / 2: guiding point) 
+		can be defined on the NC instruction of the axial machining operation.</p>
+		</td>
+	</tr>
+</table>
+<h3><a name="PKTaxial02"></a>Circular Milling and Thread Milling Parameter</h3>
+<table border="0" cellspacing="1" id="table1">
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5"><kbd>Machining tolerance</kbd><br>
+		<a name="ix-Machining tolerance: Axial Machining parameter"></a>Specifies 
+		the maximum allowed distance between the theoretical and computed tool path.
+		</td>
+	</tr>
+</table>
+<h3><a name="WNR17DirCut"></a>Circular Milling and T-Slotting Parameter</h3>
+<table border="0" cellspacing="1">
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5">
+		<a name="ix-Direction of cut: Axial Machining parameter"></a><kbd>Direction 
+		of cut</kbd><br>
+		Specifies how machining is to be done:
+		<p>Climb
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpDirofCut01.gif" align="middle" width="150" height="150"> 
+		or&nbsp; Conventional
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpDirofCut02.gif" align="middle" width="150" height="150">
+		</p>
+		<blockquote>
+			<p><kbd>Climb</kbd>: the front of the advancing tool (in the machining 
+			direction) cuts into the material first<br>
+			<kbd>Conventional</kbd>: the rear of the advancing tool (in the machining 
+			direction) cuts into the material first.</p>
+		</blockquote>
+		</td>
+	</tr>
+</table>
+<h3><a name="PKTaxial04"></a>Specific Thread Milling Parameters</h3>
+<table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2"><kbd>Machining 
+		direction</kbd><br>
+		Specifies the direction of the tool motion.<blockquote>
+			<ul>
+				<li><kbd>Top to bottom</kbd>: tool motion is from the top to the 
+				bottom of the thread. This involves conventional cutting.</li>
+				<li><kbd>Bottom to top</kbd>: tool motion is from the bottom to 
+				the top of the thread. This involves climb cutting, and results 
+				in a better quality thread.</li>
+			</ul>
+		</blockquote>
+		<p><kbd>Machining strategy</kbd><br>
+		Specifies how the tool path is to be computed.</p>
+		<blockquote>
+			<ul>
+				<li><kbd>Mono-pass</kbd> (default value) <br>
+				Machining motion is done in one pass. Tool is considered as a mono-cutting 
+				level tool.</li>
+				<li><kbd>Optimized passes</kbd><br>
+				This strategy is useful for thread mill tool (more than one cutting 
+				level exists on the tool). It is not available when a boring bar 
+				is used.<br>
+				Tool path depends on the tool characteristics and thread depth.<br>
+				One or more helical (height = pitch) toolpaths can be generated: 
+				the number of helical toolpaths depends on the effective thread 
+				length of the tool and the thread depth of the hole.</li>
+			</ul>
+		</blockquote>
+		<p>Note about thread mills and effective thread length:</p>
+		<blockquote>
+			<p>Length1 depends on Cutting length (Lc) and Taper angle (Ach). See
+			<a target="_blank" href="page11455.html#CATMfgHeader.CreateThreadMillTool">
+			Thread Mill</a> for geometry parameters.<br>
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/ThreadMilling03.gif" width="229" height="190"></p>
+			<p>Cutting levels on the tool is the number of thread pitches that can 
+			be machined during one helical motion.<br>
+			The number of cutting levels is defined as follows:<br>
+			Number of effective cutting levels = int (Length 1 / tool pitch)<br>
+			Effective thread length = number of cutting levels * pitch.</p>
+		</blockquote>
+		<p>Note that between helical toolpaths:</p>
+		<ul>
+			<li>approach macro motion is done before each helical motion</li>
+			<li>retract macro motion is done after each helical motion.</li>
+		</ul>
+		<p>The following figure illustrates the motion involved for 2 helical toolpaths.</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" rowspan="3">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/ThreadMilling01.gif" width="336" height="498"></td>
+		<td style="padding: 5" valign="top">Key to colors and arrows in this figure:<p>
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/ThreadMilling02.gif" width="294" height="117"></p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding: 5" valign="top">Helical tool path is done for one helix 
+		pitch height.<p><i>Distance</i> is defined from start of one helix motion 
+		to next start of next helix motion.<br>
+		Distance = effective thread length of the tool + pitch.</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding: 5" valign="bottom">The figures below illustrate the 
+		various combinations depending on tool type, tool&#39;s effective thread length, 
+		thread depth of hole, machining strategy, machining direction.</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2">Thread mill, Machining 
+		strategy=Optimized passes, Machining direction=Top to Bottom:</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/ThreadMillingA1a.gif" width="258" height="215"></td>
+		<td style="padding: 5" valign="top">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/ThreadMillingA1b.gif" width="260" height="215"></td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2">Thread mill, Machining 
+		strategy=Optimized passes, Machining direction=Bottom to Top:</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/ThreadMillingA2a.gif" width="260" height="215"></td>
+		<td style="padding: 5" valign="top">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/ThreadMillingA2b.gif" width="260" height="215"></td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2">Thread mill or 
+		Boring bar, Machining strategy=Mono-pass, machining direction=Top to Bottom:</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/ThreadMillingB1a.gif" width="260" height="215"></td>
+		<td style="padding: 5" valign="top">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/ThreadMillingB1b.gif" width="260" height="215"></td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2">Thread mill or 
+		Boring bar, Machining strategy=Mono-pass, Machining direction=Bottom to 
+		Top:</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/ThreadMillingB2a.gif" width="260" height="260"></td>
+		<td style="padding: 5" valign="top">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/ThreadMillingB2b.gif" width="260" height="260"></td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2">
+		<a name="ix-Spring pass:Thread Milling parameter"></a><kbd>Spring pass</kbd><br>
+		Indicates whether or not a spring pass is to be done at the same location 
+		as the last pass. The spring pass is used to compensate the natural &#39;spring&#39; 
+		of the tool and improve the surface finish. </td>
+	</tr>
+</table>
+<h3><a name="PKTaxial03"></a>Specific Circular Milling Parameters</h3>
+<table border="0" cellspacing="1">
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5"><kbd>Machining mode</kbd><br>
+		<a name="ix-Machining mode: Axial Machining parameter"></a>
+		<a name="ix-Distance between paths: Axial Machining parameter"></a>
+		<a name="ix-Number of paths: Axial Machining parameter"></a>Specifies the 
+		machining mode: Standard or Helical. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5"><kbd>Distance between paths 
+		(Dp)</kbd><br>
+		Defines the maximum distance between two consecutive tool paths in a radial 
+		strategy (for both Standard and Helical modes. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5"><kbd>Number of paths (Np)</kbd><br>
+		Defines the number of tool paths in a radial strategy (for both Standard 
+		and Helical modes). </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5"><kbd>Axial mode</kbd><br>
+		<a name="ix-Axial mode: Axial Machining parameter"></a>
+		<a name="ix-Maximum depth of cut (Mdc): Axial Machining parameter"></a>
+		<a name="ix-Number of levels (Nl): Axial Machining parameter"></a>Defines 
+		how the distance between two consecutive levels is to be computed (for Standard 
+		mode).
+		<blockquote>
+			<p><kbd>Maximum depth of cut (Mdc)</kbd><br>
+			Defines the maximum depth of cut in an axial strategy. <br>
+			<kbd>Number of levels (Nl)</kbd><br>
+			Defines the number of levels to be machined in an axial strategy.</p>
+		</blockquote>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5"><kbd>Sequencing mode</kbd><br>
+		<a name="ix-Sequencing mode: Axial Machining parameter"></a>Specifies the 
+		order in which machining is to be done (for Standard mode):
+		<blockquote>
+			<p><kbd>Axial</kbd>: axial machining is done first then radial<br>
+			<kbd>Radial</kbd>: radial machining is done first then axial. </p>
+		</blockquote>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5"><kbd>Percentage overlap</kbd><br>
+		<a name="ix-Percentage overlap: Axial Machining parameter"></a>Specifies 
+		the percentage overlap (for both Standard and Helical modes). </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5">
+		<a name="ix-Automatic draft angle: Axial Machining parameter"></a><kbd>Automatic 
+		draft angle<br>
+		</kbd>Specifies the draft angle to be applied on the circular flank between 
+		the top and bottom of the hole (for both Standard and Helical modes).
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5"><kbd>Helix mode</kbd><br>
+		<a name="ix-Helix mode: Axial Machining parameter"></a>
+		<a name="ix-Helix angle: Axial Machining parameter"></a>
+		<a name="ix-Helix pitch: Axial Machining parameter"></a>Defines how the 
+		helix computation is to be done (for Helical mode).<br>
+		The manufacturing attribute is MFG_HELIX_MODE.
+		<blockquote>
+			<p><kbd>Pitch (P)</kbd>: Specifies the helix pitch<br>
+			<kbd>Angle (Ang)</kbd>: Specifies the helix angle.</p>
+		</blockquote>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5">
+		<a name="ix-Spring pass:Circular Milling parameter"></a><kbd>Spring pass</kbd><br>
+		Indicates whether or not a spring pass is to be done at the same location 
+		as the last pass. The spring pass is used to compensate the natural &#39;spring&#39; 
+		of the tool and improve the surface finish. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5"><kbd>Compensation output</kbd><br>
+		<a name="ix-Compensation output: Axial Machining parameter"></a>Allows you 
+		to manage the generation of Cutter compensation (CUTCOM) instructions in 
+		the NC data output (for both Standard and Helical modes):<p>The following 
+		options are proposed:</p>
+		<ul>
+			<li>If <kbd>2D Radial profile</kbd> is selected, both the tool tip and 
+			cutter profile will be visualized during tool path replay. Cutter compensation 
+			instructions are automatically generated in the NC data output. An approach 
+			macro must be defined to allow the compensation to be applied.</li>
+			<li>If <kbd>2D Radial tip</kbd> is selected, the tool tip will be visualized 
+			during tool path replay. Cutter compensation instructions are automatically 
+			generated in the NC data output. An approach macro must be defined to 
+			allow the compensation to be applied.</li>
+			<li>If <kbd>None</kbd> is selected, cutter compensation instructions 
+			are not generated in the NC data output. In this case, please refer 
+			to <a href="page12421.html">How to generate CUTCOM syntaxes</a>.
+			</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<table border="0">
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2" width="783">
+		<h3><a name="R19HelicalInterpolCirThrdMill"></a>Helical Interpolation for 
+		Circular Milling and Thread Milling</h3>
+		<p>A helical interpolation instruction can be generated in the output file 
+		(APTsource or Clfile) for helical tool motions. The machine specified on 
+		the Part Operation must support Helical interpolation and the corresponding 
+		check box must be selected in the
+		<a target="_blank" href="page11418.html">
+		Machine Editor</a>.<br>
+		The Helical Interpolation option must be set to <kbd>From machine</kbd> 
+		in the Generate NC Output dialog box. If this option is set to <kbd>None</kbd>, 
+		then GOTO instructions are generated for the helical motion. For more information, 
+		see
+		<a target="_blank" href="page11392.html">
+		Generate APT Source</a> or
+		<a target="_blank" href="page11398.html">
+		Generate Clfile</a>.</p>
+		<h2><a name="axialgeom"></a>Axial Machining Geometry Considerations</h2>
+		<p>Geometry parameters are managed in the <kbd>Geometry</kbd> tab page
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/TabGeomG.gif" align="middle" width="36" height="22">.</p>
+		<a name="ix-Machining Pattern"></a>
+		<h3><a name="ax01"></a>Machining Patterns</h3>
+		<p>A machining pattern comprises two sets of data:</p>
+		<ul>
+			<li>Pattern geometry: hole positions/axes, top element</li>
+			<li>Pattern usage or <i>technology</i> data: Ordering mode, Jump distance, 
+			local entry/exit distances, local depth, activate/deactivate status.</li>
+		</ul>
+		<p>When you create a new axial machining operation, the <kbd>New Pattern</kbd> 
+		command in the list prompts you to create a machining pattern for the operation.</p>
+		<p>You can add positions to this new machining pattern by clicking the sensitive 
+		text (No Point or x Points). This opens the Pattern Selection dialog box 
+		that lists all available machining and design patterns. Just select one 
+		of the existing patterns and/or select geometry in the 3D view to define 
+		the hole positions. </p>
+		<p>The new machining pattern is created when you create the machining operation. 
+		The pattern geometry and technology data is stored and the new pattern is 
+		assigned an identifier <code>Machining Pattern.x</code>.</p>
+		<blockquote>
+			<p align="left">
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/dbDrilling03NLS.gif" width="391" height="259"></p>
+		</blockquote>
+		<p>If there are already machining patterns on previous operations, the list 
+		allows a quick selection of an existing pattern. If selected, the existing 
+		pattern is shared between the operations.</p>
+		<blockquote>
+			<p>
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/dbAxialPatternNewCopyNLS.gif" width="391" height="260"></p>
+		</blockquote>
+		<p><a name="WNR12SharePattern"></a>You can also use the following commands 
+		in the list for assigning a machining pattern to the operation. </p>
+		<p><kbd>Copy from Current</kbd>: The machining pattern (geometry and technology 
+		data) is duplicated. The pattern cannot be shared. It is possible to modify 
+		the machining data in the current machining operation without impacting 
+		other operations.</p>
+		<p><kbd>New from Current (share geometry)</kbd>: The machining pattern (geometry 
+		and technology data) is duplicated. The pattern can be shared. If the pattern 
+		is modified, all operations using it will be impacted.</p>
+		<p><kbd>New Pattern</kbd>: A new machining pattern is created with the geometry 
+		and technology data that you specify.</p>
+		<p>Modification of a machining pattern is possible using the Machining Pattern 
+		editor only. This editor can be opened by double-clicking the machining 
+		pattern in the manufacturing view. Please refer to
+		<a href="page11361.html" target="_default">
+		Machining Patterns</a> for more information.</p>
+		<p>Note that it is possible to reference in a machining pattern one or more 
+		3D Wireframe features (that is, Projection, Symmetry, Rotation and Translation 
+		operators) containing at least one point.</p>
+		<h4>Tool Axis Initialization from Pattern Selection</h4>
+		<p>When you select pattern points by means of design holes or circular edges, 
+		the orientation of tool axis is automatically initialized using semantic 
+		information related to the selected geometry.</p>
+		<p>If a geometrical point is selected there is no semantic information to 
+		determine the tool axis. In this case, the tool axis is initialized from 
+		the z-axis of the absolute axis system. </p>
+		<p>You can modify the tool axis by right-clicking a pattern point and selecting
+		<kbd>Edit Local Axis</kbd> (see <a href="#ax06">Contextual Menu on Pattern 
+		Points</a> for more information).</p>
+		<h4><a name="ax02"></a>Pattern Ordering Modes</h4>
+		<a name="ix-contextual command::Reverse Ordering;Reverse Ordering contextual command">
+		</a><a name="ix-contextual command::Closest;Closest contextual command">
+		</a><a name="ix-contextual command::Manual;Manual contextual command">
+		</a><a name="ix-contextual command::By Band;By Band contextual command">
+		</a>
+		<p>Holes that are selected for a machining pattern can be ordered according 
+		to the following modes: </p>
+		<ul>
+			<li><kbd>Closest</kbd>: to obtain the shortest possible tool path</li>
+			<li><kbd>Manual</kbd>: to obtain a user-defined numbered sequence</li>
+			<li><kbd>By Band</kbd>: to obtain a Zig Zag or One Way configuration 
+			according to a set of bands that have a user-defined width.<ul>
+				<li><kbd>Zig Zag</kbd> ordering of a pattern of 40 points for a 
+				band width of 18mm is illustrated below:<br>
+				<img border="1" src="b35doc/english/online/pmgug_c2/images/BandOrderingZigZag.gif" width="497" height="377"></li>
+				<li><kbd>One Way</kbd> ordering of the same points and same band 
+				width is illustrated below:<img border="1" src="b35doc/english/online/pmgug_c2/images/BandOrderingOneWay.gif" width="492" height="377"></li>
+			</ul>
+			</li>
+			<li><kbd>Reverse Ordering</kbd>: Reverses the numbered sequence of pattern 
+			points (for example, points numbered 1 thru 10 will become numbered 
+			10 thru 1).</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2" width="783">
+		<h4><a name="WNR12PatternManage"></a>Managing Pattern Points</h4>
+		<h5><a name="ax05"></a>Contextual Menu on &#39;No Points / x Points&#39; Sensitive 
+		Text</h5>
+		<p>A number of contextual commands are available for managing hole positions 
+		when you right click the &#39;No Points / x Points&#39; sensitive text in the Geometry 
+		tab page.</p>
+		<blockquote>
+			<p align="left">
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/mbpatternpt01NLS.gif" width="371" height="246"></p>
+		</blockquote>
+		<a name="ix-contextual command::Remove All Positions;Remove All Positions contextual command">
+		</a><a name="ix-contextual command::Remove;Remove contextual command">
+		</a>
+		<a name="ix-contextual command::Deactivate;Deactivate contextual command">
+		</a>
+		<a name="ix-contextual command::Move After;Move After contextual command">
+		</a><a name="ix-contextual command::Analyze;Analyze contextual command">
+		</a>
+		<a name="ix-contextual command::Find Features Through Faces;Find Features Through Faces contextual command">
+		</a>
+		<ul>
+			<li><kbd>Remove All Positions</kbd>: Removes all positions from the 
+			pattern.</li>
+			<li><kbd>Remove</kbd>: Displays a dialog box for removing selected positions 
+			from the pattern.</li>
+			<li><kbd>Deactivate</kbd>: Displays a dialog box for deactivating selected 
+			points of the pattern.<br>
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/dbDeactivatePos01NLS.gif" width="330" height="99"></li>
+			<li><kbd>Move After</kbd>: Displays a dialog box for moving one or more 
+			positions after a specified position in the pattern. Only available 
+			when Pattern Ordering mode is set to Manual.</li>
+			<li><kbd>Analyze</kbd>: Displays the Geometry Analyser for consulting 
+			the status of the referenced geometry.</li>
+			<li><kbd>Find Features Through Faces</kbd>: Allows you to quickly locate 
+			circular edges in a selected face. Please refer to
+			<a href="page12400.html">Select Hole Design Features for Machining</a>.</li>
+		</ul>
+		<h5><a name="ax06"></a>Contextual Menu on Pattern Points</h5>
+		<p>A number of contextual commands are available when you right-click a 
+		pattern point.</p>
+		<a name="ix-Entry distance"></a>
+		<a name="ix-contextual command::Edit Entry Distance;Edit Entry Distance contextual command">
+		</a><a name="ix-Exit distance"></a>
+		<a name="ix-contextual command::Edit Exit Distance;Edit Exit Distance contextual command">
+		</a>
+		<a name="ix-contextual command::Deactivate the Point;Deactivate the Point contextual command">
+		</a>
+		<a name="ix-contextual command::Activate the Point;Activate the Point contextual command">
+		</a>
+		<a name="ix-contextual command::Invert Selection;Invert Selection contextual command">
+		</a>
+		<a name="ix-contextual command::Select All;Select All contextual command">
+		</a>
+		<a name="ix-contextual command::Renumber;Renumber contextual command">
+		</a>
+		<a name="ix-contextual command::Set as Start Point;Set as Start Point contextual command">
+		</a>
+		<a name="ix-contextual command::Edit Depth;Edit Depth contextual command">
+		</a>
+		<a name="ix-contextual command::Restore Associativity;Restore Associativity contextual command">
+		</a>
+		<a name="ix-contextual command::Edit Local Axis;Edit Local Axis contextual command">
+		</a>
+		<a name="ix-contextual command::Insert after Current Position;Insert after Current Position contextual command">
+		</a>
+		<a name="ix-contextual command::Remove Current Position;Remove Current Position contextual command">
+		</a>
+		<a name="ix-contextual command::Remove Linked Positions;Remove Linked Positions contextual command">
+		</a>
+		<blockquote>
+			<p align="left">
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/mbpatternptNLS.gif" width="203" height="335"></p>
+		</blockquote>
+		<ul>
+			<li><kbd>Deactivate the Point</kbd>: Deactivates the selected point 
+			in the pattern. An O symbol indicates that the point is omitted from 
+			the pattern. A deactivated point can be activated in the pattern again.</li>
+			<li><kbd><a name="WNR10RetainOmit"></a>Invert Selection</kbd>: All omitted 
+			points are retained in the pattern again; pattern points become omitted 
+			points.</li>
+			<li><kbd>Select All</kbd>: Allows you to include all omitted points 
+			in the pattern again.</li>
+			<li><kbd>Set as Start Point</kbd>: Allows you to choose the start point 
+			for the pattern.</li>
+			<li><kbd>Renumber</kbd>: Allows you to renumber points in the pattern. 
+			Only available when Pattern Ordering mode is set to Manual.</li>
+			<li><kbd>Edit Entry Distance</kbd> and <kbd>Edit Exit Distance</kbd>:<br>
+			Allows you to locally edit Entry<a name="EntryDist"></a> and Exit<a name="ExitDist"></a> 
+			distances at individual points in a hole pattern. This can be useful 
+			for locally specifying a clearance that is greater than the one defined 
+			by the <a href="#JumpDist">jump distance/approach clearance</a> discussed 
+			below.</li>
+			<li><kbd>Edit Depth</kbd>: Allows you to edit the depth of a pattern 
+			point.</li>
+			<li><kbd>Restore Associativity</kbd>: <a name="RestoreAssociativity">
+			</a>Restores the original values taken from the selected design feature 
+			if these were modified by the user, and so restore associativity with 
+			the feature.</li>
+			<li><kbd>Edit Local Axis</kbd>: Allows you to locally modify the tool 
+			axis at a point. The <kbd>Tool Axis</kbd> dialog box appears.<table border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<td width="22">&nbsp;</td>
+					<td width="734">
+					<blockquote>
+						<p align="left">
+						<img border="1" src="b35doc/english/online/pmgug_c2/images/dbToolAxis01NLS.gif" width="276" height="286"></p>
+					</blockquote>
+					<p align="left">Choose one of the proposed methods for defining 
+					tool axis orientation:</p>
+					<blockquote>
+						<p><kbd>Manual</kbd>. Choose one of the following: </p>
+						<ul>
+							<li><kbd>Components</kbd> to define the tool axis orientation 
+							by means of I, J, and K components. </li>
+						</ul>
+						<ul>
+							<li><kbd>Angles</kbd> to define the orientation by means 
+							of a rotation specified by means of one or two angles.</li>
+						</ul>
+						<p><kbd>Selection</kbd>. If you select a line or linear 
+						edge, the tool axis will have the same orientation as that 
+						element. If you select a planar element, the tool axis will 
+						be normal to that element. </p>
+						<p><kbd>Points in the View</kbd>. Just select two points 
+						to define the orientation.</p>
+						<p><kbd>Feature defined. </kbd>Select a machining feature 
+						in the 3D viewer. For example, if you select an axial machining 
+						feature then the axis of the feature is taken as the tool 
+						axis.</p>
+					</blockquote>
+					<p>The tool axis is visualized by means of an arrow. The direction 
+					can be reversed by clicking <kbd>Reverse Direction</kbd> in 
+					the dialog box. Just click OK to accept the specified tool axis 
+					orientation.</p>
+					<p>You can also choose to display the tool at the <kbd>Default 
+					position</kbd> or at a <kbd>User-defined position</kbd>. </p>
+					<p>For a user-defined position, click the <kbd>[...]</kbd> button 
+					and select the desired position in the 3D viewer.</p>
+					<p>For more information about this dialog box please refer to
+					<a target="_blank" href="page11376.html">
+					Define the Tool Axis</a>.</p>
+					</td>
+				</tr>
+			</table>
+			</li>
+			<li><kbd>Insert after Current Position</kbd>: Allows you to insert one 
+			or more positions (or patterns) after the current point in the pattern. 
+			Only available when Pattern Ordering mode is set to Manual.</li>
+			<li><kbd>Remove Current Position</kbd>: Deletes the current point from 
+			the pattern.</li>
+			<li><kbd>Remove Linked Positions</kbd>: Deletes the current point and 
+			all linked positions from the pattern. Linked positions are points from 
+			the same design pattern, for example.</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2" width="783">
+		<h4><a name="WNR12ReveresePattern"></a>Inversing Pattern Ordering</h4>
+		<a name="ix-Inverse pattern ordering"></a>
+		<p>An <kbd>Inverse pattern ordering</kbd> check box is available in the Geometry 
+		tab page to allow an operation to locally override the ordering of the Machining 
+		Pattern by inversing it.</p>
+		<ul>
+			<li>If not selected, the Machining Pattern will be machined as defined 
+			(and as shown in the 3D view).</li>
+			<li>If selected, the tool path computation will begin at the last point 
+			and finish at the first point.<br>
+			This will not modify the ordering on the Machining Pattern: the pattern 
+			numbers shown in the 3D View are not modified.</li>
+		</ul>
+		<p>This option is useful in the following cases.</p>
+		<ul>
+			<li>When machining symmetrical parts. Please refer to
+			<a href="page11438.html" target="ds_doc2">
+			Opposite hand machining</a>.</li>
+			<li>To save machining time when managing two operations sharing the 
+			same Machining Pattern on a large part. The first operation can be set 
+			to machine from the first position to the last one, and the second operation 
+			can be set machine from the last position to the first one. </li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2" width="783">
+		<h3><a name="ax03"></a>Overall Tool Axis Orientation</h3>
+		<p>Right click the <i>Tool axis strategy</i> sensitive text in the Geometry 
+		tab page and select one of the following options to specify the general 
+		tool axis orientation:</p>
+		<blockquote>
+			<p align="left">
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/mbTAGuidanceNLS.gif" width="160" height="78"></p>
+		</blockquote>
+		<ul>
+			<li>
+			<p align="left"><kbd>Fixed Axis</kbd>: the tool axis orientation is 
+			the same for all the selected points </p>
+			</li>
+			<li>
+			<p align="left"><kbd>Variable Axis</kbd>: the tool axis orientation 
+			can vary from one point to another</p>
+			</li>
+			<li>
+			<p align="left"><kbd>Normal to PS Axis</kbd>: the tool axis orientation 
+			is determined by the normal to the selected part surface.</p>
+			</li>
+		</ul>
+		<p align="left">Note that the tool axis orientation can be inverted by clicking 
+		the tool axis symbol in the <kbd>Geometry</kbd> tab page.</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2" width="783">
+		<h3><a name="ax04"></a>Projection and Top Element Modes</h3>
+		<p>In the <kbd>Geometry</kbd> tab page you can choose between <kbd>Projection</kbd> 
+		and <kbd>Top Element</kbd> modes by clicking on the sensitive text. </p>
+		<p>The following figure illustrates <kbd>Projection</kbd> mode. The reference 
+		pattern points are projected onto the selected part surface. The projected 
+		points and the axes normal to the surface define the hole positions to be 
+		drilled.</p>
+		<blockquote>
+			<p align="left">
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/DrillingProjection.gif" width="535" height="319"></p>
+		</blockquote>
+		<p>The following figure illustrates <kbd>Top Element</kbd> mode. The reference 
+		pattern points define the hole positions to be drilled. The machining depth 
+		takes into account the normal distance between the reference points and 
+		the selected part surface.</p>
+		<blockquote>
+			<p align="left">
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/DrillingTopElement.gif" width="535" height="319"></p>
+		</blockquote>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2" width="783">
+		<h3><a name="BtmPln"></a>Bottom Plane</h3>
+		<a name="ix-Bottom plane"></a>
+		<p>If a bottom plane is selected, the machining depth is the distance between 
+		the hole origin and its projection on the bottom plane. This machining depth 
+		is computed for each hole in the machining pattern.</p>
+		<p>The depth shown in the <kbd>geometry</kbd> dialog box is the machining depth computed 
+		for the first hole. The <kbd>Machine different depths</kbd> setting is ignored 
+		when a bottom plane is selected.</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2" width="783">
+		<h3><a name="ax07"></a>Origin Offset</h3>
+		<p><a name="ix-Origin offset"></a>You can specify an <kbd>Origin Offset</kbd> 
+		in order to shift the entire tool path by the specified amount. </p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2" width="783">
+		<h3><a name="JumpDist"></a>Jump Distance</h3>
+		<p><a name="ix-Jump distance"></a>The jump distance allows an <i>extra clearance</i> 
+		for moving in Rapid motion between the holes to be drilled whenever this 
+		distance is greater than the approach clearance.<br>
+		For example, for an approach clearance of 2.5mm and a jump distance of 10mm, 
+		the extra clearance is 7.5mm.</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2" width="783">
+		<h3><a name="WNHoleDepths"></a>Holes at Different Levels</h3>
+		<p>For 2.5-axis operations, the program automatically manages holes at different 
+		levels using horizontal transition paths. </p>
+		<blockquote>
+			<p align="left">
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/axialsamelevelholes.gif" width="264" height="146"></p>
+		</blockquote>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2" width="783">
+		<h3><a name="WNSpecResult"></a>Machining Different Depths</h3>
+		<a name="ix-Machine different depths"></a>
+		<p>When dealing with design feature holes in design patterns, both the result 
+		and specification mode are taken into account (<b>except Spot Drilling, 
+		Counterboring, and Countersinking operations</b>).</p>
+		<p>Select the <kbd>Machine different depths</kbd> check box in the Geometry 
+		tab page when you want the program to automatically manage different depths 
+		of holes in a pattern (result mode).</p>
+		<blockquote>
+			<p align="left">
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/axialspecresult.gif" width="266" height="141"></p>
+		</blockquote>
+		<p align="left">If the check box is not selected, the program uses the values 
+		specified in the <kbd>Geometry</kbd> tab page for the pattern holes (specification 
+		mode).</p>
+		<a name="ix-Machine different thread depths"></a>
+		<p><a name="WNR10DiffThreadDepth"></a><b>For Threading operations</b>, select 
+		the <kbd>Machine different thread depths</kbd> check box when you want the 
+		program to take the real thread depth of each selected pattern hole into 
+		account.<br>
+		<b>Note</b>: Different thread depths can be applied only when information 
+		exists on the geometry linked to the machined position. For example, thread 
+		information exists on a threaded design hole but none exists for a circular 
+		edge. <br>
+		When no thread information exists on the geometry linked to the machined 
+		position, the depth defined on the operation is used.</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2">
+		<h3><a name="WNR11RelimitHoleOrigin"></a>Relimiting Hole Origins</h3>
+		<p>The <kbd>Relimit hole origin</kbd> and <kbd>Machine different depths</kbd> 
+		checkboxes in the <kbd>Geometry</kbd> tab page can be used together to manage the machining 
+		strategy of different design hole configurations.</p>
+		<p>In the following figures the red star (<img border="1" src="b35doc/english/online/pmgug_c2/images/starred.gif" align="middle" width="20" height="20">) 
+		represents the origin of the selected design hole, and the green star (<img border="1" src="b35doc/english/online/pmgug_c2/images/stargreen.gif" align="middle" width="20" height="20">) 
+		represents the start of the tool path.</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top"><kbd>Relimit 
+		hole origin</kbd> Off<kbd><br>
+		Machine different depths </kbd>Off<p>
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/RelimitHoleOrigin01.gif" width="300" height="260"></p>
+		</td>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top"><kbd>Relimit 
+		hole origin</kbd> Off<kbd><br>
+		Machine different depths </kbd>On<p>
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/RelimitHoleOrigin02.gif" width="300" height="260"></p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top"><kbd>Relimit 
+		hole origin</kbd> On<kbd><br>
+		Machine different depths </kbd>Off<p>
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/RelimitHoleOrigin03.gif" width="300" height="260"></p>
+		</td>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top"><kbd>Relimit 
+		hole origin</kbd> On<kbd><br>
+		Machine different depths </kbd>On<p>
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/RelimitHoleOrigin04.gif" width="300" height="260"></p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2" width="783">
+		<h3><a name="hj-Drilling">Drilling</a> through Stock upto bottom in 
+		Axial Operations</h3>
+		<p>Select<kbd> </kbd>the<kbd> Drill through stock upto bottom </kbd>check box in<kbd> 
+		</kbd>the<kbd> 
+		Geometry </kbd>tab to drill the hole up to the bottom plane of the 
+		intermediate stock. <br>
+		<kbd>
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/dbDrillingStockUptoBottomNLS.gif" width="330" height="491"><br>
+		
+		<img title="" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" width="13" height="13"></kbd>By 
+		default, the check box is not selected.<br>
+		<br>
+		The <kbd>Drill through stock upto bottom</kbd> checkbox is available i<span class="style1">f</span>:</p>
+		<ul>
+			<li>the input stock is selected through the <kbd>Part Operation</kbd> editor.</li>
+			<li>the <kbd>Intermediate Stock for Milling and Turning Operation</kbd> check box is 
+		selected in the <kbd>Option</kbd> tab.</li>
+		</ul>
+		<p>The <kbd>Drill through stock upto bottom</kbd> checkbox is 
+		disabled i<span class="style1">f</span>: </p>
+		<ul>
+			<li><kbd>Compensation application mode</kbd> 
+		is chosen as <kbd>a Guiding point</kbd>.</li>
+			<li><kbd>Depth mode</kbd> is 
+		chosen as <kbd>By tip</kbd> in <kbd>Strategy</kbd> tab.<br>
+			OR<br>
+			The <kbd>Drill through stock upto bottom</kbd> checkbox is enabled if:</li>
+			<li><kbd>Depth Mode</kbd> is chosen as By shoulder in Strategy tab</li>
+		</ul>
+		<h3><a name="hj-Spot">Spot</a> Drill to Part</h3>
+		<p>Select this check box when you want the tool to go up 
+		to top plane of the part.<br>
+		<kbd>
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/dbDrillingStockDrillToPartNLS.gif" width="165" height="77"><br>
+		
+		<img title="" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" width="13" height="13"></kbd>By 
+		default, the check box is not selected.<br>
+		</p>
+		<p>This check box is available in <kbd>Geometry</kbd> tab of <kbd>Spot 
+		Drilling</kbd> machining operation i<span class="style1">f</span>:<br>
+		</p>
+		<ul>
+			<li>&nbsp;the input stock is selected through the <kbd>Part Operation</kbd> editor.</li>
+			<li>the <kbd>Intermediate Stock for Milling and Turning Operation</kbd> check box is 
+		selected in the <kbd>Option</kbd> tab.</li>
+			
+			<li>Input stock is not disabled at machining operation level. See
+			<a href="page12405.html#hj-Disable">Intermediate Stock</a></li>
+		</ul>
+		<h3><a name="WNR14DiffDiams"></a>Machining Different Diameters</h3>
+		<a name="ix-Machine different diameters"></a>
+		<p>It is possible to machine different hole diameters in a <b>Circular Milling 
+		operation</b> thanks to the <kbd>Machine different diameters</kbd> check 
+		box 
+		on the Geometry tab page. </p>
+		<p>If selected, the diameter specified for each position of the machining 
+		pattern is machined.<br>
+		Otherwise, the diameter of the first position of the machining pattern is 
+		used for all the pattern holes. </p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2" width="783">
+		<h3><a name="WNT14BlindThru"></a>Managing Blind and Through Holes</h3>
+		<a name="ix-Machine Blind/Through"></a>
+		<p>A <kbd>Machine Blind/Through</kbd> check box is provided in the Geometry 
+		tab page. </p>
+		<p>If selected, the blind/through characteristic of the hole is determined 
+		for each position of the machining pattern.<br>
+		If not selected, the blind/through characteristic of the first position 
+		of the machining pattern is used for all the pattern holes. </p>
+		<p align="left">Note that the <kbd>Machine Blind/Through </kbd>capability 
+		is not available for user features.</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2" width="783">
+		<h2><a name="axialmacros"></a>Macros in Axial Machining Operations</h2>
+		<p><a name="WNR14ClearMacro"></a>The <kbd>Macro</kbd> tab page
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/TabMacroG.gif" align="middle" width="36" height="22"> 
+		in the operation definition dialog box allows customized transitions paths 
+		for:</p>
+		<ul>
+			<li>approach</li>
+			<li>retract</li>
+			<li>linking linking between machining holes of the same pattern</li>
+			<li>clearance, which can be used to define the feedrate on the horizontal 
+			path between two machining positions. </li>
+		</ul>
+		<blockquote>
+			<p align="left">
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/DrillingNonAxialMotions.gif" width="421" height="237"></p>
+		</blockquote>
+		<a name="WNR9CollChk"></a>
+		<p>All types of macros used in Drilling Operations are collision checked. 
+		If a check element is specified between two machined positions, a linking 
+		macro is applied to avoid collisions. Check (or fixture) elements as well 
+		as an associated <kbd>Offset on Check</kbd> can be specified in the Geometry 
+		tab page.</p>
+		<blockquote>
+			<p align="left">
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/dbDrilling04NLS.gif" width="352" height="340"></p>
+			<table border="0" width="100%" id="table4">
+				<tr>
+					<td valign="top">
+					<img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+					<td>
+					<ul>
+						<li>When a check element is specified, the tool assembly 
+						along with the tool is taken into account for the detection 
+						of collisions with the check element. </li>
+						<li>If a tool assembly is not defined, then only the tool 
+						is taken into account for the detection of collisions with 
+						the check element. </li>
+					</ul>
+					</td>
+				</tr>
+			</table>
+		</blockquote>
+		<p>Note that some specific axial machining operations support additional 
+		macro types:</p>
+		<ul>
+			<li>global approach and global retract (Circular Milling and Thread 
+			Milling)</li>
+			<li>return between levels (Circular Milling and Thread Milling)</li>
+			<li>return in a level (Circular Milling only)</li>
+			<li>helix approach (see <a href="page12433.html">Helix Approach Macro in Circular 
+			Milling</a>)</li>
+		</ul>
+		<p>For more information, refer to
+		<a href="page11365.html" target="ds_doc2">
+		Define Macros on an Axial Machining Operation</a>.</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2" width="783">
+		<h2><a name="axialcyclesyntax"></a>Editing CYCLE Syntaxes in Axial Machining 
+		Operationss</h2>
+		<p>For all axial operations <kbd>Edit Cycle</kbd>
+		<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgEditCycleP2.gif" align="middle" width="22" height="22"> 
+		in the Axial Machining Operation dialog box allows you to:</p>
+		<ul>
+			<li>display the unresolved syntax of the NC Instruction of the operation. 
+			This is the syntax as specified in the PP table referenced by the current 
+			Part Operation.</li>
+		</ul>
+		<ul>
+			<li>display and, if needed, modify the syntax that is resolved either 
+			by geometric selection and user entries.</li>
+		</ul>
+		<p>For example, the Cycle Syntax Edition dialog box appears when you select
+		<kbd>Edit Cycle</kbd>
+		<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgEditCycleP2.gif" align="middle" width="22" height="22"> 
+		in the Boring operation dialog box. It displays the default cycle syntax 
+		for the Boring operation.</p>
+		<blockquote>
+			<p align="left">
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/dbEditSyntax01.gif" width="419" height="282"></p>
+		</blockquote>
+		<p>You can access all the cycle syntaxes contained in the current PP table 
+		for a Boring operation by means of <kbd>PP instruction</kbd>
+		<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgPPInstructionP2.gif" width="22" height="22" align="middle">.</p>
+		<p>For example, if your PP Table contains the following NC Instructions 
+		for <kbd>Boring</kbd> operations: </p>
+		<p><samp>/<br>
+		*START_NC_INSTRUCTION NC_BORING_1<br>
+		*START_SEQUENCE<br>
+		CYCLE/BORE,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP<br>
+		*END<br>
+		*END<br>
+		/<br>
+		*START_NC_INSTRUCTION NC_BORING_2<br>
+		*START_SEQUENCE<br>
+		CYCLE/BORE,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP,%MFG_BREAKTHROUGH<br>
+		*END<br>
+		*END<br>
+		/<br>
+		*START_NC_INSTRUCTION NC_BORING_3<br>
+		*START_SEQUENCE<br>
+		CYCLE/BORE,%MFG_TOTAL_DEPTH,%MFG_PLUNGE_OFFST,%MFG_CLEAR_TIP<br>
+		,%MFG_FEED_MACH,%MFG_FEED_RETRACT<br>
+		*END<br>
+		*END<br>
+		/<br>
+		*START_NC_INSTRUCTION NC_BORING_4<br>
+		*START_SEQUENCE <br>
+		CYCLE/BORE,%MFG_TOTAL_DEPTH,%MFG_PLUNGE_OFFST,0,%MFG_CMP_DWL_TIME,%MFG_CLEAR_TIP<br>
+		,%MFG_FEED_MACH,%MFG_SPNDL_MACH,ON,0,0,%MFG_FEED_RETRACT <br>
+		*END<br>
+		*END</samp></p>
+		<p>Then these syntaxes will be displayed in the PP Words Selection dialog 
+		box that appears:</p>
+		<blockquote>
+			<p align="left">
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/dbEditSyntax02.gif" width="588" height="244"></p>
+		</blockquote>
+		<p align="left">You can then select the desired syntax and click <kbd>Apply</kbd> 
+		to display it in the Cycle Syntax Edition dialog box. Just click OK to use 
+		the cycle syntax in the Boring operation being edited.</p>
+		<blockquote>
+			<p align="left">
+			<img border="1" src="b35doc/english/online/pmgug_c2/images/dbEditSyntax03.gif" width="586" height="205"></p>
+		</blockquote>
+		<p align="left">Note that in the example above, the PP Table contained several 
+		PP Instructions for the same operation type: NC_BORING_1 to NC_BORING_4.
+		</p>
+		<p align="left">Note that only one cycle syntax (delimited by <code>*START_SEQUENCE 
+		/ *END</code> keywords) is allowed for each PP Instruction.</p>
+		<p align="left">In this way, a multiple choice of syntaxes is proposed at 
+		programming time.</p>
+		<p>Note that, if user decides to edit the default syntax and puts their 
+		own syntax instead of a syntax from the list of available syntaxes, it 
+		would be treated as user syntax. Hence, any change thereafter in the 
+		pptable would not reflect in the syntax overridden by the user for the 
+		particular Machining Operation.</p>
+		<p align="left">For more information please refer to
+		<a href="page11383.html" target="ds_doc2">
+		Insert PP Instruction</a>.</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2" width="783">
+		<h2><a name="R20MultiEdit"></a>
+		Editing 
+		Parameters of Several Axial Machining Operations</h2>
+		<p>You can modify the common parameters of several Axial Machining operations in 
+		one shot as follows: </p>
+		<ul>
+			<li>Select two or more Axial Machining operations either in the Specification 
+			tree or in the Process table.</li>
+			<li>Right-click the highlighted operations and select <kbd>Selected 
+			Objects &gt; Definition...</kbd>&nbsp; <br>
+			The corresponding <kbd>Axial Machining </kbd>dialog box appears.</li>
+			<li>Modify any of the parameters that are available for edition.<br>
+			Only those parameters would be editable which has the same value in 
+			all the selected axial operations. For example, consider the <kbd>
+			Approach Clearance</kbd> parameter in all the Drilling operations. 
+			When you selects two or more drilling operations and click <kbd>
+			Definition</kbd> command in the contextual menu, then the <kbd>
+			Approach Clearance</kbd> parameter would be editable in the 
+			Multi-Edit dialog box, only if all the selected operations have the same 
+			value of <kbd>Approach Clearance</kbd>. Otherwise, it will be 
+			disabled. <br>
+			<br>
+			<b>Note</b>: Parameters (including Geometry and macro definitions) can be edited if all the 
+			selected operations already have identical values. The parameters 
+			which are different in the selected operations are not editable; the 
+			displayed value &nbsp;is the one of the first operation selected.&nbsp; 
+			Tool parameters cannot be edited and <kbd>Replay</kbd> icon is disabled.</li>
+		</ul>
+		<p>The parameters (Jump distance, No Point (hole selection), Closest, 
+		Top Element, Fixed Axis, and the arrow for inversion of the machining 
+		direction) coming from pattern in the axial operations cannot be edited.</p>
+		<p>For <kbd>Sequential Axial</kbd> and <kbd>Sequential Groove</kbd> operations, the different 
+		motions added by you in the motions tab of <kbd>strategy</kbd> dialog box, would not be 
+		supported in multi-edit mode. The motions tab page would be disabled in 
+		case of multi-editing. </p>
+		<p>The editing of tool parameters (Tool Name, Comment, Tool Number, and 
+		changing the Tool type) from <kbd>Tool</kbd> Tab in the axial operations 
+		is not supported.</p>
+		<ul>
+			<li>Click <kbd>OK</kbd> to apply the modified parameters of all the selected operations.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+
+</body>
+
+</html>
+

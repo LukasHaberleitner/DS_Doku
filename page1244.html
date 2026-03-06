@@ -1,0 +1,607 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Analyzing and Repairing Vault Links</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Analyzing and Repairing Vault Links</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td rowspan="1" valign="top" colspan="2">This task explains how to analyze 
+     and repair vault links to be able to restore a consistent state of the data 
+     after a crash of the vault server file system or vault server data base, 
+     particularly in an environment where the metadata database is centralized 
+     and the vault servers are distributed among several sites.<p>After 
+     restoration, the reporting tool, in a specific number of cases described 
+     below, will analyze the 
+     <strong>ENOVIAV5VPM</strong> metadata, vault server metadata and vault 
+     server file systems in order to track broken links, and provides repair 
+     functions and correction proposals whenever possible.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td rowspan="1" valign="top" colspan="2">
+     <h2><a name="hj-ErrorsTracked"></a>Errors Tracked</h2>
+     <p>The tool can track four types of errors broadly divided into two 
+     categories:</p>
+     <ul>
+       <li>dangling pointers</li>
+       <li>unreferenced data.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">
+     <h3><strong>ENOVIAV5VPM</strong> dangling pointers to vault metadata</h3>
+     <p>This can occur after a vault database server crash. Any vault metadata 
+     created after the last backup will be missing in the restored vault 
+     database. But <strong>ENOVIAV5VPM</strong> metadata still points to the data in the central 
+     <strong>ENOVIAV5VPM</strong> 
+     database server.</p>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/LCA_VaultBackupRestore01_NLS.jpg" width="720" height="540"></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2">
+     <h3>Vault metadata dangling pointers to file</h3>
+     <p>This can occur:</p>
+     <ul>
+       <li>after a vault database server crash: any vault metadata deleted after 
+       the last backup will reappear after the restore of the crashed vault 
+       server but the pointed file has been deleted.</li>
+       <li>after a vault file system crash: any vault file created after the 
+       last backup will be missing in the restored vault file system, but vault 
+       metadata still points to the data in the corresponding vault server 
+       database. </li>
+     </ul>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/LCA_VaultBackupRestore02_NLS.jpg" width="720" height="540"></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">
+     <h3>Unreferenced vault metadata</h3>
+     <p>This can occur after a vault database server crash. Any vault metadata 
+     deleted after the last backup will reappear after the restore of the 
+     crashed vault server but the corresponding 
+     <strong>ENOVIAV5VPM</strong> metadata is missing from the 
+     central <strong>ENOVIAV5VPM</strong> database.</p>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/LCA_VaultBackupRestore03_NLS.jpg" width="720" height="540"></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2">
+     <h3>Unreferenced vault files</h3>
+     <p>This can occur:</p>
+     <ul>
+       <li>after a vault database server crash: any vault metadata created after 
+       the last backup will be missing in the restored vault server but the 
+       corresponding vault file still exists in the vault file system. </li>
+       <li>after a vault file system crash: any vault file deleted after the 
+       last backup will reappear after the restore of the crashed vault file 
+       system, but the corresponding vault metadata has been deleted from the 
+       vault database.</li>
+     </ul>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/LCA_VaultBackupRestore04_NLS.jpg" width="720" height="540"></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2" valign="top">
+     <h2 align="left">Running the Vault Link Checker</h2>
+     <p align="left">Run the vault link checker on the machine on which the 
+     vault server is installed (this is the vault server being checked) as 
+     follows:</p>
+     <p><code><a name="ix-ENOCheckVaultLink command"></a>./catstart -run &quot;ENOCheckVaultLink.sh&quot;<a name="ix-commands::ENOCheckVaultLink"></a></code></p>
+     <p>The arguments are:</p>
+     <p><code>ENOCheckVaultLink.sh [ -h | -TmpDir tmpdir -DatabaseVendor 
+     databaseVendor -DatabaseName databaseName -TableOwner tableOwner -ConnectUser 
+     connectUser -ConnectPasswd connectPasswd -FileOut fileOut[-ExceptVaultAlias 
+     exceptVaultAlias | -ListVaultAlias listVaultAlias ] [-ExceptDomain 
+     exceptDomain | -ListDomain listDomain] [-AfterTimeStamp afterTimeStamp] [-NOCorrection 
+     | -ONLYCorrection] [-iPRC&lt;PRC id&gt; | -iPV &lt;PV id&gt; -Version &lt;Version&gt;]</code></p>
+     <p>&nbsp;</p>
+     <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="748" id="AutoNumber1">
+       <tr>
+         <td width="154" valign="top"><b>Option</b></td>
+         <td width="202"><b>Optional/Mandatory</b></td>
+         <td width="388"><b>Description</b></td>
+       </tr>
+       <tr>
+         <td width="154" valign="top"><code>-TmpDir</code></td>
+         <td width="202" valign="top">mandatory</td>
+         <td width="388" valign="top">A directory where the executables can read 
+         and write temporary data</td>
+       </tr>
+       <tr>
+         <td width="154" valign="top"><code>-DatabaseName</code></td>
+         <td width="202" valign="top">mandatory</td>
+         <td width="388" valign="top">the connection string to the central 
+         database</td>
+       </tr>
+       <tr>
+         <td width="154" valign="top"><code>-DatabaseVendor</code></td>
+         <td width="202" valign="top">mandatory</td>
+         <td width="388" valign="top">the database vendor [DB2 | ORACLE]</td>
+       </tr>
+       <tr>
+         <td width="154" valign="top"><code>-TableOwner</code></td>
+         <td width="202" valign="top">mandatory</td>
+         <td width="388" valign="top">the database schema (on DB2) or the 
+         database structures owner (on ORACLE)</td>
+       </tr>
+       <tr>
+         <td width="154" valign="top"><code>-ConnectUser</code></td>
+         <td width="202" valign="top">mandatory</td>
+         <td width="388" valign="top">the user to be used to connect on the 
+         central database, read/update data on the central database</td>
+       </tr>
+       <tr>
+         <td width="154" valign="top"><code>-ConnectPasswd</code></td>
+         <td width="202" valign="top">mandatory</td>
+         <td width="388" valign="top">the password of the user used to connect 
+         to the central database</td>
+       </tr>
+       <tr>
+         <td width="154" valign="top"><code>-FileOut</code></td>
+         <td width="202" valign="top">mandatory</td>
+         <td width="388" valign="top">The absolute name of the file that will be 
+         generated. The file has to be generated in a writable directory for the 
+         user that will launch the shell.</td>
+       </tr>
+       <tr>
+         <td width="154" valign="top"><code>-ExceptVaultAlias</code></td>
+         <td width="202" valign="top">optional</td>
+         <td width="388" valign="top">Not yet supported.</td>
+       </tr>
+       <tr>
+         <td width="154" valign="top"><code>-ListVaultAlias</code></td>
+         <td width="202" valign="top">mandatory</td>
+         <td width="388" valign="top">Enter the alias name of the restored 
+         vault. This alias has to be found in the vault client properties.<p>
+         Only lists with one item are supported for the moment. This means one 
+         vault alias name, the alias name of the vault server which crashed. 
+         This alias is located in the VaultClient.properties file on the central 
+         <strong>ENOVIAV5VPM</strong> server.</td>
+       </tr>
+       <tr>
+         <td width="154" valign="top"><code>-ExceptDomain</code></td>
+         <td width="202" valign="top">optional</td>
+         <td width="388" valign="top">enter the name of data domains found in 
+         the admin data that are not to be checked</td>
+       </tr>
+       <tr>
+         <td width="154" valign="top"><code>-ListDomain</code></td>
+         <td width="202" valign="top">optional</td>
+         <td width="388" valign="top">enter a list of the only data domains that 
+         are to be checked</td>
+       </tr>
+       <tr>
+         <td width="154" valign="top"><code>-AfterTimeStamp</code></td>
+         <td width="202" valign="top">optional</td>
+         <td width="388" valign="top">enter a timestamp in the following format 
+         (usual database time format):<p><code>%4d-%2d-%2d-%2d.%2d.%2d.%6d
+         </code></p>
+         <p>this will check only the 
+         <strong>ENOVIAV5VPM</strong> metadata modified after this timestamp.</td>
+       </tr>
+       <tr>
+         <td width="154" valign="top"><code>-NOCorrection</code></td>
+         <td width="202" valign="top">optional</td>
+         <td width="388" valign="top">do not perform the correction step</td>
+       </tr>
+       <tr>
+         <td width="154" valign="top"><code>-ONLYCorrection</code></td>
+         <td width="202" valign="top">optional</td>
+         <td width="388" valign="top">perform only the correction step (with the 
+         info stored in the TmpDir from a previous Check run with the -NOCorrection 
+         option).<p>After the check, the tool only uses the information 
+         contained in the -TmpDir option but uses the file of the option -FileOut, 
+         obtained after first running the tool in -NOCorrection mode.</td>
+       </tr>
+       <tr>
+         <td width="154" valign="top">
+         <p align="left"><code>-h</code></td>
+         <td width="202">optional</td>
+         <td width="388">
+         <p align="left">displays help.</td>
+       </tr>
+       <tr>
+         <td width="154" valign="top">
+         <code>-iPRC&lt;PRC id&gt;</code></td>
+         <td width="202">optional</td>
+         <td width="388">
+         Enter name of a PRC to limit the scope of ENOCheckVaultLink to the 
+		 documents within the PRC structure.<br>You can use either
+         <code>-iPRC&lt;PRC id&gt;</code> or
+         <code>-iPV &lt;PV id&gt; -Version &lt;Version&gt;</code>.<br>You must 
+		 manually repair DANGLINGLCA and DANGLINGVAULT errors detected, when you 
+		 use
+         <code>-iPRC&lt;PRC id&gt;.</code></td>
+       </tr>
+       <tr>
+         <td width="154" valign="top">
+         <code>-iPV &lt;PV id&gt; -Version &lt;Version&gt;</code></td>
+         <td width="202">optional</td>
+         <td width="388">
+         Enter name of a PV and its version to limit the scope of 
+		 ENOCheckVaultLink to the documents attached to the subassembly.<br>You 
+		 must manually repair DANGLINGLCA and DANGLINGVAULT errors detected, 
+		 when you use
+         <code>-iPV &lt;PV id&gt; -Version &lt;Version&gt;</code>.</td>
+       </tr>
+     </table>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2" valign="top">
+     <h2>Executables</h2><br><h3>CheckVaultLink_Extractor:</h3><br>It extracts 
+	 the information from 
+	 documents in the vault database and saves in Extractor.xml. When you do not 
+	 use
+         <code>-iPRC&lt;PRC id&gt;</code> or
+         <code>-iPV &lt;PV id&gt; -Version &lt;Version&gt;</code>, CheckVaultLink_Extractor 
+	 runs first.<br><br>Argument to run CheckVaultLink_Extractor 
+	 individually is as follows:<br><code>CheckVaultLink_Extractor -TmpDir %TmpDir% 
+	 -DatabaseVendor %DatabaseVendor% -DatabaseName %DatabaseName% -TableOwner 
+	 %TableOwner% -ConnectUser %ConnectUser% -ConnectPasswd %ConnectPasswd% 
+	 -ListVaultAlias %ListVaultAlias%</code><br><h3>ENOVaultLinkExtractorTool:</h3><br>It extracts the information from 
+	 documents in the PRC or PV mentioned in
+         <code>-iPRC&lt;PRC id&gt;</code> or
+         <code>-iPV &lt;PV id&gt; -Version &lt;Version&gt;</code> and saves in Extractor.xml. When you  
+	 use
+         <code>-iPRC&lt;PRC id&gt;</code> or
+         <code>-iPV &lt;PV id&gt; -Version &lt;Version&gt;</code>, 
+	 ENOVaultLinkExtractorTool runs first instead of CheckVaultLink_Extractor.<br><br>Argument to run 
+	 ENOVaultLinkExtractorTool individually is as follows:<br><code>
+	 ENOVaultLinkExtractorTool -TmpDir &lt;TmpDir&gt; -user &lt;ConnectUser&gt; -pwd 
+	 &lt;ConnectPasswd&gt; &#8211;iPRC &lt;iPRC_id&gt; or &#8211;iPV &lt;PV_id&gt; &#8211;Version &lt;Version&gt;</code><br><h3>
+	 runENOVVaultChecker:</h3><br>It checks the consistency between the 
+	 extracted links and the vault metadata and file system, using the 
+	 information in Extractor.xml to track the unreferenced vault metadata and 
+	 files. All the detected errors are saved in an XML.<br><br>Argument to run 
+	 runENOVVaultChecker individually is as follows:<br><code>runENOVVaultChecker 
+	 -inputFile $l_TmpDir_opt&quot;/&quot;Extractor.xml &#8211;alias $l_ListVaultAlias_opt 
+	 -outputFile $l_FileOut_opt &#8211;noGUI</code><br><h3>CheckVaultLink_Corrector:</h3><br>
+	 It processes the possible correction proposals, using the XML generated 
+	 from runENOVVaultChecker.<br><br>Argument to run CheckVaultLink_Corrector individually is as follows:<br>
+	 <code>CheckVaultLink_Corrector -InputFile $l_FileOut_opt -VaultAliasName $l_ListVaultAlias_opt</code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2">
+     <h2>Narrowing the Scope of Processing
+     <p>You can narrow the scope of the processing performed by the tool as 
+     follows:</p>
+     <h3>By a timeframe</h3>
+     <p>The tool will use the LASTUPDATEDATE column to collect the vault links 
+     to check. Only dangling pointers to vault metadata or vault file systems 
+     will benefit from this option.</p>
+     <h3>By a list of vault alias</h3>
+     <p>Both LIST (&#133;) 
+     and EXCEPT (&#133;) 
+     options are available. The standard use is to narrow the process with the 
+     alias of the crashed vault.</p>
+     <h3>By a list of domains</h3>
+     <p>Both LIST (&#133;) 
+     and EXCEPT (&#133;) 
+     options are available. Only dangling pointers to vault metadata or vault 
+     file systems will benefit from this option.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2">
+     <h2>Reporting tool steps</h2>
+     <p>The tool performs the following steps:</p>
+     <ul>
+       <li>extracts all the vault links from the central 
+       <strong>ENOVIAV5VPM</strong> database 
+       (optimized with narrowing capabilities)</li>
+       <li>checks the consistency between the extracted links and the vault 
+       metadata and file system.</li>
+       <li>tracks unreferenced vault metadata and files.</li>
+       <li>outputs an XML format report containing the detected errors</li>
+       <li>processes the correction proposals.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2">
+     <h2>Understanding the Generated File</h2>
+     <p>The output file generated contains XML tags describing the detected 
+     problems. There are 5 nodes that can appear in the XML file:</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2"><b><br>
+     ROOTNODE</b><br>
+     this tag aggregates all the other tags.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2"><b><br>
+     DANGLINGLCA (<strong>ENOVIAV5VPM</strong> dangling pointers to vault metadata)<br>
+&nbsp;</b></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>attributes of the XML node </td>
+     <td>comment</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>OID</td>
+     <td>hexadecimal value of the OID of the object pointing to a missing vault 
+     metadata</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>TYPE</td>
+     <td>type of the object pointing to a missing vault metadata</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>Attribute</td>
+     <td>attribute name that points to the missing vault metadata</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>URL</td>
+     <td>the URL of the missing vault metadata</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>VDOID</td>
+     <td>not filled</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>DOCLOCATION</td>
+     <td>not filled</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2"><b><br>
+     DANGLINGVAULT (Vault metadata dangling pointers to file)<br>
+&nbsp;</b></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>attributes of the XML node comment</td>
+     <td>comment</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>OID</td>
+     <td>hexadecimal value of the OID of the object pointing to a missing vault 
+     file</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>TYPE</td>
+     <td>type of the object pointing to a missing vault file</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>Attribute</td>
+     <td>attribute name that points to the missing vault file</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>URL</td>
+     <td>the URL of the faulty vault metadata</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>VDOID</td>
+     <td>the OID of the vault metadata</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>DOCLOCATION</td>
+     <td>the expected physical location of the missing file</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2"><b><br>
+     UNREFVAULT (Unreferenced vault metadata)<br>
+&nbsp;</b></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>attributes of the XML node comment</td>
+     <td>comment</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>OID</td>
+     <td>the identifier of the unreferenced the vault metadata</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>ALIAS</td>
+     <td>the alias of the vault where the unreferenced vault file is stored</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2"><b><br>
+     UNREFFILE (Unreferenced vault files)<br>
+&nbsp;</b></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>attributes of the XML node</td>
+     <td>comment</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>Path</td>
+     <td>the path where the unreferenced vault file is stored</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>Name</td>
+     <td>the name of the unreferenced vault file</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>Size</td>
+     <td>the size of the unreferenced vault file (not filled)</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>ALIAS</td>
+     <td>the alias of the vault where the unreferenced vault file is stored</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">
+     <h2><a name="hj-CorrectionModes"></a>Correction Modes</h2>
+     <p>The tool <kbd>ENOCheckVaultLink </kbd>command can be run in the 
+     following correction modes.</p>
+     <h3>No automatic correction</h3>
+     <p>No automatic correction of the detected problems. You must run the 
+     command using all the mandatory options (not just -NOCorrection). The XML 
+     output file will be generated in the -FileOut location. Along with the 
+     mandatory options, -NOCorrection must also be specified.</p>
+     <h3>Automatic correction of the detected problems</h3>
+     <p>To correct the detected problems automatically, you must run the command 
+     using all the mandatory options (but neither -ONLYCorrection nor -NOCorrection).</p>
+     <p><b>Note:</b> automatic correction only corrects errors for unreferenced 
+     vault metadata and unreferenced vault files, as well as the correction that 
+     is applied.</p>
+     <h3>Customize the desired corrections in the XML file</h3>
+     <p>Run the tool in no automatic correction mode using all the mandatory 
+     options. Then, edit the XML file generated in the -FileOut location to 
+     specify the corrections you want to perform. Finally, rerun the command 
+     using the same options, except this time replace the -NOCorrection option 
+     by the -ONLYCorrection option.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2">
+     <h2>Correction scope and Limitations</h2>
+     <h3><strong>ENOVIAV5VPM</strong> dangling pointers to vault metadata</h3>
+     <p>The <strong>ENOVIAV5VPM</strong> dangling pointers identified by the tool have to be manually 
+     repaired. </p>
+     <h3>Vault metadata dangling pointers to file</h3>
+     <p>The impacted vault metadata identified by the tool have to be manually 
+     repaired.</p>
+     <h3>Unreferenced vault metadata</h3>
+     <p>In this case, the tool will be able to automatically clean the vault 
+     database.</p>
+     <h3>Unreferenced vault files</h3>
+     <p>In this case, the tool will be able to automatically remove the files.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2">
+     <h3>Return Codes for the Vault Link Checker</h3>
+     <p>The return code is not meaningful to know if errors have been reported 
+     in the output file. It just indicates if all steps have been fully 
+     performed.</p>
+     <p>0 : all steps have been performed<br>
+     1 : step 1 failed.<br>
+     2 : step 2 failed<br>
+     3 : step 3 failed.<br>
+     100: bad arguments.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2">
+     <h3><a name="hj-Restorator"></a>Repairing 
+     <strong>ENOVIAV5VPM</strong> Dangling Pointers</h3>
+     <p>There is a way to try to repair 
+     <strong>ENOVIAV5VPM</strong> dangling pointers (which the Vault 
+     Link Checker cannot do).</p>
+     <p>Using a two-step process, the Vault Link Restore Utility makes 
+     propositions to repair the dangling pointers, and repairs the accepted 
+     ones.</p>
+     <p>During the first step, simulation, it uses the DANGLINGLCA tag in the 
+     Generated XML file, to access to the database and to generate an output XML 
+     file which proposes to:</p>
+     <ul>
+       <li>delete the Format</li>
+       <li>delete the Iteration</li>
+       <li>find a Preferred Iteration.</li>
+     </ul>
+     <p>The command syntax of this simulation step is:</p>
+     <p><code>&gt;CheckVaultLink_Restorator -user uuu -pwd ppp -role rrr -isimul 
+     InSimul.xml -osimul OutSimul.xml </code></p>
+     <p>Here is an example of an OutSimul.xml file:</p>
+     <p><code>&lt;?xml version=&quot;1.0&quot; encoding='UTF-8' ?&gt;<br>
+     &lt;!DOCTYPE docChange &gt;<br>
+     &lt;DOCCHANGE&gt;<br>
+     &lt;!-- 
+     ************************************************************************************** 
+     -&nbsp;&gt;&nbsp;<br>
+     &lt;!-- * -&nbsp;&gt;&nbsp;<br>
+     &lt;!-- * Warning :only authorized modifications are deletes of whole Document 
+     Revision blocks -&nbsp;&gt;&nbsp;<br>
+     &lt;!-- * -&nbsp;&gt;&nbsp;<br>
+     &lt;!-- 
+     ************************************************************************************** 
+     -&nbsp;&gt;&nbsp;<br>
+     &lt;!-- * -&nbsp;&gt;&nbsp;<br>
+     &lt;!-- * Warning :if execution is succesfull ,this file will be renamed ,do 
+     not re-use it -&nbsp;&gt;&nbsp;<br>
+     &lt;!-- * ,restart a simulation -&nbsp;&gt;&nbsp;<br>
+     &lt;!-- * -&nbsp;&gt;&nbsp;<br>
+     &lt;!-- 
+     ************************************************************************************** 
+     -&nbsp;&gt;&nbsp;<br>
+     &lt;DOCREV V_version=&quot;---&quot; V_description=&quot;---&quot; V_ID=&quot;PGR2&quot; &gt;<br>
+     &lt;ACTION Action=&quot;Delete&quot; V_doc_iter_num=&quot;0&quot; OID_MO=&quot;ACE4C6CE0014A0544048BF37000AF3E1&quot; 
+     TYPE_MO=&quot;80A2B3BD00000509384D10620005D1D1&quot; DD_MO=&quot;454E4F44525F444F4344495220202020&quot; 
+     /&gt;<br>
+     &lt;/DOCREV&gt;<br>
+     &lt;/DOCCHANGE&gt; </code></p>
+     <p>The Data Administrator chooses to accept some of the propositions by 
+     leaving them in the file and to refuse some others by deleting them from 
+     the file. </p>
+     <p>During the second step, execution, the Vault Link Restorator Utility 
+     reads the file reviewed by the Data Administrator, and applies the repair 
+     propositions. </p>
+     <p>The command syntax of this step is:</p>
+     <p><code>&gt;CheckVaultLink_Restorator -user uuu -pwd ppp -role rrr -exec 
+     InExec.xml </code></p>
+     <p>Note that the Generated file has evolved to a certain extent: for both 
+     DANGLINGLCA and DANGLINGVAULT, the tags are:</p>
+     <p><code>OID<br>
+     TYPE<br>
+     Attribute<br>
+     TYPEOID new: hexadecimal value of the Type the pointing object<br>
+     DATADOMAINOID new: hexadecimal value of the Data Domain the pointing<br>
+     object<br>
+     URL<br>
+     VDOID<br>
+     DOCLOCATION<br>
+     DOCSIZE new: size (in bytes) of the pointed document<br>
+     LASTUPDATEDATE new: last update date of the document </code></p>
+     <p>The shell arguments of ENOCheckVaultLink.sh have not changed.</td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="3">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <table>
+ </table>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,463 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+	<head>
+	<meta name="MonocodingType" content="0">
+	<meta name="MonocodingFlag" content="C2D2">
+	<meta http-equiv="Content-Language" content="en-us">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Profile Finish Turning Operations</title>
+	<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+	<meta name="ProgId" content="FrontPage.Editor.Document">
+	<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+	<style type="text/css">
+.style2 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+	</head>
+
+	<body>
+
+	<h1><a name="13883"></a>Profile Finish Turning Operations</h1>
+	<a name="ix-Profile Finish Turning operation"></a>
+	<a name="ix-Profile Finish Turning parameter:Axial part offset"></a>
+	<a name="ix-Profile Finish Turning parameter:Contouring for Outside Corners">
+	</a><a name="ix-Profile Finish Turning parameter:End Limit"></a>
+	<a name="ix-Profile Finish Turning parameter:End Limit Offset"></a>
+	<a name="ix-Profile Finish Turning parameter:Lead-in"></a>
+	<a name="ix-Profile Finish Turning parameter:Leading Safety Angle"></a>
+	<a name="ix-Profile Finish Turning parameter:Lift-off"></a>
+	<a name="ix-Profile Finish Turning parameter:Location"></a>
+	<a name="ix-Profile Finish Turning parameter:Machining Direction"></a>
+	<a name="ix-Profile Finish Turning parameter:Machining Tolerance"></a>
+	<a name="ix-Profile Finish Turning parameter:Orientation"></a>
+	<a name="ix-Profile Finish Turning parameter:Radial part offset"></a>
+	<a name="ix-Profile Finish Turning parameter:Recess Machining"></a>
+	<a name="ix-Profile Finish Turning parameter:Start Limit"></a>
+	<a name="ix-Profile Finish Turning parameter:Start Limit Offset"></a>
+	<a name="ix-Profile Finish Turning parameter:Part offset"></a>
+	<a name="ix-Profile Finish Turning parameter:Trailing Safety Angle"></a>
+	<a name="ix-Profile Finish Turning parameter:Under Spindle Axis Machining">
+	</a><p>The information in this section will help you create and edit <kbd>Profile 
+	Finish Turning</kbd> operations in your manufacturing program. </p>
+	<p><a name="pgfId=54711"></a>The <kbd>Profile Finish Turning</kbd> operation allows you 
+	to finish a part profile. You can specify: </p>
+	<ul>
+		<li>the type of machining according to the profile of the area to machine 
+		(external, internal or frontal)</li>
+		<li>relimitation of the profile by start and end elements</li>
+		<li>various approach and retract path types</li>
+		<li>linear and circular lead-in and lift-off options with specific feedrates</li>
+		<li>recess machining</li>
+		<li>various corner processing options</li>
+		<li>cutter compensation.</li>
+	</ul>
+	<p>The following topics are dealt with in the paragraphs below:</p>
+	<ul>
+		<li><a href="#tools">Tooling</a></li>
+		<li><a href="#pgfId=1036694">Geometry</a></li>
+		<li><a href="#pgfId=54979">Machining Strategy Parameters</a></li>
+		<li><a href="#FandSProfFinish">Feeds and Speeds</a></li>
+		<li><a href="#CompenProfFinish">Tool Compensation</a></li>
+		<li><a href="#pgfId=1053846">Macros</a>.</li>
+	</ul>
+	<table border="0">
+			<tr>
+					<td width="770">
+					<h3><a name="tools"></a>Tooling for Profile Finish Turning
+					</h3>
+					<p>The following tooling may be used: </p>
+					<ul>
+						<li>External and Internal insert-holders with all insert 
+						types except groove and thread. </li>
+						<li>External and Internal Groove insert-holders with groove 
+						and trigon inserts.<br>
+						Refer to <a target="_blank" href="page11208.html">Trigon 
+						Insert Used on a Groove Insert-holder</a> for more information 
+						about this tooling configuration.</li>
+					</ul>
+					<p>Note that the following attributes may influence machining 
+					(they are located on the <kbd>Insert-holder&#39;s Technology</kbd> tab):</p>
+					<ul>
+						<li>Gouging angle</li>
+						<li>Trailing angle</li>
+						<li>Leading angle</li>
+						<li>Max Recessing Depth</li>
+						<li>Max Cutting Depth</li>
+						<li>Max Boring Depth.</li>
+					</ul>
+					<p>These attributes take tooling accessibility into account 
+					and may reduce the machined area.<br>
+					However, you can use the <b>Insert-Holder Constraints</b> option 
+					on the operation editor to either ignore or apply these tooling 
+					attributes. You can replay the operation to verify the influence 
+					of these attributes on the generated tool path.</p>
+					<p>Note that the <b>Insert-Holder Constraints </b>setting does 
+					not influence the <a href="#SafetyAngles">Leading and Trailing 
+					Safety Angles</a> defined in the operation editor.</p>
+					<h3><a name="pgfId=1036694"></a>Geometry for Profile Finish 
+					Turning </h3>
+					<p>A Part profile is required. It can be specified as follows:</p>
+					<a name="ix-contextual command::By Curve;By Curve contextual command">
+					</a>
+					<a name="ix-contextual command::Sectioning;Sectioning contextual command">
+					</a><ul>
+						<li>select edges either directly or after selecting the
+						<b>By Curve</b> contextual command. In this case the
+						<a href="page11480.html#EdgeSelToolbar" target="ds_doc2">
+						Edge Selection toolbar</a> appears to help you specify the 
+						guiding contour.</li>
+						<li>select the <b>Sectioning</b> contextual command. Please 
+						refer to
+						<a href="page4937.html" target="ds_doc2">
+						Sectioning</a> for details of how to use this capability.<br>
+						Please note that the sectioning selection method is not 
+						associative.</li>
+					</ul>
+					<p><b>Start Limit</b>: None / In / On / Out<br>
+					This option allows you to specify a point, line,<br>
+					curve or face as the start element of the part<br>
+					profile. If a face is specified, the start element is<br>
+					the intersection of the face and the working plane.<br>
+					The position of the start of machining is also<br>
+					defined with respect to this element.</p>
+					<p><b>In / On / Out</b>: allows you to specify the Go-Go type 
+					positioning of the tool with respect to the start element. Go-Go 
+					type positioning of tool in general positions the tool based 
+					on its radius and tool compensation number. This means positioning 
+					will vary for different tool insert geometries with respect 
+					to the limit and there is possibility of tool going beyond limit 
+					even with IN option. The On option is always used for a point 
+					type start element. If needed, the profile may be extrapolated 
+					to the start element.</p>
+					<p><b>End Limit</b>: None / In / On / Out<br>
+					This option allows you to specify a point, line, curve or face 
+					as the end element of the part profile. If a face is specified, 
+					the end element is the intersection of the face and the working 
+					plane. The position of the end of machining is also defined 
+					with respect to this element.</p>
+					<p><b>In / On / Out</b>: allows you to specify the Go-Go type 
+					positioning of the tool with respect to the end element. Go-Go 
+					type positioning of tool in general positions the tool based 
+					on its radius and tool compensation number. This means positioning 
+					will vary for different tool insert geometries with respect 
+					to the limit and there is possibility of tool going beyond limit 
+					even with IN option. The On option is always used for a point 
+					type end element.</p>
+					<p>Note: To avoid collisions of tool with Limit geometry or 
+					unwanted machining beyond limits with IN option, either define 
+					limits with suitable offset value or include Limit geometry 
+					as part element (this is better wherever applicable) and avoid 
+					limit definition.</p>
+					<p><b>Relimiting the area to machine by means of limit elements</b></p>
+					<p>If you specify a point, it is projected onto the part profile.
+					<br>
+					A line through the projected point parallel to the radial axis 
+					delimits the area to machine.</p>
+					<p>If you specify a line, its intersection with the part profile 
+					is calculated (if necessary, the line is extrapolated). <br>
+					A line through the intersection point parallel to the radial 
+					axis delimits the area to machine.</p>
+					<p>If you specify a curve, its intersection with the part profile 
+					is calculated (if necessary, the curve is extrapolated using 
+					the tangent at the curve extremity). <br>
+					A line through the intersection point parallel to the radial 
+					axis delimits the area to machine.</p>
+					<p><a name="pgfId=54776"></a>If needed, the profile may be extrapolated 
+					to the end element. </p>
+					<p>
+					<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-21.gif" width="600" height="297">
+					</p>
+					<p><a name="pgfId=1004625"></a><a name="F1@CYC64"></a>The figure 
+					above illustrates the use of start and end elements for Profile 
+					Finish Turning. Profile is machined from start element. Profile 
+					is extrapolated up to end element. Direct approach and radial-axial 
+					retract.</p>
+					<h4><a name="pgfId=1036702"></a><a name="78251"></a>Orientation 
+					and Location for Profile Finish Turning</h4>
+					<a name="ix-Internal Profile Finish Turning"></a>
+					<a name="ix-External Profile Finish Turning"></a>
+					<a name="ix-Frontal Profile Finish Turning"></a><ul>
+						<li><b>Orientation</b>: Internal / External / Frontal<br>
+						This option allows you to specify the type of machining 
+						according to the location of the area to machine on the 
+						part.</li>
+					</ul>
+					<ul>
+						<li><b>Location</b>:&nbsp; <ul>
+							<li>Front, the profile is machined toward the head stock</li>
+							<li>Back, the profile is machined from the head stock.</li>
+						</ul>
+						</li>
+					</ul>
+					<h4><a name="pgfId=1037730"></a><a name="53180"></a>
+					<a name="marker=1064973"></a>
+					<a name="ix-Profile Finish Turning parameter:Corner Processing">
+					</a>Corner Processing for Profile Finish Turning </h4>
+					<p><a name="pgfId=1040692"></a>The following options allow you 
+					to define how corners of the profile are to be machined:</p>
+					<ul>
+						<li>None: no corners are to be machined along the profile</li>
+						<li>Chamfer: only 90 degree corners of the profile are chamfered</li>
+						<li>Rounded: all corners of the profile are rounded.</li>
+					</ul>
+					<p>
+					<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-22.gif" width="600" height="448">
+					</p>
+					<p>Corner processing options are also available to define how 
+					the entry and exit corners are to be machined. Entry and exit 
+					corners are defined by either a chamfer length, or a corner 
+					radius and corner angle.</p>
+					<h4>Part Offsets for Profile Finish Turning</h4>
+					<ul>
+						<li><b>Part offset</b>, which is defined perpendicular to 
+						the part profile.</li>
+						<li><b>Axial part offset</b>.</li>
+						<li><b>Radial part offset</b>.</li>
+					</ul>
+					<ul>
+						<li><b>Start limit offset</b>: distance with respect to 
+						the start element (only if start element is a line or a 
+						curve, and when In or Out is set for start element positioning).</li>
+						<li><b>End limit offset</b>: distance with respect to the 
+						end element (only if end element is a line or a curve, and 
+						when In or Out is set for end element positioning).</li>
+					</ul>
+					<p>Offsets can be positive or negative with any absolute value. 
+					The global offset applied to the part profile is the resulting 
+					value of the normal, axial and radial offsets. </p>
+					<p>In addition to these global values, local offsets can be 
+					applied to segments, curves and arcs of the part profile.
+					</p>
+					<h3><a name="pgfId=54979"></a>Machining Strategy Parameters 
+					for Profile Finish Turning</h3>
+					<h4><a name="pgfId=1070593"></a><a name="21957"></a>Path Definition 
+					for Profile Finish Turning</h4>
+					<ul>
+						<li><b>Machining Direction</b>: To or From Spindle<br>
+						This option is only available for frontal machining for 
+						specifying the machining direction with respect to the spindle 
+						axis.</li>
+					</ul>
+					<blockquote>
+							<p><a name="pgfId=1081597"></a>If start and end elements 
+							are defined that are in conflict with the machining 
+							direction, then these elements will be reversed automatically.
+							</p>
+					</blockquote>
+					<ul>
+						<li><b>Contouring for Outside Corners</b>: Angular / Circular<br>
+						Allows you to define whether contouring of corners is to 
+						be angular or circular. Note that the part profile is respected 
+						in this case.</li>
+					</ul>
+					<blockquote>
+							<p>
+							<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-23.gif" width="302" height="300">
+							</p>
+					</blockquote>
+					<ul>
+						<li><b>Under Spindle Axis Machining</b><br>
+						When finishing in frontal mode, this option allows you to 
+						request machining under the spindle axis.</li>
+						<li><b>Recess Machining</b><br>
+						When this option is set, a recess machining path is done 
+						after the profile finish path.<br>
+						The trailing safety angle option becomes available.<br>
+						<br>
+						<a name="R18AsymmericTool"></a>Note: Prior to Release 18, 
+						when machining a recess in Profile Finish Turning using 
+						an asymmetric groove tool, complete machining of the recess 
+						is only possible when the nose radius of the tool insert 
+						is less than or equal to half its width. <br>
+						<br>
+						As from Release 18, an asymmetric groove tool insert whose 
+						nose radius (left or right) is greater than half its width 
+						allows complete machining.</li>
+						<li><b><a name="SafetyAngles"></a>Leading </b>and<b> Trailing 
+						Safety Angles</b><br>
+						The insert geometry is taken into account to avoid collision 
+						by reducing the maximum slope on which the tool can machine. 
+						The Leading Safety Angle and<a name="marker=1071175">
+						</a>Trailing Safety Angle allow you to further reduce this 
+						slope. <br>
+						<br>
+						Leading and trailing angles can also be defined on the insert-holder 
+						to define the maximum slope on which machining can be done. 
+						In this case and if the<b> Insert-Holder Constraints </b>
+						setting is applied (<a href="#tools">see above</a>), the 
+						angles that reduce the slope the most will be taken into 
+						account.</li>
+						<li><b>Machining Tolerance</b> for following the profile.</li>
+					</ul>
+					<h4><a name="pgfId=1070606"></a><a name="60601"></a>Lead-in 
+					and Lift-off for Profile Finish Turning</h4>
+					<ul>
+						<li><b>Lead-in type</b>: Linear / Circular&nbsp; <br>
+						Defines the type of lead-in onto the profile at lead-in 
+						feedrate <ul>
+							<li>Linear: lead-in up to the point where profile machining 
+							starts is defined by means of the <b>lead-in distance</b> 
+							and <b>lead-in angle</b> parameters. </li>
+							<li>Circular: lead-in is circular and tangent to the 
+							point where profile machining starts. It is defined 
+							by means of the <b>lead-in radius</b> and<b> lead-in 
+							angle</b> parameters.</li>
+						</ul>
+						<p>Note that the lead-in angle is defined with respect to 
+						the normal to the cutting direction. Range of lead-in angle 
+						is from -90 to 135 degrees for all tool types except for 
+						a grooving tool, where it ranges from 0 to 90 degrees.</p>
+						</li>
+					</ul>
+					<p><a name="pgfId=1070616"></a><a name="F1@CYC65"></a>The figure 
+					below shows an example of linear lead-in and circular lift-off 
+					(external machining is assumed).</p>
+					<p>
+					<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-24.gif" width="774" height="360">
+					</p>
+					<ul>
+						<li><b>Lift-off type</b>: Linear / Circular.<br>
+&nbsp;Defines the type of lift-off from the profile at lift-off feedrate <ul>
+							<li>Linear: lift-off from the point where profile machining 
+							ends is defined by means of the <b>lift-off distance</b> 
+							and <b>lift-off angle</b> parameters.</li>
+							<li>Circular: lift-off is circular and tangent from 
+							the point where profile machining ends. It is defined 
+							by means of the <b>lift-off radius</b> and <b>lift-off 
+							angle</b> parameters.</li>
+						</ul>
+						<p>Note that the lift-off angle is defined with respect 
+						to the normal to the cutting direction. Range of lift-off 
+						angle is from -90 to 135 degrees for all tool types except 
+						for a grooving tool, where it ranges from 0 to 90 degrees.</p>
+						</li>
+					</ul>
+					<p>In the example below, the round tool is tangent <b>In</b> 
+					start element plus clearance at start of profiling. Round tool 
+					is tangent <b>Out</b> end element plus clearance at end of profiling.</p>
+					<p>
+					<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-25.gif" width="600" height="272"></p>
+					<h4>Local Invert</h4>
+					<p><b>Invert strategy</b></p>
+					<ul>
+						<li>None: no Invert strategy</li>
+						<li>Overlap: defined by a clearance and an overlap parameter</li>
+						<li>Thickness: defined by a clearance and a thickness parameter.</li>
+					</ul>
+					<p><b>Machine inverted elements first</b>: you machine inverted 
+					elements on the first path, and then the other elements.</p>
+					<p><b>Invert Lead-in angle</b> and <b>Invert Lead-in distance
+					</b>for entry path before the inverted machined profile.</p>
+					<p><b>Invert Lift-off type</b> allows to select the type of 
+					exit path after the inverted machined profile:</p>
+					<ul>
+						<li><b>Linear</b> path is defined by an <b>Invert Lift-off 
+						angle</b> and <b>distance</b>.</li>
+						<li><b>Circular</b> path is defined by an <b>Invert Lift-off 
+						angle </b>and<b> radius</b>.</li>
+					</ul>
+					<h3>
+					<a name="ix-Profile Finish Turning parameter:Feeds and Speeds">
+					</a><a name="FandSProfFinish"></a>Feeds and Speeds for Profile 
+					Finish Turning</h3>
+					<p><a name="pgfId=1034563"></a><a name="marker=1080025"></a>
+					Speed unit can be set to: </p>
+					<ul>
+						<li>Angular: spindle speed in revolutions per minute</li>
+						<li>Linear: constant cutting speed in units per minute.</li>
+					</ul>
+					<p><a name="pgfId=1043029"></a>Once the unit is specified, you 
+					can give a Machining speed value. </p>
+					<p>You can also set a Maximum spindle speed value for 
+					the operation (by default, this value is the same as the 
+					Maximum spindle speed set on the Part Operation).</p>
+					<p align="left">The following feedrates can be set to either 
+					Angular units (length per revolution) or Linear units (length 
+					per minute)</p>
+					<ul>
+						<li><p align="left">Machining feedrate </p>
+						</li>
+						<li><p align="left">Chamfering feedrate for machining chamfers 
+						or corners </p>
+						</li>
+						<li><p align="left">Lift-off feedrate </p>
+						</li>
+						<li><p align="left">Lead-in feedrate</p>
+						</li>
+						<li>
+						<p align="left">Air cutting feedrate</p>
+						</li>
+					</ul>
+					<p align="left">In addition to these global feedrates, local 
+					feedrates can be applied to segments, curves and arcs of the 
+					part profile.</p>
+					<p align="left">Feedrates are also available 
+					for air cutting trajectories such as macro motions and path transitions.
+					</p>
+					<p align="left">Note that RAPID feedrate can be replaced by 
+					Air cutting feedrate in tool trajectories (except in macros) 
+					by selecting the check box in the <kbd>Feed and Speeds</kbd> tab page
+					<img border=" 0" src="b35doc/english/online/lmgug_c2/images/TabFeedG.gif" align="middle" width="36" height="22">.</p>
+		<p>
+		<img src="b35doc/english/online/lmgug_c2/images/AirCutting01.gif" width="363" height="76" class="style2"></p>
+		<p>You can select <kbd>Air Cutting feed-rate</kbd> as Linear (feed per 
+		minute) or Angular (feed per revolution). When you select it as Angular the 
+		unit is set to mm_turn, the unit is set to mm_mn for Linear.</p>
+		<p>The changes in unit of <kbd>Air cutting feed-rate</kbd>, are also reflected in APT 
+		file output. Calculated cycle time in Properties dialog box of MO also 
+		get changed. There are changes in total time and machining time on tool 
+		path replay dialog box.</p>
+					<h3><a name="CompenProfFinish"></a>Tool Compensation for Profile 
+					Finish Turning </h3>
+					<p>
+					<a name="ix-Profile Finish Turning parameter:Tool Compensation">
+					</a><a name="pgfId=1062586"></a>You can select a <b>tool compensation 
+					number</b> corresponding to the desired tool output point. Note 
+					that the usable compensation numbers are defined on the tool 
+					assembly linked to the machining operation.
+					<a name="pgfId=1062587"></a>If you do not select a tool compensation 
+					number, the output point corresponding to type P9 will be used 
+					by default. </p>
+					<p><a name="pgfId=1071215"></a><a name="marker=1108181"></a>
+					<a name="ix-Profile Finish Turning parameter:CUTCOM"></a><b>
+					CUTCOM (Cutter Compensation)</b>: None / On / Reverse. <br>
+					If this option is set to On or Reverse, the NC output will include 
+					CUTCOM instructions in approach and retract paths for cutter 
+					compensation.</p>
+					<ul>
+						<li>On: CUTCOM/RIGHT instruction generated if tool is to 
+						the right of the tool path and CUTCOM/LEFT if tool is to 
+						the left of the tool path.</li>
+						<li>Reverse: CUTCOM/RIGHT instruction generated if tool 
+						is to the left of the tool path and CUTCOM/LEFT if tool is 
+						to the right of the tool path.</li>
+					</ul>
+					<p><a name="pgfId=1071221"></a>See<a href="page11195.html"> 
+					Cutter Compensation with Finish Operations </a>for more information.
+					</p>
+					<h3><a name="pgfId=1053846"></a>Approach and Retract Macros 
+					for Profile Finish Turning</h3>
+					<p><a name="pgfId=1097496"></a>The following
+					<a name="marker=1097494"></a>Approach and
+					<a name="marker=1097495"></a>Retract macros are proposed: Direct, 
+					Axial-radial, Radial-axial, and Build by user.
+					<a name="pgfId=1097497"></a>The selected macro type (Approach 
+					or Retract) defines the tool motion before or after machining.
+					</p>
+					<p>Various feedrates are available for the approach and retract 
+					motions (RAPID, lead-in, lift-off, and so on). Local feedrates 
+					can be set to either Angular units (length per revolution) or 
+					Linear units (length per minute).</p>
+					<p>See
+					<a href="page11368.html" target="_blank">
+					Define Macros on a Turning Operation</a> for more information.</p>
+					</td>
+			</tr>
+	</table>
+
+	</body>
+
+</html>
+

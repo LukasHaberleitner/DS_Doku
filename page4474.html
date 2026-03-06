@@ -1,0 +1,190 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Calibrating a Tool Point</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body bgcolor="#FFFFFF" text="#000000" link="#3366FF" vlink="#0080FF" alink="#990000">
+
+ <h1 align="center">Calibrating a
+ <a name="DNBIgpOlpUIWkbHeader.DNBIgpOlpCalibToolPtCmd">Tool Point</a></h1>
+ <table border="0" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">Use this command to adjust the tool profile of a robot 
+     based on the measurement of multiple points. Select a robot and a tag group 
+     representing uploaded mount plate positions. You are then provided with 
+     tool calibration results.&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td valign="top">You must have a .CATProcess document open.&nbsp; It must 
+     contain:&nbsp;
+     <ul>
+       <li>a robot with a predefined tool profile</li>
+       <li>a tag group generated at the robot's mounting plate while moving the 
+       tool tip to a fixed point in space at different orientations of the 
+       robot's wrist.</li>
+       <li>an initial guess for the tool point parameters. The guess should be 
+       within a few centimeters of the actual tool parameters.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top">The positions and orientations of the tag points of the 
+     mount plate tag group are significant for this procedure. However, only the 
+     tool profile position [X, Y, Z] will be adjusted; the tool profile 
+     orientation will not be changed.<p>For more information on the algorithm 
+     used for tool information, see <a href="page4475.html">About Tool Point 
+     Calibration</a>.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">Click <a name="ix-command::Calibrate Toolpoint">
+       <kbd>Calibrate Tool Point</kbd></a> <img border="0" src="b35doc/english/online/icons_C2/images/I_DNBIgpOlpCalibToolPtCmdP2.gif" align="texttop" width="24" height="24">.</li>
+       <li>
+       <p class="task"><a name="Step 2">Select</a> the robot whose tool point 
+       you wish to adjust.</li>
+       <li>
+       <p class="task">Select the tag group that represents the simulation 
+       points used to compute the true TCP. (Typically, this tag group is 
+       uploaded.)</li>
+       <li>
+       <p class="task">Two dialog boxes appear:<br>
+&nbsp;</p>
+       <table border="0" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+         <tr>
+           <td>
+           <ul>
+             <li>the <a name="ix-parameters::default TCP">robot's Default TCP 
+             Values</a>:<br>
+             <br>
+             <img border="0" src="b35doc/english/online/cfyugolp_c2/images/dbDfltTCPVlNLS.gif" width="149" height="149"><br>
+&nbsp;</li>
+           </ul>
+           </td>
+         </tr>
+         <tr>
+           <td>
+           <ul>
+             <li>the<a name="ix-parameters::tool point calibration;tool point::calibration parameters"> 
+             Calibration Parameters</a>:<br>
+             <br>
+             <img border="0" src="b35doc/english/online/cfyugolp_c2/images/dbTlPtParmNLS.gif" width="295" height="173"></li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Alter the tool point parameters as desired: <br>
+&nbsp;</p>
+       <table border="0" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+         <tr>
+           <td>
+           <ul>
+             <li>Select the desired tool profile (the default value is Default)</li>
+           </ul>
+           </td>
+         </tr>
+         <tr>
+           <td>
+           <ul>
+             <li>Translate X, Y, Z (i.e., set as Free/Fixed): Specifies which 
+             components of the tool frame are to be adjusted. Unless the 
+             resource is known to be aligned with an axis or on a plane, the [X, 
+             Y, Z] parameters should all be set &quot;Free&quot; during calibration.</li>
+           </ul>
+           </td>
+         </tr>
+         <tr>
+           <td>
+           <ul>
+             <li>Estimated measurement noise: an estimate of the uncertainty of 
+             the positional measurements during the calibration experiment. The 
+             measurement noise need only be an order of magnitude estimate, for 
+             example 0.1 mm or 1.0 mm.</li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+       <p class="task">&nbsp;</li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd>.</li>
+       <li>
+       <p class="task">The <a name="ix-tool point::calibration results">tool 
+       point <kbd>Calibration Results</kbd></a> dialog box appears.<br>
+       <br>
+       <img border="0" src="b35doc/english/online/cfyugolp_c2/images/dbTlPtCalResNLS.gif" width="315" height="180"><br>
+&nbsp;</li>
+       <li>
+       <p class="task">The table below describes the values provided: </li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd> when completed.</li>
+     </ol>
+     <table border="1" cellpadding="3" cellspacing="3" width="100%" class="code" style="border-collapse: collapse" bordercolor="#111111">
+       <tr>
+         <td width="20%"><b>Value</b></td>
+         <td width="100%"><b>Explanation</b></td>
+       </tr>
+       <tr>
+         <td width="20%" class="code2">Maximum uncertainties</td>
+         <td width="100%" class="code2">This value represents the maximum of the 
+         uncertainties for the fit on the parameters to be identified. Large 
+         uncertainty values are an indication that the experimental observation 
+         strategy was flawed, even if the RMS fitting error was small.</td>
+       </tr>
+       <tr>
+         <td width="20%">Number of iterations to convergence</td>
+         <td width="100%">The number of iterations required by the numerical 
+         identification method.</td>
+       </tr>
+       <tr>
+         <td width="20%" class="code2">Number of fitting tag points</td>
+         <td width="100%" class="code2">The number of points used for the least 
+         squares fitting procedure.</td>
+       </tr>
+       <tr>
+         <td width="20%">Root mean square fitting error</td>
+         <td width="100%">The root mean square fitting error on the points after 
+         adjusting the tool profile to the best fit possible. </td>
+       </tr>
+     </table>
+     <p>
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32">The 
+     robot's tool profile is adjusted in an attempt to get the tool tip to move 
+     to the same point in space from each of the different wrist orientations. 
+     The algorithm works by minimizing the mean square position error between 
+     the tool tip positions from each of the mounting plate tag points while 
+     maintaining the constraints of the Translate X, Y, Z selections.</td>
+   </tr>
+ </table>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

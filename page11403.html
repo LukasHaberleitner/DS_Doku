@@ -1,0 +1,288 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+	<head>
+	<meta name="MonocodingType" content="0">
+	<meta name="MonocodingFlag" content="C2D2">
+	<meta http-equiv="Content-Language" content="en-us">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>User Representations</title>
+	<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+	<meta name="ProgId" content="FrontPage.Editor.Document">
+	<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+	</head>
+
+	<body>
+
+	<h1>User Representations</h1>
+	<p align="left">This section deals with the material removal simulation capability 
+	provided with the <kbd>Replay</kbd> <kbd>Tool Path </kbd>command.</p>
+	<table border="1" style="border-collapse: collapse; margin-top: 10; margin-bottom: 10">
+			<tr>
+					<td width="305" valign="top">
+					<b>For information about...</b></td>
+					<td width="354" valign="top">
+					<b>Please refer to...</b></td>
+			</tr>
+			<tr>
+					<td width="305" valign="top">
+					CATProduct user representation of tools</td>
+					<td width="354" valign="top">
+					<ul>
+						<li><p align="left"><a href="#UserRepMill">CATProduct User 
+						Representation of Milling Tools</a></p>
+						</li>
+						<li><p align="left"><a href="#UserRepLathe">CATProduct User 
+						Representation of Lathe Tools</a></p>
+						</li>
+						<li><p align="left"><a href="#UserRepClean">CATProduct User 
+						Representation of Cleaning Tools</a></p>
+						</li>
+					</ul>
+					</td>
+			</tr>
+			<tr>
+					<td width="305" valign="top">
+					<p align="left">CATPart tools for milling</p>
+					</td>
+					<td width="354" valign="top">
+					<a href="#CPartPhotoVideo">CATPart Tools for Photo or Video 
+					Mode</a></td>
+			</tr>
+			</table>
+	<h2><a name="UserRepMill"></a>CATProduct User Representation of Milling Tools</h2>
+	<p>You can attach a CATProduct to a tool or tool assembly by means of the
+	<kbd>NC Resources &gt; Add User Representation</kbd> contextual command in the 
+	Resource List.</p>
+	<p>Parts of this CATProduct are the components of the tool:</p>
+	<ul>
+		<li>tool holder, which is a non-cutting component</li>
+		<li>shank, which is a non-cutting component</li>
+		<li>cutter, which is a cutting component.</li>
+	</ul>
+	<p>The tool created from the CATProduct can be used in Video simulation. This 
+	tool can have multiple cutters, holders, and shanks.</p>
+	<p>Please note however that user representation may reduce the performance of 
+	the material removal simulation.</p>
+	<h4>Preliminary Settings under Tools &gt; Options</h4>
+	<p>To allow Parameter nodes to be displayed in the PPR tree, make the following 
+	settings in <kbd>Tools &gt;&nbsp; Options</kbd>:</p>
+	<ul>
+		<li><kbd>Parameters and Measure</kbd> category: select the <kbd>Parameter 
+		Tree View</kbd> <kbd>With value</kbd> and <kbd>With formula</kbd> checkboxes 
+		in the <kbd>Knowledge</kbd> tab.</li>
+		<li><kbd>Infrastructure &gt; Part Infrastructure</kbd> category: select the
+		<kbd>Parameters </kbd>&nbsp;check box in the <kbd>Display</kbd> tab<kbd>.</kbd></li>
+	</ul>
+	<h4>Tool Definition and Structure</h4>
+	<p>In the Sketcher workbench, select the YZ plane (the Y-axis should be the 
+	axis of revolution). Create a closed profile, adding successive elements in 
+	the anti-clockwise direction.</p>
+	<p>You can define tool geometry as a CATProduct file. CATParts instantiated 
+	in this CATProduct (there may be intermediate products between root product 
+	and parts at any level) are components of this tool. A given component may be 
+	instantiated several times in the product, at different locations.</p>
+	<h4>Naming Convention and Content of Parts </h4>
+	<p>Some components are <i>cutting</i> components and are used in simulation 
+	and in In-Process Model (IPM) generation. Some other components are <i>non-cutting</i> 
+	and are used in collision detection. A non-cutting component may be a shank 
+	or a holder. These sub-categories of non-cutting components must be differentiated 
+	as well. </p>
+	<p>To identify the type of a component, the corresponding CATPart must contain 
+	a Knowledgeware parameter (added using the Fx button in Part Design).<br>
+	Parameter name is <kbd>CuttingType</kbd> (type <kbd>string</kbd>).<br>
+	Possible values of this parameter are <kbd>CUTTER</kbd>, <kbd>SHANK</kbd> and
+	<kbd>HOLDER</kbd>.<br>
+	Any CATPart not containing this parameter is ignored in the simulation and in 
+	IPM generation.</p>
+	<p>Note that Photo simulation allows one shank or holder only.</p>
+	<p>In the following example:</p>
+	<ul>
+		<li>CUTCutterBig.1, CUTCutterBig.2, and CUTCutterSmall.1 are cutting components 
+		(note that one of them is instantiated twice).</li>
+		<li>NOCUTShank.1 is a non-cutting component.</li>
+		<li>HOLD.1 component is ignored in simulation and in IPM generation.</li>
+	</ul>
+	<p><img border="1" src="b35doc/english/online/mfgug_c2/images/simulation02.gif" width="276" height="320"></p>
+	<h4>Material Removal</h4>
+	<p>You can perform material removal with tool assemblies with multiple cutting 
+	parts.</p>
+	<p>For example:</p>
+	<p><img border="1" src="b35doc/english/online/mfgug_c2/images/simulation01.gif" width="380" height="280"></p>
+	<p>If you perform machining with the tool assembly as shown above, then all 
+	three cutting parts should be considered for material removal.</p>
+	<h2><a name="UserRepLathe"></a>CATProduct User Representation of Lathe Tools</h2>
+	<p>You can attach a CATProduct to a lathe tool by means of the <kbd>NC Resources 
+	&gt; Add User Representation</kbd> contextual command in the Resource List.</p>
+	<p>Parts of this CATProduct are the components of the lathe tool:</p>
+	<ul>
+		<li>insert, which is a cutting component</li>
+		<li>insert holder, which is a non-cutting component.</li>
+	</ul>
+	<p>The lathe tool user representation can be used in Video simulation. However, 
+	unlike the user representation used for milling tools, only one cutting and 
+	one non-cutting component can be used for lathe tools. Also, the insert holder 
+	does not participate in material removal (regardless of Rapid or Feed mode) 
+	and is used only for collision detection.</p>
+	<p>The sketch conventions outlined below for cutting and non-cutting components 
+	must be respected.</p>
+	<p>Please note however that user representation may reduce the performance of 
+	the material removal simulation.</p>
+	<h4>Preliminary Settings under Tools &gt; Options</h4>
+	<p>To allow Parameter nodes to be displayed in the PPR tree, make the following 
+	settings:</p>
+	<ul>
+		<li>Parameters and Measure: select the <kbd>Parameter Tree View</kbd> check 
+		box in the <kbd>Knowledge</kbd> tab.</li>
+		<li>Part Infrastructure: select the <kbd>Parameters</kbd> check box in the 
+		<kbd>Display</kbd> tab.</li>
+	</ul>
+	<p>To allow you to pick individual points during the material removal simulation, 
+	make the following setting:</p>
+	<ul>
+		<li>Sketcher: set Grid Graduations to 100. </li>
+	</ul>
+	<h4>Define the Cutting Component (the insert)</h4>
+	<p>Create a part (<kbd>New &gt; Part</kbd>) then select the F(x) Formula command.</p>
+	<p>In the <kbd>Formula</kbd> dialog box, set CuttingType to CUTTER.</p>
+	<p>
+	<img border="1" src="b35doc/english/online/mfgug_c2/images/VideoLatheUserRep1NLS.gif" width="640" height="417"></p>
+	<p>In the <kbd>Sketcher</kbd> workbench, select the YZ plane such that H direction should be opposite to 
+	Z axis and V direction should 
+	be along Y axis. Create a closed profile, adding 
+	successive elements in the anti-clockwise direction.</p>
+	<p>&nbsp;<a name="wnr13conelems"></a>Note that:</p>
+	<ul>
+		<li>the Sketch user representation of tools can include construction elements.</li>
+		<li>transformations (such as rotation or translation) must not be applied 
+		on this sketch as they will not be taken into account for simulation.</li>
+	</ul>
+	<p>
+	<img alt="" height="340" src="b35doc/english/online/mfgug_c2/images/VideoLatheUserRep2NLS.gif" width="312"></p>
+	<p>In the Part Design workbench, create a Pad from the sketch (2mm thick, for 
+	example). This will represent the lathe insert.</p>
+	<p>
+	<img border="1" src="b35doc/english/online/mfgug_c2/images/VideoLatheUserRep3NLS.gif" width="527" height="342"></p>
+	<p>Right-click the Part in the tree and select <kbd>Properties</kbd>. Rename 
+	the Part Number (Insert001, for example). </p>
+	<p>
+	<img border="1" src="b35doc/english/online/mfgug_c2/images/VideoLatheUserRep4NLS.gif" width="454" height="357"></p>
+	<p>Save the CATPart.</p>
+	<h4>Define the Non-Cutting Component (the insert holder)</h4>
+	<p>Define the non-cutting component using the same procedure.</p>
+	<p>Create a part (<kbd>New &gt; Part</kbd>) then select the F(x) Formula command. In the 
+	<kbd>Formula</kbd> 
+	dialog box, set CuttingType to HOLDER.</p>
+	<p>In the <kbd>Sketcher</kbd> workbench, select the YZ plane. Create a rectangle. </p>
+	<p>In the <kbd>Part Design </kbd>workbench, create a Pad from the sketch. This will represent 
+	the lathe insert holder.</p>
+	<p>Right-click the Part in the tree and select <kbd>Properties</kbd>. Rename 
+	the Part Number (Holder001, for example).</p>
+	<p>Save the CATPart.</p>
+	<h4>Create the CATProduct User Representation</h4>
+	<p>Create a new CATProduct instantiated with the Insert and Holder CATParts.</p>
+	<p>
+	<img border="1" src="b35doc/english/online/mfgug_c2/images/VideoLatheUserRep5NLS.gif" width="387" height="383"></p>
+	<p>You can then use the CATProduct as the Tool in the Video simulation.</p>
+	<p>
+	<img border="1" src="b35doc/english/online/mfgug_c2/images/VideoLatheUserRep6NLS.gif" width="440" height="437"></p>
+	<h2><a name="UserRepClean"></a>CATProduct User Representation of Cleaning Tools</h2>
+	<p>A Cleaning operation is a non-machining operation that uses a CATProduct 
+	user representation tool. It is defined by first creating a machining operation 
+	(depending upon the strategy required by the cleaning process) so as to generate 
+	the tool path for cleaning. Then by assigning a specific user representation 
+	tool a cleaning behavior can be simulated. Cleaning simulation can be performed 
+	in Video mode only.</p>
+	<p>The tool assigned to cleaning operations must be a CATProduct user representation 
+	and must conform to the following rules. The <kbd>CuttingType</kbd> knowledge 
+	attribute needs to be defined with a value equal to <kbd>CLEANING </kbd>for 
+	defining the cleaning component of the tool (which may be a brush, for example). 
+	Possible values for the non-cleaning components are <kbd>SHANK</kbd> and
+	<kbd>HOLDER</kbd>.</p>
+	<p>
+	<img border="1" src="b35doc/english/online/mfgug_c2/images/UserRepCleaning02NLS.gif" width="287" height="432"><br>
+	<img border="1" src="b35doc/english/online/mfgug_c2/images/UserRepCleaning03NLS.gif" width="288" height="435">&nbsp;
+	<img border="1" src="b35doc/english/online/mfgug_c2/images/UserRepCleaning01NLS.gif" width="241" height="425"></p>
+	<p>In operations where cleaning tools as described above are used, the Video 
+	simulation has the behavior as illustrated below:</p>
+	<ul>
+		<li>The cleaning tool will not remove any material.</li>
+		<li>Collisions will be detected (if collisions detection is set ON) between 
+		the holder and the other components in the system, as is the normal collision 
+		detection behavior.</li>
+		<li>In rapid mode, collision detection will be performed between the cleaning 
+		element and the rest of the components in the system, including the stock.</li>
+		<li>No collision will be reported during the cleaning action, provided it 
+		is in feed mode between the work-piece and the cleaning element of the tool.</li>
+	</ul>
+	<p>Note that Cleaning tools are not supported for turning operations or in Photo 
+	mode.</p>
+<h2 align="left"><a name="CPartPhotoVideo"></a>CATPart Tools for Photo or Video 
+	Mode and Collision Checking.</h2>
+	<p align="left">Please note that the CATProduct user representation of tools 
+	described above is the recommended method.</p>
+	<p>You can attach a CATPart to a tool or tool assembly by means of the <kbd>
+	NC Resources &gt; Add User Representation</kbd> contextual command in the Resource 
+	List.</p>
+	<p><a name="WNudprofile"></a>You can add a sketch called CUT to define the cutting 
+	part of the tool and, optionally, a sketch called NOCUT to define the non-cutting 
+	part of the tool. These profiles will be used in the material removal simulation 
+	in Photo or Video mode.<br>
+	Note that the sketches must be called CUT and NOCUT: no other names are possible.</p>
+	<p>Please note however that user representation may reduce the performance of 
+	the material removal simulation .</p>
+	<p align="left">
+	<img border="1" src="b35doc/english/online/mfgug_c2/images/UserToolNLS.gif" width="625" height="466"></p>
+	<p>Here is a step-by step procedure for defining the CUT and NOCUT profiles.</p>
+	<p>Define a closed profile representing the cutting part of the tool: </p>
+	<ul>
+		<li>In the Sketcher workbench, create a sketch in the YZ plane.</li>
+		<li>Click the <kbd>Axis</kbd> icon then create an axis from (0,0) along 
+		the V-axis. <br>
+		This is useful if you want to use the profile to generate a 3D representation 
+		of the cutting part of the tool.</li>
+		<li>Create the profile, starting from a position on the V-axis. Create the 
+		profile using line segments and circular arcs in an anti-clockwise direction. 
+		H coordinates must be positive. Close the profile using a line segment.
+		</li>
+		<li>Sketch profiles should describe a set of cylinders, spheres, conics 
+		or torus along the central axis of the tool. Concave torus profiles are 
+		supported.<br>Particular cases: <ul><li>Tools with non cutting diameter are filled and 
+		transformed into a cylinder.</li><li>For profiles with a concave cutter: the cutter concavity is not taken into account during collision checking.  False collisions might then be detected between the machined part and the concave area of the tool.</li></ul> <br>All other profiles are not supported, especially shaped defined along a 
+		local axis.</li>
+	</ul>
+	<blockquote>
+			<p><b>Examples of correct profiles:</b></p>
+			<p>&nbsp;<img border="1" src="b35doc/english/online/mfgug_c2/images/CUT01.gif" width="250" height="239">
+			<img border="1" src="b35doc/english/online/mfgug_c2/images/CUT03.gif" width="250" height="239"><img border="1" src="b35doc/english/online/mfgug_c2/images/CUT02.gif" width="250" height="239">
+			<img border="1" src="b35doc/english/online/mfgug_c2/images/CUT04.gif" width="250" height="239"></p>
+			<p><strong>Example of incorrect profile:</strong></p>
+			<p><img border="1" src="b35doc/english/online/mfgug_c2/images/CUT05.gif" width="155" height="200"></p>
+	</blockquote>
+	<ul>
+		<li>Using the <kbd>Properties</kbd> contextual command, name this profile 
+		CUT in the <kbd>Feature Properties </kbd>tab of the dialog box that appears.</li>
+	</ul>
+	<blockquote>
+			<p align="left">&nbsp;<img border="1" src="b35doc/english/online/mfgug_c2/images/UserTool01NLS.gif" width="448" height="189"></p>
+	</blockquote>
+	<p>If needed, define a profile representing the non-cutting part of the tool:
+	</p>
+	<ul>
+		<li>In the <kbd>Sketcher</kbd> workbench, create a sketch in the YZ plane.</li>
+		<li>Click the <kbd>Axis</kbd> icon then create an axis from (0,0) along 
+		the V-axis. <br>
+		This is useful if you want to use the profile to generate a 3D representation 
+		of the non-cutting part of the tool.</li>
+		<li>Create the profile, starting from a position on the V-axis. Create the 
+		profile using line segments and circular arcs in an anti-clockwise direction. 
+		H coordinates must be positive. Close the profile using a line segment.
+		</li>
+		<li>Using the <kbd>Properties</kbd> contextual command, name this profile 
+		NOCUT in the <kbd>Feature Properties</kbd> tab of the displayed dialog box.</li>
+	</ul>
+	
+	</body>
+
+</html>
+

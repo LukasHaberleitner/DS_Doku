@@ -1,0 +1,340 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2L2">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Documenting Processes</title>
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta content="none, default" name="Microsoft Border">
+</head>
+
+ <body>
+
+ <h1>Documenting Processes</h1>
+ <table border="0" width="100%" cellspacing="3" cellpadding="3">
+   <tr>
+     <td width="5%" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td width="95%" valign="top">A CATScript file named <i><b>DocumentNewGeneratorHTML.CATScript</b></i> is located in 
+     the <i>code/command</i> directory of the DELMIA installation. This script can be executed using the command 
+     &quot;Generate Documentation&quot; in the DPM Tools toolbar in the DPM Planner Workbench.<p>An analysis of this script is 
+     provided below for educational purposes. The interfaces that are used and their purpose are described.&nbsp;</p>
+     <p>In the following script, interfaces of interest are highlighted in <b>bold green</b> text, and additional 
+     descriptive remarks (which are <b>not</b> part of the program) are highlighted in
+     <span style="background-color: #E0E0E0">red text with a gray background</span>.<br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td width="5%" valign="top"></td>
+     <td width="95%" valign="top">
+     <pre>'********************************************************************
+'********************************************************************
+'****  VBSCRIPT MACRO FOR THE GENERATION OF HTML DOCUMENTATION   **** 
+'****              Steve Morissette 11/01/99                     ****
+'********************************************************************
+'********************************************************************
+' 11/01/99 : Modified to make URL references to attributes named URL</pre>
+     <pre><span style="background-color: #E0E0E0">The lines above represent a series of comment lines. All comment 
+lines must begin with the single-quote (') character.</span></pre>
+     <pre>Language=&quot;VBSCRIPT&quot;  <span style="background-color: #E0E0E0">This is mandatory.</span></pre>
+     <pre>Dim OutRef, OutPath, OutIndex  <span style="background-color: #E0E0E0">This declares global variables to be 
+used later.</span></pre>
+     <pre>Sub CATMain() <span style="background-color: #E0E0E0">This is the script that is going to be called by the 
+documentation function.</span>
+   CATDocument &quot;Process&quot;, &quot;Test&quot;, &quot;c:&#092;temp&#092;&quot; <span style="background-color: #CCCCCC">
+</span>   <span style="background-color: #E0E0E0">The Subroutine CATDocument will be called with these default </span><span style="background-color: #CCCCCC">
+</span>   <span style="background-color: #E0E0E0">values </span><span style="background-color: #E0E0E0">if no other values are given.</span>
+End Sub</pre>
+     <pre>'--------------------------------------------------------------------
+' Main Procedure  <span style="background-color: #E0E0E0">This procedure will set up starting variables for  
+this particular documentation method (this is related to the way the 
+documentation method is called, and is not pertinent in knowing how  
+to use Process Data interfaces).</span>
+'--------------------------------------------------------------------
+Sub CATDocument( RootActivityName, HtmlFilesName, HtmlFilesPath)
+CATIA.SystemService.Print &quot;RootActivityName : &quot; &amp; RootActivityName
+CATIA.SystemService.Print &quot;HtmlFilesName : &quot; &amp; HtmlFilesName
+CATIA.SystemService.Print &quot;HtmlFilesPath : &quot; &amp; HtmlFilesPath
+  Dim RootActivity
+  Dim RootActName
+  RootActName = RootActivityName
+  OutPath = HtmlFilesPath
+  OutRef = HtmlFilesName
+  OutIndex = OutRef &amp; &quot;_index.html&quot;
+  Set RootActivity = <b>Catia.ActiveDocument.GetItem(RootActName)</b> 
+<span style="background-color: #E0E0E0">CATIA will find the object called RootActName in the current 
+ActiveDocument and set RootActivity at this value.</span>
+  CreateIndex RootActivity, OutPath, OutRef, OutIndex  <span style="background-color: #E0E0E0">
+Calling the CreateIndex method.</span>
+End Sub
+</pre>
+     <pre>'---------------------------------------------------------------
+' Create the index file
+'---------------------------------------------------------------'
+Sub CreateIndex(RootActivity, OutPath, OutRef, OutIndex)
+  Dim indexfs
+  Dim indexf</pre>
+     <pre>  Set indexfs = CreateObject(&quot;Scripting.FileSystemObject&quot;)
+  Set indexf = Indexfs.OpenTextFile(OutPath &amp; OutIndex, 2, True)
+<span style="background-color: #E0E0E0">This created an output file for the data to be written, and 
+opened the file to receive the data All the data will be    
+written using the indexf.WriteLine statement.
+</span>
+<span style="background-color: #E0E0E0">The few next statements are related to the html header, since in 
+this example, we are trying to create a set of html pages.</span></pre>
+     <pre>  'Write index file header
+  indexf.WriteLine &quot;&lt;!doctype html public &quot;&quot;-//w3c//dtd html 4.0 transitional//en&quot;&quot;&gt;&quot;
+  indexf.WriteLine &quot;&lt;html&gt;&quot;
+  indexf.WriteLine &quot;&lt;head&gt;&quot;
+  indexf.WriteLine &quot;   &lt;meta http-equiv=&quot;&quot;Content-Type&quot;&quot; content=&quot;&quot;text/html; charset=iso-8859-1&quot;&quot;&gt;&quot;
+  indexf.WriteLine &quot;   &lt;meta name=&quot;&quot;GENERATOR&quot;&quot; content=&quot;&quot;IPD v2&quot;&quot;&gt;&quot;
+  indexf.WriteLine &quot;   &lt;meta name=&quot;&quot;Author&quot;&quot; content=&quot;&quot;IPD v2&quot;&quot;&gt;&quot;
+  indexf.WriteLine &quot;   &lt;title&gt;Activities Index for Process : &quot; &amp; <b>RootActivity.Name &amp;</b> &quot;&lt;/title&gt;&quot;
+<span style="background-color: #E0E0E0">RootActivity is an object of type Activity, for which the Name attribute will return a label.</span></pre>
+     <pre>  indexf.WriteLine &quot;&lt;/head&gt;&quot;
+  indexf.WriteLine &quot;&lt;body background=&quot;&quot;back.gif&quot;&quot; bgcolor=#EEEEFF&gt;&quot;</pre>
+     <pre>  indexf.WriteLine &quot;&lt;CENTER&gt;&quot;
+  indexf.WriteLine &quot;&lt;P&gt;&lt;h2&gt;Activities Index for Process : &lt;I&gt;&quot; &amp; RootActivity.Name &amp; &quot;&lt;/I&gt;&lt;/h2&gt;&quot;
+  indexf.WriteLine &quot;&lt;I&gt;Generation Date : &quot; &amp; Date &amp; &quot; at &quot; &amp; Time &amp; &quot;&lt;/I&gt;&lt;/P&gt;&quot;</pre>
+     <pre>  indexf.WriteLine &quot;&lt;/CENTER&gt;&quot;
+  indexf.WriteLine &quot;&lt;P&gt;&lt;TABLE BORDER COLS=1 WIDTH=&quot;&quot;100%&quot;&quot; &gt;&quot;
+  indexf.WriteLine &quot;&lt;TR ALIGN=CENTER BGCOLOR=#CCCCCC&gt;&lt;TD&gt;&lt;B&gt;Activities Hierarchy&lt;/B&gt;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&quot;
+  indexf.WriteLine &quot;&lt;TABLE BORDER COLS=5 WIDTH=&quot;&quot;100%&quot;&quot; &gt;&quot;
+  indexf.WriteLine &quot;&lt;TR ALIGN=CENTER BGCOLOR=#EEEEEE&gt;&quot;
+  indexf.WriteLine &quot;&lt;TD WIDTH=&quot;&quot;30%&quot;&quot;&gt;&lt;B&gt;Name&lt;/B&gt;&lt;/TD&gt;&quot;
+  indexf.WriteLine &quot;&lt;TD WIDTH=&quot;&quot;40%&quot;&quot;&gt;&lt;B&gt;Description&lt;/B&gt;&lt;/TD&gt;&quot;
+  indexf.WriteLine &quot;&lt;TD WIDTH=&quot;&quot;10%&quot;&quot;&gt;&lt;B&gt;Cycle Time&lt;/B&gt;&lt;/TD&gt;&quot;
+  indexf.WriteLine &quot;&lt;TD WIDTH=&quot;&quot;10%&quot;&quot;&gt;&lt;B&gt;Begin Date&lt;/B&gt;&lt;/TD&gt;&quot;
+  indexf.WriteLine &quot;&lt;TD WIDTH=&quot;&quot;10%&quot;&quot;&gt;&lt;B&gt;End Date&lt;/B&gt;&lt;/TD&gt;&quot;
+  indexf.WriteLine &quot;&lt;/TR&gt;&quot;</pre>
+     <pre>  'Write reference
+  WriteIndexRef RootActivity, indexf, OutPath, OutRef, 0
+  indexf.WriteLine &quot;&lt;/TD&gt;&lt;/TR&gt;&lt;/TABLE&gt;&lt;/P&gt;&quot;</pre>
+     <pre><span style="background-color: #E0E0E0">The main page of the documentation has now been written and another subroutine, 
+WriteIndexRef, is now being called to extract all the details of the operations.</span></pre>
+     <pre>End Sub</pre>
+     <pre>'---------------------------------------------------------------
+' Write the index reference for an activity
+'---------------------------------------------------------------
+Function WriteIndexRef(Activity, File, OutPath, OutRef, Level)
+  Dim childs
+  Dim child
+  Dim quantity
+  Dim I</pre>
+     <pre>   If (<b>Activity.IsSubTypeOf</b>(&quot;PhysicalActivity&quot;)) Then
+<span style="background-color: #E0E0E0">This method of the Activity Object allows to test for the type of 
+an Activity object.</span></pre>
+     <pre>    'Write reference for the activity itself
+    File.WriteLine &quot;&lt;TR VALIGN=TOP BGCOLOR=#FFFFFF&gt;&lt;TD&gt;&lt;A HREF = &quot; &amp; OutRef &amp; &quot;_&quot; 
+        &amp; <b>Activity.Name</b> &amp; &quot;.html&gt;&quot;
+	'Indent the name according to the level of the activity
+	Dim J
+	For J = 0 To Level
+	  File.Write &quot;--&quot;
+	Next
+	File.WriteLine Activity.Name &amp; &quot;&lt;/A&gt;&lt;/TD&gt;&quot;
+	File.WriteLine &quot;&lt;TD&gt;&quot; &amp; <b>Activity.Description</b> &amp; &quot;&lt;/TD&gt;&quot;
+	File.WriteLine &quot;&lt;TD&gt;&quot; &amp; <b>Activity.CycleTime</b> &amp; &quot;&lt;/TD&gt;&quot;
+	File.WriteLine &quot;&lt;TD&gt;&quot; &amp; <b>Activity.BeginningDate</b> &amp; &quot;&lt;/TD&gt;&quot;
+    File.WriteLine &quot;&lt;TD&gt;&quot; &amp; <b>Activity.EndDate</b> &amp; &quot;&lt;/TD&gt;&lt;/TR&gt;&quot;</pre>
+     <pre><span style="background-color: #E0E0E0">All of the above methods are also available using the Activity Object. 
+They will return the values of the Description, the CycleTime, and the 
+Beginning and End Dates. Please note that Time and Dates are updated   
+once the Gantt Chart is opened in DPM.</span></pre>
+     <pre>    'Write the activity detail file
+    WriteActivityFile Activity, OutPath, OutRef</pre>
+     <pre>    'Write the list
+    Set childs = <b>Activity.ChildrenActivities</b>
+<span style="background-color: #E0E0E0">This will get a list of children activities of the selected Activity.</span>
+    quantity = <b>childs.Count</b> <span style="background-color: #E0E0E0">This will give the number of elements in 
+that returned list.</span></pre>
+     <pre>    if quantity &lt;= 0 then
+      Exit Function
+    End if
+    'Recursively write sons
+    For I=1 To quantity
+      Set child = <b>childs.Item(I)</b>  <span style="background-color: #E0E0E0">This will extract all elements 
+of the child's list.</span><span style="background-color: #E0E0E0"> </span><span style="background-color: #E0E0E0">Each extracted element is also an Activity, 
+and therefore, we can recursively </span><span style="background-color: #E0E0E0">call </span><span style="background-color: #E0E0E0">the method to extract the 
+Activity data for this son element.</span>
+      WriteIndexRef child,File,OutPath,OutRef,Level+1
+    Next
+  End if</pre>
+     <pre>End Function
+</pre>
+     <pre><span style="background-color: #E0E0E0">These are other subroutines that may be called with an Activity 
+and an output File.</span>
+'---------------------------------------------------------------
+' Write an activity item list <span style="background-color: #E0E0E0">This will return the list of 
+items attached to an activity (that is the list of items   
+products that an Activity will be working on).</span>
+'---------------------------------------------------------------
+Sub WriteItems(Activity, File)
+  Dim items,item,quantity
+  Set items = <b>Activity.Items</b> 
+  quantity = <b>items.Count</b>
+  if quantity &lt;= 0 then
+    File.WriteLine &quot;None&quot;
+    exit sub
+  end if
+  File.WriteLine &quot;&lt;UL&gt;&quot;
+  For I=1 To quantity
+    Set item = items.Item(I)
+	File.WriteLine &quot;&lt;LI&gt;&quot; &amp; item.Name &amp; &quot;&lt;/LI&gt;&quot;  <span style="background-color: #E0E0E0">Each of the</span> 
+        <span style="background-color: #E0E0E0">items, as any Object, has a name that can be extracted. </span>
+  Next
+  File.WriteLine &quot;&lt;/UL&gt;&quot;
+End Sub</pre>
+     <pre>'---------------------------------------------------------------
+' Write an activity resource list  <span style="background-color: #E0E0E0">This will return the list    
+of resources attached to the Activity so that it may be properly
+performed.</span>
+'---------------------------------------------------------------
+Sub WriteResources(Activity, File)
+  Dim resources,item,quantity
+  Set resources = <b>Activity.Resources</b>
+  quantity = <b>resources.Count</b>
+  if quantity &lt;= 0 then
+    File.WriteLine &quot;None&quot;
+    exit sub
+  end if
+  File.WriteLine &quot;&lt;UL&gt;&quot;
+  For I=1 To quantity
+    Set resource = <b>resources.Item(I)</b>
+	File.WriteLine &quot;&lt;LI&gt;&quot; &amp; <b>resource.Name</b> &amp; &quot;&lt;/LI&gt;&quot;
+  Next
+  File.WriteLine &quot;&lt;/UL&gt;&quot;
+End Sub</pre>
+     <pre>'---------------------------------------------------------------
+' Write the previous list <span style="background-color: #E0E0E0">This method will allow you to extract
+the list of previous Activities (in Sequence) for an Activity, 
+inside an output File</span>
+'---------------------------------------------------------------
+Sub WritePrevious(Activity, File)
+  Dim activities
+  Dim one
+  Dim quantity
+  Dim I</pre>
+     <pre>  Set activities = <b>Activity.PreviousCFActivities</b>
+  quantity = <b>activities.Count</b>
+  if quantity &lt;= 0 then
+    exit sub
+  end if
+   File.WriteLine &quot;&lt;UL&gt;&quot;
+  for I = 1 to quantity
+    Set one = activities.Item(I)
+    If (one.IsSubTypeOf(&quot;PhysicalActivity&quot;)) Then
+      File.WriteLine &quot;&lt;LI&gt;&lt;A HREF = &quot;&quot;&quot; &amp; OutRef &amp; &quot;_&quot; &amp; one.Name &amp; &quot;.html&quot; &amp; &quot;&quot;&quot;&gt;&quot; 
+        &amp; one.Name &amp; &quot;&lt;/A&gt;&lt;/LI&gt;&quot;
+	End If
+	next
+  File.WriteLine &quot;&lt;/UL&gt;&quot;
+End Sub</pre>
+     <pre>'---------------------------------------------------------------
+' Write the next list <span style="background-color: #E0E0E0">This method will allow you to extract the 
+list of next Activities (in Sequence) for an Activity, inside   
+an output File </span>
+'---------------------------------------------------------------
+Sub WriteNext(Activity, File)
+  Dim activities
+  Dim one
+  Dim quantity
+  Dim I</pre>
+     <pre>  Set activities = <b>Activity.NextCFActivities</b>
+  quantity = <b>activities.Count</b>
+  if quantity &lt;= 0 then
+    exit sub
+  end if</pre>
+     <pre>  File.WriteLine &quot;&lt;UL&gt;&quot;
+  for I = 1 to quantity
+    Set one = activities.Item(I)
+    If (one.IsSubTypeOf(&quot;PhysicalActivity&quot;)) Then
+	  File.WriteLine &quot;&lt;LI&gt;&lt;A HREF = &quot;&quot;&quot; &amp; OutRef &amp; &quot;_&quot; &amp; one.Name &amp; &quot;.html&quot; &amp; &quot;&quot;&quot;&gt;&quot; 
+            &amp; one.Name &amp; &quot;&lt;/A&gt;&lt;/LI&gt;&quot;
+	</pre>
+     <pre>  next
+  File.WriteLine &quot;&lt;/UL&gt;&quot;
+End Sub</pre>
+     <pre>'---------------------------------------------------------------
+' Write an activity file specific data block <span style="background-color: #E0E0E0">This method will 
+allow you to extract the list of specific attributes attached 
+to an Activity, inside an output File </span>
+'---------------------------------------------------------------
+Sub WriteSpecific(Activity, File)
+  If (Activity.IsSubTypeOf(&quot;PhysicalActivity&quot;)) Then <span style="background-color: #E0E0E0">This If 
+statement is necessary since only the Physical Activity have 
+the capability to have additional specific user attributes.  
+</span>    Nbr=<b>Activity.AttrCount</b> <span style="background-color: #E0E0E0">This will give the number of extra
+ attributes on the Activity</span>
+    If (Nbr &gt; 0) Then
+      For I=1 To Nbr
+        name = <b>Activity.AttrName(I)</b> <span style="background-color: #E0E0E0">This will give the name 
+of the attribute of rank I in the list of extra attributes. </span>
+        If (name = &quot;URL&quot;) Then
+            File.WriteLine &quot;&lt;B&gt;&quot; &amp; name &amp; &quot; : &lt;/B&gt;&quot;
+            AttrVal = <b>Activity.AttrValue(I)</b> <span style="background-color: #E0E0E0">This will give  
+the value of the attribute of rank I in the list of extra   
+attributes.</span>
+            File.WriteLine &quot;&lt;A HREF=file:/&quot; &amp; AttrVal &amp; &quot;&gt;&quot; &amp; AttrVal &amp; &quot;&lt;/A&gt;&lt;BR&gt;&quot;
+        Else
+            File.WriteLine &quot;&lt;B&gt;&quot; &amp; name &amp; &quot; : &lt;/B&gt;&quot;
+            AttrVal = <b>Activity.AttrValue(I)</b>
+            File.WriteLine AttrVal &amp; &quot;&lt;BR&gt;&quot;
+        End If
+      Next
+	Else
+	  File.WriteLine &quot;None&quot;
+    End If
+  End If
+End Sub
+ </pre>
+     </td>
+   </tr>
+   <tr>
+     <td width="5%" valign="top">
+     <h2><img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></h2>
+     </td>
+     <td width="95%" valign="top">
+     <h2>Notes</h2>
+     </td>
+   </tr>
+   <tr>
+     <td width="5%" valign="top"></td>
+     <td width="95%" valign="top">
+     <ul>
+       <li>Most of the methods that are used come from the Activity Object.</li>
+       <li>
+       <p style="margin-bottom: 1em">Some methods that were not discussed in this example are:
+       <ul>
+         <li><b>Activity.Resources</b>, which returns the list of resources on an Activity, and on which the Resources 
+         Object can then be used.</li>
+         <li><b>Activity.Items</b>, which returns the list of Items transformed by an Activity, and on which the Items 
+         Object can then be used.</li>
+         <li><b>Activity.Create(&quot;PhysicalActivity&quot;)</b>, which creates a son Activity to an existing Activity. The type 
+         of the Activity to be created will be specified in the method (this type must exist, and the relevant Process 
+         Library loaded in DELMIA DPM Planner).&nbsp;</li>
+         <li><b>L1.CreateLink L2</b>, which creates a sequence link between two activities objects L1 and L2.</li>
+         <li><b>ChildrenActivities.Remove(&quot;xxx&quot;)</b>, which removes Children Activity of name xxx from a list of 
+         Activities ChildrenActivities.</li>
+         <li>&nbsp;<b>L1. RemoveLink L2</b>, which removes Sequence Link between Activities L1 and L2.<br>
+&nbsp;</li>
+       </ul>
+       </li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <p align="center"><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

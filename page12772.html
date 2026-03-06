@@ -1,0 +1,133 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>Creating a Curvature Mapping</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="docCompliance" content="v 0.9; Tue Jul 12 09:35:25 2005">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1><a name="ix-commandes:Curvature Mapping"></a>
+Creating a Curvature Mapping<a name="CATCloudQsrHeaderCmd.CATQsrCurvMapHdr"></a></h1>
+<table Border="0" CELLSPACING="0" valign="top" cellpadding="0">
+  <tr valign="top" BORDER="0">
+    <td>
+    <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32">
+    </td>
+    <td rowspan="1">This task will show you how to create an editable and 
+    associative curvature mapping on any mesh, e.g. to help you select iso-curvature 
+    points.<p>There are five 
+    curvatures:</p>
+    <ul>
+      <li>Maximum</li>
+      <li>Minimum</li>
+      <li>Mean</li>
+      <li>Gaussian</li>
+      <li>Absolute.</li>
+    </ul>
+    <p>The geometric construction of the <kbd>maximum</kbd> and <kbd>minimum</kbd> 
+    curvatures is the following: <br>
+    let be a plane containing the normal to the surface in a given point. <br>
+    This plane cuts the surface along a curve that has a given curvature in this 
+    point. <br>
+    If this plane rotates around the normal, the curvatures of the curves 
+    intersecting <br>
+    the surface will vary between two utmost values. <br>
+    These two values are the maximum (KM) and the minimum (Km) curvatures.</p>
+    <p>The <kbd>mean</kbd> curvature is equal to (KM+Km)/2. <br>
+    The utmost values appear where the surface is the most warped. <br>
+    The mean curvature is largely used to detect irregularities on the surface.
+    <br>
+    A minimal surface is characterized by a null mean curvature.</p>
+    <p>The <kbd>gaussian</kbd> curvature is equal to KM.Km. <br>
+    It describes the local shape of a surface in one point:</p>
+    <ul>
+      <li>If it is positive, the point is elliptic, <br>
+      i.e. the surface has locally the shape of an ellipsoid around that point,</li>
+      <li>If it is negative, the surface is hyperbolic in this points, <br>
+      i.e. the local shape is a horse saddle,</li>
+      <li>It it is null, the surface is parabolic in this point, <br>
+      i.e. one of the maximum or minimum curvatures is null in this point. <br>
+      The cone and the cylinder are two surfaces where all points are parabolic.</li>
+    </ul>
+    <p>The <kbd>absolute</kbd> curvature is equal to |KM|+|Km|. <br>
+    It is used to detect the surface areas where the surface is locally almost 
+    flat <br>
+    (the absolute curvature is almost null).</p></td>
+  </tr>
+  <tr>
+    <td>
+    <img src="b35doc/english/online/icons_C2/common/aprereq.gif" title="aprereq.gif (1231 bytes)" width="32" height="32"></td>
+    <td rowspan="1">Open the <a href="b35doc/english/online/qsrug_c2/samples/SurfNetwork.CATPart">SurfNetwork.CATPart</a> from the samples directory. 
+    Send all elements but Polygon to the NoShow.</td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td>
+    <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td>
+    <ol class="task">
+      <li>
+      <p class="task">Click <kbd>Curvature Mapping 
+      <img border="0" src="b35doc/english/online/icons_C2/images/I_CldCurvatureP2.gif" width="24" height="24"></kbd>. <br>
+      The <kbd>Curvature Mapping</kbd> dialog box is displayed.<br>
+      <img border="0" src="b35doc/english/online/qsrug_c2/images/dbCurvatureMapping01NLS.gif" width="238" height="168"></li>
+      <li>
+      <p class="task">Select <kbd>Polygon</kbd> as the <kbd>Element</kbd> to 
+      process.<br>
+      The mesh may not be non-manifold and must contain one single cell.<br>
+      Click
+          <img border="0" src="b35doc/english/online/icons_C2/images/I_SwapHideShowP2.gif" width="24" height="27"> 
+                  to hide the input element.</li>
+      <li>
+      <p class="task">An  <kbd><a name="ix-segmentation by curvature criterion:influent radius">Influent Radius</a></kbd>
+      is proposed. <br>
+      By default, it is 1/100 of the diagonal of the bounding box. In this case 
+      2.956mm:<br>
+      <img border="0" src="b35doc/english/online/qsrug_c2/images/CurvatureMapping02.gif" width="334" height="229"><p class="task" align="left">For each vertex, this radius defines a sphere centered on this vertex. <br>
+      All vertices and edges inside this sphere influence the resulting 
+      curvature value at this vertex. <br>
+      If the <kbd>Influent Radius</kbd> is small, the 
+      result will be noisy, 
+      <br>
+      <img border="0" src="b35doc/english/online/qsrug_c2/images/CurvatureMapping01.gif" width="346" height="238"><br>
+      if it is large, the curvature will be smoothed.<br>
+      <img border="0" src="b35doc/english/online/qsrug_c2/images/CurvatureMapping03.gif" width="339" height="238"></p></li>
+      <li>
+      <p class="task" align="left">Select the type of curvature to apply from 
+      the list:<br>
+      <img border="1" src="b35doc/english/online/qsrug_c2/images/dbCurvatureMapping02NLS.gif" width="214" height="91"></p>
+      </li>
+      <li>
+      <p class="task" align="left">Click Apply. The curvature mapping is 
+      displayed:<br>
+      <img border="0" src="b35doc/english/online/qsrug_c2/images/CurvatureMapping02.gif" width="334" height="229"></p>
+      </li>
+      <li>
+      <p class="task" align="left">Click <kbd>OK</kbd> to validate and exit the dialog box. 
+      A feature <kbd>Curvature Mapping.x </kbd>is created in the specification tree. 
+      If necessary, double-click its name to edit it.</p>
+      </li>
+    </ol>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td colspan="2">
+    <p align="center">
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+    </td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

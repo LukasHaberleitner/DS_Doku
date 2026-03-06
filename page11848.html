@@ -1,0 +1,485 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>Replacing a Component</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1>Replacing a Component</h1>
+<table border="0" style="border-collapse: collapse" cellpadding="0" cellspacing="0">
+  <tr>
+    <td valign="top">
+    &nbsp;</td>
+    <td valign="top" rowspan="2">This chapter explains how the Mold Tooling Replace command 
+    works.<p>The information below refers to simple components (their reference is a 
+    CATPart, not a CATProduct). <br>
+    However the principles are the same for assembly components.<p>You should be familiar with the <a href="page11842.html">Tooling Concepts</a>.</p>
+    <p>
+    The Mold Tooling&nbsp;Replace Reference command deals with:</p>
+    <ul>
+      <li>A Tooling 
+    Component already inserted in the Die, which you select in 
+    session. <br>
+            It is the <kbd>To Be Replaced Component</kbd>, in short <kbd>TBRC</kbd>. </li>
+      <li>A reference which will take the place of the 
+    reference of the <kbd>&nbsp;TBRC</kbd>.<br>
+      You select this reference as a file, in a catalog .... <br>
+      It is the <kbd>Replacing Component</kbd>, in short <kbd>RepComp.</kbd> </li>
+    </ul>
+    <h2>Rules you must comply with</h2>
+    <p>Mandatory: you must save the <kbd>TBRC</kbd> on files before applying the Tooling 
+    Replace command. </p>
+    <p>Recommended: </p>
+    <ul>
+      <li>Do not select the reference of the <kbd>TBRC </kbd>as the <kbd>RepComp</kbd>. 
+      </li>
+      <li>Do not 
+    call the Tooling Replace command and then click OK without selecting 
+      anything (a new 
+    reference will be created). </li>
+      <li>If the <kbd>RepComp</kbd> is instantiated in an Assembly 
+    and not yet saved, it is the value on File which will be used for the 
+    replace, not the instantiated value.</li>
+    </ul>
+    <h2>How does Replace work ?</h2>
+    <p>It is important to understand that the <kbd>&nbsp;TBRC</kbd> and 
+    the <kbd>RepComp</kbd> do not play the same role:</p>
+    <ul>
+      <li><kbd>TBRC</kbd> refers to the reference of a selected instance and all its sisters. 
+    It already contributes to the current assembly. </li>
+      <li><kbd>RepComp</kbd> is a document about which nothing is yet known: 
+      <ul>
+        <li>It may&nbsp; 
+    be instantiated or not, in this assembly or in another one. </li>
+        <li>It will be cloned in the 
+    process before becoming the new reference.</li>
+      </ul>
+      </li>
+      <li>The words <kbd>&nbsp;TBRC</kbd> and <kbd>RepComp</kbd> are 
+    just convenient shortcuts.</li>
+    </ul>
+    <p>&nbsp;</p>
+    <table border="0" cellpadding="0" style="border-collapse: collapse" id="table7">
+      <tr>
+        <td>Before Replace:<br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/ReplaceComponent5NLS.gif" align="right" width="391" height="337"></td>
+      </tr>
+      <tr>
+        <td>After Replace:<br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/ReplaceComponent6NLS.gif" align="right" width="437" height="338"></td>
+      </tr>
+      <tr>
+        <td>During Replace:<br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/ReplaceComponent7NLS.gif" width="441" height="69" align="right"></td>
+      </tr>
+    </table>
+    <p>If Reference <kbd>RepComp</kbd> receives Impacts IN, this information will be:</p>
+    <ul>
+      <li>Removed in some cases, </li>
+      <li>Cloned in some cases and </li>
+      <li>Isolated in some other cases 
+      </li>
+    </ul>
+    <p>in the Resulting Reference. This is described below.</p>
+    <h2>Impacts OUT and Replace</h2>
+    <p><kbd>Impacts OUT</kbd> have a meaning for the <kbd>TBRC</kbd> (If Impacts were used 
+    to create additional geometry, is this additional geometry kept ?) and none for the
+    <kbd>RepComp.</kbd> </p>
+    <h2>Publications, Logical and Basic Replace</h2>
+    <p>When information is copied with link from one CATPart to 
+    another, in the context of an assembly, there are two possibilities: </p>
+    <ul>
+      <li>The copied 
+    information is published in the context of the assembly:<ul>
+        <li>The link can be resynchronized when needed: namely the source of the 
+        copy might be temporarily &#8220;not known&#8221; by the result, <br>
+        then retrieved later automatically by a synchronization user request. 
+        </li>
+        <li>If the published object is replaced by another equivalent 
+        publication, the result of the copy can be synchronized on this new 
+        object automatically</li>
+      </ul>
+      </li>
+      <li>It is not published. </li>
+    </ul>
+    <p>The Tooling Replace Reference command can have two behaviors with 
+    respect to Tooling Drills: </p>
+    <ul>
+      <li>Logical Replace:<ul>
+        <li>The Tooling <kbd>Impacts 
+    OUT</kbd> of a <kbd>TBRC</kbd> instance are kept after removal of this instance.</li>
+        <li>The clone of <kbd>RepComp</kbd> is instantiated (same 3D position, same position in spec tree as 
+    that of the removed instance).</li>
+        <li>The existing Tooling Impacts of the <kbd>TBRC</kbd> 
+    instance are automatically synchronized on the publications of the <kbd>RepComp</kbd> 
+    instance.</li>
+        <li>The from/to/between list if any is associated to the new instance 
+    as is (without computations).</li>
+        <li>This requires to have the same publications for <kbd>TBRC</kbd> and 
+        <kbd>RepComp</kbd>. If this is not the case, there may be less Impacts or non 
+        synchronized Impacts.</li>
+      </ul>
+      </li>
+      <li>Basic Replace: 
+      <ul>
+        <li>The Tooling <kbd>Impacts OUT</kbd> of a <kbd>TBRC</kbd> instance are 
+    &#8220;captured&#8221; before removal of this instance (via the from/to/between list or 
+    via link analysis). </li>
+        <li>They are deleted.</li>
+        <li>The 
+    clone of <kbd>RepComp</kbd> is instantiated (same 3D position, same position in spec 
+    tree as that of the removed instance). </li>
+        <li>The Tooling Impacts of the new 
+    instance are automatically recreated.</li>
+      </ul>
+      </li>
+      <li>Switch between the two behaviors: Logical Replace is used:<ul>
+        <li>If 
+    the TBRC has at least ONE publication (any element) at its root level </li>
+        <li>AND 
+    if the <kbd>RepComp </kbd>has at least ONE publication (any element) at its root 
+    level. </li>
+        <li>Otherwise Basic Replace is used.</li>
+      </ul>
+      </li>
+    </ul>
+    <p>Note that Logical Replace: </p>
+    <ul>
+      <li>Is faster,</li>
+      <li>Provides more associativity,</li>
+      <li>Is compatible with a logical definition of the tooling component 
+    behavior.</li>
+    </ul>
+    <p>while the Basic Replace:</p>
+    <ul>
+      <li>Provides upward 
+    compatibility, </li>
+      <li>Is intended for companies who do not have access to the 
+    publication mechanism (P2),</li>
+      <li>does not request administrator or user to anticipate iso-publications on the components in order to obtain consistent behavior 
+    for the Tooling Impacts.</li>
+    </ul>
+    <h2>About RepComp</h2>
+    <ul>
+      <li>The <kbd>RepComp</kbd> component (document) is not modified. </li>
+      <li>If it receives <kbd>Impacts 
+    IN</kbd>, they are unchanged. </li>
+      <li>If it is instantiated somewhere, the <kbd>Impacts OUT</kbd> of 
+    it various instances are unchanged. </li>
+      <li>If its <kbd>Impacts IN</kbd> or <kbd>OUT</kbd> go through 
+    upward or downward Tooling Part Interfaces or Tooling Split Part Interfaces 
+    in the context of a given assembly, these part interfaces are unchanged.</li>
+    </ul>
+    <h2>About TBRC</h2>
+    <p>If a TBRC is replaced:</p>
+    <ul>
+      <li>All its sister instances are replaced and for each one: 
+      <ul>
+        <li>The Tooling 
+    Drills are maintained for the result,</li>
+        <li>The DTPI are updated,</li>
+        <li>The 
+    from/to/between list is propagated to the new instance, if applicable.</li>
+        <li>If its reference receives <kbd>Impacts IN</kbd> in the context of the current 
+    assembly, they are not propagated to the resulting reference. </li>
+        <li>The UTPI and 
+    TSPI are cleaned of the now useless data.</li>
+      </ul>
+      </li>
+    </ul>
+    <h3>Impacts OUT for the TBRC instances</h3>
+    <table border="1" cellpadding="3" style="border-collapse: collapse" id="table4" width="1251">
+      <tr>
+        <td colspan="3" class="code" valign="top">
+        <p align="center"><b>INPUT</b></td>
+        <td colspan="7" class="code2" valign="top">
+        <p align="center"><b>RESULT</b></td>
+      </tr>
+      <tr>
+        <td width="174" class="code" align="center" valign="top">
+        <p align="center"><kbd>&nbsp;</kbd><b>TBRC <br>
+        Impact OUT on Plate 1<br>
+        No Impact IN</b></td>
+        <td width="176" class="code" align="center" valign="top">
+        <p align="center"><b>In Plate 1: fillet on the edge of the drill hole</b></td>
+        <td width="116" class="code" align="center" valign="top">
+        <p align="center"><b>RepComp<br>
+        No Impact IN</b></td>
+        <td width="32" class="code2" align="center" valign="top"><b>TSPI </b> </td>
+        <td width="26" class="code2" align="center" valign="top"><b>UTP</b></td>
+        <td width="86" class="code2" align="center" valign="top"><b>FTB list on resulting instances</b></td>
+        <td width="348" class="code2" align="center" valign="top"><b>Drills of Plate 1</b></td>
+        <td width="70" class="code2" valign="top"><b>All DTPI</b></td>
+        <td width="70" class="code2" align="center" valign="top"><b>In Plate1 fillet is</b></td>
+        <td width="152" class="code2" align="center" valign="top"><b>Other 
+        Impacts OUT tooling or non tooling</b></td>
+      </tr>
+      <tr>
+        <td width="174" class="code" valign="top">Standard Tooling Drills<br>
+        Logical Replace</td>
+        <td width="176" class="code" valign="top">Fillet on the edge of the drill hole</td>
+        <td width="116" class="code" valign="top">
+        <ul>
+          <li>Iso publications</li>
+          <li>Less publications</li>
+          <li>More publications</li>
+        </ul>
+        </td>
+        <td width="32" class="code2" valign="top">N/A</td>
+        <td width="26" class="code2" valign="top">N/A</td>
+        <td width="86" class="code2" valign="top" align="center">Yes</td>
+        <td width="348" class="code2" valign="top">
+        <ul>
+          <li>Iso publications: drills are updated one for one.</li>
+          <li>Less publications: some drills are without parents.</li>
+          <li>More publications: additional publications are not <br>
+          automatically taken 
+        into account for the plate drills.</li>
+        </ul>
+        </td>
+        <td width="70" class="code2" valign="top" align="center">updated</td>
+        <td width="70" class="code2" valign="top" align="center">kept</td>
+        <td width="152" class="code2" valign="top">Same behavior as Tooling Drills</td>
+      </tr>
+      <tr>
+        <td width="174" class="code" valign="top">Standard Tooling Drills<br>
+        Basic Replace</td>
+        <td width="176" class="code" valign="top">Fillet on the edge of the drill hole</td>
+        <td width="116" class="code" valign="top">&nbsp;</td>
+        <td width="32" class="code2" valign="top">N/A</td>
+        <td width="26" class="code2" valign="top">N/A</td>
+        <td width="86" class="code2" valign="top" align="center">Yes</td>
+        <td width="348" class="code2" valign="top">
+        <ul>
+          <li>Created on the basis of the from/to/between list of the TBRC 
+        instance and the Part bodies found in the Resulting Reference.</li>
+        </ul>
+        </td>
+        <td width="70" class="code2" valign="top" align="center">updated</td>
+        <td width="70" class="code2" valign="top" align="center">not kept</td>
+        <td width="152" class="code2" valign="top">Deleted</td>
+      </tr>
+      <tr>
+        <td width="174" class="code" valign="top">Detailed Tooling Drills<br>
+        Logical Replace</td>
+        <td width="176" class="code" valign="top">Fillet on the edge of the drill hole</td>
+        <td width="116" class="code" valign="top">
+        <ul>
+          <li>So publications</li>
+          <li>Less publications</li>
+          <li>More publications</li>
+        </ul>
+&nbsp;</td>
+        <td width="32" class="code2" valign="top">N/A</td>
+        <td width="26" class="code2" valign="top">N/A</td>
+        <td width="86" class="code2" valign="top" align="center">No</td>
+        <td width="348" class="code2" valign="top">
+        <ul>
+          <li>Iso publications: drills are updated one for one.</li>
+          <li>Less publications: some drills are without parents.</li>
+          <li>More publications: additional publications are not automatically taken 
+        into account for the plate drills.</li>
+        </ul>
+        </td>
+        <td width="70" class="code2" valign="top" align="center">updated</td>
+        <td width="70" class="code2" valign="top" align="center">kept</td>
+        <td width="152" class="code2" valign="top">Same behavior as Tooling Drills</td>
+      </tr>
+      <tr>
+        <td width="174" class="code" valign="top">Detailed Tooling Drills<br>
+        Basic Replace</td>
+        <td width="176" class="code" valign="top">Fillet on the edge of the drill hole</td>
+        <td width="116" class="code" valign="top">&nbsp;</td>
+        <td width="32" class="code2" valign="top">N/A</td>
+        <td width="26" class="code2" valign="top">N/A</td>
+        <td width="86" class="code2" valign="top" align="center">No</td>
+        <td width="348" class="code2" valign="top">
+        <ul>
+          <li>Created on the basis of the analysis of the links of the TBRC 
+        instance and the Part bodies found in the Resulting Reference.</li>
+        </ul>
+        </td>
+        <td width="70" class="code2" valign="top" align="center">updated</td>
+        <td width="70" class="code2" valign="top" align="center">not kept</td>
+        <td width="152" class="code2" valign="top">Deleted</td>
+      </tr>
+    </table>
+    <h3>Impacts IN for the TBRC reference</h3>
+    <table border="1" cellpadding="3" style="border-collapse: collapse" id="table5">
+      <tr>
+        <td colspan="3" class="code" align="center" valign="top"><b>INPUT</b></td>
+        <td colspan="3" class="code2" align="center" valign="top"><b>RESULT</b></td>
+      </tr>
+      <tr>
+        <td class="code" align="center" valign="top"><kbd>&nbsp;</kbd><b>TBRC<br>
+        Single instance</b></td>
+        <td class="code" align="center" valign="top"><b>Surface reduction</b></td>
+        <td class="code" align="center" valign="top"><b>Any RepComp <br>
+        without Impact IN</b></td>
+        <td class="code2" align="center" valign="top"><b>TSPI</b></td>
+        <td class="code2" align="center" valign="top"><b>UTPI</b></td>
+        <td class="code2" align="center" valign="top"><b>Resulting Ref</b></td>
+      </tr>
+      <tr>
+        <td height="18" class="code">Has been &quot;Tooling Split&quot; by Surf1</td>
+        <td height="18" class="code" align="center">with</td>
+        <td height="18" class="code"></td>
+        <td height="18" class="code2" align="center">cleaned</td>
+        <td height="18" class="code2" align="center">cleaned</td>
+        <td height="18" class="code2">No split by Surf1</td>
+      </tr>
+      <tr>
+        <td class="code">Has been &quot;Tooling Split&quot; by Surf1</td>
+        <td class="code" align="center">without</td>
+        <td class="code">&nbsp;</td>
+        <td class="code2" align="center">N/A</td>
+        <td class="code2" align="center">cleaned</td>
+        <td class="code2">No split by Surf1</td>
+      </tr>
+      <tr>
+        <td class="code">Has been split by an external <br>
+        Surf2 in Part Design</td>
+        <td class="code">&nbsp;</td>
+        <td class="code">&nbsp;</td>
+        <td class="code2" align="center">N/A</td>
+        <td class="code2" align="center">N/A</td>
+        <td class="code2">No split by Surf2</td>
+      </tr>
+      <tr>
+        <td class="code">Has been &quot;Tooling Drilled&quot;</td>
+        <td class="code">&nbsp;</td>
+        <td class="code">&nbsp;</td>
+        <td class="code2" align="center">N/A</td>
+        <td class="code2" align="center">cleaned</td>
+        <td class="code2">Not Tooling Drilled</td>
+      </tr>
+      <tr>
+        <td class="code">Has been &quot;Tooling Morphed&quot;</td>
+        <td class="code">&nbsp;</td>
+        <td class="code">&nbsp;</td>
+        <td class="code2" align="center">N/A</td>
+        <td class="code2" align="center">cleaned</td>
+        <td class="code2">Not Tooling Morphed</td>
+      </tr>
+    </table>
+    <h3>RepComp contains Impacts IN, what about the resulting reference?</h3>
+    <table border="1" cellpadding="3" style="border-collapse: collapse" id="table6">
+      <tr>
+        <td colspan="2" class="code" align="center" valign="top"><b>INPUT</b></td>
+        <td colspan="3" class="code2" align="center" valign="top"><b>RESULT</b></td>
+      </tr>
+      <tr>
+        <td class="code" align="center" valign="top"><kbd>&nbsp;</kbd><b>TBRC has no Impact IN</b></td>
+        <td class="code" align="center" valign="top"><b>RepComp Impact IN</b></td>
+        <td class="code2" align="center" valign="top"><b>TSPI</b></td>
+        <td class="code2" align="center" valign="top"><b>UTPI</b></td>
+        <td class="code2" align="center" valign="top"><b>Resulting Reference</b></td>
+      </tr>
+      <tr>
+        <td class="code" valign="top">is multi-instance</td>
+        <td class="code" valign="top">has Impacts IN</td>
+        <td class="code2" valign="top" align="center">N/A</td>
+        <td class="code2" valign="top" align="center">N/A</td>
+        <td class="code2" valign="top">Replace not allowed</td>
+      </tr>
+      <tr>
+        <td class="code" valign="top">is mono-instance</td>
+        <td class="code" valign="top">has solid Impacts IN</td>
+        <td class="code2" valign="top" align="center">N/A</td>
+        <td class="code2" valign="top" align="center">N/A</td>
+        <td class="code2" valign="top">Solid Impacts removed from resulting reference</td>
+      </tr>
+      <tr>
+        <td class="code" valign="top">is mono-instance</td>
+        <td class="code" valign="top">contains isolated external references <br>
+        in dedicated body</td>
+        <td class="code2" valign="top" align="center">N/A</td>
+        <td class="code2" valign="top" align="left">created if needed<br>
+        enriched as needed</td>
+        <td class="code2" valign="top">Connection dialog appears for these isolated external references</td>
+      </tr>
+      <tr>
+        <td class="code" valign="top">is mono-instance</td>
+        <td class="code" valign="top">contains external references</td>
+        <td class="code2" valign="top" align="center">N/A</td>
+        <td class="code2" valign="top" align="left">created if needed<br>
+        enriched as needed</td>
+        <td class="code2" valign="top">These external references are automatically isolated. 
+        <br>
+        Then as above</td>
+      </tr>
+      <tr>
+        <td class="code" valign="top">is mono-instance</td>
+        <td class="code" valign="top">contains isolated external references <br>
+        in any body</td>
+        <td class="code2" valign="top" align="center">N/A</td>
+        <td class="code2" valign="top" align="center">?</td>
+        <td class="code2" valign="top">?</td>
+      </tr>
+      <tr>
+        <td class="code" valign="top">is mono-instance</td>
+        <td class="code" valign="top">contains external parameters</td>
+        <td class="code2" valign="top" align="center">N/A</td>
+        <td class="code2" valign="top" align="center">N/A</td>
+        <td class="code2" valign="top">External parameters, isolated or not, <br>
+        not managed during cloning<br>
+        no reconnection dialog box</td>
+      </tr>
+    </table>
+    <h2>Example: Management of the Impact IN for the Replacing Component </h2>
+    <p>Replacing Component: <br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/ImpactIN01NLS.gif" width="282" height="257"></p>
+    <p>Mold:<br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/ImpactIN02NLS.gif" width="331" height="789"></p>
+    <p>You can see that the replacing component contains:</p>
+    <ul>
+      <li>An Isolated External Reference (Clamping Center). After the 
+      replacement, it will correspond to the Clanping Center of the 
+      ClampingPlate, </li>
+      <li>Two External References the definitions of those correspond to the 
+      publication paths of Point.2 and Point.3 of the ClampingPlate. </li>
+    </ul>
+    <p>You can also note that the Publication Point.2 of the ClamplingPlate is 
+    broken (this is indicated by the yellow warning symbol). </p>
+    <p>We replace Sleeve_TD_4-All_1 in Mold by the replacing component using the 
+    contextual menu item <kbd>Replace Reference</kbd>. <br>
+    <br>
+    As we click <kbd>OK</kbd> to validate the replacement, the following dialog 
+    box is displayed:<br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/ImpactIN04NLS.gif" width="756" height="234"></p>
+    <ul>
+      <li>The status of <kbd>ClampingCenter</kbd> is <kbd>Isolated</kbd> because 
+      it is an Isolated External Reference. </li>
+      <li><kbd>Point. 2 </kbd> and<kbd> Point.3</kbd> have been automatically 
+      isolated.</li>
+    </ul>
+    <p>When we select a line in the list, the buttons <kbd>Isolate</kbd>, <kbd>
+    Delete </kbd>and<kbd> Reconnect</kbd> become available. <br>To isolate or delete 
+    a component, click the corresponding button. <br>To Reconnect a 
+    component, click Reconnect and select a component in the specification tree. 
+    <br>Its name appears in the <kbd>Reconnect with</kbd> column. We have 
+    reconnected the components as shown below:<br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/ImpactIN05NLS.gif" width="673" height="70"></p>
+    <p>After validation, the structure of the replacing component in the mold 
+    specification tree looks like this:<br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/ImpactIN06NLS.gif" width="338" height="335">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    &nbsp;</td>
+         </table>
+
+</body>
+
+</html>
+

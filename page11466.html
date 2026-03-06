@@ -1,0 +1,125 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Lock/Unlock Mechanisms</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+</head>
+
+<body>
+
+<h1>Lock/Unlock Mechanisms</h1>
+<h2><a name="LockedMO"></a>Locked Machining Operations</h2>
+<p>Often, when a machining operation is computed (that is, the tool path is calculated), 
+it can be useful to lock the operation to prevent the tool path from being removed 
+(for example, in case of design or operator change) and allow the NC Programmer 
+to determine what was machined and how it was machined based on the replay of the 
+locked tool path.</p>
+<h2><a name="LockedMObis"></a><a name="LockedTPbis"></a>Lock / Unlock Commands on 
+Machining Operations</h2>
+<p>In the contextual menu for a computed machining operation, there are four commands 
+allowing different lock/unlock actions.</p>
+<p><kbd>Lock: </kbd>Lock the tool path and the operation parameters.<br>
+In this case the Locked symbol
+<img border="0" src="b35doc/english/online/icons_C2/images/I_MaskLocked.gif" width="10" height="11"> (yellow padlock) 
+appears on the operation icon in the PPR tree.</p>
+<p><kbd>Unlock: </kbd>Unlock the tool path and the operation parameters.</p>
+<p><kbd>Lock Tool Path: </kbd>Lock the tool path only.<br>
+In this case the Locked Tool Path symbol
+<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgMaskTPLocked.gif" width="10" height="11"> (green 
+padlock) appears on the operation icon in the PPR tree.</p>
+<p><kbd>Unlock Tool Path: </kbd>Unlock the tool path only.</p>
+<h3>Commands available depending on the operation&#39;s Lock state</h3>
+<p>The operation is not locked and its tool path is not locked.<br>
+Available commands are <kbd>Lock</kbd> and <kbd>Lock Tool Path</kbd>.</p>
+<p>The operation is not locked but its tool path is locked.<br>
+Available commands are <kbd>Lock</kbd> and <kbd>Unlock Tool Path</kbd>.</p>
+<p>The operation is locked (Tool path and operation parameters)<br>
+Available command is <kbd>Unlock</kbd>.</p>
+<h3>Functionalities available depending on operation&#39;s Lock state</h3>
+<p>The operation is locked (Tool path and operation parameters):</p>
+<ul>
+	<li>Replay, simulation and NC data generation are based on the locked tool path.</li>
+	<li>Compute tool path and remove tool path are not possible.</li>
+	<li>Replace tool is unavailable.</li>
+	<li>The OK button on the operation editor is disabled. You can only browse the 
+	operation.</li>
+	<li>Tool path edition is possible for operations with a tool path node.</li>
+</ul>
+<p>The operation is not locked but its tool path is locked:</p>
+<ul>
+	<li>Replay, simulation and NC data generation are based on the locked tool path.</li>
+	<li>Compute tool path and remove tool path are not possible.</li>
+	<li>Replace tool is available.</li>
+	<li>The operation editor is available but no update of the operation will be 
+	done by means of the OK button.</li>
+	<li>Tool path edition is possible for operations with a tool path node.</li>
+</ul>
+<p>Please note the following points:</p>
+<ul>
+	<li>The parameter values of a machining operation cannot be changed when it 
+	is in a locked state. However, if the units are modified then the parameter 
+	values will be automatically changed by taking the appropriate conversion factors 
+	into account.</li>
+	<li>To modify the tool path using the tool path editor, the <b><kbd>Edit Tool</kbd></b><kbd>
+	</kbd><b><kbd>Path</kbd></b> check box must be selected in the
+	<a href="page1017.html" target="_blank">
+	Tools &gt; Options &gt; Machining &gt; Output</a>.</li>
+	<li>When NC data is generated for a locked machining operation, a specific message 
+	will be issued in the CATMFG.log file.</li>
+	<li>The <b><kbd>Lock Operations</kbd></b> check box can be selected in the Generate 
+	NC Output in Batch Mode dialog box to lock all operations after NC data generation 
+	when <b><kbd>Save document</kbd></b> is requested.</li>
+</ul>
+<h2><a name="LockChildren"></a><a name="LockTP"></a>Lock / Unlock Commands on Manufacturing 
+Programs</h2>
+<p>By right-clicking a Manufacturing Program you can use the<b> <kbd>Lock Children</kbd></b> 
+or <b><kbd>Unlock Children</kbd></b> command to lock or unlock all the children 
+nodes of the program (that is, the program&#39;s machining operations) .</p>
+<p><kbd>Lock Children</kbd>:<br>
+The child node is not locked and its tool path is not locked: Lock Tool Path and 
+operation parameters.<br>
+The child node is not locked but its tool path is locked: Lock operation parameters, 
+Tool Path already locked. <br>
+The child node is locked: Tool Path and operation parameters already locked.</p>
+<p><kbd>Unlock Children</kbd>:<br>
+The child is not locked and its tool path is not locked: Tool Path and operation 
+parameters already unlocked.<br>
+The child is not locked but its tool path is locked: Unlock Tool Path, operation 
+parameters already unlocked.<br>
+The child is locked: Unlock Tool Path and operation parameters.</p>
+<p>By right-clicking a Manufacturing Program you can use the<b> <kbd>Lock Tool Path</kbd></b> 
+or <b><kbd>Unlock Tool Path</kbd></b> command to lock or unlock all the tool path 
+nodes of the program.</p>
+<p><kbd>Lock Tool Path</kbd>:<br>
+The child node is not locked and its tool path is not locked: Lock Tool Path.<br>
+The child node is not locked but its tool path is locked: Tool Path already locked.<br>
+The child node is locked: Tool Path already locked.</p>
+<p><kbd>Unlock Tool Path</kbd>:<br>
+The child node is not locked and its tool path is not locked: Tool Path already 
+unlocked.<br>
+The child node is not locked but its tool path is locked: Unlock Tool Path.<br>
+The child node is locked: Tool Path is protected by the operation lock. You cannot 
+unlock the Tool Path only. You have to unlock the operation.</p>
+<h2>Tool Path Stability</h2>
+<p>The <kbd>Lock Tool Path</kbd> functionality offers a means for ensuring the stability 
+of a computed NC tool path from one release to another.</p>
+<p>Knowing that tool path variations may be introduced from one release to another 
+due to algorithm enhancements or maintenance interventions, this functionality reduces 
+NC Programmer time and effort by eliminating the need to re-calculate and re-validate 
+previously computed NC data.</p>
+<p>When <kbd>Lock Tool Path</kbd> is used, the computed tool path data is stored 
+in the model. If an operation is not modified from one release to another (that 
+is, geometry, parameters, and so on are unchanged), it is not re-calculated: the 
+previously stored tool path data will be read.</p>
+
+</body>
+
+</html>
+

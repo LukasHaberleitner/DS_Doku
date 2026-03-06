@@ -1,0 +1,2578 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+		<head>
+		<meta name="MonocodingType" content="0">
+		<meta name="MonocodingFlag" content="C2D2">
+		<meta http-equiv="Content-Language" content="en-us">
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+		<title>PP Tables and PP Word Syntaxes</title>
+		<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+		<meta name="ProgId" content="FrontPage.Editor.Document">
+		<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+		</head>
+
+		<body>
+
+		<h1>PP Tables and PP Word Syntaxes</h1>
+		<h2 align="left">PP Word Tables</h2>
+		<p>You can create and manage Post-Processor word tables with NC Manufacturing 
+		products.</p>
+		<p>Sample PP word tables are delivered with the product in the ..\startup\manufacturing\PPTables 
+		folder. Each PP word table is stored in a unique text file with suffix
+		<b>pptable</b>. These tables can be used as a basis for creating user-defined 
+		tables.</p>
+		<p>A PP word table can be defined for a specific machine tool and used in 
+		NC applications. <br>
+		You can also define the general syntaxes of post-processor words. These 
+		syntaxes will be proposed when you want to create a PP instruction.</p>
+		<a name="ix-PP word table"></a>
+		<p>A PP word table comprises:</p>
+		<ul>
+				<li>major words without parameters</li>
+				<li>major words with a text</li>
+				<li>major words with parameters</li>
+				<li>minor words</li>
+				<li>word syntaxes.</li>
+		</ul>
+		<p>You can define for a given machine tool:</p>
+		<ul>
+				<li>syntaxes associated to particular <a href="#NCCommand">NC commands</a></li>
+				<li>sequences of PP word syntaxes associated to particular
+				<a href="#NCInstruction">NC instructions</a>.</li>
+		</ul>
+		<p>The NC Manufacturing product will resolve the parameters of these syntaxes 
+		and syntax sequences and generate the corresponding statements in the APT 
+		output.</p>
+		<p><b>Note</b>:<br>
+		TPRINT and NOTE are automatically included in the lists of major words with 
+		parameters and minor words respectively even if they are not specifically 
+		declared in the PP word table.</p>
+		<h2 align="left"><a name="NCCommand"></a>NC Commands </h2>
+		<p>You can define for a given machine tool (i.e. post-processor) PP word 
+		syntaxes associated to particular NC commands.</p>
+		<p>An NC command is a machine function such as feedrate declaration (NC_FEEDRATE) 
+		or spindle activation (NC_SPINDLE_START).</p>
+		<p>A syntax comprises a major word and one or more syntax elements such 
+		as minor words, numerical values, lists and parameters. </p>
+		<p>A syntax that includes lists or parameters is a <b>parameterized syntax</b> 
+		(see example below):</p>
+		<blockquote>
+				<p><code>*START_NC_COMMAND&nbsp;&nbsp;&nbsp;&nbsp; NC_COMPENSATION<br>
+				LOADTL/%MFG_TL_NUMBER,%MFG_TOOL_COMP<br>
+				*END</code></p>
+		</blockquote>
+		<p>Note that the <b>&amp;</b> character indicates a list and the <b>%</b> character 
+		indicates a parameter. A list has a finite number of values. You can define 
+		only one syntax for each NC command.</p>
+		<p>The example below shows how lists can be used to <b>define inch units 
+		for feeds and speeds</b>:</p>
+		<blockquote>
+				<p><code>*START_NC_COMMAND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				NC_FEEDRATE<br>
+				*START_LIST MFG_FEED_UNIT <br>
+				IPM ,IPR <br>
+				*END <br>
+				FEDRAT/%MFG_FEED_VALUE,&amp;MFG_FEED_UNIT<br>
+				*END<br>
+				/<br>
+				*START_NC_COMMAND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				NC_SPINDLE_START<br>
+				*START_LIST MFG_SPNDL_UNIT <br>
+				RPM ,SFM <br>
+				*END<br>
+				SPINDL/%MFG_SPNDL_SPEED,&amp;MFG_SPNDL_UNIT,&amp;MFG_SPNDL_WAY<br>
+				*END<br>
+				/<br>
+				*START_NC_COMMAND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				NC_SPINDLE_LATHE<br>
+				*START_LIST MFG_SPNDL_UNIT <br>
+				RPM ,SFM <br>
+				*END <br>
+				SPINDL/%MFG_SPNDL_SPEED,&amp;MFG_SPNDL_UNIT<br>
+				*END</code></p>
+		</blockquote>
+		<p>The example below shows how lists can be used to <b>define metric units 
+		for feeds and speeds</b>:</p>
+		<blockquote>
+				<p><code>*START_NC_COMMAND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				NC_FEEDRATE<br>
+				*START_LIST MFG_FEED_UNIT <br>
+				MMPM ,MMPR <br>
+				*END <br>
+				FEDRAT/%MFG_FEED_VALUE,&amp;MFG_FEED_UNIT<br>
+				*END<br>
+				/<br>
+				*START_NC_COMMAND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				NC_SPINDLE_START<br>
+				*START_LIST MFG_SPNDL_UNIT <br>
+				RPM ,SMM <br>
+				*END<br>
+				SPINDL/%MFG_SPNDL_SPEED,&amp;MFG_SPNDL_UNIT,&amp;MFG_SPNDL_WAY<br>
+				*END<br>
+				/<br>
+				*START_NC_COMMAND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				NC_SPINDLE_LATHE<br>
+				*START_LIST MFG_SPNDL_UNIT <br>
+				RPM ,SMM <br>
+				*END <br>
+				SPINDL/%MFG_SPNDL_SPEED,&amp;MFG_SPNDL_UNIT<br>
+				*END</code></p>
+		</blockquote>
+		<p>For an example of how to define syntaxes in NC commands, please see
+		<a href="page11424.html">PP Word Syntaxes</a> in the Customizing section 
+		of this guide.</p>
+		<h3>Arithmetic Operators</h3>
+		<p>It is possible to use the following arithmetic operators in PP word syntaxes:</p>
+		<ul>
+				<li>addition (+)</li>
+				<li>subtraction (-)</li>
+				<li>multiplication (*)</li>
+				<li>division (/).</li>
+		</ul>
+		<p>These operators can be used:</p>
+		<ul>
+				<li>between word syntaxes (for example, %MFG_xxx + %MFG_yyy)</li>
+				<li>between a value and a word syntax (for example, n + %MFG_yyy)</li>
+				<li>between a word syntax and a value (for example, %MFG_xxx + n)</li>
+				<li>between values (for example, n + m).</li>
+		</ul>
+		<p>Parenthesis are not needed in expressions except for design parameters, 
+		such as (syntax %(AB)), created using Knowledgeware capabilities.</p>
+		<p>Operators are processed in the order they appear in the syntax. For example:</p>
+		<blockquote>
+				<p><code>%MFG_xxx + %MFG_yyy * %MFG_zzz</code></p>
+		</blockquote>
+		<p>This means that %MFG_xxx is added to %MFG_yyy, then this sum is multiplied 
+		by %MFG_zzz.</p>
+		<p>You should avoid using the +, -, *, / characters for other meanings. 
+		For example, you could use an underscore (_) instead of a dash (-) in the 
+		following expression to avoid any ambiguity:</p>
+		<blockquote>
+				<p><code>PPRINT/DIAMETER-VALUE, %MFG_NOMINAL_DIAM</code></p></blockquote>
+
+				<h3>Controlling the Parameter Display Format</h3>
+				<p>You can control the format for an individual paramter 
+				by specifying the format in the pptable. For example, the format 
+				of MFG_NOMINAL_DIAM is %12.6f, which means there are six digits 
+				after the decimal. To modify the format (for example, to limit 
+				the display to two digits after the decimal), use the following:</p>
+				<blockquote>
+<p><code>*START_FORMAT MFG_NOMINAL_DIAM<br><br>%12.2f<br><br>
+				*END<br><br>*START_FORMAT MFG_CORNER_RAD<br><br>%12.2f<br><br>
+				*END</code></p>
+		</blockquote>
+		<h3>Syntaxes of NC Commands </h3>
+		<p>NC command syntaxes that are supported in the current version are as 
+		follows:</p>
+		<ul>
+				<li><a href="#NC_3X_END_COMMENT">NC_3X_MO_END_COMMENT</a></li>
+				<li><a href="#NC_5X_END_COMMENT">NC_5X_MO_END_COMMENT</a></li>
+				<li><a href="#NC_AX_END_COMMENT">NC_AXIAL_MO_END_COMMENT</a></li>
+				<li><a href="#NC_3X_STRT_COMMENT">NC_3X_MO_START_COMMENT</a></li>
+				<li><a href="#NC_5X_STRT_COMMENT">NC_5X_MO_START_COMMENT</a></li>
+				<li><a href="#NC_AX_STRT_COMMENT">NC_AXIAL_MO_START_COMMENT</a></li>
+				<li><a href="#NC_AXIS_LOCK">NC_AXIS_LOCK</a></li>
+				<li><a href="#NC_AXIS_MOVE">NC_AXIS_MOVE</a></li>
+				<li><a href="#ix-NC command::NC_CHANGE_REF_PT">NC_CHANGE_REF_PT</a></li>
+				<li><a href="#NC_COMMENT">NC_COMMENT</a></li>
+				<li><a href="#NC_COMPENSATION">NC_COMPENSATION</a></li>
+				<li><a href="#NC_CUTCOM_LEFT">NC_CUTCOM_LEFT</a></li>
+				<li><a href="#NC_CUTCOM_OFF">NC_CUTCOM_OFF</a></li>
+				<li><a href="#NC_CUTCOM_ON">NC_CUTCOM_ON</a></li>
+				<li><a href="#NC_CUTCOM_NDS_OFF">NC_CUTCOM_NORMDS_OFF</a></li>
+				<li><a href="#NC_CUTCOM_NDS_ON">NC_CUTCOM_NORMDS_ON</a></li>
+				<li><a href="#NC_CUTCOM_NPS_OFF">NC_CUTCOM_NORMPS_OFF</a></li>
+				<li><a href="#NC_CUTCOM_NPS_ON">NC_CUTCOM_NORMPS_ON</a></li>
+				<li><a href="#NC_CUTCOM_RIGHT">NC_CUTCOM_RIGHT</a></li>
+				<li><a href="#NC_DELAY">NC_DELAY</a></li>
+				<li><a href="#NC_FEEDRATE">NC_FEEDRATE</a></li>
+				<li><a href="#NC_HELICAL_INTERPOLATION">NC_HELICAL_INTERPOLATION</a></li>
+				<li><a href="#NC_LT_END_COMMENT">NC_LATHE_MO_END_COMMENT</a></li>
+				<li><a href="#NC_LT_STRT_COMMENT">NC_LATHE_MO_START_COMMENT</a></li>
+				<li><a href="#NC_MACHINING_AXIS">NC_MACHINING_AXIS</a></li>
+				<li><a href="#NC_ML_END_COMMENT">NC_MILL_MO_END_COMMENT</a></li>
+				<li><a href="#NC_ML_STRT_COMMENT">NC_MILL_MO_START_COMMENT</a></li>
+				<li><a href="#NC_MILL_TURRET_INVERSION">NC_MILL_TURRET_INVERSION</a></li>
+				<li><a href="#ix-NC command::NC_MILL_TURRET_ORIENTATION">NC_MILL_TURRET_ORIENTATION</a></li>
+				<li><a href="#NC_MULTAX_ON">NC_MULTAX_ON</a></li>
+				<li><a href="#NC_MULTAX_OFF">NC_MULTAX_OFF</a></li>
+				<li><a href="#NC_PITCH">NC_PITCH</a></li>
+				<li><a href="#NC_SPINDLE">NC_SPINDLE</a></li>
+				<li><a href="#NC_SPINDLE_LATHE">NC_SPINDLE_LATHE</a></li>
+				<li><a href="#NC_SPINDLE_LOCK">NC_SPINDLE_LOCK</a></li>
+				<li><a href="#NC_SPINDLE_LOCK">NC_SPINDLE_MAXSPEED</a></li>
+				<li><a href="#NC_SPINDLE_OFF">NC_SPINDLE_OFF</a></li>
+				<li><a href="#NC_SPINDLE_ON">NC_SPINDLE_ON</a></li>
+				<li><a href="#NC_SPINDLE_START">NC_SPINDLE_START</a></li>
+				<li><a href="#NC_SPINDLE_STOP">NC_SPINDLE_STOP</a></li>
+				<li><a href="#NC_THREAD_TURN">NC_THREAD_TURN</a></li>
+				<li><a href="#NC_THREAD_TURN_OFF">NC_THREAD_TURN_OFF</a></li>
+		</ul>
+		<h4>NC Commands for Start Comments</h4>
+		<p><a name="WNStartComment"></a>NC_xxx_MO_START_COMMENT syntaxes allow an 
+		automatic output in the APT of instructions at the start of machining operations, 
+		which allows among other things to easily recognize the start of an operation, 
+		to know the type of the operation, or to launch functions automatically 
+		(start coolant, axis unlocking, activating a working mode, and so on).<br>
+		A sample PP Table (PPTableSampleMOComment.pptable) is delivered in the ..\startup\manufacturing\PPTables 
+		folder.</p>
+		<h4><a name="NC_AX_STRT_COMMENT">NC_AXIAL_MO_START_COMMENT</a></h4>
+		<a name="ix-NC command::NC_AXIAL_MO_START_COMMENT"></a>
+		<p>For axial machining operations:</p>
+		<blockquote>
+				<p><code>*START_NC_INSTRUCTION NC_AXIAL_MO_START_COMMENT<br>
+				*START_SEQUENCE<br>
+				PPRINT NC_AXIAL_MO_START_COMMENT BEGIN<br>
+				PPRINT MACHINE OPERATION = %MFG_MO_TYPE<br>
+				PPRINT OPERATION NAME = %MFG_MO_IDENTIFIER<br>
+				PPRINT PATTERN NAME = %MFG_PATTERN_NAME<br>
+				PPRINT TOOL ASSEMBLY = %MFG_TL_ASMBLY_ID <br>
+				PPRINT NC_AXIAL_MO_START_COMMENT END<br>
+				*END<br>
+				*END</code></p>
+		</blockquote>
+		<p>The following example shows the type of APT source that can be generated:</p>
+		<blockquote>
+				<p><code>PPRINT NC_AXIAL_MO_START_COMMENT BEGIN<br>
+				PPRINT MACHINE OPERATION = Drilling<br>
+				PPRINT OPERATION NAME = Drilling.1<br>
+				PPRINT PATTERN NAME = Hole.1<br>
+				PPRINT TOOL ASSEMBLY = Drill_Diam10<br>
+				PPRINT NC_AXIAL_MO_START_COMMENT END<br>
+				PPRINT OPERATION NAME : Drilling.1<br>
+				$$ Start generation of : Drilling.1<br>
+				LOADTL/2,1<br>
+				SPINDL/ 204.0000,SFM,CLW<br>
+				RAPID<br>
+				GOTO / 130.00000, -55.00000, 2.50000<br>
+				CYCLE/DRILL, 52.886751, 2.500000, 0.200000,MMPR<br>
+				GOTO / 130.00000, -55.00000, 0.00000<br>
+				CYCLE/OFF</code></p>
+		</blockquote>
+		<h4><a name="NC_3X_STRT_COMMENT">NC_3X_MO_START_COMMENT</a></h4>
+		<a name="ix-NC command::NC_3X_MO_START_COMMENT"></a>
+		<p>For 3-axis milling operations:</p>
+		<blockquote>
+				<p><code>*START_NC_INSTRUCTION NC_3X_MO_START_COMMENT<br>
+				*START_SEQUENCE<br>
+				PPRINT NC_3X_MO_START_COMMENT BEGIN<br>
+				PPRINT MACHINE OPERATION = %MFG_MO_TYPE<br>
+				PPRINT OPERATION NAME = %MFG_MO_IDENTIFIER<br>
+				PPRINT TOOL ASSEMBLY = %MFG_TL_ASMBLY_ID<br>
+				PPRINT NC_3X_MO_START_COMMENT END<br>
+				*END<br>
+				*END</code></p>
+		</blockquote>
+		<h4><a name="NC_5X_STRT_COMMENT">NC_5X_MO_START_COMMENT</a></h4>
+		<a name="ix-NC command::NC_5X_MO_START_COMMENT"></a>
+		<p>For 5-axis milling operations:</p>
+		<blockquote>
+				<p><code>*START_NC_INSTRUCTION NC_5X_MO_START_COMMENT<br>
+				*START_SEQUENCE<br>
+				PPRINT NC_5X_MO_START_COMMENT BEGIN<br>
+				PPRINT MACHINE OPERATION = %MFG_MO_TYPE<br>
+				PPRINT OPERATION NAME = %MFG_MO_IDENTIFIER<br>
+				PPRINT TOOL ASSEMBLY = %MFG_TL_ASMBLY_ID<br>
+				PPRINT NC_5X_MO_START_COMMENT END<br>
+				*END<br>
+				*END</code></p>
+		</blockquote>
+		<h4><a name="NC_LT_STRT_COMMENT">NC_LATHE_MO_START_COMMENT</a></h4>
+		<a name="ix-NC command::NC_LATHE_MO_START_COMMENT"></a>
+		<p>For turning operations:</p>
+		<blockquote>
+				<p><code>*START_NC_INSTRUCTION NC_LATHE_MO_START_COMMENT<br>
+				*START_SEQUENCE<br>
+				PPRINT NC_LATHE_MO_START_COMMENT BEGIN<br>
+				PPRINT MACHINE OPERATION = %MFG_MO_TYPE<br>
+				PPRINT OPERATION NAME = %MFG_MO_IDENTIFIER<br>
+				PPRINT TOOL ASSEMBLY = %MFG_TL_ASMBLY_ID<br>
+				PPRINT NC_LATHE_MO_START_COMMENT END<br>
+				*END<br>
+				*END</code></p>
+		</blockquote>
+		<h4><a name="NC_ML_STRT_COMMENT">NC_MILL_MO_START_COMMENT</a></h4>
+		<a name="ix-NC command::NC_MILL_MO_START_COMMENT"></a>
+		<p>For 2.5-axis milling operations:</p>
+		<blockquote>
+				<p><code>*START_NC_INSTRUCTION NC_MILL_MO_START_COMMENT<br>
+				*START_SEQUENCE<br>
+				PPRINT NC_MILL_MO_START_COMMENT BEGIN<br>
+				PPRINT MACHINE OPERATION = %MFG_MO_TYPE<br>
+				PPRINT OPERATION NAME = %MFG_MO_IDENTIFIER<br>
+				PPRINT TOOL ASSEMBLY = %MFG_TL_ASMBLY_ID<br>
+				PPRINT NC_MILL_MO_START_COMMENT END<br>
+				*END<br>
+				*END</code></p>
+		</blockquote>
+		<h4>NC Commands for End Comments</h4>
+		<p><a name="WNR17SP2"></a>NC_xxx_MO_END_COMMENT syntaxes allow an automatic 
+		output in the APT of instructions at the end of machining operations (stop 
+		spindle rotation, stop coolant, axis locking / unlocking, deactivating a 
+		working mode, and so on) and to easily recognize the end of operations. 
+		This allows the PP to stop reading ahead of the APT if it is searching an 
+		instruction only inside the current operation, for example. This avoids 
+		the need to manually insert APT words, which is not always possible.</p>
+		<h4><a name="NC_AX_END_COMMENT">NC_AXIAL_MO_END_COMMENT</a></h4>
+		<a name="ix-NC command::NC_AXIAL_MO_END_COMMENT"></a>
+		<p>For axial machining operations:</p>
+		<blockquote>
+				<p><code>*START_NC_INSTRUCTION NC_AXIAL_MO_END_COMMENT<br>
+				*START_SEQUENCE<br>
+				PPRINT NC_AXIAL_MO_END_COMMENT BEGIN<br>
+				PPRINT MACHINE OPERATION = %MFG_MO_TYPE<br>
+				PPRINT OPERATION NAME = %MFG_MO_IDENTIFIER<br>
+				PPRINT PATTERN NAME = %MFG_PATTERN_NAME<br>
+				PPRINT TOOL ASSEMBLY = %MFG_TL_ASMBLY_ID <br>
+				PPRINT NC_AXIAL_MO_END_COMMENT END<br>
+				*END<br>
+				*END</code></p>
+		</blockquote>
+		<p>The following example shows the type of APT source that can be generated:</p>
+		<blockquote>
+				<p><code>$$ End generation of : Drilling.1<br>
+				PPRINT NC_AXIAL_MO_END_COMMENT BEGIN<br>
+				PPRINT MACHINE OPERATION = Drilling<br>
+				PPRINT OPERATION NAME = Drilling.1<br>
+				PPRINT PATTERN NAME = Hole.1<br>
+				PPRINT TOOL ASSEMBLY = Drill_Diam10<br>
+				PPRINT NC_AXIAL_MO_END_COMMENT END<br>
+				PPRINT OPERATION NAME : Drilling.1</code></p>
+		</blockquote>
+		<h4><a name="NC_3X_END_COMMENT">NC_3X_MO_END_COMMENT</a></h4>
+		<a name="ix-NC command::NC_3X_MO_END_COMMENT"></a>
+		<p>For 3-axis milling operations:</p>
+		<blockquote>
+				<p><code>*START_NC_INSTRUCTION NC_3X_MO_END_COMMENT<br>
+				*START_SEQUENCE<br>
+				PPRINT NC_3X_MO_END_COMMENT BEGIN<br>
+				PPRINT MACHINE OPERATION = %MFG_MO_TYPE<br>
+				PPRINT OPERATION NAME = %MFG_MO_IDENTIFIER<br>
+				PPRINT TOOL ASSEMBLY = %MFG_TL_ASMBLY_ID<br>
+				PPRINT NC_3X_MO_END_COMMENT END<br>
+				*END<br>
+				*END</code></p>
+		</blockquote>
+		<h4><a name="NC_5X_END_COMMENT">NC_5X_MO_END_COMMENT</a></h4>
+		<a name="ix-NC command::NC_5X_MO_END_COMMENT"></a>
+		<p>For 5-axis milling operations:</p>
+		<blockquote>
+				<p><code>*START_NC_INSTRUCTION NC_5X_MO_END_COMMENT<br>
+				*START_SEQUENCE<br>
+				PPRINT NC_5X_MO_END_COMMENT BEGIN<br>
+				PPRINT MACHINE OPERATION = %MFG_MO_TYPE<br>
+				PPRINT OPERATION NAME = %MFG_MO_IDENTIFIER<br>
+				PPRINT TOOL ASSEMBLY = %MFG_TL_ASMBLY_ID<br>
+				PPRINT NC_5X_MO_END_COMMENT END<br>
+				*END<br>
+				*END</code></p>
+		</blockquote>
+		<h4><a name="NC_LT_END_COMMENT">NC_LATHE_MO_END_COMMENT</a></h4>
+		<a name="ix-NC command::NC_LATHE_MO_END_COMMENT"></a>
+		<p>For turning operations:</p>
+		<blockquote>
+				<p><code>*START_NC_INSTRUCTION NC_LATHE_MO_END_COMMENT<br>
+				*START_SEQUENCE<br>
+				PPRINT NC_LATHE_MO_END_COMMENT BEGIN<br>
+				PPRINT MACHINE OPERATION = %MFG_MO_TYPE<br>
+				PPRINT OPERATION NAME = %MFG_MO_IDENTIFIER<br>
+				PPRINT TOOL ASSEMBLY = %MFG_TL_ASMBLY_ID<br>
+				PPRINT NC_LATHE_MO_END_COMMENT END<br>
+				*END<br>
+				*END</code></p>
+		</blockquote>
+		<h4><a name="NC_ML_END_COMMENT">NC_MILL_MO_END_COMMENT</a></h4>
+		<a name="ix-NC command::NC_MILL_MO_END_COMMENT"></a>
+		<p>For 2.5-axis milling operations:</p>
+		<blockquote>
+				<p><code>*START_NC_INSTRUCTION NC_MILL_MO_END_COMMENT<br>
+				*START_SEQUENCE<br>
+				PPRINT NC_MILL_MO_END_COMMENT BEGIN<br>
+				PPRINT MACHINE OPERATION = %MFG_MO_TYPE<br>
+				PPRINT OPERATION NAME = %MFG_MO_IDENTIFIER<br>
+				PPRINT TOOL ASSEMBLY = %MFG_TL_ASMBLY_ID<br>
+				PPRINT NC_MILL_MO_END_COMMENT END<br>
+				*END<br>
+				*END</code></p>
+		</blockquote>
+		<h4>Other NC Commands</h4>
+		<p>Parameters listed under a context have to be used in the same context 
+		(where it makes sense) and should not be extended to other contexts.</p>
+		<h4><a name="ix-NC command::NC_AXIS_LOCK"></a><a name="NC_AXIS_LOCK">
+		</a>NC_AXIS_LOCK</h4>
+		<p>Allows blocking a linear or rotary axis. <br>
+		See <a href="#DispLockAxis">Displacing and Locking Linear and Rotary Axes</a> 
+		for more information.</p>
+		<p>MFG_AXIS_LOCK_STATUS:lock status of NC axis<br>
+		MFG_NCAXIS_NAME:name of NC axis</p>
+		<h4><a name="ix-NC command::NC_AXIS_MOVE"></a><a name="NC_AXIS_MOVE">
+		</a>NC_AXIS_MOVE</h4>
+		<p>Allows linear displacement.<br>
+		See <a href="#DispLockAxis">Displacing and Locking Linear and Rotary Axes</a> 
+		for more information.</p>
+		<p>MFG_NCAXIS_NAME: name of NC axis<br>
+		MFG_AXIS_POSITION: position if NC axis</p>
+		<h4><a name="ix-NC command::NC_CHANGE_REF_PT"></a>
+		<a name="NC_CHANGE_REF_PT"></a>NC_CHANGE_REF_PT</h4>
+		<p>Allows selecting the tool compensation corresponding to the desired tool 
+		output point.</p>
+		<p>MFG_QUADRANT: Number of the compensation type (for example, 2 for compensation 
+		type P2)<br>
+		<br>
+		MFG_TL_SET_X: Tool assembly set length in x direction<br>
+		MFG_TL_SET_Y: Tool assembly set length in y direction<br>
+		MFG_TL_SET_Z: Tool assembly set length in z direction<br>
+		MFG_NOSE_RADIUS: Insert nose radius<br>
+		MFG_CMP_TL_SET_X: Computed Tool Assembly set length in X direction<br>
+		MFG_CMP_TL_SET_Y: Computed Tool Assembly set length in Y direction<br>
+		MFG_CMP_TL_SET_Z: Computed Tool Assembly set length in Z direction<br>
+		MFG_CMP_NOSE_RADIUS: Nose radius corresponding to the active compensation 
+		point (left or right). Nose radius could be different for groove insert 
+		(left radius, right radius), when changing the active compensation point 
+		automatically. For other inserts (diamond, square, and so on) the value 
+		is the insert radius.<br>
+		<br>
+		MFG_LGTH_COR_REG, MFG_TOOL_COMP and MFG_TL_COMP (compatibility V4): number 
+		of the correction register.</p>
+		<p><b>Default syntax</b>: <code>SWITCH/%MFG_QUADRANT<br>
+		</code><b>Syntax example for turning operations</b>:<br>
+		<code>SWITCH/%MFG_TL_COMP,%MFG_QUADRANT,INCR,%MFG_TL_SET_X,%MFG_TL_SET_Z,%MFG_NOSE_RADIUS</code></p>
+		<h4><a name="ix-NC command::NC_COMMENT"></a><a name="NC_COMMENT"></a>NC_COMMENT</h4>
+		<p>MFG_MO_COMMENT: comment defined on machining operation. </p>
+		<p><b>Default syntax</b>: <code>%MFG_MO_COMMENT</code></p>
+		<h4><a name="ix-NC command::NC_COMPENSATION"></a>
+		<a name="NC_COMPENSATION"></a>NC_COMPENSATION </h4>
+		<p>MFG_TOOL_COMP and MFG_TL_COMP (compatibility V4): value of the tool compensation 
+		length<br>
+		MFG_TL_COMP_RAD: value of the tool compensation radius<br>
+		MFG_TL_NUMBER: tool number associated to the compensation<br>
+		MFG_TL_NAME: name of tool associated to the compensation.</p>
+		<p><b>Default syntax</b>: <code>LOADTL/%MFG_TL_NUMBER,%MFG_TL_COMP</code></p>
+		<h4><a name="ix-NC command::NC_CUTCOM_ON"></a><a name="NC_CUTCOM_ON">
+		</a>NC_CUTCOM_ON</h4>
+		<p>The syntax of this NC command is CUTCOM/ON and cannot be parameterized.
+		</p>
+		<h4><a name="ix-NC command::NC_CUTCOM_OFF"></a><a name="NC_CUTCOM_OFF">
+		</a>NC_CUTCOM_OFF</h4>
+		<p>The syntax of this NC command is CUTCOM/OFF and cannot be parameterized.</p>
+		<h4><a name="ix-NC command::NC_CUTCOM_NORMDS_ON"></a>
+		<a name="NC_CUTCOM_NDS_ON"></a>NC_CUTCOM_NORMDS_ON</h4>
+		<p>The syntax of this NC command is CUTCOM/SAME, NORMDS and cannot be parameterized.
+		</p>
+		<h4><a name="ix-NC command::NC_CUTCOM_NORMDS_OFF"></a>
+		<a name="NC_CUTCOM_NDS_OFF"></a>NC_CUTCOM_NORMDS_OFF</h4>
+		<p>The syntax of this NC command is CUTCOM/OFF and cannot be parameterized.</p>
+		<h4><a name="ix-NC command::NC_CUTCOM_NORMPS_ON"></a>
+		<a name="NC_CUTCOM_NPS_ON"></a>NC_CUTCOM_NORMPS_ON</h4>
+		<p>The syntax of this NC command is CUTCOM/NORMPS and cannot be parameterized.
+		</p>
+		<h4><a name="ix-NC command::NC_CUTCOM_NORMPS_OFF"></a>
+		<a name="NC_CUTCOM_NPS_OFF"></a>NC_CUTCOM_NORMPS_OFF</h4>
+		<p>The syntax of this NC command is CUTCOM/OFF and cannot be parameterized.</p>
+		<h4><a name="ix-NC command::NC_CUTCOM_LEFT"></a>
+		<a name="NC_CUTCOM_LEFT"></a>NC_CUTCOM_LEFT</h4>
+		<p>The syntax of this NC command is CUTCOM/LEFT and cannot be parameterized.</p>
+		<h4><a name="ix-NC command::NC_CUTCOM_RIGHT"></a>
+		<a name="NC_CUTCOM_RIGHT"></a>NC_CUTCOM_RIGHT</h4>
+		<p>The syntax of this NC command is CUTCOM/RIGHT and cannot be parameterized.</p>
+		<h4><a name="ix-NC command::NC_DELAY"></a><a name="NC_DELAY"></a>NC_DELAY
+		</h4>
+		<p>MFG_DELAY_UNIT: list with two values defining the delay units.<br>
+		First value: delay expressed in number of revolutions.<br>
+		REV is the default value.<br>
+		Second value: delay expressed in seconds.<br>
+		A blank string (represented by 8 underscore characters) is the default value. 
+		When the statement is generated by the application this string is ignored.<br>
+		MFG_DELAY_VALUE: numerical value of the delay.</p>
+		<p><b>Default syntax</b>: <code>DELAY/%MFG_DELAY_VALUE,&amp;MFG_DELAY_UNIT</code></p>
+		<h4><a name="ix-NC command::NC_FEEDRATE"></a><a name="NC_FEEDRATE"></a>NC_FEEDRATE</h4>
+		<p>MFG_FEED_UNIT: list with two values defining the feedrate units.<br>
+		First value: feedrate expressed in model units per minute. MMPM is the default 
+		value.<br>
+		Second value: feedrate expressed in model units per revolution. MMPR is 
+		the default value.<br>
+		MFG_FEED_VALUE: numerical value of the feedrate.</p>
+		<p><b>Default syntax</b>: <code>FEDRAT/%MFG_FEED_VALUE,&amp;MFG_FEED_UNIT</code></p>
+		<h4><a name="ix-NC command::NC_HELICAL_INTERPOLATION"></a>
+		<a name="NC_HELICAL_INTERPOLATION"></a>NC_HELICAL_INTERPOLATION</h4>
+		<p>%MFG_HELICAL_X_CENTER: X coordinate of the helix center (output in the 
+		current machining axis); <br>
+		this point is defined on the plane perpendicular to the helix axis and includes 
+		the helix start point.<br>
+		%MFG_HELICAL_Y_CENTER: Y coordinate of the helix center (output in the current 
+		machining axis); <br>
+		this point is defined on the plane perpendicular to the helix axis and includes 
+		the helix start point.<br>
+		%MFG_HELICAL_Z_CENTER: Z coordinate of the helix center (output in the current 
+		machining axis); <br>
+		this point is defined on the plane perpendicular to the helix axis and includes 
+		the helix start point.<br>
+		%MFG_HELICAL_INDIRV_I: I component of the tangent at the helix start point<br>
+		%MFG_HELICAL_INDIRV_J: J component of the tangent at the helix start point<br>
+		%MFG_HELICAL_INDIRV_K: K component of the tangent at the helix start point<br>
+		%MFG_HELICAL_I_AXIS: I component of helix axis <br>
+		%MFG_HELICAL_J_AXIS: J component of helix axis<br>
+		%MFG_HELICAL_K_AXIS: K component of helix axis<br>
+		%MFG_HELICAL_PITCH: helix pitch <br>
+		%MFG_HELICAL_RADIUS: helix radius <br>
+		%MFG_HELICAL_ X_END: X coordinate of the helix end point (output in the 
+		current machining axis)<br>
+		%MFG_HELICAL_ Y_END: Y coordinate of the helix end point (output in the 
+		current machining axis)<br>
+		%MFG_HELICAL_ Z_END: Z coordinate of the helix end point (output in the 
+		current machining axis)<br>
+		%MFG_HELICAL_ANGLE: helix angle <br>
+		%MFG_HELICAL_HEIGHT: helix height<br>
+		%MFG_HELICAL_ROUND: number of turns of the helix</p>
+		<p><b>Default syntax</b>, which is defined with required parameters only:
+		<code><br>
+		HELICAL/, %MFG_HELICAL_ X_CENTER, %MFG_HELICAL_Y_CENTER, %MFG_HELICAL_ Z_CENTER,
+		<br>
+		%MFG_HELICAL_INDIRV_I, %%MFG_HELICAL_INDIRV_J, %MFG_HELICAL_INDIRV_K,
+		<br>
+		%MFG_HELICAL_I_AXIS, %MFG_HELICAL_J_AXIS, %MFG_HELICAL_K_AXIS, %MFG_HELICAL_PITCH,
+		<br>
+		%MFG_HELICAL_RADIUS, %MFG_HELICAL_ X_END, %MFG_HELICAL_ Y_END, %MFG_HELICAL_ 
+		Z_END</code></p>
+		<h4><a name="ix-NC command::NC_MACHINING_AXIS"></a>
+		<a name="NC_MACHINING_AXIS"></a>NC_MACHINING_AXIS</h4>
+		<p>The syntax of this NC command is as follows:</p>
+		<blockquote>
+				<p><code>$$*CATIA0<br>
+				$$ %MFG_NCAXIS_IDENTIFIER<br>
+				$$ %MFG_NCAXIS_X_VECX %MFG_NCAXIS_X_VECY %MFG_NCAXIS_X_VECZ %MFG_NCAXIS_X_ORIG<br>
+				$$ %MFG_NCAXIS_Y_VECX %MFG_NCAXIS_Y_VECY %MFG_NCAXIS_Y_VECZ %MFG_NCAXIS_Y_ORIG<br>
+				$$ %MFG_NCAXIS_Z_VECX %MFG_NCAXIS_Z_VECY %MFG_NCAXIS_Z_VECZ %MFG_NCAXIS_Z_ORIG</code></p>
+		</blockquote>
+		<p>The syntax of this NC command for a multi-slide lathe machine environment 
+		is as follows:</p>
+		<blockquote>
+				<p><code>$$*CATIA0<br>
+				$$ %MFG_NCAXIS_IDENTIFIER, %MFG_SPINDLE_NAME, %MFG_SPINDLE_NUMBER<br>
+				$$ %MFG_NCAXIS_X_VECX %MFG_NCAXIS_X_VECY %MFG_NCAXIS_X_VECZ %MFG_NCAXIS_X_ORIG<br>
+				$$ %MFG_NCAXIS_Y_VECX %MFG_NCAXIS_Y_VECY %MFG_NCAXIS_Y_VECZ %MFG_NCAXIS_Y_ORIG<br>
+				$$ %MFG_NCAXIS_Z_VECX %MFG_NCAXIS_Z_VECY %MFG_NCAXIS_Z_VECZ %MFG_NCAXIS_Z_ORIG</code></p>
+		</blockquote>
+		<p>The parameters are as follows:</p>
+		<p>MFG_NCAXIS_IDENTIFIER: manufacturing program name for the first output, 
+		otherwise name of the machining axis change<br>
+		MFG_SPINDLE_NAME: name of the spindle that is linked to the origin<br>
+		MFG_SPINDLE_NUMBER: number of the spindle that is linked to the origin<br>
+		MFG_NCAXIS_X_ORIG, MFG_NCAXIS_Y_ORIG, MFG_NCAXIS_Z_ORIG: coordinates of 
+		the machining axis origin<br>
+		MFG_NCAXIS_X_VECX, MFG_NCAXIS_Y_VECX, MFG_NCAXIS_Z_VECX: components of the 
+		x-axis<br>
+		MFG_NCAXIS_X_VECY, MFG_NCAXIS_Y_VECY, MFG_NCAXIS_Z_VECY: components of the 
+		y-axis<br>
+		MFG_NCAXIS_X_VECZ, MFG_NCAXIS_Y_VECZ, MFG_NCAXIS_Z_VECZ: components of the 
+		z-axis.</p>
+		<p>See <a href="#DispLockAxis">Displacing and Locking Linear and Rotary 
+		Axes</a> for more information.</p>
+		<h4><a name="ix-NC command::NC_MILL_TURRET_INVERSION"></a>
+		<a name="NC_MILL_TURRET_INVERSION"></a>NC_MILL_TURRET_INVERSION</h4>
+		<p>The syntax of this NC command is as follows:</p>
+		<blockquote>
+				<p><code>*START_NC_COMMAND NC_MILL_TURRET_INVERSION <br>
+				*START_SEQUENCE<br>
+				ROTATE/CAXIS,%MFG_MILL_TURRET_AXIS_INVERT<br>
+				*END<br>
+				*END</code></p>
+		</blockquote>
+		<p>Parameter is the following:<br>
+		%MFG_MILL_TURRET_AXIS_INVERT: value of this parameter indicates whether 
+		the mill turret is at inverted position or not<br>
+		Possible values:<br>
+		0: not inverted (C-axis = 0 degree)<br>
+		1: inverted (C-axis = 180 degrees)</p>
+		<p>Notes: </p>
+		<ul>
+				<li>The syntax is output only when the operation is performed on 
+				a machine with a turret defined as a Mill Turret (for example, on 
+				a multi-slide lathe machine).</li>
+				<li>If no syntax is defined in the PP word table, no statement is 
+				generated on turning operation.</li>
+		</ul>
+		<h4><a name="ix-NC command::NC_MILL_TURRET_ORIENTATION"></a>
+		<a name="NC_MILL_TURRET_ORIENTATION"></a>NC_MILL_TURRET_ORIENTATION</h4>
+		<p>The syntax of this NC command is as follows: </p>
+		<blockquote>
+				<p><code>*START_NC_COMMAND NC_MILL_TURRET_ORIENTATION <br>
+				BAXIS,/%MFG_MILL_TURRET_I_AXIS, %MFG_MILL_TURRET_J_AXIS, MFG_MILL_TURRET_K_AXIS<br>
+				*END</code></p>
+		</blockquote>
+		<p>Parameters are the following:<br>
+		% MFG_MILL_TURRET_I_AXIS: I component of tool axis orientation<br>
+		% MFG_MILL_TURRET_J_AXIS: J component of tool axis orientation<br>
+		% MFG_MILL_TURRET_K_AXIS: K component of tool axis orientation</p>
+		<p>Coordinates are defined in the machining axis (spindle axis system).</p>
+		<h4><a name="ix-NC command::NC_MULTAX_ON"></a><a name="NC_MULTAX_ON">
+		</a>NC_MULTAX_ON</h4>
+		<p>The syntax of this NC command is MULTAX and cannot be parameterized.
+		</p>
+		<h4><a name="ix-NC command::NC_MULTAX_OFF"></a><a name="NC_MULTAX_OFF">
+		</a>NC_MULTAX_OFF</h4>
+		<p>The syntax of this NC command is MULTAX/OFF and cannot be parameterized.
+		</p>
+		<h4><a name="ix-NC command::NC_PITCH"></a><a name="NC_PITCH"></a>NC_PITCH</h4>
+		<p>MFG_THREAD_PITCH: Thread pitch&nbsp; <a name="pgfId=1085704"><br>
+		</a>MFG_NUM_THREADS: Number of threads.</p>
+		<p><b>Syntax examples</b>:<br>
+		<code>PITCH/%MFG_THREAD_PITCH<br>
+		</code><br>
+		<code>PITCH/(1/%MFG_THREAD_PITCH),MULTRD,%MFG_NUM_THREADS<br>
+		FEDRAT/%MFG_THREAD_PITCH,MMPR</code></p>
+		<h4><a name="ix-NC command::NC_SPINDLE_ON"></a><a name="NC_SPINDLE_ON">
+		</a>NC_SPINDLE_ON</h4>
+		<p>The syntax of this NC command is SPINDL/ON and cannot be parameterized.
+		</p>
+		<h4><a name="ix-NC command::NC_SPINDLE_START"></a>
+		<a name="NC_SPINDLE_START"></a>NC_SPINDLE_START or
+		<a name="ix-NC command::NC_SPINDLE"></a><a name="NC_SPINDLE"></a>NC_SPINDLE</h4>
+		<p>MFG_SPNDL_UNIT: list with two values defining the spindle rotation units.<br>
+		First value: spindle rotation expressed in revolutions per minute. RPM is 
+		the default value.<br>
+		Second value: spindle rotation expressed in surface meters per minute. SMM 
+		is the default value.<br>
+		MFG_SPNDL_WAY: list with two values defining the direction of rotation of 
+		the spindle.<br>
+		First value: spindle rotation processed clockwise. CLW is the default value.<br>
+		Second value: spindle rotation processed counter-clockwise. CCLW is the 
+		default value.<br>
+		MFG_SPNDL_SPEED: numerical value of the spindle speed.<br>
+		MFG_SPNDL_DIAMTR: diameter of the tool where the spindle speed is taken 
+		into account.</p>
+		<p><b>Default syntax</b>: <code>SPINDL/%MFG_SPNDL_SPEED,&amp;MFG_SPNDL_UNIT,&amp;MFG_SPNDL_WAY</code></p>
+		<h4><a name="ix-NC command::NC_SPINDLE_LATHE"></a>
+		<a name="NC_SPINDLE_LATHE"></a>NC_SPINDLE_LATHE</h4>
+		<p>Note that this corresponds to the <b>part&#39;s </b>spindle speed.</p>
+		<p>MFG_SPNDL_UNIT: list with two values defining the spindle rotation units.<br>
+		First value: spindle rotation expressed in revolutions per minute. RPM is 
+		the default value.<br>
+		Second value: spindle rotation expressed in surface meters per minute. SMM 
+		is the default value.<br>
+		MFG_SPNDL_WAY: list with two values defining the direction of rotation of 
+		the spindle.<br>
+		First value: spindle rotation processed clockwise. CLW is the default value.<br>
+		Second value: spindle rotation processed counter-clockwise. CCLW is the 
+		default value.<br>
+		MFG_SPNDL_SPEED: numerical value of the spindle speed.</p>
+		<p><b>Default syntax</b>: <code>SPINDL/%MFG_SPNDL_SPEED,&amp;MFG_SPNDL_UNIT</code></p>
+		<h4><a name="ix-NC command::NC_SPINDLE_STOP"></a>
+		<a name="NC_SPINDLE_STOP"></a>NC_SPINDLE_STOP</h4>
+		<p>This NC command ensures compatibility with V4. You should use NC_SPINDLE_LOCK 
+		or NC_SPINDLE_OFF, if possible.</p>
+		<p>MFG_SPNDL_STOP: list with two values defining the action applied to the 
+		spindle.<br>
+		First value: de-activation of the spindle. OFF is the default value.<br>
+		Second value: spindle locked in an indexed position. LOCK is the default 
+		value.</p>
+		<h4><a name="ix-NC command::NC_SPINDLE_LOCK"></a>
+		<a name="NC_SPINDLE_LOCK"></a>NC_SPINDLE_LOCK</h4>
+		<p>The syntax of this NC command is SPINDL/LOCK and cannot be parameterized.
+		</p>
+		<h4><a name="ix-NC command::NC_SPINDLE_MAXSPEED"></a>
+		<a name="NC_SPINDLE_MAXSPEED"></a>
+		NC_SPINDLE_MAXSPEED</h4>
+		<p>Note that this corresponds to the maximum spindle speed defined on the 
+		operation and is output only if the <kbd>Spindle Output</kbd> option is checked on the operation.</p>
+		<p>MFG_MAX_ SPNDL_SPEED: numerical value of the maximum spindle speed.<br>
+		MFG_MAX_SPNDL_UNIT: the rotation units of the maximum spindle speed are 
+		in revolutions per minute (RPM).<br>
+		MFG_SPNDL_WAY: list with two values defining the direction of rotation of 
+		the spindle.<br>
+		First value: spindle rotation processed clockwise. CLW is the default value.<br>
+		Second value: spindle rotation processed counter-clockwise. CCLW is the 
+		default value.</p>
+		<p><b>Default syntax</b>: <code>MAXSPNDL/%MFG_MAX_SPNDL_SPEED, &amp;MFG_MAX_SPNDL_UNIT</code></p>
+		<p><b>Example</b>: </p>
+		<blockquote>
+				<p><code>*START_NC_COMMAND NC_SPINDLE_MAXSPEED<br>
+&nbsp;MAXSPNDL/%MFG_MAX_SPNDL_SPEED, &amp; MFG_MAX_SPNDL_UNIT, &amp; MFG_SPNDL_WAY<br>
+				*END</code></p>
+		</blockquote>
+		<h4><a name="ix-NC command::NC_SPINDLE_OFF"></a>
+		<a name="NC_SPINDLE_OFF"></a>NC_SPINDLE_OFF</h4>
+		<p>The syntax of this NC command is SPINDL/OFF and cannot be parameterized.
+		</p>
+		<h4><a name="ix-NC command::NC_THREAD_TURN"></a>
+		<a name="NC_THREAD_TURN"></a>NC_THREAD_TURN</h4>
+		<p><b>Syntax example</b>: <code>THREAD/TURN</code></p>
+		<h4><a name="ix-NC command::NC_THREAD_TURN_OFF"></a>
+		<a name="NC_THREAD_TURN_OFF"></a>NC_THREAD_TURN_OFF</h4>
+		<p>Ends a NC_THREAD_TURN statement.</p>
+		<p><b>Syntax example</b>:</p>
+		<blockquote>
+				<p><code>*START_NC_COMMAND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				NC_THREAD_TURN_OFF<br>
+				THREAD/OFF<br>
+				*END</code></p>
+		</blockquote>
+		<h2><a name="NCInstruction"></a>NC Instructions </h2>
+		<p>You can define for a given machine tool (i.e. post-processor) sequences 
+		of PP word syntaxes associated to particular NC instructions.</p>
+		<p>NC instructions are either <a href="#NCINSR_AUXCMD">auxiliary commands</a> 
+		or <a href="#NCINSTR_AXIALOP">axial machining operations</a>. </p>
+		<p>A syntax comprises a major word and one or more syntax elements such 
+		as minor words, numerical values and standard parameters. A set of standard 
+		parameters is associated to each NC instruction. Parameters may be combined 
+		in arithmetical expressions. </p>
+		<p>A syntax that includes parameters is a <b>parameterized syntax</b> (see 
+		examples below):</p>
+		<blockquote>
+				<p><code>*START_NC_INSTRUCTION&nbsp;&nbsp; NC_TOOL_CHANGE<br>
+				*START_SEQUENCE<br>
+				TOOLNO/%MFG_TOOL_NUMBER,%MFG_NOMINAL_DIAM<br>
+				TPRINT/%MFG_TOOL_NAME<br>
+				LOADTL/%MFG_TOOL_NUMBER<br>
+				*END<br>
+				*END</code></p>
+				<p><code>*START_NC_INSTRUCTION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NC_TAPPING<br>
+				*START_SEQUENCE<br>
+				CYCLE/TAP,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP<br>
+				*END<br>
+				*END</code></p>
+		</blockquote>
+		<p>Note that the <b>%</b> character indicates a parameter.</p>
+		<p>You can define one or more syntax sequences for each NC instruction.</p>
+		<p>For an example of how to define syntax sequences in NC Instructions, 
+		please see <a href="page11424.html">PP Word Syntaxes</a> in the Customizing 
+		section of this guide.</p>
+		<h3><a name="NCINSR_AUXCMD"></a>Standard Parameters for Auxiliary Command 
+		Type NC Instructions</h3>
+		<p>These parameters include data that is defined on the corresponding entity 
+		or parameters that are computed according to an application method. </p>
+		<p>Auxiliary command type NC Instructions are as follows:</p>
+		<ul>
+				<li><a href="#NC_ACTIVITY_HEADER">NC_ACTIVITY_HEADER</a></li>
+				<li><a href="#NC_CYCLE_OFF">NC_CYCLE_OFF</a></li>
+				<li><a href="#NC_END_MACRO">NC_END_MACRO</a></li>
+				<li><a href="#NC_HEAD_ROTATION">NC_HEAD_ROTATION</a></li>
+				<li><a href="#NC_ORIGIN">NC_ORIGIN</a></li>
+				<li><a href="#NC_PROGRAM_HEADER">NC_PROGRAM_HEADER</a></li>
+				<li><a href="#NC_START_MACRO">NC_START_MACRO</a></li>
+				<li><a href="#NC_TABLE_ROTATION">NC_TABLE_ROTATION</a></li>
+				<li><a href="#NC_TOOL_CHANGE">NC_TOOL_CHANGE</a></li>
+				<li><a href="#NC_TOOL_CHANGE_LATHE">NC_TOOL_CHANGE_LATHE</a></li>
+		</ul>
+		<div align="left">
+				<table border="0" style="padding-bottom: 10">
+						<tr>
+								<td width="621" valign="top" style="padding-top: 15; padding-bottom: 10" colspan="3">
+								<h4>
+								<a name="ix-NC instruction, auxiliary command type::NC_ACTIVITY_HEADER">
+								</a><a name="NC_ACTIVITY_HEADER"></a>NC_ACTIVITY_HEADER</h4>
+								<font face="Arial" size="2">
+								<p>This instruction is used to valuate parameters 
+								of an activity during the generation of APT.</p>
+								</font>
+								<p><b>Default syntax (empty)</b>: <code><br>
+								*START_NC_INSTRUCTION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+								NC_ACTIVITY_HEADER <br>
+								*START_SEQUENCE <br>
+								*END <br>
+								*END</code></p>
+								<p><b>Syntax example</b>:<br>
+								<code>$$ OPERATION NAME = %MFG_MO_IDENTIFIER</code></p>
+								<h4>
+								<a name="NC_CYCLE_OFF">NC_CYCLE_OFF</a></h4>
+								<p>
+								The CYCLE instruction is generated by 
+								drilling and probing operations.
+								By default (if the user defines nothing in the 
+								used PPTable) the NC_AXIAL_CYCLE_OFF, 
+								NC_LATHE_CYCLE_OFF and NC_PROBING_CYCLE_OFF 
+								instructions are defined by:<br>
+								&nbsp;</p>
+								<ul>
+									<li>For a drilling operation:<br>
+									<code>*START_NC_INSTRUCTION 
+									NC_AXIAL_CYCLE_OFF <br>
+									*START_SEQUENCE <br>
+									CYCLE/OFF <br>
+									*END <br>
+									*END</code></li>
+									<li>For a lathe operation:<br>
+									<code>*START_NC_INSTRUCTION 
+									NC_LATHE_CYCLE_OFF <br>
+									*START_SEQUENCE <br>
+									CYCLE/OFF <br>
+									*END <br>
+									*END</code></li>
+									<li>For a probing operation:<br>
+									<code>*START_NC_INSTRUCTION 
+									NC_PROBING_CYCLE_OFF <br>
+									*START_SEQUENCE <br>
+									CYCLE/OFF <br>
+									*END <br>
+									*END</code></li>
+								</ul>
+								<p>The instruction is managed 
+								automatically by the operation, not by the user.</p>
+								<p>For existing tool paths, if you had 
+								defined the NC_CYCLE_OFF in your PPTable, define 
+								NC_AXIAL_CYCLE_OFF, NC_LATHE_CYCLE_OFF and 
+								NC_PROBING_CYCLE_OFF as NC_CYCLE_OFF to keep the 
+								same tool path.</p>
+								<h4>
+								<a name="ix-NC instruction, auxiliary command type::NC_END_MACRO">
+								</a><a name="NC_END_MACRO"></a>NC_END_MACRO </h4>
+								<p>MFG_IDENTIFIER: Part Operation identifier<br>
+								MFG_MACHINE_NAME: Machine name.</p>
+								<p><b>Default syntax</b>: <code>SPINDL/OFF</code></p>
+								<h4><a name="NC_HEAD_ROTATION"></a>
+								<a name="ix-NC instruction, auxiliary command type::NC_HEAD_ROTATION">
+								NC_HEAD_ROTATION</a></h4>
+								<p>MFG_TYPE_OF_ROT: Rotation type (absolute angle 
+								in this version)<br>
+								MFG_DIR_OF_ROT: Rotation direction (clockwise or 
+								counterclockwise)<br>
+								MFG_AMOUNT_ROT: Angle of rotation about the axis 
+								of rotation<br>
+								MFG_AXIS_OF_ROT: Axis of rotation on machine head.
+								<br>
+								MFG_ABC_AXIS: Axis of rotation on machine head to 
+								get Minor word AAXIS, BAXIS or CAXIS.</p>
+								<p>See <a href="#DispLockAxis">Displacing and Locking 
+								Linear and Rotary Axes</a> for more information.</p>
+								<p><b>Default syntax</b>: <code>ROTHED/%MFG_AMOUNT_ROT,%MFG_DIR_OF_ROT</code></p>
+								<h4>
+								<a name="ix-NC instruction, auxiliary command type::NC_ORIGIN">
+								</a><a name="NC_ORIGIN"></a>NC_ORIGIN</h4>
+								<p>MFG_NCAXIS_X_ORIG, MFG_NCAXIS_Y_ORIG, MFG_NCAXIS_Z_ORIG: 
+								coordinates of the origin<br>
+								MFG_ORIGIN_NUMBER: origin number<br>
+								MFG_ORIGIN_GROUP: origin group.</p>
+								<p><b>Default syntax</b>: <code>ORIGIN/%MFG_NCAXIS_X_ORIG,%MFG_NCAXIS_Y_ORIG,%MFG_NCAXIS_Z_ORIG,$<br>
+								%MFG_ORIGIN_NUMBER,%MFG_ORIGIN_GROUP</code></p>
+								<h4>
+								<a name="ix-NC instruction, auxiliary command type::NC_PROGRAM_HEADER">
+								</a><a name="NC_PROGRAM_HEADER"></a>NC_PROGRAM_HEADER</h4>
+								<p>MFG_PROGRAM_NAME: Manufacturing Program name<br>
+								MFG_CHANNEL_NUMBER: Channel number (Turret).</p>
+								<p><b>Default syntax (empty)</b>: <code><br>
+								*START_NC_INSTRUCTION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+								NC_PROGRAM_HEADER <br>
+								*START_SEQUENCE <br>
+								*END <br>
+								*END</code></p>
+								<p><b>Syntax example</b>:<br>
+								<code>PROG_NAME,%MFG_PROGRAM_NAME</code></p>
+								<p><b>Syntax example in a Multi-Axis Lathe machine 
+								environment</b>:<br>
+								<code>CHANNEL,%MFG_CHANNEL_NUMBER</code></p>
+								<h4>
+								<a name="ix-NC instruction, auxiliary command type::NC_START_MACRO">
+								</a><a name="NC_START_MACRO"></a>NC_START_MACRO
+								</h4>
+								<p>MFG_IDENTIFIER: Part Operation identifier<br>
+								MFG_PROGRAM_NAME: Manufacturing Program name<br>
+								MFG_MACHINE_NAME: Machine name<br>
+								MFG_MODEL_NAME: Name of the CATProcess (with document 
+								suffix)<br>
+								MFG_PRODUCT_NAME: Name of the CATProduct/CATPart 
+								(with no document suffix).</p>
+								<p><b>Default syntax</b>: <code>PARTNO PART TO BE 
+								MACHINED</code></p>
+								<p>Note: When PARTNO is defined as a major word 
+								with text, if you want to use PARTNO with parameters 
+								for a clfile output, the &quot;/&quot; character must be replaced 
+								by a space.<br>
+								You can use the&nbsp; &quot;/&quot; character for an APT output.</p>
+								<h4><a name="NC_TABLE_ROTATION"></a>
+								<a name="ix-NC instruction, auxiliary command type::NC_TABLE_ROTATION">
+								NC_TABLE_ROTATION</a></h4>
+								<p>MFG_TYPE_OF_ROT: Rotation type (absolute angle 
+								in this version)<br>
+								MFG_DIR_OF_ROT: Rotation direction (clockwise or 
+								counterclockwise)<br>
+								MFG_AMOUNT_ROT: Angle of rotation about the axis 
+								of rotation<br>
+								MFG_AXIS_OF_ROT: Axis of rotation on machine table.
+								<br>
+								MFG_ABC_AXIS: Axis of rotation on machine table 
+								to get Minor word AAXIS, BAXIS or CAXIS.</p>
+								<p><b>Default syntax</b>: <code>ROTABL/%MFG_AMOUNT_ROT,%MFG_DIR_OF_ROT</code></p>
+								<p>See <a href="#DispLockAxis">Displacing and Locking 
+								Linear and Rotary Axes</a> for more information.</p>
+								<h4><a name="NC_TOOL_CHANGE"></a>
+								<a name="ix-NC instruction, auxiliary command type::NC_TOOL_CHANGE">
+								NC_TOOL_CHANGE</a></h4>
+								<p>Please note that if tool assembly resources are 
+								not used in your process, the term &#39;tool assembly&#39; 
+								means &#39;tool&#39; or &#39;cutter&#39; in the following description.
+								</p>
+								<p>MFG_TL_ASMBLY_ID: Tool assembly identifier
+								<br>
+								MFG_TL_SET_LGTH: Tool set length<br>
+								MFG_NOMINAL_DIAM: Nominal diameter of the tool<br>
+								MFG_TOOL_COMMENT: Comment associated with the tool<br>
+								MFG_TOOL_NUMBER: Tool assembly number <br>
+								MFG_ASS_COMMENT: Comment associated with the tool 
+								assembly<br>
+								MFG_WEIGHT_SNTX: Tool weight syntax<br>
+								MFG_COOLNT_SNTX: Coolant supply syntax<br>
+								MFG_TOOTH_DES: Tooth description<br>
+								MFG_DIAMETER_2: Diameter 2 of the tool assembly<br>
+								MFG_MAX_MIL_TIME: Tool life (in time units)<br>
+								MFG_MAX_MIL_LGTH: Tool life (in length units)<br>
+								MFG_CORNER_RAD: Tool corner radius<br>
+								MFG_CUT_ANGLE: Tool cutting angle<br>
+								MFG_LENGTH: Length of active part of the tool<br>
+								MFG_TL_TIP_LGTH: Tool tip length<br>
+								MFG_CUT_LENGTH: Tool cutting length<br>
+								MFG_NB_OF_FLUTES: Number of teeth<br>
+								MFG_TOOL_NAME: Tool name<br>
+								MFG_TL_SET_X: Tool set length in x direction<br>
+								MFG_TL_SET_Y: Tool set length in y direction<br>
+								MFG_WAY_OF_ROT: Computed rotation direction of tool 
+								(RIGHTHAND or LEFTHAND)<br>
+								MFG_TOOL_ASS_POW: Computed tool assembly power type<br>
+								If fixed the value is TURN, otherwise the value 
+								is MILL<br>
+								MFG_TOOL_COMP and MFG_TL_COMP (compatibility V4): 
+								value of the tool compensation length<br>
+								MFG_TOOL_COMP_2: value of the second tool compensation 
+								length<br>
+								<br>
+								MFG_FEED_MACH: Machining feedrate <b>(*)</b><br>
+								MFG_SPNDL_MACH: Machining spindle speed <b>(*)<br>
+								</b>MFG_FEED_UNIT: Computed feedrate unit <b>(*)</b><br>
+								MFG_SPNDL_UNIT: Computed spindle speed unit <b>(*)</b></p>
+								<p><b>(*)</b> The values of these feed and speed 
+								attributes are taken from the first machining operation 
+								under the tool change.</p>
+								<p><b>Default syntax</b>: <code>TOOLNO/%MFG_TOOL_NUMBER,%MFG_NOMINAL_DIAM</code></p>
+								</td>
+						</tr>
+						<tr>
+								<td width="621" valign="top" colspan="3">
+								<h4><a name="NC_TOOL_CHANGE_LATHE"></a>
+								<a name="ix-NC instruction, auxiliary command type::NC_TOOL_CHANGE_LATHE">
+								NC_TOOL_CHANGE_LATHE</a></h4>
+								<p>MFG_TL_ASMBLY_ID: Tool assembly identifier
+								<br>
+								MFG_ASS_COMMENT: Comment associated with the tool 
+								assembly <br>
+								MFG_TOOL_NUMBER: Tool assembly number <br>
+								MFG_TOOL_NAME: Insert-holder name <br>
+								MFG_TOOL_COMMENT: Comment associated with the insert-holder<br>
+								MFG_INSERT_NAME: Insert name<br>
+								MFG_INSERT_COMMENT: Comment associated with the 
+								insert<br>
+								<br>
+								MFG_QUADRANT: Number of the compensation type (for 
+								example, 2 for compensation type P2)<br>
+								MFG_TL_SETUP_ANG: Tool assembly setup angle (value 
+								in degrees)<br>
+								MFG_TL_SET_X: Tool assembly set length in x direction
+								<br>
+								MFG_TL_SET_Y: Tool assembly set length in y direction&nbsp;
+								<br>
+								MFG_TL_SET_Z: Tool assembly set length in z direction
+								<br>
+								MFG_NOSE_RADIUS: Insert nose radius <br>
+								<br>
+								MFG_CMP_TL_SET_X: Computed Tool Assembly set length 
+								in X direction<br>
+								MFG_CMP_TL_SET_Y: Computed Tool Assembly set length 
+								in Y direction<br>
+								MFG_CMP_TL_SET_Z: Computed Tool Assembly set length 
+								in Z direction<br>
+								MFG_CMP_NOSE_RADIUS: Nose radius corresponding to 
+								the active compensation point (left or right). Nose 
+								radius could be different for groove insert (left 
+								radius, right radius), when changing the active 
+								compensation point automatically. For other inserts 
+								(diamond, square, and so on) the value is the insert 
+								radius.<br>
+								<br>
+								MFG_HAND_STYLE: Insert-holder style (LEFT_HAND, 
+								RIGHT_HAND or NEUTRAL)<br>
+								MFG_TOOL_INVERT: Tool assembly inversion. Defines 
+								if the insert-holder has been inverted with respect 
+								to the original insert-holder style. Possible values 
+								are 0 (not inverted) or 1 (inverted).<br>
+								MFG_TOOL_COMP and MFG_TL_COMP (compatibility V4): 
+								Value of the insert-holder compensation length<br>
+								<br>
+								MFG_LIFE_TIME: Insert life-time (in time units). 
+								Not available for Groove inserts. <br>
+								MFG_CLEAR_ANGLE: Insert clearance angle<br>
+								MFG_INSERT_LGTH: Insert length<br>
+								MFG_INSCRIB_DIAM: Inscribed diameter of insert
+								<br>
+								MFG_INSERT_ANGLE: Insert shape angle <br>
+								<br>
+								MFG_SPNDL_WAY: Spindle direction <br>
+								MFG_FEED_MACH: Machining feedrate <b>(*)</b><br>
+								MFG_FEED_UNIT: Feedrate unit <b>(*)</b><br>
+								MFG_SPNDL_MACH: Machining spindle speed <b>(*)</b><br>
+								MFG_SPNDL_UNIT: Spindle speed unit <b>(*)</b>.</p>
+								<p><b>(*)</b> The values of these feed and speed 
+								attributes are taken from the first machining operation 
+								under the tool change.</p>
+								<p><b>Default syntax</b>: <code>TOOLNO/%MFG_TOOL_NUMBER,TURN</code></p>
+								<h4>Mill/Turn integration and the NC_TOOL_CHANGE_LATHE 
+								instruction</h4>
+								<p>For a drilling operation using a non-powered 
+								Milling Tool Assembly and machining along the spindle 
+								axis, a Lathe Tool Change is created. In this case, 
+								the following Insert attributes are replaced by 
+								Tool attributes:</p>
+								</td>
+						</tr>
+						<tr>
+								<td valign="top"><b>Insert attributes</b><br>
+								MFG_NOSE_RADIUS <br>
+								MFG_INSCRIB_DIAM <br>
+								MFG_LIFE_TIME <br>
+								MFG_LIFE_LGTH <br>
+								MFG_INSERT_LGTH <br>
+								MFG_CLEAR_ANGLE<br>
+								MFG_INSERT_ANGLE </td>
+								<td valign="top">&nbsp;</td>
+								<td valign="top"><b>Tool attributes</b><br>
+&nbsp;MFG_NOMINAL_DIAM<br>
+&nbsp;MFG_NOMINAL_DIAM<br>
+&nbsp;MFG_MAX_MIL_TIME<br>
+&nbsp;MFG_MAX_MIL_LGTH<br>
+&nbsp;MFG_CUT_LENGTH<br>
+&nbsp;0 (not valuated)<br>
+&nbsp;MFG_CUT_ANGLE </td>
+						</tr>
+				</table>
+		</div>
+		<h3><a name="DispLockAxis"></a>Displacing and Locking Linear and Rotary 
+		Axes</h3>
+		<p>Machine instructions have a customizable format in the PP table.<br>
+		They can contain the following information.</p>
+		<p><b>Linear displacements:</b> </p>
+		<p>Default format for a linear displacement: </p>
+		<blockquote>
+				<p><code>PPFUN/ &lt;Letter of the axis&gt;,&lt;Letter of the axis&gt;AXIS,value 
+				of the displacement</code></p>
+		</blockquote>
+		<p>Otherwise, it can be customized in the PP table by means of NC_AXIS_MOVE.</p>
+		<blockquote>
+				<p><code>/<br>
+				*START_NC_COMMAND NC_AXIS_MOVE<br>
+				CLAMP/OFF,%MFG_NCAXIS_NAME,%MFG_AXIS_POSITION<br>
+				*END<br>
+				/</code></p>
+		</blockquote>
+		<p><b>Rotary displacements:</b></p>
+		<p>Format for a rotary displacement: </p>
+		<blockquote>
+				<p><code>ROTABL/value of the rotation,&lt;rotary direction &gt;,&lt;rotation 
+				axis&gt;</code></p>
+		</blockquote>
+		<p>Otherwise, it can be customized in the PP table by means of the NC instructions 
+		NC_TABLE_ROTATION, NC_MACHINING_AXIS and NC_HEAD_ROTATION.</p>
+		<blockquote>
+				<p><code>/<br>
+				*START_NC_INSTRUCTION NC_HEAD_ROTATION<br>
+				*START_SEQUENCE<br>
+				ROTHED/%MFG_AMOUNT_ROT,%MFG_DIR_OF_ROT<br>
+				*END<br>
+				*END<br>
+				/<br>
+				*START_NC_INSTRUCTION NC_TABLE_ROTATION<br>
+				*START_SEQUENCE<br>
+				ROTABL/%MFG_AMOUNT_ROT,%MFG_DIR_OF_ROT,%MFG_ABC_AXIS<br>
+				*END<br>
+				*END<br>
+				/<br>
+				*START_NC_INSTRUCTION NC_MACHINING_AXIS<br>
+				*START_SEQUENCE<br>
+				$$ %MFG_NCAXIS_IDENTIFIER<br>
+				$$ %MFG_NCAXIS_X_VECX %MFG_NCAXIS_X_VECY %MFG_NCAXIS_X_VECZ %MFG_NCAXIS_X_ORIG<br>
+				$$ %MFG_NCAXIS_Y_VECX %MFG_NCAXIS_Y_VECY %MFG_NCAXIS_Y_VECZ %MFG_NCAXIS_Y_ORIG<br>
+				$$ %MFG_NCAXIS_Z_VECX %MFG_NCAXIS_Z_VECY %MFG_NCAXIS_Z_VECZ %MFG_NCAXIS_Z_ORIG<br>
+				CATMAT/%MFG_NCAXIS_X_ORIG,%MFG_NCAXIS_Y_ORIG,%MFG_NCAXIS_Z_ORIG,%MFG_NCAXIS_X_VECX,%MFG_NCAXIS_X_VECY,%MFG_NCAXIS_X_VECZ,%MFG_NCAXIS_Y_VECX,%MFG_NCAXIS_Y_VECY,%MFG_NCAXIS_Y_VECZ,%MFG_NCAXIS_Z_VECX,%MFG_NCAXIS_Z_VECY,%MFG_NCAXIS_Z_VECZ,%MFG_NCAXIS_IDENTIFIER<br>
+				*END<br>
+				*END</code></p>
+		</blockquote>
+		<p><b>To block a linear or rotary axis: </b></p>
+		<p>If the axis is blocked:</p>
+		<blockquote>
+				<p><code>LOCK/ &lt;Letter of the axis&gt;,&lt;Letter of the axis&gt;AXIS,ON
+				</code></p>
+		</blockquote>
+		<p>Otherwise, it can be customized in the PP table by means of NC_AXIS_LOCK</p>
+		<blockquote>
+				<p><code>/<br>
+				*START_NC_COMMAND NC_AXIS_LOCK<br>
+				CLAMP/%MFG_AXIS_LOCK_STATUS,%MFG_NCAXIS_NAME<br>
+				*END<br>
+				/</code></p>
+		</blockquote>
+		<h3><a name="NCINSTR_AXIALOP"></a>Standard Parameters for Axial Machining 
+		Operation Type NC Instructions</h3>
+		<p>For axial machining operations, the standard parameters are either:</p>
+		<ul>
+				<li>parameters defined on the corresponding machining operation 
+				(geometrical data, machining strategy parameters, feeds and speeds, 
+				and so on) </li>
+				<li>parameters that are calculated according to an application method.</li>
+		</ul>
+		<p>In the figures below<a name="holedepthfigures"></a>:</p>
+		<ul>
+				<li>detail depth (MFG_DETAIL_DEPTH), total depth (MFG_TOTAL_DEPTH) 
+				and total depth up to the tool compensation point (MFG_TOTAL_DEPTH_COMP) 
+				are computed parameters</li>
+				<li>breakthrough distance (MFG_BREAKTHROUGH) is a machining strategy 
+				parameter</li>
+				<li>tool tip length is a geometric attribute of the tool (MFG_TL_TIP_LGTH).</li>
+		</ul>
+		<p>Overall breakthrough is the breakthrough distance plus the tool tip length.</p>
+		<table cellspacing="1" width="100%">
+				<tr>
+						<td width="50%">
+						<img border="1" src="b35doc/english/online/mfgug_c2/images/TotalDepth01.gif" width="338" height="346"></td>
+				</tr>
+				<tr>
+						<td width="50%">
+						<p align="left"><a name="BrkThru_No"></a><b>Figure 1.</b> 
+						Total depth without breakthrough</p>
+						</td>
+				</tr>
+				<tr>
+						<td width="50%">
+						<img border="1" src="b35doc/english/online/mfgug_c2/images/TotalDepth02.gif" width="340" height="381"></td>
+				</tr>
+				<tr>
+						<td width="50%">
+						<p align="left"><a name="BrkThru_Yes"></a><b>Figure 2.</b> 
+						Total depth with breakthrough</p>
+						</td>
+				</tr>
+		</table>
+		<p>The figures below show Depth mode behavior on axial operations with chamfering 
+		machining:</p>
+		<table cellspacing="1" width="100%">
+				<tr>
+						<td width="50%">
+						<img border="1" src="b35doc/english/online/mfgug_c2/images/TotalDepth03.gif" width="400" height="300"></td>
+				</tr>
+				<tr>
+						<td width="50%">
+						<p align="left"><a name="TotalDepth03"></a><b>Figure 3.</b> 
+						Spot Drilling with Depth mode=By Tip</p>
+						</td>
+				</tr>
+				<tr>
+						<td width="50%">
+						<img border="1" src="b35doc/english/online/mfgug_c2/images/TotalDepth04.gif" width="435" height="300"></td>
+				</tr>
+				<tr>
+						<td width="50%">
+						<p align="left"><a name="TotalDepth04"></a><b>Figure 4.</b> 
+						Countersinking with Depth mode=By Diameter</p>
+						</td>
+				</tr>
+		</table>
+		<p>Axial machining operation type NC Instructions are as follows:</p>
+		<ul>
+				<li><a href="#NC_BACK_BORING">NC_BACK_BORING</a></li>
+				<li><a href="#NC_BORING">NC_BORING</a></li>
+				<li><a href="#NC_BORING_SPINDLE_STOP">NC_BORING_SPINDLE_STOP</a></li>
+				<li><a href="#NC_BORING_AND_CHAMFERING">NC_BORING_AND_CHAMFERING</a></li>
+				<li><a href="#NC_BREAK_CHIPS">NC_BREAK_CHIPS</a></li>
+				<li><a href="#NC_CIRCULAR_MILLING">NC_CIRCULAR_MILLING</a></li>
+				<li><a href="#NC_COUNTERBORING">NC_COUNTERBORING</a></li>
+				<li><a href="#NC_COUNTERSINKING">NC_COUNTERSINKING</a></li>
+				<li><a href="#NC_DEEPHOLE">NC_DEEPHOLE</a></li>
+				<li><a href="#NC_DRILLING">NC_DRILLING</a></li>
+				<li><a href="#NC_DRILLING_DWELL_DELAY">NC_DRILLING_DWELL_DELAY</a></li>
+				<li><a href="#NC_LATHE_THREADING">NC_LATHE_THREADING</a></li>
+				<li><a href="#NC_REAMING">NC_REAMING</a></li>
+				<li><a href="#NC_REVERSE_THREADING">NC_REVERSE_THREADING</a></li>
+				<li><a href="#NC_SPOT_DRILLING">NC_SPOT_DRILLING</a></li>
+				<li><a href="#NC_T_SLOTTING">NC_T_SLOTTING</a></li>
+				<li><a href="#NC_TAPPING">NC_TAPPING</a></li>
+				<li><a href="#NC_THREAD_WITHOUT_TAP_HEAD">NC_THREAD_WITHOUT_TAP_HEAD</a></li>
+				<li><a href="#NC_THREAD_MILLING">NC_THREAD_MILLING</a></li>
+				<li><a href="#NC_TWO_SIDES_CHAMFERING">NC_TWO_SIDES_CHAMFERING</a></li>
+		</ul>
+		<table border="0" width="685">
+				<tr>
+						<td width="672" valign="top" style="padding-top: 15">
+						<h4><a name="NC_BACK_BORING"></a>
+						<a name="ix-NC instruction, axial machining type::NC_BACK_BORING">
+						NC_BACK_BORING</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_CLEAR_TIP_2: Second approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode (1: Tip / 2: Shoulder)<br>
+						MFG_DWELL_MODE: Dwell mode (0: None / 1: By revolutions 
+						/ 2: By time)<br>
+						MFG_DWELL_REVOL: Dwell delay in revolutions<br>
+						MFG_DWELL_TIME: Dwell delay in time units (seconds)<br>
+						MFG_LIFT_MODE: Shift mode (0: None / 1: Linear coordinates 
+						/ 2: Polar coordinates) <br>
+						MFG_XOFF: Shift along X <br>
+						MFG_YOFF: Shift along Y <br>
+						MFG_ZOFF: Shift along Z <br>
+						MFG_LIFT_ANGLE: Shift angle <br>
+						MFG_LIFT_DIST: Shift distance<br>
+						MFG_RETRACT_CLEAR_TIP: retract clearance <br>
+						MFG_TOOL_COMP and MFG_TL_COMP (compatibility V4): Length 
+						number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip</p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Nominal diameter of the tool<br>
+						MFG_NOMINAL_DIAMETER: Nominal diameter of the machined feature<br>
+						MFG_BCK_BORE_VAL: Back bore depth<br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_CMP_DWL_TIME: Computed dwell delay (in time units of 
+						seconds): this parameter is computed if dwell mode is set 
+						to &#39;revolutions&#39;. Otherwise, the dwell time is returned 
+						as is.<br>
+						MFG_CMP_OFFSET: Computed offset<br>
+						MFG_CMP_ANGLE: Computed angle. This parameter is computed 
+						if Shift mode is set to &#39;Linear coordinates&#39;. Otherwise, 
+						the Shift angle is returned as is.</p>
+						<p><b>Default syntax</b>: <code>CYCLE/BORE,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code></p>
+						<h4><a name="NC_BORING"></a>
+						<a name="ix-NC instruction, axial machining type::NC_BORING">
+						NC_BORING</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode (1: Tip / 2: Shoulder)<br>
+						MFG_BREAKTHROUGH: Breakthrough distance<br>
+						MFG_PLUNGE_MODE: Plunge mode (0: None / 1: Tip / 3: Diameter)<br>
+						MFG_PLUNGE_TIP: Plunge tip distance<br>
+						MFG_PLUNGE_OFFST: Plunge tip offset<br>
+						MFG_PLUNGE_DIAMETER: Plunge diameter<br>
+						MFG_DWELL_MODE: Dwell mode (0: None / 1: By revolutions 
+						/ 2: By time)<br>
+						MFG_DWELL_REVOL: Dwell delay in revolutions<br>
+						MFG_DWELL_TIME: Dwell delay in time units (seconds)<br>
+						MFG_TOOL_COMP and MFG_TL_COMP (compatibility V4): Length 
+						number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip</p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Nominal diameter of tool<br>
+						MFG_NOMINAL_DIAMETER: Nominal diameter of the machined feature<br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_PLUNGE_DIST: Whatever the selected plunge mode (by Tip 
+						or by Diameter), this parameter returns the plunge distance. 
+						The plunge offset is taken into account in this value.<br>
+						MFG_CMP_DWL_TIME: Computed dwell delay (in time units of 
+						seconds): this parameter is computed if dwell mode is set 
+						to &#39;revolutions&#39;. Otherwise, the dwell time is returned 
+						as is.</p>
+						<p><b>Default syntax</b>: <code>CYCLE/BORE,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code></p>
+						<h4><a name="NC_BORING_SPINDLE_STOP"></a>
+						<a name="ix-NC instruction, axial machining type::NC_BORING_SPINDLE_STOP">
+						NC_BORING_SPINDLE_STOP</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode (1: Tip / 2: Shoulder)<br>
+						MFG_BREAKTHROUGH: Breakthrough distance<br>
+						MFG_PLUNGE_MODE: Plunge mode (0: None / 1: Tip / 3: Diameter)<br>
+						MFG_PLUNGE_TIP: Plunge tip distance<br>
+						MFG_PLUNGE_OFFST: Plunge tip offset<br>
+						MFG_PLUNGE_DIAMETER: Plunge diameter<br>
+						MFG_DWELL_MODE: Dwell mode (0: None / 1: By revolutions 
+						/ 2: By time)<br>
+						MFG_DWELL_REVOL: Dwell delay in revolutions<br>
+						MFG_DWELL_TIME: Dwell delay in time units (seconds)<br>
+						MFG_LIFT_MODE: Shift mode (0: None / 1: Linear coordinates 
+						/ 2: Polar coordinates) <br>
+						MFG_XOFF: Shift along X <br>
+						MFG_YOFF: Shift along Y <br>
+						MFG_ZOFF: Shift along Z <br>
+						MFG_LIFT_ANGLE: Shift angle <br>
+						MFG_LIFT_DIST: Shift distance<br>
+						<font color="#000000">MFG_TOOL_COMP and MFG_TL_COMP (compatibility 
+						V4): Length number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip</font>.</p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Nominal diameter of tool<br>
+						MFG_NOMINAL_DIAMETER: Nominal diameter of the machined feature<br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_PLUNGE_DIST: Whatever the selected plunge mode (by Tip 
+						or by Diameter), this parameter returns the plunge distance. 
+						The plunge offset is taken into account in this value.<br>
+						MFG_CMP_DWL_TIME: Computed dwell delay (in time units of 
+						seconds): this parameter is computed if dwell mode is set 
+						to &#39;revolutions&#39;. Otherwise, the dwell time is returned 
+						as is.<br>
+						MFG_CMP_OFFSET: Computed offset<br>
+						MFG_CMP_ANGLE: Computed angle. This parameter is computed 
+						if Shift mode is set to &#39;Linear coordinates&#39;. Otherwise, 
+						the Shift angle is returned as is.</p>
+						<p><b>Default syntax</b>: <code>CYCLE/BORE,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code></p>
+						<h4><a name="NC_BORING_AND_CHAMFERING"></a>
+						<a name="ix-NC instruction, axial machining type::NC_BORING_AND_CHAMFERING">
+						NC_BORING_AND_CHAMFERING</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_CHAMFER_FEED_VALUE and MFG_CHAMFER_FEED (compatibility 
+						V4): Machining feedrate for chamfering phase<br>
+						MFG_CHAMFER_SPINDLE_VALUE: Machining spindle speed for chamfering 
+						phase.<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows: </p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_CLEAR_TIP_2: Second approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode (1: Tip / 2: Shoulder)<br>
+						MFG_BREAKTHROUGH: Breakthrough distance<br>
+						MFG_PLUNGE_MODE: Plunge mode (0: None / 1: Tip / 3: Diameter)<br>
+						MFG_PLUNGE_TIP: Plunge tip distance<br>
+						MFG_PLUNGE_OFFST: Plunge tip offset<br>
+						MFG_PLUNGE_DIAMETER: Plunge diameter<br>
+						MFG_DWELL_MODE: Dwell mode (0: None / 1: By revolutions 
+						/ 2: By time)<br>
+						MFG_DWELL_REVOL: Dwell delay in revolutions<br>
+						MFG_DWELL_TIME: Dwell delay in time units (seconds)<br>
+						MFG_TOOL_COMP and MFG_TL_COMP (compatibility V4): Length 
+						number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_2: Length number of second corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_2: Distance between the position of the 
+						second corrector and the tool tip</p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER and MFG_CHAMFER_VAL (compatibility V4): 
+						Chamfer diameter<br>
+						MFG_NOMINAL_DIAMETER: Nominal diameter of the machined feature<br>
+						MFG_JUMP_DIST: Jump distance. </p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined.<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_PLUNGE_DIST: Whatever the selected plunge mode (by Tip 
+						or by Diameter), this parameter returns the plunge distance. 
+						The plunge offset is taken into account in this value.<br>
+						MFG_CMP_DWL_TIME: Computed dwell delay (in time units of 
+						seconds): this parameter is computed if dwell mode is set 
+						to &#39;revolutions&#39;. Otherwise, the dwell time is returned 
+						as is.</p>
+						<p><b>Default syntax</b>: <code>CYCLE/BORE,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code></p>
+						<h4><a name="NC_BREAK_CHIPS"></a>
+						<a name="ix-NC instruction, axial machining type::NC_BREAK_CHIPS">
+						NC_BREAK_CHIPS</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode&nbsp; (1: Tip / 2: Shoulder)<br>
+						MFG_BREAKTHROUGH: Breakthrough distance<br>
+						MFG_AXIAL_DEPTH: Maximum depth of cut<br>
+						MFG_OFFSET_RET: Retract offset&nbsp; <br>
+						MFG_PLUNGE_MODE: Plunge mode (0: None / 1: Tip / 3: Diameter)<br>
+						MFG_PLUNGE_TIP: Plunge tip distance<br>
+						MFG_PLUNGE_OFFST: Plunge tip offset<br>
+						MFG_PLUNGE_DIAMETER: Plunge diameter<br>
+						MFG_DWELL_MODE: Dwell mode (0: None / 1: By revolutions 
+						/ 2: By time)<br>
+						MFG_DWELL_REVOL: Dwell delay in revolutions<br>
+						MFG_DWELL_TIME: Dwell delay in time units (seconds)<br>
+						<font color="#000000">MFG_TOOL_COMP and MFG_TL_COMP (compatibility 
+						V4): Length number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip</font></p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Tool nominal diameter<br>
+						MFG_NOMINAL_DIAMETER: Nominal diameter of the machined feature<br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined.<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_PLUNGE_DIST: Whatever the selected plunge mode (by Tip 
+						or by Diameter), this parameter returns the plunge distance. 
+						The plunge offset is taken into account in this value.<br>
+						MFG_CMP_DWL_TIME: Computed dwell delay (in time units of 
+						seconds): this parameter is computed if dwell mode is set 
+						to &#39;revolutions&#39;. Otherwise, the dwell time is returned 
+						as is.<br>
+						MFG_EFFCT_DEPTH: Effective depth (= maximum depth of cut)</p>
+						<p><b>Default syntax</b>: <code>CYCLE/BRKCHP,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code></p>
+						<h4><a name="NC_CIRCULAR_MILLING"></a>
+						<a name="ix-NC instruction, axial machining type::NC_CIRCULAR_MILLING">
+						NC_CIRCULAR_MILLING</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility 
+						V4): Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_RADIAL_STEP: Distance between paths<br>
+						MFG_RADIAL_NB: Number of paths<br>
+						MFG_AXIAL_STRAT: Axial mode (1: Max depth of cut / 2: Number 
+						of levels / 3: Number of levels without top) <br>
+						MFG_AXIAL_DEPTH: Maximum depth of cut<br>
+						MFG_AXIAL_NUMBER: Number of levels<br>
+						MFG_SEQUENCING_STRAT: Sequencing mode (1: Radial first / 
+						2: Axial first)<br>
+						MFG_TOLER_MACH: Machining tolerance<br>
+						MFG_DIR_CUT: Direction of cut (1: Climb / 2: Conventional)<br>
+						MFG_OVERHANG: Percentage overlap<br>
+						MFG_DRAFT_ANGLE: Automatic draft angle<br>
+						MFG_CIRCULAR_MODE: Machining mode (1: Standard / 2: Helical)<br>
+						MFG_HELIX_MODE: Helix mode (1: By pitch / 2: By angle)<br>
+						MFG_HELIX_ANGLE: Helix angle<br>
+						MFG_PITCH: Helix pitch<br>
+						<font color="#000000">MFG_TOOL_COMP and MFG_TL_COMP (compatibility 
+						V4): Length number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip</font></p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Nominal diameter of hole (offset on contour 
+						is taken into account in this value)<br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined.<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. </p>
+						<p><b>Default syntax</b>: <code>CYCLE/CIRCULARMILLING,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code>
+						</p>
+						</td>
+				</tr>
+				<tr>
+						<td width="672" valign="top" style="padding-top: 10; padding-bottom: 10">
+						<h4><a name="NC_COUNTERBORING"></a>
+						<a name="ix-NC instruction, axial machining type::NC_COUNTERBORING">
+						NC_COUNTERBORING</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode (1: Tip / 2: Shoulder)<br>
+						MFG_PLUNGE_MODE: Plunge mode (0: None / 1: Tip / 3: Diameter)<br>
+						MFG_PLUNGE_TIP: Plunge tip distance<br>
+						MFG_PLUNGE_OFFST: Plunge tip offset<br>
+						MFG_PLUNGE_DIAMETER: Plunge diameter<br>
+						MFG_DWELL_MODE: Dwell mode (0: None / 1: By revolutions 
+						/ 2: By time)<br>
+						MFG_DWELL_REVOL: Dwell delay in revolutions<br>
+						MFG_DWELL_TIME: Dwell delay in time units (seconds)<br>
+						<font color="#000000">MFG_TOOL_COMP and MFG_TL_COMP (compatibility 
+						V4): Length number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip</font></p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Nominal diameter of the tool<br>
+						MFG_NOMINAL_DIAMETER: Nominal diameter of the machined feature<br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined.<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_PLUNGE_DIST: Whatever the selected plunge mode (by Tip 
+						or by Diameter), this parameter returns the plunge distance. 
+						The plunge offset is taken into account in this value.<br>
+						MFG_CMP_DWL_TIME: Computed dwell delay (in time units of 
+						seconds): this parameter is computed if dwell mode is set 
+						to &#39;revolutions&#39;. Otherwise, the dwell time is returned 
+						as is.</p>
+						<p><b>Default syntax</b>: <code>CYCLE/BORE,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code>
+						</p>
+						<h4><a name="NC_COUNTERSINKING"></a>
+						<a name="ix-NC instruction, axial machining type::NC_COUNTERSINKING">
+						NC_COUNTERSINKING</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode (3: Diameter / 4: Distance). 
+						See <a href="#TotalDepth04">Figure 4</a> above.<br>
+						MFG_PLUNGE_MODE: Plunge mode (0: None / 1: Tip / 3: Diameter).
+						<br>
+						MFG_PLUNGE_TIP: Plunge tip distance<br>
+						MFG_PLUNGE_OFFST: Plunge tip offset<br>
+						MFG_PLUNGE_DIAMETER: Plunge diameter<br>
+						MFG_DWELL_MODE: Dwell mode (0: None / 1: By revolutions 
+						/ 2: By time)<br>
+						MFG_DWELL_REVOL: Dwell delay in revolutions<br>
+						MFG_DWELL_TIME: Dwell delay in time units (seconds)<br>
+						<font color="#000000">MFG_TOOL_COMP and MFG_TL_COMP (compatibility 
+						V4): Length number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip</font></p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Countersink diameter<br>
+						MFG_NOMINAL_DIAMETER: Nominal diameter of the machined feature<br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#TotalDepth04">Figure 4</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined.<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth and breakthrough.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_PLUNGE_DIST: Whatever the selected plunge mode (by Tip 
+						or by Diameter), this parameter returns the plunge distance. 
+						The plunge offset is taken into account in this value.<br>
+						MFG_CMP_DWL_TIME: Computed dwell delay (in time units of 
+						seconds): this parameter is computed if dwell mode is set 
+						to &#39;revolutions&#39;. Otherwise, the dwell time is returned 
+						as is.</p>
+						<p><b>Default syntax</b>: <code>CYCLE/CSINK,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code>
+						</p>
+						<h4><a name="NC_DEEPHOLE"></a>
+						<a name="ix-NC instruction, axial machining type::NC_DEEPHOLE">
+						NC_DEEPHOLE</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode (1: Tip / 2: Shoulder)<br>
+						MFG_BREAKTHROUGH: Breakthrough distance<br>
+						MFG_PLUNGE_MODE: Plunge mode&nbsp; (0: None / 1: Tip / 3: 
+						Diameter)<br>
+						MFG_PLUNGE_TIP: Plunge tip distance<br>
+						MFG_PLUNGE_OFFST: Plunge tip offset<br>
+						MFG_PLUNGE_DIAMETER: Plunge diameter<br>
+						MFG_DWELL_MODE: Dwell mode (0: None / 1: By revolutions 
+						/ 2: By time)<br>
+						MFG_DWELL_REVOL: Dwell delay in revolutions<br>
+						MFG_DWELL_TIME: Dwell delay in time units (seconds)<br>
+						MFG_AXIAL_DEPTH: Maximum depth of cut<br>
+						MFG_OFFSET_RET: Retract offset&nbsp; <br>
+						MFG_DEPTH_DEC: Decrement rate&nbsp; <br>
+						MFG_DEPTH_LIM: Decrement limit&nbsp; <br>
+						<font color="#000000">MFG_TOOL_COMP and MFG_TL_COMP (compatibility 
+						V4): Length number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip</font></p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Nominal diameter of the tool<br>
+						MFG_NOMINAL_DIAMETER: Nominal diameter of the machined feature<br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined.<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_PLUNGE_DIST: Whatever the selected plunge mode (by Tip 
+						or by Diameter), this parameter returns the plunge distance. 
+						The plunge offset is taken into account in this value.<br>
+						MFG_CMP_DWL_TIME: Computed dwell delay (in time units of 
+						seconds): this parameter is computed if dwell mode is set 
+						to &#39;revolutions&#39;. Otherwise, the dwell time is returned 
+						as is.<br>
+						MFG_EFFCT_DEPTH: Effective depth (= Maximum depth of cut)</p>
+						<p><b>Default syntax</b>: <code>CYCLE/DEEPHL,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code></p>
+						<h4><a name="NC_DRILLING"></a>
+						<a name="ix-NC instruction, axial machining type::NC_DRILLING">
+						NC_DRILLING</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode (1: Tip / 2: Shoulder)<br>
+						MFG_BREAKTHROUGH: Breakthrough distance<br>
+						MFG_PLUNGE_MODE: Plunge mode&nbsp; (0: None / 1: Tip / 3: 
+						Diameter)<br>
+						MFG_PLUNGE_TIP: Plunge tip distance<br>
+						MFG_PLUNGE_OFFST: Plunge tip offset<br>
+						MFG_PLUNGE_DIAMETER: Plunge diameter<br>
+						<font color="#000000">MFG_TOOL_COMP and MFG_TL_COMP (compatibility 
+						V4): Length number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip</font></p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Nominal diameter of the tool<br>
+						MFG_NOMINAL_DIAMETER: Nominal diameter of the machined feature<br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined.<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_PLUNGE_DIST: Whatever the selected plunge mode (by Tip 
+						or by Diameter), this parameter returns the plunge distance. 
+						The plunge offset is taken into account in this value.</p>
+						<p><b>Default syntax</b>: <code>CYCLE/DRILL,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP,%MFG_FEED_MACH,&amp;MFG_FEED_UNIT</code></p>
+						<h4><a name="NC_DRILLING_DWELL_DELAY"></a>
+						<a name="ix-NC instruction, axial machining type::NC_DRILLING_DWELL_DELAY">
+						NC_DRILLING_DWELL_DELAY</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode (1: Tip / 2: Shoulder)<br>
+						MFG_BREAKTHROUGH: Breakthrough distance<br>
+						MFG_PLUNGE_MODE: Plunge mode (0: None / 1: Tip / 3: Diameter)<br>
+						MFG_PLUNGE_TIP: Plunge tip distance<br>
+						MFG_PLUNGE_OFFST: Plunge tip offset<br>
+						MFG_PLUNGE_DIAMETER: Plunge diameter<br>
+						MFG_DWELL_MODE: Dwell mode (0: None / 1: By revolutions 
+						/ 2: By time)<br>
+						MFG_DWELL_REVOL: Dwell delay in revolutions<br>
+						MFG_DWELL_TIME: Dwell delay in time units (seconds)<br>
+						<font color="#000000">MFG_TOOL_COMP and MFG_TL_COMP (compatibility 
+						V4): Length number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip</font></p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Nominal diameter of the tool<br>
+						MFG_NOMINAL_DIAMETER: Nominal diameter of the machined feature<br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined.<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_PLUNGE_DIST: Whatever the selected plunge mode (by Tip 
+						or by Diameter), this parameter returns the plunge distance. 
+						The plunge offset is taken into account in this value.<br>
+						MFG_CMP_DWL_TIME: Computed dwell delay (in time units of 
+						seconds): this parameter is computed if dwell mode is set 
+						to &#39;revolutions&#39;. Otherwise, the dwell time is returned 
+						as is.</p>
+						<p><b>Default syntax</b>: <code>CYCLE/DRILL,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code></p>
+						</td>
+				</tr>
+				<tr>
+						<td width="672" valign="top" style="padding-top: 10; padding-bottom: 10">
+						<h4><a name="NC_LATHE_THREADING"></a>
+						<a name="ix-NC instruction, axial machining type::NC_LATHE_THREADING">
+						NC_LATHE_THREADING</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier.</p>
+						<p>Machining Strategy parameters are as follows: </p>
+						<p>MFG_THREAD_MACHINING: Machining type (1: Constant depth 
+						/ 2: Section of cut)<br>
+						MFG_THREAD_PENETRATION: Penetration (1: Straight / 2: Flank 
+						/ 3: Alternate)<br>
+						MFG_THREAD_UNIT: Unit (1: Pitch / 2: Thread per inch)<br>
+						MFG_THREAD_PROFILE: Profile (1: ISO / 2: Trapezoidal / 3: 
+						UNC / 4: Gaz)<br>
+						MFG_THREAD_ORIENTATION: Orientation (1: Internal / 2: External)</p>
+						<p>MFG_THREAD_PITCH: Thread pitch&nbsp;
+						<a name="pgfId=1085704"><br>
+						</a>MFG_NUM_THREADS: Number of threads&nbsp;
+						<a name="pgfId=1085705"><br>
+						</a>MFG_THRD_PER_UNIT: Threads per inch</p>
+						<p>MFG_FIR_PATH: Boolean for first passes&nbsp; (0: No / 
+						1: Yes)<br>
+						MFG_LAS_PATH: Boolean for last passes (0: No / 1: Yes)<br>
+						MFG_SPR_PATH: Boolean for spring passes (0: No / 1: Yes)<br>
+						MFG_NUM_FIR_PATH: Number of first passes&nbsp;
+						<a name="pgfId=1086165"><br>
+						</a>MFG_NUM_LAS_PATH: Number of last passes<br>
+						MFG_NUM_SPR_PATH: Number of spring passes<br>
+						MFG_FIR_SECT_CUT: Section of cut for first passes&nbsp;
+						<a name="pgfId=1085662"><br>
+						</a>MFG_LAS_DEPT_CUT: Depth of cut for last passes&nbsp;
+						<a name="pgfId=1085664"><br>
+						</a>MFG_FIR_SECT_RAT: Section ratio between first passes 
+						and next passes</p>
+						<p>MFG_CRES_DIA_CLR: Clearance on crest diameter&nbsp;
+						<a name="pgfId=1085657"><br>
+						</a>MFG_ENTER_ANG: Entry angle&nbsp;
+						<a name="pgfId=1085658"><br>
+						</a>MFG_LEAD_IN_DIST: Lead-in distance&nbsp;
+						<a name="pgfId=1085659"><br>
+						</a>MFG_LIFT_OFF_ANG: Lift-off angle <br>
+						MFG_LIFT_OFF_DIS: Lift-off distance</p>
+						<p>MFG_SPNDL_UNIT: list with two values defining the spindle 
+						rotation units.<br>
+						First value: spindle rotation expressed in revolutions per 
+						minute. RPM is the default value.<br>
+						Second value: spindle rotation expressed in surface meters 
+						per minute. SMM is the default value.<br>
+						MFG_SPNDL_WAY: list with two values defining the direction 
+						of rotation of the spindle.<br>
+						First value: spindle rotation processed clockwise. CLW is 
+						the default value.<br>
+						Second value: spindle rotation processed counter-clockwise. 
+						CCLW is the default value.<br>
+						MFG_SPNDL_SPEED: numerical value of the spindle speed.</p>
+						<p>Computed parameters are as follows:</p>
+						<p>MFG_ST_THRD_AX: Axial coordinate of the start thread 
+						on the crest.&nbsp; <a name="pgfId=1085715"><br>
+						</a>MFG_ST_THRD_RAD: Radial coordinate of the start thread 
+						on the crest.&nbsp; <a name="pgfId=1085716"><br>
+						</a>MFG_END_THRD_AX: Axial coordinate of the end thread 
+						on the crest.&nbsp; <a name="pgfId=1085717"><br>
+						</a>MFG_END_THRD_RAD: Radial coordinate of the end thread 
+						on the crest.&nbsp; <a name="pgfId=1085718"><br>
+						</a>MFG_END_THRD1_AX: Axial coordinate of the end thread 
+						on the root.&nbsp; <a name="pgfId=1085719"><br>
+						</a>MFG_END_THRD1_RAD: Radial coordinate of the end thread 
+						on the root.&nbsp; <a name="pgfId=1085720"><br>
+						</a>MFG_THRD_DEL_RAD: Depth of thread according to the radial 
+						axis.<a name="pgfId=1084228"><br>
+						</a>MFG_THRD_ANG: Angle of the thread. If different from 
+						zero, this angle indicates a conical thread.&nbsp;
+						<a name="pgfId=1083315"><br>
+						</a>MFG_NOM_DIAM: Nominal diameter of the thread.&nbsp;
+						<a name="pgfId=1085721"><br>
+						</a>MFG_THRD_LENGTH: Length of the thread.&nbsp;
+						<a name="pgfId=1083321"><br>
+						</a>MFG_NB_PATH: Number of passes. First, last and spring 
+						passes are not included.&nbsp; <a name="pgfId=1083327">
+						<br>
+						</a>MFG_DEPTH_CUT: Depth of cut.&nbsp;
+						<a name="pgfId=1085015"><br>
+						</a>MFG_SECTION_CUT: Section of cut for passes that follow 
+						the first passes.&nbsp; <a name="pgfId=1085016"><br>
+						</a>MFG_THREAD_DEPTH: Depth of thread.</p>
+						<p><b>Default syntax</b>: <code>CYCLE/THREAD,%MFG_THREAD_PITCH</code></p>
+						</td>
+				</tr>
+				<tr>
+						<td width="672" valign="top" style="padding-top: 10; padding-bottom: 10">
+						<h4><a name="NC_REAMING"></a>
+						<a name="ix-NC instruction, axial machining type::NC_REAMING">
+						NC_REAMING</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode (1: Tip / 2: Shoulder)<br>
+						MFG_BREAKTHROUGH: Breakthrough distance<br>
+						MFG_PLUNGE_MODE: Plunge mode (0: None / 1: Tip / 3: Diameter)<br>
+						MFG_PLUNGE_TIP: Plunge tip distance<br>
+						MFG_PLUNGE_OFFST: Plunge tip offset<br>
+						MFG_PLUNGE_DIAMETER: Plunge diameter<br>
+						MFG_DWELL_MODE: Dwell mode (0: None / 1: By revolutions 
+						/ 2: By time)<br>
+						MFG_DWELL_REVOL: Dwell delay in revolutions<br>
+						MFG_DWELL_TIME: Dwell delay in time units (seconds)<br>
+						<font color="#000000">MFG_TOOL_COMP and MFG_TL_COMP (compatibility 
+						V4): Length number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip</font></p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Nominal diameter of the tool<br>
+						MFG_NOMINAL_DIAMETER: Nominal diameter of the machined feature<br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined.<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_PLUNGE_DIST: Whatever the selected plunge mode (by Tip 
+						or by Diameter), this parameter returns the plunge distance. 
+						The plunge offset is taken into account in this value.<br>
+						MFG_CMP_DWL_TIME: Computed dwell delay (in time units of 
+						seconds): this parameter is computed if dwell mode is set 
+						to &#39;revolutions&#39;. Otherwise, the dwell time is returned 
+						as is.</p>
+						<p><b>Default syntax</b>: <code>CYCLE/REAM,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code></p>
+						<h4><a name="NC_REVERSE_THREADING"></a>
+						<a name="ix-NC instruction, axial machining type::NC_REVERSE_THREADING">
+						NC_REVERSE_THREADING</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode (1: Tip / 2: Shoulder)<br>
+						MFG_BREAKTHROUGH: Breakthrough distance<br>
+						MFG_PLUNGE_MODE: Plunge mode (0: None / 1: Tip)<br>
+						MFG_PLUNGE_TIP: Plunge tip distance<br>
+						MFG_PLUNGE_OFFST: Plunge tip offset<br>
+						<font color="#000000">MFG_TOOL_COMP and MFG_TL_COMP (compatibility 
+						V4): Length number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip</font></p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Internal diameter of the tool<br>
+						MFG_THREAD_DIAMETER: Nominal diameter of the tool<br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined.<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_PLUNGE_DIST: This parameter returns the plunge distance. 
+						The plunge offset is taken into account in this value.<br>
+						MFG_TOOL_PITCH: Pitch value defined on tool.</p>
+						<p><b>Default syntax</b>: <code>CYCLE/TAP,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code></p>
+						<h4><a name="NC_SPOT_DRILLING"></a>
+						<a name="ix-NC instruction, axial machining type::NC_SPOT_DRILLING">
+						NC_SPOT_DRILLING</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode (1: Tip / 2: Shoulder). See
+						<a href="#TotalDepth03">Figure 3</a> above.<br>
+						MFG_BREAKTHROUGH: Breakthrough distance <br>
+						MFG_PLUNGE_MODE: Plunge mode (0: None / 1: Tip / 3: Diameter).
+						<br>
+						MFG_PLUNGE_TIP: Plunge tip distance<br>
+						MFG_PLUNGE_OFFST: Plunge tip offset<br>
+						MFG_PLUNGE_DIAMETER: Plunge diameter<br>
+						MFG_DWELL_MODE: Dwell mode (0: None / 1: By revolutions 
+						/ 2: By time)<br>
+						MFG_DWELL_REVOL: Dwell delay in revolutions<br>
+						MFG_DWELL_TIME: Dwell delay in time units (seconds)<br>
+						<font color="#000000">MFG_TOOL_COMP and MFG_TL_COMP (compatibility 
+						V4): Length number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip</font></p>
+						<p>Geometry parameters are as follows:</p>
+						<p><font color="#000000">MFG_DIAMETER: Chamfer diameter<br>
+						MFG_JUMP_DIST: Jump distance</font> </p>
+						<p>Computed parameters are as follows (see
+						<a href="#TotalDepth03">Figure 3</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined.<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth and plunge distance.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_PLUNGE_DIST: Whatever the selected plunge mode (by Tip 
+						or by Diameter), this parameter returns the plunge distance. 
+						The plunge offset is taken into account in this value.<br>
+						MFG_CMP_DWL_TIME: Computed dwell delay (in time units of 
+						seconds): this parameter is computed if dwell mode is set 
+						to &#39;revolutions&#39;. Otherwise, the dwell time is returned 
+						as is.</p>
+						<p><b>Default syntax</b>: <code>CYCLE/DRILL,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code></p>
+						<h4><a name="NC_T_SLOTTING"></a>
+						<a name="ix-NC instruction, axial machining type::NC_T_SLOTTING">
+						NC_T_SLOTTING</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode (1: Tip)<br>
+						MFG_DIR_CUT: Direction of cut (1: Climb / 2: Conventional)<br>
+						MFG_DWELL_MODE: Dwell mode (0: None / 1: By revolutions 
+						/ 2: By time)<br>
+						MFG_DWELL_REVOL: Dwell delay in revolutions<br>
+						MFG_DWELL_TIME: Dwell delay in time units (seconds)<br>
+						<font color="#000000">MFG_TOOL_COMP and MFG_TL_COMP (compatibility 
+						V4): Length number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip</font></p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Slot diameter<br>
+						MFG_NOMINAL_DIAMETER: Nominal diameter of the machined feature<br>
+						MFG_LENGTH: Slot height (= Tool length, which is read on 
+						tool)<br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined.<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_CMP_DWL_TIME: Computed dwell delay (in time units of 
+						seconds): this parameter is computed if dwell mode is set 
+						to &#39;revolutions&#39;. Otherwise, the dwell time is returned 
+						as is.</p>
+						<p><b>Default syntax</b>: <code>CYCLE/TSLOT,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code></p>
+						<h4><a name="NC_TAPPING"></a>
+						<a name="ix-NC instruction, axial machining type::NC_TAPPING">
+						NC_TAPPING</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode&nbsp; (1: Tip / 2: Shoulder)<br>
+						MFG_BREAKTHROUGH: Breakthrough distance<br>
+						MFG_PLUNGE_MODE: Plunge mode&nbsp; (0: None / 1: Tip)<br>
+						MFG_PLUNGE_TIP: Plunge tip distance<br>
+						MFG_PLUNGE_OFFST: Plunge tip offset<br>
+						<font color="#000000">MFG_TOOL_COMP and MFG_TL_COMP (compatibility 
+						V4): Length number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip</font></p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Internal diameter of the tool<br>
+						MFG_THREAD_DIAMETER: Nominal diameter of the tool<br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined.<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_PLUNGE_DIST: This parameter returns the plunge distance. 
+						The plunge offset is taken into account in this value.<br>
+						MFG_TOOL_PITCH: Pitch value defined on tool</p>
+						<p><b>Default syntax</b>: <code>CYCLE/TAP,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code></p>
+						<h4><a name="NC_THREAD_WITHOUT_TAP_HEAD"></a>
+						<a name="ix-NC instruction, axial machining type::NC_THREAD_WITHOUT_TAP_HEAD">
+						NC_THREAD_WITHOUT_TAP_HEAD</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode (1: Tip)<br>
+						MFG_BREAKTHROUGH: Breakthrough distance<br>
+						MFG_PLUNGE_MODE: Plunge mode (0: None / 1: Tip)<br>
+						MFG_PLUNGE_TIP: Plunge tip distance<br>
+						MFG_PLUNGE_OFFST: Plunge tip offset<br>
+						<font color="#000000">MFG_TOOL_COMP and MFG_TL_COMP (compatibility 
+						V4): Length number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip</font></p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Hole internal diameter<br>
+						MFG_THREAD_DIAMETER: Tool nominal diameter<br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined.<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_PLUNGE_DIST: This parameter returns the plunge distance. 
+						The plunge offset is taken into account in this value.</p>
+						<p><b>Default syntax</b>: <code>CYCLE/TAP,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code></p>
+						</td>
+				</tr>
+				<tr>
+						<td width="672" valign="top">
+						<h4><a name="NC_THREAD_MILLING"></a>
+						<a name="ix-NC instruction, axial machining type::NC_THREAD_MILLING">
+						</a>NC_THREAD_MILLING</h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility 
+						V4): Approach feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_THREAD_STRATEGY: Thread milling mode&nbsp; (1: Mono-pass 
+						/ 2: Optimized-passes)<br>
+						MFG_THREAD_DIRECTION: Thread milling direction&nbsp; (1: 
+						Top to bottom / 2: Bottom to top)<br>
+						MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_BREAKTHROUGH: Breakthrough distance<br>
+						MFG_TOOL_COMP and MFG_TL_COMP (compatibility V4): Length 
+						number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip.</p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Hole internal diameter<br>
+						MFG_THREAD_DIAMETER: Hole nominal diameter<br>
+						MFG_PITCH: Thread pitch<br>
+						MFG_PITCH_SENS or MFG_PITCH_WAY_OF_ROT: Thread direction 
+						(1: Left-hand / 2: Right-hand) <br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined.<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_TOOL_PITCH: Pitch value defined on tool</p>
+						<p><b>Default syntax</b>: <code>CYCLE/THREADMILLING,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP</code></p>
+						<h4><a name="NC_TWO_SIDES_CHAMFERING"></a>
+						<a name="ix-NC instruction, axial machining type::NC_TWO_SIDES_CHAMFERING">
+						NC_TWO_SIDES_CHAMFERING</a></h4>
+						<p>General parameters are as follows:</p>
+						<p>MFG_MO_TYPE: Machining operation type<br>
+						MFG_MO_IDENTIFIER: Machining operation name or identifier<br>
+						MFG_PATTERN_NAME: Machining pattern name.</p>
+						<p>Feeds and Speeds parameters are as follows:</p>
+						<p>MFG_FEED_APP_MODE: Approach feedrate mode (0: Value / 
+						1: Rapid)<br>
+						MFG_FEED_APP_VALUE and MFG_FEED_APPRCH (compatibility V4): 
+						Approach feedrate<br>
+						MFG_FEED_PLUNGE_MODE and MFG_FEED_PL_TYPE (compatibility 
+						V4): Plunge feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_PLUNGE_VALUE and MFG_PLUNGE_FEED (compatibility 
+						V4): Plunge feedrate<br>
+						MFG_FEED_MACH_VALUE and MFG_FEED_MACH (compatibility V4): 
+						Machining feedrate<br>
+						MFG_SPINDLE_MACH_VALUE and MFG_SPNDL_MACH (compatibility 
+						V4): Machining spindle speed<br>
+						MFG_FEED_RETRACT_MODE and MFG_FEED_RT_TYPE (compatibility 
+						V4): Retract feedrate mode (0: Value / 1: Rapid)<br>
+						MFG_FEED_RETRACT_VALUE and MFG_FEED_RETRACT (compatibility 
+						V4): Retract feedrate<br>
+						MFG_FEED_UNIT: Feedrate unit<br>
+						MFG_SPNDL_UNIT: Spindle speed unit</p>
+						<p>Machining Strategy parameters are as follows:</p>
+						<p>MFG_CLEAR_TIP: Approach clearance<br>
+						MFG_CLEAR_TIP_2: Second approach clearance<br>
+						MFG_DEPTH_MODE: Depth mode (1: Tip)<br>
+						MFG_PLUNGE_MODE: Plunge mode (0: None / 1: Tip / 3: Diameter)<br>
+						MFG_PLUNGE_TIP: Plunge tip distance<br>
+						MFG_PLUNGE_OFFST: Plunge tip offset<br>
+						MFG_PLUNGE_DIAMETER: Plunge diameter<br>
+						MFG_DWELL_MODE: Dwell mode (0: None / 1: By revolutions 
+						/ 2: By time)<br>
+						MFG_DWELL_REVOL: Dwell delay in revolutions<br>
+						MFG_DWELL_TIME: Dwell delay in time units (seconds)<br>
+						MFG_TOOL_COMP and MFG_TL_COMP (compatibility V4): Length 
+						number of current corrector<br>
+						MFG_TOOL_COMP_1: Length number of first corrector<br>
+						MFG_TOOL_COMP_2: Length number of second corrector<br>
+						MFG_TOOL_COMP_DIST: Distance between the position of the 
+						current corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_1: Distance between the position of the 
+						first corrector and the tool tip<br>
+						MFG_TOOL_COMP_DIST_2: Distance between the position of the 
+						second corrector and the tool tip</p>
+						<p>Geometry parameters are as follows:</p>
+						<p>MFG_DIAMETER: Chamfer diameter<br>
+						MFG_NOMINAL_DIAMETER: Nominal diameter of the machined feature<br>
+						MFG_JUMP_DIST: Jump distance</p>
+						<p>Computed parameters are as follows (see
+						<a href="#BrkThru_No">Figure 1</a> and
+						<a href="#BrkThru_Yes">Figure 2</a> above):</p>
+						<p>MFG_DETAIL_DEPTH: Hole depth that is effectively machined.<br>
+						MFG_TOTAL_DEPTH: Total depth machined by the operation. 
+						This includes the hole depth, breakthrough, and tool tip 
+						length.<br>
+						MFG_TOTAL_DEPTH_COMP: Total depth machined by the operation 
+						up to the tool compensation point selected for the operation. 
+						This includes hole depth, breakthrough and tool tip length 
+						up to the compensation point. <br>
+						MFG_PLUNGE_DIST: Whatever the selected plunge mode (by Tip 
+						or by Diameter), this parameter returns the plunge distance. 
+						The plunge offset is taken into account in this value.<br>
+						MFG_CMP_DWL_TIME: Computed dwell delay (in time units of 
+						seconds): this parameter is computed if dwell mode is set 
+						to &#39;revolutions&#39;. Otherwise, the dwell time is returned 
+						as is.</p>
+						<p><b>Default syntax</b>: <code>CYCLE/DRILL,%MFG_TOTAL_DEPTH,%MFG_CLEAR_TIP,%MFG_FEED_MACH,&amp;MFG_FEED_UNIT</code></p>
+						</td>
+				</tr>
+		</table>
+
+		</body>
+
+</html>
+

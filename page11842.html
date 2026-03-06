@@ -1,0 +1,414 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>Tooling Concepts</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1>Tooling Concepts</h1>
+<table border="0" style="border-collapse: collapse" cellpadding="0" cellspacing="0" id="table1">
+  <tr>
+    <td width="32">&nbsp;</td>
+    <td>The information below refers to simple components (their reference is a 
+    CATPart, not a CATProduct). <br>
+    However the principles are the same for assembly components.<p>You will find 
+    information about:</p>
+    <ul>
+      <li><a href="#ix-tooling concepts:tooling component template">Tooling 
+      Components</a></li>
+      <li><a href="#ix-tooling concepts:impact OUT">Impacts</a></li>
+      <li><a href="#ix-tooling concepts:geometry of the tooling component">
+      Geometry of the Tooling Component</a></li>
+      <li><a href="#ix-tooling concepts:tooling part interface">Tooling Part 
+      Interface</a></li>
+      <li><a href="#ix-tooling concepts:tooling split part interface">Tooling 
+      Split Part Interface</a></li>
+      <li><a href="#ix-tooling concepts:rules">Rules</a></li>
+      <li><a href="#ix-tooling concepts:constraints">Constraints</a></li>
+    </ul>
+    <h2>Tooling Components</h2>
+    <h3><a name="ix-tooling concepts:tooling component template">Tooling Component Template</a></h3>
+    <p>It is a tooling component not yet inserted in a Die/Mold, but which 
+      complies with the Mold Tooling Design rules, <br>
+    i.e. a component proposed in 
+      a manufacturer catalog or a component you have created in your own 
+      catalog.</p>
+    <h3><a name="ix-tooling concepts:tooling component">Tooling Component</a></h3>
+    <p>A Tooling component is a component which has been instantiated in an 
+    Assembly via a Mold Tooling Command. <br>It is easily identified in the specification tree by its icon. 
+      <br>It is an instance. <br>It has a reference. <br>If the reference has been saved, it has one or several associated documents 
+    (CATProducts and CATParts).</td>
+  </tr>
+  <tr>
+    <td width="32" valign="top">
+          <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>
+	<ul>
+		<li>When you insert a component in a Die/Mold, you actually copy the 
+          tooling component template from the catalog to the Die/Mold. <br>As a 
+          consequence, if you modify the tooling component template in the 
+          catalog, the tooling component in the Die/Mold is not modified. </li>
+		<li>During the insertion, addition or replacement of Tooling components, 
+		a new component reference may be created. <br>In this case, it receives a 
+		part number which is given by the application. <br>The suffix of this part 
+		number is a number intended to ensure part number uniqueness in the 
+		session: <br>this way the user is relieved of the responsibility of part 
+		number uniqueness and the creation of a new reference is transparent. 
+		<br>This suffix cannot be controlled by the user and it cannot be assumed 
+		that it will have a given starting point or an increasing order.</li>
+	</ul>
+	</td>
+  </tr>
+  <tr>
+    <td width="32">&nbsp;</td>
+    <td>
+    <h3><a name="ix-tooling concepts:tooling sub-components">Tooling Sub-components</a></h3>
+    <p>They are sub-products or sub-parts of a tooling component. <br>
+    It is 
+      recommended that they are tooling components themselves, but it is not 
+      mandatory.</p>
+    <h3><a name="ix-tooling concepts:shared sub-components">Shared sub-components</a></h3>
+    <p>They are created with the option <kbd>Several Instances per Reference</kbd>.<br>Example: We have created two instances of 
+      <kbd>Loose Core_1</kbd>, which 
+      share the same sub-components, e.g. <kbd>SetPin_2</kbd>. <br>
+    If we modify the 
+      geometry of <kbd>SetPin_2</kbd> in <kbd>Loose Core_1 (Loose Core_1.1)</kbd>, 
+      <br>
+    the geometry of <kbd>SetPin_2</kbd> will also be modified in <kbd>Loose 
+      Core_1 (Loose Core_1.2)</kbd>.<br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/Impacts01NLS.gif" width="289" height="646"></p>
+    <h3><a name="ix-tooling concepts:tooling component environment">Tooling Component Environment</a></h3>
+    <p>It is the root product in which the tooling component is inserted, 
+      e.g. a Die or a Mold with all the already inserted components.</p>
+    <h2>Impacts</h2>
+    <h3><a name="ix-tooling concepts:impact OUT">Impact OUT</a></h3>
+    <p>A Tooling component (instance) may affect the assembly in which it is 
+    inserted (current assembly). <br>
+    Typically, it may create a hole in a plate with its drill hole.</p>
+    <p>For each Tooling component instance, if information has been copied from 
+    the inside of its reference into another CATPart used in the current 
+    assembly, <br>we say the instance has an <kbd>Impact OUT</kbd> in the context of the 
+    current assembly (component centric spoken).</td>
+  </tr>
+  <tr>
+    <td width="32">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>If an <kbd>Impact OUT</kbd> is created for a given instance in a given assembly, it 
+    does not affect its reference. <br>
+    For instance, if this reference was saved just before creating the <kbd>
+    Impact OUT</kbd>, and if a save management is requested, it will show this reference as 
+    &#8220;not modified&#8221;</td>
+  </tr>
+  <tr>
+    <td width="32">&nbsp;</td>
+    <td>Example: <kbd>Impacts OUT</kbd> of the Tooling Component and ON its environment:<br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/ToolingConcept01NLS.gif" width="687" height="482"><h3>
+    <a name="ix-tooling concepts:impact IN">Impact IN</a></h3>
+    <p>Let's consider a CATPart X. <br>
+    It may contain information of type knowledge, wireframe, surfaces, solids 
+    resulting from a copy/paste with link operation performed by an user or a V5 
+    command. <br>
+    If the copy/paste is performed from a CATPart Y to this CATPart X, we say 
+    the CATPart X receives an <kbd>Impact IN</kbd> from CATPart Y.<br>
+    <kbd>Impact IN</kbd> is a notion which is relevant for references or documents, not 
+    just for instances.</p>
+    <h3>Assembly Components Impacts</h3>
+    <p>A Tooling Component is a component instantiated in an Assembly (current 
+    assembly) via a Tooling Command. <br>
+    It may be obtained as the result of insertion of a CATProduct (and not a 
+    single CATPart). In this case it has sub-components. <br>
+    The Tooling Component can receive <kbd>Impacts IN</kbd> or create <kbd>
+    Impacts OUT</kbd> in the 
+    current assembly context. <br>
+    If a sub-component of the Tooling Component impacts another of its 
+    sub-components, the impact is viewed as an
+    <a name="ix-tooling concepts:internal impact">internal impact</a> of the Tooling 
+    Component. </td>
+  </tr>
+  <tr>
+    <td width="32">
+    <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+    <td>An internal impact is not viewed as an <kbd>Impact IN</kbd> or an <kbd>
+    Impact OUT</kbd> of the 
+    Tooling Component.</td>
+  </tr>
+  <tr>
+    <td width="32">&nbsp;</td>
+    <td>Let's consider a Tooling Component obtained as the result of insertion 
+    of a CATProduct which contains an internal impact from sub-component 1 to 
+    sub-component 2.
+    <ul>
+      <li>If the CATProduct is opened as a stand-alone assembly and if the 
+      corresponding link is not broken, then the impact exists in the context of 
+      the stand-alone assembly. <br>The impact is internal to the Tooling Component 
+      reference. </li>
+      <li>If not, it was created in another context.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="32">
+    <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+    <td>For the sake of re-usability, we recommended that you create internal 
+    impacts of the Tooling Component prior to instantiation <br>
+    (opening as stand alone the Tooling Component reference)</td>
+  </tr>
+  <tr>
+    <td width="32">&nbsp;</td>
+    <td>
+    <h3><a name="ix-tooling concepts:context">Context</a> of Impacts</h3>
+    <p>The minimal context of an impact is the smallest product in the structure 
+    that contains both the impacted and the impacting components. <br>
+    Example: if we consider <kbd>Sleeve_Z022-2</kbd> inserted between the <kbd>
+    ClampingPlate</kbd>&nbsp; in the <kbd>InjectionSide,</kbd> the minimal context is
+    <kbd>InjectionSide </kbd>(that contains both the sleeve and ClampingPlate).<br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/Impacts02NLS.gif" width="293" height="566"></p>
+    <h3><a name="ix-tooling concepts:tooling impacts">Tooling Impacts</a> </h3>
+    <p>Some Tooling commands use internally the copy/paste as result with link 
+    (from the inside of a CATPart to the inside of another one). </p>
+    <p>An impact created by a Tooling command is a Tooling Impact. <br>
+    The Tooling impacts are one of several kinds: </p>
+    <ul>
+      <li>Detailed Tooling Drills / Standard Tooling Drills, 
+      </li>
+      <li>Tooling Splits (with or without surface reduction),</li>
+      <li>Tooling Morphing.</li>
+    </ul>
+    <h4><a name="ix-tooling concepts:tooling drills">Tooling Drills</a></h4>
+    <p>They are created by one of four Tooling commands or sub-commands: </p>
+    <ul>
+      <li>Drill Component,</li>
+      <li>Distributed Drill Component,</li>
+      <li>Generate Final Holes and Pads,</li>
+      <li>The <a name="ix-tooling concepts:standard tooling drill">Standard drillings</a> accessible in some of the Tooling Component 
+      contextual commands. </li>
+      <li>(pads, pockets Impacts etc ... are also called Tooling Drills in this 
+      document!)</li>
+    </ul>
+    <p>There are two possible situations for the Tooling Drills of a given 
+    instance: </p>
+    <ul>
+      <li>They are memorized in the instance <kbd>from/to/between list</kbd>, in short
+      <a name="ix-tooling concepts:FTB list"><kbd>FTB List</kbd></a>, </li>
+      <li>They are too complex to be described by a <kbd>from/to/between list</kbd> and 
+      therefore they are not memorized in the instance.</li>
+    </ul>
+    <p>Definitions:</p>
+    <ul>
+      <li>If the <kbd>from/to/between list</kbd> of the instance is active, the 
+      impact is 
+      called Standard Tooling Drills. </li>
+      <li>If not, the impact is a
+      <a name="ix-tooling concepts:detailed tooling drills">Detailed Tooling Drills</a>.</li>
+    </ul>
+    <h4><a name="ix-tooling concepts:tooling morphing">Tooling Morphing</a></h4>
+    <p>When a Part with isolated external references is instantiated for the 
+    first time as a Tooling Component, you can request the reconnection of these 
+    isolated references. <br>This is done by Mold Tooling/Assembly as follows : </p>
+    <ul>
+      <li>By copying the user selected information from the current Assembly,
+      </li>
+      <li>By pasting it as result with link inside of the clone of the Part,
+      </li>
+      <li>By replacing the isolated external reference by this new reference.
+      </li>
+    </ul>
+    <p>Now the clone of the Part receives an <kbd>Impact IN.</kbd></p>
+      <h3>Impact Children</h3>
+    <p>An impact is an operation which </p>
+    <ul>
+      <li>uses geometry located in one component (Tooling or not), </li>
+      <li>Copies it (with link) inside another component (Tooling or not), </li>
+      <li>And then uses it to create operations inside the receiving component, 
+      using the result of the copy. </li>
+    </ul>
+    <p>From the point of view of the impact:</p>
+    <ul>
+      <li>The component in which the geometry to copy is found is called 
+      impacting component, </li>
+      <li>The component in which it is copied is called receiving component or 
+      impacted component. </li>
+      <li>The set of all children of the impact operation in the receiving 
+      component (excluding the copy itself) is called &#8220;impact children&#8221;.</li>
+    </ul>
+    <table border="0" cellpadding="0" style="border-collapse: collapse" id="table3">
+      <tr>
+        <td>
+          <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+        <td>
+        <ul>
+          <li>The impact children and the input features are created within the 
+          Tooling Component Template. </li>
+          <li>They affect all the instances based on this document and all the 
+          Tooling Components based on shared sub-components.</li>
+        </ul>
+        </td>
+      </tr>
+    </table>
+    <h2><a name="ix-tooling concepts:geometry of the tooling component">Geometry of the Tooling Component</a></h2>
+    <p>You can consider the following:<ul>
+      <li>The geometry of the component itself,</li>
+      <li>The geometry used for the tooling impacts OUT (tooling component 
+      output features):<ul>
+        <li>Solids used for tooling drills,</li>
+        <li>Surfaces used for tooling splits,</li>
+        </ul>
+        </li>
+        <li>The geometry that is the input of tooling impacts IN (tooling 
+        component input features):<ul>
+          <li>Solids used for tooling drills,</li>
+          <li>Surfaces used for tooling splits,</li>
+          </ul>
+          </li>
+          <li>Non tooling input (surfaces, wireframes, solids).</li>
+      </ul>
+      <dl>
+        <dt>Special case of the Tooling Component Dummy Input</dt>
+        <dd>This is a virtual geometry in the Tooling Component Template, that 
+        creates an Impact IN for that component. <br>It is replaced by an actual 
+        geometry at insertion.</dd>
+    </dl>
+    <h2><a name="ix-tooling concepts:tooling part interface">Tooling Part Interface</a></h2>
+    <p>When a Tooling Impact is created, the copy/paste as result with link may 
+    use a relay CATPart called a <kbd>Tooling Part Interface</kbd> in certain situations:
+    <br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/ToolingConcept02NLS.gif" width="459" height="92"></p>
+    <ul>
+      <li>Comp1 has <kbd>Impacts OUT</kbd> on Comp2,</li>
+      <li>Comp2 receives an <kbd>Impact IN</kbd> from Comp1,</li>
+      <li>The <kbd>Tooling Part Interface</kbd> is ignored when describing the 
+      Impacts 
+      because it is not a functional part.</li>
+      <li>It takes the form of a CATPart, with a name beginning with <kbd>TlgItf_</kbd>.</li>
+    </ul>
+    <p>Definitions:</p>
+    <ul>
+      <li>For Comp1, the <kbd>Tooling Part Interface</kbd> is Downward, in short
+      <a name="ix-tooling concepts:DTPI-downward tooling part interface"><kbd>DTPI</kbd></a>,
+      </li>
+      <li>For Comp2, the <kbd>Tooling Part Interface</kbd> is Upward , in short
+      <a name="ix-tooling concepts:UTPI-upward tooling part interface"><kbd>UTPI</kbd></a>.</li>
+    </ul>
+    <p>Example : Comp3 has an upward and a downward <kbd>Tooling Part Interface</kbd>. <br>
+    Typically it can be an insert which is split and which creates a pocket in a 
+    plate.<br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/ToolingConcept03NLS.gif" width="476" height="94"></p>
+    <h2><a name="ix-tooling concepts:tooling split part interface">Tooling Split Part Interface</a></h2>
+    <p>When a <a name="ix-tooling concepts:tooling split">Tooling Split</a> is created, 
+    the copy/paste as result with link may use an additional relay CATPart 
+    called a <kbd>Tooling Split Part Interface</kbd> in certain situations.<br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/ToolingConcept04NLS.gif" width="616" height="90"></p>
+    <p>Definitions: </p>
+    <ul>
+      <li>Comp2 receives an <kbd>Impact IN</kbd> from the component containing Surface,
+      </li>
+      <li>The <kbd>Tooling Part Interface</kbd> and the <kbd>Tooling Split Part Interface</kbd> are 
+      ignored when describing the Impacts because they are not functional, </li>
+      <li>In short the <kbd>Tooling Split Part Interface</kbd> is called <kbd>TSPI</kbd>.</li>
+    </ul>
+    <h2><a name="ix-tooling concepts:rules">Rules</a></h2>
+    <h3>Tooling Component Template Rules</h3>
+    <ul>
+      <li>All the inputs for Tooling <kbd>Impacts OUT</kbd> must be published at the level 
+      of the Root of the Template.<br>All output features of catalogs are published.</li>
+      <li>All the predefined dummy inputs of <kbd>Impacts IN</kbd> are gathered in a 
+      specific geometrical set called <kbd>Isolated external references</kbd>.<br>They are ignored by the Mold Tooling Design if this is not the case.<table border="0" id="table4">
+		<tr>
+			<td>
+			<img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+			<td>When you insert or replace a component, this component may have 
+			solid Impacts IN, that may lead to troublesome contextual links. <br>To 
+			avoid that, solid impacts are checked at the insertion:<ul>
+				<li>If they are seen as referencing a source that does not exist 
+				in the session, they are removed. </li>
+				<li>If the source cannot be identified, the solid impacts are 
+				kept. </li>
+			</ul>
+			</td>
+		</tr>
+		</table>
+		</li>
+      <li>It is necessary to avoid direct links between a Tooling Component 
+      geometry and a Tooling Component output feature. <br>To ensure consistency, use parameters and relations.<br>A warning message is issued if such links are found.</li>
+      <li>It is necessary to ensure consistency between sub-components of a 
+      Tooling Component Template by using parameters at the Root Level. </li>
+      <li>If the tooling Component is an Assembly, it is recommended to define 
+      its sub-components as Tooling Components, to fully benefit from the Mold 
+      Tooling Design mechanisms. <br>However it is not mandatory for Data Upward 
+      Compatibility reasons. </li>
+    </ul>
+    <h3>Rules for management of Impactable components </h3>
+    <p>If a component is modified in a way which depends on its 3D position in 
+    the environment, be careful not 
+    affect the other representations of this component in other 3D 
+    positions:</p>
+    <ul>
+      <li>If a Tooling Component receives an <kbd>Impact IN</kbd>, it must be mono-instance
+      </li>
+      <li>If a Tooling sub-component receives an <kbd>Impact IN</kbd>, it must not be a 
+      shared component. </li>
+      <li>A component which has dummy inputs is necessarily mono-instance </li>
+      <li>A Tooling Component which is part of the Mold Structure is necessarily 
+      mono-instance. <br>Add new instance command is not available.</li>
+      <li>A Component receiving an impact is necessarily a CATPart (even a 
+      sub-component within a Tooling Component can receive an <kbd>Impact IN</kbd>) </li>
+    </ul>
+    <h3>Sub-component Rules </h3>
+    <ul>
+      <li>It is not allowed to edit the sub-components of the Tooling Component.
+      <br>The only way to modify them is via the Tooling Component itself by 
+      changing the parameters. </li>
+      <li>A Tooling sub-component may not send directly an impact outside of the 
+      Tooling Component it belongs to, after instantiation. <br>The impact must be created via the father Tooling Component.</li>
+      <li>A Tooling sub-component may not send directly an impact inside the 
+      Tooling Component it belongs to, after instantiation. <br>The impact must be created before instantiation of the Tooling Component, 
+      in the Tooling Component Template.</li>
+    </ul>
+    <h3>Tooling Part Interface Rules</h3>
+    <ul>
+      <li>The Tooling Part Interface is not editable.</li>
+      <li>Impacts in the components of a block come from within the block or 
+      else affects one of the block parts interface. </li>
+    </ul>
+    <h3>Tooling Update Rules </h3>
+    <p>To prevent complex update loops, a Tooling Component should not receive 
+    <kbd>Impacts IN</kbd> and send <kbd>Impacts OUT</kbd> at the same time. <br>
+    However there are numerous 
+    situations in Die Design, which require breaking this simple rule. 
+    <br>
+    Therefore it is necessary to define more detailed recommendations: </p>
+    <ul>
+      <li>It is best to prevent the situations of Tooling Components Impacting 
+      and Impacted at the same time </li>
+      <li>If a Tooling Components is both Impacting and Impacted, keep input features 
+	  independent of output 
+      features, from the update/synchronization point of view.</li>
+      <li>A Tooling Component which is part of the Mold Structure may not Impact 
+      other components, except for Coolant Channels. <br>It is not available for splits nor drillings.</li>
+    </ul>
+    <h2><a name="ix-tooling concepts:constraints">Constraints</a></h2>
+    <p>The constraints reconnection is ensured only when: </p>
+    <ul>
+      <li>Component product structure is the same. </li>
+      <li>Instance names of products in the replacing component are the same.
+      </li>
+      <li>Constraints reference the same published elements </li>
+    </ul>
+    </td>
+  </tr>
+  </table>
+
+</body>
+
+</html>
+

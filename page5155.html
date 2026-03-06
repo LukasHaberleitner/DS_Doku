@@ -1,0 +1,228 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2E2L2O2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>Splitting on Collision Points</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+</head>
+
+<body>
+
+<h1>
+<a name="ix-commands:Split on Collision Points">Splitting on Collision 
+Points</a> </h1><a name="CATTPEHeader.TPESplitToCopyTransformation"></a>
+<table border="0" style="border-collapse: collapse" cellpadding="0" cellspacing="0">
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td valign="top">When the tool length is an important constraint, it may be 
+    useful to split the tool path of an operation in:<ul>
+      <li>a tool path reachable by the specified tool, i.e. a collision free 
+      tool path,</li>
+      <li>a tool path reachable by a longer tool, i.e. a tool path with 
+      collisions points when using the tool specified above.</li>
+    </ul>
+    <p><kbd>Split on Collision Points</kbd> creates a <kbd>
+            <a name="ix-split on collision points:copy-transformation">Copy-Transformation</a></kbd> containing the points in collision in the specification tree <br>
+    with a tool path that is computed with the longer tool. Both tool paths must 
+    then be closed either automatically or manually.<p>This task will show you how to do that quickly.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+    <td valign="top">
+    <ul>
+      <li><kbd>Split on Collision Points </kbd>is available only for 
+    operations where the tool has a fixed axis. </li>
+      <li><kbd>Split on Collision Points </kbd>is a post-process, that never 
+      takes into account the rough stock but only the part.<br>
+      This may have impacts especially on roughing operations.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td valign="top">Open the
+    <a href="b35doc/english/online/cfysm_C2/samples/Machining/CollisionSplit/CollisionSplit.CATProcess">
+    CollisionSplit.CATProcess </a>from the samples directory.</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td valign="top">
+    <ol class="task">
+      <li>
+      <p class="task">Select a tool path or an operation. </p></li>
+      <li>
+      <p class="task">Either click <kbd>Split on Collision Points</kbd>
+      <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/I_M3xTPESplitToCopyTransfo.gif" width="22" height="22"> in the 
+      <kbd>Tool Path 
+      Management</kbd> toolbar,<br>or select <kbd>Split on Collision Points</kbd> in the 
+      <kbd>Tool path object</kbd> contextual 
+      menu.</p>
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="table2">
+        <tr>
+          <td colspan="2">
+          <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/dbtpe01NLS.gif" width="363" height="114"></td>
+        </tr>
+        <tr>
+          <td>
+          <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+          <td>The contextual menu is available on tool paths only.</td>
+        </tr>
+      </table></li>
+      <li>
+      <p class="task">The dialog box and the tool path are displayed.<br>
+      <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/SplitCollision2NLS.gif" width="312" height="250"><br>
+      <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/dbSplitCollision01NLS.png"></p>
+      </li>
+      <li>
+      <p class="task"><kbd>New tools </kbd>lists the tools available to compute a 
+      new tool path on the portions with collision points. This means that: </p>
+      <table border="0" cellpadding="0" style="border-collapse: collapse" id="table3">
+        <tr>
+          <td>
+      <ul class="task">
+        <li>the tool used originally to compute the tool path is not 
+        listed as it will not be used on portions with collision points,
+        </li>
+        <li>
+        among all the tools available in the specification tree, 
+        only those relevant to the operation are listed.</li>
+        <li>
+        The <kbd>Split on Collision Points</kbd> command tries to keep the 
+        initial structure of the operation:<p></p>
+        <p>
+        <ul>
+          <li>If the operation contains a tool with no tool-holder, Split on 
+          Collision Points proposes only tools with no tool-holder. <br>
+          As the collision occurs with the non-cutting part of the tool, you 
+          need a tool with no holder, with the same cutting end but a larger 
+          cutting length. </li>
+          <li>If the operation contains a tool and a tool-holder, Split on 
+          Collision Points proposes only tools with tool-holders. <br>
+          As the collision occurs either with the non-cutting part of the tool 
+          or with the tool-holder, you need a tool with a tool-holder, <br>
+          with the same cutting end, a cutting length larger or equal to the 
+          initial one and a larger gage. <br>
+          The command searches such a tool only among tools with tool-holders.</li>
+          <li>If the operation contains a tool with a tool-holder, which you 
+          want to replace with a simple tool, <br>
+          you must re-create this simple tool as a tool with a tool-holder and a 
+          Gage1 value larger than the initial tool-holder. <br>
+          It will then appear in the list of available tools.</li>
+        </ul>
+        </li>
+      </ul>
+      <p class="task">You can select one or several tools to perform the split 
+      on collision points.<br>
+      The tools are sorted in increasing length order.<br>
+      The command creates as many Copy-Transformation operations as necessary.</p>
+          </td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p class="task">In the sensitive icon, click 
+      <a name="ix-split on collision points:extra geometry"> <kbd>Extra geometry</kbd> 
+      </a>to add additional geometry to the part 
+          in the operation where the tool path was computed. <br>Additional geometry may be a face or a clamp that you would rather 
+          avoid using in the computation and <br>that is not defined in the operation.
+          </p></li>
+      <li>
+      <p class="task">Set the parameters to find collision points and split the 
+      tool path:<br>
+      By default, <kbd>
+      <a name="ix-split on collision points:split inside machining pass">Split inside machining pass</a></kbd> is selected, allowing 
+      the command to split a machining pass between an approach and a retract.<br>
+      If you deselect this check box, the command cannot split a machining pass 
+      between an approach and a retract, the whole pass is then considered in 
+      collision.<br>
+      By default, <kbd><a name="ix-split on collision points:use part">Use part</a>
+      </kbd>is selected and the part you defined in the operation is used to 
+      compute the collision points.<br>
+      <kbd><a name="ix-split on collision points:collision tolerance">Collision tolerance</a></kbd> defines the distance within which the 
+            tool holder is considered to be in collision.<br>
+      <kbd><a name="ix-split on collision points:offset on tool holder">Offset on tool holder</a> 
+		(dT)</kbd> and 
+            <kbd><a name="ix-split on collision points:offset on tool shank">
+		Offset on tool shank</a></kbd> define the tolerance distances specific <br>to the tool holder radius and tool length.<br>
+      <kbd>
+      <a name="ix-split on collision points:safety distance on split point">Safety distance on split point</a></kbd> is the safety distance required 
+      on the first or last collision point to insert a collision free macro:<br>
+      See the
+      <a href="page5143.html#ix-split on collision points:safety distance on split point">
+      Tool Path Editor Parameters </a>chapter for more information.</p></li>
+      <li>
+      <p class="task">Set the parameters to close the resulting tool paths:<br>
+      By default, the <kbd>
+      <a name="ix-split on collision points:close initial tool path">Close initial tool path</a></kbd> and the <kbd>
+      <a name="ix-split on collision points:close split tool path">Close 
+      split tool path</a></kbd> check boxes are selected: the resulting tool paths 
+      will be automatically closed. Otherwise you will have to close them 
+      manually. See the
+      <a href="page5143.html#ix-split on collision points:split inside machining pass">
+      Tool Path Editor Parameters</a> chapter for more information.<br>
+      Once you have set the parameters, click <kbd>Apply</kbd>. 
+      The points in collision appear in red:</p>
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+        <tr>
+          <td>
+          <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/SplitCollision1NLS.gif" width="432" height="373"></td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p class="task">Click <kbd>OK</kbd>.</p>
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5">
+        <tr>
+          <td>
+          <ul>
+            <li>The dialog box is closed.</li>
+            <li>A <kbd>Copy-Transformation</kbd> containing the points in collision is 
+            created in the specification tree <br>with a tool path that is computed with the new tool.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber6">
+              <tr>
+                <td>
+                <img border="1" src="b35doc/english/online/cfyugtpe_c2/images/SplitTree2NLS.gif" width="360" height="308"></td>
+              </tr>
+            </table></li>
+          </ul></td>
+        </tr>
+      </table></li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td valign="top" nowrap>If you modify the initial tool path: 
+    <p>The <kbd>Split on collision points</kbd> command creates one or several 
+    Copy-Transformation operations. <br>
+    The initial operation is unlocked, some parameters are modified and the tool 
+    path is computed again. <br>
+    The Copy-Transformation operations are probably no longer up-to-date. <br>
+    If you start the <kbd>Split on collision points</kbd> command on the initial 
+    modified operation, a message asks you if the old existing 
+    Copy-Transformation operations can be deleted or not. <br>
+    If you answer <kbd>Yes</kbd>, the old operations are deleted and new ones 
+    are created. <br>
+    If you answer <kbd>No</kbd>, new Copy-Transformation operations are created 
+    but the old ones are kept. You will have to manage them.</td>
+  </tr>
+  <tr>
+    <td colspan="2">
+    <p align="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

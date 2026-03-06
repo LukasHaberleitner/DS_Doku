@@ -1,0 +1,280 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head><meta name="MonocodingType" content="0"></meta>
+	  <meta name="MonocodingFlag" content="C2"></meta>
+	  <meta http-equiv="Content-Language" content="en-us"></meta>
+	  <meta name="GENERATOR" content="Microsoft FrontPage 6.0"></meta>
+	  <meta name="ProgId" content="FrontPage.Editor.Document"></meta>
+  	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	  <title>Using Analysis Sensors in an Optimization
+  Problem</title>
+          <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+          
+	 </head><body onload="newPage('pt04ch14s07.html');" ondblclick="newSelection();" bgcolor="#FFFFFF" text="#000000" vlink="#FF5113" alink="#004D48" link="#004D48" class="TEXT"><div class="sect1" id="ath-gen-res-anlcntrl-optimize">
+    <a name="ath-gen-res-anlcntrl-optimize"></a>
+
+    <div class="titlepage">
+      
+
+      <div class="title">
+        <h3>Using Analysis Sensors in an
+        Optimization Problem</h3>
+      </div>
+    </div>
+
+    <p>This section describes how you can use the Product
+    Engineering Optimizer (PEO) workbench to solve for a desired
+    result in a nonlinear structural or thermal analysis.
+    Optimization requires the creation of local or global solution
+    sensors and knowledgeware parameters to control the optimized
+    solution. Once an optimization is created, it will run
+    iteratively until the best solution is found for the current
+    parameters.</p>
+
+    <p>The following topics are covered:</p>
+
+    <ul type="disc"><li>
+        <p><a href="page0488.html#ath-gen-res-anlcntrl-optimize-basicsteps">
+        Basic
+        Optimization Steps</a></p>
+      </li>
+
+      <li>
+        <p><a href="page0488.html#ath-gen-res-anlcntrl-optimize-parameters">
+        Creating
+        Optimization Parameters</a></p>
+      </li>
+
+      <li>
+        <p><a href="page0488.html#ath-gen-res-anlcntrl-optimize-results">
+        Running an Optimization</a></p>
+      </li>
+    </ul><div class="sect2" id="ath-gen-res-anlcntrl-optimize-basicsteps">
+      <a name="ath-gen-res-anlcntrl-optimize-basicsteps"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3>Basic Optimization
+          Steps</h3>
+        </div>
+      </div>
+
+      <p>The optimization process requires the following steps:</p>
+
+      <div class="orderedlist" id="d0">
+        <ol class="type1"><li>
+            <p>Request field output or whole model history output
+            of the desired optimization quantities.</p>
+          </li>
+
+          <li>
+            <p>Run the initial analysis.</p>
+          </li>
+
+          <li>
+            <p>Create local or global solution sensors (see
+            <a href="page0495.html#ath-gen-res-post-sensor">
+            Creating a Solution Sensor</a>).</p>
+          </li>
+
+          <li>
+            <p>Create new Knowledgeware parameters from the sensors
+            (see <a href="page0488.html#ath-gen-res-anlcntrl-optimize-parameters">
+            Creating
+            Optimization Parameters</a>).</p>
+          </li>
+
+          <li>
+            <p>Set up an optimization problem in the Product
+            Engineering Optimizer (PEO) workbench.</p>
+          </li>
+
+          <li>
+            <p>Run the optimization.</p>
+          </li>
+
+          <li>
+            <p>Review the optimized parameter results in the
+            Nonlinear Structural Analysis or Thermal Analysis
+            workbench.</p>
+          </li>
+        </ol></div><span id="ath-gen-res-anlcntrl-optimize-basicsteps"></span>
+    </div>
+
+    <div class="sect2" id="ath-gen-res-anlcntrl-optimize-parameters">
+      <a name="ath-gen-res-anlcntrl-optimize-parameters"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Creating Optimization
+          Parameters</h3>
+        </div>
+      </div>
+
+      <p>The solution sensor output for nonlinear and thermal
+      analyses is a list of values for each sensor&#8212;one value
+      for each increment in the required solution process. The
+      parameters used to control the optimization input and output
+      must each have a single value that the optimizer can compare
+      over multiple analyses to reach a solution. The PEO workbench
+      will run several analyses varying the input parameters and
+      monitoring the output until the parameter value satisfies
+      your optimization criteria.</p>
+
+      <p>You can use the Knowledgeware formula editor to create a
+      single parameter for each list of values. For more
+      information, see <a href="page0495.html#ath-gen-res-post-sensor">Creating a Solution
+      Sensor</a>. For general information on applying and using
+      Knowledgeware, see <a href="page0468.html">Applying
+      Knowledgeware</a> and <a href="page1341.html">Using
+      Knowledgeware Capabilities</a> in the CATIA V5
+      Infrastructure User's Guide.</p>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to create a Knowledgeware
+      parameter for use in optimization.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Click the Formula <img src="b35doc/english/online/anlug_c2/images/I_FormulaP2.png"></img> icon in the Knowledge
+            toolbar.</p>
+          </li>
+
+          <li>
+            <p>Use <span class="guitext"><b class="guilabel">New
+            Parameter of type</b></span> to create a new parameter.
+            Select an appropriate data type for the sensor you are
+            using, such as <span class="guitext"><b class="guilabel">Mass</b></span> for a global mass sensor,
+            and use the default <span class="guitext"><b class="guilabel">Single Value</b></span> selection.</p>
+          </li>
+
+          <li>
+            <p>Select <span class="guitext"><b class="guilabel">Add
+            Formula</b></span> to create the formula for the new
+            parameter.</p>
+
+            <p>CATIA opens the <span class="guitext"><b class="guilabel">Formula Editor</b></span>.</p>
+          </li>
+
+          <li>
+            <p>Accept the default <span class="guitext"><b class="guilabel">Parameters</b></span> dictionary selection,
+            and select <span class="guitext"><b class="guilabel">List</b></span> in the <span class="guitext"><b class="guilabel">Members of
+            Parameters</b></span> column.</p>
+
+            <div style="margin-left: 0.5in; margin-right: 0.5in;" class="note">
+              <p><b class="title"><a name="d0e22111">Note:&nbsp;</a></b> You must use formula
+              commands intended for list data, such as <span class="guitext"><b class="guilabel">getItem()</b></span>,
+              to access the sensor values.</p>
+            </div>
+
+            <p>The <span class="guitext"><b class="guilabel">Members of List</b></span> column should
+            display a list for each of the solution sensors in the
+            current model.</p>
+          </li>
+
+          <li>
+            <p>Select the appropriate model output in the
+            <span class="guitext"><b class="guilabel">Members of
+            List</b></span> column.</p>
+          </li>
+        </ol></div><span id="ath-gen-res-anlcntrl-optimize-parameters"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div>
+
+    <div class="sect2" id="ath-gen-res-anlcntrl-optimize-results">
+      <a name="ath-gen-res-anlcntrl-optimize-results"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Running an
+          Optimization</h3>
+        </div>
+      </div>
+
+      <p>Once you have created the solution sensors and parameters
+      for use in an analysis, you can enter the Product Engineering
+      Optimizer (PEO) workbench to create and run the optimization.
+      The workbench is described in the <a href="page10944.html">Product
+      Engineering Optimizer User's Guide</a>.</p>
+
+      <div style="margin-left: 0.5in; margin-right: 0.5in;" class="note">
+        <p><b class="title"><a name="d0e22139">Note:&nbsp;</a></b>
+        The incremental solution techniques used to solve each
+        analysis step produce solution sensors that are a list of
+        values. This list format prevents the use of the
+        <span class="guitext"><b class="guilabel">Algorithm for
+        Constraints and Derivatives Providers</b></span> in the
+        <span class="guitext"><b class="guilabel">Optimization</b></span> dialog box.</p>
+      </div>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to create and run an
+      optimization.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Select the <span class="guitext"><b class="guilabel">Optimization</b></span> tool from the PEO
+            toolbar.</p>
+          </li>
+
+          <li>
+            <p>In the Problem tab, do the following:</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Select the optimization type.</p>
+                </li>
+
+                <li>
+                  <p>Select the parameter to optimize.</p>
+                </li>
+
+                <li>
+                  <p>Enter the &#8220;free&#8221; parameters that
+                  can be varied to optimize the desired result.</p>
+                </li>
+              </ol></div>
+          </li>
+
+          <li>
+            <p>In the Constraints tab, enter the parameters that
+            will limit the analysis.</p>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guilabel">Run
+            optimization</b></span> at the bottom of the dialog
+            box.</p>
+
+            <p>A progress bar indicates that the optimization
+            process is running.</p>
+          </li>
+        </ol></div>
+
+      <p>Once you define the optimization problem and select
+      <span class="guitext"><b class="guilabel">Run</b></span>, the
+      optimization process submits jobs, attaches the results, and
+      updates the solution sensors until the termination criteria
+      are met.</p>
+
+      <p>Updating a solution sensor or activating an image from the
+      Nonlinear Structural Analysis or Thermal Analysis workbench
+      will display results from the attached output database. If
+      you are in the PEO workbench, updating a sensor or activating
+      an image will trigger a new optimization run if any of the
+      analysis parameters have changed.</p>
+
+      <div style="margin-left: 0.5in; margin-right: 0.5in;" class="tip">
+        <p><img border="0" src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32" style="vertical-align: middle"></img><b>Tip:</b>
+        To make parameters and optimizations available in the
+        specification tree, select <b><span class="guitext"><b class="guimenu">Tools</b></span>&gt;<span class="guitext"><b class="guimenuitem">Options</b></span></b> and toggle on
+        <span class="guitext"><b class="guilabel">Show
+        parameters</b></span> and <span class="guitext"><b class="guilabel">Show relations</b></span> in the <span class="guitext"><b class="guilabel">General</b></span> tabbed
+        page for the <span class="guitext"><b class="guilabel">Analysis &amp; Simulation</b></span>
+        options.</p>
+      </div><span id="ath-gen-res-anlcntrl-optimize-results"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div><span id="ath-gen-res-anlcntrl-optimize"></span>
+  </div></body></html>
+

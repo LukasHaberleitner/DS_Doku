@@ -1,0 +1,231 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Automating Tasks</title>
+  <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+</head>
+
+ <body>
+
+ <a name="ix-writing macros;macros, writing"></a>
+ <h1>Automating Tasks </h1>
+ <table Border="0" CELLSPACING="0" valign="top" style="border-collapse: collapse" cellpadding="0" width="781">
+   <tr>
+     <td valign="top" height="54" width="32">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" alt="ainfo.gif (980 bytes)" width="32" height="32"></td>
+     <td colspan="2" height="54" width="749">If you perform a task repeatedly, 
+     you can take advantage of a macro to automate it. A macro is a series of 
+     functions, written in a scripting language, that you group in a single 
+     command to perform the requested task automatically.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="32" width="32">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td rowspan="1" colspan="2" height="32" width="749">This task will show you 
+     how to edit a macro created in the DMU Optimizer workbench.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="74" width="32">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" alt="aprereq.gif (1223 bytes)" width="32" height="32"></td>
+     <td colspan="2" height="74" width="749">Open the ThicknessMacro.CATScript&nbsp; 
+     from the sample folder with a Text editor
+     <p>You stored your recorded&nbsp; macros in a text format file. For more 
+     details about recording, running macros refer to the <i>DMU Navigator 
+     Infrastructure User's Guide.</i></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="72" width="32">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" alt="ascenari.gif (1364 bytes)" width="32" height="32"></td>
+     <td rowspan="1" height="72" width="380">&nbsp;You can easily modify the macro 
+     instructions specific to DMU Optimizer (strings of characters put in bold).<br>
+     Here is an example:
+     <ul>
+       <li>Thickness Macro</li>
+     </ul>
+     </td>
+     <td rowspan="1" height="72" width="369"></td>
+   </tr>
+   <tr>
+     <td valign="top" height="19" width="32"></td>
+     <td height="19" width="380">
+     <p align="center"><strong>THICKNESS MACRO</strong></td>
+     <td height="19" width="369">
+     <p align="center"><strong>EXPLANATIONS</strong></td>
+   </tr>
+   <tr>
+     <td valign="top" height="322" width="32"></td>
+     <td height="322" width="380"><kbd>Language=&quot;VBSCRIPT&quot;<br>
+     <br>
+     Sub CATMain()</kbd>
+     <p><kbd>Dim productDocument1 As Document<br>
+     Set productDocument1 = CATIA.ActiveDocument</kbd></p>
+     <p><kbd>Dim dMOThicknesses1 As DMOThicknesses<br>
+     Set dMOThicknesses1 = optimizerWorkBench1.Thicknesses</kbd></p>
+     <p><kbd>Dim product1 As Product<br>
+     Set product1 = productDocument1.Product</kbd></p>
+     <p><kbd>Dim groups1 As AnyObject<br>
+     Set groups1 = product1.GetTechnologicalObject(&quot;Groups&quot;)</kbd></p>
+     <p><kbd>&nbsp;</kbd></td>
+     <td height="322" width="369"></td>
+   </tr>
+   <tr>
+     <td valign="top" rowspan="2" height="149" width="32"></td>
+     <td rowspan="2" height="149" width="380"><kbd>Dim group1 As Group<br>
+     Set group1 = groups1.Add()<br>
+     <br>
+     <b>group1.AddExplicit product1</b></kbd><p><kbd>Dim dMOThicknesses1 As 
+     AnyObject<br>
+     Set dMOThicknesses1 = product1.GetTechnologicalObject(&quot;Thicknesses&quot;)<br>
+&nbsp;</kbd></td>
+     <td height="115" width="369">Name of the product selected for the 
+     thickness. <br>
+     <br>
+     Enter a meaningful name if you wish to edit the name.</td>
+   </tr>
+   <tr>
+     <td height="34" width="369">
+     <img src="b35doc/english/online/dmoug_c2/images/macro01NLS.gif" alt="macro01NLS.gif (1034 bytes)" width="216" height="22"></td>
+   </tr>
+   <tr>
+     <td valign="top" height="1" width="32"></td>
+     <td height="1" width="380"></td>
+     <td height="1" width="369"></td>
+   </tr>
+   <tr>
+     <td valign="top" rowspan="3" height="394" width="32"></td>
+     <td rowspan="3" height="394" width="380"><kbd>Dim 
+     arrayOfVariantOfDouble1(5)<br>
+     arrayOfVariantOfDouble1(0) = 1665.173462<br>
+     arrayOfVariantOfDouble1(1) = -682.007568<br>
+     arrayOfVariantOfDouble1(2) = -29.914585<br>
+     arrayOfVariantOfDouble1(3) = -0.006795<br>
+     arrayOfVariantOfDouble1(4) = -0.173679<br>
+     arrayOfVariantOfDouble1(5) = 0.984779<br>
+     Dim document1 As Document<br>
+     <b>Set document1 = dMOThicknesses1.ComputeAThickness(group1, 2.000000, 
+     -2.000000, 0,</b> arrayOfVariantOfDouble1)<br>
+     <br>
+     Dim optimizerWorkBench1 As Workbench<br>
+     Set optimizerWorkBench1 = 
+     productDocument1.GetWorkbench(&quot;OptimizerWorkBench&quot;)</kbd><br>
+     <br>
+     <kbd>groups1.Remove group1<br>
+     <br>
+     document1.Activate <br>
+     <br>
+&nbsp;</kbd></td>
+     <td height="32" width="369"><kbd>2.000000, -2.000000, Gives the values of 
+     the offset 1 and offset 2, you defined.</kbd></td>
+   </tr>
+   <tr>
+     <td height="41" width="369"><kbd>
+     <img src="b35doc/english/online/dmoug_c2/images/macro02NLS.gif" alt="macro02NLS.gif (1963 bytes)" width="218" height="41"></kbd></td>
+   </tr>
+   <tr>
+     <td height="321" width="369">&nbsp;<p><kbd>1 corresponds to the number 
+     orientation constraints.<br>
+     <br>
+     arrayOfVariantOfDouble1:&nbsp; defines the constraint coordinates:</kbd></p>
+     <ul>
+       <li><kbd>Constraint location point</kbd></li>
+     </ul>
+     <p><kbd>arrayOfVariantOfDouble1(0) = 1665.173462<br>
+     arrayOfVariantOfDouble1(1) = -682.007568<br>
+     arrayOfVariantOfDouble1(2) = -29.914585</kbd></p>
+     <ul>
+       <li><kbd>Corresponding normal vector</kbd></li>
+     </ul>
+     <p><kbd>arrayOfVariantOfDouble1(3) = -0.006795<br>
+     arrayOfVariantOfDouble1(4) = -0.173679<br>
+     arrayOfVariantOfDouble1(5) = 0.984779</kbd></td>
+   </tr>
+   <tr>
+     <td valign="top" height="112" width="32"></td>
+     <td height="112" width="380"><kbd>document1.SaveAs 
+     &quot;./Product1_THICKNESS.cgr&quot;<br>
+     <br>
+     productDocument1.Activate <br>
+     <br>
+     productDocument1.Activate <br>
+     <br>
+     End Sub</kbd></td>
+     <td height="112" width="369">Gives the location of the cgr file you saved.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="36" width="32">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" alt="ainfo.gif (980 bytes)" width="32" height="32"></td>
+     <td colspan="2" height="36" width="749">Note: From V5R11,&nbsp; the 
+     calculation changes: offset1 and offset2 values make the selected surface 
+     move to two opposite directions (i.e. two positive values equal to 2mn will 
+     result in a thickness of 4mm).</td>
+   </tr>
+   <tr>
+     <td valign="top" height="1" width="32"></td>
+     <td height="1" colspan="2" width="749">Open the ThickR11.CATScript&nbsp; 
+     document to access a V5R11 thickness macro (taking in account this 
+     behavioral change)</td>
+   </tr>
+   <tr>
+     <td valign="top" height="1" width="32"></td>
+     <td height="1" width="380">Open the SilhouetteMacro.CATScript document from 
+     the samples folder</td>
+     <td height="1" width="369"></td>
+   </tr>
+   <tr>
+     <td valign="top" rowspan="2" bgcolor="#F2F2F2" height="424" width="32">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" alt="ainfo.gif (980 bytes)" width="32" height="32"></td>
+     <td rowspan="2" bgcolor="#F2F2F2" height="424" width="380"><strong><kbd>
+     Silhouette macro example :</kbd> </strong>
+     <p><kbd>Dim arrayOfVariantOfDouble1(17)<br>
+     arrayOfVariantOfDouble1(0) = 1.000000<br>
+     arrayOfVariantOfDouble1(1) = 0.000000<br>
+     arrayOfVariantOfDouble1(2) = 0.000000<br>
+     arrayOfVariantOfDouble1(3) = -1.000000<br>
+     arrayOfVariantOfDouble1(4) = 0.000000<br>
+     arrayOfVariantOfDouble1(5) = 0.000000<br>
+     arrayOfVariantOfDouble1(6) = 0.000000<br>
+     arrayOfVariantOfDouble1(7) = 1.000000<br>
+     arrayOfVariantOfDouble1(8) = 0.000000<br>
+     arrayOfVariantOfDouble1(9) = 0.000000<br>
+     arrayOfVariantOfDouble1(10) = -1.000000<br>
+     arrayOfVariantOfDouble1(11) = 0.000000<br>
+     arrayOfVariantOfDouble1(12) = 0.000000<br>
+     arrayOfVariantOfDouble1(13) = 0.000000<br>
+     arrayOfVariantOfDouble1(14) = 1.000000<br>
+     arrayOfVariantOfDouble1(15) = 0.000000<br>
+     arrayOfVariantOfDouble1(16) = 0.000000<br>
+     arrayOfVariantOfDouble1(17) = -1.000000<br>
+     Dim document1 As Document<br>
+     Set document1 = silhouettes1.ComputeASilhouette(group1, 
+     arrayOfVariantOfDouble1, 20.000000, 0.000000)<br>
+&nbsp;</kbd></td>
+     <td bgcolor="#F2F2F2" height="155" width="369"><strong><kbd>Coordinates of 
+     the&nbsp; first viewpoint vector :</kbd></strong><p><kbd>
+     <font FACE="Courier New" size="2">arrayOfVariantOfDouble1(0) = 1.000000<br>
+     arrayOfVariantOfDouble1(1) = 0.000000<br>
+     arrayOfVariantOfDouble1(2) = 0.000000</font></kbd></p>
+     <p><kbd><font FACE="Courier New" size="2">and so on...</font></kbd></td>
+   </tr>
+   <tr>
+     <td bgcolor="#F2F2F2" height="269" width="369"><kbd>
+     <img border="0" src="b35doc/english/online/dmoug_c2/images/dbmultiselectionlistNLS.gif" width="358" height="206"></kbd></td>
+   </tr>
+   <tr>
+     <td valign="top" height="32" width="32"></td>
+     <td rowspan="1" colspan="2" height="32" width="749">
+     <p align="center"><kbd>
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" alt="aendtask.gif (1477 bytes)" width="64" height="32"></kbd></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

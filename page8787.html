@@ -1,0 +1,353 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<title>Inverting Surfaces and Curves</title>
+</head>
+
+<body>
+
+<h1>Inverting Surfaces and Curves<a name="ICMCLAShape.Invert"></a> <a name="ix-commands::Invert;surfaces:invert;curves:invert">
+</a></h1>
+<table cellpadding="5" cellspacing="2">
+  <tr>
+    <td><img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td colspan="2">
+    <p class="task">This task explains how to invert and align the normals and directions of selected curves and surfaces.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+    <td colspan="2" valign="top">In the graphics area, the following vector symbols are used to display the UV and normal directions:<br>
+    <table cellpadding="5" cellspacing="2">
+      <tr>
+        <td><img src="b35doc/english/online/icmug_c2/images/InvertSurface_Symbols.gif" width="0" height="0"> </td>
+        <td>
+        <ul class="st">
+          <li><kbd>green</kbd>: UV direction</li>
+          <li><kbd>black</kbd>: surface normal depending from the UV vectors</li>
+          <li><kbd>red</kbd>: shell normal (basis for the basic direction of the commands applied in the following on the surface)</li>
+        </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+    <p class="task">With this command, the following invert operations can be carried out:</p>
+    <ul class="st">
+      <li><kbd>Surfaces</kbd>:
+        <ul class="nd">
+          <li><a href="#ChangeOrientation">Change Orientation</a>: Change UV direction (and thus the surface normal (white)) or invert 
+            Shell normal (yellow).</li>
+          <li><a href="#AlignNormals">Align Normals to Surface Normal</a>: The Shell normal as well as the surface normal are aligned 
+            to the surface normal of a <a href="#Reference">Reference</a>.</li>
+          <li><a href="#AlignUV">Align UV</a>: The UV directions are aligned according to a <a href="#Reference">Reference</a>.</li>
+        </ul>
+      </li>
+      <li><kbd>Curves</kbd>:
+        <ul class="nd">
+          <li><a href="#InvertDirection">Invert Direction</a>: Invert the direction of curves.</li>
+          <li><a href="#AlignDirections">Align Directions</a>: Align the direction of curves according to a <a href="#Reference">Reference</a>.</li>
+        </ul>
+      </li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td><img src="b35doc/english/online/icons_C2/images/I_ICMInvertAsFeatureLT.gif" align="middle" width="22" height="22"></td>
+    <td colspan="2">
+    <h3>Invert (Feature)</h3>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td valign="top">After having carried out the inversion, a Feature element &#39;Invert.X&#39; is inserted in the specification tree and 
+    the original elements are set to Hide mode.<br>
+    The input geometry will not be modified.<br>
+    For certain modes (<a href="#AlignNormals">Align Normals to Surface Normal</a>, <a href="#AlignUV">Align UV</a>,
+    <a href="#AlignDirections">Align Directions</a>), the input geometry must be topologically contiguous (see
+    <a href="#GapDistance">Gap Distance</a>).</td>
+    <td valign="top"><img src="b35doc/english/online/icmug_c2/images/InvertSurface_Feature.gif" width="560" height="240"></td>
+  </tr>
+  <tr>
+    <td><img src="b35doc/english/online/icons_C2/images/I_ICMInvertLT.gif" align="middle" width="22" height="22"></td>
+    <td colspan="2">
+    <h3>Invert (Datum)</h3>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td valign="top">With this command, the inverted elements remain datum elements.<br>
+    If the command is carried out on a datum element, the result will be applied directly on the input element.<br>
+    The selected elements need not to be topologically contiguous, however, in case of carrying out the command with a selected
+    <a href="#Reference">Reference</a>, only the region containing the reference element will be considered.</td>
+    <td valign="top"><img src="b35doc/english/online/icmug_c2/images/InvertSurface_Datum.gif" width="563" height="249"></td>
+  </tr>
+</table>
+<table cellpadding="5" cellspacing="2">
+  <tr>
+    <td><img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td colspan="2">
+    <p class="task">Open the <a href="b35doc/english/online/icmug_c2/samples/InvertCurve.CATPart">InvertCurve.CATPart</a> document.</p>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td><img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td>
+    <ol class="task">
+      <li>
+        <p class="task">Click the <kbd>Invert (Feature)</kbd> icon
+        <img src="b35doc/english/online/icons_C2/images/I_ICMInvertAsFeatureLT.gif" align="middle" width="22" height="22">.<br>
+        The Invert dialog box is displayed.</p>
+      </li>
+    </ol>
+    </td>
+    <td><img src="b35doc/english/online/icmug_c2/images/dbInvert.png"></td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">
+    <ol class="task" start="2">
+      <li>
+        <p class="task">Select <kbd>Invert Direction</kbd> in the <kbd>Mode</kbd> list.</p>
+      </li>
+      <li>
+        <p class="task">Select Curves 1 to 3.<br>
+        The curve direction is displayed by vectors if <kbd>Display Vectors</kbd> is selected.<br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/InvertCurve01.gif" width="452" height="131"></p>
+      </li>
+      <li>
+        <p class="task">Click <kbd>Apply</kbd>.<br>
+        The direction of all selected curves is inverted.<br>
+        A Multi-Output feature result is displayed in the tree.<br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/InvertCurve02.gif" width="597" height="235"></p>
+      </li>
+      <li>
+        <p class="task">Select <kbd>Align Directions</kbd> in the <kbd>Mode</kbd> list.</p>
+      </li>
+      <li>
+        <p class="task">Select Curve 1 as <kbd>Reference</kbd>.<br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/InvertCurve03.gif" width="458" height="146"></p>
+      </li>
+      <li>
+        <p class="task">Click <kbd>Apply</kbd> to align the direction of all selected curves to the direction of Curve 1.<br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/InvertCurve04.gif" width="499" height="114"></p>
+      </li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td><img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td colspan="2">
+    <p class="task">Open the <a href="b35doc/english/online/icmug_c2/samples/InvertSurface.CATPart">InvertSurface.CATPart</a> document.</p>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td>&nbsp;</td>
+    <td colspan="2">
+    <ol class="task">
+      <li>
+        <p class="task">Select <kbd>Change Orientation</kbd> in the <kbd>Mode</kbd> list.</p>
+      </li>
+      <li>
+        <p class="task">Select Surfaces 1 to 9.<br>
+        Normals and UV directions are displayed if <kbd>Display Vectors</kbd> is selected.<br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/InvertSurface01.gif" width="594" height="370"></p>
+      </li>
+      <li>
+        <p class="task">Select <kbd>Invert Shell Normal</kbd>.<br>
+        The normals of all selected surfaces are inverted.<br>
+        A Multi-Output feature result is displayed in the tree.<br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/InvertSurface02.gif" width="754" height="384"></p>
+      </li>
+      <li>
+        <p class="task">Select <kbd>Align Normals to Surface Normal</kbd> in the <kbd>Mode</kbd> list.</p>
+      </li>
+      <li>
+        <p class="task">Select Surface 1 as <kbd>Reference</kbd>.<br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/InvertSurface03.gif" width="576" height="438"></p>
+      </li>
+      <li>
+        <p class="task">Click <kbd>Apply</kbd> to align all selected surfaces in direction of the normal of surface 1.<br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/InvertSurface04.gif" width="579" height="392"></p>
+      </li>
+      <li>
+        <p class="task">Select <kbd>Align UV</kbd> in the <kbd>Mode</kbd> list.<br>
+        Surface 1 is still selected as <kbd>Reference</kbd>.</p>
+      </li>
+      <li>
+        <p class="task">Click <kbd>Apply</kbd> to align the U and V direction to the U and V direction of surface 1.<br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/InvertSurface05.gif" width="596" height="395"></p>
+      </li>
+    </ol>
+    </td>
+  </tr>
+</table>
+<table cellpadding="5" cellspacing="2">
+  <tr>
+    <td valign="top"></td>
+    <td valign="top">You can define the following options::</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="top"><kbd>Mode</kbd><br>
+    For inverting surfaces and curves, you can select the following modes:
+    <ul class="nd">
+      <li><a name="ChangeOrientation"></a><kbd>Change orientation</kbd>:<br>
+        Changes the orientation of surfaces. In this mode, the following options are available:
+        <ul class="nd">
+          <li><a name="ReverseUV"></a><kbd>Reverse U/V</kbd>: Inverts the U or V direction of all selected surface elements.<br>
+            <br>
+            <table cellpadding="5">
+              <tr>
+                <td class="code" valign="top"><img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+                <td class="code">Attention:<br>
+                Inverting U or V direction also inverts the surface normal!</td>
+              </tr>
+            </table>
+            <br>
+            <img src="b35doc/english/online/icmug_c2/images/InvertSurface_InvertU.gif" width="668" height="195"><br>
+            <br>
+          </li>
+          <li><a name="SwapUV"></a><kbd>Swap UV</kbd>: Inverts the U and V directions of all selected surface elements.<br>
+            <br>
+            <table cellpadding="5">
+              <tr>
+                <td class="code" valign="top"><img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+                <td class="code">Attention:<br>
+                Inverting UV direction will also invert the surface normal!</td>
+              </tr>
+            </table>
+            <br>
+            <img src="b35doc/english/online/icmug_c2/images/InvertSurface_InvertUV.gif" width="672" height="195"><br>
+            <br>
+          </li>
+          <li><a name="InvertShellNormal"></a><kbd>Invert shell normal</kbd>: Inverts the shell normal direction of the selected surface 
+            elements.<br>
+            <br>
+            <img src="b35doc/english/online/icmug_c2/images/InvertSurface_InvertNormal.gif" width="681" height="178"><br>
+            <br>
+            <table class="code" cellpadding="5" cellspacing="2">
+              <tr>
+                <td><img src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+                <td>Note: In case of constructions on top, this option is not available for subsequent edition, as updates cannot 
+                be guaranteed to be free of errors.</td>
+              </tr>
+            </table>
+          </li>
+        </ul>
+      </li>
+      <li><a name="AlignNormals"></a><kbd>Align normals to surface normal</kbd>: Aligns all normals, i. e. shell and surface normals 
+        of all selected surfaces lying within one topologically contiguous region (see <a href="#GapDistance">Gap Distance</a>) according 
+        to the surface normal direction of the surface selected as <a href="#Reference">Reference</a>.<br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/InvertSurface_AlignNormal.gif" width="974" height="252"><br>
+        <br>
+        <table cellpadding="5">
+          <tr>
+            <td class="code" valign="top"><img src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+            <td class="code">Note:<br>
+            In order to be able to select a <a href="#Reference">reference</a>, it may be necessary in certain constellations to use 
+            the selection filter &#39;Geometrical Element Filter&#39; (see <a href="page1418.html">Selecting 
+            Using a Filter</a>). In some special cases, e. g. a federated join (see
+            <a href="page3191.html#hj-federation_V5R7SP2">Using the Federation Capability</a>) as 
+            input element, the selection of a reference may not be possible.</td>
+          </tr>
+        </table>
+      </li>
+      <li><a name="AlignUV"></a><kbd>Align UV</kbd>: Aligns U and V direction of all selected surface elements lying within one region 
+        (see <a href="#GapDistance">gap distance</a>) according to the U and V direction of the surface chosen as a
+        <a href="#Reference">Reference</a>.<br>
+        The surface normal direction remains unchanged.<br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/InvertSurface_AlignUV.gif" width="950" height="193"></li>
+      <li><kbd><a name="InvertDirection"></a>Invert direction</kbd>: Inverts the direction of the selected curve elements.<br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/InvertCurve_InvertDirection.gif" width="487" height="90"><br>
+        <br>
+        <table class="code" cellpadding="5" cellspacing="2">
+          <tr>
+            <td><img src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+            <td>Note: In case of constructions on top, this option is not available for subsequent edition, as updates cannot be guaranteed 
+            to be free of errors.</td>
+          </tr>
+        </table>
+      </li>
+      <li><a name="AlignDirections"></a><kbd>Align directions</kbd>: Aligns the direction of all selected curve elements lying within 
+        one region (see <a href="#GapDistance">gap distance</a>) according to the direction of the curve chosen as a
+        <a href="#Reference">reference</a>.<br>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/InvertCurve_AlignDirection.gif" width="413" height="260"><br>
+      </li>
+      <li></li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">
+    <ul class="st">
+      <li><kbd><a name="Surface"></a>Surface</kbd>: Selects the surfaces to be inverted.</li>
+      <li><kbd>Curve</kbd>: Selects of the curves to be inverted.</li>
+      <li><a name="Reference"></a><kbd>Reference</kbd>: Only available for the options <a href="#AlignDirections">Align direction</a>,
+        <a href="#AlignNormals">Align normals</a> and <a href="#AlignUV">Align UV</a>.<br>
+        Selects from the selected surface or curve element the reference element specifying the normal direction, UV alignment, and 
+        curve direction.</li>
+      <li><a name="GapDistance"></a><kbd>Gap distance</kbd>: Only available for the options <a href="#AlignDirections">Align direction</a>,
+        <a href="#AlignNormals">Align normals</a> and <a href="#AlignUV">Align UV</a>.<br>
+        If the distance between selected surfaces is larger than the specified tolerance value, they are assigned to different regions.<br>
+        Curves and surfaces cannot be mixed.<br>
+        To preserve all surfaces, the minimum from the specified gap tolerance and the smallest edge of the surfaces concerned is 
+        used.</li>
+      <li><kbd>Display vectors</kbd>: Displays the normal vectors,<br>
+        the U and V direction arrows on a surface, and<br>
+        the direction vectors of a curve.<br>
+        To distinguish the different vectors the following colors is used:<br>
+        <ul>
+          <li>UV directions: green</li>
+          <li>Shell normals: yellow</li>
+          <li>Surface normals: white</li>
+        </ul>
+      </li>
+      <li><kbd>Display face normals</kbd>: This display option is enabled if the <kbd>Display vectors</kbd> option is selected.<br>
+        The face normal is displayed for each input face. To distinguish the different normals the following colors is used:
+        <ul>
+          <li>Shell normals: red</li>
+          <li>Surface normals: white</li>
+          <li>Face normals: light blue</li>
+        </ul>
+        <br>
+        <img src="b35doc/english/online/icmug_c2/images/Invert_FaceNormals.gif" width="737" height="297"> </li>
+      <li><kbd>Results</kbd>: Displays the number of selected and adjusted elements as well as the number of regions after a multi-selection.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+    <p align="center"><img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+    </td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

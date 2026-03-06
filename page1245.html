@@ -1,0 +1,140 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Setting Up a DB2 DATALINK Vault Server</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Setting Up a DB2 DATALINK Vault Server</h1>
+ <p><a name="ix-Vault Server::setting up DB2 datalink"></a>This document will 
+ show you how to setup DB2 DATALINK mode for Vault operations.</p>
+ <p style="line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">This vault administration 
+ documentation is for UNIX only.</p>
+ <p style="margin-top:6.0pt;margin-right:0in;margin-bottom:6.0pt;
+margin-left:0in;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">This setup is implemented in two 
+ steps.</p>
+ <h2 style="margin-top:6.0pt;margin-right:0in;margin-bottom:6.0pt;
+margin-left:0in;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none"><font color="#282187">Set Up the 
+ DB2 DATALINK system:</font></h2>
+ <p style="margin-top:6.0pt;margin-right:0in;margin-bottom:6.0pt;
+margin-left:0in;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">See DB2 DATALINK documentation 
+ for more information about how to setup a datalink system.</p>
+ <h2 style="margin-top:12.0pt;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none"><font color="#282187">Vault 
+ Server Specific Installation Operations due to DATALINK</font></h2>
+ <h3 style="line-height: 12.0pt; tab-stops: .25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none; margin-right: 0in; margin-top: 12.0pt; margin-bottom: .0001pt">
+ <font color="#282187">Data Structure Creation</font></h3>
+ <p style="line-height: 12.0pt; tab-stops: .25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none; margin-right: 0in; margin-top: 12.0pt; margin-bottom: .0001pt">
+ Beware: Each Vault Server is supposed to have its own data structure.</p>
+ <p style="line-height: 12.0pt; tab-stops: .25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none; margin-right: 0in; margin-top: 12.0pt; margin-bottom: .0001pt">
+ Do not share Vault Server data structures between several Vault Servers!</p>
+ <p>You will find the reference files for the data structure creation (tables, 
+ index, etc.) under the following directory:</p>
+ <blockquote>
+   <p class="MsoNormal" style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none; margin-right: 0in; margin-top: 6.0pt; margin-bottom: 6.0pt">
+   <code>YourUnloaddir/$OSDS/reffiles/DBMS/ddl</code></p>
+ </blockquote>
+ <p style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ The $OSDS value could be either aix_a or <blink>aix_a64 </blink>depending on your 
+ operating system.</p>
+ <p style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none; margin-right: 0in; margin-top: 12.0pt; margin-bottom: .0001pt">
+ The suffix of these reference files is .clp for DB2.</p>
+ <p style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none">
+ They are named:</p>
+ <p class="MsoNormal" style="margin-left:.5in;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">VPM_VAULTFILEDB2DL.clp when 
+ creating tables </p>
+ <p class="MsoNormal" style="margin-left:.5in;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">grant_VPM_VAULTFILEDB2DL.clp 
+ when creating grants on tables </p>
+ <p style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none; margin-right: 0in; margin-top: 6.0pt; margin-bottom: .0001pt">
+ You can also use the drop_VPM_VAULTFILEDB2DL.clp and the 
+ revoke_VPM_VAULTFILEDB2DL.clp files to remove respectively tables and grants on 
+ tables.</p>
+ <p style="line-height: 12.0pt; tab-stops: 0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in; mso-layout-grid-align: none; text-autospace: none; margin-right: 0in; margin-top: 6.0pt; margin-bottom: .0001pt">
+ When creating your data structure, you have to customize the above mentioned 
+ files.</p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">To do so:</p>
+ <p style="tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">1. Duplicate the 
+ following files and rename them as indicated below:</p>
+ <p class="MsoBodyTextIndent" style="margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:27.0pt;margin-bottom:.0001pt;text-indent:0in;tab-stops:27.0pt 225.0pt">
+ <b>Original file name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ Duplicated file name</b></p>
+ <p class="MsoNormal" style="margin-left:27.0pt;line-height:12.0pt;tab-stops:0in 27.0pt 225.0pt;
+mso-layout-grid-align:none;text-autospace:none">VPM_VAULTFILEDB2DL.clp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ VPM_VAULTFILEDB2DL_MyVault.clp </p>
+ <p class="MsoNormal" style="margin-left:27.0pt;line-height:12.0pt;tab-stops:0in 27.0pt 1.0in 1.5in 2.0in 2.5in 225.0pt;
+mso-layout-grid-align:none;text-autospace:none">grant_VPM_VAULTFILEDB2DL.clp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ grant_VPM_VAULTFILEDB2DL_MyVault.clp </p>
+ <p class="MsoNormal" style="margin-left:27.0pt;line-height:12.0pt;tab-stops:0in 27.0pt 1.0in 1.5in 2.0in 2.5in 225.0pt;
+mso-layout-grid-align:none;text-autospace:none">drop_VPM_VAULTFILEDB2DL.clp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ drop_VPM_VAULTFILEDB2DL_MyVault.clp</p>
+ <p class="MsoNormal" style="margin-left:27.0pt;line-height:12.0pt;tab-stops:0in 27.0pt 1.0in 1.5in 2.0in 2.5in 225.0pt;
+mso-layout-grid-align:none;text-autospace:none">revoke_VPM_VAULTFILEDB2DL.clp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ revoke_VPM_VAULTFILEDB2DL_MyVault.clp</p>
+ <p style="line-height: 12.0pt; tab-stops: 0in 27.0pt 1.0in 1.5in 2.0in 2.5in 225.0pt; mso-layout-grid-align: none; text-autospace: none">
+ 2. Change the name of the structure owner (the default owner is VPMADM) and the 
+ tablespaces name if necessary. In the case of the grant file, we advise you to 
+ change the &quot;to public&quot; right into &quot;to vault_structure_owner&quot;. The datalink 
+ options used to create the datalink column on the VAULTDOCUMENT table are:</p>
+ <p style="margin-top:6.0pt;text-indent:0in;tab-stops:
+27.0pt 45.0pt 1.5in 2.0in 2.5in 3.0in"><code>linktype url file link control 
+ integrity all read permission DB write permission blocked recovery yes on 
+ unlink restore</code></p>
+ <p style="text-indent: 0in; tab-stops: 27.0pt 1.5in 2.0in 2.5in 3.0in; margin-right: 0in; margin-top: 6.0pt; margin-bottom: .0001pt">
+ See DB2 documentation if you want to change options above. Beware: the on 
+ unlink delete option is not supported.</p>
+ <p style="text-indent: 0in; tab-stops: 27.0pt 1.5in 2.0in 2.5in 3.0in; margin-right: 0in; margin-top: 6.0pt; margin-bottom: .0001pt">
+ 3. Execute the VPM_VAULTFILEDB2DL_MyVault.clp file and the related grant file 
+ (grant_VPM_VAULTFILEDB2DL_My_Vault.clp) on your database:</p>
+ <p style="margin-left:1.0in;text-indent:-.25in;line-height:
+12.0pt;mso-list:l0 level1 lfo1;tab-stops:0in .75in list 1.0in left 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">a.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ logon the database as Database Administrator</p>
+ <p style="margin-left:.75in;line-height:12.0pt;tab-stops:.75in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">b.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ under the DB2 prompt, run the command: </p>
+ <blockquote>
+   <p style="margin-left:.75in;line-height:12.0pt;tab-stops:.75in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none"><code>db2 -tvf 
+   file_fullpathname.clp</code></p>
+ </blockquote>
+ <p style="text-indent: 0in; tab-stops: 27.0pt 1.5in 2.0in 2.5in 3.0in; margin-right: 0in; margin-top: 6.0pt; margin-bottom: .0001pt">
+ 4. Continue Vault Server installation as a standard Vault Server installation.</p>
+ <p style="margin-top:12.0pt;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in;
+mso-layout-grid-align:none;text-autospace:none">Vault Server properties file 
+ modifications for datalink mode activation:</p>
+ <p style="margin-top:6.0pt;tab-stops:0in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+ Add the following lines in the $CATInstallPath/docs/java/VaultServer.properties 
+ file:</p>
+ <p style="margin-top:6.0pt;margin-right:0in;margin-bottom:0in;
+margin-left:.5in;margin-bottom:.0001pt;line-height:12.0pt;tab-stops:3.0in 3.25in;
+mso-layout-grid-align:none;text-autospace:none"><code>
+ VaultServer_DLFMHostServerName = datalink_file_manager_host_name</code></p>
+ <p style="margin-left:.5in;line-height:12.0pt;tab-stops:0in .5in 1.0in 1.5in 3.0in 3.25in;
+mso-layout-grid-align:none;text-autospace:none"><code>VaultServer_DB2DATALINK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+ = true</code></p>
+ <p style="text-indent: 0in; tab-stops: 27.0pt 1.5in 2.0in 2.5in 3.0in; margin-right: 0in; margin-top: 6.0pt; margin-bottom: .0001pt">
+ <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ datalink_file_manager_host_name</code>:&nbsp;&nbsp;&nbsp; name of the workstation 
+ where the datalink file manager service is running (see DB2 DATALINK&nbsp;documentation for more information about the datalink file manager).</p>
+ <table>
+ </table>
+ 
+ </body>
+
+</html>
+

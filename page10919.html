@@ -1,0 +1,494 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Tips and Tricks</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="Microsoft Border" content="none">
+</head>
+
+ <body>
+
+ <h1>Useful Tips</h1>
+ <ul>
+   <li><a href="#Optimization">Optimization</a><div align="left">
+     <table border="0" cellpadding="4" id="AutoNumber16">
+       <tr>
+         <td>
+         <ul>
+           <li><a href="#Gradient">Gradient</a></li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li><a href="#Chaining algorithms">Chaining algorithms</a></li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li><a href="#Several constraints">Several<font FACE="Arial" SIZE="2" COLOR="#000000">
+           </font>constraints</a></li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li><a href="#Recommendations">Recommendations</a></li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li><a href="#Design of Experiments Tool">Design<font color="#282187"> of
+   </font>Experiments<font color="#282187"> </font>Tool</a></li>
+ </ul>
+ <p>&nbsp;</p>
+ <h2>Optimization<a name="Optimization"></a></h2>
+ <p>If you encounter a problem with many variables (more than 4) as free 
+ parameters: </p>
+ <table border="0" cellpadding="0" cellspacing="0">
+   <tr>
+     <td valign="baseline">&nbsp;</td>
+     <td valign="top">
+     <ul>
+       <li>do not forget to apply ranges, and&nbsp;</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="baseline">&nbsp;</td>
+     <td valign="top">
+     <ul>
+       <li>begin with the gradient algorithm before trying the simulated 
+       annealing algorithm.</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <h3>Gradient<a name="Gradient"></a></h3>
+ <p>The gradient behaves better with squares or <a name="quadratic function">
+ quadratic functions</a> (especially relevant for &quot;Target Values&quot;). Hence the 
+ following problem:</p>
+ <div align="center">
+   <center>
+   <table border="0" cellpadding="4" cellspacing="1" bgcolor="#CCCCCC">
+     <tr>
+       <td bgcolor="#F0F0F0" bordercolor="#FFFFFF">
+       <p align="center"><code>Given: <kbd>volume=x*y*z</kbd>.</code></p>
+       <p align="center"><code>Find, x, y and z such that volume = 1000.</code></p>
+       <p align="center"><code>is better solved if the following formula is 
+       given to the optimizer:<br>
+       &nbsp;</code><kbd><code>objective = (volume)2</code></kbd></td>
+     </tr>
+   </table>
+   </center>
+ </div>
+ <font FACE="Arial" SIZE="2" COLOR="#000000">
+ <h3><font color="#282187"><a name="Chaining algorithm">Chaining algorithms</a>
+ <a name="Chaining algorithms"></a></font></h3>
+ </font>
+ <p>In most cases the properties of the functions used inside the optimization 
+ problem are unknown. In this case, it is recommended to use the global search 
+ algorithm (Simulated Annealing). However, as this algorithm can take a long 
+ time to reach convergence (especially when there are many free parameters), it 
+ could be helpful to use a local search (gradient) for a few iterations before 
+ switching to the global search (Simulated Annealing). Eventually, when the 
+ global search has converged and that results must be refined, reduce the ranges 
+ around the found solution and restart a slow Local Search.</p>
+ <font FACE="Arial" SIZE="2" COLOR="#000000">
+ <h3><font color="#282187">Several constraints<a name="Several constraints"></a></font></h3>
+ </font>
+ <table border="0" cellpadding="0" cellspacing="0" width="892">
+   <tr>
+     <td valign="top" width="869">
+     <ul>
+       <li>Some optimization problems can contain a large number of constraints 
+       with respect to the number of free parameters. In this case the 
+       optimization problem can be over-constrained i.e. there is no feasible 
+       region (set of free parameter values for which all constraints are 
+       satisfied). The Global Search (Simulated Annealing) helps to reduce the 
+       constraints values even in this later case. However, it does not 
+       guarantee any access to the feasible region even if it exists.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="869">
+     <ul>
+       <li>The evolution of the distances to satisfaction (that can be displayed 
+       with the graphs) is useful to identify constraints that are difficult to 
+       satisfy. It is sometime better to deactivate all other constraints to 
+       identify a potential zone of satisfaction for these constraints only.</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <font FACE="Arial" SIZE="2" COLOR="#000000">
+ <h3><font color="#282187">Recommendations<a name="Recommendations"></a></font></h3>
+ </font>
+ <p>Always use well-constrained sketches when they are involved in an 
+ optimization. Under-constrained sketches can lead to wrong solutions or 
+ collapsed geometries (see <a href="b35doc/english/online/kwoug_c2/samples/KwoCirclesSk.CATPart">
+ KwoCirclesSk.CATPart</a>). It is also recommended to limit the ranges of the 
+ free parameters to reasonable values.&nbsp;</p>
+ <h2><font color="#282187">Design of Experiments Tool<a name="Design of Experiments Tool"></a></font></h2>
+ <h3>How to manually build graphics from a DoE Excel Output file?<a name="How to manually build"></a></h3>
+ <p class="task">The process described below is based on the following file:
+ <a href="b35doc/english/online/kwoug_c2/samples/HowToManuallyBuildGraphsFromDoEExcelOutputFile.xls">
+ HowToManuallyBuildGraphsFromDoEExcelOutputFile.xls</a></p>
+ <h4>Creating the Effects Graphs:</h4>
+ <p class="task">For each effect graph to build, i.e. for each array of the part 
+ entitled <kbd>ARRAYS OF FACTORS EFFECTS</kbd>, &nbsp;for each output S and each 
+ factor X, perform the following actions in the Excel file:</p>
+ <ol class="task">
+   <li>
+   <p class="task">If not already done, open the DoE output Excel file.</li>
+   <li>
+   <p class="task">Click the Chart Wizard command.</li>
+   <li>
+   <p class="task">Select the Line as Chart type and click the NEXT command.</li>
+   <li>
+   <p class="task">In the Data Range tab:</p>
+   <div align="left">
+     <table border="0" cellpadding="4" id="AutoNumber1">
+       <tr>
+         <td>
+         <ul>
+           <li>Put the cursor in the Data Range field and select the following 
+           highlighted range in the sheet:</li>
+         </ul>
+         <div align="left">
+           <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber2">
+             <tr>
+               <td>
+               <img border="0" src="b35doc/english/online/kwoug_c2/images/kwodoejapanese1NLS.gif" align="left" width="558" height="253"></td>
+             </tr>
+           </table>
+         </div>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li>Check the Columns option in the Series In field.</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>
+   <p class="task">In the Data Range tab :</p>
+   <div align="left">
+     <table border="0" cellpadding="4" id="AutoNumber3">
+       <tr>
+         <td>
+         <ul>
+           <li>Do not modify the content of the Series frame.</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li>Put the cursor in the Category (X) axis labels field and select 
+           the following highlighted range in the sheet :<div align="left">
+             <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber4">
+               <tr>
+                 <td><img border="0" src="b35doc/english/online/kwoug_c2/images/kwodoejapanese2NLS.gif" width="555" height="154"></td>
+               </tr>
+             </table>
+           </div>
+           </li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li>Click <kbd>NEXT</kbd>.</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>
+   <p class="task">In the Titles tab:</p>
+   <div align="left">
+     <table border="0" cellpadding="4" id="AutoNumber5">
+       <tr>
+         <td>
+         <ul>
+           <li>
+           <p class="task">Chart Title = Mean effect of FactorK on OutputN 
+           (surrounded by min. and max. effect)</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li>Category (X) axis = VALUE of FactorK</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li>Value (Y) axis = Average of OutputN (output&#039;s 
+           unit) responses (surrounded by min. and max. responses)</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>
+   <p class="task">&nbsp;Leave the other tabs unchanged and click <kbd>NEXT</kbd>.
+   </li>
+   <li>
+   <p class="task">Choose the As Object in : Sheet1 option. </li>
+   <li>
+   <p class="task">Click <kbd>FINISH</kbd>.</li>
+ </ol>
+ <h4>Creating the Interactions Graphs </h4>
+ <p class="task">For each interaction graph to build, i.e. for each array of the 
+ part entitled <kbd>ARRAYS OF INTERACTIONS AVERAGES, </kbd>perform the following 
+ actions in the Excel file :</p>
+ <ol class="task">
+   <li>
+   <p class="task">If not already done, open the DoE output Excel file.</li>
+   <li>
+   <p class="task">Click the Chart Wizard command.</li>
+   <li>
+   <p class="task">Select the Line as Chart type and click NEXT.</li>
+   <li>
+   <p class="task">In the Data Range tab:</p>
+   <div align="left">
+     <table border="0" cellpadding="4" id="AutoNumber6">
+       <tr>
+         <td>
+         <ul>
+           <li>Put the cursor in the Data Range field and select the following 
+           highlighted range in the sheet:<div align="left">
+             <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber7">
+               <tr>
+                 <td><img border="0" src="b35doc/english/online/kwoug_c2/images/kwodoejapanese3NLS.gif" width="563" height="192"></td>
+               </tr>
+             </table>
+           </div>
+           </li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li>Check the Columns option in the Series In field</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>
+   <p class="task">In the Series tab :</p>
+   <div align="left">
+     <table border="0" cellpadding="4" id="AutoNumber8">
+       <tr>
+         <td>
+         <ul>
+           <li>
+           <p class="task">Do not modify the content of the Series frame</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li>Put the cursor in the Category (X) axis labels field and select 
+           the following highlighted range in the sheet:</li>
+         </ul>
+         <div align="left">
+           <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber9">
+             <tr>
+               <td><img border="0" src="b35doc/english/online/kwoug_c2/images/kwodoejapanese4NLS.gif" width="451" height="120"></td>
+             </tr>
+           </table>
+         </div>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li>Click <kbd>NEXT</kbd>.</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>
+   <p class="task">In the Titles tab :</p>
+   <div align="left">
+     <table border="0" cellpadding="4" id="AutoNumber10">
+       <tr>
+         <td>
+         <ul>
+           <li>
+           <p class="task">Chart Title = Effect of FactorL on OutputN for each 
+           value of FactorK (no interaction if curves are parallel)</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li>Category (X) axis = VALUE of FactorL</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td>(Y) axis = Average of OutputN (output&#039;s 
+         unit)</td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>
+   <p class="task">Do not modify the other tabs and click <kbd>NEXT</kbd>.</li>
+   <li>
+   <p class="task">Choose the As Object in : Sheet1 option.</li>
+   <li>
+   <p class="task">Click <kbd>FINISH</kbd>.</li>
+ </ol>
+ <h4>Creating the Slopes Graphs</h4>
+ <p class="task">For each slope graph to build, i.e. for each array of the part 
+ entitled ARRAYS OF EFFECTS SLOPES,perform the following actions in the Excel 
+ file :</p>
+ <ol class="task">
+   <li>
+   <p class="task">If not already done, open the DoE output Excel file.</li>
+   <li>
+   <p class="task">Click the Chart Wizard command.</li>
+   <li>
+   <p class="task">Select the Line as Chart type and click NEXT.</li>
+   <li>
+   <p class="task">In the Data Range tab:</p>
+   <div align="left">
+     <table border="0" cellpadding="4" id="AutoNumber11">
+       <tr>
+         <td>
+         <ul>
+           <li>Put the cursor in the Data Range field and select the following 
+           highlighted range in the sheet:<div align="left">
+             <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber12">
+               <tr>
+                 <td><img border="0" src="b35doc/english/online/kwoug_c2/images/kwodoejapanese5NLS.gif" width="550" height="188"></td>
+               </tr>
+             </table>
+           </div>
+           </li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li>Check the Columns option in the Series In field.</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>
+   <p class="task">In the Series tab :</p>
+   <div align="left">
+     <table border="0" cellpadding="4" id="AutoNumber13">
+       <tr>
+         <td>
+         <ul>
+           <li>Do not modify the content of the Series frame</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li>Put the cursor in the Category (X) axis labels field and select 
+           the following highlighted range in the sheet :</li>
+         </ul>
+         <div align="left">
+           <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber14">
+             <tr>
+               <td><img border="0" src="b35doc/english/online/kwoug_c2/images/kwodoejapanese6NLS.gif" width="454" height="125"></td>
+             </tr>
+           </table>
+         </div>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li>Click <kbd>NEXT</kbd>.</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>
+   <p class="task">In the Titles tab :</p>
+   <div align="left">
+     <table border="0" cellpadding="4" id="AutoNumber15">
+       <tr>
+         <td>
+         <ul>
+           <li>Chart Title = Mean slope of the effect curve of FactorK on 
+           OutputN (surrounded by min. and max. slopes).</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li>Category (X) axis = Range of study = [value at level i,value at 
+           level i+1] of factor FactorK</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li>Value (Y) axis = Slope</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>
+   <p class="task">Do not modify the other tabs and click <kbd>NEXT</kbd>.</li>
+   <li>
+   <p class="task">Choose the As Object in : Sheet1 option.</li>
+   <li>
+   <p class="task">Click <kbd>FINISH</kbd>.</li>
+ </ol>
+
+ </body>
+
+</html>
+

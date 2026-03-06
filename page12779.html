@@ -1,0 +1,372 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>Checking Geometric Dimensions and Tolerances</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="docCompliance" content="v 0.9; Tue Jul 12 09:35:25 2005">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1>
+<a name="ix-commands::Geometric Tolerances Checker"></a>Checking Geometric 
+Dimensions and Tolerances<a name="CATCloudQsrHeaderCmd.CATQsrFTAInspectionHdr"></a></h1>
+<table Border="0" CELLSPACING="0" valign="top" cellpadding="0" width="610">
+  <tr valign="top" BORDER="0">
+    <td>
+    <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32">
+    </td>
+    <td rowspan="1">This task will show you how to check geometric dimensions 
+	and tolerances 
+	and include the result in a deviation report. 
+	The&nbsp;<kbd>Geometric Tolerances Checker</kbd>:<ul>
+		<li>Reads and decodes geometric dimensions and tolerances applied on CAD 
+		data.</li>
+		<li>Accurately evaluates actual size, position and form of the mesh for 
+		each selected tolerance.</li>
+		<li>Provides you with:<ul>
+		<li>An OK/KO status for each tolerance in the dialog box.</li>
+		<li>A color map in the 3D viewer.</li>
+		<li>A defect analysis tool via a slider in the dialog box (whenever 
+		meaningful for the current tolerance).</li>
+	</ul>
+		</li>
+		<li>Summarizes the results in a report.</li>
+	</ul>
+	</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"><br>
+	  </td>
+    <td>
+	<ul>
+		<li>Only the following geometric dimensions and tolerances are supported in this release:<table border="1" id="table5">
+			<tr>
+				<td class="code">Tolerance Type</td>
+				<td class="code">Tolerance Name</td>
+				<td class="code">Applying to</td>
+			</tr>
+			<tr>
+				<td>form</td>
+				<td>flatness</td>
+				<td>so called planar surface</td>
+			</tr>
+			<tr>
+				<td>form</td>
+				<td>cylindricity</td>
+				<td>so called cylindrical surface</td>
+			</tr>
+			<tr>
+				<td>form</td>
+				<td>circularity</td>
+				<td>so called cylindrical or conical surface</td>
+			</tr>
+			<tr>
+				<td>form</td>
+				<td>straightness</td>
+				<td>cylinder axis</td>
+			</tr>
+			<tr>
+				<td>form</td>
+				<td>straightness</td>
+				<td>cylindrical generatrix</td>
+			</tr>
+			<tr>
+				<td>form</td>
+				<td>surface profile</td>
+				<td>surface</td>
+			</tr>
+			<tr>
+				<td>orientation</td>
+				<td>parallelism</td>
+				<td>surface/reference plane</td>
+			</tr>
+			<tr>
+				<td>orientation</td>
+				<td>perpendicularity</td>
+				<td>surface/reference plane</td>
+			</tr>
+			<tr>
+				<td>orientation</td>
+				<td>angularity</td>
+				<td>surface/reference plane</td>
+			</tr>
+			<tr>
+				<td>dimension</td>
+				<td>linear</td>
+				<td>so called planar surface</td>
+			</tr>
+			<tr>
+				<td>dimension</td>
+				<td>angular</td>
+				<td>so called planar surface</td>
+			</tr>
+			<tr>
+				<td>dimension</td>
+				<td>linear</td>
+				<td>cylinder diameter</td>
+			</tr>
+			<tr>
+				<td>dimension</td>
+				<td>linear</td>
+				<td>cylinder/cylinder distance (interaxial)</td>
+			</tr>
+			<tr>
+				<td>orientation</td>
+				<td>perpendicularity</td>
+				<td>cylinder/plane</td>
+			</tr>
+			<tr>
+				<td>position</td>
+				<td>coaxiality</td>
+				<td>cylinder/cylinder</td>
+			</tr>
+		</table>
+		</li>
+		<li>Reference planes are currently computed as least squares planes. True 
+		reference planes computation based on infinite norm are not yet 
+		supported.</li>
+		<li>Semantic dimensions are not currently supported. This applies in 
+		particular to linear dimensions.</li>
+	</ul>
+	</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/aprereq.gif" title="aprereq.gif (1231 bytes)" width="32" height="32"></td>
+    <td rowspan="1">
+	<p>The mesh must be properly aligned with the corresponding exact CAD data (by 
+	best fit for example).</p>
+    <p>In order to be properly analyzed, the mesh must be segmented into different 
+	areas. An automatic segmentation is provided inside the command, but you can use any other segmentation tool as well (before entering the 
+	command):</p>
+	<ul>
+		<li>If the input is an already segmented mesh, the command takes this 
+		segmentation into account. No automatic segmentation is 
+		started. This way, you have full control over the segmentation used 
+		within the command. </li>
+	<li>If input is a non-segmented mesh (a mesh with just one internal cell), 
+	the automatic segmentation is started (this segmentation is guided by the 
+	aligned exact geometry, hence the requirement of a proper alignment).</li>
+	</ul>
+	<p>Open the <a href="b35doc/english/online/qsrug_c2/samples/GeometricTolerancesChecker01.CATPart">
+	GeometricTolerancesChecker01.CATPart</a> from the samples directory.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td rowspan="1">
+    <ol class="task">
+		<li>
+		<p class="task">Click <kbd>Geometric Tolerances Checker</kbd>
+		<img border="0" src="b35doc/english/online/icons_C2/images/I_CldFTAInspectionP2.gif" width="24" height="24"> 
+      in the <kbd>Check Deviation</kbd> toolbar.<br>
+		The dialog box is displayed.<br>
+		<img border="0" src="b35doc/english/online/qsrug_c2/images/dbGTC01NLS.gif" width="380" height="273"></li>
+		<li>
+		<p class="task">Select the <kbd>
+		<a name="ix-geometric tolerances checker:mesh to inspect"></a>Mesh to inspect</kbd>.<br>
+		<img border="1" src="b35doc/english/online/qsrug_c2/images/GTC01NLS.gif" width="314" height="285"></li>
+		<li>
+		<p class="task">Select the tolerances you want to check:</p>
+		<table border="0" id="table1">
+			<tr>
+				<td>
+				<ul>
+					<li>
+					Either pick them directly.</li>
+					<li>
+					or pick the CAD surfaces related to them in the 
+					3D viewer (In this case, the tolerances are deduced from the 
+				surfaces.) </li>
+					<li>
+					Multi-selection
+            <img border="0" src="b35doc/english/online/icons_C2/images/I_MultiSelectionUserCtrlP2.gif" width="24" height="24"> 
+            		is available.</li>
+				</ul>
+				<p class="task">The supported tolerances are listed with their 
+				requested tolerance values:<br>
+				<img border="1" src="b35doc/english/online/qsrug_c2/images/dbGTC02NLS.gif" width="356" height="115"></p>
+				</td>
+			</tr>
+		</table></li>
+		<li>
+		<p class="task">Optional: Select the <kbd>
+		<a name="ix-geometric tolerances checker:radius">Radius</a> </kbd>check box: when the cloud of points is noisy, it is difficult to 
+      have the boundaries of the CAD surface going through
+      all the points. <br>When you select this check box, the points inside a circular pipe centered on the 
+		surface edge are not taken into account. You can set the value of this 
+		radius. 
+		<br>
+		This option being useless for already segmented input meshes, it is 
+		available for non segmented meshes only (grayed otherwise).<li>
+		<p class="task">Click <kbd>Apply</kbd> to start the inspection.
+		<table border="0" id="table2">
+			<tr>
+				<td>
+				<ul>
+					<li>
+					<p class="MsoNormal"><span lang="EN-GB">Each tolerance is 
+				evaluated and the measured value is displayed, with an OK/KO 
+				status:<br>
+					</span>
+					<img border="1" src="b35doc/english/online/qsrug_c2/images/dbGTC03NLS.gif" width="356" height="115"></p>
+					</li>
+					<li>
+					<p class="MsoNormal"><span lang="EN-GB">The tolerances in 
+					the 3D viewer are colored according to their status.<br>
+					</span>
+					<img border="1" src="b35doc/english/online/qsrug_c2/images/GTC02NLS.gif" width="349" height="301"></li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		</li></li>
+	</ol>
+	</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    &nbsp;</td>
+    <td>
+    <ol class="task" start="6">
+		<li>
+		<p class="task">Select the <kbd>Perpendicularity.1</kbd> line.<br>
+		The defect is highlighted in the 3D viewer, with a color map:<table border="0" id="table10">
+			<tr>
+				<td>
+				<ul>
+					<li>Areas in green meet the tolerance.</li>
+					<li>Areas in Red are above the tolerance.</li>
+					<li>Areas in Blue are below the tolerance.</li>
+				</ul>
+				<p>The slider at the bottom of the dialog box becomes available, depending 
+		on the tolerance selected.</td>
+			</tr>
+		</table>
+		</li>
+		<li>
+		<p class="task">Move this slider. The distribution of colors 
+		changes in the defect map.<table border="0" id="table9">
+			<tr>
+				<td>Some tolerances are evaluated from a reference 
+				named datum. Depending on the type of the tolerance, 
+				this reference may slightly move around its default position. 
+				This is the &#8220;clearance&#8221; of the reference. <br>The slider in the dialog box lets you move the reference from 
+				one extremity to the other, as follows:
+				
+				<ul>
+					<li>First example:<ul>
+						<li>First extremity of the reference<br>
+						<img border="0" src="b35doc/english/online/qsrug_c2/images/GTC04.png"></li>
+						<li>Intermediate position of the reference<br>
+						<img border="0" src="b35doc/english/online/qsrug_c2/images/GTC05.png"></li>
+						<li>Second extremity of the reference<br>
+						<img border="0" src="b35doc/english/online/qsrug_c2/images/GTC06.png"></li>
+					</ul>
+					<p>Obviously, this face is globally flat and the 
+					parallelism criterion is reached, apart along its 
+					edges. The KO diagnosis is due to the welds between the 
+					planar faces. If you select the <kbd>Radius</kbd> check box and 
+					increase this value, the visualization turns into<br>
+					<img border="0" src="b35doc/english/online/qsrug_c2/images/GTC07.png"><br>confirming that, at a certain distance from its edges, the 
+					face is flat, the parallelism criterion is reached.</li>
+					<li>Second example:<ul>
+						<li>First extremity of the reference<br>
+						<img border="0" src="b35doc/english/online/qsrug_c2/images/GTC08.png"></li>
+						<li>Intermediate position of the reference<br>
+						<img border="0" src="b35doc/english/online/qsrug_c2/images/GTC09.png"></li>
+						<li>Second extremity of the reference<br>
+						<img border="0" src="b35doc/english/online/qsrug_c2/images/GTC10.png"></li>
+					</ul>
+					<p>Whatever the position of the reference, it is not 
+					possible to reach the parallelism criterion of this 
+					geometric tolerance. This is a true defect to be solved on 
+					the physical part.</li>
+				</ul></td>
+			</tr>
+		</table></li>
+	</ol>
+	</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    &nbsp;</td>
+    <td>
+    <ol class="task" start="8">
+		<li>
+		<p class="task">Click
+		<kbd>OK</kbd> to validate and exit the command. <br>The inspection display is erased from the screen.<br>A feature 
+		<kbd>GD&amp;T Check.x</kbd> is created in the specification tree 
+		under the <kbd>Deviation Check</kbd> node.<br>
+		<img border="0" src="b35doc/english/online/qsrug_c2/images/GTCTreeNLS.gif" width="161" height="54"></li>
+		<li>
+		<p class="task">Either add the <kbd>GD&amp;T Check.x</kbd> feature as a 
+		<kbd>More Elements to Export</kbd> in a Deviation Report:</p>
+		<table border="0" id="table7">
+			<tr>
+				<td>
+				<ul>
+					<li>Click <kbd>Deviation Report </kbd>
+					<img border="0" src="b35doc/english/online/icons_C2/images/I_TPSReportP2.gif" width="24" height="24"> 
+      in the <kbd>Check Deviation</kbd> toolbar.</li>
+					<li>Go to the <kbd>Deviation</kbd> tab and to <kbd>More 
+					Elements to Export</kbd>.<br>
+					<img border="1" src="b35doc/english/online/qsrug_c2/images/dbGTCReport01NLS.gif" width="382" height="330"></li>
+					<li>Click <kbd>Add</kbd> and select the <kbd>GD&amp;T Check.x
+					</kbd>you have created (you can select several <kbd>GD&amp;T 
+					Check.x</kbd> features).</li>
+					<li>The exported report looks like this:<br>
+					<img border="1" src="b35doc/english/online/qsrug_c2/images/GTCreport01NLS.gif" width="449" height="213"><br>Each 
+					<kbd>GD&amp;T Check.x</kbd>&nbsp; feature has its own 
+					section in the <kbd>Deviation check results</kbd> web page, 
+					and can be accessed directly from the navigation panel.</li>
+				</ul></td>
+			</tr>
+		</table></li>
+		<li>
+		<p class="task">Or capture the image of the <kbd>GD&amp;T Check.x</kbd> 
+		feature to insert it in the deviation report.</p>
+		<table border="0" id="table8">
+			<tr>
+				<td>
+				<ul>
+					<li>Double-click the <kbd>GD&amp;T Check.x</kbd>&nbsp; feature 
+					to display it.</li>
+					<li>Create the image with the <kbd>Tools &gt; Images &gt; Capture</kbd> 
+              menu or by any other means.</li>
+					<li>Click <kbd>Deviation Report </kbd>
+					<img border="0" src="b35doc/english/online/icons_C2/images/I_TPSReportP2.gif" width="24" height="24"> 
+      in the <kbd>Check Deviation</kbd> toolbar.</li>
+					<li>Go to the <kbd>Insert Images</kbd> tab and click <kbd>Add</kbd>. 
+					Select the image to insert.<br>
+					<img border="1" src="b35doc/english/online/qsrug_c2/images/dbGTCReport02NLS.gif" width="365" height="284"></li>
+					<li>The exported report looks like this:<br>
+					<img border="1" src="b35doc/english/online/qsrug_c2/images/GTCreport02NLS.gif" width="568" height="725"></li>
+				</ul></td>
+			</tr>
+		</table></li>
+	</ol>
+	<p>&nbsp;</td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td colspan="2">
+    <p align="center">
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+    </td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

@@ -1,0 +1,284 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Managing Multiple CATIA Environments</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Theme" content="none, default">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Managing Multiple CATIA Environments</h1>
+ <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber2" height="103">
+   <tr>
+     <td width="5%" height="43" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td width="95%" height="43">
+		<h2>Concept </h2>
+		</td>
+   </tr>
+   <tr>
+     <td width="5%" height="43" valign="top">
+     &nbsp;</td>
+     <td width="95%" height="43">The Multiple CATIA Environments facility has been created for the Supply Chain, and has been added to facilitate OEM requests to handle multiple CATIA releases and settings through a single SmarTeam installation.
+ 	<p>This allows the administrator to manage all CATIA data seamlessly in the proper environment in order to prevent saving data in the wrong CATIA version, wrong Drawing standards, etc.</p>
+		<p>The administrator builds a suitable environment for CATIA. When the user uses this environment and saves an object to SmarTeam, the object is saved with the correct mapping of the CATIA Environment Name.
+
+		</p>
+		<p>When opening a CATIA document from SmarTeam, the appropriate CATIA  environment is opened for editing the document. If a different CATIA environment is already open, a warning message notifies the user that the current environment is not the correct environment for editing the document.</p>
+		<p>
+		<img border="0" src="b35doc/english/online/td1ug_c2/images/catia_environ_message.gif" width="606" height="145"></p>
+		<p class="MsoNormal" style="line-height: normal; margin-bottom: 2.0pt">
+		<span lang="EN-GB" style="font-size: 10.0pt; font-family: Verdana,sans-serif">
+		When&nbsp; saving a CATIA document in a CATIA environment other than the one 
+		in which it was last saved, a warning message notifies the user.</span></p>
+		<p class="MsoNormal" style="line-height: normal; margin-bottom: 2.0pt">
+		<img border="0" src="b35doc/english/online/td1ug_c2/images/catia_environ_message.gif" width="606" height="145"></td>
+   </tr>
+   <tr>
+     <td width="5%" height="44" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="95%" height="44">
+     <h2>Configuration</h2>
+     The Multiple CATIA Environment configuration comprises two main stages:<ul>
+		<li>Database Preparation <ol><li>Run the Data Model Designer utility.
+		<li>Update the CATIA document profile cards through the Form Designer.
+		<li>Define the mapping using Integration Tools Setup.</li></ol></li>
+		<li>CATIA Environment Definition and Registration in SmarTeam</li>
+		
+		<ol>
+			<li>Customize the CATIA environment through the CATIA Environment 
+			Editor.
+			<li>Create relevant CATIA environments in SmarTeam.
+			<li>Modify SmarTeam keys using SmarTeam System Configuration Editor.</li>
+		</ol>
+		<p>&nbsp;</li>
+		</ul>
+		<h3><a name="hj-modify0"></a>Database Preparation</h3>
+		<p>This section includes running the Data Model Designer, updating the CATIA documents profile cards and defining a mapping between CATIA properties and Smarteam attributes. </p>
+     <p>To prepare the database:</p>
+     <ol class="task">
+       <li>
+		<p class="task">Launch the SmarTeam Data Model Designer.</li>
+		<li>
+		<p class="task">From the File menu, select <b>Modify Database Structure</b>. </li>
+		<li>
+		<p class="task">Select the R19 Database.</li>
+		<li>
+		<p class="task">Validate the warning message and log in as <b>joe</b>.</li>
+		<li>
+		<p class="task">Check that the Admin Mechanism is selected in the list of Available Mechanisms.<p class="task">
+		<img border="0" src="b35doc/english/online/td1ug_c2/images/admin_mechanism.gif" width="609" height="256"></p>
+		<li>
+		<p class="task">Click on <b>Next</b> and enable the <b>CAD Document</b> behavior for the CAD 
+		files.
+		<p class="task">
+		<img border="0" src="b35doc/english/online/td1ug_c2/images/cad_doc_behavior.gif" width="630" height="255"></p>
+		<li>
+		<p class="task">Verify that under the Admin Superclass, CAD Environment 
+		class with CATIA Environment sub-class is present.		<p class="task">
+		<img border="0" src="b35doc/english/online/td1ug_c2/images/catia_environment.gif" width="297" height="116"></p>
+		<li>
+		<p class="task">Click on next and verify that two new attributes, 
+		<b>CAD Version</b> and <b>CATIA Environment </b>are present in the List of Attributes for the 
+		<b>Class Documents</b>.
+		<p class="task">
+		<img border="0" src="b35doc/english/online/td1ug_c2/images/cad_version.gif" width="274" height="97"></p>
+		
+		<li>
+		<p class="task">Click <b>Create</b>.		
+			</ol>
+		<h3><a name="hj-release"></a>Updating the Profile Card</h3>
+		<p>In Form Designer, update the CATIA document profile cards.
+
+</p>
+     <ol class="task">
+       <li value="1">
+       <p class="task">Launch the Form Designer utility through SmarTeam Admin Console.</li>
+     
+       <li value="2">
+       <p>Modify the CATIA Documents profile card and add the following two fields:</li>
+       <ul><li>
+       CAD Version (TextEdit  on TDM_CAD_VERSION attribute)<li>
+	CATIA Environment Name (Ref to Class on TDM_CAT_ENVIRONMENT attribute)</ul></li>
+			
+		</ol>
+		<p>
+	</p>
+		<h3><a name="hj-modify1"></a>Integration Tools Setup</h3>
+		<p>In the SmarTeam Integration Tools Setup, define the CATIA Environment Attribute to map to the OEM environment.<ol>
+		<li>In SmarTeam, go to Admin Console and launch Integration Tool Setup.</li>
+		<li>Under CATIA, select Mapping Group Types and then CATIA Part.</li>
+		<li>Right-click and select <b>Open groups tree</b>.
+		
+		
+		
+		<p>
+		<img border="0" src="b35doc/english/online/td1ug_c2/images/integ_tool_setup.gif" width="473" height="230"></p>
+		
+		
+		<li>Under Engineering Information, add a new property named <b>OEM Environment</b>.</li>
+		<li>Map from <b>CATIA Part </b>to <b>CATIA Environment</b> as shown.
+		
+		
+		
+		<p>
+		<img border="0" src="b35doc/english/online/td1ug_c2/images/attribute_mapping.gif" width="355" height="237"></p>
+		<li>Select the <b>Enable updating of SmarTeam</b> checkbox and click <b>OK</b>.<br>
+		<img border="0" src="b35doc/english/online/td1ug_c2/images/mapping_groups_enable_updating.gif" width="515" height="334"></li>
+		<li>Similarly, map from <b>CATIA Product</b> to <b>CATIA Environment</b> and <b>CATIA Drawing</b> to <b>CATIA Environment</b>.</li>
+		<li>In the same way, define the CAD Version attribute to map to the <b>CN_VERSION_TO_READ</b> hard-coded property name.<ol><li type=a>
+Under CATIA, select <b>Mapping Group Types</b> and then <b>CATIA Part</b>. 
+<li type=a>Right-click and select <b>Open groups tree</b>. 
+<li type=a>Under Engineering Information, add a new property named <b>CN_VERSION_TO_READ</b>. 
+<li type=a>Map to <b>CATIA Part / CAD Version</b>.<li type=a>Select the <b>Enable updating of SmarTeam</b> checkbox and click <b>OK</b>.</ol>
+<br>
+<img border="0" src="b35doc/english/online/td1ug_c2/images/mapping_groups_enable_updating.gif" width="515" height="334"><li>Similarly, define the mapping for <b>CATIA Product</b> and <b>CATIA Drawing</b>.</li></ol>
+</li>
+		
+		<h3><a name="hj-modify2"></a>CATIA Environment Definition and Registration in SmarTeam</h3>	
+		<h4>CATIA Environment Definition</h4>
+		<p>On the CATIA side, the administrator must define and set a new variable named <b>OEM Environment</b> for each CATIA environment. 
+		This variable is the connection between the OEM Environment and the SmarTeam profile card. <br>
+			<br>For more information about customizing environments, refer to Customizing Your Environment on Windows.</p>
+<ol><li>Select the <b>Start</b>> <b>Programs</b>> <b>CATIA</b>> <b>Tools</b>> 
+	<b>Environment Editor V5R19</b> command.<li>Define and set a new variable as follows:
+<br>
+<ul><li>Name: <b>OEM Environment</b> (This name is mandatory.)<br></li>
+<li>Value: OEM Environment Name  
+<br></li></ul>
+		</ol>
+		<p><img border="0" src="b35doc/english/online/td1ug_c2/images/EnvironmentEditorR19.gif" width="766" height="516"></p>
+		<p>&nbsp;</p>
+		<p></p>
+		<p>This variable can be added manually in the CATIA CATEnv file.</p>
+		<p>
+		<img border="0" src="b35doc/english/online/td1ug_c2/images/catenv_file.gif" width="485" height="521"></p>
+		<h4><a name="hj-modify3"></a>Registering a CATIA Environment in SmarTeam</h4>
+		<p>The administrator creates an object for each environment in the CAD Environment class.
+The <b>name</b> must be identical to the <b>OEM Environment</b> value defined in 
+		the CATIA Environment 
+		Editor.</p>
+		<ol class="task">
+			<li><span> style="font-weight: 400">Launch </span>SmarTeam<span style="font-weight: 400"> and select the
+			</span>Admin<span style="font-weight: 400"> button on the Browser toolbar.<br>
+			<img border="0" src="b35doc/english/online/td1ug_c2/images/i_admin.gif" width="97" height="57"><li>
+			<span style="font-weight: 400">After clicking the <b>Admin</b> 
+			button, add CATIA Environment. The CATIA Environment Profile Card appears.<br>
+			<img border="0" src="b35doc/english/online/td1ug_c2/images/catia_environ_pc3.gif" width="569" height="347"><br>
+&nbsp;</span><li><span style="font-weight: 400">Fill in the necessary information in the Profile Card as shown for the 
+			new CATIA Environment OEM1. 
+			</span> 
+			<li><span style="font-weight: 400">In the
+			</span>
+			Attributes1 tab, fill in the complete string for the Environment Command using the following format:<br>
+			&nbsp;&nbsp;
+			-f '%1' -e '&lt;Environment Name>&lt;Environment Name&gt;' -c '&lt;Environment Command>&lt;Environment 
+			Command&gt;' </p>
+			<p>Note the syntax of the command:<br><b>&nbsp;&nbsp; -f</b>&lt;<i>space</i>&gt;<b>'%1'</b>&lt;<i>space</i>&gt;<b>&#8211;e</b>&lt;<i>space</i>&gt;<b>'</b>&lt;<i>Environment 
+			Name</i>&gt;<b>'</b>&lt;<i>space</i>&gt;<b>-c</b>&lt;<i>space</i>&gt; <b>'</b>&lt;<i>Environment 
+			Command</i>&gt;<b>'</b></p>
+			<p>The String corresponding to <b>-f</b>,<b>-c</b> & <b>-e</b> must be enclosed within single quotation marks ( ' ' )<br>
+<b>-f '%1'</b> represents the name of the file to be opened in CATIA<br>
+<b>-e '&lt;Environment Name&gt;'</b> represents the Environment Name<br>
+<b>-c '&lt;Environment Command&lt;'</b> represents the Environment Command as it appears in the shortcut (Target field of environment properties)
+</p>
+			</p>
+			<p><img src="b35doc/english/online/td1ug_c2/images/oem2properties.gif" width="374" height="525"> </p>
+			<p class="MsoNormal" style="line-height: normal; margin-left: 36.0pt; margin-bottom: 2.0pt">
+			<span style="font-size: 10.0pt; font-family: Verdana,sans-serif; color: black">
+			An example of Environment Command: </span></p>
+			<p class="MsoNormal" style="line-height: normal; margin-left: 72.0pt; margin-bottom: 2.0pt">
+			
+			<b>-f</b> <b>'%1'</b> <b>-e</b> 'BMW for Sheet Metal' <b>-c</b> 
+			'&quot;C:\Program Files\Dassault Systemes\B19\intel_a\code\bin\CATSTART.exe&quot;
+			<b>-run</b> &quot;CNEXT.exe&quot; <b>-env</b> OEM1 <b>-direnv</b> 
+			&quot;C:\Documents and Settings\davidd\Application Data\DassaultSystemes\CATEnv&quot;
+			<b>-nowindow&quot;'<br>
+&nbsp;</b></span></p>
+			<li>Similarly, add two more environments and fill in the information accordingly in 
+			the Profile Card for OEM2 and OEM3. </li>
+			<p>&nbsp;</p>
+			<h4><a name="hj-modify4"></a>Application Setup</h4>The administrator set application sets, in Command line parameters, the default environment to be launched in following cases:
+			<br>
+			<ul>&#8226;	If the Environment Name is empty in the CATIA document object<br>&#8226;	If the 
+				Environment object with the Environment Name does not exist&nbsp; 
+				<table border="1" width="100%" id="table2" style="border-width: 0px">
+					<tr>
+						<td style="border-style: none; border-width: medium">
+						<img border="0" src="b35doc/english/online/td1ug_c2/images/add_modify_tool-2.gif" width="410" height="456"></td>
+					</tr>
+				</table>
+			</ul>&nbsp;</ol>
+	</table>
+		
+	<table width="1251"><td width="5%" height="43" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td width="94%" height="43"> 
+		<h2>System Keys</h2>
+		
+		<p>Two new system keys are provided to control whether or not the CAD Level attributes are checked when launching or saving in CATIA Integration.</p>
+		<h3>CheckCATIAEnvironmentOnSave</h3>
+		<b>Name of Key</b>: CATIA. CheckCATIAEnvironmentOnSave<br>
+		<b>Description</b>: Specifies whether or not to display warning messages when saving a CAD document with the wrong CATIA environment
+		<br>
+		<b>Possible Values</b>: True/False 
+True = Display a warning message
+False = Do not display a warning message <br>
+		<b>Default Value</b>: False <br>
+		<b>Override level</b>: Domain
+
+<h3>CheckCATIAEnvironmentOnOpen</h3>
+		<p><b>Name of Key</b>: CATIA. CheckCATIAEnvironmentOnOpen <br>
+		<b>Description</b>:  Specifies whether or not to display warning messages when saving a CAD document with the wrong CATIA environment
+		<br>
+		<b>Possible Values</b>: True/False 
+<br>
+		Where True = Display a warning message; False = Do not display a warning message
+		<br>
+		<b>Default Value</b>: False <br>
+		<b>Override level</b>: Domain </p>
+
+		</td>	 
+	<tr>
+		<td width="5%" height="43" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td width="94%" height="43"> 
+		<h2>Cross-version compatibility</h2>
+		
+		<p>Multiple CATIA environment functionality is available for Smarteam V5R19/CATIA V5R18 SP5 and later.</p>
+		<p>&nbsp;</td>	 
+	</tr>
+</table>
+		
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <p align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

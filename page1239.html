@@ -1,0 +1,639 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Activating the Full Text Server on Vault Servers</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Activating the Full Text Server on Vault Servers</h1>
+ <table border="0" width="100%" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" id="table2">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>
+ <h2><b><a name="ix-full text server"></a></b><font color="#282187">Introduction</font></h2>
+ <p>In order to take advantage of the 
+ full text search feature in the ENOVIA Document Management application, full text servers must be activated on each vault 
+	server on which the full text indexing feature is 
+ enabled. </p>
+	<p>For example, the full text server is designed to be activated principally 
+	on vaults intended to store specification or maintenance documents in 
+	various word processing or spreadsheet formats. A full text server need not 
+	be activated on vaults dedicated to storing CAD data or images, since there would be no text to index.</p></td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td vAlign="top">
+		<h2>Software Prerequisites</h2>
+		<p>Full text indexing is supported only on Windows machines hosting a 
+		vault server.</p>
+	<p>The Microsoft Index Server (MIS) feature must be installed on the vault 
+	server running a vault with documents needing to be indexed in full-text 
+	mode. This is an optional component of Windows server operating systems, 
+	just like Microsoft IIS), along with the prerequisite .NET runtime version documented in Software Prerequisites section 
+	of the Program Directory.</p>
+		<p>Use of a Microsoft Index Server located on a different machine from the 
+	machine running the vault server is not supported.</p>
+		<p>WebSphere Application Server is no longer a prerequisite for full 
+		text indexing on the vault server.<p>Installation of the full text 
+		server is performed using command line instructions. However, the MIS 
+		administration is performed using the Microsoft Management Console. 
+		Everything related to MIS administration is located under the <kbd>
+		Indexing Services</kbd> node in the <kbd>Services and Applications</kbd> 
+		node.</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     &nbsp;</td>
+     <td vAlign="top">
+		<h3><a name="hj-FullTextParameters"></a>Full Text Indexing Command 
+		Syntax</h3>
+		<p>For this task, you will need the following inputs:<br>
+&nbsp;</p>
+		<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="867" id="table3">
+         <tr>
+           <td valign="top" align="center">
+           <b>Input placeholder used in this task</b></td>
+           <td valign="top" align="center">
+           <p align="center"><b>Meaning</b></td>
+           <td valign="top" width="343" align="center">
+           <p align="center"><b>Source</b></td>
+         </tr>
+         <tr>
+           <td valign="top"><i>&lt;install_path&gt;</i></td>
+           <td valign="top">Location of the code installation</td>
+           <td valign="top" width="343">
+           <b>
+           <a href="page1284.html">Unloading Your Product Code on 
+			Windows</a><br>
+           <a href="page1283.html">Unloading Your Product Code on UNIX</a></b></td>
+         </tr>
+         <tr>
+           <td valign="top"><i>&lt;fulltext_workdir&gt;</i></td>
+           <td valign="top">Location of the full text working directory. This 
+			directory contains the full text indexes, and other directories 
+			directly required for the full text solution.</td>
+           <td valign="top" width="343">Person in charge of full text server 
+			activation for the ENOVIA vault</td>
+         </tr>
+         <tr>
+           <td valign="top"><i>&lt;VaultAliasName&gt;</i></td>
+           <td valign="top">Vault server name</td>
+           <td valign="top" width="343"><b>
+			<a href="page1286.html">Setting Up the Vault 
+			Server</a></b></td>
+         </tr>
+         <tr>
+           <td valign="top"><i>&lt;VaultServer_PropertiesFileName&gt;</i></td>
+           <td valign="top">Optional: Name of the vault server properties file. 
+			If not set, the vault server properties file is: <code>&lt;VaultAliasName&gt;.properties</code></td>
+           <td valign="top" width="343"><b>
+			<a href="page1246.html">Installing the Vault Server 
+			Manually</a></b></td>
+         </tr>
+         <tr>
+           <td valign="top"><i>&lt;VaultServer_PropertiesFilePath&gt;</i></td>
+           <td valign="top">Optional: Path of the vault client properties file. 
+			If not set, the vault server properties files is located at: <code>&lt;install_path&gt;\win_b64\docs\java</code></td>
+           <td valign="top" width="343"><b>
+			<a href="page1246.html">Installing the Vault Server 
+			Manually</a></b><p>&nbsp;</td>
+         </tr>
+         <tr>
+           <td valign="top"><i>&lt;catalog_name&gt;</i></td>
+           <td valign="top">Optional: name of the Microsoft Index Server catalog 
+			used to index vault documents. Default value is &#8216;vaultv5&#8217; if not 
+			provided.</td>
+           <td valign="top" width="343">MIS Administrator</td>
+         </tr>
+         <tr>
+           <td valign="top"><i>&lt;rootURI&gt;</i></td>
+           <td valign="top">Optional: name that appears in the URL your users 
+			will use to connect to the web application. Default value is &#8216;<code>/enovia</code>&#8217; 
+			if not provided.</td>
+           <td valign="top" width="343">IIS Administrator</td>
+         </tr>
+         </table>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">
+ <h2>Supported Formats</h2>
+ <p>The full text engine allows indexing and searching of the following data 
+ formats:</p>
+ <ul>
+   <li>ANSI Text, ASCII Text</li>
+   <li>HTML, SGML, XML</li>
+   <li>Microsoft RTF, Microsoft Word for Windows V3.x upwards</li>
+   <li>Microsoft Word Mac V4.x to 6.x, Microsoft Word PC V2.0 to 5.5</li>
+   <li>Adobe PDF</li>
+   <li>Microsoft Works V3.x upwards</li>
+   <li>Microsoft Excel V3.x upwards</li>
+   <li>Microsoft Powerpoint 4 upwards.</li>
+ </ul>
+ 	<h3>Extending Support to PDF and Other Formats</h3>
+	<p>The full text infrastructure relies on MIS in order to index vault 
+		documents. In turn, MIS relies on IFilters in order to index documents of a 
+		given type. Windows provides pre-installed IFilters for the document formats 
+	listed above. To enable indexing of other document formats stored in the vault, two steps must be performed:</p>
+		<ul>
+			<li>the IFilter enabling MIS to index the new format must be 
+			installed on the machine running the vault server and MIS</li>
+			<li>the mapping between the MIME type of the new document format and 
+			its extension must be declared in the file:<br>
+			<code>FullTextTypeMap.property</code>.</li>
+		</ul>
+		<p>Given that Vault stores documents in its repository without their 
+		original extension (using the <code>.Vault</code> extension), the full text 
+		infrastructure for the vault needs to know the original file extension, 
+		given its MIME type of the document. The mapping between MIME type and 
+		document extensions is declared in the following file located in:</p>
+		<p><code>&lt;install_path&gt;\win_b64\docs\java\FullTextTypeMap.property</code></p>
+		<p>The format of this file is very simple:</p>
+		<p><code># Syntax:<br>
+		# MIME.&lt;id&gt;=&lt;mime type identified&gt;<br>
+		# Extension.&lt;id&gt;=.&lt;extension for the MIME&lt;.id&gt; mime type&gt;</code></p>
+		<p>If you want to index PDF documents, the Acrobat PDF IFilter must be downloaded 
+			from the <code>www.adobe.com</code> internet site. Once on this 
+		site, enter the string IFilter and take the most recent version of the 
+		IFilter. For example: <code>Adobe - Acrobat : For Windows : Adobe PDF 
+		IFilter v6.0</code>.</p>
+	<p>The Adobe IFilter for PDF must be 
+		installed on the server machine hosting MIS, and the MIME type-to-extension mapping file must be updated accordingly. A sample pair of lines is left at the end of the file to help enable 
+		PDF indexing:</p>
+		<p><code># Uncomment these two lines for PDF indexing support (once Adobe PDF 
+		IFilter is installed)<br>
+		#MIME.10 = application/pdf<br>
+		#Extension.10 = .pdf</code></p>
+	<p>The Microsoft Index Server will not index documents for which no 
+			IFilter has been installed, until the appropriate IFilter 
+			implementation is installed.</p>
+		<p>Text written after the sharp (&#8216;#&#8217;) character is ignored until the end 
+		of the line, allowing you to write comments in this file. The space and tab 
+		characters are ignored.</p>
+		</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     &nbsp;</td>
+     <td vAlign="top">
+     <h2>Activating the Full Text Server</h2>
+		</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td vAlign="top">
+     <ol>
+       <li>In a Windows Command Prompt window, change directory to:<p><code>&lt;install_path&gt;\win_b64\code\bin</code></p>
+		<p>Here is the syntax of the <code>ActivateFullText</code> command used 
+		to activate the full text server:<p><code>catstart &#8211;run 
+		&#8220;ActivateFullText.exe &#8211;d &lt;fulltext_workdir&gt;<br>
+		[&#8211;catalog &lt;catalog_name&gt;]<br>
+		[-rootURI &lt;rootURI&gt;]<br>
+		[-alias &lt;VaultAliasName&gt;]&#8221;</code><p>Run the command, for 
+		example, like this:<p><code>catstart &#8211;run &#8220;ActivateFullText.exe &#8211;d E:\FullTextWorkDir &#8211;catalog 
+		SESFullText<strong>ShortReleaseNumber</strong> -rootURI FullText<strong>ShortReleaseNumber</strong> -alias ENOVIAVaultServer&#8221;</code><p>The different parameters are 
+		described 
+		in <a href="#hj-FullTextParameters">Full Text Indexing Command Syntax</a>.<p>
+		The <code>-env</code> and <code>-direnv</code> parameters may also be 
+		used if several environment files exist.<br>
+       </li>
+       <li>Make sure that the Microsoft Indexing Service is stopped, otherwise 
+		stop it.<p>To stop it, select the 
+
+		<kbd>My Computer</kbd> icon then right-click 
+		and select the <kbd>Manage</kbd> command on the contextual menu. Go to
+		<kbd>Services and Applications</kbd>, select <kbd>Indexing Service</kbd>, 
+		then right-click and select the <kbd>Stop</kbd> command.</p></li>
+		<li>Create a new catalog.<p>Microsoft Index Server has its own format to manage full text 
+		indexes.
+		To index a given set of locations, MIS uses a <kbd>catalog</kbd>. The 
+		indexes corresponding to a given catalog are stored in a location 
+		associated with this catalog. <br>
+		</p>
+		<p>To create a catalog, right-click <kbd>Indexing Service</kbd>, select <kbd>New&nbsp;&gt;&nbsp;Catalog</kbd> 
+		and provide the name and location of the catalog. Make sure that the 
+		catalog name is the same as <code>&lt;catalog_name&gt;</code> you specified 
+		with the <code>ActivateFullText</code> command:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/FullTextCreateCatalog_NLS.gif" width="347" height="172"></p>
+		<p>When the following popup appears:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/FullTextCreateCatalogOffline_NLS.gif" width="369" height="126"></p>
+		<p>click OK.</p>
+		<p>The catalog is added like this:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/FullTextCreateCatalog02_NLS.gif" width="693" height="452"><br>
+&nbsp;</p></li>
+		<li>Add the following directory to the catalog:<p><code>&lt;fulltext_workdir&gt;\ftvault</code></p>
+		<p>To do so, right-click the catalog name, select the <kbd>New&nbsp;&gt;&nbsp;Directory </kbd>
+		command, and provide the path:</p>
+		<p><code>&lt;fulltext_workdir&gt;\ftvault</code></p>
+		<p>For example:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/FullTextCreateCatalog03_NLS.gif" width="693" height="452"><br>
+		<br>
+		then click OK.</p>
+		<p>
+		To find where MIS stores full text indexes (and other working files) 
+		associated with a given catalog, select&nbsp; <kbd>Services and 
+		Applications</kbd>, then <kbd>Indexing Service</kbd>, then right-click 
+		on the catalog. Select <kbd>Properties</kbd> to access the information:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/FullTextIndexDir_NLS.gif" width="638" height="452"><br>
+&nbsp;</p></li>
+		<li>Tune Microsoft Index Server to maximize performance.<p>While it is 
+		not possible to guarantee when the full text index will take into 
+		account a file inserted, modified or deleted in the vault, it is 
+		possible to tune MIS to make it as reactive as possible.To be more 
+		precise, if MIS performance is configured as shown below, the lag 
+		between the moment when a document modification is committed on a 
+		full-text indexed vault will be equal to: </p>
+		<p><i>sleep time of the full text queue reader + MIS time to index a 
+		document in &quot;Immediate mode&quot;</i></p>
+		<p>MIS time in &quot;Immediate mode&quot; depends on the machine load. Using very 
+		slow &quot;sleep time&quot; for the queue reader and dedicated full text machine 
+		can help to attain as close as possible &quot;real time&quot;. </p>
+		<p>To set up MIS &quot;Immediate mode&quot;, use the Microsoft Management Console, 
+		right-click on <kbd>Indexing Services</kbd> and then select <kbd>All 
+		Tasks</kbd> and <kbd>Tune Performance</kbd>:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/FullTextPCS_NLS.gif" width="693" height="452"></p>
+		<p>
+		to display the <kbd>Indexing Service Usage</kbd> dialog box. In the 
+		Indexing Service Usage dialog box, select <kbd>Customize</kbd>:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/FullTextIndexServiceUsage_NLS.gif" width="329" height="329"></p>
+		<p>then click on the <kbd>Customize&#8230;</kbd> button. In the Desired 
+		Performance dialog box, move the <kbd>Indexing</kbd> performance cursor to 
+		<kbd>Instant</kbd>, and the <kbd>Querying</kbd> performance to <kbd>High load</kbd>:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/FullTextIndexPerformance_NLS.gif" width="366" height="373"></p>
+		<p>then click OK, then OK again.</p>
+		</li>
+		<li>Finally, restart MIS and restart IIS.
+		<p>To restart MIS, right-click <kbd>Indexing Service </kbd>then select 
+		the <kbd>Start</kbd> command.</p>
+		<p>The vault full text server is ready for service. Any documents 
+		created in the vault from now on will be automatically indexed.</p>
+		</li>
+     </ol>
+		<h3>Indexing on Windows Server 2008</h3>
+		<p>On Windows Server 2008, due to some security constraints, two extra 
+		steps must be run: </p>
+		<ul>
+			<li>one before Full Text activation: run the <code>
+			OpenFtActivationPhase.exe</code> utility, then run the <code>
+			ActivateFullText.exe </code>utility </li>
+			<li>one after Full Text Activation: end by running the <code>
+			CloseFtActivationPhase.exe</code> utility. </li>
+		</ul>
+		</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     &nbsp;</td>
+     <td vAlign="top">
+ <h2>XML Settings for Full Text Search</h2>
+	<p>XML Settings need to be setup in the ENOVIA installation (on the client 
+	side) to enable Full Text Search capabilities.
+	Depending on the type of application you are deploying, the locations and 
+	contents are different. </p>
+	<p>There are two groups of applications: </p>
+	<ul>
+		<li>Webtop applications:
+        <strong>LCA Navigator</strong></li>
+		<li>Wintop applications: the 
+        <strong>LCA Classic</strong> (the ENOVIA VPC 
+		product). </li>
+	</ul>
+	<p>The full path of the XML Settings file for Wintop configuration is:</p>
+	<p><code>win_b64\resources\fulltext\fulltextserverconfig.xml</code></p>
+	<p>and for Webtop configuration:</p>
+	<p><code>win_b64\resources\fulltextconfig\fulltextserverconfig.xml </code>
+	</p>
+	<p>From the installed samples delivered on the CD-ROM at installation time, 
+	you will notice that they contain different tags.<br>
+	As an example, the settings for Webtop deployment require setting the <code>
+	ftsInstalled</code> tag to true.</p>
+	<h3>Example for <strong>LCA Navigator</strong></h3>
+	<p>In order to operate full text searching in 
+    <strong>LCA Navigator</strong>, the following 
+	settings need to be customized after completing full 
+	text server setup:</p>
+	<p>The <code>fulltextserverconfig.xml</code> file located at:</p>
+	<p><code>install_path/resources/fulltextconfig (UNIX)<br>
+	install_path\resources\fulltextconfig (Windows)</code></p>
+	<p>contains the following:</p>
+	<p><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>
+	&lt;FullTextServers&gt;<br>
+	&lt;ftsInstalled&gt;false&lt;/ftsInstalled&gt;<br>
+	&lt;server&gt;<br>
+	&lt;ftServerHost&gt;FTServerHost:HTTPPort&lt;/ftServerHost&gt;<br>
+	&lt;/server&gt;<br>
+	&lt;/FullTextServers&gt;</code></p>
+	<p>Modify the file <code>fulltextserverconfig.xml</code> as follows:<br>
+	Example:</p>
+	<p><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>
+	&lt;FullTextServers&gt;<br>
+	&lt;ftsInstalled&gt;True&lt;/ftsInstalled&gt;<br>
+	&lt;server&gt;<br>
+	&lt;ftServerHost&gt;pinnacle1plb:80&lt;/ftServerHost&gt;<br>
+	&lt;collection&gt;ev5vault&lt;/collection&gt;<br>
+	&lt;iisNode&gt;enovia&lt;/iisNode&gt; (optional)<br>
+	&lt;/server&gt;<br>
+	&lt;/FullTextServers&gt; </code></p>
+	<p>Note:</p>
+	<p><code>&lt;ftsInstalled&gt;True&lt;/ftsInstalled&gt;</code></p>
+	<p><code>ftsInstalled</code>: The value True/False in this Tag says whether 
+	the full text server is installed or not.<br>
+	</p>
+	<p><code>True</code> : FTS is Installed.<br>
+	<code>False</code> : FTS is Not Installed (Default). </p>
+	<p>In Server Node:</p>
+	<p><code>&lt;server&gt;<br>
+	&lt;ftServerHost&gt;pinnacle1plb:80&lt;/ftServerHost&gt;<br>
+	&lt;collection&gt;ev5vault&lt;/collection&gt;<br>
+	&lt;iisNode&gt;enovia&lt;/iisNode&gt; (optional)<br>
+	&lt;/server&gt;</code></p>
+	<p><code>ftServerHost</code>: FTServerHost: HTTPPort<br>
+	<code>FTServerHost</code>: Hostname of the Full Text Server (eg. 
+	&quot;pinnacle1plb&quot;).<br>
+	<code>HTTPPort</code>: This is the TCP Port provided in IIS (by default it 
+	is 80)</p>
+	<p>The IIS Website Port may be checked as follows (TCP Port):</p>
+	<ol>
+		<li>Go to the Computer Management Console.</li>
+		<li>Expand <kbd>Service and Applications&nbsp;&gt;&nbsp;Internet Information 
+		Services&nbsp;&gt;&nbsp;Web sites.</kbd></li>
+		<li>Right-click on <kbd>Default Web Site</kbd> and click <kbd>
+		Properties.</kbd></li>
+		<li>Check the TCP Port number.</li>
+	</ol>
+	<p><code>Collection</code>: The collection in which the queries are made.<br>
+	A default is used on the server side (for example, <code>
+	ev5vault</code>)</p>
+	<p><code>iisNode</code>: The IIS website name.<br>
+	Optional parameter: the default <code>/enovia</code> is used on the server 
+	side. If the IIS Website name is other than <code>/enovia</code>, the <code>
+	iisNode</code> Node should be added in the Server Node (<code>&lt;server&gt;</code>).
+	</p>
+	<p>Since the full text search supports multiple full text servers, there can 
+	be multiple server nodes (<code>&lt;server&gt;</code>) in the <code>
+	fulltextserverconfig.xml</code> file. <br>
+	Example:</p>
+	<p><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>
+	&lt;FullTextServers&gt;<br>
+	&lt;ftsInstalled&gt;true&lt;/ftsInstalled&gt;<br>
+	&lt;server&gt;<br>
+	&lt;ftServerHost&gt;pinnacle1plb:80&lt;/ftServerHost&gt;<br>
+	&lt;collection&gt;ev5vault&lt;/collection&gt;<br>
+	&lt;iisNode&gt;enovia&lt;/iisNode&gt;<br>
+	&lt;/server&gt;<br>
+	&lt;server&gt;<br>
+	&lt;ftServerHost&gt;pinnacle1plb:80&lt;/ftServerHost&gt; 
+	&lt;collection&gt;ev5vault1&lt;/collection&gt; &lt;iisNode&gt;enovia&lt;/iisNode&gt;<br>
+	&lt;/server&gt;<br>
+	&lt;server&gt;<br>
+	&lt;ftServerHost&gt;pinnacle1plb:80&lt;/ftServerHost&gt; 
+	&lt;collection&gt;ev5vault1&lt;/collection&gt; &lt;iisNode&gt;enoviaTVD&lt;/iisNode&gt; &lt;/server&gt;<br>
+	&lt;/FullTextServers&gt;</code></p>
+	<h3>Notes</h3>
+	<p>Multi-vault support (one FTS for multiple vaults) is available. The full 
+	text infrastructure can be used with multiple vaults, provided the following 
+	actions are taken: </p>
+	<ol>
+		<li>Run the full text activation using the <kbd>ActivateFullText</kbd> 
+		command on each vault, choosing distinct catalog names for each vault, 
+		and a distinct <code>full text working directory</code> per vault.</li>
+		<li>Create an MIS catalog, one per vault, with associated catalog name 
+		and directory corresponding to where each vault stub will store the
+		<code>.ftvault</code> files.</li>
+		<li>The client application (<strong>LCA Classic</strong> or 
+        <strong>LCA Navigator</strong>) must support 
+		configuration of catalog name, i.e. the fulltextserverconfig.xml file 
+		should contain details about the server name and catalog.<br>
+		Example (for 
+        <strong>LCA Navigator</strong>):<br>
+		<br>
+		<code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>
+		&lt;FullTextServers&gt;<br>
+		&lt;ftsInstalled&gt;true&lt;/ftsInstalled&gt;<br>
+		&lt;server&gt;<br>
+		&lt;ftServerHost&gt;pinnacle1plb:80&lt;/ftServerHost&gt;<br>
+		&lt;collection&gt;ev5vault&lt;/collection&gt;<br>
+		&lt;iisNode&gt;enovia&lt;/iisNode&gt;<br>
+		&lt;/server&gt;<br>
+		&lt;server&gt;<br>
+		&lt;ftServerHost&gt;pinnacle1plb:80&lt;/ftServerHost&gt; 
+		&lt;collection&gt;ev5vault1&lt;/collection&gt;<br>
+		&lt;iisNode&gt;enovia&lt;/iisNode&gt;<br>
+		&lt;/server&gt;<br>
+		&lt;/FullTextServers&gt; </code></li>
+	</ol>
+	<p>Multi-full text server support is also provided.</p>
+	<p>You do not need to have one full text server per vault: you can have 
+	multiple catalogs, each for one vault, in a single full text server.</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     &nbsp;</td>
+     <td vAlign="top">
+ <h2>Creating Documents and Search</h2>
+	<p>This example uses 
+    <strong>LCA Classic</strong>:</p>
+		<ol>
+			<li>Open Content Management.</li>
+			<li>Create and check in one or many text document(s).</li>
+			<li>Commit the document(s).</li>
+			<li>Wait for a minute. The indexing is done at the beginning of every minute.</li>
+		</ol>
+		<h2>Using the Full Text Search Command</h2>
+		<ol>
+			<li>Click on the Full text search icon.</li>
+			<li>Enter the text you want to search and Click 'Search'</li>
+			<li>Check the results.</li>
+		</ol>
+	<p><img border="0" src="b35doc/english/online/basil_c2/images/LCA_Portal_FT.gif" width="960" height="753"></p>
+		</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     &nbsp;</td>
+     <td vAlign="top">
+     <h2>Deactivating the Full Text Server</h2>
+		<ol>
+			<li>In a Windows Command prompt, change directory to:<p><code>&lt;install_path&gt;\win_b64\code\command</code>
+			</li>
+			<li>Run the <kbd>InactivateFullText</kbd> command:<p><code>catstart 
+			&#8211;run &quot;InactivateFullText.exe [-alias &lt;VaultAliasName&gt;]</code></p>
+			<p>For example:</p>
+			<p><code>catstart &#8211;run &quot;InactivateFullText.exe -alias 
+			ENOVIAVaultServer&quot;</code></p>
+			<p>This command will not remove any data from <code>&lt;fulltext_workdir&gt;</code>.
+			<p>An inactivated full text server can be re-activated later using the 
+			same full text working directory. 
+			<p>Any documents created, modified or deleted in a vault having an inactivated full text server will not 
+			be taken into account in the full text indexes. If documents were 
+			created, modified or deleted while the full text server was not 
+			active, the vault must be re-indexed. Otherwise, the full text 
+			query results will not be consistent with the actual document content 
+			and status.</li>
+		</ol>
+		</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     &nbsp;</td>
+     <td vAlign="top">
+ <h2>Indexing Previously Existing Vaults</h2>
+	<p>The <kbd>ftreindex</kbd> command allows you to index previously existing 
+	vaults. By default, the <kbd>ftreindex</kbd> command performs the following 
+	operations:</p>
+	<ul>
+		<li>retrieves the required parameters, in particular the name of the 
+		directory in which the <code>.ftvault</code> files will be written (this 
+		property was added to the <code>Vaultserver.properties</code> file when 
+		you ran the <code>ActivateFullText</code> command)</li>
+		<li>extracts the documents from the vault one by one</li>
+		<li>reads the data required to create the <code>.ftvault</code> files</li>
+		<li>and generates the <code>ftvault</code> files in the indexing 
+		directory.</li>
+	</ul>
+	<p>Then, MIS indexes the all the new files automatically (but you can also 
+	force indexing using the Management Console).</p>
+	<p>Here is the syntax of the <kbd>ftreindex</kbd> command:</p>
+	<p><code>catstart - jrun &quot;ftreindex&quot;</code></p>
+	<p>Note that the vault server in question must have been activated in full 
+	text mode.</p>
+	<h3>Exporting Variables</h3>
+	<p>The vault server properties file can be located elsewhere than in the 
+	default installation path. This is managed using the following two 
+	variables:</p>
+	<p><code>VaultServer_PropertiesFilePath<br>
+    VaultServer_PropertiesFileName</code></p>
+ <p>These variables have to be set to allow successful execution of the command:</p>
+ <p><code>catstart - jrun &quot;ftreindex&quot;</code></p>
+	<p>The key point is that the information of the vault to re-index is not an 
+    input parameter for the command, and has to be explicitly provided using the
+    <code>VaultServer_PropertiesFilePath</code> and <code>
+    VaultServer_PropertiesFileName</code> properties.</p>
+ <h3>What Happens if the Full Text Server Is Not Active For a Short Time?</h3>
+	<p>If the full text server Is not active for a short time, the consequences 
+	depend on &quot;what was not active&quot; when the documents were written to the 
+	vault:</p>
+	<ul>
+		<li>if full text indexing was not active: this can happen for example, 
+		when migrating an R17 to an
+        <strong>ShortReleaseNumber</strong> vault, or when a decision has been taken 
+		not to activate full text indexing immediately in the production 
+		version.<br>
+		Solution: use the reindexing command since in this case there are 
+		missing <code>.ftvault</code> files to inform MIS what it has to index.</li>
+		<li>if full text indexing has been activated, but MIS has been stopped;<br>
+		Solution: restart MIS, then MIS will index the <code>.ftvault</code> 
+		files submitted while MIS was stopped. The only method for determining 
+		if the indexes are up-to-date is to look at the MIS Console&nbsp; to 
+		determine the number of files remaining to be indexed for the catalog 
+		created to index the vault.</li>
+		<li>if full text indexing has been activated, MIS is running, but IIS 
+		has been stopped;<br>
+		There are no consequences on indexing: the query service will be 
+		available immediately once IIS has been restarted.</li>
+	</ul>
+ 	</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     &nbsp;</td>
+     <td vAlign="top">
+ <h2>Advanced task: Activate Full Text for Multiple Vault Servers Located on the 
+ Same Machine</h2>
+ <p>The following instructions are required if there is, for a given 
+ <strong>ENOVIAV5VPM</strong> 
+ installation, more than one vault server running on the same machine, and if 
+ full text is required on more than one vault server running on the same 
+ machine.</p>
+		<p>To index several vault servers running on the same machine, the only 
+		requirement is to follow the activation steps as many times as there are 
+		vaults, to have the same <code>&lt;fulltext_workdir&gt;</code>, and to create 
+		the MIS catalog only once.</p>
+ <p><b>Warning</b>: it is currently not possible to have more that one full text 
+ server active at the same time on the same machine, even if these servers 
+ originate from distinct ENOVIA installations or distinct ENOVIA releases.</p>
+ 	</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     &nbsp;</td>
+     <td vAlign="top">
+     <h2>Limitations</h2>
+		<ol>
+			<li>There is no full text solution for vaults on UNIX. The by-pass 
+			is to use a vault on Windows for documents on which full text 
+			indexing is needed. Mounting a vault file system on a Windows 
+			machine using Hummingbird NFS or a similar solution is not supported 
+			by Microsoft Index Server. MIS prevents users from adding a 
+			directory originating from an NFS mount to a catalog.</li>
+			<li>Due to the underlying MIS technology, it is not possible to 
+			activate full text from more than one ENOVIA installation on the 
+			same machine. To activate full text, an IFilter for is registered 
+			for the <code>.ftvault</code> document extension. This IFilter is 
+			part of the unloaded ENOVIA vault administration product, and 
+			Windows does not allow registering of more than more IFilter for a 
+			given extension.</li>
+		</ol>
+		</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     &nbsp;</td>
+     <td vAlign="top">
+     <h3>Temporary ASP.NET Files</h3>
+		<p>When using the Index Server, you must exclude the Temporary ASP.NET 
+		Files directory from the folders that the Index Server scans. To do so, 
+		follow these steps:</p>
+		<ol>
+			<li>Click Start, point to All Programs, point to Administrative 
+			Tools, and then click Computer Management.</li>
+			<li>Expand the Services and Applications node, expand the Indexing 
+			Service node, and then expand the System node.</li>
+			<li>Right-click the Directories folder, point to New, and then click 
+			Directory from the subform to open the Add Directory dialog box.</li>
+			<li>Click Browse, and then locate the Temporary ASP.NET Files 
+			directory. You typically find the Temporary ASP.NET files in the 
+			following path:<br>
+			<code>c:\&lt;WINDIR&gt;\Microsoft.NET\Framework\&lt;Version Number&gt;\Temporary 
+			ASP.NET Files</code><br>
+			<br>
+			Note <code>&lt;Version Number&gt;</code> is the version of .NET Framework 
+			installed on your computer.</li>
+			<li>Click No under the Include in Index? option buttons.</li>
+			<li>Click OK to close.</li>
+			<li>Close the Computer Management dialog box.</li>
+			<li>Restart the Indexing Services service.</li>
+		</ol>
+		<p>For more information, refer to Microsoft Article ID 329065.</td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+  
+ </body>
+
+</html>
+

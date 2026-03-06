@@ -1,0 +1,298 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Thread Turning Operations</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1><a NAME="Threading"></a>Thread Turning Operations</h1>
+ <a name="ix-Thread Turning operation"></a>
+ <a name="ix-Thread Turning parameter:Clearance on crest diameter"></a>
+ <a name="ix-Thread Turning parameter:Depth of cut"></a>
+ <a name="ix-Thread Turning parameter:End Limit"></a>
+ <a name="ix-Thread Turning parameter:End Limit Offset"></a>
+ <a name="ix-Thread Turning parameter:First passes"></a>
+ <a name="ix-Thread Turning parameter:Last passes"></a>
+ <a name="ix-Thread Turning parameter:Lead-in"></a>
+ <a name="ix-Thread Turning parameter:Lift-off"></a>
+ <a name="ix-Thread Turning parameter:Location"></a>
+ <a name="ix-Thread Turning parameter:Machining spindle speed"></a>
+ <a name="ix-Thread Turning parameter:Nominal diameter"></a>
+ <a name="ix-Thread Turning parameter:Number of passes"></a>
+ <a name="ix-Thread Turning parameter:Number of threads"></a>
+ <a name="ix-Thread Turning parameter:Orientation"></a>
+ <a name="ix-Thread Turning parameter:Spring passes"></a>
+ <a name="ix-Thread Turning parameter:Start Limit"></a>
+ <a name="ix-Thread Turning parameter:Start Limit Offset"></a>
+ <a name="ix-Thread Turning parameter:Thread depth"></a>
+ <a name="ix-Thread Turning parameter:Thread length"></a>
+ <a name="ix-Thread Turning parameter:Thread Penetration type"></a>
+ <a name="ix-Thread Turning parameter:Thread pitch"></a>
+ <a name="ix-Thread Turning parameter:Thread profile"></a>
+ <a name="ix-Thread Turning parameter:Thread unit"></a>
+ <a name="ix-Thread Turning parameter:Threading type"></a>
+ <a name="ix-Thread Turning parameter:Threads/inch"></a>
+ <p>The information in this section will help you create and edit <kbd>Thread Turning</kbd> 
+ operations in your manufacturing program. </p>
+ <p><a NAME="pgfId=1064989"></a>The <kbd>Thread Turning</kbd> operation allows you to 
+ specify: </p>
+ <ul>
+   <li>the type of machining according to the required thread (external or 
+   internal)</li>
+   <li>relimitation of the profile by start and end elements</li>
+   <li>thread machining options</li>
+   <li>various approach and retract types</li>
+   <li>PP Word syntaxes.</li>
+ </ul>
+ <p>The following topics are dealt with in the paragraphs below:</p>
+ <ul>
+   <li><a href="#tools">Tooling</a></li>
+   <li><a href="#geometry">Geometry</a></li>
+   <li><a href="#machstrat">Machining Strategy Parameters</a></li>
+   <li><a href="#syntax">CYCLE or GOTO Output Syntaxes</a></li>
+   <li><a href="#syntaxedit">Editing CYCLE Syntaxes</a></li>
+   <li><a href="#toolcomp">Tool Compensation</a></li>
+   <li><a href="#macro">Macros</a>.</li>
+ </ul>
+ <table border="0">
+   <tr>
+     <td>
+     <h3><a name="tools"></a>Tooling for Thread Turning</h3>
+     <p>The following tooling may be used: </p>
+     <ul>
+       <li>Internal and External threading insert-holders with thread inserts.&nbsp;</li>
+     </ul>
+     <h3><a name="geometry"></a>Geometry for Thread Turning</h3>
+     <p>A Part profile is required. It can be specified as follows:</p>
+     <a name="ix-contextual command::By Curve;By Curve contextual command"></a>
+     <a name="ix-contextual command::Sectioning;Sectioning contextual command">
+     </a>
+     <ul>
+       <li>select edges either directly or after selecting the <b>By Curve</b> 
+       contextual command. In this case the
+       <a href="page11480.html#EdgeSelToolbar" target="ds_doc2">
+       Edge Selection toolbar</a> appears to help you specify the guiding 
+       contour.</li>
+       <li>select the <b>Sectioning</b> contextual command. Please refer to
+       <a href="page4937.html" target="ds_doc2">
+       Sectioning</a> for details of how to use this capability.<br>
+       Please note that the sectioning selection method is not associative.</li>
+     </ul>
+     <p><b>End Limit</b>: None / In / On / Out<br>
+     This option allows you to specify a point, line, curve or face as the end 
+     element of the profile to be machined. If a face is specified, the end 
+     element is the intersection of the face and the working plane. The position 
+     of the end of machining is also defined with respect to this element.<a NAME="pgfId=1062651"><br>
+     </a>In / On / Out allows you to specify the Go-Go type positioning of the 
+     tool with respect to the end element. The On option is always used for a 
+     point type end element.&nbsp;<a NAME="pgfId=1062652"><br>
+     </a>If needed, the profile may be extrapolated to the end element.</p>
+     <p><b>End Limit Offset</b>: distance with respect to the end element (only 
+     if end element is a line, curve or face, and when In or Out is set for end 
+     element positioning).</p>
+     <p><b>Start Limit</b>: None / In / On / Out<br>
+     This option allows you to specify a point, line, curve or face as the start 
+     element of the profile to be machined. If a face is specified, the start 
+     element is the intersection of the face and the working plane. The position 
+     of the start of machining is also defined with respect to this element.&nbsp;<br>
+     In / On / Out allows you to specify the Go-Go type positioning of the tool 
+     with respect to the start element. The On option is always used for a point 
+     type end element.&nbsp;<br>
+     If needed, the profile may be extrapolated to the start element.</p>
+     <p><b>Start Limit offset</b>: distance with respect to the start element 
+     (only if start element is a line, curve or face, and when In or Out&nbsp; 
+     is set for start element positioning).</p>
+     <p><b>Relimiting the area to machine by means of limit elements</b></p>
+     <p>If you specify a point, it is projected onto the part profile. <br>
+     A line through the projected point parallel to the radial axis delimits the 
+     area to machine.<br>
+     <br>
+     If you specify a line, its intersection with the part profile is calculated 
+     (if necessary, the line is extrapolated). <br>
+     A line through the intersection point parallel to the radial axis delimits 
+     the area to machine.<br>
+     <br>
+     If you specify a curve, its intersection with the part profile is 
+     calculated (if necessary, the curve is extrapolated using the tangent at 
+     the curve extremity). <br>
+     A line through the intersection point parallel to the radial axis delimits 
+     the area to machine.</p>
+     <h4><a NAME="pgfId=1062643"></a><a NAME="81989"></a>Orientation and 
+     Location for Thread Turning</h4>
+     <a name="ix-Internal Threading"></a><a name="ix-External Threading"></a>
+     <ul>
+       <li><b>Orientation</b>: Internal / External<br>
+       This option allows you to specify the type of machining according to the 
+       location of the area to machine on the part.</li>
+       <li><b>Location</b>: Front / Back
+       <ul>
+         <li>Front, the profile is machined toward the head stock</li>
+         <li>Back, the profile is machined from the head stock.</li>
+       </ul>
+       </li>
+     </ul>
+     <h4><a NAME="pgfId=1062607"></a><a NAME="65055"></a>Threads</h4>
+     <ul>
+       <li><b>Thread profile</b>: ISO / Trapezoidal / UNC / Gas / Other<br>
+       Other allows defining a specific thread profile.</li>
+       <li><b>Thread unit</b>: Pitch / Threads per Inch <br>
+       You must specify the thread type when the Thread profile is Other. Thread 
+       is automatically set to Pitch for the ISO and Trapezoidal types and set 
+       to Threads per Inch for UNC and Gas.</li>
+       <li><b>Nominal diameter</b> <br>
+       This value must be given when Thread type is internal and Thread profile 
+       is Other.</li>
+       <li><b>Thread length</b><br>
+       This value must be given when the Start or End relimiting element is set 
+       to Profile End.</li>
+       <li><b>Thread pitch</b> <br>
+       This value must be given when the Thread type is set to Pitch or the 
+       Thread profile is ISO or Trapezoidal.</li>
+       <li><b>Threads/inch</b><br>
+       This value must be given when the Thread type is set to Thread per inch 
+       or when the Thread profile is UNC or Gas.</li>
+       <li><b>Thread depth</b><br>
+       This value must be given when the Thread profile is Other.</li>
+       <li><b>Number of threads</b><br>
+       When greater than 1, this value allows you to specify whether a 
+       multi-start thread is to be machined.</li>
+     </ul>
+     <h3><a name="machstrat"></a>Machining Strategy Parameters for Thread 
+     Turning</h3>
+     <h4><a NAME="pgfId=1072824"></a><a NAME="51205"></a>Machining Options for 
+     Thread Turning</h4>
+     <ul>
+       <li><b>Threading type.</b> You must choose the desired threading type:
+       <ul>
+         <li>Constant depth of cut</li>
+         <li>Constant section of cut</li>
+       </ul>
+       </li>
+       <li>Maximum <b>Depth of cut</b> when Threading type is set to Constant 
+       depth of cut</li>
+       <li><b>Number of passes</b> when Threading type is set to Constant 
+       section of cut.<br>
+       When the number of passes is defined, the Section of cut value is 
+       automatically set.</li>
+       <li><b>Machining spindle speed&nbsp;</b> in revolutions per minute<br>
+		You can also set a Maximum spindle speed value for the operation 
+		(by default, this value is the same as the Maximum spindle speed set on 
+		the Part Operation).</li>
+       <li><b>Thread Penetration type</b>:
+       <ul>
+         <li>Straight</li>
+         <li>Oblique (penetration angle must be specified)</li>
+         <li>Alternate (penetration angle must be specified).</li>
+       </ul>
+       </li>
+     </ul>
+     <h4><a NAME="pgfId=1072839"></a><a NAME="65482"></a>Path Computation 
+     options for Thread Turning</h4>
+     <ul>
+       <li><b>Clearance on crest diameter</b></li>
+       <li><b>Lead-in Distance<br>
+       </b>Defined with respect to the cutting direction. The tool is in RAPID 
+       mode before this distance.</li>
+       <li><b>Lift-off Distance</b> and <b>Lift-off Angle</b>.<br>
+       These parameters define the lift-off vector at the end of each pass with 
+       respect to the cutting direction. The figure below shows the effect of a 
+       positive lift-off angle (external machining is assumed).</li>
+     </ul>
+     <p><img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-39.gif" width="360" height="190"></p>
+     <h4><a NAME="pgfId=1083699"></a>First and Last Passes options for Thread 
+     Turning</h4>
+     <ul>
+       <li>Manage penetration on first passes by means of the <b>First passes</b> 
+       check box. This option is available when Threading type is set to 
+       Constant section of cut. When activated, you must specify values for:
+       <ul>
+         <li><b>Number of first passes</b></li>
+         <li><b>First section rate</b>.</li>
+       </ul>
+       </li>
+     </ul>
+     <blockquote>
+       <p><a NAME="pgfId=1083756"></a>When these two values are specified, the 
+       Section of cut for first passes value is automatically set. </p>
+     </blockquote>
+     <ul>
+       <li>Manage penetration on the last passes by means of the <b>Last passes</b> 
+       check box. When activated, you must specify:
+       <ul>
+         <li><b>Number of last passes</b></li>
+         <li><b>Depth of cut for last passes</b>.</li>
+       </ul>
+       </li>
+       <li>Manage the spring passes by means of the <b>Spring passes</b> check 
+       box. When activated, you must specify a<a NAME="pgfId=1083735"> </a><b>
+       Number of spring passes</b>.</li>
+     </ul>
+     <h3><a name="syntax"></a>CYCLE or GOTO Output Syntaxes</h3>
+     <p>If you want to generate CYCLE statements, you must select the <b><kbd>
+     Output CYCLE syntax</kbd></b> check box in the Options tab and set the
+     <a href="page11463.html#SyntaxUsed" target="_default">
+     Syntax Used</a> option to Yes in the NC Output generation dialog box.<br>
+     Otherwise, GOTO statements will be generated.&nbsp;</p>
+     <p>The parameters available for PP word syntaxes for this type of operation 
+     are described in the
+     <a href="page11460.html#NC_LATHE_THREADING" target="_default">
+     NC_LATHE_THREADING section of the Manufacturing Infrastructure User's Guide</a>.</p>
+     <h3><a name="syntaxedit"></a>Editing CYCLE Syntaxes </h3>
+     <p><a name="ix-command::Edit Cycle;Edit Cycle command"></a>The<b> Edit 
+     Cycle</b> command in the Thread Turning dialog box allows you to:</p>
+     <ul>
+       <li>display the unresolved syntax of the NC Instruction of the operation. 
+       This is the syntax as specified in the PP table referenced by the current 
+       Part Operation.</li>
+       <li>display and, if needed, edit the syntax that is resolved either by 
+       geometric selection and user entries.</li>
+     </ul>
+     <p>The Cycle Syntax Edition dialog box is displayed when you click the <b>
+     Edit Cycle</b> command.</p>
+     <p align="center"><img border="1" src="b35doc/english/online/lmgug_c2/images/dbEditSyntax01NLS.gif" width="365" height="279"></p>
+     <p>You can access all the CYCLE syntaxes contained in the current PP table 
+     by means of the PP instruction
+     <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgPPInstructionP2.gif" width="22" height="22" align="middle"> 
+     icon. You can then select the desired syntax to be used by means of the 
+     procedure described in the
+     <a href="page11383.html" target="ds_doc2">
+     Insert PP Instruction</a> section.</p>
+     <p align="center"><img border="1" src="b35doc/english/online/lmgug_c2/images/dbEditSyntax02NLS.gif" width="541" height="225"></p>
+     <h3><a name="toolcomp"></a>Tool Compensation for Thread Turning&nbsp;</h3>
+     <p><a NAME="pgfId=1063404"></a>
+     <a name="ix-Thread Turning parameter:Tool Compensation"></a>You can select 
+     a <b>tool compensation number</b> corresponding to the desired tool output 
+     point. Note that the usable compensation numbers are defined on the tool 
+     assembly linked to the machining operation. <a NAME="pgfId=1063405"></a>If 
+     you do not select a tool compensation number, the output point 
+     corresponding to type P9 will be used by default.&nbsp;</p>
+     <p><a NAME="pgfId=1103863"></a>Note that the change of output point is 
+     managed automatically if you set the <a NAME="marker=1108273"></a>
+     <a name="ix-Thread Turning parameter:Change Output Point"></a><b>Change 
+     Output Point</b> option for Trapezoidal or Other Thread profile.</p>
+     <h3><a name="macro"></a>Approach and Retract Macros for Thread Turning&nbsp;</h3>
+     <p><a NAME="pgfId=1098635"></a>The following <a NAME="marker=1098633"></a>
+     Approach and <a NAME="marker=1098634"></a>Retract macros are proposed: 
+     Direct, Axial-radial, Radial-axial, and Build by user.<br>
+     <a NAME="pgfId=1098636"></a>The selected macro type (Approach or Retract) 
+     defines the tool motion before or after machining. </p><p>Various feedrates are 
+     available for the approach and retract motions (RAPID, air-cutting, and so 
+     on). Local feedrates can be set to either Angular units (length per revolution) or Linear units (length per minute).</p>
+     <p>See
+     <a href="page11368.html" target="_blank">
+     Define Macros on a Turning Operation</a> for more information.</td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

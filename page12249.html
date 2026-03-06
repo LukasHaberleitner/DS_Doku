@@ -1,0 +1,153 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>About Generic Naming</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="Microsoft Border" content="none, default">
+ <meta name="docCompliance" content="v 0.9; Thu Oct 13 09:35:18 2005">
+ </head>
+
+ <body>
+
+ <h1>&nbsp;About Generic naming</h1>
+ <p>Generic naming is a CATIA technique which creates a label whenever an 
+ element has been selected interactively. This label is a coded description of 
+ the selected element. When you specify a fillet to be applied to a face, you 
+ must select interactively the face definition but prior&nbsp; to doing this you 
+ must of course have generated the face to be filleted. This is why scripts 
+ requiring face, point or edge definitions cannot be generated in one shot. You 
+ don't have to mind about the generic naming itself as it is automatically 
+ captured from the geometry area. The thing you have to mind about is the order 
+ your instructions are to be written and executed in the script.</p>
+ <p><kbd><font color="#000080">Example</font></kbd></p>
+ <p>The &quot;mechanical&quot; part of the PktPocketCalculator.CATGScript sample is to be 
+ generated in two shots:</p>
+ <ol class="task">
+   <li class="task">
+   <p class="task">import the necessary sketches and generate the pads:</p>
+   <table border="0" cellspacing="1">
+     <tr>
+       <td bgcolor="#F0F0F0"><code>import Input : FilePath &quot;Select the 
+       PktInitialSketch.CATPart sample&quot; ;<br>
+       <br>
+       calc isa CATPart<br>
+       {<br>
+       part1 isa Part<br>
+       {<br>
+       <br>
+       partbody isa BodyFeature<br>
+       {<br>
+       S1 isa Sketch.1 {}<br>
+       S2 isa Sketch.2 {}<br>
+       <br>
+       pad1 isa Pad(&quot;S2&quot;)<br>
+       {<br>
+       FirstLength = 0.5mm;<br>
+       SecondLength=2.0mm;<br>
+       }<br>
+       <br>
+       fillet1 isa ConstantEdgeFillet (&quot;Face:(Brp:(pad1;0:(Brp:(S2;1)));None:())&quot;)<br>
+       {<br>
+       Radius =1.0 mm;<br>
+       }<br>
+       <br>
+       pattern1 isa Pattern[4,4] of fillet1<br>
+       {<br>
+       Step1 =7.0 mm;<br>
+       Step2 = 7.0 mm;</code><kbd><br>
+       </kbd><code>}<br>
+       /*<br>
+       pad0 isa Pad(&quot;S1&quot;)<br>
+       {<br>
+       FirstLength = 5.0mm;<br>
+       SecondLength=0mm;<br>
+       }<br>
+       */<br>
+       /*<br>
+       fillet2 isa Fillet (select the cylindrical face of pad0 )<br>
+       {<br>
+       Radius =2.0 mm;<br>
+       }<br>
+       */<br>
+       }<br>
+       }<br>
+       }</code></td>
+     </tr>
+   </table>
+   </li>
+   <li>
+   <p class="task">Remove the comments before the following lines and click <kbd>
+   Generate</kbd>:<br>
+   <code>pad0 isa Pad(&quot;S1&quot;)<br>
+   {<br>
+   FirstLength = 5.0mm;<br>
+   SecondLength=0mm;<br>
+   }</code></li>
+   <li>
+   <p class="task">Capture the fillet1 and fillet2 definitions, remove the 
+   comments and re-execute the script:</p>
+   <div align="left">
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+       <tr>
+         <td bgcolor="#F0F0F0">&nbsp;<code>import Input : FilePath &quot;Select the 
+         PktInitialSketch.CATPart sample&quot; ;<br>
+         <br>
+         calc isa CATPart<br>
+         {<br>
+         part1 isa Part<br>
+         {<br>
+         <br>
+         partbody isa BodyFeature<br>
+         {<br>
+         S1 isa Sketch.1 {}<br>
+         S2 isa Sketch.2 {}<br>
+         <br>
+         pad1 isa Pad(&quot;S2&quot;)<br>
+         {<br>
+         FirstLength = 0.5mm;<br>
+         SecondLength=2.0mm;<br>
+         }<br>
+         <br>
+         fillet1 isa ConstantEdgeFillet (capture the face using the Get surface 
+         command)<br>
+         {<br>
+         Radius =1.0 mm;<br>
+         }<br>
+         <br>
+         pattern1 isa Pattern[4,4] of fillet1<br>
+         {<br>
+         Step1 =7.0 mm;<br>
+         Step2 = 7.0 mm;<br>
+         }<br>
+         <br>
+         pad0 isa Pad(&quot;S1&quot;)<br>
+         {<br>
+         FirstLength = 5.0mm;<br>
+         SecondLength=0mm;<br>
+         }<br>
+         <br>
+         /*<br>
+         fillet2 isa ConstantEdgeFillet (capture the face using the Get surface 
+         command )<br>
+         {<br>
+         Radius =2.0 mm;<br>
+         }<br>
+         */<br>
+         }<br>
+         }<br>
+         }</code></td>
+       </tr>
+     </table>
+   </div>
+   </li>
+ </ol>
+
+ </body>
+
+</html>
+

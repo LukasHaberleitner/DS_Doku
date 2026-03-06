@@ -1,0 +1,344 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Upgrading Standard Files from Previous Releases</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+</head>
+
+<body>
+
+<h1>Upgrading Standard Files from Previous Releases<a name="ix-upgrading standards;standards::upgrading"></a></h1>
+<table border="0" cellspacing="0" width="100%" style="border-collapse: collapse" cellpadding="0">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>Depending on your needs, you can:<ul>
+      <li><a href="#hj-preR9">Upgrade CATDrwStandard files (i.e. standard files 
+      customized in releases up to and including V5R8) to the current level for 
+      XML standard files</a></li>
+      <li><a href="#hj-Current">Upgrade XML standard files from previous 
+      releases (i.e. XML standard files customized in releases starting from 
+      V5R9) to the current level for XML standard files</a></li>
+    </ul>
+    <h2>Upgrading CATDrwStandard Files to the Current XML Standard Files<a name="hj-preR9"></a></h2>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/abasic.gif" width="32" height="32"></td>
+    <td>Up to and including V5R8, the standard file defining standard XXX was a 
+    file named XXX.CATDrwStandard, located in <kbd>install_root/reffiles/Drafting.
+    </kbd>
+    <p>In V5R9, the format of the standard file was changed to XML. The standard 
+    file defining standard XXX is now a file named XXX.xml, located in <kbd>
+    install_root/resources/standard/drafting.</kbd></p>
+    <p>If you have customized or defined a CATDrwStandard file, and wish to 
+    re-use this customization in the current release, you need to convert your 
+    CATDrwStandard file into a XML file. There are 2 ways of doing this:</p>
+    <h3>Manual upgrade</h3>
+    <p>If the degree of customization of the standard file is small, you can 
+    start from one of the 4 pre-defined standard files (ISO, ANSI, JIS or ASME), 
+    and modify it using the standards editor (<kbd>Tools> Standards</kbd>). 
+    You will need to modify the parameter values, and add the styles that you 
+    had defined in the CATDrwStandard file.</p>
+    <h3>Automatic upgrade<a name="ix-utilities::CATAnnStandardTools;CATAnnStandardTools"></a></h3>
+    <p>A batch utility is provided in order to automatically generate the 
+    XXX.xml file starting from a XXX.CATDrwStandard file. All the customization 
+    done on the CATDrwStandard file will be reproduced in the XML file, and all 
+    styles defined in CATDrwStandard file will be added.</p>
+    <p>The utility will also add to the XML file the new standard parameters 
+    (with default values), as well as the new pre-defined styles.</p>
+    <ul>
+      <li>If you want to convert a single CATDrwStandard to the current XML 
+      format, use:<br>
+      <code>CATAnnStandardTools MIGRATE XXX [dir]</code></li>
+      <li>If you want to convert all CATDrwStandard files to the current XML 
+      format, use:<br>
+      <code>CATAnnStandardTools MIGRATE_ALL [dir]</code></li>
+    </ul>
+    <p>For more information on using these commands on Windows and on Unix, see 
+    below.</p>
+    <p>&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td>The tasks below will show you how to use the standard automatic upgrade 
+    tool on Windows and on Unix.</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;
+    <p>
+    <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td>
+    <h4>Using the standard automatic upgrade tool on Windows</h4>
+    <ol class="task">
+      <li>
+      <p class="task">Open an MS-DOS Window.</li>
+      <li>
+      <p class="task">Change to the folder in which you installed the product.&nbsp;<br>
+      The default folder is <code>\intel_a\code\&#092;bin</code></li>
+    </ol>
+    <ol class="task">
+      <li value="3">
+      <p class="task">You have two options:</li>
+    </ol>
+    <blockquote>
+      <ul>
+        <li>
+        <p class="task">To generate XML files for all the CATDrwStandard files 
+        located in <code>reffiles&#092;Drafting</code>, 
+        enter this command:&nbsp;</li>
+      </ul>
+      <blockquote>
+        <p class="task"><code>CATAnnStandardTools MIGRATE_ALL [dir]&nbsp;</code></p>
+        <p class="task">where <code>[dir]</code> is an optional directory in 
+        which to write the resulting XML files. Local directory is the default.</p>
+      </blockquote>
+      <ul>
+        <li>To generate the XML file corresponding to one single standard, enter 
+        this command:</li>
+      </ul>
+      <blockquote>
+        <p><code>CATAnnStandardTools MIGRATE XXX [dir]</code></p>
+        <p>where&nbsp;<code>XXX</code> is the name of the standard you want to 
+        convert (ISO, ANSI...) and<b> </b><code>[dir]</code> is an optional 
+        directory in which to write the resulting XML file. Local directory is 
+        the default.</p>
+      </blockquote>
+    </blockquote>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;
+    <p>
+    <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td>
+    <h4>Using the standard automatic upgrade tool on UNIX</h4>
+    <ol class="task">
+      <li>
+      <p class="task">Open a shell command window.</li>
+      <li>
+      <p class="task">Change to the directory in which you installed the 
+      product.&nbsp;<br>
+      The default directory is <code>/OS_a/code/command/<br>
+      </code>where <code>OS_a</code> is:</li>
+    </ol>
+    <blockquote>
+      <ul>
+        <li>
+        <p class="task"><code>aix_a</code></li>
+        <li>
+        <p class="task"><code>hpux_a</code></li>
+        <li>
+        <p class="task"><code>irix_a</code></li>
+        <li>
+        <p class="task"><code>solaris_a</code></li>
+      </ul>
+    </blockquote>
+    <ol class="task">
+      <li value="3">
+      <p class="task">You have two options:</li>
+    </ol>
+    <blockquote>
+      <ul>
+        <li>
+        <p class="task">To generate XML files for all the CATDrwStandard files 
+        located in <code>reffiles&#092;Drafting</code>, 
+        enter this command:&nbsp;</li>
+      </ul>
+      <blockquote>
+        <p class="task"><code>./catstart -run &quot;CATAnnStandardTools MIGRATE_ALL 
+        [dir]&quot;</code> </p>
+        <p class="task">where <code>[dir]</code> is an optional directory in 
+        which to write the resulting XML files. Local directory is the default.
+        </p>
+      </blockquote>
+      <ul>
+        <li>To generate the XML file corresponding to one single standard, enter 
+        this command:&nbsp;</li>
+      </ul>
+      <blockquote>
+        <p><code>./catstart -run &quot;CATAnnStandardTools MIGRATE XXX [dir]&quot;</code> 
+        &nbsp;</p>
+        <p>where&nbsp;<code>XXX</code> is the name of the standard you want to 
+        convert (ISO, ANSI...) and<b> </b><code>[dir]</code> is an optional 
+        directory in which to write the resulting XML files. Local directory is 
+        the default.</p>
+      </blockquote>
+    </blockquote>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>
+    <h2><a name="R12"></a>Upgrading XML Standard Files from Previous Releases to 
+    the Current Level<a name="hj-Current"></a></h2>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/abasic.gif" width="32" height="32"></td>
+    <td>The XML standard file has evolved in each release since V5R9. New 
+    standard parameters have been added, some have been modified, and new 
+    functionalities (such as styles) have been introduced.
+    <p>If you have customized or defined an XML standard file in a previous 
+    release (i.e. a release starting from V5R9), and wish to re-use this 
+    customization in the current level, you need to upgrade your XML file. There 
+    are 2 ways of doing this:</p>
+    <h3>Manual upgrade</h3>
+    <p>If the degree of customization of the standard file is small, you can 
+    start from one of the 4 pre-defined standard files (ISO, ANSI, JIS or ASME), 
+    and modify it using the standards editor (<kbd>Tools> Standards</kbd>). 
+    You will need to modify the parameter values and customize new parameters 
+    and/or styles.</p>
+    <h3>Automatic upgrade<a name="ix-utilities::CATAnnStandardTools;CATAnnStandardTools"></a></h3>
+    <p>A batch utility is provided in order to automatically generate the 
+    current XML file starting from an XML file from a previous release. All the 
+    customization done on the starting file will be reproduced in the upgraded 
+    XML file.</p>
+    <p>The utility will also add the new parameters and styles introduced in the 
+    current release (with default values) in the XML file.</p>
+    <ul>
+      <li>If you want to upgrade a single XML file to the current version, use:<br>
+      <code>CATAnnStandardTools UPGRADE XXX [dir]</code></li>
+      <li>If you want to upgrade all XML files to the current version, use:<br>
+      <code>CATAnnStandardTools UPGRADE_ALL [dir]</code></li>
+    </ul>
+    <p>For more information on using these commands on Windows and on Unix, see 
+    below.</p>
+    <p>&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td>The tasks below will show you how to use the standard automatic upgrade 
+    tool on Windows and on Unix.</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;
+    <p>
+    <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td>
+    <h4>Using the standard automatic upgrade tool on Windows</h4>
+    <ol class="task">
+      <li>
+      <p class="task">Open an MS-DOS Window.</li>
+      <li>
+      <p class="task">Change to the folder in which you installed the product.&nbsp;<br>
+      The default folder is <code>\intel_a\&#092;code\&#092;bin</code></li>
+    </ol>
+    <ol class="task">
+      <li value="3">
+      <p class="task">You have two options:</li>
+    </ol>
+    <blockquote>
+      <ul>
+        <li>
+        <p class="task">To upgrade standard files for all the XML files located 
+        in <code>install_root&#092;resources&#092;standard&#092;drafting</code>, 
+        enter this command:&nbsp;</li>
+      </ul>
+      <blockquote>
+        <p class="task"><code>CATAnnStandardTools UPGRADE_ALL [dir]&nbsp;</code></p>
+        <p class="task">where <code>[dir]</code> is an optional directory in 
+        which to write the resulting XML files. Local directory is the default.</p>
+      </blockquote>
+      <ul>
+        <li>To upgrade the XML file corresponding to one single standard, enter 
+        this command:</li>
+      </ul>
+      <blockquote>
+        <p><code>CATAnnStandardTools UPGRADE XXX [dir]</code></p>
+        <p>where&nbsp;<code>XXX</code> is the name of the standard you want to 
+        convert (ISO, ANSI, MY_ISO...) and<b> </b><code>[dir]</code> is an 
+        optional directory in which to write the resulting XML file. Local 
+        directory is the default.</p>
+      </blockquote>
+      <p>The batch will first search the standard file in the directory defined 
+      by the exported variable CATCollectionStandard (e.g. set 
+      CATCollectionStandard=e:&#092;tmp), 
+      and then, if not found, in the following directory: <code>install_root&#092;resources&#092;standard&#092;drafting.</code></p>
+    </blockquote>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;
+    <p>
+    <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td>
+    <h4>Using the standard automatic upgrade tool on UNIX</h4>
+    <ol class="task">
+      <li>
+      <p class="task">Open a shell command window.</li>
+      <li>
+      <p class="task">Change to the directory in which you installed the 
+      product.&nbsp;<br>
+      The default directory is <code>/OS_a/code/command/<br>
+      </code>where <code>OS_a</code> is:</li>
+    </ol>
+    <blockquote>
+      <ul>
+        <li>
+        <p class="task"><code>aix_a</code></li>
+        <li>
+        <p class="task"><code>hpux_a</code></li>
+        <li>
+        <p class="task"><code>irix_a</code></li>
+        <li>
+        <p class="task"><code>solaris_a</code></li>
+      </ul>
+    </blockquote>
+    <ol class="task">
+      <li value="3">
+      <p class="task">You have two options:</li>
+    </ol>
+    <blockquote>
+      <ul>
+        <li>
+        <p class="task">To upgrade standard files for all the XML files located 
+        in <code>install_root&#092;resources&#092;standard&#092;drafting</code>, 
+        enter this command:&nbsp;</li>
+      </ul>
+      <blockquote>
+        <p class="task"><code>./catstart -run &quot;CATAnnStandardTools UPGRADE_ALL 
+        [dir]&quot;</code> </p>
+        <p class="task">where <code>[dir]</code> is an optional directory in 
+        which to write the resulting XML files. Local directory is the default.
+        </p>
+      </blockquote>
+      <ul>
+        <li>To upgrade the XML file corresponding to one single standard, enter 
+        this command:&nbsp;</li>
+      </ul>
+      <blockquote>
+        <p><code>./catstart -run &quot;CATAnnStandardTools UPGRADE XXX [dir]&quot;</code> 
+        &nbsp;</p>
+        <p>where&nbsp;<code>XXX</code> is the name of the standard you want to 
+        convert (ISO, ANSI...) and<b> </b><code>[dir]</code> is an optional 
+        directory in which to write the resulting XML files. Local directory is 
+        the default.</p>
+      </blockquote>
+      <p>The batch will first search the standard file in the directory defined 
+      by the exported variable CATCollectionStandard (e.g. export 
+      CATCollectionStandard=d/tmp), and then, if not found, in the following 
+      directory: <code>install_root&#092;resources&#092;standard&#092;drafting.</code></p>
+    </blockquote>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="2" align="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

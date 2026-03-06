@@ -1,0 +1,252 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+<head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta HTTP-EQUIV="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Preparing the ENOVIA V5 VPM Server Environment</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style type="text/css">
+.style1 {
+	font-family: Verdana;
+}
+</style>
+ </head>
+ 
+ <body>
+
+ <h1>Preparing the 
+ ENOVIA V5 VPM Server Environment</h1>
+ <table border="0" width="100%" cellspacing="0">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">This section explains the additional operations that have 
+     to performed to prepare the 
+     <strong>ENOVIAV5VPM</strong> server environment.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h2><span style="font-style: normal; font-weight: 400">Editing the Server 
+     Environment</span></h2>
+     <p>When you installed and set up the 
+     <strong>ENOVIAV5VPM</strong> server, a runtime 
+     environment was created. You must now edit this environment and make some 
+     minor changes to ensure that end users logging onto the ENOVIA server 
+     inherit all the resources (settings, etc.) specific to each end user.</p>
+     <p>This mechanism concerns 
+     <strong>ENOVIAV5VPM</strong> servers on both UNIX and Windows.</p>
+     <h3>Windows</h3>
+     <p><font face="Verdana">Note that, on Windows, you do not have to customize 
+     the default value: it will work as is. However, you are free to customize 
+     it if you wish. To do so:</font></p>
+     <ol>
+       <li><font face="Verdana">Start the <kbd>Environment Editor</kbd>.<br>
+&nbsp;</font></li>
+       <li><font face="Verdana">Locate the <code>USER_HOME</code> variable.<br>
+       <br>
+       The default value on Windows is:<br>
+       <br>
+       <code>CSIDL_COMMON_APPDATA\DassaultSystemes\DSKEY_USERID<br>
+       <br>
+       </code>
+       </font><font face="Verdana">which typically points to:<br>
+       </font><code><font face="Verdana"><br>
+       </font></code><font face="Verdana"><code>
+		C:\ProgramData\DassaultSystemes\DSKEY_USERID</code><br>
+&nbsp;</font></li>
+       <li><font face="Verdana">Edit the variable and specify a path. You can 
+       specify a path like this, for example:<br><br>
+       </font><span class="style1"><code>C:\Users\%CATRealUser%</code></span><code>\</code><font face="Verdana"><br>
+       <br>or like this:</font><code><font face="Verdana"><br><br>
+       </font>C:\Users\DSKEY_USERID\</code><font face="Verdana"><br>&nbsp;</font></li>
+       <li><font face="Verdana">Save the environment and exit the Environment 
+       Editor.</font></li>
+     </ol>
+     <h3>UNIX</h3>
+     <p><font face="Verdana">On UNIX, however, the default variable MUST be 
+     edited, it does not work as is.</font></p>
+     <ol>
+       <li><font face="Verdana">Start the <kbd>Environment Editor</kbd>.<br>
+&nbsp;</font></li>
+       <li><font face="Verdana">Locate the <code>USER_HOME</code> variable.<br>
+       <br>
+       The default value on UNIX is <code>$HOME</code>.<br>
+&nbsp;</font></li>
+       <li><font face="Verdana">Edit the variable and specify a path.<br>
+       <br>
+       On UNIX, for example:<br>
+       <br>
+       </font><code>$HOME/ALL_LCA_Users/$CATRealUser</code><font face="Verdana"><code><br>
+       <br>
+       </code>
+       </font><font face="Verdana">where ALL_LCA_Users is the name of an 
+       existing directory.<code><font face="Verdana"> </font></code>The path 
+       MUST contain the <code>$CATRealUser</code> variable. <br>
+&nbsp;</font></li>
+       <li><font face="Verdana">Save the environment and exit the Environment 
+       Editor.</font></li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h3><span style="font-style: normal; font-weight: 400">Role of the <blink>
+     <a name="hj-User_Home"></a></blink>USER_HOME<a name="ix-environment variables::USER_HOME"></a>
+     <a name="ix-USER_HOME environment variable"></a>&nbsp;and
+     <a name="hj-$CATRealUser variable"></a>$CATRealUser<a name="ix-environment variables::$CATRealUser"></a><a name="ix-$CATRealUser environment variable">&nbsp;</a>Variables</span></h3>
+     <p>The <code>USER_HOME</code> variable points by default to the home directory of the 
+     physical userid created to start the 
+     <strong>ENOVIAV5VPM</strong> server. It must always be customized on 
+     UNIX. If this value is not customized, successive end users will be able to 
+     log on, but they will inherit the settings of the previous user and then 
+     overwrite them with their own settings, which will in turn be inherited by 
+     the following user, etc.</p>
+     <p>Positioning the <code>USER_HOME</code> variable to point to the path of the userid 
+     creates all user settings in the same place; including the <code>$CATRealUser</code> 
+     variable in the path ensures that a directory is created in the same 
+     directory for storing user-specific settings.</p>
+     <p><b>We strongly recommend that you do not skip this step.</b></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h2>Issuing the xhost + Command on UNIX Before Starting the Server</h2>
+     <p>For UNIX installations only, the <code>xhost +</code> command must be 
+     issued on the UNIX server console each time the server is booted up before 
+     any <strong>LCA Navigator</strong> or 3d com WebSphere application server is started. Also, 
+     once this is done, the window where it is issued must remain open on the 
+     console, but it can be minimized if desired. Additionally, in the case of a 
+     UNIX server that doesn't have a dedicated physical console installed, some 
+     form of a remote console logon setup is required to support the <code>xhost 
+     +</code> requirement. </p>
+     <p>There is an exception to the above on AIX servers, where the optional 
+     use of XVFB (virtual frame buffer) is supported. When this is used, and the 
+     application server DISPLAY environment entry in the application server is 
+     appropriately set to use it, the xhost + isn't required.<br>
+     </p>
+     <p>When there is a problem anywhere in the DISPLAY setup, the last entry in 
+     the <code>SystemOut.log</code> file during the application server startup 
+     will be: </p>
+     <p><code>[3/28/06 8:48:41:489 EST] e2cea37 SystemOut O + Registered 
+     servlet[hcb] Asynchronous Callback Servlet for HTML</code><br>
+     </p>
+     <p>Here's an example of an AIX server containing both the hardware graphics 
+     adapter (:0), and the XVFB (:1) capabilities setup. In this case, if the 
+     application server is set up to use the hardware graphics adapter, the
+     <code>xhost +</code> is required, and the DISPLAY variable would be set to
+     <code>&lt;servername&gt;:0</code>. However, if the application server is setup to 
+     use the XVFB, the <code>xhost +</code> command isn't required, and the 
+     DISPLAY variable would be set to <code>&lt;servername&gt;:1</code>. </p>
+     <p><code>HARDWARE GRAPHICS ADAPTER</code></p>
+     <p><code>root 131168 114868 0 Mar 22 - 0:44 /usr/lpp/X11/bin/X -x abx -x 
+     dbe -x GLX -D /usr/lib/X11//rgb -T -force :0 -auth /var/dt/A:0-A2Mlqa</code></p>
+     <p><code>XVFB </code></p>
+     <p><code>root 311462 1 0 Mar 22 - 0:00 /usr/bin/X11/X -force -vfb -x abx -x 
+     dbe -x GLX :1 </code></p>
+     <p>Note: The XVFB setup is an excellent solution for situations where a 
+     hardware graphics adapter isn't available on the AIX server, or when 
+     optimum graphics processing throughput is desired, and sufficient server 
+     CPU and memory resources are available to support the requirements. </p>
+     <p>There is another situation on AIX servers that can lead to the 
+     application server failing to start, as indicated above. This is where 
+     someone has removed files from the <code>/tmp</code> directory, including 
+     the <code>/tmp/.X11-unix</code> directory. This directory is required for 
+     graphics processing, and in the case of the above server setup, it contains 
+     sub-directories for both the hardware graphics adapter (X0), and the XVFB 
+     (X1) as listed below. Once removed, graphics processing will fail until the 
+     server is rebooted. </p>
+     <p><code># pwd<br>
+     /tmp/.X11-unix<br>
+     # ls<br>
+     X0 X1 </code>
+		<h2>How to secure the ENOVIA server installation &#8211; Best Practice</h2>
+		<h3>Reminder</h3>
+		<p>When you log in as an ENOVIA user, you are the owner of the server 
+		process. This server process must be executed with the ENOVIA User 
+		identity.<br>
+		<br>
+		The ENOVIA GW0Runner executable is used to impersonate the ENOVIA server 
+		processes. To do this operation, a specific right (s bit) is set to 
+		GW0Runner and it must belong to UNIX &#8216;root&#8217; user.<h3>Caution</h3>
+		<p>Although GW0Runner is not designed to be directly executed from a 
+		command line, it can be misused to launch programs with improper rights, 
+		because of its special properties. Therefore, attention must be paid to 
+		secure its access.<p>This will be achieved if the ENOVIA installation 
+		meets basic security rules:<ul>
+		<li>ENOVIA server must be installed on an isolated computer, with 
+		controlled remote access.</li>
+		<li>The ENOVIA installation files should be accessible by restricted 
+		users only (root, admin).</li>
+		</ul>
+		<p>However, if these rules cannot be met, you must apply the following 
+		instructions:</p>
+		<h3>How to protect the access of GW0Runner</h3>
+		<ol>
+			<li>Use a specific UNIX group<br>
+			<br>
+			One UNIX group (for example, ESG) must be created to manage the 
+			right of server starter chain. Admin users who will start orbix 
+			daemon (for example, EUA1) must be associated to this UNIX group. 
+			Applicative ENOVIA users (for example, U1) must not be associated to 
+			this group.<br>
+			<br>
+			<img border="0" src="b35doc/english/online/basil_c2/images/InstallLCABestPracticeNLS.gif" width="644" height="221"><br>
+			<br>
+			ESG should be the 'system' group if the ENOVIA server is managed by 
+			the members of the 'system' group only.<br>
+&nbsp;</li>
+			<li>Change the file right<br>
+			<br>
+			The right of GW0Runner module must be restricted as follows:<br>
+			<br>
+			<code>-r-s r-s r-- 1&nbsp;&nbsp;&nbsp;&nbsp; root&nbsp;&nbsp;&nbsp;&nbsp; 
+			ESG&nbsp;&nbsp;&nbsp;&nbsp; 12559 Sep 26 2009&nbsp;&nbsp;&nbsp;&nbsp; 
+			GW0Runner</code><br>
+			<br>
+			You can use chmod an chown commands to do this.<br>
+			For example: <code>chmod o-x GW0Runner<br>
+			</code>will make sure that no one outside the ESG group can run the 
+			executable.<br>
+&nbsp;</li>
+			<li>Start daemon orbix with an admin user<br>
+			<br>
+			Use the user associated in UNIX group ESG (for example, EUA1) to 
+			start the orbix daemon<br>
+			<br>
+			<code># su - EUA1<br>
+			$ cd /appl/R20Custo/CODES/aix_a/code/command<br>
+			$ ./catstart -run runOrbix<br>
+			Starting runOrbix program. Please wait...<br>
+			runOrbix : Daemon orbix is running with DISPLAY=newenoaix14plp:0</code><br>
+			<br>
+			You can check the identity of orbix daemon process and the 
+			ServerManager process<br>
+			<br>
+			<code>$ ps -ef | grep -i orbixd<br>
+			EUA1 1208560 1 0 20:40:00 pts/5 0:00 
+			/appl/R20Custo/CODES/aix_a/code/bin/orbixd -u &#8211;s<br>
+			$ ps -ef | grep GW0SRVMG<br>
+			EUA1 450806 1208560 0 20:44:20 pts/5 0:00 GW0SRVMG 
+			CATIAServerManager -env ENOVIA_V5_VPM.V5R20.B20 -direnv 
+			/appl/R20Custo/CATEnv -timeOut 3600000</code><br>
+&nbsp;</li>
+			</ol>
+			<p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td colspan="2" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

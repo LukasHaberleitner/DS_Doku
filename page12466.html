@@ -1,0 +1,502 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2L2">
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+ <title>Automation Interface to Access Manufacturing Assembly</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Automation Interface to Access Manufacturing Assembly</h1>
+ <table border="0" width="719" cellspacing="3" cellpadding="3">
+   <tr>
+     <td width="32" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td width="666" valign="top" colspan="2">Using Interface Description 
+		Language (IDL), .CATProcesses are available for Automation interfaces to access Manufacturing 
+     Assembly.&nbsp;
+     The automation interfaces to the Manufacturing Assembly are the following:</td>
+   </tr>
+   <tr>
+     <td width="32" valign="top">&nbsp;</td>
+     <td width="666" valign="top" colspan="2">
+     <ul>
+       <li>Manufacturing Assembly: 
+       <ul>
+         <li>The Name of the Manufacturing Assembly:  MAName (get and put) </li>
+         <li>The Part Number of the MA:  MAPartNumber (get and put) </li>
+         <li>Manufacturing Assembly or Manufacturing Kit:  MAType (only get) </li>
+         <li>The number of assigned items:  Count </li>
+         <li>Item (only get)<span lang="de">;</span> One assigned Part (Product and/or Resource or another 
+         Manufacturing Assembly) of the Manufacturing Assembly<span lang="de">
+         </span>(to be fetched via index): </li>
+         <li>AddPart<span lang="de">:</span> Adds a part (Product, Resource or another 
+         Manufacturing Assembly) to a Manufacturing 
+         Assembly (Resources can be added only to Manufacturing Kits): </li>
+         <li>Remove<span lang="de"> </span>Part<span lang="de">:</span> Removes an allocated Part from the Manufacturing Assembly </li>
+       </ul>
+       </li>
+       <li>Manufacturing Assembly type
+       <ul>
+         <li>An Enumeration defining a Manufacturing Assembly or a Manufacturing 
+         Kit </li>
+       </ul>
+       </li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="32" valign="top">&nbsp;</td>
+     <td width="666" valign="top" colspan="2">
+     Subsequent some excerpts of Visual Basic how to access the Manufacturing 
+     Assemblies<span lang="de">:</span>
+     </td>
+   </tr>
+   <tr>
+     <td width="32" valign="top">&nbsp;</td>
+     <td width="666" valign="top" colspan="2">
+     <ul>
+       <li>Fetch an assigned Manufacturing Assembly from an Activity </li>
+     </ul>
+     <blockquote>
+       <blockquote>
+       <p><code>Dim myActivity As Activity <br>
+		myActivity = &lt;get Activity&gt; <br>
+		Dim myItem As Item <br>
+		Set myItem = myActivity.Items.Item(1) <br>
+		Dim obj As MfgAssembly <br>
+		Set obj = mySel.FindObject(&quot;DNBIAMfgAssembly&quot;) </code> </p>
+       </blockquote>
+     </blockquote>
+     <ul>
+       <li>Fetch the Name of the Manufacturing Assembly </li>
+     </ul>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+       <p><code>Dim myName As String <br>
+		myName = obj.MAName </code> </p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <ul>
+       <li>Change the Name of the Manufacturing Assembly </li>
+     </ul>
+     <blockquote>
+       <blockquote>
+       <p><code>Dim newName As String <br>
+		newName = "NewMAName" <br>
+		obj.MAName = newName </code> </p>
+       </blockquote>
+     </blockquote>
+     <ul>
+       <li>Fetch the PartNumber of the Manufacturing Assembly </li>
+     </ul>
+     <blockquote>
+       <blockquote>
+       <p><code>Dim myPart As String <br>
+		myPart = obj.MAPartNumber </code> </p>
+       </blockquote>
+     </blockquote>
+     <ul>
+       <li>Change the PartNumber of the MA </li>
+     </ul>
+     <blockquote>
+       <blockquote>
+       <p><code>Dim newPartNumber As String <br>
+		newPartNumber = "NewPartNumber" <br>
+		obj.MAPartNumber = newPartNumber </code> </p>
+       </blockquote>
+     </blockquote>
+     <ul>
+       <li>Fetch the type of the Manufacturing Assembly </li>
+     </ul>
+     <blockquote>
+       <blockquote>
+       <p><code>Dim MAtype As String <br>
+		If MA.MAType = manufacturingAssembly Then <br>
+		MAtype = &quot;Manufacturing Assembly&quot; <br>
+		Else <br>
+		MAtype = &quot;Manufacturing Kit&quot; <br>
+		End If </code> </p>
+       </blockquote>
+     </blockquote>
+     <ul>
+       <li>Fetch the number of assigned parts of the Manufacturing Assembly </li>
+     </ul>
+     <blockquote>
+       <blockquote>
+       <p><code>Dim Number As Long <br>
+		Number = MA.Count <br>
+		Fetch the assigned parts of the MA <br>
+		Dim j As Long <br>
+		For j = 1 To MA.Count <br>
+		Dim it As Item <br>
+		Set it = MA.Item(j) <br>
+		Dim ItemName As String <br>
+		ItemName = it.Name <br>
+		Next </code> </p>
+       </blockquote>
+     </blockquote>
+     <ul>
+       <li>Add a new Part to a Manufacturing Assembly </li>
+     </ul>
+     <blockquote>
+       <blockquote>
+       <p><code>Dim myProducts As PPRProducts <br>
+		Set myProducts = DELMIA.ActiveDocument.PPRDocument.Products <br>
+		Dim Part As Item <br>
+		Set Part = myProducts.Item(2) <br>
+		MA.AddPart(Part) </code> </p>
+       </blockquote>
+     </blockquote>
+     <ul>
+       <li>Remove a new Part from a Manufacturing Assembly </li>
+     </ul>
+     <blockquote>
+       <blockquote>
+       <p><code>Dim myProducts As PPRProducts <br>
+		Set myProducts = DELMIA.ActiveDocument.PPRDocument.Products <br>
+		Dim Part As Item <br>
+		Set Part = myProducts.Item(2) <br>
+		MA.RemovePart(Part) </code> </p>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+       <td valign="top" width="32">
+       <img src="b35doc/english/online/icons_C2/common/ascenari.gif" title="ascenari.gif (1364 bytes)" width="32" height="32"></td>
+       <td valign="top" width="666" colspan="2">
+       <h2>Script Example</h2>
+       </td>
+     </tr>
+   <tr>
+     <td width="32" valign="top">&nbsp;</td>
+     <td width="666" valign="top" colspan="2">
+     <h3>Example 1:</h3>
+     </td>
+   </tr>
+   <tr>
+     <td width="32" valign="top">&nbsp;</td>
+     <td width="666" valign="top" colspan="2">
+     This script is an example how to use all Manufacturing Assembly Automation 
+     Interfaces</td>
+   </tr>
+   <tr>
+     <td width="32" valign="top">&nbsp;</td>
+     <td width="666" valign="top" colspan="2">
+     <h4>Prerequisite</h4>
+     <p>Create following PPR items</p>
+     <ul>
+       <li>One Activity </li>
+       <li>Two Products </li>
+       <li>Two Resources </li>
+       <li>One Manufacturing Assembly, assign one of the products, assign the 
+       Manufacturing Assembly to the Activity with "Process Processes Product"
+       </li>
+       <li>One Manufacturing Kit, assign one of the products and one of the 
+       Resources, assign the Manufacturing Kit to the Activity with "Process 
+       Processes Product" </li>
+       </ul>
+     <p>&nbsp;</p>
+     Create a CATScript<span lang="de">:</span></td>
+   </tr>
+   <tr>
+     <td width="32" valign="top">&nbsp;</td>
+       <td valign="top" align="right"><b>1.</b></td>
+       <td valign="top">
+       <p style="margin-bottom: 1em">Select the <kbd>Tools> Macro> Macros
+       </kbd>and create a new CATScript<p style="margin-bottom: 1em">
+       <img border="0" src="b35doc/english/online/prpug_c2/images/mbChangePertIcon2NLS.gif" width="400" height="411"></td>
+   </tr>
+   <tr>
+      <td valign="top">&nbsp;</td>
+      <td valign="top" align="right">
+      &nbsp;</td>
+      <td valign="top">&nbsp;</td>
+   </tr>
+   <tr>
+      <td valign="top">&nbsp;</td>
+      <td valign="top" align="right">
+      <b>2.</b></td>
+      <td valign="top">Execute following script (<kbd>Tools> Macro> Macros</kbd>..>select 
+      the new create<span lang="de">d</span> CATScript> 
+     <kbd>Run</kbd>)</td>
+     </tr>
+
+   <tr>
+     <td width="32" valign="top">&nbsp;</td>
+     <td width="666" valign="top" colspan="2">
+     &nbsp;</td>
+   </tr>
+   <tr>
+     <td width="32" valign="top">&nbsp;</td>
+     <td width="666" valign="top" colspan="2">
+     <pre><code>Option Explicit
+Language = &quot;VBSCRIPT&quot;
+
+Sub CATMain()
+<span lang="de"> </span>MsgBox &quot;Select an activity&quot;
+<span lang="de"> </span>Dim sFilter(0)
+<span lang="de"> </span>sFilter(0) = &quot;Activity&quot;
+<span lang="de"> </span>Dim This_Sel As Selection
+<span lang="de"> </span>Set This_Sel = DELMIA.ActiveDocument.Selection
+<span lang="de"> </span>Dim sStatus As String
+<span lang="de"> </span>sStatus = This_Sel.SelectElement2(sFilter, &quot;Select an activity&quot;, True)
+<span lang="de"> </span>Dim Act As Activity
+<span lang="de"> </span>Set Act = This_Sel.Item(1).Value
+<span lang="de"> </span>
+<span lang="de"> </span>display_items Act
+<span lang="de"> </span>change_items Act
+<span lang="de"> </span>display_items Act
+
+End Sub
+
+Sub display_items(myActivity As Activity)
+<span lang="de"> </span>Dim i As Long
+<span lang="de"> </span>Dim mymessg As String
+<span lang="de"> </span>mymessg = mymessg &amp; &quot;List of Manufacturing Assemblies&quot; &amp; vbCrLf &amp; vbCrLf
+<span lang="de"> </span>For i = 1 To myActivity.Items.Count
+<span lang="de">   </span>Dim myItem As Item
+<span lang="de">   </span>Set myItem = myActivity.Items.Item(i)
+<span lang="de">   </span>
+<span lang="de">   </span>Dim mySel As Selection
+<span lang="de">   </span>Set mySel = DELMIA.ActiveDocument.Selection
+<span lang="de">   </span>mySel.Add myItem
+<span lang="de">   </span>On Error Resume Next
+<span lang="de">   </span>' Filter out Products
+<span lang="de">   </span>Dim prod As Product
+<span lang="de">   </span>Set prod = mySel.FindObject(&quot;CATIAProduct&quot;)
+<span lang="de">   </span>If Err.Number &lt;&gt; 0 Then
+<span lang="de">     </span>On Error GoTo 0
+<span lang="de">     </span>Dim MA As MfgAssembly
+<span lang="de">     </span>Set MA = mySel.FindObject(&quot;DNBIAMfgAssembly&quot;)
+<span lang="de">     </span>
+<span lang="de">     </span>Dim MAName As String
+<span lang="de">    </span> MAName = MA.MAName
+<span lang="de">     </span>
+<span lang="de">     </span>Dim MAPartNbr As String
+<span lang="de">     </span>MAPartNbr = MA.MAPartNumber
+<span lang="de">     </span>
+<span lang="de">     </span>Dim MAtype As String
+<span lang="de">     </span>If MA.MAtype = manufacturingAssembly Then
+<span lang="de">       </span>MAtype = &quot;Manufacturing Assembly&quot;
+<span lang="de">     </span>Else
+<span lang="de">       </span>MAtype = &quot;Manufacturing Kit&quot;
+<span lang="de">     </span>End If
+<span lang="de">     </span>Dim Number As Long
+<span lang="de">     </span>Number = MA.Count
+<span lang="de">     </span>mymessg = mymessg &amp; MAName &amp; vbCrLf
+<span lang="de">     </span>mymessg = mymessg &amp; &quot;  Part Number: &quot; &amp; MAPartNbr &amp; vbCrLf
+<span lang="de">     </span>mymessg = mymessg &amp; &quot;  Type: &quot; &amp; MAtype &amp; vbCrLf
+<span lang="de">     </span>mymessg = mymessg &amp; &quot;  Number of Parts: &quot; &amp; Number &amp; vbCrLf
+<span lang="de">     </span>Dim j As Long
+<span lang="de">     </span>For j = 1 To Number
+<span lang="de">       </span>Dim it As Item
+<span lang="de">       </span>Set it = MA.Item(j)
+<span lang="de">       </span>mymessg = mymessg &amp; &quot;    Item: &quot; &amp; it.Name &amp; vbCrLf
+<span lang="de">     </span>Next
+<span lang="de">     </span>mymessg = mymessg &amp; vbCrLf
+<span lang="de">   </span>End If
+<span lang="de"> </span>Next
+<span lang="de"> </span>MsgBox (mymessg)
+End Sub
+
+Sub change_items(myActivity As Activity)
+<span lang="de"> </span>Dim i As Long
+<span lang="de"> </span>For i = 1 To myActivity.Items.Count
+<span lang="de">   </span>Dim myItem As Item
+<span lang="de">   </span>Set myItem = myActivity.Items.Item(i)
+<span lang="de">   </span>
+<span lang="de">   </span>Dim mySel As Selection
+<span lang="de">   </span>Set mySel = DELMIA.ActiveDocument.Selection
+<span lang="de">   </span>mySel.Add myItem
+<span lang="de">   </span>On Error Resume Next
+<span lang="de">   </span>' Filter out Products
+<span lang="de">   </span>Dim prod As Product
+<span lang="de">   </span>Set prod = mySel.FindObject(&quot;CATIAProduct&quot;)
+<span lang="de">   </span>If Err.Number &lt;&gt; 0 Then
+<span lang="de">     </span>On Error GoTo 0
+<span lang="de">     </span>Dim MA As MfgAssembly
+<span lang="de">     </span>Set MA = mySel.FindObject(&quot;DNBIAMfgAssembly&quot;)
+<span lang="de">     </span>
+<span lang="de">     </span>Dim myProducts As PPRProducts
+<span lang="de">     </span>Dim myRes As PPRResources
+<span lang="de">     </span>Dim Part As Item
+<span lang="de">     </span>If MA.MAtype = manufacturingAssembly Then
+<span lang="de">       </span>MA.MAName = &quot;NewMA2&quot;
+<span lang="de">       </span>MA.MAPartNumber = &quot;NewMA2Part&quot;
+<span lang="de">       </span>Set myProducts = DELMIA.ActiveDocument.PPRDocument.Products
+<span lang="de">       </span>
+<span lang="de">       </span>Set Part = myProducts.Item(1)
+<span lang="de">       </span>MA.RemovePart (Part)
+<span lang="de">       </span>Set Part = myProducts.Item(2)
+<span lang="de">       </span>MA.AddPart (Part)
+<span lang="de">     </span>Else
+<span lang="de">     </span> <span lang="de"> </span>MA.MAName = &quot;NewMK2&quot;
+<span lang="de"> </span> <span lang="de">   </span> <span lang="de"> </span>MA.MAPartNumber = &quot;NewMK2Part&quot;
+<span lang="de">       </span>Set myProducts = DELMIA.ActiveDocument.PPRDocument.Products
+<span lang="de">       </span>
+<span lang="de">       </span>Set Part = myProducts.Item(2)
+<span lang="de"> </span> <span lang="de">   </span> <span lang="de"> </span>MA.RemovePart (Part)
+<span lang="de">       </span>Set Part = myProducts.Item(1)
+<span lang="de"> </span> <span lang="de">   </span> <span lang="de"> </span>MA.AddPart (Part)
+<span lang="de">       </span>
+<span lang="de">       </span>Set myRes = DELMIA.ActiveDocument.PPRDocument.Resources
+<span lang="de">       </span>
+<span lang="de">       </span>Set Part = myRes.Item(2)
+<span lang="de">   </span> <span lang="de">   </span>MA.RemovePart (Part)
+<span lang="de">       </span>Set Part = myRes.Item(1)
+<span lang="de"> </span> <span lang="de">     </span>MA.AddPart (Part)
+<span lang="de">     </span>End If
+<span lang="de">   </span>End If
+<span lang="de"> </span>Next
+End Sub</code></pre>
+     </td>
+   </tr>
+   <tr>
+     <td width="32" valign="top">&nbsp;</td>
+     <td width="666" valign="top" colspan="2">
+     First a list of the items will be shown before the changes<span lang="de">.</span><p>
+     <img border="0" src="b35doc/english/online/prpug_c2/images/dbCatScriptAutoMA1.gif" width="200" height="312"></p>
+     <p>Then the changes are applied and a list box is shown<span lang="de">.</span></p>
+     <p>
+		<img border="0" src="b35doc/english/online/prpug_c2/images/dbCatScriptAutoMA2.gif" width="201" height="311"></td>
+   </tr>
+   <tr>
+     <td width="32" valign="top">&nbsp;</td>
+     <td width="666" valign="top" colspan="2">
+     <h3>Example <span lang="de">2</span>:</h3>
+     </td>
+   </tr>
+   <tr>
+     <td width="32" valign="top">&nbsp;</td>
+     <td width="666" valign="top" colspan="2">
+     All assigned Products of an Activity are fetched, independently if they are 
+     direct assigned, or as assigned parts of a Manufacturing Assembly</td>
+   </tr>
+   <tr>
+     <td width="32" valign="top">&nbsp;</td>
+     <td width="666" valign="top" colspan="2">
+     <h4>Prerequisite</h4>
+     </td>
+   </tr>
+   <tr>
+     <td width="32" valign="top">&nbsp;</td>
+     <td width="666" valign="top" colspan="2">
+     Create following PPR items<ul>
+       <li>One Activity</li>
+       <li>Four Products, assign the fourth Product direct to the Activity</li>
+       <li>Three Manufacturing Assemblies, assign the two of the products to the 
+       first MA, assign the third product to the third MA, assign the second MA 
+       to the first MA, assign the third MA to the second MA, assign the first 
+       MA to the Activity with "Process Processes Product"</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="32" valign="top">
+     &nbsp;</td>
+     <td width="666" valign="top" colspan="2">
+     Execute following script (<kbd>Tools> Macro> Macros</kbd>..>select the 
+     new create<span lang="de">d</span> CATScript> <kbd>Run</kbd>)</td>
+   </tr>
+   <tr>
+     <td width="32" valign="top">
+     &nbsp;</td>
+     <td width="666" valign="top" colspan="2">
+     <code>Option Explicit<br>
+     Language = &quot;VBSCRIPT&quot;<br>
+     <br>
+     Sub CATMain()<br>
+     <span lang="de">&nbsp;</span>MsgBox &quot;Select an activity&quot;<br>
+     <span lang="de">&nbsp;</span>Dim sFilter(0)<br>
+     <span lang="de">&nbsp;</span>sFilter(0) = &quot;Activity&quot;<br>
+     <span lang="de">&nbsp;</span>Dim This_Sel As Selection<br>
+     <span lang="de">&nbsp;</span>Set This_Sel = DELMIA.ActiveDocument.Selection<br>
+     <span lang="de">&nbsp;</span>Dim sStatus As String<br>
+     <span lang="de">&nbsp;</span>sStatus = This_Sel.SelectElement2(sFilter, 
+     &quot;Select an activity&quot;, True)<br>
+     <span lang="de">&nbsp;</span>Dim Act As Activity<br>
+     <span lang="de">&nbsp;</span>Set Act = This_Sel.Item(1).Value<br>
+     <span lang="de">&nbsp;</span>display_Act Act<br>
+     End Sub<br>
+     <br>
+     Sub display_Act(myActivity As Activity)<br>
+     <span lang="de">&nbsp;</span>Dim i As Long<br>
+     <span lang="de">&nbsp;</span>Dim mymessg As String<br>
+     <span lang="de">&nbsp;</span>mymessg = mymessg &amp; &quot;List of Products of an 
+     Activity&quot; &amp; vbCrLf<br>
+     <span lang="de">&nbsp;</span>For i = 1 To myActivity.Items.Count<br>
+     <span lang="de">&nbsp;&nbsp; </span>Dim myItem As Item<br>
+     <span lang="de">&nbsp;&nbsp; </span>Set myItem = myActivity.Items.Item(i)<br>
+     <span lang="de">&nbsp;&nbsp; </span>display_Item myItem, mymessg<br>
+     <span lang="de">&nbsp;</span>Next<br>
+     <span lang="de">&nbsp;</span>MsgBox (mymessg)<br>
+     End Sub<br>
+     <br>
+     Sub display_Item(myItem As Item, mymessg As String)<br>
+     <span lang="de">&nbsp;</span>Dim mySel As Selection<br>
+     <span lang="de">&nbsp;</span>Set mySel = DELMIA.ActiveDocument.Selection<br>
+     <span lang="de">&nbsp;</span>mySel.Add myItem<br>
+     <span lang="de">&nbsp;</span>On Error Resume Next<br>
+     <span lang="de">&nbsp;</span>' Filter out Products<br>
+     <span lang="de">&nbsp;</span>Dim prod As Product<br>
+     <span lang="de">&nbsp;</span>Set prod = mySel.FindObject(&quot;CATIAProduct&quot;)<br>
+     <span lang="de">&nbsp;</span>If Err.Number = 0 Then<br>
+     <span lang="de">&nbsp;&nbsp; </span>mymessg = mymessg &amp; prod.Name &amp; vbCrLf<br>
+     <span lang="de">&nbsp;</span>Else<br>
+     <span lang="de">&nbsp;&nbsp; </span>On Error GoTo 0<br>
+     <span lang="de">&nbsp;&nbsp; </span>Dim MA As MfgAssembly<br>
+     <span lang="de">&nbsp;&nbsp; </span>Set MA = 
+     mySel.FindObject(&quot;DNBIAMfgAssembly&quot;)<br>
+     <span lang="de">&nbsp;&nbsp; </span>Dim Number As Long<br>
+     <span lang="de">&nbsp;&nbsp; </span>Number = MA.Count<br>
+     <span lang="de">&nbsp;&nbsp; </span>Dim j As Long<br>
+     <span lang="de">&nbsp;&nbsp; </span>For j = 1 To Number<br>
+     <span lang="de">&nbsp;&nbsp;&nbsp;&nbsp; </span>Dim it As Item<br>
+     <span lang="de">&nbsp;&nbsp;&nbsp;&nbsp; </span>Set it = MA.Item(j)<br>
+     <span lang="de">&nbsp;&nbsp;&nbsp;&nbsp; </span>display_Item it, mymessg<br>
+     <span lang="de">&nbsp;&nbsp; </span>Next<br>
+     <span lang="de">&nbsp;</span>End If<br>
+     End Sub<br>
+&nbsp;</code></td>
+   </tr>
+   <tr>
+     <td width="32" valign="top">
+     <h2><img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></h2>
+     </td>
+     <td width="666" valign="top" colspan="2">
+     <h2>Notes</h2>
+     </td>
+   </tr>
+   <tr>
+     <td width="32" valign="top"></td>
+     <td width="666" valign="top" colspan="2">
+     <ul>
+       <li>Manufacturing Assemblies cannot be created or deleted; also it is not 
+       possible to get a list of all Manufacturing Assemblies in the document.</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

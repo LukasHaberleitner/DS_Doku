@@ -1,0 +1,185 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Importing the Initial Model in CATIA</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style type="text/css">
+.auto-style1 {
+	border-collapse: collapse;
+}
+.auto-style2 {
+	font-family: Verdana;
+}
+.auto-style3 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+</head>
+
+<body>
+
+<h1 align="center">
+<a name="CATCoDefaultCmdHeader.CATSLTCompositesLinkZoneImportId"></a>Importing the Initial Model in CATIA</h1>
+<table border="0" id="AutoNumber1" class="auto-style1">
+  <tr>
+    <td valign="top">
+    
+    <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td>This task shows how to import the zones model in CATIA.<br>Within the same command, 
+	you can import:<ul>
+		<li>Only contours. The part in which you perform the import may contain 
+		no <kbd>Composites Parameters</kbd>.</li>
+		<li>Zones with or without geometry. <br>Access to a Composites Design 
+		licence is required.</li>
+		<li>Laminates</li>
+		<li>Rosettes</li>
+	</ul>
+	  </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img height="32" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32"></td>
+    <td>
+    See <a href="page3011.html#ix-composites link:CATIA zone">CATIA Zones</a> 
+	and <a href="page3012.html#ix-composites link:analysis zone">Analysis 
+	Zones</a> for more information.<br></td>
+  </tr>
+  <tr>
+    <td valign="top">
+          
+      <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td>
+  <ol class="task">
+      <li>
+      <p class="task">If you are importing zones in a part that contains only 
+	  geometry, <br>define <kbd>Composites Parameters</kbd> and a Zones Group.<li>
+      <p class="task"><a name="ix-import zones"></a>Click <kbd>Import Zones</kbd> 
+        <img src="b35doc/english/online/icons_C2/images/I_SLTClkImportZone.png" align="middle" border="0" width="22" height="22"> in the Composites Link 
+	  toolbar.<li><p class="task">Press ... to select the input file (Nastran bulk data 
+		file).<li>
+	  <p class="task"><a name="ix-import contours"></a>Click <kbd>OK</kbd> to import only contours.<table style="width: 100%">
+		  <tr>
+			  <td>
+			  <ul>
+				  <li>Contours defining PCOMP boundaries are imported.</li>
+				  <li>They are 
+				placed in an Open Body named <kbd>Zones</kbd>, under <kbd>Composites Link</kbd>.</li>
+				  <li>The zone names are made from the prefix <kbd>pcomp</kbd> followed 
+					by the PCOMPID.<br>For example, <kbd>pcomp.1</kbd> refers to the 
+				contents of the PCOMP card with ID=1.</li>
+				  <li>Because a CATIA zone can only be defined over one 
+					contiguous area, if a PCOMP is used in several separate 
+					parts of the model, <br>several outer contours are created 
+					around section regions. <br>For example, if the PCOMP region 
+					with ID=1 is used in two disconnected regions, two sets of 
+					contours are created as <kbd>pcomp.1</kbd> and <kbd>pcomp.1_2.</kbd><br>(A 
+					subscript showing the instance index is appended to the 
+					second and subsequent regions. <br>The order of naming is 
+					set by the lowest element ID existing in the respective 
+					regions.)</li>
+				  <li>If a section region contains one or more holes, 
+					corresponding inner contours are created. </li>
+			  </ul>
+			  <p>This geometry is based on the element edges and may require 
+				rework. <br>However, it is easier for the designer to redraw from a 
+				curve present in CATIA, rather than guessing the locations of 
+				the zones. </p>
+			  <p>
+			  <img height="138" src="b35doc/english/online/cclug_c2/images/ImportContourTreeNLS.png" width="224">
+			  <img src="b35doc/english/online/cclug_c2/images/ImportContour.png"></p>
+			  </td>
+		  </tr>
+	  </table>
+	  <li>
+      <p class="task">To import zones, select the <kbd>Zone Group</kbd> where the zones are imported and 
+	  click <kbd>OK</kbd>.<table style="width: 100%">
+		  <tr>
+			  <td><img src="b35doc/english/online/cclug_c2/images/ImportZonesNLS.png" class="auto-style3"><br>Composites Link tries to 
+			  map analysis materials with materials referenced in the <kbd>Composites parameters</kbd>, by:<ul>
+				  <li>Matching material names</li>
+				  <li>Matching key mechanical property values within 0.1%.</li>
+			  </ul>
+			  </td>
+		  </tr>
+	  </table>
+	 </li><li><p class="task">When automatic mapping is not possible, you are requested to map the materials manually.<table style="width: 100%">
+		  <tr>
+			  <td><img src="b35doc/english/online/cclug_c2/images/MaterialMapNLS.png" class="auto-style3"><ul>
+				  <li>Pick an analysis material on the left.</li>
+				  <li>Pick a Composites Design material on the right.</li>
+				  <li>Click <kbd>Map</kbd>.</li>
+			  </ul>
+			  </td>
+		  </tr>
+	  </table>
+	 </li><li><p class="task"> Click <kbd>OK</kbd> without selecting any 
+	  check box to create empty zones.<br>
+	  <img height="371" src="b35doc/english/online/cclug_c2/images/EmptyZonesTreeNLS.png" width="213"></li><li><p class="task">
+	  Alternatively, select the <kbd>Set Geometry on Zone</kbd> check box.<br>
+	  The contours associated with the zones are projected onto the underlying 
+	  surface of the zones group.<br>These projections are associated with the 
+	  zones.<li>
+	  <p class="task">By default, these projections are not automatically 
+	  updated. <br>If required, select the <kbd>Automatic Local Updates</kbd> 
+	  check box.  </li></ol>
+	<tr>
+    <td valign="top">
+          
+      <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>
+    <kbd><a name="ix-set geometry on zone"></a>Set Geometry on Zone </kbd>and<kbd> 
+	<a name="ix-automatic local updates"></a>Automatic Local Updates</kbd> are 
+	not selected by default as in most cases, you simplify the zone 
+	geometry before associating it to a zone.<br><kbd>Automatic Local Updates</kbd> 
+	may be time consuming.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+          
+      &nbsp;</td>
+    <td>
+    <ol class="task" start="9">
+        <li>
+		<p class="task">Select the <span class="auto-style2"><kbd>Import Laminates</kbd></span> 
+		check box to convert the analysis zones into a smeared equivalent 
+		description.<br>For every layer in the analysis PCOMP, the CATIA 
+		material is identified from the mapping.<br>The closest angle defined in 
+		the <kbd>Composites Parameters</kbd> is selected, the number in this 
+		direction is incremented accordingly.</p>
+		<li>
+		<p class="task">In the analysis input deck, check the thickness of the 
+		CATIA material given in the CATMaterial.</p>
+		<li>
+		<p class="task"><a name="ix-set rosette on zone"></a>Select the <kbd>Set Rosette on Zone</kbd> check box to 
+		import the analysis coordinates system, if any.</p>
+</td>
+  </tr>
+  <tr>
+    <td valign="top">
+          
+      <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>
+    To do so, all the elements in a particular zone must reference one single 
+	coordinates system.<br>If the orientation is not defined by a coordinates 
+	system, or if several coordinates systems are referenced, no rosette is set.</td>
+  </tr>
+  <tr>
+    <td colspan="2">
+    <p align="center">
+    
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

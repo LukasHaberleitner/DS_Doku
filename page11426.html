@@ -1,0 +1,229 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Access External Tool Catalogs</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Access to External Tool Catalogs</h1>
+ <table border="0">
+   <tr>
+     <td width="34" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" title="task target" width="32" height="32"></td>
+     <td width="700" valign="top" colspan="2">This task shows you how to 
+     customize access to the following external tool catalogs:
+     <ul>
+       <li><a name="CATIATDB"></a>CATIA Version 4 Manufacturing database under 
+       ORACLE or DB2/6000</li>
+       <li>TDM (Tool Data Management) database under ORACLE .</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="34" valign="top"></td>
+     <td width="733" valign="top" colspan="2" style="padding-top: 10; padding-bottom: 10">
+     <b>CATIA Version 4 Manufacturing relational database (ORACLE)</b>
+     <p>Please note that the V4 database must be used as the server and the V5 
+     session must be running in client mode.</td>
+   </tr>
+   <tr>
+     <td width="34" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" title="scenario" width="32" height="32"></td>
+     <td width="35" valign="top"><font color="#1C1557"><b>1.&nbsp;</b></font></td>
+     <td width="698" valign="top">Declare the UNIX server on the client machine.<p>
+     The client machine should have a client ORACLE installation (for example, 
+     on Windows it may be installed on c:\orant).</p>
+     <p>The Unix server machine should be declared on the client machine, the 
+     tnsnames.ora file (for example, in c:\orant\net80\admin) should be 
+     modified.</p>
+     <ul>
+       <li>The string MACHINE_NAME should be replaced by the name of the Unix 
+       server machine where V4 database is installed.</li>
+       <li>The string SID_NAME should be replaced by the name of the ORACLE SID 
+       name of V4 database installation.</li>
+       <li>The string PORT_NUMBER should be replaced by the port number used for 
+       the ORACLE installation.</li>
+     </ul>
+     <p>Please contact the ORACLE administrator to locate the file.</p>
+     <p><b>Example:</b></p>
+     <p class="MsoNormal"><code>MACHINE_NAME.SID_NAME =<br>
+&nbsp; (DESCRIPTION =<br>
+&nbsp;&nbsp; (ADDRESS_LIST =<br>
+&nbsp;&nbsp;&nbsp;&nbsp; (ADDRESS =<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (PROTOCOL = TCP)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (PORT =&nbsp;PORT_NUMBER&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (HOST = MACHINE_NAME)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )<br>
+&nbsp;&nbsp;&nbsp; )<br>
+&nbsp;&nbsp; (CONNECT_DATA = (SID = SID_NAME)<br>
+&nbsp;&nbsp;&nbsp; )<br>
+&nbsp; )</code></td>
+   </tr>
+   <tr>
+     <td width="34" valign="top"></td>
+     <td width="35" valign="top"><font color="#1C1557"><b>2.&nbsp;</b></font></td>
+     <td width="698" valign="top">Customize the <code>
+     ...\intel_a\startup\Manufacturing\Database\CATIAV4NC.ini</code> file of 
+     your CATIA V5 installation to define the default values for the connection.<ul>
+       <li>The string DatabaseType should be set to ORACLE.</li>
+       <li>The string DatabaseName should be set to MACHINE_NAME.SID_NAME 
+       declared in the tnsnames.ora file.</li>
+       <li>The string User should be set to the Unix user who has access rights 
+       to the V4 database</li>
+       <li>The string Password should be set to the password of the Unix user 
+       who has access rights to the V4 database.</li>
+       <li>The string ProjectName should be set to the name of the V4 database 
+       project to be connected.</li>
+       <li>The string CDMADictionary should be set to the name of the CDMA 
+       dictionary used for the V4 database installation.</li>
+     </ul>
+     <p ALIGN="JUSTIFY"><b>Example:</b></p>
+     <p ALIGN="JUSTIFY"><code>DatabaseType = ORACLE<br>
+     DataBaseName =diva.AIX<br>
+     User =catadm<br>
+     Password =db2adm<br>
+     ProjectName =MfgResources<br>
+     CDMADictionary =CATIA</code></td>
+   </tr>
+   <tr>
+     <td width="34" valign="top"></td>
+     <td width="737" valign="top" colspan="2"><b>CATIA Version 4 Manufacturing 
+     relational database (DB2/6000)</b>
+     <p>Please note that the V4 database must be used as the server and the V5 
+     session must be running in client mode.</td>
+   </tr>
+   <tr>
+     <td width="34" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" title="scenario" width="32" height="32"></td>
+     <td width="35" valign="top"><font color="#1C1557"><b>1.</b></font></td>
+     <td width="702" valign="top">
+     <p ALIGN="JUSTIFY">Declare the UNIX server on the client machine. </p>
+     <p class="MsoNormal">The client machine should have a DB2/6000 client 
+     installation.&nbsp;<br>
+     The UNIX server machine should be declared on the client machine. The 
+     following commands have to be executed by the db2 administrator of the 
+     client machine:</p>
+     <blockquote>
+       <p class="MsoNormal"><code>CATALOG TCPIP NODE nodename REMOTE hostname&nbsp;</code></p>
+       <p class="MsoNormal"><code>CATALOG DATABASE database_name at NODE 
+       nodename AUTHENTICATION SERVER</code></p>
+     </blockquote>
+     <p class="MsoNormal"><code>nodename</code> can be the name of the UNIX 
+     machine where server installation is done</p>
+     <p class="MsoNormal"><code>hostname</code> is the name of the UNIX machine 
+     where server installation is done</p>
+     <p class="MsoNormal"><code>database_name</code> is the name of the database 
+     on which the V4 database is installed.</td>
+   </tr>
+   <tr>
+     <td width="34" valign="top"></td>
+     <td width="35" valign="top"><font color="#1C1557"><b>2.</b></font></td>
+     <td width="702" valign="top">Customize the <code>
+     ...\intel_a\startup\Manufacturing\Database\CATIAV4NC.ini</code> file of 
+     your CATIA V5 installation to define the default values for the connection.
+     <ul>
+       <li>
+       <p class="MsoNormal">The string DatabaseType should be set to DB2.</li>
+       <li>
+       <p class="MsoNormal">The string DatabaseName should be set to the name of 
+       the DB2 database used for the V4 database installation.</li>
+       <li>
+       <p class="MsoNormal">The string User should be set to the UNIX user who 
+       has access rights to the V4 database.</li>
+       <li>
+       <p class="MsoNormal">The string Password should be set to the password of 
+       the UNIX user&nbsp;who has access rights to the V4 database.</li>
+       <li>
+       <p class="MsoNormal">The string ProjectName should be set to the name of 
+       the V4 database project to be connected.</li>
+       <li>
+       <p class="MsoNormal">The string CDMADictionary should be set to the name 
+       of the CDMA dictionary used for the V4 database installation.</li>
+     </ul>
+     <p><b>Example:</b></p>
+     <p><code>DatabaseType = DB2<br>
+     DataBaseName =SAMPLE<br>
+     User =catadm<br>
+     Password =db2adm<br>
+     ProjectName =MfgResources<br>
+     CDMADictionary =CATIA</code></td>
+   </tr>
+   <tr>
+     <td width="34" valign="top"></td>
+     <td width="733" valign="top" colspan="2" style="padding-top: 10; padding-bottom: 10">
+     <b><a name="WALTERTDM"></a>TDM (Tool Data Management) relational database 
+     (Oracle)</b>
+     <p>Please note that the TDM database must be installed and used as the 
+     server and the V5 session must be running in client mode.</td>
+   </tr>
+   <tr>
+     <td width="34" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" title="scenario" width="32" height="32"></td>
+     <td width="35" valign="top"><font color="#1C1557"><b>1.&nbsp;</b></font></td>
+     <td width="702" valign="top">Declare the UNIX server on the client machine.<p>
+     The client machine should have a client ORACLE installation (for example, 
+     on Windows it may be installed on c:\orant).</p>
+     <p>The UNIX server machine should be declared on the client machine, the 
+     tnsnames.ora file (for example, in c:\orant\net80\admin) should be 
+     modified.</p>
+     <ul>
+       <li>The string MACHINE_NAME should be replaced&nbsp;by the name of the UNIX 
+       server machine where the TDM database is installed.</li>
+       <li>The string SID_NAME should be replaced by the ORACLE SID name of the 
+       TDM database installation.</li>
+       <li>The string PORT_NUMBER should be replaced by the port number used for 
+       the ORACLE installation.</li>
+     </ul>
+     <p>Please contact the ORACLE administrator to locate the file.</p>
+     <p><b>Example:</b></p>
+     <p class="MsoNormal"><code>MACHINE_NAME.SID_NAME =<br>
+&nbsp; (DESCRIPTION =<br>
+&nbsp;&nbsp; (ADDRESS_LIST =<br>
+&nbsp;&nbsp;&nbsp;&nbsp; (ADDRESS =<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (PROTOCOL = TCP)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (PORT =&nbsp;PORT_NUMBER&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (HOST = MACHINE_NAME)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )<br>
+&nbsp;&nbsp;&nbsp; )<br>
+&nbsp;&nbsp; (CONNECT_DATA = (SID = SID_NAME)<br>
+&nbsp;&nbsp;&nbsp; )<br>
+&nbsp; )</code></td>
+   </tr>
+   <tr>
+     <td width="34" valign="top"></td>
+     <td width="35" valign="top"><font color="#1C1557"><b>2.</b></font></td>
+     <td width="702" valign="top">Customize the <code>
+     ...\intel_a\startup\Manufacturing\Database\TDM.ini</code> file of your 
+     CATIA V5 installation to define the default values for the connection.
+     <ul>
+       <li>
+       <p class="MsoNormal">The string DatabaseName should be set to 
+       MACHINE_NAME.SID_NAME declared in the tnsnames.ora file.</li>
+       <li>
+       <p class="MsoNormal">The strings User and Password&nbsp; should be set to 
+       catia. </li>
+     </ul>
+     <p><b>Example:</b></p>
+     <p><code>User =catia<br>
+     Password =catia<br>
+     DatabaseName =tdm.world</code></td>
+   </tr>
+   <tr>
+     <td colspan="3" width="703">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="end of task" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

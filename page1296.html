@@ -1,0 +1,481 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Deploying Instant Collaboration in IBM WebSphere Application Server
+ </title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Deploying Instant Collaboration in IBM WebSphere Application 
+ Server</h1>
+ <table style="BORDER-COLLAPSE: collapse" cellSpacing="0" cellPadding="0" width="100%" border="0">
+   <tr>
+     <td vAlign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td vAlign="top">
+     <h2>What Is Instant Collaboration?</h2>
+     <p>Instant Collaboration enables instant collaboration between all 
+     participants across the extended enterprise to promote the sharing of data 
+     and ideas that can result in a faster time to market and an increase in 
+     overall product innovation.</p>
+     <p>Instant Collaboration can operate in either peer-to-peer mode, or in 
+     client/server mode, <b>and requires neither an 
+     <strong>ENOVIAV5VPM</strong> server nor a 
+     vault, but can operate optionally with both if required.</b></p>
+     <p>Instant Collaboration requires a web application server: in this 
+     section, we describe how to integrate the product within a WebSphere 
+     application server.</p>
+     <p>You need:</p>
+     <ul>
+       <li>to deploy the Instant Collaboration code in a configuration 
+       containing at least VPM Navigator, for example the VDM configuration, on 
+       the same machine as the web application server</li>
+       <li>to install on the clients the same code as on the web application 
+       server: VDM, for example.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td vAlign="top">&nbsp;</td>
+     <td vAlign="top">
+     <h2>Hardware and Software Prerequisites</h2>
+     <p>Here is a quick checklist of server software prerequisites:</p>
+     <ul>
+       <li>IBM WebSphere Application Server, Advanced Edition</li>
+       <li><span lang="EN-GB">An HTTP server</span></li>
+       <li><blink><a name="hj-MSLCS"></a></blink>Lotus Instant Messaging and Web Conferencing (Sametime) 
+       Version 7 or MS Live Communication Server 2005</li>
+       <li><span lang="en-gb">An </span><span lang="EN-GB">LDAP directory server</span></li>
+       <li>IBM DB2 Universal Database or Oracle</li>
+       <li>Java Runtime Environment.</li>
+     </ul>
+     <p>and a checklist of client software prerequisites:</p>
+     <ul>
+       <li>Java Runtime Environment</li>
+       <li>If you are using 32-bit Instant Collaboration on Windows, you need to 
+       install the following packages on each client:<ul>
+         <li>Microsoft .NET Framework Version 1.1 Redistribution Package</li>
+       </ul>
+       </li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td vAlign="top">&nbsp;</td>
+     <td vAlign="top">
+     <h2>Deployment Checklist</h2>
+     <p>After you have installed all the software prerequisites, as illustrated 
+     in the diagram above, use this checklist to deploy Instant Collaboration:</p>
+     <p><code><b>Phase 1: Installing the Version 5 code on the Web Application 
+     Server and&nbsp;the V5 Collaboration Client</b></code></p>
+		<p><code><b>Phase 2: Configuring the Communication Servers and V5 
+		Collaboration Clients</b></code></p>
+     <p><code><b>Phase 3: Creating a Database for Settings Persistency</b></code></p>
+     <p><code><b>Phase 4: Deploying the Web Application in an Application Server</b></code></p>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <blockquote>
+             <p><code><b>1. Creating the Enterprise Archive File<br>
+             2. Securing the WebSphere Application Server<br>
+             3. Launching the Web Application</b></code></p>
+           </blockquote>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <p><code><b>Phase 5: Configuring Single Sign-On (SSO) for Instant 
+     Collaboration (Optional)</b></code></p>
+     <p><code><b>Phase 6: Configuring the Sametime Server </b></code></p>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <blockquote>
+             <p><code><b>1. Performing Sametime Post-installation Operations<br>2. Setting Sametime Administration Parameters</b></code></p>
+           </blockquote>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td vAlign="top">
+     <h3>Phase 1: Installing the Version 5 Code on the Web Application Server 
+     and the Collaboration Clients</h3>
+     <h4>Web Application Server</h4>
+     <ol>
+       <li>Install the runtime view of the VDM code on the server:<blockquote>
+         <blockquote>
+           <blockquote>
+             <ul>
+               <li>Media: ENOVIA V5 VPM</li>
+               <li>Configuration: VDM containing VPM Navigator.</li>
+             </ul>
+           </blockquote>
+         </blockquote>
+       </blockquote>
+       </li>
+     </ol>
+     <h4>V5 Collaboration Client</h4>
+     <ol>
+       <li>Install the V5 runtime view of the VDM code on the V5 collaboration 
+       client:<blockquote>
+         <blockquote>
+           <blockquote>
+             <ul>
+               <li>Media: ENOVIA V5 VPM</li>
+               <li>Configuration: VDM containing VPM Navigator.<br>
+               <br>
+               Note that you also have to install from the ENOVIA DMU Navigator 
+               media a configuration containing the DMU Navigator (for example, 
+               DM2). If no DMU license is present, you will not have access to 
+               certain functions.</li>
+             </ul>
+           </blockquote>
+         </blockquote>
+       </blockquote>
+       </li>
+       <li>Perform the following post-installation operations on the V5 
+       collaboration client:<blockquote>
+         <blockquote>
+           <blockquote>
+             <ul>
+               <li>Install Java level</li>
+             </ul>
+           </blockquote>
+         </blockquote>
+       </blockquote>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td vAlign="top">
+     <h3>Phase 2: Configuring the Communication Servers and V5 Collaboration 
+		Clients</h3>
+		<p>You can use two different communication servers:</p>
+		<ul>
+			<li>a Sametime server</li>
+			<li>or a MS Live Communication Server 2005.</li>
+		</ul>
+		<h3>Sametime Server</h3>
+     <p>The clients communicate with the WebSphere application server and a Sametime server deployed for collaboration purposes as illustrated below:</p>
+     <p>
+     <img title="" src="b35doc/english/online/basil_c2/images/LCAVICArchiSametime_NLS.gif" width="960" height="720">&nbsp;</p>
+     <h4>Sametime Server Configuration (Lotus Instant Messaging and Web 
+     Conferencing)</h4>
+     <p>This section describes how to configure the Sametime server. Note that 
+     this is pure Sametime configuration: no Version 5 code is concerned at this 
+     stage.</p>
+     <p>If the Sametime server is on another machine from the WebSphere 
+     application server, you must tell the Sametime server that it is OK to 
+     accept IP connections from server applications on different machines.</p>
+     <p>You can tell Sametime to accept application IP connections by doing the 
+     following:</p>
+     <ol>
+       <li>On the server machine that is running Sametime, locate the 
+       sametime.ini file. Generally you can find the sametime.ini file in:<br>
+       <br>
+       <code>$sametime_installpath\sametime.ini </code><br>
+       <br>
+       depending on how you installed Sametime).<br>
+&nbsp;</li>
+       <li>Open sametime.ini file with an editor like Notepad.</li>
+       <li>Find the [Config] section of the ini file.</li>
+       <li>Add the following line in the [Config] section:<br>
+       <br>
+       <code>VPS_TRUSTED_IPS= &quot;trusted IP list separated by comma&quot;</code><br>
+       <br>
+       where the &quot;trusted IP list separated by comma&quot; contains the IP addresses 
+       or DNS names of the machines from which server applications are allowed 
+       access.<br>
+       <br>
+       Here is an example of how this can look where three other machines are 
+       allowed to run server applications that access the Sametime server:<br>
+       <br>
+       <code>[Config]<br>
+       ....<br>
+       VPS_TRUSTED_IPS= 129.33.13.162,129.33.13.163,129.33.13.164 </code><br>
+       <br>
+       Alternatively, you can tell the Sametime to allow connections to it from 
+       any IP address. You can do so by following the previous steps 1 and 2, 
+       and do the following:<br>
+       <br>
+       - Add a section called [Debug] at the end of the ini file (if one doesn't 
+       already exist)<br>
+       - In the [Debug] section add the following line:<br>
+       <br>
+       <code>VPS_BYPASS_TRUSTED_IPS=1</code><br>
+       <br>
+       You should only use this setting for development/tests purposes. We do 
+       not recommend to use it on production systems.<br>
+       Now you are ready to proceed to setting up your environment.<br>
+       Note: By default there will be no Debug section in a sametime.ini file so 
+       you may have to add the line with [Debug] as well.</li>
+     </ol>
+     <h4>Configuration of the V5 CATIA Collaboration Client for Sametime</h4>
+		<ol>
+			<li>Copy the following files:<br><br><code>CommRes.jar<br>STComm.jar</code>
+			<br><br>from:<br><br><code>$InstallLotus\Lotus\Domino\Data\domino\html\sametime\toolkits\st651javatk\bin
+               </code><br><br>to:<br><br><code>$installV5\docs\javacommon<br>
+&nbsp;</code></li>
+			<li>Set connectivity settings on the V5 collaboration client:</li>
+		</ol>
+		<blockquote>
+			<blockquote>
+				<blockquote>
+					<ul>
+						<li>start a V5 session</li>
+						<li>Select <kbd>Tools&nbsp;&gt;&nbsp;Options...</kbd> then <kbd>Collaboration 
+               			Infrastructure </kbd>settings</li>
+						<li>In the <kbd>Network</kbd> tab: check the option <kbd>
+						IBM Lotus Instant Messaging and Web Conferencing (Sametime)</kbd><br>
+						<br>
+						<img border="0" src="b35doc/english/online/basil_c2/images/InstantCollab_NLS.gif" width="726" height="433"><br>
+&nbsp;</li>
+						<li>In the <kbd>Connectivity</kbd> tab:<br><kbd>Collaboration server</kbd>: specify your WebSphere 
+               application server name<br><kbd>Communication server</kbd>: specify your Sametime 
+						host name and port (port 
+               1533 by default)<br><br>For more information, refer to the description of how to 
+               customize the
+               			<a href="page0715.html">Connectivity</a> tab in the 
+						<i>ENOVIA DMU Navigator Users Guide</i>.</li>
+					</ul>
+				</blockquote>
+			</blockquote>
+		</blockquote>
+		<h3>
+     MS Live Communication Server 2005</h3>
+		<p>You can also use a MS Live Communication Server 2005 as illustrated below:<p>
+     <img title="" src="b35doc/english/online/basil_c2/images/LCAVICArchiMSLive_NLS.gif" width="960" height="720">&nbsp;<h4>
+		Configuration of the V5 CATIA Collaboration Client for MS Live 
+		Communication Server 2005</h4>
+		<ol>
+			<li>Set connectivity settings on the V5 collaboration client:</li>
+		</ol>
+		<blockquote>
+			<blockquote>
+				<blockquote>
+					<ul>
+						<li>start a V5 session</li>
+						<li>Select <kbd>Tools&nbsp;&gt;&nbsp;Options...</kbd> then <kbd>Collaboration 
+               			Infrastructure </kbd>settings</li>
+						<li>In the <kbd>Network</kbd> tab: check the option <kbd>
+						Microsoft Live Communications Server</kbd><br>
+						<br>
+						<img border="0" src="b35doc/english/online/basil_c2/images/InstantCollab02_NLS.gif" width="715" height="366"><br>
+						<br>
+&nbsp;</li>
+						<li>In the <kbd>Connectivity</kbd> tab:<br><kbd>Collaboration server</kbd>: specify your WebSphere 
+               application server name<br><kbd>Communication server</kbd>: specify your 
+						communication server host name<br><br>For more information, refer to the description of how to 
+               customize the
+               			<a href="page0715.html">Connectivity</a> tab in the 
+						<i>ENOVIA DMU Navigator Users Guide</i>.</li>
+					</ul>
+				</blockquote>
+			</blockquote>
+		</blockquote>
+		</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td vAlign="top">
+     <h3>Phase 3: Creating a Database for Settings Persistency</h3>
+     <p>Refer to <a href="page1289.html">Creating a DB2 
+     Database for Settings Persistency.</a></p>
+     <p>Refer to <a href="page1291.html">Creating an ORACLE 
+     Database for Settings Persistency.</a><br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td vAlign="top">
+     <h3>Phase 4: Deploying the Web Application in an Application Server</h3>
+     <p>Refer to <a href="page1290.html">Creating the Enterprise 
+     Archive File.</a></p>
+     <p>Refer to <a href="page1294.html">Securing the WebSphere 
+     Application Server.</a><br>
+     <br>
+     Note: We recommend for deployment reasons that you secure the WebSphere 
+     Application Server.</p>
+		<p>If your are using Secured WAS to access your communication server, you 
+       must modify in your CATIA runtime view the following file:<br>
+       <br>
+       	<code>$os/resources/sso/SSOClient.properties 
+       </code></p>
+       <p>Set the following properties to &quot;yes&quot;:<p><code>SSOActivated=yes<br>
+       SSOSecuredEnvironment=yes</code><p>Refer to <a href="page1293.html">Launching the Web 
+     Application.</a></td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td vAlign="top">
+     <h3>Phase 5: Configuring Single Sign-On for Instant Collaboration 
+     (optional)</h3>
+     <p>Once you have deployed the runtime view of the VDM code in the 
+     application server, you may also decide to deploy the <kbd>Single Sign-On 
+     (SSO) </kbd>capability which is an optional feature provided by the 
+     application server. It provides a way to sign on once and for all and 
+     guarantees authentication on a Websphere Application Server. Single Sign-On 
+     provides a single platform to authenticate users for all PLM Hubs.</p>
+     <p>If you just want to configure SSO for collaboration, refer to the 
+     following tasks in <a href="page1229.html">Configuring Single 
+     Sign-On</a>:</p>
+     <ol>
+       <li><a href="page1193.html">Configuring the LDAP Server and 
+       Customizing the LDAP Repository</a><br>
+       <a href="page1295.html">Configuring Credential Sets for Single 
+       Sign-On</a> (when creating the credential set, select <kbd><b>ENOVIA V5 </b></kbd>
+       as the application name)<br>
+       <a href="page1287.html">Activating Single Sign-On</a> (if you 
+       are using an <strong>ENOVIAV5VPM</strong> server)<br>
+       &nbsp;</li>
+       <li>Restart the WAS.</li>
+     </ol>
+     <p>Note: no further customization of the collaboration client is requited 
+     for SSO activation: the SSO feature is activated implicitly.</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td vAlign="top">
+     <h3>Phase 6: Configuring Sametime</h3>
+     <h4>Performing Sametime Post-installation Operations</h4>
+     <p>This part of the Sametime administration involves Version 5 code:</p>
+     <p><b>.jar files necessary for the correct functioning of the server</b></p>
+     <ol>
+       <li>From the directory of your Sametime server installation, go to the 
+       following directory:<br>
+       <br>
+       .<code>..\Lotus\Domino\Data\domino\html\sametime\toolkits\st651commsrvrtk\bin</code><br>
+&nbsp;</li>
+       <li>Copy the file <code>stcommsrvrtk.jar</code> to the directory:<br>
+       <br>
+       <code>%install_path%\docs\java </code></li>
+     </ol>
+     <p><b>.jar and .cab files necessary for the correct functioning of the 
+     applet</b></p>
+     <ol>
+       <li>From the directory of your Sametime server installation, go to the 
+       following directory:<br>
+       <br>
+       <code>...\Lotus\Domino\Data\domino\html\sametime\toolkits\st651javatk\bin</code><br>
+&nbsp;</li>
+       <li>Copy the following files from the directory of your Sametime server 
+		installation:<br>
+       <br>
+       <code>CommRes.cab <br>
+       MeetRes.cab <br>
+       STMeeting.cab<br>
+       STJNILoader.cab </code><br>
+       <br>
+       to the following V5 installation directory deployed on the collaboration 
+		server:<br>
+       <br>
+       <code>%install_path%\docs\applet</code></li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p>These .cab files must be defined with read and execute access 
+           privileges for all users on UNIX installations of Instant 
+           Collaboration.</p>
+           <p><code>CommRes.jar<br>
+           MeetRes.jar<br>
+           STMeeting.jar<br>
+           STJNILoader.jar <br>
+           STMeetingPACSupport.jar</code></p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <p><b>Resources necessary for the correct functioning of STLinks</b></p>
+     <ol>
+       <li>From the directory of your Sametime server installation, go to the 
+       following directory:<br>
+       <br>
+       <code>...\Lotus\Domino\Data\domino\html\sametime\stlinks</code><br>
+&nbsp;</li>
+       <li>Copy the following files:<br>
+       <br>
+       <code>stlinks.js<br>
+       stlinks.cab<br>
+       stlinks.jar<br>
+       hostInfo.js</code><br>
+       <br>
+       to the directory:<br>
+       <br>
+       <code>$install_path\resources\stlinks</code><br>
+&nbsp;</li>
+       <li>Restart the WAS.</li>
+     </ol>
+     <h4>Setting Sametime Administration Parameters</h4>
+     <ol>
+       <li>Open your browser.</li>
+       <li>Go to:<br>
+       <br>
+       <code>http://YourWasServer:YourPort/YourRootURI/html/CATJadOptions</code><br>
+&nbsp;</li>
+       <li>Expand <b>Administration &gt; Collaboration</b> and click the <b>
+       Connectivity</b> icon. The JDBC Providers window displays.</li>
+       <li>Click the Edit button:</li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <ul>
+             <li>In the Server text-entry field, enter the name of your Sametime 
+             server.</li>
+             <li>In the Server index text-entry field, enter the index number 
+             (if you have only one WAS accessing the Sametime server, this index 
+             number can be any value between 0 and 9. If you have multiple WAS 
+             accessing the Sametime server, each WAS must be assigned a unique 
+             index number. </li>
+             <li>In the Runtime location text-entry field, enter the address of 
+             the <kbd>stlinks</kbd> runtime directory on the Sametime server.
+             </li>
+             <li>Verify that the Installation of prerequisite Lotus Sametime 
+             components (Server) status is Complete (green). <br>
+             The status will be green when the file <code>stcommsrvrtk.jar
+             </code>has been correctly copied as explained above.</li>
+             <li>Verify that the Installation of prerequisite Lotus Sametime 
+             components (Client) status is Complete (green). <br>
+             The status will be green when the other files have been correctly 
+             copied in the Post-Installation for Sametime above. </li>
+             <li>Verify that the port numbers defined for both Community and 
+             Collaboration correspond 100% to the communication ports defined 
+             for the Sametime server configuration. </li>
+             <li>To save your settings and start the collaboration services, 
+             click the Start services and save these settings button. </li>
+             <li>Click Apply to confirm the modifications.</li>
+           </ul>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td vAlign="top" colSpan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" border="0" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

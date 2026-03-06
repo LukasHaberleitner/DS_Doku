@@ -1,0 +1,258 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="C2D2E2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Enabling DSLS Concurrent Offline Licensing</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Enabling DSLS Concurrent Offline Licensing</h1>
+ <h2>What Is Concurrent Offline Licensing?</h2>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr valign="top" BORDER="0">
+     <td valign="top" style="width: 44px">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>
+     <p>Concurrent <a name="ix-licensing::offline licensing"></a>offline 
+     licensing<a name="ix-offline licensing"></a> allows users to extract a 
+     concurrent license from a <b>license server</b> for a certain number of 
+     days and to use it on a Windows <b>laptop</b> disconnected (or not) from the 
+     network, and applies to CATIA, ENOVIA DMU or DELMIA (or RADE) software.</p>
+     <p>When the concurrent offline license is reserved for use, a license is 
+     installed on a laptop connected to the network. For the duration of the 
+     reservation, the extracted license is considered as a nodelock license tied 
+     to the laptop. This license is called an offline nodelocked license. Once 
+     the offline nodelocked license has been installed on the laptop, the laptop 
+     can be disconnected from the network.</p>
+     <p>Once extracted, the license is no longer available from the license 
+     server. The license only becomes available once more to other users when 
+     one of the following occurs:</p>
+     <ul>
+       <li>the reservation period expires</li>
+       <li>the license is returned to the server from the laptop (end-users can 
+       return the license before the expiry date).</li>
+     </ul>
+     <p>The maximum extraction duration is 30 days.</p>
+		<p>When using DSLS an offline license can be extracted from a DSLS 
+		failover cluster.</p>
+     </td>
+   </tr></table>
+   <h2>Procedure</h2>
+
+   <table>
+   <tr valign="top" BORDER="0">
+     <td valign="top" style="width: 44px">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>
+     <p>Implementing concurrent offline licensing involves the following steps 
+		which should be performed on the <b>laptop</b>.</p>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" style="width: 44px">
+      <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol>
+		<li>Check that your laptop is connected to the network.<br>
+		</li>
+		<li>Check you have write access to the folder containing the nodelock 
+       files.<br>
+		</li>
+		<li>Make sure that the DSLS server has been set in DSLicSrv.txt.<br>
+		</li>
+		<li>Select the <kbd>Start&nbsp;&gt;&nbsp;Programs&nbsp;&gt;&nbsp;</kbd><a class="doc,C2"><kbd>CATIA 
+       	</kbd></a><kbd>
+		<strong>VersionNumber</strong> (</kbd><a class="doc,E2"><kbd>or 
+       ENOVIA_DMU_Navigator </kbd></a><kbd>
+		<strong>VersionNumber</strong></kbd><a class="doc,D2"><kbd>, or DELMIA 
+       	</kbd></a><kbd>
+		<strong>VersionNumber</strong></kbd><a class="doc,D2"><kbd>)</kbd></a><kbd>&nbsp;&gt;&nbsp;Tools&nbsp;&gt;&nbsp;<a name="ix-commands::Nodelock Key Management">Nodelock 
+		Key Management (DSLS) </a>
+		<strong>VersionNumber</strong><a name="ix-Nodelock Key Management command"></a>
+		</kbd>command.<p>The <kbd>Local License Key Management</kbd> tool appears.<br>
+		</li>
+		<li>Select the <kbd>Offline Management</kbd> tab and click <kbd>RefreshList</kbd> to display the available 
+		licenses.<p>The <kbd>Local License Management</kbd> dialog box displays.</p>
+		<p align="left">
+		<img border="0" src="b35doc/english/online/basil_c2/images/NodelockExtractDSLS01_NLS.png" vspace="5"></p>
+		<p><span class="blink">The lower pane of <kbd>Local License Key Management 
+		</kbd>dialog box 
+		displays licenses corresponding to all installed 
+		roles declared on the servers referenced on your license client (in the 
+		DSLicSrv.txt file).
+		A separate line is displayed for each server when a keyword is set (a 
+		lock is present), and a single line is displayed for all servers when no 
+		keyword is set. The license server name is also displayed in the <kbd>Server</kbd> column for 
+		the lines having a lock, but not for the line without lock.<br>
+		<br>
+		In the above example, the tool is connected to several license servers 
+		containing the same licensed feature. Two ME2 licenses are available via 
+		two different license servers: a lock is displayed for the same feature 
+		on each server since an authorization rule for different extraction 
+		durations has been set.</span> <br>
+		</p>
+		</li>
+		<li>
+		<p>If you wish to extract licenses, you must select them in the lower 
+		pane, right-click then select the <kbd>Extract</kbd> command. When you extract the 
+		license, you can reset the license duration to extract the license for a 
+		lower duration than the one authorized. </p>
+		To do so, right-click the appropriate license and use the slider to set it to a new 
+       value (30 days maximum). <br>
+		In certain cases, you may attempt to set a value greater than the value 
+       registered for that license on the DSLS server. In that case the 
+		extraction date fits the <kbd>Max Duration (Days)</kbd> displayed in the
+		<kbd>Licenses available for offline extraction from license servers
+		</kbd>section.<p>In our example, the ME2 license will expire in 22 days.</p>
+		<p>After validation, the license(s) is(are) extracted.</p>
+		<p>You cannot extract a license if the same license already exists as a 
+       nodelock license (either standard nodelock or offline nodelock).<strong><br>
+		<br>
+		Note: </strong>You can 
+       extract several licenses if required. A message popup confirms that 
+		the license was successfully extracted.
+		Once the license has been 
+       extracted, it is no longer available on the license server for network 
+       users. The new status of the license can be tracked on the license server 
+       using the kbd>License Administration Tool.</p>
+		</li>
+		<li>To test that you can use the license offline, disconnect the laptop 
+       from the network.</li>
+		<li>Start a Version 5 session.</li>
+		<li>Check if you are using a nodelock 
+       license by selecting the <kbd>Tools&nbsp;&gt;&nbsp;Options...</kbd> command, then the
+       	<kbd>Licensing</kbd> tab.<p>If you were using a network license beforehand, the request for this 
+       license is still stored in your licensing settings. Consequently, at this 
+       point, the License Manager will inform you that the requested license is 
+       not available (you are now disconnected from the network) and prompt you 
+       to select the offline license and restart.</p>
+		<p>Once you have finally displayed the <kbd>Licensing</kbd> tab, you will 
+       then see the following:</p>
+		<p>
+		<img title="" src="b35doc/english/online/basil_c2/images/NodelockExtractDSLS03_NLS.png" width="747" height="518">&nbsp;</p>
+		<p><strong>Note:</strong> The <kbd>Licensing</kbd> tab does not specifically identify the 
+		license as an offline nodelock license, but as a Local license).<br>
+		<br>
+				You can now use your license for the duration specified when it was 
+       extracted. Once that duration has expired, the license will no longer be 
+       available.<br>
+		</p>
+		</li>
+		<li>You may also return the license before the expiry date. To do so, reconnect the laptop to the network, then make sure that 
+       the DSLS client is correctly configured and points to the machine running 
+       the DSLS license server to which you are going to return the 
+       license.<br>
+		<br>
+		</li>
+		<li>Select the kbd>Start&nbsp;&gt;&nbsp;Programs&nbsp;&gt;&nbsp;<a class="doc,C2"><kbd>CATIA 
+       	</kbd></a><kbd>
+		<strong>VersionNumber</strong> (</kbd><a class="doc,E2"><kbd>or 
+       ENOVIA_DMU_Navigator </kbd></a><kbd>
+		<strong>VersionNumber</strong></kbd><a class="doc,D2"><kbd>, or DELMIA
+		</kbd></a><kbd>
+		<strong>VersionNumber</strong></kbd><a class="doc,D2"><kbd>)</kbd></a><kbd>&nbsp;&gt;&nbsp;Tools&nbsp;&gt;&nbsp;<a name="ix-commands::Nodelock Key Management">Nodelock 
+		Key Management (DSLS) </a>
+		<strong>VersionNumber</strong><a name="ix-Nodelock Key Management command"></a>
+		</kbd>ccommand.<br>
+		<br>
+		</li>
+		<li>Using the <kbd>Local License Key Management</kbd> tool, select the
+		<kbd>Properties</kbd> tab.
+		The <kbd>Properties</kbd> tab contains the following:<br>
+		<br>
+		<ol>
+			<li><kbd>License Repository</kbd> <br>
+		Specifies the path containing extracted offline licenses. <br>
+		By default, the path is (Windows 7 and Windows Server 2008) is<code> C:\ProgramData\DassaultSystemes\Licenses</code><br>
+			<br>
+			</li>
+			<li><kbd>Expiry Alert </kbd><br>
+		The expiry alert informs you by a message (popup in the interactive app 
+		and written in logs for batch apps) that a license will soon expire. The 
+		value is 7 days by default.<br>
+			<br>
+			</li>
+			<li><kbd>Computer ID</kbd> <br>
+		Displays the computer id for your computer. Selecting the <kbd>Target ID &gt; 
+		Copy to clipboard</kbd> command is a useful way of retrieving your computer id 
+		instead of typing it in manually. You can then paste it as required.<br>
+			<br>
+			</li>
+			<li><kbd>Network Adapter</kbd> <br>
+		Displays the current network adapter used to compute your computer's 
+		computer id. Click <kbd>Change Network Adapter</kbd> used for Computer ID to select 
+		another network adapter. The following warning message appears:<br>
+			<br>
+			<code>WARNING: changing the network adapter used for the Computer ID<br>
+		will change the value of the Computer ID, invalidating all previously 
+		extracted licenses<br>
+			</code>Click <kbd>OK</kbd> to continue. <br>
+		Choose the adapter from the dialog box and click <kbd>OK</kbd>.<br>
+			<br>
+			</li>
+			<li><kbd>License Servers</kbd> <br>
+		Displays a list of referenced license servers and indicates server 
+		status:<br>
+			<br>
+			<ul>
+				<li>green: server OK <br>
+				</li>
+				<li>red: server not running <br>
+				</li>
+				<li>orange: client and server not synchronized, due to a time difference
+		between the two machines <br>
+				</li>
+				<li>gray: host unreachable, or the host status is unknown <br>
+				</li>
+				<li>purple:
+		offline extraction has been forbidden on the DS License Server.<br>
+				<br>
+				<img title="." src="b35doc/english/online/basil_c2/images/LicenceServerNLS.png"><br>
+				</li>
+			</ul>
+			</li>
+		</ol>
+		<br>
+		However, you can still restitute previously extracted licenses.<br>
+		<br>
+		</li>
+		<li>Select the Offline Management/kbd>  tab. The license you 
+		extracted is listed in a dialog box.<p><strong>Note:</strong> You can return more than one offline license.<br>
+		</p>
+		</li>
+		<li>Right-click the license and select <kbd>Restitute</kbd>. A message popup asks to confirm the restitution.<br>
+		</li>
+		<li>Click kbd>OK.<p>AA message 
+       popup confirms that the license was successfully returned. Once the license has been 
+       returned, it becomes available once more on the license server for 
+       network users.
+		The status of the license can be tracked on the license server using the 
+       	License Administration Tool/kbd>.<p><b>Warning:</b>  If you are using 
+     	<strong>ENOVIAV5VPM</strong> or ENOVIA 3d com, these 
+     product brands use concurrent licenses only: nodelock licenses are not 
+     supported. This means that, although nothing stops you physically from 
+     extracting licenses for these brands, the extracted licenses will be 
+     useless. Therefore, do not extract concurrent-offline licenses for
+		<strong>ENOVIAV5VPM</strong> or ENOVIA 3d com.</li>
+		</ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" align="middle" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+
+ </body>
+
+</html>
+

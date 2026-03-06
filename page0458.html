@@ -1,0 +1,340 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head><meta name="MonocodingType" content="0"></meta>
+	  <meta name="MonocodingFlag" content="C2"></meta>
+	  <meta http-equiv="Content-Language" content="en-us"></meta>
+	  <meta name="GENERATOR" content="Microsoft FrontPage 6.0"></meta>
+	  <meta name="ProgId" content="FrontPage.Editor.Document"></meta>
+  	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	  <title>Importing Composite Properties</title>
+          <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+          
+	 </head><body onload="newPage('pt02ch05s04.html');" ondblclick="newSelection();" bgcolor="#FFFFFF" text="#000000" vlink="#FF5113" alink="#004D48" link="#004D48" class="TEXT"><div class="sect1" id="ath-gen-fem-prop-importcomp">
+    <a name="ath-gen-fem-prop-importcomp"></a>
+
+    <div class="titlepage">
+      
+
+      <div class="title">
+        <h3>Importing Composite
+        Properties</h3>
+      </div>
+    </div>
+
+    <p>There are two ways that you can import composite properties
+    into a nonlinear analysis in the Nonlinear Structural Analysis
+    (ANL) workbench. If you have access to the Composite Design
+    (CPD) workbench, you can import the composite properties into
+    ANL. If you do not have the Composite Design workbench or you
+    want to control section properties on an element-by-element
+    basis, you can use an XML mapping file to create and edit
+    composite properties for use in ANL.</p>
+
+    <p>The following topics are discussed in this section:</p>
+
+    <ul type="disc"><li>
+        <p><a href="page0458.html#ath-gen-fem-prop-importcpd">Importing Composite
+        Properties from the Composite Design Workbench</a></p>
+      </li>
+
+      <li>
+        <p><a href="page0458.html#ath-gen-fem-prop-xmlmap">Reading Composite Properties
+        from an XML Mapping File</a></p>
+      </li>
+    </ul><div class="sect2" id="ath-gen-fem-prop-importcpd">
+      <a name="ath-gen-fem-prop-importcpd"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Importing Composite
+          Properties from the Composite Design Workbench</h3>
+        </div>
+      </div>
+
+      <p>You can import composite properties from the Composite
+      Design (CPD) workbench into the Nonlinear Structural Analysis
+      workbench to include them in a nonlinear analysis. Although a
+      composite model created in the Composite Design workbench
+      includes all the properties that define the behavior of the
+      composite (material type, thickness, density, etc.), only
+      some of these properties are imported into the Nonlinear
+      Structural Analysis (ANL) workbench. The following composite
+      properties are imported:</p>
+
+      <ul type="disc"><li>
+          <p>isotropic, two-dimensional orthotropic, and fiber
+          material types,</p>
+        </li>
+
+        <li>
+          <p>cured material thickness (imported as shell section
+          layer thickness),</p>
+        </li>
+
+        <li>
+          <p>density,</p>
+        </li>
+
+        <li>
+          <p>Young's modulus, and</p>
+        </li>
+
+        <li>
+          <p>strength.</p>
+        </li>
+      </ul>Other properties that have no bearing on the
+      analysis&#8212;such as the uncured material
+      thickness&#8212;are skipped during the import process.
+
+      <p>Two analysis methods, <span class="guitext"><b class="guilabel">By zone</b></span> and <span class="guitext"><b class="guilabel">By ply</b></span>, are
+      available for imported composite model properties. When you
+      import composite properties into ANL, the analysis method
+      used must match that used in the Composite Design workbench.
+      For example, if you defined the model using plies in CPD, you
+      must import the properties and run the analysis using the
+      <span class="guitext"><b class="guilabel">By ply</b></span>
+      method. The two methods are described as follows:</p>
+
+      <div class="indent" id="d0">
+        <p><b>By zone</b></p>
+
+        <div class="indent" id="d0">
+          <p>Zones are geometric areas of the model defined in the
+          Composite Design workbench. Each zone includes geometric
+          boundaries that can lie on the model boundaries or that
+          can be defined by creating, joining, and splitting lines,
+          and other operations. The zone definition includes the
+          number of layers of each laminate material and any
+          directional properties, including the layer orientations
+          with respect to the model. Analysis by zones provides
+          general results for a model, but it does not include the
+          details available when you use individual plies.</p>
+        </div>
+      </div>
+
+      <div class="indent" id="d0">
+        <p><b>By ply</b></p>
+
+        <div class="indent" id="d0">
+          <p>Plies are the individual layers that make up the
+          thickness of the composite structure. Each ply has a
+          material and an orientation defined in the Composite
+          Design workbench. Simple composites may have one set of
+          plies that exist throughout the structure, whereas more
+          complex composites may have changing numbers,
+          orientations, and compositions of plies to meet the
+          requirements of the design. For example, extra plies may
+          be added to reinforce areas of high stress; similarly,
+          plies may be removed in parts of the structure where they
+          are not needed. Ply definition is more difficult than
+          zone definition, and it carries a greater computational
+          expense. However, the results allow a detailed evaluation
+          of the reactions at each ply that is not available when
+          you use a zone analysis and more closely models real
+          composite behavior.</p>
+        </div>
+      </div>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to use imported composite
+      properties.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Click the Imported Composite Property icon <img src="b35doc/english/online/anlug_c2/images/I_ImportedCompositeP2.gif"></img>.</p>
+
+            <p>The <span class="guitext"><b class="guititle">Imported Composite Property</b></span>
+            dialog box appears, and an imported composite property
+            object appears in the specification tree under the
+            Properties objects set.</p>
+          </li>
+
+          <li>
+            <p>You can change the imported composite property
+            identifier by editing the <span class="guitext"><b class="guilabel">Name</b></span> field.
+            This name will be used in the specification tree.</p>
+          </li>
+
+          <li>
+            <p>Select the 2D geometry representing the composite
+            model; valid geometry selections must include a
+            mesh.</p>
+
+            <p>The imported composite properties will be those
+            defined in the Composite Design workbench for the
+            selected geometry.</p>
+          </li>
+
+          <li>
+            <p>Choose the analysis type, <span class="guitext"><b class="guilabel">By zone</b></span> or
+            <span class="guitext"><b class="guilabel">By
+            ply</b></span>.</p>
+
+            <p>The analysis type is dictated by the information
+            available from the Composite Design workbench; for
+            example, if the composite properties were created by
+            zones, you must use the <span class="guitext"><b class="guilabel">By zone</b></span> analysis type.</p>
+
+            <div style="margin-left: 0.5in; margin-right: 0.5in;" class="tip">
+              <p><img border="0" src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32" style="vertical-align: middle"></img><b>Tip:</b> Analysis results for
+              the <span class="guitext"><b class="guilabel">By
+              zone</b></span> method are less detailed than the
+              ply-by-ply results available when you use the
+              <span class="guitext"><b class="guilabel">By
+              ply</b></span> method, but they may reduce the
+              analysis time.</p>
+            </div>
+          </li>
+
+          <li>
+            <p>Click the Component Edition icon <img src="b35doc/english/online/anlug_c2/images/I_BcEditGreen.png"></img> to open the <span class="guitext"><b class="guititle">Filter
+            Definition</b></span> dialog box, and select the zones
+            or plies to be included in the analysis.</p>
+          </li>
+
+          <li>
+            <p>If you selected <span class="guitext"><b class="guilabel">By ply</b></span>, you can toggle on
+            <span class="guitext"><b class="guilabel">Transfer
+            producibility</b></span> to include manufacturing
+            parameters in the composite. The producibility
+            parameters attempt to align the fibers with the way a
+            part must be formed based on a producibility analysis
+            in the Composite Design workbench.</p>
+
+            <p>The differences in results due to this option will
+            be more apparent if the part has surfaces with
+            significant curvature such as a hemisphere. If you do
+            not use this option, fiber directions are transferred
+            by basic projection onto the part surfaces.</p>
+          </li>
+
+          <li>
+            <p>Toggle the <span class="guitext"><b class="guilabel">Symmetrical</b></span> option off to use the
+            draping direction of the composite as defined in the
+            Composite Design workbench. This option is toggled on
+            by default, and the material is distributed
+            symmetrically over the selected supports.</p>
+
+            <p>Symmetrical distribution applies the composite
+            thickness as though the selected supports are at the
+            center of the composite thickness. Toggling
+            <span class="guitext"><b class="guilabel">Symmetrical</b></span> off lays (drapes) the
+            composite thickness on top of the supports as they
+            would be layered on top of a mold; appropriate offsets
+            are added in the analysis to account for the thickness.
+            This option usually has little effect on the results
+            for thin composites or for models with few plies.</p>
+          </li>
+
+          <li>
+            <p>Use the <span class="guitext"><b class="guilabel">Core sampling depth</b></span> option to set
+            a thickness for the composite. This option is useful if
+            support surfaces are folded such that there may be
+            multiple layers of the composite at a sampling point
+            instead of a single thickness.</p>
+
+            <p>The default value (0 mm) corresponds to an infinite
+            depth. The core sampling positions are established by
+            the selection of 3D points in the Composite Design
+            workbench.</p>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">OK</b></span> in the <span class="guitext"><b class="guititle">Imported Composite
+            Property</b></span> dialog box.</p>
+          </li>
+        </ol></div>
+
+      <p>For more information, see <a href="page7165.html">Importing
+      Composite Properties</a> in the CATIA V5 Generative
+      Structural Analysis User's Guide.</p><span id="ath-gen-fem-prop-importcpd"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div>
+
+    <div class="sect2" id="ath-gen-fem-prop-xmlmap">
+      <a name="ath-gen-fem-prop-xmlmap"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Reading Composite
+          Properties from an XML Mapping File</h3>
+        </div>
+      </div>
+
+      <p>If you do not have composite properties from the Composite
+      Design workbench or you want to control section properties on
+      an element-by-element basis, you can access composite
+      properties through an XML mapping file. XML mapping files can
+      also be used to provide composite data from the Composite
+      Design workbench to someone who does not have the
+      workbench.</p>
+
+      <p>To create an XML mapping file, right-click on a Properties
+      objects set in the specification tree, and select the
+      <span class="guitext"><b class="guilabel">Generate Mapping
+      file</b></span> option from the menu that appears. In all
+      cases the generated file includes the model elements and any
+      associated material and model properties. Any composite
+      material data defined in the Composite Design workbench are
+      also included in the generated file so they can be
+      transferred to others or manipulated on an element-by-element
+      basis.</p>
+
+      <p>If the mapping file does not contain composite property
+      data, you must add it&#8212;the creation of XML mapping
+      files, mapping properties, and the required syntax for the
+      mapping files are discussed in <a href="page7171.html">XML
+      Mapping Properties</a> in the CATIA V5 Generative
+      Structural Analysis User's Guide. Once you have a mapping
+      file that contains composite data, you can use the
+      instructions below to create mapping properties that assign
+      the data in the file to a part in the current model.</p>
+
+      <div style="margin-left: 0.5in; margin-right: 0.5in;" class="note">
+        <p><b class="title"><a name="d0e5676">Note:&nbsp;</a></b>
+        Nonlinear Structural Analysis ignores any data in the XML
+        mapping files that is not related to the analysis of
+        composites.</p>
+      </div>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to use a mapping property to apply
+      composite properties to a part.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Click the Mapping Property icon <img src="b35doc/english/online/anlug_c2/images/I_MappingPropertyP2.gif"></img>.</p>
+
+            <p>The <span class="guitext"><b class="guititle">Mapping Property</b></span> dialog box
+            appears, and a mapping property object appears in the
+            specification tree under the Properties objects
+            set.</p>
+          </li>
+
+          <li>
+            <p>You can change the mapping property identifier by
+            editing the <span class="guitext"><b class="guilabel">Name</b></span> field. This name will be
+            used in the specification tree.</p>
+          </li>
+
+          <li>
+            <p>Select a part.</p>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">Browse</b></span> to select the XML mapping
+            file containing the composite properties to be used for
+            the selected part.</p>
+          </li>
+        </ol></div>
+
+      <p>Use the <span class="guitext"><b class="guibutton">Synchronize</b></span> button to update the model
+      with changes if you modify the XML mapping file after using
+      it in Nonlinear Structural Analysis.</p>
+
+      <p>For more information, see <a href="page7170.html">Creating
+      Mapping Properties</a> in the CATIA V5 Generative
+      Structural Analysis User's Guide.</p><span id="ath-gen-fem-prop-xmlmap"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div><span id="ath-gen-fem-prop-importcomp"></span>
+  </div></body></html>
+

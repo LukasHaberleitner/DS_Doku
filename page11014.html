@@ -1,0 +1,145 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Handling Errors</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="docCompliance" content="v 0.9; Fri Oct 14 14:45:30 2005">
+ <meta name="Microsoft Border" content="none">
+</head>
+
+ <body>
+
+ <h1>Handling Errors <a name="ix-handling errors"></a>&nbsp;<a name="ix-error, handling"></a>
+ <a name="ix-relation::handling errors"></a></h1>
+ <table border="0" valign="top" cellpadding="4" cellspacing="0" Width="0">
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>This task explains how to handle features that are in error. In the 
+     scenario described below, you are going to open a .CATPart file that is 
+     made up of 2 lines and a datum point. This point will be the intersection 
+     of the lines if they intersect, or the origin if they do not. To do so, you 
+     are going to create a rule. </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/amethod.gif" width="32" height="32"></td>
+     <td>The use of geometrical operators to value geometry in relations may 
+     lead to update errors in the created features. If you value a datum point 
+     with the result of the intersection of 2 lines, these 2 lines may not 
+     intersect and the point is therefore in error.
+     <p><kbd>Do not catch evaluation errors</kbd> which is available by 
+     selecting the relation in the specification tree and selecting the 
+     Properties command enables you:</p>
+     <ul>
+       <li>To create features in error </li>
+       <li>To know (through an error message) if a feature is in error and </li>
+       <li>To make changes (or not) in case of errors.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>Note that this error handling is only available for GSD features.</td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol class="task">
+       <li>
+       <p class="task">Open the <a href="b35doc/english/online/kwrug_c2/samples/KwrErrorHandling.CATPart">
+       KwrErrorHandling.CATPart</a> file. </li>
+       <li>
+       <p class="task">From the <kbd>Start &gt; Knowledgeware</kbd> menu, access 
+       the Knowledge Advisor workbench.</li>
+       <li>
+       <p class="task">Click the Rule icon (<img src="b35doc/english/online/icons_C2/images/I_RulesP2.gif" width="24" height="24">) 
+       to create a rule that will react to the fact that the datum point is the 
+       intersection of the 2 lines if they intersect or the origin if they do 
+       not.</li>
+       <li>
+       <p class="task">In the Rule Editor, enter the following body:</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber1" style="border-collapse: collapse" bordercolor="#111111">
+           <tr>
+             <td bgcolor="#F0F0F0" valign="top"><code>let x(Point)<br>
+             x =intersect(`Geometrical Set.1&#092;Line.1` 
+             ,`Geometrical Set.1&#092;Line.2` 
+             )<br>
+             if (x.Error==true)<br>
+             `Geometrical Set.1&#092;Point.5` 
+             = point(0mm,0mm,0mm)<br>
+             else <br>
+             `Geometrical Set.1&#092;Point.5` 
+             = x</code></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <div align="left">
+       <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber4">
+         <tr>
+           <td valign="top" bgcolor="#F2F2F2">
+           <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+           <td valign="top" bgcolor="#F2F2F2">Note that Japanese users must type 
+           the following rule body:</td>
+           <td valign="top" bgcolor="#F2F2F2">
+           <img border="0" src="b35doc/english/online/kwrug_c2/images/kwrerrorhandling_japanese.gif" width="293" height="75"></td>
+         </tr>
+       </table>
+     </div>
+     <ol start="5" class="task">
+       <li>
+       <p class="task">Click <kbd>OK</kbd> when done. The intersect operator 
+       launches an error message if the intersection is empty.</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber5">
+           <tr>
+             <td valign="top"><img border="0" src="b35doc/english/online/kwrug_c2/images/kwrerrorhandling2NLS.gif" width="216" height="119"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <div align="left">
+       <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber3">
+         <tr>
+           <td valign="top">
+           <ol start="6" class="task">
+             <li>
+             <p class="task">Right-click the rule in the specification tree and 
+             select <kbd>Properties</kbd>.</li>
+           </ol>
+           </td>
+           <td valign="top">
+           <img border="1" src="b35doc/english/online/kwrug_c2/images/kwrerrorhandling1NLS.gif" align="right" width="194" height="46"></td>
+         </tr>
+       </table>
+     </div>
+     <ol class="task" start="7">
+       <li>
+       <p class="task">Check the <kbd>Do not catch evaluation errors</kbd> check 
+       box and click <kbd>OK</kbd> when done. This way, the evaluation of the 
+       rule will be forced even if an update error occurs.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">&nbsp;</td>
+     <td>
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

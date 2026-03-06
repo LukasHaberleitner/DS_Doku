@@ -1,0 +1,236 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="2">
+ <meta name="MonocodingFlag" content="L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Overview</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Overview</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="34" width="35">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td rowspan="1" valign="top" width="775">Companies working with external 
+     contractors and needing to implement a client-server architecture require 
+     solutions allowing workers at locations outside corporate premises to 
+     access servers and resources within the company.<p>Several solutions are 
+     possible today, each with their advantages and drawbacks, allowing external 
+     workers access to company resources over a Wide Area Network (WAN), invariably through the company's 
+     firewall.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="35" height="18"></td>
+     <td valign="top" width="775">
+     <h2><font color="#282187">Problems with the Current Client-Server 
+     Architecture</font></h2>
+     <p>In the current ENOVIA client-server architecture, client applications 
+     contact the servers using GIOP protocols(proprietary Orbix protocol or 
+     standard IIOP) which require a different port for each server to be 
+     contacted.</p>
+     <p>The current CORBA-based client-server architecture is as follows (the 
+     number of servers illustrated is not exhaustive):</p>
+     <p>
+     <img border="1" src="b35doc/english/online/basil_c2/images/CORBABasedArchitecture_NLS01.gif" width="960" height="720"></p>
+     <p>The drawbacks of the current solution are:</p>
+     <ul>
+       <li>complexity: using a CORBA-based architecture, there are too many 
+       ports to open/manage</li>
+       <li>security: client logon userids and passwords sent over the Internet 
+       are not encrypted, representing a security threat</li>
+       <li>latency: client-server communications over the Internet are affected 
+       by latency</li>
+       <li>incompatibility: reverse proxies are not compatible with Corba, 
+       leading to complexity due to the high number of machines involved.</li>
+     </ul>
+     <h3> 
+     <strong>ENOVIAV5VPM</strong></h3>
+     <p>Clients log on the servers by first contacting the Orbix daemon <kbd>
+     orbixd</kbd>. The Server Manager is started, followed by one 
+     <strong>ENOVIAV5VPM</strong> server per user. One 
+     Settings server per user and the Workbook server are also started. From the 
+     beginning, we have up to five different ports being used.</p>
+     <p>In some common 
+     scenarios, client applications need also to contact a vault server on a 
+     different host where another Orbix daemon is running. This requires using 
+     two additional ports.</p>
+     <p>
+     <img border="1" src="b35doc/english/online/basil_c2/images/LCA_HTTPTunnelComponent01_NLS.gif" width="801" height="588"></p>
+     <h3>ENOVIA 3d com Classic</h3>
+     <p>Clients log on the servers by first contacting the Orbix daemon <kbd>
+     orbixd</kbd>. The Server Manager is started, followed by the Workbook 
+     server and the Settings server. From the beginning, we have up to four 
+     different ports being used:</p>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/tunneling1.gif" width="624" height="455"></p>
+     <p>This architecture is well adapted to LANs (Local Area Networks) and 
+     Intranets, in which client and server hosts can connect to each other 
+     directly without going outside the corporate network. This is not the case 
+     for WANs (Wide Area Networks) and Extranets, in which client and server 
+     hosts have to cross network devices such as gateways and firewalls to 
+     connect to each other. The role of these (hardware or software) devices is 
+     to guard the borders of the corporate network from the Internet by 
+     enforcing rules controlling which client host (IP address) can connect to 
+     which server host (IP address) on which port.</p>
+     <p>To continue working, the above architecture supposes that a wide range 
+     of ports (currently 200) are open both on the client-side firewall (to 
+     enable outgoing connections to known server hosts on authorized ports) and on the 
+     server-side firewall (to allow incoming connections from known client hosts on 
+     authorized ports). This is problematic in terms of security and 
+     administration.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="35" height="18"></td>
+     <td valign="top" width="775" height="18">
+     <h2>Basic Setup Solutions</h2>
+     <p>There are currently two solutions for crossing Wide Area Networks:<ul>
+       <li>Virtual Private Networks (VPN)</li>
+       <li>HTTP Tunneling.</li>
+       </ul>
+       <h3 align="left">Virtual Private Networks (VPN)</h3>
+       <p align="left">A Virtual Private Network (VPN) is a solution for 
+       securing communications through the public Internet. </p>
+     <h5 align="left">Advantages</h5>
+     <p align="left">Attractions of VPNs to enterprises include:</p>
+     <ul>
+       <li>due to shared facilities, may be cheaper than traditional routed 
+       networks over dedicated facilities</li>
+       <li>can rapidly link enterprise offices, as well as small-and-home-office 
+       and mobile workers</li>
+       <li>allow customization of security and quality of service as needed for 
+       specific applications.</li>
+     </ul>
+     <p>Distributing VPNs to homes, telecommuters, and small offices may put 
+     access to sensitive information in facilities not as well protected as more 
+     traditional facilities. VPNs need to be designed and operated under 
+     well-thought-out security policies. Organizations using them must have 
+     clear security rules supported by top management. When access goes beyond 
+     traditional office facilities, where there may be no professional 
+     administrators, security must be maintained as transparently as possible to 
+     end users.</p>
+     <p align="left">VPN solutions involve a strong sense of trust and are 
+     implemented when a company knows and trusts the VPN user.</p>
+     <p align="left">Implementing a VPN involves setting up:</p>
+     <ul>
+       <li>
+       <p align="left">VPN client software on remote client machines</p></li>
+       <li>
+       <p align="left">a VPN server within the company's premises.</p></li>
+     </ul>
+     <p align="left">There is a single dedicated port for the VPN server.</p>
+     <h5>Drawbacks</h5>
+     <p>The main drawback in using a VPN is the administration overheads 
+     involved in setting up and maintaining software on the VPN client machines.</p>
+     <h5>Implementing VPNs</h5>
+     <p>No software is provided with Version 5 to implement VPNs, but VPNs are 
+     supported.</p>
+     <p>VPNs are implemented using hardware and software provided by a VPN 
+     vendor. Please refer to the documentation provided by the VPN vendor for 
+     more information. </p>
+       <h3 align="left">HTTP Tunneling</h3>
+     <p align="left">HTTP Tunneling is a technique by which communications 
+     performed using various network protocols are encapsulated using the HTTP 
+     protocol, the network protocols in question usually belonging to the TCP/IP 
+     family of protocols.</p>
+     <p align="left">A HTTP tunnel is used most often as a means for 
+     communication from network locations with restricted connectivity &#8211; most 
+     often behind NATs, firewalls, or proxy servers, and most often with 
+     applications that lack native support for communication in such conditions 
+     of restricted connectivity.</p>
+       <p>This solution comes with its specific components and processes to be 
+       started on client and server hosts, and has its own advantages and 
+       constraints.</p>
+     <p>However, <font color="#FF0000"><b>it </b></font><b>
+     <font color="#FF0000">requires that ONLY ONE 
+     additional port be open on the firewalls</font></b> standing between the 
+     client and the server networks, instead of the wide range of ports used by 
+     GIOP-based protocols. This port can be chosen arbitrarily by the 
+     administrator of the server network (a default is provided) and the clients 
+     will comply with this choice to administrate their own network security.</p>
+     <p>Technically, the solution is based on port redirection performed 
+     in the TCP protocol layer: each connection to a given port is finally 
+     redirected to the tunneling port open on the firewalls. All GIOP-based 
+     communications will occur through this dedicated port.</p>
+     <p>Refer to <a href="page1196.html">Basic Setup </a>
+     for information about setting up HTTP tunneling for both 
+     <strong>ENOVIAV5VPM</strong> and ENOVIA 3d com Classic.</p>
+		<p><b>Limitation</b>: HTTP Tunneling can not be used with CATIA 
+		Interoperability with LCA. If CATIA Interoperability with LCA is planned 
+		to be used on a WAN, it should be used through a market VPN (Virtual 
+		Private Network).</p>
+     <h5>3d com Classic</h5>
+       <p>For 3d com Classic, note that for original HTTP-based communications between the 3d com 
+     client application (and browser) and the 3d com web server, another 
+     dedicated port is used (typically port 80). However, since this port is 
+     commonly open on firewalls for this kind of communications, there is 
+     nothing more to do as compared to the standard installation where the 
+     tunneling components are not used.</p>
+       <p><b>Warning:</b> Apart 
+     from Intranet usage, you MUST use the HTTP tunneling solution. Any 
+     incidents relating to firewalls or proxies will not be taken into 
+     consideration.<h4>Advantages</h4>
+       <ul>
+         <li>The solution is quite easy to deploy and administrate: just one 
+         file to edit to activate port redirection, one client process to 
+         configure, and one server process to configure, start, and control</li>
+         <li>No dedicated host needed on the server side: the server component 
+       runs on each server host thanks to small memory overhead</li>
+         <li>Client and server components have no impact on application code</li>
+         <li>Only HTTP packets cross the firewalls</li>
+         <li>Support for HTTP proxy and reverse proxy servers</li>
+         <li>It's possible to activate SSL security and encryption on the HTTP 
+         solution</li>
+         <li>Strong authentication: support of public key cryptography and 
+         certificates</li>
+         <li>Data confidentiality: only encrypted packets cross the network and 
+         the firewalls </li>
+         <li>Data integrity: support of message digest algorithms </li>
+         <li>Apart from SSL configuration, the secured solution is also easy to 
+       deploy and administrate: just one file to edit to activate port 
+       redirection, one client process to configure, and one server process to 
+       configure, start, and control.</li>
+       </ul>
+     <h5>Drawbacks</h5>
+       <ul>
+         <li>An additional process is running on the client host. However, this 
+       process is automatically started. Nevertheless, it might require some 
+       control whenever the provided fail-over mechanism is out.</li>
+         <li>CPU and network overheads on the client and server sides due to the 
+         additional handling of HTTP semantics</li>
+         <li>SSL configuration: acquire a certificate for each server host, 
+       configure clients to accept the server certificate (Optionally: acquire a 
+       certificate for each client host, configure servers to accept the client 
+       certificate). The HTTP proxy server must allow the HTTP CONNECT method on 
+       the SSL port.</li>
+       </ul>
+       </td>
+   </tr>
+   <tr>
+     <td valign="top" width="35" height="18"></td>
+     <td valign="top" width="775" height="18">
+     <h2>Advanced Setup Solutions</h2>
+     <p>Optional, more advanced setup solutions are supported as described in
+     <a href="page1195.html">Advanced Setup</a>:</p>
+     <ul>
+       <li>forward and reverse proxies</li>
+       <li>secured tunneling mode (SSL).</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td colspan="2" valign="top" height="37" width="814">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

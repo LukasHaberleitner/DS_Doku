@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ReconciliationCommands>
+
+   <!-- One block to define Reconciliator session -->
+
+   <Reconcile simul="Execute" statistics="Yes" >
+		<!-- Define what to be Reconciled. -->
+		
+		<input>
+			<file filename="c:\temp\RECV5_TEST1rootprc.CATProduct"/>
+		</input>
+
+		<!-- Checking operations  -->
+
+		<check numberOfDocs="7">
+		</check>
+		
+		<!-- Define how object mapping & rule setting will be done. -->
+		
+		<mapping structureExp="Yes" completeWithDefaultMapping="Yes" forceKeepExternal="No" allByDeltaMode="Yes" forceNewVersion="No">
+			<queryName name="Query by object Id"/>
+			<inxml name="sessionSave.xml"/>
+			<publication>
+				<document name="RECV5_TEST1_PART1.CATPart"/>
+			</publication>
+			<newRevision>
+				<document name="RECV5_TEST1_REV.CATPart"/>
+			</newRevision>
+			<newVersion forceNewVersion="TRUE">
+				<reference name="RECV5_TEST1_VER.CATPart"/>
+			</newVersion>
+			<reload>
+				<document name="RECV5_TEST1_PART2.CATPart"/>
+				<document name="RECV5_TEST1_PART3.CATPart"/>
+			</reload>
+			<keepExternal>
+				<document name="RECV5_TEST1_PART4.CATPart"/>
+			</keepExternal>
+			<overwriteByDelta>
+				<part name="RECV5_TEST1_PROD1"/>
+			</overwriteByDelta>
+			<newVersionByDelta>
+				<reference name="RECV5_TEST1_PROD2"/>
+			</newVersionByDelta>
+			<GR>
+                                <Reload forceReload="TRUE" >
+					<GRFilter>
+						<ScmType ScmTypeValue="DOC"/>
+						<FileName FileNameValue="RECV5_TEST1_PART3.CATPart"/>
+					</GRFilter>
+                                </Reload>
+				<NewVersion onlyOnDocuments="TRUE">
+					<GRFilter>
+						<FileName FileNameValue="RECV5_TEST1_PART4.CATPart"/>
+						<State StateValue="MAPPED"/>
+					</GRFilter>
+				</NewVersion>
+				<GRInfo name="MagicRecon" queryName="Query by object Id" ForcePersistency="Yes" ForceMapping="Yes" ForceRule="Yes"/>
+			</GR>
+		</mapping>
+         		
+		<!-- Define apply behaviors. -->
+		
+		<apply noDraftingUpdate="Yes" unlockViews="No" noPartUpdate="Yes">
+			<importInAssembly name="PRC_mySupplier"/>
+ 		</apply>
+         		
+		<!-- Define how VPDM information are viewed. -->
+		
+		<vpdmView>
+			<pvs name=""/>
+			<configHandler name=""/>
+			<zone clearance="5" mode="FullyIn" filter="filterName"/>
+			<attributeFilter name="Name" operator="LIKE" value="Rec*"/>
+		</vpdmView>
+         		
+		<!-- Define how data will be saved. -->
+		
+		<save lockMgt="Acquire" action="ECO_123"/>
+
+		<!-- Define session outputs. -->
+		<output>
+			<xml name=""/>
+			<outputFileList name=""/>
+			<epexml name=""/>
+		</output>
+   </Reconcile>
+
+   <Reconcile>
+	<!-- Next block to define Another Reconciliator session -->
+   </Reconcile>
+
+</ReconciliationCommands>

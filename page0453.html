@@ -1,0 +1,286 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head><meta name="MonocodingType" content="0"></meta>
+	  <meta name="MonocodingFlag" content="C2"></meta>
+	  <meta http-equiv="Content-Language" content="en-us"></meta>
+	  <meta name="GENERATOR" content="Microsoft FrontPage 6.0"></meta>
+	  <meta name="ProgId" content="FrontPage.Editor.Document"></meta>
+  	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	  <title>Analysis Steps</title>
+          <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+          
+	 </head><body onload="newPage('pt02ch04s02.html');" ondblclick="newSelection();" bgcolor="#FFFFFF" text="#000000" vlink="#FF5113" alink="#004D48" link="#004D48" class="TEXT"><div class="sect1" id="ath-gen-fem-analysissteps">
+    <a name="ath-gen-fem-analysissteps"></a>
+
+    <div class="titlepage">
+      
+
+      <div class="title">
+        <h3>Analysis Steps</h3>
+      </div>
+    </div>
+
+    <p><span class="abstract">A nonlinear or thermal analysis is
+    based on the concept of steps, which define the history of the
+    analysis. Multiple steps can be defined in an analysis. Steps
+    can be introduced simply to change the output requests or to
+    change the loads, boundary conditions, analysis procedure, etc.
+    There is no limit on the number of steps in an analysis. The
+    state of the model at the end of a general step provides the
+    initial conditions for the next step, making it easy to
+    simulate consecutive loadings of a model, such as a dynamic
+    response following a static preload or the loading of a product
+    during its usage following a simulation of the manufacturing
+    process.</span></p>
+
+    <p><span class="abstract">The following are described in this
+    section:</span></p>
+
+    <ul type="disc"><li>
+        <p><span class="abstract"><a href="page0453.html#ath-gen-fem-analysissteps-whatis">
+        What is a Step?</a></span></p>
+      </li>
+
+      <li>
+        <p><a href="page0453.html#ath-gen-fem-analysissteps-linpert">
+        Linear Perturbation Steps</a></p>
+      </li>
+
+      <li>
+        <p><a href="page0453.html#ath-gen-fem-analysissteps-nlgeom">
+        Accounting for Nonlinear Geometric
+        Effects</a></p>
+      </li>
+
+      <li>
+        <p><a href="page0453.html#ath-gen-fem-analysissteps-restrictions">
+        Step Sequence Restrictions</a></p>
+      </li>
+    </ul><div class="sect2" id="ath-gen-fem-analysissteps-whatis">
+      <a name="ath-gen-fem-analysissteps-whatis"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3>What is a Step?</h3>
+        </div>
+      </div>
+
+      <p>A nonlinear or thermal model uses the following two types
+      of steps to describe the environmental actions on a
+      system:</p>
+
+      <div class="indent" id="d0">
+        <p><b>The initial step</b></p>
+
+        <div class="indent" id="d0">
+          <p>Nonlinear Structural Analysis or Thermal Analysis
+          creates a special initial step at the beginning of the
+          Simulation History and names it <tt class="computeroutput">Initialization</tt>. Only one initial
+          step is created for each model. You can rename the
+          initial step, but you cannot edit, replace, copy, or
+          delete it.</p>
+
+          <p>The initial step allows you to define interactions
+          that are applicable at the very beginning of the
+          analysis. For example, if a connection or field is
+          applied throughout the analysis, it is usually convenient
+          to apply such conditions in the initial step. Likewise,
+          when the first analysis step is a frequency step,
+          conditions applied in the initial step form part of the
+          base state for the procedure.</p>
+        </div>
+      </div>
+
+      <div class="indent" id="d0">
+        <p><b>Analysis steps</b></p>
+
+        <div class="indent" id="d0">
+          <p>The initialization step is followed by one or more
+          analysis steps. Each analysis step represents a period of
+          time in the simulation history and is associated with a
+          specific analysis procedure, such as a static stress
+          analysis or a transient heat transfer analysis. You can
+          change the analysis procedure from step to step. Since
+          the state of the model (stresses, strains, temperatures,
+          etc.) is updated throughout all general analysis steps,
+          the effects of previous history are always included in
+          the response for each new analysis step.</p>
+
+          <p>There is no limit to the number of analysis steps you
+          can define, but there are restrictions on the step
+          sequence. (For more information, see <a href="page0453.html#ath-gen-fem-analysissteps-restrictions">
+          Step Sequence
+          Restrictions</a>.)</p>
+        </div>
+      </div>
+
+      <p>For example, consider the following structural analysis of
+      a section of a piping system:</p>
+
+      <div class="indent" id="d0">
+        <p><b>Initialization Step:</b></p>
+
+        <div class="indent" id="d0">
+          <p>No changes are needed in the default initial step.</p>
+        </div>
+      </div>
+
+      <div class="indent" id="d0">
+        <p><b>Step 1: Compress</b></p>
+
+        <div class="indent" id="d0">
+          <p>Apply boundary conditions to fix the left end of the
+          pipe and to allow only axial movement at the right end.
+          Apply a compressive force to the right end of the pipe.
+          This step is a general static step.</p>
+        </div>
+      </div>
+
+      <p>When you create or edit an analysis step (as discussed in
+      <a href="page0444.html">Structural Analysis
+      Steps</a> or <a href="page0445.html">Thermal Analysis
+      Steps</a>), it becomes the current step. All analysis step
+      operations you perform, such as defining loads or boundary
+      conditions, act on the current step. To set a different
+      analysis step to be current, right-click on the step in the
+      specification tree and select <span class="guitext"><b class="guilabel">Set As Current Step</b></span> from the menu that
+      appears.</p><span id="ath-gen-fem-analysissteps-whatis"></span>
+    </div>
+
+    <div class="sect2" id="ath-gen-fem-analysissteps-linpert">
+      <a name="ath-gen-fem-analysissteps-linpert"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3>Linear Perturbation
+          Steps</h3>
+        </div>
+      </div>
+
+      <p>The response in a linear perturbation step is the linear
+      perturbation response about the base state. The base state is
+      the current state of the model at the end of the last general
+      analysis step prior to the linear perturbation step. If the
+      first step of an analysis case is a perturbation step, the
+      base state is determined from the Initialization step.
+      Nonlinear geometric effects are not considered during a
+      linear perturbation step. You can add linear perturbation
+      steps only in structural analysis cases. You can include
+      linear perturbation steps between general static analysis
+      steps; the linear perturbation response has no effect as the
+      general static analysis is continued. The step time of linear
+      perturbation steps, which is taken arbitrarily to be a very
+      small number, is never accumulated into the total analysis
+      time (the total accumulated time over all general analysis
+      steps within a particular nonlinear structural analysis
+      case). During a linear perturbation analysis step, the
+      model's response is defined by its linear elastic stiffness
+      at the base state. Plasticity and other inelastic effects are
+      ignored.</p>
+
+      <p>A <span class="guitext"><b class="guilabel">Frequency</b></span> linear perturbation step is
+      available in the Nonlinear Structural Analysis
+      workbench.</p><span id="ath-gen-fem-analysissteps-linpert"></span>
+    </div>
+
+    <div class="sect2" id="ath-gen-fem-analysissteps-nlgeom">
+      <a name="ath-gen-fem-analysissteps-nlgeom"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3>Accounting for Nonlinear
+          Geometric Effects</h3>
+        </div>
+      </div>
+
+      <p>For each step in the analysis you can choose whether the
+      solver will account for nonlinear effects from large
+      displacements and deformations. If the displacements in a
+      model due to loading are relatively small during a step, the
+      effects may be small enough to be ignored. By default, these
+      geometrically nonlinear effects are considered for General
+      Static steps, and these effects are not considered for all
+      other types of steps. However, in cases where the loads on a
+      model result in large displacements, nonlinear geometric
+      effects can become important. The <span class="guitext"><b class="guilabel">Nonlinear geometry</b></span>
+      setting for a step determines whether the solver will account
+      for geometric nonlinearity in that step.</p>
+
+      <p>The sequence of steps and the current setting determine
+      whether you can change the setting in a particular step. For
+      example, if the solver is already accounting for geometric
+      nonlinearity, it continues to do so in all subsequent steps
+      and you cannot change the setting.</p>
+
+      <p>The <span class="guitext"><b class="guilabel">Nonlinear
+      geometry</b></span> setting is turned on by default for
+      General Static steps, and turned off by default for all other
+      types of steps. However, if hyperelastic materials are
+      included in the model, the <span class="guitext"><b class="guilabel">Nonlinear geometry</b></span> setting is also
+      turned on by default for other step types in a Nonlinear
+      Structural case. The sequence of steps and the current
+      <span class="guitext"><b class="guilabel">Nonlinear
+      geometry</b></span> setting determine whether you can change
+      the <span class="guitext"><b class="guilabel">Nonlinear
+      geometry</b></span> setting in a particular step. For
+      example, if the solver is already accounting for geometric
+      nonlinearity, the <span class="guitext"><b class="guilabel">Nonlinear geometry</b></span> setting is toggled
+      on for all subsequent steps, and you cannot toggle it
+      off.</p><span id="ath-gen-fem-analysissteps-nlgeom"></span>
+    </div>
+
+    <div class="sect2" id="ath-gen-fem-analysissteps-restrictions">
+      <a name="ath-gen-fem-analysissteps-restrictions"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3>Step Sequence
+          Restrictions</h3>
+        </div>
+      </div>
+
+      <p>The analysis step can be either a static or heat transfer
+      consideration of the system response, depending on the
+      workbench you are using and the case you selected, as shown
+      in <a href="page0453.html#afc-fem-steprestrictions">Table 4&#8211;1</a>.</p>
+
+      <div class="table">
+        <p><a name="afc-fem-steprestrictions"></a><b><span class="gentxt_dkgry">Table 4&#8211;1</span></b> Step sequence
+        restrictions.</p>
+
+        <table border="1"><thead><tr><th valign="top">Analysis</th>
+
+              <th valign="top">Analysis Case</th>
+
+              <th valign="top">Analysis Step</th>
+            </tr></thead><tbody><tr><td valign="middle" rowspan="2">Structural</td>
+
+              <td valign="middle" rowspan="2">Structural</td>
+
+              <td>General Static</td>
+            </tr><tr><td>Frequency</td>
+            </tr><tr><td valign="middle">Thermal</td>
+
+              <td>Thermal</td>
+
+              <td>Heat Transfer</td>
+            </tr></tbody></table></div>
+
+      <p>There is no limit to the number of analysis steps you can
+      define. However, once you define a step within an Analysis
+      Case, only compatible steps can be added to that analysis
+      case. For example, if you create a general static step in a
+      structural case, you can add only general static or frequency
+      steps to that analysis case. A thermal analysis can contain
+      only thermal analysis cases, and the cases can contain only
+      heat transfer steps.</p><span id="ath-gen-fem-analysissteps-restrictions"></span>
+    </div><span id="ath-gen-fem-analysissteps"></span>
+  </div></body></html>
+

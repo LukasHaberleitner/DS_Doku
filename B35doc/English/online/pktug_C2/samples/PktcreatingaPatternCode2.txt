@@ -1,0 +1,73 @@
+let obj (Udf4)
+
+let line1 (UserFeature)
+let line2 (UserFeature)
+let line3 (UserFeature)
+
+let p1 (Point)
+let p2 (Point)
+let p3 (Point)
+let p4 (Point)
+let p5 (Point)
+let p6 (Point)
+
+let p7 (Point)
+
+let i (Integer)
+let j (Integer)
+let k (Integer)
+let m (Integer)
+
+i = 1
+j=1
+k = 1
+m=1
+
+For i while i <= Lines.Size()
+	{
+		j = 1
+		For j while j <= Lines.Size()
+			{
+				k = 1
+				if i < j
+					{
+						set line1 = Lines.GetItem(i)
+						set line2 = Lines.GetItem(j)
+						set p1 = line1.GetAttributeObject("Point.1")
+						set p2 = line1.GetAttributeObject("Point.2")
+						set p3 = line2.GetAttributeObject("Point.1")
+						set p4 = line2.GetAttributeObject("Point.2")
+						
+						if p1 == p3 or p1 == p4 or p2 == p3 or p2 == p4
+							{
+								if p1 == p3 or p1 == p4
+									p7 = p1
+								else
+									p7 = p2
+								
+								For k while k <= Lines.Size()
+									{
+										if j < k 
+											{
+												set line3 = Lines.GetItem(k)
+												set p5 = line3.GetAttributeObject("Point.1")
+												set p6 = line3.GetAttributeObject("Point.2") 
+												
+												if (p5 == p1 or p5 == p2 or p5 == p3 or p5 == p4) and (p6 == p1 or p6 == p2 or p6 == p3 or p6 == p4)
+													{
+														set obj = CreateOrModifyTemplate("PktARMcatalog3|UserFeature4", PartBody , Surfaces, m)
+														obj.Line.1 = line1
+														obj.Line.2 = line2
+														obj.Line.3 = line3
+														EndModifyTemplate(obj)
+														m = m +1
+													}
+												}
+												k = k + 1
+											}
+										}
+									}
+									j = j +1
+								}
+								i = i+ 1
+							}

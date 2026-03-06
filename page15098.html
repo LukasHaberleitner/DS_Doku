@@ -1,0 +1,223 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>How ENOVIA information is impacted by Reconciliator</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none">
+</head>
+
+ <body>
+
+ <h1><img border="0" src="b35doc/english/online/icons_C2/common/anew.gif" width="32" height="32">How 
+	ENOVIA information is impacted by Reconciliator</h1>
+ <div align="left">
+   <table border="0" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3" height="1846">
+     <tr>
+       <td valign="top" height="261" width="35">
+       <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+       <td valign="top" height="261" width="630">Reconciliation solution enables 
+		you to import a set of CATIA documents in ENOVIA, defining how those 
+		data issued from file will affect data stored in ENOVIA. For this 
+		purpose you will be able to define storage mode.
+		<ul>
+			<li>For <kbd>CATProduct</kbd> document, in <kbd>Structure Exposed</kbd>, 
+			you will have to define the mapping of CATIA Product onto an 
+			assembly node.
+			<ul>
+				<li>For <kbd>ENOVIA V5</kbd>, it will be either a Part Version 
+				(PV) or a PRC (For the root of the assembly). </li>
+				<li>For <kbd>ENOVIA VPM V4</kbd>, it will be a Part (an object 
+				issued from PART_LIST table).</li>
+			</ul>
+			</li>
+			<li>For other cases (<kbd>CATProduct</kbd> in <kbd>Publication 
+			Exposed</kbd> mode or other supported document types), he will have 
+			to define the mapping onto a document.
+			<ul>
+				<li>For <kbd>ENOVIA V5</kbd>, it will be Document Revision (DR).</li>
+				<li>For <kbd>ENOVIA VPM V4</kbd>, it will be document (object 
+				stored in document tables) or CATIA V4 model (object stored in 
+				CATIA_MODEL table). </li>
+			</ul>
+			</li>
+		</ul>
+		</td>
+     </tr>
+     <tr>
+       <td valign="top" align="left" height="151" width="35">&nbsp;</td>
+       <td valign="top" align="left" height="151" width="630">
+       After defining for each CATIA objects (CATIA Products in <kbd>Structure 
+		Exposed</kbd> and Document for <kbd>Publication Exposed</kbd>) one 
+		counter ENOVIA object, you will select one Reconciliation rule among the 
+		authorized ones. The rules are categorized into 2 categories:
+		<ul>
+			<li>The First category (called<kbd> Reload</kbd>)<kbd> </kbd>where 
+			you will not update ENOVIA repository with the information received 
+			from file. This is done by using <kbd>Reload from VPDM</kbd> rule.
+			</li>
+			<li>The second category (called <kbd>Overwrite</kbd>) where you will 
+			update the information in ENOVIA with data received from file. In 
+			this category, you will find all other rules: <kbd>New</kbd>, <kbd>
+			Overwrite</kbd>, <kbd>New Version</kbd>, <kbd>New Revision</kbd>, 
+			and <kbd>Overwrite by Delta</kbd>.</li>
+		</ul>
+       </td>
+     </tr>
+     <tr>
+       <td width="35" valign="top" height="352">&nbsp;</td>
+       <td width="630" valign="top" height="352">When you click the <kbd>Apply</kbd> 
+		button of the <kbd>Reconciliator Window</kbd>, the Reconciliator will 
+		define for each object the way, it will be exposed in ENOVIA repository:<ol class="task">
+       <li>
+		<p class="task">For reference objects, Document and CATIA Product on 
+		which end-user has defined an explicit mapping, the behavior will 
+		explicitly defined by the <kbd>Reconciliator</kbd> rules selected. </li>
+		<li>
+		<p class="task">For other objects, such as Instances, publications or 
+		connections, <kbd>Reconciliator</kbd> program will compute a mapping 
+		using either comparison techniques or a replacement mechanism (removed 
+		all older information in ENOVIA and save CATIA ones as new). <br>
+		<br>
+		The update logic for this set of information will be based on the rule 
+		associated to the reference object that aggregates this information:
+		<ul class="task">
+			<li>
+			<p class="task">For <kbd>CATPart</kbd> or <kbd>CATProduct</kbd> in
+			<kbd>Publication Exposed</kbd>, the program will automatically map 
+			the Root Product on the Part with the part associated to this 
+			document (using for ENOVIA V5 the exposition information). </li>
+			<li>
+			<p class="task">For CATIA product instance, in <kbd>Structure 
+			Exposed</kbd>, the mapping will done using an assembly structure 
+			comparison and the CATIA instance will update ENOVIA if its father 
+			CATIA Product is using an Overwrite rule. In case of reload rule on 
+			the CATIA father Product, the CATIA instance will be refreshed. </li>
+		</ul>
+		</li>
+     </ol></td>
+     </tr>
+     <tr>
+       <td width="35" valign="top" height="564"></td>
+       <td width="630" valign="top" height="564">In case of CATProduct in <kbd>
+		Publication Exposed</kbd>, CATIA product instance are not exposed in 
+		ENOVIA. However, the instances embedded in the parent document will be 
+		updated if document is using an overwrite rule, throw the update of the 
+		document content in Vault. So behavior is consistent on instances, with 
+		the 2 storage modes:<br>
+&nbsp;<table border="1" width="90%" bgcolor="#F2F2F2" bordercolor="#000000">
+			<tr>
+				<td width="130" align="center" bgcolor="#E0E0E0" colspan="2" rowspan="2"><strong>Instance 
+				Comparison Status</strong></td>
+				<td width="24%" align="center" bgcolor="#E0E0E0" rowspan="2">
+				<strong>Meaning<br>
+&nbsp;</strong></td>
+				<td align="center" bgcolor="#E0E0E0" colspan="2"><strong>Rule on 
+				Father CATIA Product</strong></td>
+			</tr>
+			<tr>
+				<td width="28%" align="center" bgcolor="#E0E0E0" height="53">
+				<strong>Reload Rule</strong><br>
+				(Only for ENOVIA V5)<br>
+&nbsp;</td>
+				<td align="center" bgcolor="#E0E0E0" height="53" width="21%">
+				Overwrite rule</td>
+			</tr>
+			<tr>
+				<td width="14%" align="center">
+				<img border="0" src="b35doc/english/online/wpeug_c2/images/wd_instance03.gif" width="23" height="18"></td>
+				<td width="11%" align="center">
+				<p align="center">identical</td>
+				<td width="24%">CATIA instance successfully mapped on an ENOVIA 
+				instance with the same 3D position.</td>
+				<td width="28%" rowspan="2">CATIA Instance will be refreshed.</td>
+				<td width="21%" rowspan="2">ENOVIA instance will be updated in 
+				ENOVIA (position, name, and others attributes )</td>
+			</tr>
+			<tr>
+				<td width="14%" align="center">
+				<img border="0" src="b35doc/english/online/wpeug_c2/images/wd_instance04.gif" width="23" height="18"></td>
+				<td width="11%" align="center">To be moved</td>
+				<td width="24%">CATIA instance successfully mapped on an ENOVIA 
+				instance with different 3D position.</td>
+			</tr>
+			<tr>
+				<td width="14%" align="center">
+				<img border="0" src="b35doc/english/online/wpeug_c2/images/wd_instance02.gif" width="23" height="18"></td>
+				<td width="11%" align="center">To be deleted&nbsp;</td>
+				<td width="24%">One ENOVIA instance has no counterpart among 
+				CATIA instances.</td>
+				<td width="28%">Nothing to do either in CATIA side or on ENOVIA instance.</td>
+				<td width="21%">ENOVIA instance will be deleted, except for 
+				Overwrite by Delta or New Version by delta where nothing will be 
+				done</td>
+			</tr>
+			<tr>
+				<td width="14%" align="center">
+				<img border="0" src="b35doc/english/online/wpeug_c2/images/wd_instance01.gif" width="23" height="18"></td>
+				<td width="11%" align="center">To be created</td>
+				<td width="24%">One CATIA instance has no counterpart among 
+				ENOVIA instances.</td>
+				<td width="28%">Reconciliation will fail.</td>
+				<td width="21%">ENOVIA instance will be created in ENOVIA</td>
+			</tr>
+		</table>
+		</td>
+     </tr>
+     <tr>
+       <td width="35" valign="top" height="480">&nbsp;</td>
+       <td width="630" valign="top" height="480"><p>In context of ENOVIA V5, you 
+		need to take into account that the assembly model is relying on a mixed 
+		assembly structure model with the instance model (PRC and Item Instance) 
+		and the reference assembly model (Part and Assembly Relation). As 
+		Reconciliator mainly operates at reference model (<kbd>Assembly Relation</kbd> 
+		and <kbd>Item Instance</kbd> directly attached to the PRC), the impact 
+		on Item Instance will be evaluated according to its mother Item Instance 
+		and its associated Assembly Relation.</p>
+       <ul>
+         <li>For <strong>Publications</strong>, the mechanism will be similar to 
+			CATIA product instances: <br>
+			In case of <kbd>Overwrite</kbd> rule on Document, the <kbd>
+			Reconciliator</kbd> program will compute a mapping based on 
+			comparison on publication name. At next save, CATIA publications 
+			will be saved in ENOVIA either in updating existing ones or create 
+			new ones for not mapped ones. Publication in ENOVIA not mapped on an 
+			existing Publication in CATIA will be removed. <br>
+			In case of <kbd>Reload</kbd> rule on Document, the <kbd>
+			Reconciliator</kbd> program will have only to reload the CATIA 
+			document which will have as side effect to replace at <kbd>
+			Reconciliation Apply</kbd> all Publications.</li>
+			<li>For <strong>contextual links</strong>:<br>
+			In case of <kbd>Overwrite</kbd> rule on Document, the <kbd>
+			Reconciliator</kbd> program will remove existing links in ENOVIA 
+			associated to this contextual part; and will create new links for 
+			this contextual part according to the CATIA view. There is never 
+			some update for such entities.<br>
+			In case of <kbd>Reload</kbd> rule on Document, the Reconciliator 
+			program will have only to reload the CATIA document which will have 
+			as side effect to replace at <kbd>Reconciliation Apply</kbd> all 
+			Publications.</li>
+			<li>For <strong>Connections</strong>, the mechanism will be based on 
+			a replace mechanism:<br>
+			In case of <kbd>Overwrite</kbd> rule on the Document or Product, the
+			<kbd>Reconciliator</kbd> program will compute impacted Connections 
+			in ENOVIA and will log their deletion at next save. With the same 
+			mechanism, the program will log as new all CATIA connections. Thus, 
+			at next save, CATIA connections will replace existing ENOVIA ones.<br>
+			In case of <kbd>Reload</kbd> rule on the Document or Product, the
+			<kbd>Reconciliator</kbd> program will refresh CATIA session with 
+			connections published in ENOVIA.</li>
+       </ul></td>
+     </tr>
+     </table>
+ </div>
+ 
+ </body>
+
+</html>
+

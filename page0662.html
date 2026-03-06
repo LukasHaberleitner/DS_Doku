@@ -1,0 +1,372 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Data Upgrade for Large Assemblies Performance</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+ </head>
+
+ <body>
+
+ <h1>Data Upgrade for Large Assemblies Performance<a name="ix-utilities::Data Upgrade for Large Assemblies Performances"></a><a name="CATAsmUpgrade.UpgradeBatchFrame"></a>
+ </h1>
+ <table border="0" cellpadding="5" cellspacing="0" style="border-collapse: collapse">
+   <tr>
+     <td valign="top" align="left">
+     <img border="0" src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+     <td valign="top" align="left">In Releases 10, 11 and 12, several projects 
+     have been conducted to reduce the amount of memory required for an assembly 
+     in specific scenarios.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left"></td>
+     <td valign="top" align="left">All those scenarios start with loading the 
+     assembly in visualization mode, and allows you to:</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">
+     <ul>
+       <li>To stay in visualization mode (actually product mode, typically from 
+       10% to 15% more memory consumption than visualization mode) and to get 
+       the up-to-date status of the assembly, with constraints, design in 
+       context or knowledgeware relations.</li>
+       <li>To switch to Brep mode for assembly constraint creation, for drawing 
+       update.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">The major benefit of those enhancements is to 
+     lower the required amount of memory used in those typical scenarios. The 
+     drafting creation can start at a much lower memory point, leaving enough 
+     memory for the necessary processing to generate the drawing.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">Yet, the benefit of those enhancements is 
+     only available with newly created data. This means that all our current 
+     customers, using Releases 8 or 9, do not benefit from them, unless they 
+     recreate their data... or migrate it, thanks to this new development.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">
+     <h2>Needed Options</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left"></td>
+     <td valign="top" align="left">Select <font color="#666666"><b>Tools &gt; Options...</b></font> menu item:<ul>
+       <li>Cache Management on:<ul>
+         <li>Select the <kbd>Infrastructure</kbd> category.</li>
+         <li>Select the <kbd>Product Infrastructure</kbd> sub-category.</li>
+         <li>Select the <kbd>Cache Management</kbd> tab.</li>
+         <li>See
+         <a href="page3310.html">Cache 
+         Management for CATProduct and CATProcess Document</a>.</li>
+       </ul>
+       </li>
+       <li>Load Referenced documents:<ul>
+         <li>Select the <kbd>General</kbd> category.</li>
+         <li>Select the <kbd>General</kbd> sub-category.</li>
+         <li>Select the <kbd>General</kbd> tab.</li>
+         <li>See
+         <a href="page3311.html">
+         Loading of Referenced Document</a>.</li>
+       </ul>
+       </li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">
+     <h2>Before You Begin</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">
+     <img border="0" src="b35doc/english/online/icons_C2/common/abasic.gif" width="32" height="32"></td>
+     <td valign="top" align="left">The upgrade macro/batch might fail for very 
+     large assembly, in this case we suggest you to upgrade its subassemblies 
+     before.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">
+     <h2>Macro Usage</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left"></td>
+     <td valign="top" align="left">The macro is delivered in the application 
+     runtime view 
+     (./operating_system/VBScript/UpgradeActiveDocumentMacro.CATScript)</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">
+     <ol class="task">
+       <li>
+       <p class="task">Launch the application.</li>
+       <li>
+       <p class="task">Open the assembly to be upgraded (CATProduct document).</li>
+       <li>
+       <p class="task">SendTo if you want to keep the original data.</li>
+       <li>
+       <p class="task">Close the original assembly.</li>
+       <li>
+       <p class="task">Open the copy.</li>
+       <li>
+       <p class="task">Launch Macro (Alt-F8 + 
+       UpgradeActiveDocumentMacro.CATScript)</li>
+       <li>
+       <p class="task">Save Management.</li>
+       <li>
+       <p class="task">Close the application.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">
+     <h2>Batch Usage</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left"></td>
+     <td valign="top" align="left">The batch is delivered in the application 
+     runtime view (./OS_a/code/bin), where OS_a is:<ul>
+       <li>intel_a</li>
+       <li>aix_a</li>
+       <li>hpux_b</li>
+       <li>irix_a</li>
+       <li>solaris_a. </li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left"></td>
+     <td valign="top" align="left">The syntax of the command is as follows:</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left"><code>catstart -run &quot;CATAsmUpgrade 
+     [-c|--check] [-f|--force] [-h|--help] [-n|--no-copy] [-o|--output-dir 
+     TargetDirectory]<br>
+     [-p|--path ConcatenationPath] [-s|--stats] [-v|--verbose] DocumentList&quot;</code></td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">
+     <img src="b35doc/english/online/icons_C2/common/abasic.gif" width="32" height="32"></td>
+     <td valign="top" align="left">The CATAsmUpgrade and its related options 
+     must be included between double-quotes when using the catstart command.<br>
+     For more information about catstart command see
+     <a target="ds_doc2" href="page1360.html">
+     Starting a Session on Windows</a> or
+     <a target="ds_doc2" href="page1361.html">
+     Starting a Session on UNIX</a>.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">
+     <table border="0" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+       <tr>
+         <td align="left" valign="top" width="30%" class="code"><kbd>-c</kbd> or
+         <kbd>--check</kbd></td>
+         <td align="left" valign="top" width="70%" class="code">Prints for each 
+         document its upgrade status<i>.<br>
+         </i>This option performs a check only and disables -f and -n options.</td>
+       </tr>
+       <tr>
+         <td align="left" valign="top" width="30%" class="code2"><kbd>-f</kbd> 
+         or <kbd>--force</kbd></td>
+         <td align="left" valign="top" width="70%" class="code2">Forces the 
+         CATPart documents upgrade to take benefit of Semantic Unstreaming.</td>
+       </tr>
+       <tr>
+         <td align="left" valign="top" width="30%" class="code"><kbd>-h</kbd> or
+         <kbd>--help</kbd></td>
+         <td align="left" valign="top" width="70%" class="code">Displays the 
+         help.</td>
+       </tr>
+       <tr>
+         <td align="left" valign="top" width="30%" class="code2"><kbd>-n</kbd> 
+         or <kbd>--no-copy</kbd></td>
+         <td align="left" valign="top" width="70%" class="code2">Overwrites 
+         input data. This option disables -o option.</td>
+       </tr>
+       <tr>
+         <td align="left" valign="top" width="30%" class="code"><kbd>-o</kbd> or
+         <kbd>--output-dir <i>TargetDirectory</i></kbd></td>
+         <td align="left" valign="top" width="70%" class="code">Defines the 
+         target directory for upgraded documents.<br>
+         The default location is C:\temp for Windows and /tmp for Unix.</td>
+       </tr>
+       <tr>
+         <td align="left" valign="top" width="30%" class="code2"><kbd>-p</kbd> 
+         or <kbd>--path <i>ConcatenationPath</i></kbd></td>
+         <td align="left" valign="top" width="70%" class="code2">Defines the 
+         paths where to find relative documents and dependencies. Paths are 
+         separated by a semi-colon.<br>
+         This option disables the application search order specifications.</td>
+       </tr>
+       <tr>
+         <td align="left" valign="top" width="30%" class="code"><kbd>-s</kbd> or
+         <kbd>--stats</kbd></td>
+         <td align="left" valign="top" width="70%" class="code">Prints 
+         statistics at the end of upgrade.</td>
+       </tr>
+       <tr>
+         <td align="left" valign="top" width="30%" class="code2"><kbd>-v</kbd> 
+         or <kbd>--verbose</kbd></td>
+         <td align="left" valign="top" width="70%" class="code2">Verboses 
+         output.</td>
+       </tr>
+       <tr>
+         <td align="left" valign="top" width="30%" class="code"><i><kbd>
+         DocumentList</kbd></i></td>
+         <td align="left" valign="top" width="70%" class="code">The list of 
+         CATProduct documents to be upgraded. Document name containing blank 
+         character must be included between double quotes.</td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">
+     <h2>Batch Monitor Usage</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left"></td>
+     <td valign="top" align="left">The batch monitor allows you define this 
+     batch through an user interface.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">
+     <ol class="task">
+       <li>
+       <p class="task">Select <kbd>Tools &gt; Utilities...</kbd> menu item.</li>
+       <li>
+       <p class="task">In the <kbd>Utilities</kbd> tab of the <kbd>Batch Monitor</kbd> 
+       dialog box, double-click the <kbd>CATAsmUpgadeBatch</kbd> utility.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">
+     <p style="margin-left: 40">The <kbd>CATAsmUpgadeBatch</kbd> dialog box 
+     appears.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">
+     <img border="0" src="b35doc/english/online/asmug_c2/images/db022NLS.gif" hspace="40" width="472" height="373"></td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">
+     <ol class="task">
+       <li value="3">
+       <p class="task">Click <kbd>Select Documents to process</kbd> button.</li>
+       <li>
+       <p class="task">In the <kbd>File Selection</kbd> dialog box which 
+       appears, select the desired CATProduct documents to be processed.</li>
+       <li>
+       <p class="task">Keep the <kbd>Overwrite Document</kbd> option checked if 
+       you wish, otherwise you must specify the <kbd>Target Directory</kbd> 
+       field.</li>
+       <li>
+       <p class="task">Select the desired action: <kbd>Upgrade Documents</kbd> 
+       or <kbd>Check Documents Only</kbd>.</li>
+       <li>
+       <p class="task">Check the <kbd>Verbose Logs</kbd> option if you whish to 
+       verbose the resulting log.</li>
+       <li>
+       <p class="task">Check the <kbd>Force upgrade to take benefit of Semantic 
+       Unstreaming</kbd> option to force the CATPart documents upgrade to take 
+       benefit of Semantic Unstreaming.</li>
+       <li>
+       <p class="task">Click <kbd>Run</kbd> to upgrade or check your CATProduct 
+       documents.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">
+     <h2>Result File Location</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">The result file location is available on:<ul>
+       <li>Windows in: C:\temp\upgrade.log</li>
+       <li>Unix in: /tmp/upgrade.log</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">
+     <h2>Example</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left"></td>
+     <td valign="top" align="left">Run the batch or the macro with the following
+     <a href="b35doc/english/online/asmug_c2/samples/Articulation.CATProduct">Articulation.CATProduct </a>
+     document.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">
+     <p style="margin-left: 40">The result file displays the following result:</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left">&nbsp;</td>
+     <td valign="top" align="left">
+     <table border="0" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="50%" id="AutoNumber1">
+       <tr>
+         <td width="32">&nbsp;</td>
+         <td class="code">[I] CATAsmProxyUpgrader Reporting:<br>
+         Number of Constraint: 8<br>
+         Number of tried upgraded Constraint: 7<br>
+         Number of successfully upgraded Constraint: 7<br>
+         Number of unsuccessfully upgraded Constraint: 0<br>
+         Number of Publication: 0<br>
+         Number of tried upgraded Publication: 0<br>
+         Number of successfully upgraded Publication: 0<br>
+         Number of unsuccessfully upgraded Publication: 0<br>
+         Number of Context: 0<br>
+         Number of tried upgraded Context: 0<br>
+         Number of successfully upgraded Context: 0<br>
+         Number of unsuccessfully upgraded Context: 0<br>
+         [I] CATKweProxyUpgrader Reporting:<br>
+         Number of Relation: 0<br>
+         Number of tried upgraded Relation: 0<br>
+         Number of successfully upgraded Relation: 0<br>
+         Number of unsuccessfully upgraded Relation: 0</td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

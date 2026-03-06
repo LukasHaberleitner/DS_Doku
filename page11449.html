@@ -1,0 +1,215 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+	<head>
+	<meta name="MonocodingType" content="0">
+	<meta name="MonocodingFlag" content="C2D2">
+	<meta http-equiv="Content-Language" content="en-us">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+	<meta name="ProgId" content="FrontPage.Editor.Document">
+	<title>Feeds and Speeds</title>
+	<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+	<style type="text/css">
+.style1 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+	</head>
+
+	<body>
+
+	<h1>Feeds and Speeds</h1>
+	<p align="left"><font color="#000000">Cutting conditions (feed/tooth and cutting 
+	speed) can be included in a tools catalog. This data is converted into machining 
+	feedrate and spindle speed parameters to be used in machining operations by 
+	means of formula.</font></p>
+	<p align="left"><font color="#000000">For an example of such a tools catalog, 
+	see FeedsAndSpeeds.xls file delivered in the .../startup/Manufacturing/Samples 
+	folder.</font></p>
+	<p align="left"><font color="#000000">Cutting conditions are also available 
+	in the <a href="page11359.html#CuttingCond">Feeds &amp; Speeds tab of the Tool 
+	Definition dialog box</a>.</font></p>
+	<p align="left"><font color="#000000"><a name="WNComputeFS"></a>In the <kbd>
+	Feeds and Speeds</kbd> tab of milling operations, the Rough or Finish quality 
+	of the operation and the tool data are taken into account for computing the 
+	feeds and speeds.</font></p>
+	<h2>Cutting Conditions</h2>
+	<a name="ix-cutting conditions"></a><p><font color="#000000">The following
+	<a name="WNfeedspeed"></a><a name="ix-cutting speed, cutting condition"></a>
+	<a name="ix-feedrate/tooth, cutting condition"></a>
+	<a name="ix-depth of cut, cutting condition"></a>cutting conditions data are 
+	supported: <b>cutting speed (Vc)</b>, <b>feedrate/tooth (Sz)</b>, and <b>depth 
+	of cut</b>. </font>&nbsp;</p>
+	<p><font color="#000000">Cutting conditions for drilling tools:</font></p>
+	<blockquote>
+			<p><font color="#000000">MFG_VC: cutting speed in mm/mn<br>
+			MFG_SZ: feedrate/tooth in mm/rev<br>
+			MFG_PP: Depth of cut.</font></p>
+	</blockquote>
+	<p><font color="#000000">Roughing and Finishing cutting conditions for milling 
+	tools:</font></p>
+	<blockquote>
+			<p><font color="#000000">MFG_VC_FINISH: finishing cutting speed in mm/mn<br>
+			MFG_SZ_FINISH: finishing feedrate/tooth in mm/rev<br>
+			<br>
+			MFG_VC_ROUGH: roughing cutting speed in mm/mn<br>
+			MFG_SZ_ROUGH: roughing feedrate/tooth in mm/rev.</font></p>
+	</blockquote>
+	<p><font color="#000000">Roughing and Finishing cutting conditions for lathe 
+	inserts:</font></p>
+	<blockquote>
+			<p><font color="#000000">MFG_VC_FINISH: finishing cutting speed in mm/mn<br>
+			MFG_SZ_FINISH: finishing feedrate/tooth in mm/rev<br>
+			MFG_SZ_AA_FINISH: axial depth of cut for finishing<br>
+			</font><font color="#000000">MFG_SZ_AR_FINISH: axial depth of cut for 
+			finishing<br>
+			<br>
+			MFG_VC_ROUGH: roughing cutting speed in mm/mn<br>
+			MFG_SZ_ROUGH: roughing feedrate/tooth in mm/rev<br>
+			</font><font color="#000000">MFG_SZ_AA_ROUGH: axial depth of cut for 
+			roughing<br>
+			</font><font color="#000000">MFG_SZ_AR_ROUGH: axial depth of cut for 
+			roughing.</font></p>
+	</blockquote>
+	<p><font color="#000000">When a tool is selected for an operation,
+	<a name="ix-spindle speed (N)"></a><a name="ix-machining feedrate (Vf)"></a>
+	<b>spindle speed (N)</b> and <b>machining feedrate (Vf)</b> are computed using 
+	the following formula:&nbsp; </font></p>
+	<blockquote>
+			<p><font color="#000000"><b>N (in rev/mn)&nbsp; = Vc / (D * PI)</b><br>
+			where: <br>
+			D = tool diameter for milling/drilling in mm<br>
+			Vc = cutting speed of the tool or insert.<br>
+			<br>
+			For turning operations, N is automatically set in mm/min with the value 
+			of the insert&#39;s cutting speed.</font></p>
+			<p><font color="#000000"><b>Vf (in mm/rev) = Sz * N * Z </b><br>
+			where:<br>
+			Sz = feedrate/tooth on the tool<br>
+			N = spindle speed in rev/min <br>
+			Z = number of teeth on the tool (MFG_NB_OF_FLUTES) or 1 for a lathe 
+			insert.</font></p>
+	</blockquote>
+	<p><font color="#000000">Finishing data is used if the operation is finishing 
+	type (for example, Lathe Profile Finishing) or if it includes a finishing feedrate.
+	</font></p>
+	<p><font color="#000000">If the tool data is set to 0 (that is, if there are 
+	no specified values in the catalog), then spindle speed N and machining feedrate 
+	Vf are not computed on the operation. <br>
+	</font>In such cases, if <kbd>Automatic Compute from Tooling Feeds and Speeds</kbd> 
+	is set, the last values set on this operation are retained. If a new operation 
+	is created, a default value is used.</p>
+	<h2><a name="FSUpdate"></a>Update of Feeds and Speeds on Machining Operation</h2>
+	<h3>Operation with a Tool</h3>
+	<p>When you modify a feeds and speeds attribute on the tool, the feeds and speeds 
+	values of the operation are not automatically updated. </p>
+	<p>Feeds &amp; speeds of the operation will be updated according to tooling feeds 
+	and speeds:</p>
+	<ul>
+		<li>when you select a new tool</li>
+		<li>by selecting the <kbd>Automatic Compute</kbd> check boxes in the Feeds 
+		and Speeds tab of the operation</li>
+		<li>by clicking the <kbd>Compute</kbd> button located in the Feeds and Speeds 
+		tab of the operation.</li>
+	</ul>
+	<p><a name="WNR9FSCompute"></a>Two check boxes allow operation feeds and speeds 
+	values to be updated automatically when feeds and speeds values of the tool 
+	are modified.</p>
+	<div align="left">
+		<table border="0">
+				<tr>
+						<td>
+						<img src="b35doc/english/online/mfgug_c2/images/dbfeed01NLS.gif" width="273" height="218" class="style1">
+						<img src="b35doc/english/online/mfgug_c2/images/dbspeed01NLS.gif" width="267" height="113" class="style1"></td>
+				</tr>
+		</table>
+	</div>
+	<p>If they are selected, the feeds and speeds values of the operation will be 
+	updated when the feeds and speeds values of the tool are modified.</p>
+	<p>These two check boxes work separately: if feedrate <kbd>Automatic Compute</kbd> 
+	is checked and not the spindle <kbd>Automatic Compute </kbd>then the only the 
+	feedrate values are computed. If they are not selected, the automatic update 
+	will not be done.</p>
+	<p>When you modify the feeds and speeds values on a tool, all existing operations 
+	with these check boxes selected that use this tool (or an assembly using this 
+	tool) will be recomputed.</p>
+	<p>The <kbd>Compute</kbd> button allows you to force the update of the operation 
+	values if one or both check boxes are not selected.</p>
+	<p>The feed and speed values are computed according to the <kbd>Quality</kbd> 
+	setting on the operation.</p>
+	<p>
+	<img src="b35doc/english/online/mfgug_c2/images/dbfeedcompute01NLS.gif" width="267" height="31" class="style1"></p>
+	<p>Possible <kbd>Quality</kbd> setting are:</p>
+	<ul>
+		<li><kbd>Rough</kbd>: rough values of the tool are taken into account</li>
+		<li><kbd>Finish</kbd>: finish values of the tool are taken into account</li>
+		<li><kbd>Either</kbd>: no computation will be done for the operation&#39;s feeds and speeds.</li>
+	</ul>
+	<p>In
+	<a target="_blank" href="page1015.html">
+	Tools &gt; Options &gt; Machining &gt; Resources</a>, settings are available to define 
+	how the <kbd>Automatic Compute</kbd> check boxes in the <kbd>Feeds and Speeds</kbd> 
+	tab are to be initialized for creating new operations.</p>
+	<h3>Operation without Tool</h3>
+	<p>When a tool is selected for the machining operation, the operation is updated 
+	with the new tool&#39;s feeds and speeds data.</p>
+	<h3><a name="R18BrokenTP"></a>Feeds and Speeds Change and tool path Computation</h3>
+	<p>Depending on the type of operation and feedrate, when the user modifies a 
+	feedrate or spindle speed, the tool path is not broken and is updated with the 
+	new value of feedrate or spindle speed. The user can therefore change feeds 
+	and speeds without needing to recompute the tool path.</p>
+	<p>Please note, however, that the tool path is broken when the user modifies:</p>
+	<ul>
+		<li>a local feedrate</li>
+		<li>a plunge, approach or retract feedrate in an axial machining operation</li>
+		<li>feedrate reduction in corners</li>
+		<li>feedrates defined in turning operations.</li>
+	</ul>
+	<p>In these cases, the tool path should be recomputed.</p>
+	<h3>
+	<a name="R19NCG05"></a>Transition 
+	Feedrates</h3>
+	<p>You can locally set the feedrate for a transition path to a machining operation 
+	B from a machining operation A or from a tool change activity. This is done 
+	by selecting the <kbd>Transition</kbd> check box in the Machining Operation 
+	dialog box for operation B.</p>
+	<p>The transition feedrate type (machining, approach, retract, finishing, and 
+	so on) can then be selected from the combo box. If a local transition feedrate 
+	is required, you must enter the desired feedrate value. </p>
+	<p><img src="b35doc/english/online/mfgug_c2/images/dbfeed02NLS.gif" width="260" height="52" class="style1"></p>
+	<p>The locally defined feedrate value will be displayed in the Tool Path Replay 
+	dialog box and in the APT output. The corresponding color will be used for the 
+	transition path.</p>
+	<p>The color of the operation transition path during replay will depend on the 
+	selected feedrate type (as defined in the
+	<a href="page1014.html">Tools &gt; Options 
+	&gt; Machining &gt; General</a>).</p>
+	<p>If the <kbd>Transition</kbd> check box in the Machining Operation dialog 
+	box for operation B is not selected, the transition feedrate is determined as 
+	follows: </p>
+	<ul>
+		<li>If a clearance macro is activated on operation B, the feedrate of the 
+		clearance path is used for the transition path.<br>
+		Note: If operation B is an axial machining operation, the feedrate is always 
+		set to RAPID.</li>
+		<li>If no clearance macro is activated on operation B, the feedrate depends 
+		on the setting of the <kbd><a href="page11463.html#WNR11RAPIDatSTART">
+		<span style="font-weight: 400">Set Rapid feedrate at start of operations</span>
+		</a></kbd>option in the Generate NC Output dialog box. <ul>
+			<li>If the option is set, a Rapid feedrate (red) is used for the transition 
+			path </li>
+			<li>If the option is not set, the first feedrate defined on operation 
+			B is used for the transition path (for example, approach or machining).<br>
+			Note: If operation B is an axial machining operation, the feedrate is 
+			always set to RAPID.</li>
+		</ul>
+		</li>
+		<li>If operation B is a Tool Change or Head Change, the transition 
+		feedrate is set to RAPID.</li>
+	</ul>
+
+	</body>
+
+</html>
+

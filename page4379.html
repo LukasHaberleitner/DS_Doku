@@ -1,0 +1,155 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Understanding Exact Measure Computation</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta name="Microsoft Border" content="none, default">
+	<style>
+<!--
+div.Section1
+	{page:Section1;}
+.style1 {
+	text-align: left;
+}
+-->
+</style>
+<script type="text/javascript">
+
+function OpenLocation(link)
+{
+document.location.href = link;
+}
+</script>
+</head>
+
+ <body>
+
+ <h1><a name="hj-top"></a>Understanding Exact Measurement Computation
+ </h1>
+ <table Border="0" CELLSPACING="1" valign="top" width="765">
+   <tr valign="top" BORDER="0">
+     <td width="761">
+     <p class="task">This section provides detailed information about the exact 
+		measurement computation.<br>
+		<br>
+		Measure between command permits exact measure on geometrical entities. 
+		The measure computation is based on the geometrical modeler which 
+		specifies a tolerance value for creating geometrical objects. This 
+		tolerance value must be taken into account when performing exact 
+		measurements as it impacts greatly the measure results.</p>
+		<ul>
+			<li>
+			<p class="task"><a href="#hj-tolerancevaluedefinition">Understanding the 
+			Tolerance Value</a></p></li>
+			<li>
+			<p class="task"><a href="#hj-impactmeasurebetween">Impact of the Tolerance 
+			Value on Measure Between 
+			Computation in Exact Mode</a></p></li>
+			<li>
+			<p class="task"><a href="#hj-impactmeasureitem">Impact of the Tolerance 
+			Value on Measure Item 
+			Computation in Exact Mode</a></p>
+			</li>
+			<li>
+			<p class="task"><a href="#hj-relativetolerance">The Relative 
+			Tolerance for Measure Item &amp; Measure Inertia in Exact Mode (Surfaces 
+			&amp; Volumes)</a></p></li>
+		</ul>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <h2><a name="hj-tolerancevaluedefinition"></a>Understanding the Tolerance 
+		Value</h2>
+     <p class="task">The tolerance value is the threshold value under which two 
+		geometrical points coincide. In other words, this is <br>
+		the lowest admissible length under which a geometrical object can be 
+		created.</p>
+		<p class="task"><br>
+		This tolerance value specifies the minimum length for a valid object. It 
+		is set to 10^-3 unit. As the unit is expressed in mm, lines with length 
+		shorter than 1micro-m are not valid.<br>
+		For example, curves or edges whose length is below the tolerance value 
+		are not created. <br>
+		<br>
+		The tolerance value specified by the geometric modeler leads to manage 
+		carefully:</p>
+		<ul>
+			<li>
+			<p class="task">coincidence issues (i.e. when the distance 
+			value between two geometrical points is below the tolerance value, 
+			the two points coincide.</p></li>
+		<li>
+		<p class="task">impacts on Boolean operators (e.g. edges with a 
+		length value below the tolerance value cannot be created).<br>
+		<br>
+		The figure below show the impact of the tolerance value at creation 
+		time:<br>
+		<br>
+		On the top row, if D &gt; tolerance value, a new face is created.</p>
+		<p class="task">On the bottom row, if D &lt; tolerance value the face is 
+		separated into two distinct faces. </p>
+		<p class="task"><br>
+		<img border="0" src="b35doc/english/online/cfyugmeasure_c2/images/understandexactmeasurecomputationNLS.gif" width="394" height="253"></p></li>
+		</ul>
+		<h2><a name="hj-impactmeasurebetween"></a>Impact of the Tolerance Value on 
+		Measure Between 
+			Computation in Exact Mode</h2>
+		<p>It is not possible to guarantee the validity of measure results when 
+		those are below the tolerance value specified by the geometrical modeler 
+		(0.001mm).</p>
+		<h2><a name="hj-impactmeasureitem"></a>Impact of the Tolerance Value on 
+		Measure Item 
+			Computation in Exact Mode</h2>
+		<p>Surfaces, Arcs, curves and lines are created with respect to the tolerance 
+		value specified by the geometrical modeler.</p>
+		<p>The Measure Item capability may detect that the geometry 
+		corresponds to an arc when the curvature radius is changing inside the 
+		limits of the tolerance 
+		value specified by the geometrical modeler.</p>
+		<table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" id="table1">
+			<tr>
+				<td>
+		<img border="0" src="b35doc/english/online/cfyugmeasure_c2/images/illustration01NLS.gif" width="278" height="463"></td>
+				<td>
+				<img border="0" src="b35doc/english/online/cfyugmeasure_c2/images/illustration02NLS.gif" width="270" height="453"></td>
+			</tr>
+		</table>
+		</td>
+   </tr>
+   <tr>
+     <td height="38">
+     <h2 align="center">
+     &nbsp;<a name="hj-relativetolerance"></a>The Relative Tolerance for Measure 
+		Item &amp; Measure Inertia in Exact Mode (Surfaces &amp; Volumes)</h2>
+		<p class="style1">
+     The relative tolerance of 1% is used in the measure computation when you 
+		measure surfaces and volumes in exact mode.<br>
+		<br>
+		<table style="width: 100%">
+		<tr>
+			<td style="width: 42px">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+			<td>In the Knowledge Base<br>
+			<a href="#" onClick="OpenLocation('https://kb.dsxclient.3ds.com/360-mashup-ui/page/document?q=docid:QA00000043176')">Variation in the measure results for the same object measured at different instances</a>.</td>
+		</tr>
+		</table>
+		<p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p><br>
+ </p>
+ <h1></h1>
+
+ </body>
+
+</html>
+

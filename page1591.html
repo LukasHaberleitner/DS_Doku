@@ -1,0 +1,237 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Scenario for Printer Administration</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+ </head>
+
+ <body>
+
+ <h1><font color="#282187" face="Verdana">Scenario for Printer 
+ Administration</font><font face="Arial, Arial, Helvetica" color="#282187">
+ </font></h1>
+ <p align="center">&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" height="2136" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td width="32" height="42">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td width="1362" height="42">This scenario gives an example of 
+     printer administration and explains what happens when three different 
+     administrators successively protect printer directories and lock printer 
+     creation directories and describes the impact on the end user inheriting 
+     these settings.</td>
+   </tr>
+   <tr valign="middle" BORDER="0">
+     <td width="32" height="50">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td width="1362" height="50">We assume that you are already 
+     familiar with
+     <a target="ds_doc2" href="page1168.html#hj-SettingsConcatInherit">
+     concatenation mechanisms</a> and 
+		<a target="ds_doc2" href="page1199.html">locking/unlocking settings</a>.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td width="32" height="166">&nbsp;</td>
+     <td width="1362" height="166">The scenario involves three 
+     administration levels and one end user:<ul>
+       <li><b>Admin1</b> (the higher administration level) has reset 
+       CATReferenceSettingPath to E:\users\Admin1:<br>
+       <code>${CATReferenceSettingPath}=E:\users\Admin1</code></li>
+       <li><b>Admin2</b> has reset CATReferenceSettingPath to E:\users\Admin2:<br>
+       <code>${CATReferenceSettingPath}=E:\users\Admin1;E:\users\Admin2</code></li>
+       <li><b>Admin3</b> has reset CATReferenceSettingPath to E:\users\Admin3:<br>
+       <code>
+       ${CATReferenceSettingPath}=E:\users\Admin1;E:\users\Admin2;E:\users\Admin3</code></li>
+       <li><b>User1</b> is the end user.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td width="32" height="1843">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="middle" width="1362" height="1843">
+     <ol class="task">
+       <li>
+       <p class="task"><b>Admin1</b> accesses the <kbd>
+       <span style="font-weight: 400">
+       <a href="page0926.html">Printers</a></span></kbd> 
+       tab and:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1" height="378">
+           <tr>
+             <td height="156">
+             <ul>
+               <li>
+               <p class="task">Protects the paths referenced by 
+               ${CATReferenceSettingPath}</li>
+               <li>
+               <p class="task">Does not protect the paths referenced by 
+               ${CATUserSettingPath}</li>
+               <li>
+               <p class="task">Does not lock the Printer Directory List area</li>
+             </ul>
+             <ul>
+               <li>
+               <p class="task">Sets ${CATReferenceSettingPath} as the printer 
+               creation directory.</li>
+             </ul>
+             <p class="task">The result is:</td>
+           </tr>
+           <tr>
+             <td height="216">
+             <img border="1" src="b35doc/english/online/bascugen_C2/images/printersoptions05NLS.gif" width="397" height="205"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="2">
+       <p class="task">Admin1 now creates a printer by selecting <kbd>File &gt; 
+       Printer Setup &gt; Add Printer</kbd>: this new printer is created in:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+           <tr>
+             <td>
+             <p class="task"><code>E:\users\Admin1\Printers</code></p>
+             <blockquote>
+               <blockquote>
+                 <p class="task"></p>
+               </blockquote>
+             </blockquote>
+             <p class="task">&quot;Printers&quot; has been added at the end of the path 
+             because when the printer creation directory has no &quot;Printers&quot; 
+             father directory, the application automatically adds it to the 
+             path.</p>
+             <p class="task"></p>
+             <p class="task">As ${CATReferenceSettingPath} has been protected in 
+             step 1, Admin1 can only display the printer properties but is not 
+             authorized to modify any printer parameter.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="3">
+       <p class="task"><b>Admin2</b>, who inherits locked and unlocked values 
+       from the higher administration level (i.e. Admin1) accesses the <kbd>
+       Printers</kbd> tab and sees that printer directories referenced by 
+       ${CATReferenceSettingPath} have been protected:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3" height="219">
+           <tr>
+             <td height="216">
+             <img border="1" src="b35doc/english/online/bascugen_C2/images/printersoptions05NLS.gif" width="397" height="205"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="4">
+       <p class="task">Admin2 creates a printer and this printer is created 
+       in...</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4">
+           <tr>
+             <td>
+             <p class="task"><code>E:\users\Admin2\Printers</code></p>
+             <p class="task"><br>
+             ... because ${CATReferenceSettingPath} references several concatenated 
+             paths and thus, the new printer is created in the last path.</p>
+             <blockquote>
+               <blockquote>
+                 <p class="task"></p>
+               </blockquote>
+             </blockquote>
+             <p class="task">Admin2 has access to two printers: the one he has 
+             created and the one created by Admin1. <br>
+             He cannot modify the printer parameters of these two printers since 
+             ${CATReferenceSettingPath} has been protected by Admin1 (unless he 
+             cancels the protection by clicking the red symbol
+             <img border="0" src="b35doc/english/online/icons_C2/images/S_PrinterDirProtect.gif" width="16" height="16"> 
+             to make it turn green
+             <img border="0" src="b35doc/english/online/icons_C2/images/S_PrinterDirFree.gif" width="16" height="16">).
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="5">
+       <p class="task"><b>Admin3</b>, who inherits locked and unlocked values 
+       from Admin1 and Admin2, accesses the <kbd>Printers</kbd> tab then:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5" height="519">
+           <tr>
+             <td height="206">
+             <ul>
+               <li>
+               <p class="task">Adds a directory using an environment variable 
+               named ${Admin3PrintersPath} that already references other 
+               printers</li>
+               <li>
+               <p class="task">Locks the new ${Admin3PrintersPath} variable</li>
+               <li>
+               <p class="task">Locks the Printer Directory List area</li>
+               <li>
+               <p class="task">Changes the <kbd>Printer Creation Directory</kbd> 
+               to ${CATUserSettingPath}</li>
+               <li>
+               <p class="task">Locks the <kbd>Printer Creation Directory</kbd>.</li>
+             </ul>
+             <p class="task">The result is now:</td>
+           </tr>
+           <tr>
+             <td height="224">
+             <img border="1" src="b35doc/english/online/bascugen_C2/images/printersoptions06NLS.gif" width="393" height="205"></td>
+           </tr>
+           <tr>
+             <td height="85">This means that Admin3 has access to the printers 
+             created by Admin1 and Admin2 but cannot modify their parameters.<p>
+             Admin3 has also access to the printers referenced by the 
+             ${Admin3PrintersPath} variable but cannot modify them since a 
+             protection has been applied to ${Admin3PrintersPath}.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="6">
+       <p class="task"><b>User1</b>, who inherits values from Admin1, Admin2 and 
+       Admin3, accesses the <kbd>Printers</kbd> tab:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber6" height="242">
+           <tr>
+             <td height="220">
+             <img border="1" src="b35doc/english/online/bascugen_C2/images/printersoptions07NLS.gif" width="405" height="207"></td>
+           </tr>
+           <tr>
+             <td height="16">
+             <p class="task">User1 can use the printers created by Admin1, 
+             Admin2 and Admin3 but cannot modify their parameters.</p>
+             <p class="task">As shown in the above capture, the User1 cannot 
+             modify the data displayed in the Printer Directory List area and in 
+             the <kbd>Printer Creation Directory</kbd> box because they have 
+             been locked by Admin3.</p>
+             <p class="task">Therefore, any printer created by User1 will be 
+             created in ${CATUserSettingPath}, which is the default location, 
+             and User1 will be able to modify their parameters. </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td width="100%" height="35" colspan="2">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

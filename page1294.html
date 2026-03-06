@@ -1,0 +1,275 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Securing the WebSphere Application Server</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1><font color="#282187">Securing the WebSphere Application 
+ Server</font></h1>
+ <table cellSpacing="0" width="100%" border="0" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr>
+     <td vAlign="top" width="3%">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" border="0" width="32" height="32"></td>
+     <td vAlign="top" width="97%">You must secure your WebSphere Application Server so that 
+     every user accessing the web application will be authenticated by their 
+     company LDAP identity. Otherwise, all users logging onto the web 
+     application would be able to access the application without entering a 
+     username and password. They will also arrive in the application with the 
+     username <kbd>Anonymous</kbd>.<p>There are several mechanism for securing the 
+     WAS, for example:</p>
+     <ul>
+       <li>using operating system users (securing via local OS)</li>
+       <li>using an LDAP directory.</li>
+     </ul>
+     <p>This scenario illustrates authentication against an LDAP directory.</p>
+     <p><b>This task requires input relative to an LDAP user which must already 
+     exist in the LDAP directory and must have been created with specific rights. In 
+           our scenario, we used the wpsadmin user set up earlier when 
+           configuring a typical LDAP server. You will be prompted to enter this 
+           user id and password when you later start the WebSphere Administrative 
+           Console.</b><p>For detailed information about this LDAP user, refer 
+     to
+     <a href="page1193.html">
+     <font face="Verdana, Helvetica, sans serif">Configuring and Customizing the LDAP 
+     Repository</font></a>.<h2><a name="hj-SecurityTab"></a>Alternative Methods for <font color="#282187">Securing the WebSphere Application 
+ Server</font></h2>
+     <p>To secure your WebSphere Application Server, two alternative methods are 
+     available:<ul>
+       <li>you can use <kbd>Security</kbd> tab in the <kbd>Deployment Wizard for V5 Web Applications</kbd> 
+       to secure the WAS (with LDAP authentication only) and deploy the 
+       Enterprise Archive file at the same time.<br>
+       Note: you cannot use the <kbd>Security</kbd> tab for the sole purpose of 
+       configuring WAS security: clicking the Finish button in the <kbd>Deployment Wizard for V5 Web Applications</kbd> 
+       also deploys the Enterprise Archive file. Both operations are run 
+       together.</li>
+       <li>or, you can configure security manually using the WebSphere 
+       Administrative Console.</li>
+       </ul>
+       </td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="3%">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td vAlign="top" width="97%">For this task, you will need the following:<blockquote>
+       <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="90%" id="AutoNumber1">
+         <tr>
+           <td width="33%">
+           <p align="center"><b>Variable</b></td>
+           <td width="33%">
+           <p align="center"><b>Signification</b></td>
+         </tr>
+         <tr>
+           <td width="33%" valign="top">
+           <span style="font-weight: 400; font-style: italic">Server User ID</span></td>
+           <td width="33%">user id that will be used to log onto WebSphere 
+           administration console when security will be activated</td>
+         </tr>
+         <tr>
+           <td width="33%" valign="top">
+           <span style="font-weight: 400; font-style: italic">Server User 
+           Password</span></td>
+           <td width="33%">password of the LDAP user used to administrate 
+           WebSphere</td>
+         </tr>
+         <tr>
+           <td width="33%" valign="top">
+           <span style="font-weight: 400; font-style: italic">Host</span></td>
+           <td width="33%">name of the machine on which the LDAP server is 
+           running</td>
+         </tr>
+         <tr>
+           <td width="33%" valign="top">
+           <span style="font-weight: 400; font-style: italic">Port</span></td>
+           <td width="33%">the communication port of the LDAP server</td>
+         </tr>
+         <tr>
+           <td width="33%" valign="top">
+           <span style="font-weight: 400; font-style: italic">Base Distinguished 
+           Name</span></td>
+           <td width="33%">&nbsp;</td>
+         </tr>
+         <tr>
+           <td width="33%" valign="top">
+           <span style="font-weight: 400; font-style: italic">Bind Distinguished 
+           Name</span></td>
+           <td width="33%">LDAP user having bind privilege</td>
+         </tr>
+         <tr>
+           <td width="33%" valign="top">
+           <span style="font-weight: 400; font-style: italic">Bind Password</span></td>
+           <td width="33%">password of the LDAP user having bind privilege</td>
+         </tr>
+         <tr>
+           <td width="33%" valign="top">
+           <span style="font-weight: 400; font-style: italic">Domain Name</span></td>
+           <td width="33%">domain name</td>
+         </tr>
+         <tr>
+           <td width="33%" valign="top">
+           <span style="font-weight: 400; font-style: italic">&lt;was_install_dir&gt;</span></td>
+           <td width="33%">directory of the WAS installation</td>
+         </tr>
+         <tr>
+           <td width="33%" valign="top">
+           <span style="font-weight: 400; font-style: italic">&lt;admin_user&gt;</span></td>
+           <td width="33%">name of user chosen to administrate WebSphere</td>
+         </tr>
+         <tr>
+           <td width="33%" valign="top">
+           <span style="font-weight: 400; font-style: italic">&lt;admin_password&gt;</span></td>
+           <td width="33%">password of user chosen to administrate WebSphere</td>
+         </tr>
+       </table>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="3%">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" border="0" width="32" height="32"></td>
+     <td vAlign="top" width="97%">
+     <h2>Securing the WebSphere Application Server Using the Security Tab</h2>
+     <p>Once that you have started the <kbd>Deployment Wizard for V5 Web Applications</kbd> 
+     as described in <a href="page1290.html">Creating the Enterprise 
+		Archive File</a>:</p>
+     <ol>
+       <li><font face="Verdana, Helvetica, sans serif">Select the </font><font face="Verdana"> <kbd>Security</kbd></font><font face="Verdana, Helvetica, sans serif"> tab:</font><p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/WASSetupUI_Security01_NLS.gif" width="809" height="419"><br>
+		<br>
+       <li><font face="Verdana, Helvetica, sans serif">Check the </font><font face="Verdana"> <kbd>Configure WebSphere security</kbd></font><font face="Verdana, Helvetica, sans serif"> 
+       option:<br>
+       <br>
+       <img border="0" src="b35doc/english/online/basil_c2/images/WASSetupUI_Security02_NLS.gif" width="809" height="419"><br>
+&nbsp;</font><li><font face="Verdana, Helvetica, sans serif">Provide the required input:</font><p>
+		<kbd>Deployment target</kbd>: name of cell on machine on which the WAS is 
+       running, for example:</p>
+		<p><code>Cell: STEVANDSY</code></p>
+		<p><kbd>LDAP Server Type</kbd>:</p>
+		<p>Select the LDAP server type.</p>
+		<p><kbd>LDAP Host name &amp; port</kbd>: name of the machine on which the LDAP server is 
+       running, and the LDAP server's port number, separated by a &quot;:&quot; like this:</p>
+		<p><code>papouvn2dsy:389</code></p>
+		<p><kbd>Single signon (SSO) domain name</kbd>: Enter a domain name, for 
+       example like this:<br><br><span style="font-weight: 400"><code>dsy.ds</code></span></p>
+		<p><kbd>Base Distinguished Name (DN)</kbd>: depends on the LDAP server 
+       configuration. In our scenario:</p>
+		<p><code>cn=users,o=mycompany.org</code></p>
+		<p><kbd>User Filter</kbd>: must be compatible with the LDAP schema. The 
+		default value is:</p>
+		<p><code>(&amp;(uid=%v)(objectclass=ePerson))</code></p>
+		<p>Because we imported an LDAP file with <code>objectclass=Person </code>(described in 
+		<a href="page1193.html">Configuring and 
+		Customizing the LDAP Repository</a>), it should be set to:</p>
+		<p><code>(&amp;(uid=%v)(objectclass=Person))</code></p>
+		<p><kbd>Group Distinguished Name (DN)</kbd>: depends on the LDAP server configuration. 
+       In our scenario:</p>
+		<p><code>cn=groups,o=mycompany.org</code></p>
+		<p><kbd>Group Filter</kbd>: must be compatible with the LDAP schema. The 
+		default value is:</p>
+		<p><code>(&amp;(cn=%v)(|(objectclass=groupOfNames)(objectclass=groupOfUniqueNames)))</code></p>
+		<p>Because in <a href="page1193.html">Configuring and 
+		Customizing the LDAP Repository</a> we illustrate an LDAP file for 
+		groups with <code>objectclass==groupOfNames </code>and<code> objectclass=groupOfUniqueNames</code>, 
+		leave the default value.</p>
+		<p><kbd>Server User ID</kbd>: user id that will be used to log onto the 
+       WebSphere Administrative Console once security has been activated. In our 
+       scenario:</p>
+		<p><code>uid=wpsadmin,cn=users,o=mycompany.org</code></p>
+		<p><kbd>Server User Password</kbd>: password of the LDAP user used to 
+       administrate WebSphere</p>
+		<p><kbd>Bind Distinguished Name:</kbd> LDAP user having bind privilege, for 
+       example in our scenario:</p>
+		<p><code>cn=root</code><br><br><kbd>Bind Password:</kbd> password of the LDAP user having bind 
+       privilege.</p>
+		<p>The end result looks something like this:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/WASSetupUI_Security03_NLS.gif" width="809" height="419"><br>&nbsp;</p>
+		<li><font face="Verdana, Helvetica, sans serif">Click the </font>
+		<font face="Verdana"><kbd>Finish</kbd></font><font face="Verdana, Helvetica, sans serif"> button.</font></li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p><b>Note that this both deploys the EAR file and secures the WAS at 
+           the same time: you cannot use the wizard for the sole purpose of 
+           securing the WAS.</b></p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="3%">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" border="0" width="32" height="32"></td>
+     <td vAlign="top" width="97%">
+     <h2>Checking Security Using the WebSphere 
+     Administrative Console</h2>
+     <p>Once you have secured the WAS using the <kbd>Security</kbd> tab in the <kbd>Deployment Wizard for V5 Web Applications</kbd>, 
+		you can then start the WebSphere Administrative Console and follow the 
+		instructions below to check that the WAS has been correctly secured. </p>
+		<p>Note: this is not mandatory. All necessary security customizations 
+		are performed automatically by your settings in the <kbd>Security</kbd> 
+		tab. You should not have to perform any manual edits in the console.</p>
+     <h3>Restarting the WebSphere Application Server with Security Activated</h3>
+     <p>At this stage, the WebSphere Application Server is still 
+       running without security.</p> 
+     
+			
+				
+                <ol>
+                  <li><font face="Verdana, Helvetica, sans serif">Stop and restart the WebSphere Application Server.</font><p><font face="Verdana, Helvetica, sans serif">VERY IMPORTANT: once the WebSphere Application Server is running with 
+       security activated, the following command must be used in order to stop 
+       it.</font></p>
+         <p><font face="Verdana, Helvetica, sans serif">O<font color="#000000">n Windows, run the command:</font></font></p>
+         <p><code>stopServer.bat server1 -user &lt;admin_user&gt; -password &lt;admin_password&gt;</code></p>
+         <p><font color="#000000" face="Verdana, Helvetica, sans serif">On UNIX,&nbsp; run the command:</font></p>
+         <p><code>./stopServer.sh server1 -user &lt;admin_user&gt; -password &lt;admin_password&gt;</code></p>
+         <p><font color="#000000">where </font><code>&lt;admin_user&gt;</code><font color="#000000"> 
+       is the name of user chosen to administrate WebSphere, and </font><code>&lt;admin_password&gt;</code><font color="#000000"> 
+       is the corresponding password.</font></p></li>
+                  <li>Restart the WebSphere Administrative Console.<p>IMPORTANT: the machine name in the URL of the administrative console must 
+       include the domain, for example:</p>
+       <p><code><b>http://loug3dsy.dsy.ds:9060/ibm/console/</b></code></p>
+       <p>This time, the following dialog box appears:</p>
+       <p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/WASSecure12NLS.gif" width="384" height="301"><br>
+&nbsp;</p>
+                  </li>
+                  <li>Click <kbd>Yes</kbd><font face="Verdana, Helvetica, sans serif">.</font><p>This time, the following dialog box appears:</p>
+                  <p>
+                  <img border="1" src="b35doc/english/online/basil_c2/images/WASSecure13NLS.gif" width="789" height="443"></p>
+                  <p>The console appears and prompts you to enter a <kbd>User ID</kbd> and 
+             <kbd>Password</kbd>. These are the 
+       <kbd>Server User ID</kbd> 
+       and <kbd>Server User Password</kbd> created earlier using the <kbd>Security</kbd> tab.</p>
+                  <p>You are now running a secured WebSphere Application Server using 
+             the <kbd>Server User ID</kbd> and <kbd>Server User Password </kbd>(in our scenario, these are 
+       <i>wpsadmin</i> and <i>wpsadmin</i> 
+             respectively):</p>
+                  <p>
+       <img border="1" src="b35doc/english/online/basil_c2/images/WASSecure14NLS.gif" width="808" height="364"></p>
+                  </li>
+                </ol>
+                  
+     
+     </td>
+   </tr>
+   <tr>
+     <td vAlign="top" colSpan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" border="0" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

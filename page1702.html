@@ -1,0 +1,759 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta http-equiv="Content-Language" content="us">
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Type" content="text/HTML; charset=iso-8859-1">
+ <title>Knowledge Relations: Using the if...else Syntax</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="docCompliance" content="v 0.9; Tue Oct 18 10:20:44 2005">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Knowledge Relations: Using the if...else Syntax
+ <a name="ix-if...then...else syntax"></a><a name="ix-if...then...else"></a>&nbsp;<a name="CATBehaviorCommandHeader.CATPCEKWRelationHdr"></a></h1>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/ap3_title.gif" width="152" height="32"></p>
+ <table border="0" valign="top" cellpadding="2">
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>This scenario aims at providing the expert user with a use example of 
+     the Knowledge Relations behavior.&nbsp;The expert user creates a combination 
+     containing a Knowledge Advisor rule that drives 2 combinations:
+     <table border="0" cellpadding="0" cellspacing="0">
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>Insert_US, which enables the user to insert a manikin matching US 
+           standards.</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>Insert_EEC, which enables the user to insert a manikin matching 
+           EEC standards.</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+     <p>The scenario is divided into the following steps:</p>
+     <ul>
+       <li><a href="#Creating a technological Type">Creating a technological 
+       type</a>, called Driver. This type will be instantiated into the user 
+       workbench.</li>
+       <li><a href="#Adding an Attribute">Adding an attribute to the 
+       technological type</a>: This attribute will drive the if...then...else 
+       relation and therefore the 2 sequences (Insert_US and Insert_EEC).&nbsp;&nbsp;</li>
+       <li><a href="#Adding behaviors to the technological type">Adding 
+       behaviors to the technological type</a>: The user creates a knowledge 
+       rule that will drive 2 sequences of behaviors. These 2 sequences are 
+       identical except that the inserted documents are different. They are 
+       based on one of the basic <a href="page1648.html#Reuse model">behavior 
+       patterns</a>:
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber5">
+           <tr>
+             <td>
+             <ul>
+               <li>Load Behavior</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Bind Object Behavior</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Insert Component Behavior</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li><a href="#Generating the Workbench">Generating the workbench</a></li>
+       <li><a href="#Testing the Workbench">Testing the workbench</a></li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>Remember to save the .CATfct, the
+     <a href="b35doc/english/online/bktug_c2/samples/BktDriver-2D-SAE.CATPart">BktDriver-2D-SAE.CATPart</a> and
+     <a href="b35doc/english/online/bktug_c2/samples/BktDriver-2D-EEC.CATPart">BktDriver-2D-EEC.CATPart</a> 
+     files in the directory corresponding to the <code>CATGraphicPath</code> 
+     environment variable.</td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <h2><a name="Creating a technological Type">Create a 
+     Technological Type</a></h2>
+     <ol class="task">
+       <li>
+       <p class="task">From the <kbd>Start&gt;Knowledgeware</kbd> menu, access the
+       <kbd>Business Process Knowledge Template</kbd> workbench.</li>
+       <li>
+       <p class="Task">Create the <kbd>Driver</kbd> technological type. </p>
+       <div align="left">
+         <table border="0" cellpadding="2">
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">Click the <kbd>Create Technological Type</kbd> 
+               icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_FdeCreateSubClassP2.gif" width="24" height="24">) 
+               to create a type. The Create technological type dialog box is 
+               displayed.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">Enter the name of the type: Driver.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">Click <kbd>OK</kbd> to validate.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <h2><a name="Adding an Attribute">Add a Variable (Attribute</a>)</h2>
+     <ol start="3" class="task">
+       <li>
+       <p class="task">Add an attribute to the technological type.&nbsp; </p>
+       <div align="left">
+         <table border="0" cellpadding="2" cellspacing="0">
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">Click the <kbd>Driver</kbd> type in the 
+               specification tree and click the <kbd>Add Attribute</kbd> icon (
+               <img border="0" src="b35doc/english/online/icons_C2/images/I_FdeAddAttributeP2.gif" width="24" height="24">). 
+               The Add Attribute dialog box is displayed.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">In the Name field, enter the name of the 
+               attribute: <kbd>Legislation</kbd>.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">From the Type scrolling list, select String.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">In the Value field, enter <kbd>SAE</kbd>.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top">
+             <ul>
+               <li>
+               <p class="task">Click <kbd>OK</kbd> to validate. Double-click the 
+               Driver type: Legislation is displayed in the Attributes tab.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <h2><a name="Adding behaviors to the technological type">Add Behaviors to 
+     the Technological Type</a></h2>
+     <ol class="task" start="4">
+       <li>
+       <p class="Task">Click the Driver type and click the Sequential 
+       Combination icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_SequenceBehaviorP2.gif" width="24" height="24">). 
+       SequentialCombination is displayed in the Behaviors view. Double-click 
+       SequentialCombination&nbsp; and double-click Driver in the Behaviors tab.</li>
+       <li>
+       <p class="Task">Double-click the SequentialCombination node. The 
+       Sequential Combination editor is displayed. In the Name field, enter 
+       Selecting Manikin, and click <kbd>OK</kbd> to validate.</li>
+       <li>
+       <p class="Task">Click the Selecting Manikin node and click the Knowledge 
+       Relations behavior icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_KWRelationImplementationP2.gif" width="24" height="24">) 
+       to create a rule.&nbsp;</li>
+       <li>
+       <p class="Task">Double-click the KnowledgeRelation node in the Behaviors 
+       tab. The Knowledge Relations editor is displayed.&nbsp;</li>
+       <li>
+       <p class="Task">Click the Attributes tab and add the following 
+       attributes:</p>
+       <div align="left">
+         <table border="0" cellpadding="2" id="AutoNumber6">
+           <tr>
+             <td colspan="2">Name: Legislation, Type: String. </td>
+           </tr>
+           <tr>
+             <td colspan="2">Name: Act_EEC, Type: Boolean, Value: false, 
+             Quality: Output </td>
+           </tr>
+           <tr>
+             <td colspan="2">Name: Act_US, Type: Boolean, Value: false, Quality: 
+             Output</td>
+           </tr>
+           <tr>
+             <td valign="top" bgcolor="#F2F2F2">
+             <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+             <td valign="top" bgcolor="#F2F2F2">For more information about the 
+             Quality field, see <a href="page1640.html">About the Add 
+             Attribute dialog box...</a></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </li>
+     <ol start="9" class="task">
+       <li>
+       <p class="task">Add a rule to the behavior. </p>
+       <div align="left">
+         <table border="0" cellpadding="2">
+           <tr>
+             <td valign="top" colspan="3">
+             <ul>
+               <li>
+               <p class="task">Click the Content tab then the <a name="ix-rule">
+               </a>Rule icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_RulesP2.gif" width="24" height="24">) 
+               in the Knowledge Tools toolbar to add the rule. The Rule Editor 
+               is displayed.&nbsp;</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top" colspan="3">
+             <ul>
+               <li>
+               <p class="task">Enter the name of the rule and click <kbd>OK</kbd> 
+               to enter the Rule editor.&nbsp;</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top" colspan="3">
+             <ul>
+               <li>
+               <p class="task">In the Rule Editor, enter the following script in 
+               the Rule editor. To do so, click the objects in the behaviors 
+               tree and use the wizard. Click <kbd>OK</kbd> twice to validate 
+               and to close the dialog box: </li>
+             </ul>
+             <div align="center">
+               <center>
+               <table border="0" cellpadding="4" cellspacing="1">
+                 <tr>
+                   <td bgcolor="#F0F0F0"><code>if Legislation == &quot;SAE&quot;<br>
+                   {<br>
+                   Act_EEC = FALSE<br>
+                   Act_US = TRUE<br>
+                   }<br>
+                   else<br>
+                   {<br>
+                   Act_EEC = TRUE<br>
+                   Act_US = FALSE<br>
+                   }</code></td>
+                 </tr>
+               </table>
+               </center>
+             </div>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top"><img border="0" src="b35doc/english/online/bktug_c2/images/bktuser.gif" width="38" height="39"></td>
+             <td valign="top">
+             <p class="task">At this stage of the scenario, your workbench is 
+             similar to the graphic opposite.</p>
+             <p>&nbsp;</td>
+             <td valign="top">
+             <img border="1" src="b35doc/english/online/bktug_c2/images/bktKnowledgeRelation2NLS.gif" width="157" height="192"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Link the Knowledge Relation behavior with the Selecting 
+       Manikin Combination for the Knowledge Relation to react to the 
+       combination changes.</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber9">
+           <tr>
+             <td>
+             <ul>
+               <li>Expand the KnowledgeRelations node and right-click the 
+               Legislation attribute, and select <kbd>Legislation object&gt;Link To</kbd>.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td><img border="1" src="b35doc/english/online/bktug_c2/images/bktKnowledgeRelation1NLS.gif" width="277" height="189"></td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Expand the Driver node and click the Legislation attribute. 
+               Both attributes are now linked.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <ol class="task" start="11">
+       <li>
+       <p class="Task">Click the Selecting Manikin node in the Behaviors tab and 
+       click the Sequential Combination icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_SequenceBehaviorP2.gif" width="24" height="24">) 
+       to add a new combination. This new combination will enable the user to 
+       load a manikin matching the US standard.&nbsp;&nbsp;</li>
+       <li>
+       <p class="Task">Double-click the SequentialCombination node in the 
+       Behaviors tab. The SequentialCombination editor is displayed.&nbsp;</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber11">
+           <tr>
+             <td>
+             <ul>
+               <li>In the Name field, enter Insert_US.</li>
+               <li>Click OK to validate.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </li>
+     <ol class="task" start="13">
+       <li>
+       <p class="Task">Click the Insert_US combination in the Behaviors tab and 
+       click the Load behavior icon.&nbsp;The LoadDocument behavior is displayed in 
+       the Behaviors tab.</li>
+       <li>
+       <p class="Task">Double-click the LoadDocument node. The Load Document 
+       editor is displayed.</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber7">
+           <tr>
+             <td>
+             <ul>
+               <li>In the File path field, click
+               <img border="0" src="b35doc/english/online/bktug_c2/images/bktBrowseButton.gif" width="24" height="19"> and select the
+               <a href="b35doc/english/online/bktug_c2/samples/BktDriver-2D-SAE.CATPart">
+               BktDriver-2D-SAE.CATPart</a> file.</li>
+             </ul>
+             <ul>
+               <li>In the Properties tab, select Expert&amp;Administrator from the 
+               scrolling list of the Behavior States and select the Activate 
+               check box.&nbsp;&nbsp;</li>
+             </ul>
+             <ul>
+               <li>Click <kbd>OK</kbd> to validate.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <ol class="task" start="15">
+       <li>
+       <p class="Task">Click the Insert_US combination in the Behaviors tab and 
+       click the Bind Object behavior icon.&nbsp;The BindObject behavior is displayed 
+       in the Behaviors tab.</li>
+       <li>
+       <p class="Task">Double-click the BindObject node. The Bind Object editor 
+       is displayed.</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber8">
+           <tr>
+             <td>
+             <ul>
+               <li>In the Relative name field, enter: ../../../.. to access the 
+               root product. For more information about the syntax to use in the 
+               Relative name field, see <a href="page1657.html">About the Bind 
+               mechanism...</a></li>
+             </ul>
+             <ul>
+               <li>In the Properties tab, select Expert from the scrolling list 
+               of the Behavior States and select the Activate check box.&nbsp;&nbsp;</li>
+             </ul>
+             <ul>
+               <li>Click <kbd>OK</kbd> to validate.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </li>
+     <ol class="task" start="17">
+       <li>
+       <p class="Task">Click the Insert_US combination in the Behaviors tab and 
+       click the Insert Components behavior icon.&nbsp;The InsertComponents behavior 
+       is displayed in the Behaviors tab.</li>
+       <li>
+       <p class="Task">Double-click the InsertComponents node. The Insert 
+       Components editor opens.</p>
+       <div align="left">
+         <table border="0" cellpadding="2" id="AutoNumber10">
+           <tr>
+             <td colspan="3">
+             <ul>
+               <li>From the Definition scrolling list, select Existing 
+               Component.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td colspan="3">
+             <ul>
+               <li>Click the Existing component field, expand the LoadDocument 
+               node and select the output Document.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td colspan="3">
+             <ul>
+               <li>Click the Father product field, expand the BindObject node 
+               and select the output Link.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td colspan="3">
+             <ul>
+               <li>Set the number of instances to 1.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td colspan="3">
+             <ul>
+               <li>In the Properties tab select the Activate and Focus check 
+               boxes.&nbsp;&nbsp;</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td colspan="3">
+             <ul>
+               <li>Click <kbd>OK</kbd> to validate.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td valign="top"><img border="0" src="b35doc/english/online/bktug_c2/images/bktuser.gif" width="38" height="39"></td>
+             <td valign="top">At this stage of the scenario, your workbench is 
+             similar to the graphic opposite.</td>
+             <td valign="top">
+             <img border="1" src="b35doc/english/online/bktug_c2/images/bktKnowledgeRelation3NLS.gif" align="right" width="156" height="252"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <ol class="task" start="19">
+       <li>
+       <p class="Task">Click the Selecting Manikin combination in the Behaviors 
+       tab and click the Sequential Combination icon (<img border="0" src="b35doc/english/online/icons_C2/images/I_SequenceBehaviorP2.gif" width="24" height="24">) 
+       to add a new combination. This new combination will enable the user to 
+       load a manikin matching the EEC standard.&nbsp;</li>
+       <li>
+       <p class="Task">Double-click the SequentialCombination node in the 
+       Behaviors tab. The SequentialCombination editor is displayed.&nbsp;</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber12">
+           <tr>
+             <td>
+             <ul>
+               <li>In the Name field, enter Insert_EEC.</li>
+               <li>Click OK to validate.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </li>
+     <ol class="task" start="21">
+       <li>
+       <p class="Task">Click the Insert_EEC node in the Behaviors tab and click 
+       the Load behavior icon.&nbsp;The LoadDocument behavior is displayed in the 
+       Behaviors tab.</li>
+       <li>
+       <p class="Task">Double-click the LoadDocument node. The Load Document 
+       editor is displayed.</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber13">
+           <tr>
+             <td>
+             <ul>
+               <li>In the File path field, click
+               <img border="0" src="b35doc/english/online/bktug_c2/images/bktBrowseButton.gif" width="24" height="19"> and select the
+               <a href="b35doc/english/online/bktug_c2/samples/BktDriver-2D-EEC.CATPart">
+               BktDriver-2D-EEC.CATPart</a> file.</li>
+               <li>In the Properties tab, select Expert&amp;Administrator from the 
+               scrolling list of the Behavior States and select the Activate 
+               check box.&nbsp;&nbsp;</li>
+               <li>Click OK to validate.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </li>
+     <ol class="task" start="23">
+       <li>
+       <p class="Task">Click the Insert_EEC node in the Behaviors tab and click 
+       the Bind Object behavior icon.&nbsp;The BindObject behavior is displayed in 
+       the Behaviors tab.</li>
+       <li>
+       <p class="Task">Double-click the BindObject node. The Bind Object editor 
+       is displayed.</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber14">
+           <tr>
+             <td>
+             <ul>
+               <li>In the Relative name field, enter: ../../../.. to access the 
+               root product.</li>
+             </ul>
+             <ul>
+               <li>In the Properties tab, select Expert from the scrolling list 
+               of the Behavior States and select the Activate check box.&nbsp;&nbsp;</li>
+             </ul>
+             <ul>
+               <li>Click OK to validate.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </li>
+     <ol class="task" start="25">
+       <li>
+       <p class="Task">Click the Insert_EEC node in the Behaviors tab and click 
+       the Insert Components behavior icon.&nbsp;</li>
+       <li>
+       <p class="Task">Double-click the InsertComponents node. The Insert 
+       Components editor opens.</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber15">
+           <tr>
+             <td>
+             <ul>
+               <li>From the Definition scrolling list, select Existing 
+               Component.</li>
+             </ul>
+             <ul>
+               <li>Click the Existing component field, expand the LoadDocument 
+               node and select the output Document.</li>
+             </ul>
+             <ul>
+               <li>Click the Father product field, expand the BindObject node 
+               and select the output Link.</li>
+             </ul>
+             <ul>
+               <li>Set the number of instances to 1.</li>
+             </ul>
+             <ul>
+               <li>From the Allow sub typing scrolling list, select false.&nbsp;</li>
+             </ul>
+             <ul>
+               <li>In the Behavior States field and select the Activate and 
+               Focus check boxes.&nbsp;&nbsp;</li>
+             </ul>
+             <ul>
+               <li>Click OK to validate.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <ol start="27" class="task">
+       <li>
+       <p class="task">Expand the Insert_EEC variables node, right-click the 
+       Activity variable, select <kbd>Activity object&gt;Link To</kbd>, expand the 
+       KnowledgeRelations variables node and click the Act_EEC output.&nbsp;</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber1">
+           <tr>
+             <td><img border="1" src="b35doc/english/online/bktug_c2/images/bktKnowledgeRelation8NLS.gif" width="344" height="250"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <ol class="task" start="28">
+       <li>
+       <p class="Task">Expand the Insert_US variables node, right-click the 
+       Activity variable, select <kbd>Activity object&gt;Link To</kbd>, 
+       expand the KnowledgeRelations variables node and click the Act_US 
+       output.&nbsp;</li>
+       <li>
+       <p class="Task">Save your .CATfct file in the Graphics directory. Click
+       <a href="b35doc/english/online/bktug_c2/samples/BktKnowledgeRelations.CATfct">here</a> to open the 
+       created .CATfct.</li>
+     </ol>
+     <h2><a name="Generating the Workbench">Generate the 
+     Workbench</a></h2>
+     <ol start="30" class="task">
+       <li>
+       <p class="task">Click the <kbd>Generate Applicative Workbench</kbd> icon 
+       (<img border="0" src="b35doc/english/online/icons_C2/images/I_UserWorkMenuP2.gif" width="24" height="24">) 
+       to generate a user workbench. Enter the name of the workbench in the <kbd>
+       Workbench name</kbd> field, <kbd>Select Manikin</kbd> in this example, 
+       and select the workbench type, Product here.</li>
+     </ol>
+     <h2><a name="Testing the Workbench">Test the Workbench</a></h2>
+     <ol class="task" start="32">
+       <li>
+       <p class="Task">From the <kbd>Tools&gt;Options&gt;Knowledgeware&gt;Business 
+       Knowledge Template</kbd> menu, select <kbd>All Users</kbd> from the 
+       Access Rights scrolling list and click <kbd>OK</kbd> to work in a User 
+       environment.</li>
+       <li>
+       <p class="Task">Select Product1 in the specification tree and select the 
+       Driver check box to type the root product. Its name is now 
+       Driver:Product1.</li>
+       <li>
+       <p class="Task">Right-click Driver (product1) and select <kbd>Selecting 
+       Manikin</kbd>.&nbsp;</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber2">
+           <tr>
+             <td><img border="1" src="b35doc/english/online/bktug_c2/images/bktKnowledgeRelation5NLS.gif" width="383" height="334"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     <p>The manikin matching the US standard is inserted. </p>
+     <div align="left">
+       <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber3">
+         <tr>
+           <td><img border="1" src="b35doc/english/online/bktug_c2/images/bktKnowledgeRelation6NLS.gif" width="333" height="226"></td>
+         </tr>
+       </table>
+     </div>
+     <ol start="34" class="task">
+       <li>
+       <p class="task">Double-click the Legislation attribute located below the 
+       driver (Product1) feature and enter EEC in the opening dialog box.</li>
+     </ol>
+     <ol start="35" class="task">
+       <li>
+       <p class="task">Right-click Driver (product1) and select <kbd>Driver</kbd>.&nbsp;</li>
+     </ol>
+     <p>The manikin matching the EEC standard is inserted.</p>
+     <div align="left">
+       <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber4">
+         <tr>
+           <td><img border="1" src="b35doc/english/online/bktug_c2/images/bktKnowledgeRelation7NLS.gif" width="379" height="293"></td>
+         </tr>
+       </table>
+     </div>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>For more information about:
+     <table border="0" cellpadding="0" cellspacing="0">
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>The Knowledge Relations behavior, see<a href="page1670.html"> 
+           Knowledge Relations behavior: Data Sheet</a>.</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>The technological objects, see <a href="page1644.html">Creating 
+           a technological Object</a>.</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>The technological objects attributes, see
+           <a href="page1638.html">Adding an Attribute to a technological 
+           Object</a>.</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>The workbench generation, see <a href="page1656.html">
+           Generating a User Workbench</a>.</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top" colspan="2">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

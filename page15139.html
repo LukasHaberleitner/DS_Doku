@@ -1,0 +1,173 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Reconciling Contextual Part outside Context</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none">
+</head>
+
+ <body>
+
+ <h1>Reconciling Contextual Part outside Context<a name="ix-managing:broken links"></a></h1>
+ <table Border="0" CELLSPACING="3" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="3">
+   <tr>
+     <td width="32" valign="top" height="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32">&nbsp;
+     </td>
+     <td valign="top">
+		<p class="MsoNormal">To access the contextual part of the assembly, you 
+		can refer to the links of the corresponding document and retrieve the 
+		context used for defining the contextual link. The reconciliator first 
+		analyses the assembly loaded in CATIA session and then recursively 
+		follows inter-document links, to get a list of documents comprising the 
+		assembly.</p>
+		<p class="MsoNormal">A CATPart which depends on another CATPart having 
+		External References is considered as a contextual part. The behavior 
+		depends on the context of the contextual part, particularly, if the 
+		context is loaded in CATIA session before reconciliation. <br>
+		Note: In some cases, the&nbsp; reconciliator automatically loads some 
+		document.</td>
+   </tr>
+   <tr>
+     <td width="32" valign="top" height="32">&nbsp;</td>
+     <td valign="top">
+     You can create and save contextual links by applying Exposed Context and 
+		Workpackage Context Rules.
+     For more information about contextual links, see <i>Product Structure 
+		User's Guide</i>.</td>
+   </tr>
+   <tr>
+     <td width="32" valign="top" height="32">&nbsp;</td>
+     <td valign="top">
+     <h3 align="left">
+     Exposed Context</h3>
+		<p align="left">
+     The diagram below illustrates the dependency of the PRC document between 
+		Part1 and Part2 for exposed context. This dependency is defined in an 
+		assembly and will establish reference&nbsp; to instances used for 
+		definition and is referred to as context.<br>
+		<img border="0" src="b35doc/english/online/wpeug_c2/images/ContextualLinksSchema1NLS.gif" width="649" height="347">
+		<br>
+		Here Part2 is contextual to Part1. <br>
+		When you select <kbd>Use root context in assembly</kbd>, Part1 is 
+		pointing to both I&#8217;1 and I&#8217;2.</td>
+   </tr>
+   <tr>
+     <td width="32" valign="top" height="32">&nbsp;</td>
+     <td valign="top">
+     <h3 align="left">
+     Workpackage Context</h3>
+		<p align="left">
+     The diagram below illustrates the persistence of the link in Part2.CATPart 
+		document for workpackage context. This link is retrieved when 
+		reconciliator analyzes the current assembly.<br>
+&nbsp;<img border="0" src="b35doc/english/online/wpeug_c2/images/ContextualLinksSchema2NLS.gif" width="642" height="341"><br>
+		Here Part2 is Contextual to Part1.<br>
+		When <kbd>Use root context in assembly</kbd> is deselected, Part1 is 
+		pointing to both I1 and I2.</td>
+   </tr>
+   <tr>
+     <td width="32" valign="top" height="32">&nbsp;</td>
+     <td valign="top">
+     Now, the Part2.CATPart document is re-instantiated into another assembly 
+		and therefore considered to be reused as Out of Context. The contextual 
+		part will continue to remind the location of this context document even 
+		if the context is not loaded in CATIA session.<br>
+		By default, a contextual part already loaded in memory will not load the 
+		context document in memory.<br>
+		<br>
+		<img border="1" src="b35doc/english/online/wpeug_c2/images/ContextualPartNLS.gif" width="781" height="365"><p>
+		<strong>Note:</strong> The context document kept at its 
+		original location with its original name is said to be reachable whereas 
+		if the context document is renamed or moved, the contextual part is 
+		not reachable.</td>
+   </tr>
+   <tr>
+     <td width="32" valign="top" height="32">&nbsp;</td>
+     <td valign="top">
+		<p class="MsoNormal"><span lang="en-gb">If you </span>
+		<span lang="EN-GB">use the contextual part 
+		outside its context (where context is reachable), a warning message appears in <kbd>Reporting</kbd> 
+		dialog box. This message analyzes the situation and explains about the 
+		rule 
+		restriction in the reconciliation session. <br>
+		<img border="0" src="b35doc/english/online/wpeug_c2/images/reportReconciliator01NLS.gif" width="686" height="463"></span></p>
+		This results in reduction of additional load of documents and will save 
+		some time from analyzing.&nbsp; </td>
+   </tr>
+   <tr>
+     <td width="32" valign="top" height="32">&nbsp;</td>
+     <td valign="top">
+     If <kbd>Reload</kbd> rule is applied on contextual part, <span lang="EN-GB">
+		the file context will no longer be used for saving to PDM. As a result, 
+		the save scope will be similar to the reconcile scope and will have 
+		intuitive results.</span><p><span lang="EN-GB">If Reload rules are already enforced on the 
+		context, (possible if the context was previously saved as WorkPackage 
+		(Publications Exposed) in the database), then there is no restriction on 
+		the contextual part reconciliation rule.</span></td>
+   </tr>
+   <tr>
+     <td width="32" valign="top" height="32">&nbsp;</td>
+     <td valign="top">
+     <h3>Other Assembly:</h3>
+		<h4>Aggregating the contextual CATPart (out of its context) and context 
+		already loaded in session (eg: other windows of CATIA)</h4>
+		<p>
+		<img border="1" src="b35doc/english/online/wpeug_c2/images/ContextualPart1NLS.gif" width="810" height="539"><br>
+		<br>
+		<span lang="en-gb">If you </span>
+		<span lang="EN-GB">use </span>other assembly, aggregating the contextual 
+		CATPart (out of its context); and the context
+		<span lang="EN-GB">(where context is reachable)</span> is already loaded 
+		in session (example: other windows of CATIA)<span lang="EN-GB">, a 
+		warning message appears in <kbd>Reporting</kbd> 
+		dialog box.<br>
+		<img border="0" src="b35doc/english/online/wpeug_c2/images/reportReconciliator01NLS.gif" width="686" height="463"><br>
+		<br>
+		</span><span lang="en-gb">Even when the context is loaded, the context 
+		is excluded from the reconcile session by managing it as a Proxy on 
+		which </span><span lang="EN-GB"><kbd>keepAsExternal</kbd> rule is 
+		applied.</span><span lang="en-gb"> </span>
+		</td>
+   </tr>
+   <tr>
+     <td width="32" valign="top" height="32">&nbsp;</td>
+     <td valign="top">
+     Note:
+		<ul>
+			<li>The Reload rule must be applied for <span lang="EN-GB">
+			contextual parts having their context out of the current assembly.
+			</span></li>
+			<li><span lang="EN-GB">The contextual part must be saved initially 
+			in the assembly used for defining the contextual links, while 
+			executing FDBI. </span></li>
+			<li><span lang="en-gb">You must update the context irrespective of 
+			the rule selected. For structure exposed, the contextual parts are 
+			relative to PRC while the contextual mode do not support a mixed 
+			structure (both structure and Publication Exposed)</span></li>
+			<li><span lang="en-gb">&nbsp;Reconciliation of StandAlone Contextual 
+			CATPart is not supported.</span></li>
+		</ul>
+		</td>
+   </tr>
+   <tr>
+     <td width="32" valign="top" height="32">&nbsp;</td>
+     <td valign="top">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <h2>&nbsp;</h2>
+ <p align="right"></p>
+ <p align="right"></p>
+
+ </body>
+
+</html>
+

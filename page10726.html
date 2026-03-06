@@ -1,0 +1,199 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2E2O2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>STEP: Best Practices</title>
+<script language="JavaScript">
+  </script>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="docCompliance" content="v0.5; Tue Jul  5 17:25:10 2005">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1><a name="ix-STEP:best practices"></a>STEP: Best Practices</h1>
+<h2>Import<a name="hj-import"></a></h2>
+<table Border="0" CELLSPACING="0" valign="top">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">
+    <h3><a name="ix-best practices:import of large assemblies">Large Assemblies</a></h3>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/amethod.gif" width="32" height="32"></td>
+    <td valign="top">We recommend that you import large assemblies in
+    <a href="page10762.html">batch mode</a>:<ul>
+      <li>In this mode the CATPart documents are unloaded once transferred. </li>
+      <li>A maximum of the available memory is spared for the translation.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td valign="top">
+    <h3>Quality of conversion<a name="ix-best practices:STEP quality of conversion"></a></h3>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/amethod.gif" width="32" height="32"></td>
+    <td valign="top">Always check the
+    <a href="page10743.html#ix-STEP:report file">report and error files</a> 
+    after a conversion ! Some problems may have occurred without been visually 
+    highlighted.
+    <p>We recommend also that you use the
+    <a href="page0974.html#ix-STEP:validation properties">Geometric Validation Properties
+    </a>when they exist. When an error occurs in 
+    the comparison, you can locate the problem as follows :</p>
+    <ul>
+      <li>An error at solid or shell level means that the geometric translation 
+      failed.</li>
+      <li>An error at product level means that a sub-assembly translation 
+      failed.</li>
+      <li>An error at instance level means that a component is misplaced.</li>
+    </ul>
+    <p>Note that the error at the lowest level gives the relevant information. 
+    It is the first error that appears in the report file: </p>
+    <ul>
+      <li>An error at solid or shell level involves an error for corresponding 
+      product.</li>
+      <li>An error at product level involves an error for every product 
+      including instances of it.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="2">
+    <p align="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+<table Border="0" CELLSPACING="0" valign="top">
+  <tr>
+    <td valign="top"></td>
+    <td valign="top">
+    <h3><a name="ix-best practices:STEP topology"></a>How to Create a Topology<a name="ix-STEP:how to create a topology"></a></h3>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td valign="top">
+    <p align="left">STEP files usually describe solids. It means that they 
+    contain the <kbd>topology</kbd> of the model. During the conversion of a 
+    part: </p>
+    <ul>
+      <li>
+      <p align="left">If no problem, <kbd>the</kbd> <kbd>geometry and the 
+      topology</kbd> are imported and the result is a solid.</li>
+      <li>
+      <p align="left">If there is a <kbd>geometric</kbd> problem, one or several 
+      faces of the solid cannot be recreated and the solid itself is 
+      degenerated. <br>
+      The resulting model contains: </p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber1">
+        <tr>
+          <td>
+          <ul>
+            <li>
+            an empty PartBody,</li>
+            <li>
+            an Geometrical set with a surface corresponding to 
+            all faces OK,</li>
+            <li>
+            an Geometrical set for each face KO.</li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt054NLS.gif" width="285" height="495"></td>
+        </tr>
+      </table>
+      </li>
+    </ul>
+    <p align="left">=&gt; The repairing methodology is the same as
+    <a href="page10729.html#hj-Repair">faces KO in IGES.</a> </p>
+    <ul>
+      <li>
+      <p align="left">There may also be a <kbd>topological</kbd> problem, when 
+      all the geometry has been converted OK but the topology could not be 
+      created. Then the resulting model contains: </p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber2">
+        <tr>
+          <td>
+          <ul>
+            <li>
+            an empty PartBody,</li>
+            <li>an Geometrical set with the surfaces that could not be joined 
+            properly.</li>
+          </ul>
+          </td>
+        </tr>
+      </table>
+      </li>
+    </ul>
+    <p>=&gt;The repairing methodology is the same as in
+    <a href="page10730.html#ix-IGES:how to create a topology">IGES: Best 
+    Practices - How to create a topology.</a> </p>
+    <p></td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="2">
+    <p align="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+<h2>Export<a name="hj-export"></a></h2>
+<table Border="0" CELLSPACING="0" valign="top">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">
+    <h3><a name="ix-best practices: export of large assemblies">Large Assemblies</a></h3>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/amethod.gif" width="32" height="32"></td>
+    <td valign="top">To export a large V5 Assembly in STEP, we recommend that 
+    you open it with the <kbd>Work with the cache system </kbd>option active (<kbd>Tools/Options/Infrastructure/Product 
+    Structure/Cache Management/Work with the cache system</kbd>): When this 
+    option is active, the referenced CATPart documents are loaded only during 
+    their transfer.</td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td valign="top">
+    <h3>External references<a name="ix-best practices:STEP external references"></a></h3>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/amethod.gif" width="32" height="32"></td>
+    <td valign="top">For the exchange of large assemblies, we recommend that you 
+    use external references, using several small files instead of one large file 
+    (this will reduce memory problems).&nbsp;
+    <br>
+    See the
+    <a href="page0974.html#ix-STEP:assemblies">
+    settings</a> for more information.</td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="2">
+    <p align="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

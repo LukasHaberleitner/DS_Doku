@@ -1,0 +1,258 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Creating Layup Files</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style type="text/css">
+.auto-style1 {
+	border-collapse: collapse;
+}
+.auto-style2 {
+	margin-left: 0px;
+}
+</style>
+</head>
+
+<body>
+
+<h1 align="center">
+Creating Layup Files</h1>
+<table border="0" id="AutoNumber1" class="auto-style1">
+  <tr>
+    <td valign="top">
+          
+      &nbsp;</td>
+    <td>
+    <h2><a name="ix-surface tessellation"></a>Surface Tessellation</h2>
+	<p class="task">When entering Composites Link from a CATPart, it is 
+	  assumed that no mesh exists.<br>When you click <kbd>OK</kbd> in&nbsp;
+	<a href="page3015.html">Export Plies</span></a>:<ul>
+		<li>The underlying 
+	surfaces in the entire stacking or the selected plies groups are identified 
+		<br>and cut in turn with all the 
+	associated ply boundaries.<br></li>
+		<li>This forms regions of constant stacking 
+	between the ply boundaries.<br></li>
+		<li>Each region is tessellated using the <kbd>Sag 
+	Value </kbd>and the<kbd> Step Value</kbd>.<br> A core sample is performed on each region.<br>This determines 
+	the extent of each ply.</li>
+	</ul>
+	<ol class="task">
+		<li>
+		<p class="task">For use in manufacturing, such as laser projection or stress recovery, 
+	export target points and references in the layup file.<br>Thus, you 
+	can decide to export surface offsets in the export file. The point of the 
+	offset definiton uses the origin of the rosette.<li>
+		<p class="task">Run a draping simulation on the plies to regenerate the fiber angles for 
+	each ply.<table style="width: 100%">
+			<tr>
+				<td>
+	<p><a name="ix-regenerate (theoretical)"></a>The <kbd>Regenerate (Theoretical)</kbd> option creates projected plies 
+	where the fiber angles are determined by </p>
+	<ul>
+		<li>Projecting the rosette x-axis onto the element</li>
+		<li>Then performing a rotation with the angle given by the direction of 
+		the ply.</li>
+	</ul>
+	<p><a name="ix-regenerate (actual)"></a>The <kbd>Regenerate (Actual) </kbd>option:</p>
+	<ul>
+		<li>Performs a draping simulation, if possible.</li>
+		<li>If the referenced material is unidirectional, the simulation is 
+		uniaxial. Otherwise, it is biaxial.</li>
+		<li>If the draping simulation fails, the ply reverts to a projected 
+		type.</li>
+	</ul>
+	<p>Example of a typical tessellated mesh with a fiber simulation performed 
+	on it.<br><img height="263" src="b35doc/english/online/cclug_c2/images/MeshWithSimulation.png" width="400"><br>
+	You can see </p>
+	<ul>
+		<li>That the tessellation is done individually on areas of constant 
+		stacking: It reflects the ply boundaries correctly.</li>
+		<li>The triangular elements are topologically congruent at ply 
+		boundaries, as required.</li>
+		<li>The exported layup file contains all the information to re-run the 
+		draping simulation.</li>
+	</ul>
+	  		  </td>
+			</tr>
+		</table>
+		</li></ol>
+	  <h2><a name="ix-map onto analysis mesh"></a>Mapping onto Analysis Mesh</h2>
+	<p>The data in the layup file base on the tessellated triangles can be 
+	mapped onto an analysis mesh, using any analysis tool based on Simulayt 
+	layup technology.<br></p>
+	<h3>Composites Modeler for Abaqus/CAE</h3>
+	<ol class="task">
+		<li>
+		<p class="task">		In the CM tab, right-click a part containing a 
+		shell mesh and create a new layup model based on this analysis mesh.<br>
+		<img height="160" src="b35doc/english/online/cclug_c2/images/abaqus01NLS.png" width="700"></li>
+		<li>
+		<p class="task">		Right-click the layup node and choose the Map 
+		Layup method to map the plies onto the analysis mesh.<br>
+		<img height="181" src="b35doc/english/online/cclug_c2/images/abaqus02NLS.png" width="490"></li>
+		<li>
+		<p class="task">		Open the material spreadsheet and ensure that 
+		the CM Material is correcty linked with the mechanical properties.<br>
+		<img height="325" src="b35doc/english/online/cclug_c2/images/abaqus03NLS.png" width="698"><br>You can 
+		now use the layup as if it had been defined in Composites Modeler.</li>
+	</ol>
+	  <h2><a name="ix-shell mesh"></a>Shell Mesh</h2>
+	<h3>Export Mapped Layup File (CATIA Mesh)</h3>
+	<p>When inside a CATAnalysis (in a part or a product environment), you can 
+	create impressive meshes that respect ply boundaries, as show below.<br>
+	<img height="285" src="b35doc/english/online/cclug_c2/images/ShellMesh01.png" width="400"></p>
+	<ol class="task">
+		<li>
+		<p class="task">To export a layup file base on this mesh, follow the link to the part or 
+	to the product with <br>Composites parts containing the stacking used to create 
+	the mesh.<br><img height="91" src="b35doc/english/online/cclug_c2/images/ShellMesh02.png" width="400"><br>
+		The Composites Link toolbar appears.</p>
+		<li>
+		<p class="task"><a name="ix-CATIA mesh"></a>Select <kbd>Export Plies
+       <img src="b35doc/english/online/icons_C2/images/I_SLTClkExport.png" border="0" width="22" height="22"></kbd>.</p>
+		<li>
+		<p class="task">From the <kbd>Mesh</kbd> list, select <kbd>CATIA Mesh</kbd>.<br></p>
+		<li>
+		<p class="task"><a name="ix-core sample range"></a>The layup mesh is based on the CATIA analysis mesh: Input a <kbd>Core 
+		Sample Range</kbd> in the current CATIA units.</p>
+		<li>
+		<p class="task">From the <kbd>Export File</kbd> list, select <kbd>Layup</kbd>.</p>
+		<li>
+		<p class="task">Click <kbd>OK</kbd>.<table style="width: 100%">
+			<tr>
+				<td>Composites Link 
+				<ul>
+					<li>Retrieves the normal of each analysis element normal 
+					from its centroid.</li>
+					<li>Performs a core sampling using this normal and the <kbd>Core 
+					Sample Range</kbd>.<br>(This can be time-consuming)<br>This 
+					determines the extent of the ply.</li>
+					<li>The ply is regenerated using theoretical or actual 
+					angles (same as for tessellation).</li>
+				</ul>
+				<p>Note there is no guaranty the finite elements follow the ply boundaries, features 
+				such as split may be lost, producibility 
+				may be altered or fail.</p>
+				</td>
+			</tr>
+		</table>
+		</ol>
+	<p>The resulting layup file contains a full set of information based on the 
+	ply layup, as shown below.<br>
+	<img height="263" src="b35doc/english/online/cclug_c2/images/ExportMappedLayupFile.png" width="400"><br>In 
+	this particular case, the elements respect the ply boundaries, the ply 
+	definition is exact.<br>However, in general, ply boundaries are not 
+	respected, the element-based ply boundaries may be jagged.</p>
+	<h3>Export Mapped Layup File (External Mesh File)</h3>
+	<ol class="task">
+		<li>
+		<p class="task"><a name="ix-external mesh file"></a>From the <kbd>Mesh</kbd> list, select <kbd>External Mesh File</kbd>.</p>
+		<li>
+		<p class="task"><a name="ix-export format"></a>Select a type from the <kbd>Export File</kbd> list.<table style="width: 100%">
+			<tr>
+				<td>
+	<p>A layup file can be exported based on an alternative mesh:</p>
+	<ul>
+		<li class="auto-style2">Abaqus: Abaqus input file (.inp)</li>
+		<li>ANSYS: Ansys CBD file (.cbd)</li>
+		<li>ANSYS XML</li>
+		<li>Nastran: Nastran Bulk Data file (.bdf, .dat, .nas)</li>
+		<li>SimXpert</li>
+		<li>Composites HDFS</li>
+	</ul>
+				<p>The layup mesh is based on the imported mesh.<br>The display 
+				of the imported mesh is superimposed on the geometry.<br>Example 
+				of .bdf file<br>
+				<img height="263" src="b35doc/english/online/cclug_c2/images/LayupBdf.png" width="400"><br>Example of a tessellated layup file.<br>
+				<img height="251" src="b35doc/english/online/cclug_c2/images/LayupTessellated.png" width="400"><br>
+				</p>
+				</td>
+			</tr>
+		</table>
+		<li>
+		<p class="task">Input a <kbd>Core Sample Range</kbd> in the current CATIA units.</p>
+		<li>
+		<p class="task">Click <kbd>OK</kbd>.<table style="width: 100%">
+			<tr>
+				<td>Composites Link 
+				<ul>
+					<li>Retrieves the normal of each analysis element normal 
+					from its centroid.</li>
+					<li>Performs a core sampling using this normal and the input 
+					<kbd>Core 
+					Sample Range</kbd> to determine how far from the centroid to look.<br>
+					Any ply surface beyond this distance is ignored.<br>Use a 
+					number large enough to accomodate differences between the 
+					CAD model and the mesh surfaces, <br>But small enough to 
+					avoid detecting several surfaces for a given centroid.<br>(This can be time-consuming)<br>This 
+					determines the extent of the ply.</li>
+					<li>The ply is regenerated using theoretical or actual 
+					angles (same as for tessellation).</li>
+				</ul>
+				<p class="task">Note there is no guaranty the finite elements follow the ply boundaries, features like split may be lost, producibility 
+				may be altered or fail.<br>The resulting layup file contains a full set of information based on the 
+	ply layup, as shown below.<br>
+	<img height="256" src="b35doc/english/online/cclug_c2/images/ExportMappedLayupFileExternal.png" width="400"><br>In 
+	this particular case, the elements respect the ply boundaries, the ply 
+	definition is exact.<br>However, in general, ply boundaries are not 
+	respected, the element-based ply boundaries may be jagged.</p>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<li><p class="task">If required, select the <kbd>Export Cores</kbd> 
+		check box to include a solid core within a laminate stack.</li>
+		<li>
+		<p class="task">You can consider the true thickness of the core at the 
+		element centroid<br>(and included in the BDF ofr CDB file if the <kbd>
+		Ignore Thickness</kbd> option is cleared in the <kbd>Export Options</kbd>).<br></li>
+	</ol>
+	<h2><a name="ix-import layup file"></a>Import Layup File</h2>
+	<p>You can easily import the layup file based on an analysis mesh into any 
+	analysis application based on Simulayt layup technology and used directly.
+	<br>This creates a mesh in the program based on the mesh in the layup file. </p>
+	<h3>Composites Modeler for Abaqus/CAE</h3>
+	<ol class="task">
+		<li>
+		<p class="task">In a model, navigate the CM tab.</li><li>
+		<p class="task">Right-click the model <table style="width: 100%">
+			<tr>
+				<td style="height: 18px">Composites Modeler 
+				<ul>
+					<li>Opens the layup 
+				file.</li>
+					<li>Creates a part under the relevant model.</li>
+					<li>Places the mesh from the layup file into the new part as 
+					an orphan mesh.</li>
+					<li>Materials and coordinate systems from the layup file are 
+					placed in the model and in the part respectively.</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+	
+		where you want to import the layup 
+		file, and select <kbd>Import</kbd>.</li></ol>
+		
+	  </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+    <p align="center">
+    
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

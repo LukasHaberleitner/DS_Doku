@@ -1,0 +1,302 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml">
+
+ <head>
+ <meta name="MonocodingType" content="2">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Setting Up the SDAM Environment</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style type="text/css">
+.style1 {
+	border: 1px solid #000000;
+}
+</style>
+ </head>
+
+ <body>
+
+ <h1><font face="Arial, Arial, Helvetica" color="#282187">&nbsp;</font><font color="#282187" face="Verdana">Setting Up 
+ the SDAM Environment</font></h1>
+ <p><br>This topic describes how to setup the Shared Data Access Manager (SDAM) 
+	environment.</p>
+ <h2>Overview</h2>
+ <p>&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" style="height: 46px">
+   <tr valign="top" BORDER="0">
+     <td height="38" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td rowspan="1" height="38" width="639">
+         <p style="width: 794px; height: 129px">Starting V5-6R2022, the legacy 
+			CORBA architecture that uses Orbix implementation and the vault can 
+			be replaced with Shared Data Access Manager (SDAM) architecture 
+			(HTTP based) for the client server communication. File Collaboration 
+			Server can be used instead of the ENOVIA V5 vault for document 
+			related transactions.&nbsp; <br>SDAM is an in-house 
+		 technology developed for communication between client and server that 
+		 uses http protocol for communication.<br>
+			File Collaboration Server (FCS) is a server that can be configured 
+			to handle file check-in and check-out operations when Live 
+			Collaboration is made available from the Web. A file collaboration 
+			server URL is enabled for each store or location with files that can 
+			be accessed. For more information, see
+			<a href="page1164.html">Setting Up File 
+			Collaboration Server</a>.<br>
+			Either you can work with the Orbix middleware and ENOVIA vault or 
+			with Shared Data Access Manager and File Collaboration Server.</p>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="38" width="32">
+     &nbsp;</td>
+     <td height="38" width="639">
+         <br>
+			<br>
+			The following is the updated architecture to work with the SDAM and 
+			FCS mode. <br>
+			<strong>Note</strong>: The SDAM and FCS mode is only supported on 
+			WINDOWS and it is not supported on AIX.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="38" width="32">
+     &nbsp;</td>
+     <td height="38" width="639">
+         <img src="b35doc/english/online/basil_c2/images/SDAMFCSArchiteture.gif" width="800" height="387"></td>
+   </tr>
+   </table>
+	<h2><br>
+	Before you Begin</h2>
+ <p>&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" style="height: 86px">
+   <tr>
+     <td width="45" valign="top" style="height: 9px">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="600" valign="top" style="height: 9px">
+	 <ul>
+		 <li>Install the ENOVIA V5 Server, using the latest ENOVIA V5 installer. For 
+		 more information, see <a href="page1218.html">Installing Version 5 
+		 Products on Windows</a>.</li>
+		 <li>Ensure that the table-space and table-owner used for DB setup 
+			during installation will be required for 
+		 the FCS metadata setup.</li>
+	 </ul>
+     </td>
+   </tr>
+   </table>
+ <h3>Setup SDAM Server</h3>
+ <p>&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" height="116" width="100%">
+   <tr>
+     <td width="45" valign="top" style="height: 9px">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="600" valign="top" style="height: 9px">The following steps are 
+	 required to setup and start the SDAM server:<br><br>
+	 <div>
+		 <ul>
+			 <li>Start SDAM server.</li>
+		 </ul>
+	 </div>
+	 <div>
+		 <ul>
+			 <li>Deploy and start SDAM Middleware.</li>
+		 </ul>
+	 </div>
+	 <div>
+		 <ul>
+			 <li>Enable SDAM on client.</li>
+		 </ul>
+	 </div>
+	 <br>
+     </td>
+   </tr>
+   </table>
+ <h3>Start SDAM Server</h3>
+ <p>&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" height="114" width="100%">
+   <tr>
+     <td height="2" width="45" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="2" width="600" valign="top">This section describes how to start 
+	 the SDAM server.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="1" width="36">
+     &nbsp;</td>
+     <td rowspan="1" height="1" width="650">
+     <ul>
+		<li>Execute &#8220;runSDAMV5Server.bat&#8221; to start the SDAM Server Manager.</li>
+		<li>&#8220;runSDAMV5Server.bat&#8221; file is available at following installation 
+			path &#8220;&lt;CATInstallPath&gt;\code\bin&#8221;.</li>
+		<li>&#8220;runSDAMV5Server.bat&#8221; will start the SDAM Server Manager and by 
+			default it will listen for the requests on &#8220;8025&#8221; port and will 
+			support 500 client connections.</li>
+		<li>SDAM Server Manager will internally use &#8220;runSDAMV5Child.bat&#8221; for 
+		starting the SDAM User Process.</li>
+		<li>The &#8220;runSDAMV5Server.bat&#8221; file consists of the following variables:</li>
+		</ul>
+		<ol>
+			<li class="auto-style2"><strong>SDAM_PORT_LISTEN</strong>: This 
+				variable defines the port for the SDAM Server Manager. Default 
+				value for the variable is &#8220;8025&#8221;. You can modify this value to 
+				make SDAM Server Manager to listen on some other port. (If 
+				modified, update the corresponding change in middleware webapp&#8217;s 
+				Web.xml)</li>
+			<li class="auto-style2"><strong>SDAM_BASE</strong>: This variable 
+				defines the port on which first SDAM User Process is started. By 
+				default, the value of the variable is &#8220;8026&#8221;. You can also 
+				modify this value if required.</li>
+			<li class="auto-style2"><strong>SDAM_RANGE</strong>: This variable 
+				defines the number of users allowed to connect simultaneously. 
+				By default, the value of the variable is &#8220;500&#8221;. You can also 
+				modify this value if required.</li>
+		</ol>
+     </td>
+   </tr>
+ </table>
+ <h3>Deploy and Start SDAM Middleware</h3>
+ <p>&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" height="191" width="100%">
+   <tr>
+     <td height="2" width="45" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="2" width="600" valign="top">This section describes how to 
+	 deploy and start the SDAM Middleware.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="1" width="52">
+     &nbsp;</td>
+     <td rowspan="1" height="1" width="633">
+     <ul>
+		 <li>The SDAM Middleware is a Java web application to which clients such 
+		 as LCA, VPM Navigator connect to. This application manages their communication 
+		 with SDAM Server Manager and SDAM User Process.</li>
+		 <li>Deploy it in the supported Java web container (TomEE - The path can 
+			be referred to as <em>&lt;SDAM middleware_Install_DIR&gt;</em>) and start the 
+		 web container. Now the middleware is up and can accept the user 
+		 connection requests. <li>&nbsp;You can find WAR file 
+		 &#8220;V5SDAMClientServ.war&#8221; of the middleware at the following path: 
+		 &#8220;&lt;CATInstallPath&gt;\win_b64\resources\WebAccess&#8221;.<li>By default, the 
+		 middleware is configured to connect to the SDAM Server Manager on 
+		 default port configured for it in &#8220;runSDAMV5Server.bat&#8221;. 
+		 <li>After installation, if you modify <em>SDAM_PORT_LISTEN</em> port as described in 
+		 the <em>Start SDAM Server Manager</em> section, you must modify the 
+		 respective values in &#8220;Web.xml&#8221; in the deployed web application 
+			as well.</ul>
+	 <p class="auto-style3">For example,</p>
+	 <p class="auto-style3">
+	 <img src="b35doc/english/online/basil_c2/images/SDAMSetup.gif" width="409" height="169">&nbsp;</p>
+	 <p><strong>Note</strong>: The war file &#8220;V5SDAMClientServ.war&#8221; also includes 
+		the FCS metadata server implementation. For more information, see 
+	 <a href="page1163.html">Installing File Collaboration 
+		Server</a>. </p>
+     </td>
+   </tr>
+ </table>
+ <h3>Enable SDAM on Client</h3>
+ <p>&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" height="191" width="100%">
+   <tr>
+     <td height="2" width="45" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="2" width="600" valign="top">You must explicitly enable the SDAM 
+		environment on the LCA and VPM Navigator using the SDAMInfra flag before 
+		launching the client.<br>
+		<br>
+		<table style="width: 100%">
+			<tr>
+				<td class="style1" style="width: 99px"><strong>Flag Name</strong></td>
+				<td class="style1"><strong>Usage</strong></td>
+			</tr>
+			<tr>
+			 <td class="style1" style="width: 99px">SDAMInfra</td>
+			 <td class="style1" style="width: 436px"><strong>For LCA</strong>: <em><br>catstart &#8211;run &#8220;enovia &#8211;extra{ 
+			 -DSDAMInfra=TRUE }extra&#8221;<br><br></em><strong>For VPM Navigator</strong>:<em><br>
+			 set JAVAOPTIONS=-DSDAMInfra=TRUE<br>set SDAMINFRA=TRUE<br></em>
+			 </td>
+		 	</tr>
+		</table>
+		</td>
+   </tr>
+   </table>
+ <h3>Enable SDAM and FCS on ENOVIA V5 Server</h3>
+ <p>&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" height="191" width="100%">
+   <tr>
+     <td height="2" width="45" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="2" width="600" valign="top">Activate the following flags to 
+		enable in the SDAM environment to work with FCS.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="1" width="52">
+     &nbsp;</td>
+     <td rowspan="1" height="1" width="633">
+     <table style="width: 100%">
+		 <tr>
+			 <td class="style1" style="width: 301px"><strong>Flag Name</strong></td>
+			 <td class="style1" style="width: 436px"><strong>Usage</strong></td>
+		 </tr>
+		 <tr>
+			 <td style="height: 50px; width: 301px;" class="style1">ENOVIA_FCSInfra</td>
+			 <td style="height: 50px; width: 436px;" class="style1">Set the 
+				variable <em>ENOVIA_FCSInfra=TRUE</em> in the 
+			 server side CATEnv file.<br></td>
+		 </tr>
+		 <tr>
+			 <td class="style1" style="width: 301px">ENOVIA_FCSMetaServ</td>
+			 <td class="style1" style="width: 436px">This flag helps you to login to SDAM and FCS server in batch 
+			 mode. This is not a mandatory flag for running interactive 
+			 scenarios in LCA, VPM Navigator, and Interop.<br><br>The batch mode login is 
+			 performed during the executing programs such as 
+			 ENOVIAFileIntrospection, CATDMUUtility, ExtractForSite, and 
+			 ApplyPackage, which does accept user credentials while logging in to 
+			 the ENOVIA server. <br><br>This flag must be set on the server 
+				terminal or command prompt before executing the executables.<br><br>
+				This flag has to be activated for the ENOVIA_FCSInfra on the 
+				server terminal console to use the SDAM and FCS functionality.<br><br>
+				The value for the flag must to set as <em>
+			 ENOVIA_FCSMetaServ=&lt;SDAM Middleware Host Name&gt;:&lt;SDAM Middleware 
+			 Port number&gt;<br></em><br><strong>Note</strong>: If an executable is 
+			 launched in another shell or bat, it is&nbsp; mandatory to define 
+			 these flags (ENOVIA_FCSInfra, ENOVIA_FCSMetaServ) in the shell or 
+			 bat file.<br><br>For example, During File Introspection, 
+				CATDMUUtility.bat is executed internally, hence it is mandatory 
+				to set these flags related to SDAM and FCS within 
+				CATDMUUtility.bat.<br></td>
+		 </tr>
+		 <tr>
+			 <td class="style1" style="width: 301px">INTROSPECTION_DAEMON_USERID=&lt;username&gt;<br>
+				INTROSPECTION_DAEMON_USERPWD=&lt;password&gt;<br>
+				INTROSPECTION_DAEMON_USERROLE=&lt;userrole&gt; </td>
+			 <td class="style1" style="width: 436px">For SDAM and FCS mode, the authentication is 
+				required for user to access file collaboration server through 
+				the SDAM middleware. For authentication to work seamlessly, the 
+				user and password combination must be provided by activating the 
+				login related flags at server side for running any batches, which 
+				will interact 
+				with FCS.<br>
+				For example, <em>
+				ENOVIAFileIntrospection</em><br>
+				</td>
+		 </tr>
+	 </table>
+     </td>
+   </tr>
+ </table>
+ 
+ 
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" height="41">
+   <tr>
+     <td width="754" colspan="2" height="1">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" border="0" width="64" height="32"></td>
+   </tr>
+ </table>
+ 
+ </body>
+
+</html>
+

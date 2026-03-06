@@ -1,0 +1,153 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>ANSYS Export Options</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style type="text/css">
+.auto-style1 {
+	border-collapse: collapse;
+}
+.auto-style2 {
+	text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<h1 align="center">
+<a name="ix-ANSYS"></a>ANSYS Export Options</h1>
+<table border="0" id="AutoNumber1" class="auto-style1">
+  <tr>
+    <td valign="top">
+          
+      <img height="32" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32"></td>
+    <td>This format exports plies to ANSYS analysis tools, both for surface 
+	tessellations and shell meshes. <br>However, only the shell meshes method 
+	provides elements suitable for finite element analysis.<br>The ANSYS format 
+	file exports a PREP7 file in Coded DataBase format (.cdb). <br>This file can 
+	be imported into ANSYS Mechanical APDL analysis tool to define additional 
+	data such as loads and boundary conditions.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+          
+      <img height="32" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32"></td>
+    <td>    <ol class="task">
+		<li>
+		<p class="task">Select <kbd>ANSYS</kbd> from the <kbd>Export File</kbd> 
+		list and click <kbd>Export Options</kbd>.<br>
+		<img height="395" src="b35doc/english/online/cclug_c2/images/dbANSYSNLS.png" width="297"><br>The 
+		export mesh is defined by triangular and quadrilateral shell elements 
+		corresponding to the tessellation triangles <br>or shell finite elements, 
+		either read from a mesh file or created in CATIA.<li>
+		<p class="task"><a name="ix-material orientation"></a>Set the <kbd>Material Orientation.<br></kbd>From the
+		<kbd>LOCAL</kbd> 
+					list, select one of the coordinates system found in the 
+					stacking.<br>They are listed by order of first occurrence.<br>
+		Only rectangular coordinates systems are supported. <br>Be aware that using an axis 
+					system other than the one used for plies generates a large 
+		number of Sections.<li><p class="task">Sections are merged whenever possible using the 
+		<kbd>Angle Tolerance</kbd> and the <kbd>Thickness Tolerance</kbd>.&nbsp;
+					<table style="width: 100%">
+						<tr>
+							<td>
+							<ul>
+								<li><a name="ix-angle tolerance"></a>The <kbd>Angle Tolerance</kbd> is given in 
+							degrees, and represents the negative and positive 
+							values around the nominal<br>(For example, 5 
+							represents a -5/+5 degree tolerance).</li>
+								<li><a name="ix-thickness tolerance"></a>The <kbd>Thickness Tolerance</kbd> is given 
+								as a percentage.</li>
+								<li>Select the <kbd>Ignore Thickness</kbd> 
+								check box to ignore the thickening due to 
+								shearing, thus reducing the number of 
+								properties.<br>Be aware it also ignores any 
+								taper or thickness change on solid cores.</li>
+								<li>Select <kbd>Equally Space Variables</kbd> to 
+								use only angles and thicknesses that are an 
+								integer multiple of the input tolerances.<br>For 
+								example, with the default <kbd>Angle Tolerance</kbd> 
+								of 5, the allowed PCOMP layer angles are 0, 10, 
+								20, 30, 40...<br>Set the <kbd>Angle Tolerance</kbd> 
+								to 7.5 for angles of 0, 15, 30, 45...<br></li>
+							</ul>
+							</td>
+						</tr>
+					</table>
+		</li>
+	<li>
+		<p class="task">
+		If required, set a <kbd>Section Offset</kbd>.<br>Possible values are <kbd>
+		Default</kbd> (in this case, <kbd>Mid</kbd>), <kbd>Top</kbd>, <kbd>Mid</kbd> 
+		or <kbd>Bottom</kbd>.</li><li><p class="task">
+		If required, select the <kbd>Write Global Plies</kbd> check box.<table style="width: 100%">
+			<tr>
+				<td>
+				<ul>
+					<li>A zero thickness is created for continuous layers within a 
+					section 
+				where that ply does not exist in CATIA.<br>This reverts to 
+					considering that the same layer id represents the same ply 
+					in every section, thus the layer is a gobal ply.</li>
+					<li>This check box works only if the global plies are 
+					defined in the direction of the element normals. </li>
+				</ul>
+				</td>
+			</tr>
+		</table></li>
+	<li>
+		<p class="task">
+
+		Select the <kbd>Write Ply Components</kbd> check box.<br>In ANSYS, a component 
+		is created from the elements mapped from that particular CATIA ply definition. 
+		<br>Since ANSYS does not use the concept of a global ply, the ply component 
+		helps you manipulate the data in ANSYS APDL. 
+		<li>
+		<p class="task">Select the <kbd>Material Components</kbd> check box.<br>
+		In ANSYS, a component is created with 
+		the elements that contain each of the materials used in the ply stacking. 
+		<br>Each created component is named from the name used 
+		in CATIA materials file. </li>
+		<li>
+		<p class="task">Specify a <kbd>First CoodinateID</kbd>.<br>It 
+		corresponds to the first LOCAL coordinates system referenced for the layer 
+		orientation.<br>The default and minimum value is 11. </li>
+		<li>
+		<p class="task">Enter the ID of the first section, first material, first 
+		node and first element.<br>These ID values are unique.<br>Usually, ID 
+		values correspond to different parts of a model, or different parts to 
+		be exported and assembled in ANSYS.</li>
+		<li>
+		<p class="task">CATIA surface normals and element normals do not always 
+		correspond. <br>Select the <kbd>Reverse Element</kbd> check box to solve 
+		this problem and accurately reflect the CATIA stacking in ANSYS.<br>
+		Note: <kbd>Write Global Plies</kbd> cannot create consistent layers if 
+		the stacking in ANSYS is not accurate.</li>
+	</ol>
+	<p class="task">Material properties are written to appropriate material cards such as 2D Orthotropic materials.<br>Data not 
+	defined within CATIA are written as 0. You need to modify them manually 
+	before use.</p>
+	<p class="task">In ANSYS, use <kbd>Input</kbd> command or <kbd>Utility&gt; 
+	File&gt; Read Input</kbd> from menu to import the exported CDB file.<br>Use
+	<kbd>Utility&gt; Plot&gt; Elements</kbd> to plot the elements (EPLOT) and 
+	display the model.</p>
+	  </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="auto-style2">
+    &nbsp;</td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

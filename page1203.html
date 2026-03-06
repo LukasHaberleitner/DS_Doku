@@ -1,0 +1,328 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Migrating Documents to Use DLNames</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Migrating Documents to Use DLNames</h1>
+ <table Border="0" CELLSPACING="0" valign="top">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top"><a name="ix-DLNames::migrating to DLNames"></a>This 
+     section explains how to use the CATDLNameMigr batch tool for migrating 
+     existing documents once you decide to implement a data storage strategy 
+     based on the DLName mechanism.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">
+     <h2><font color="#282187">
+     <a name="ix-DLNames::role of CATDLNameMigr batch tool"></a>Problems 
+     Involved When Migrating to a DLName Mechanism Strategy</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">You may have created a large number of documents with 
+     Version 5 without using the DLName mechanism. If you created documents 
+     pointing to other documents (for example, CATProduct documents), these 
+     documents contain the path of the documents pointed to. For example, the 
+     product structure in the document:<p><code>E:\users\ses\CATProducts\Product1.CATProduct</code></p>
+     <p>points to a part contained in the following CATPart document:</p>
+     <p><code>E:\users\ses\CATParts\Part1.CATPart</code></p>
+     <p>If you open the document Product1.CATProduct and select the <code>
+     Edit&nbsp;&gt;&nbsp;Links...</code> command, you will see in the &quot;Links&quot; and &quot;Pointed 
+     documents&quot; tabs that the CATProduct document points to the correct CATPart 
+     document. For example, this is what you see in the &quot;Pointed documents&quot; tab:</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/basil_c2/images/EditLinks01_NLS.gif" vspace="10" width="749" height="335"></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">The path:
+     <p><code>E:\users\ses\CATParts\Part1.CATPart</code></p>
+     <p>is stored physically inside the document:</p>
+     <p><code>E:\users\ses\CATProducts\Product1.CATProduct</code></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">After creating a large number of documents in this way, 
+     you may then decide to implement a data storage strategy based on the 
+     DLName mechanism,
+     <p>However, it is not sufficient to simply create DLNames for all the 
+     directories where your documents are stored. Because the path of <i>pointed</i> 
+     documents is stored in the <i>pointing</i> document, you need some way of 
+     converting the pathname in the document to the corresponding DLName.</p>
+     <p>The CATDLNameMigr batch tool can be used to solve this problem. The 
+     batch tool can be used in two modes:</p>
+     <ul>
+       <li>repair mode: the pointing documents are &quot;repaired&quot;, in other words 
+       modified to replace the pathname by the correct DLName</li>
+       <li>check mode: provides information and generates a text file containing 
+       a list of DLNames; the pointing documents are not modified.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="62" valign="top"></td>
+     <td width="898" valign="top">
+     <h2><font color="#282187">Running the CATDLNameMigr Batch Tool</font></h2>
+     <h3><font color="#282187">On Windows</font></h3>
+     </td>
+   </tr>
+   <tr>
+     <td width="62" valign="top"></td>
+     <td width="898" valign="top">Run the program:
+     <p><code><i>install_root</i>\code\bin\CATDLNameMigr.exe</code></p>
+     <p>where &quot;install_root&quot; is the name of your installation folder which is, 
+     by default: </p>
+     <p><code><strong>WindowsInstallPath</strong>\<b>win_b64 </b>(64-bit code 
+		on Windows, x64 Edition)<b><br>
+     </b><strong>WindowsInstallPathx86</strong>\<b>intel_a </b>
+     (32-bit code on Windows, x64 Edition)</code></td>
+   </tr>
+   <tr>
+     <td width="62" valign="top"></td>
+     <td width="898" valign="top">
+     <h3><font color="#282187">On UNIX</font></h3>
+     </td>
+   </tr>
+   <tr>
+     <td width="62" valign="top"></td>
+     <td width="898" valign="top">1. Log on as root.</td>
+   </tr>
+   <tr>
+     <td width="62" valign="top"></td>
+     <td width="898" valign="top">2. Enter the command:<p><code>
+     <strong>UNIXInstallPath</strong>/OS/code/command/<b>catstart 
+     -run </b></code><b><code>CATDLNameMigr</code></b></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">
+     <h3><font color="#282187"><a name="ix-commands::CATDLNameMigr"></a>
+     <a name="ix-DLNames::CATDLNameMigr command"></a>CATDLNameMigr Command 
+     Syntax<a name="ix-CATDLNameMigr command"></a></font></h3>
+     <p><b><code>CATDLNameMigr [-r] filename(s) [-p] dir -d directory [-h]&nbsp;</code></b>
+     </p>
+     <ul>
+       <li><code><b>-r filename</b></code>: activates repair mode and modifies 
+       the specified file</li>
+       <li><code><b>-p directory: </b></code>does NOT modify the original file, 
+       but copies it to the directory specified and modifies the file in this 
+       directory only. This is useful if you do not want to modify the original 
+       file.</li>
+       <li><code><b>-d directory: </b></code>name of directory containing 
+       pointing documents</li>
+       <li><code><b>-h: </b></code>displays help.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">
+     <h2><font color="#282187">Running CATDLNameMigr in Repair Mode</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">For the purposes of this scenario, we are going to use the 
+     documents mentioned earlier, and on Windows. The pointing document is:<p>
+     <code>E:\users\ses\CATProducts\Product1.CATProduct</code></p>
+     <p>and the documented pointed to is:</p>
+     <p><code>E:\users\ses\CATParts\Part1.CATPart</code></p>
+     <p>Make sure that no DLNames have yet been created.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top"><b>1.</b> Start a Version 5 session, and create two 
+     DLNames.
+     <p>To do so, select the <kbd>Tools&nbsp;&gt;&nbsp;Options... </kbd>command, then the
+     <code>Document</code> tab in the General category. To make the DLName 
+     environment the current document environment, select &quot;DLName&quot; in the 
+     Document Environments column, then select successively the <kbd>Allowed</kbd> 
+     and <kbd>Current</kbd> buttons.&nbsp;</p>
+     <p>Then, click the <kbd>Configure...</kbd> button and add the two DLNames. 
+     You can name them &quot;DLName1&quot; and &quot;DLName2.&quot;</p>
+     <p>Make DLName1 point to:</p>
+     <p><code>E:\users\ses\CATParts</code></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top"><b>2.</b> Exit the session, then open a Command Prompt 
+     window and go to the installation directory, which is by default:<p>
+     <code>
+     <strong>WindowsInstallPath</strong>\win_b64\code\bin (64-bit code 
+		on Windows, x64 Edition)<br>
+     <strong>WindowsInstallPathx86</strong>\intel_a\code\bin (32-bit code 
+		on Windows, x64 Edition)</code></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top"><b>3.</b> Enter the command:<p><b><code>CATDLNameMigr -r 
+     E:\users\ses\CATProducts\Product1.CATProduct</code></b></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">The output displayed in the command prompt window informs 
+     you that:<ul>
+       <li>you chose to run the tool with the &quot;-r&quot; option, so it will attempt to 
+       save the file</li>
+       <li>it analyzed the file:<br>
+       <code>E:\users\ses\CATProducts\Product1.CATProduct</code><br>
+       and succeeded in modifying it.</li>
+     </ul>
+     <p>A report is created in the directory containing the pointing document:</p>
+     <p><code>E:\users\ses\CATProducts\Product1.CATProduct.CATDLNameMigr_report</code></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top"><b>4.</b> Restart a Version 5 session, then open the 
+     document <code>Product1.CATProduct.</code></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top"><b>5. </b>Select the <code>Edit&nbsp;&gt;&nbsp;Links...</code> command, 
+     then click the &quot;Pointed documents&quot; tab:</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/basil_c2/images/EditLinks02_NLS.gif" vspace="10" width="749" height="335"></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">The batch tool uses the first DLName it finds in the list, 
+     and replaces the path by &quot;DLName1&quot; so the pointed document path is now:
+     <p><code>DLName1\Part1.CATPart</code></td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+     <td valign="top">Our scenario shows how to repair a single document. To 
+     repair all the documents contained in a specific directory, run the command 
+     with the &quot;-d&quot; option followed by the name of a directory. For example, the 
+     command:
+     <p><code>C</code><b><code>ATDLNameMigr -r -d E:\users\ses\CATProducts</code></b></p>
+     <p>modifies all the files found in the directory <code>E:\users\ses\CATProducts.</code> 
+     The &quot;-d&quot; option can be run in check mode without the &quot;-r&quot; option.</p>
+     <p>Furthermore, if you do not want to modify the original document, specify 
+     the &quot;-p&quot; option followed by the name of a directory. For example, the 
+     command:</p>
+     <p><code><b>C</b></code><b><code>ATDLNameMigr -r E:\users\ses\CATProducts\Product1.CATProduct 
+     -p E:\users</code></b></p>
+     <p>runs the tool in repair mode, does NOT modify the original file, but 
+     copies it to the directory <code>E:\users</code> and modifies the file in 
+     this directory only. This is useful if you do not want to modify the 
+     original file.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">
+     <h2><font color="#282187">Running CATDLNameMigr in Check Mode</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">You can also run the batch tool without having created 
+     enough DLNames, or any DLNames at all.
+     <p>For the purposes of this scenario, we are going to use the same 
+     documents. But this time, <i>make sure that NO DLNames have yet been 
+     created.</i></td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top"><b>1.</b> Start a Version 5 session, and make sure that no 
+     DLNames have been created.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top"><b>2.</b> Exit the session, then open a Command Prompt 
+     window and go to the installation directory, which is by default:<p>
+     <code><strong>WindowsInstallPath</strong>\<b>win_b64</b>\code\bin<b> </b>
+     (64-bit code on Windows, x64 Edition)<b><br>
+     </b><strong>WindowsInstallPathx86</strong>\<b>intel_a</b>\code\bin 
+     (32-bit code on Windows, x64 Edition)</code></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top"><b>3.</b> Enter the command:<p><code><b>C</b></code><b><code>ATDLNameMigr 
+     E:\users\ses\CATProducts\Product1.CATProduct</code></b></p>
+     <p>Note that this time, you do not use the &quot;-r&quot; option.</p>
+     <p>Because you have not yet created a DLName for the path:</p>
+     <p><code>E:\users\ses\CATParts</code></p>
+     <p>the batch tool cannot replace the path by the appropriate DLName. 
+     Displaying the document using the Edit&nbsp;&gt;&nbsp;Links... command will show that the 
+     path has not been modified.</p>
+     <p>The output displayed in the command prompt window informs you that:</p>
+     <ul>
+       <li>you have chosen to run the tool in check mode (because you did not 
+       specify the &quot;-r&quot; option&quot;)&nbsp;</li>
+       <li>it could not change the link in <code>E:\users\ses\CATProducts\Product1.CATProduct</code></li>
+       <li>the following file has been created in:&nbsp;<br>
+       <code>C:\Users\ses\Local Settings\Temp\</code><b><code>CATDLNameMigr_missing-DLNames_report.txt</code></b><br>
+       in which a DLName has been created. The file contains the following line:<br>
+       <code>DLName1;E:\users\ses\CATParts;/tmp;&nbsp;</code><br>
+       The &quot;.txt&quot; file can now be imported, which will allow you to run the tool 
+       again later to repair the document.</li>
+     </ul>
+     <p>A report is created in the directory containing the pointing document:</p>
+     <p><code>E:\users\ses\CATProducts\Product1.CATProduct.CATDLNameMigr_report</code></p>
+     <p>informing you that the link could not be changed because there was no 
+     corresponding DLName.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top"><b>4.</b> Restart a Version 5 session and import the text 
+     file.
+     <p>To do so, select the <kbd>Tools&nbsp;&gt;&nbsp;Options... </kbd>command, then the
+     <code>Document</code> tab in the General category. To make the DLName 
+     environment the current document environment, select &quot;DLName&quot; in the 
+     Document Environments column, then select the <kbd>Allowed</kbd> button.</p>
+     <p>Click the <kbd>Configure...</kbd> button, then the <code>Import...</code> 
+     button, browse to select the file:</p>
+     <p><code>C:\Users\ses\Local Settings\Temp\</code><b><code>CATDLNameMigr_missing-DLNames_report.txt</code></b></p>
+     <p>The following DLName is added:</p>
+     <p><code>DLName1&nbsp;E:\users\ses\CATParts<br>
+		DLName2 E:\users\ses\CATProducts </code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">Now that you have a DLName, you can run the batch tool 
+     using the &quot;-r&quot; option to repair the file.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">
+     <h3>Command Outputs</h3>
+     <p>Running the command in any of the above modes outputs information to the 
+     command prompt window about the tasks processed. This information can also 
+     be obtained using the &quot;-h&quot; option.</td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+
+ </body>
+
+</html>
+

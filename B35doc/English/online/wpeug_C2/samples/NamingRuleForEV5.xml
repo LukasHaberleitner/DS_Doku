@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2008 -->
+<NamingRule>
+   <!-- Rule that enables to manage PRC in structure exposed CATProduct -->
+
+   <ExtractRule id="CATProduct_name_For_PRC">
+      <Condition>
+         <Predicate type="internal"  id="Type"        operator="=" value="CATProduct"/>
+         <Predicate type="internal"  id="StorageMode" operator="=" value="STRUCTURE_EXPOSED"/>
+         <Predicate type="internal"  id="Part.EV5.Type"    operator="=" value="PRC"/>
+         
+      </Condition>
+      <NamingOperator>
+         <Element type="VPDM" id="Part.Product ID" length="20" padding=" "/>
+         <Element type="string" id="_PRC" />
+      </NamingOperator>
+   </ExtractRule>
+
+   <!-- Rule that enables to manage PV in structure exposed CATProduct -->
+
+   <ExtractRule id="CATProduct_name_For_PV">
+      <Condition>
+         <Predicate type="internal"  id="Type"        operator="=" value="CATProduct"/>
+         <Predicate type="internal"  id="StorageMode" operator="=" value="STRUCTURE_EXPOSED"/>
+         <Predicate type="internal"  id="Part.EV5.Type"    operator="=" value="PV"/>
+
+      </Condition>
+      <NamingOperator>
+         <Element type="VPDM" id="Part.Part Number" length="20" padding=" "/>
+         <Element type="string" id="_" />
+         <Element type="VPDM" id="Part.Version" />
+         <Element type="string" id="-Assembly-Part" />
+      </NamingOperator>
+   </ExtractRule>
+
+   <!-- Rule for CATPart & CATProduct in workpackage -->
+
+   <ExtractRule id="Part_Document_name">
+      <Condition>
+         <Predicate type="internal"  id="Type" operator="LIKE" value="CATP*"/>
+      </Condition>
+      <NamingOperator>
+         <Element type="VPDM" id="Part.Part Number" length="20" padding=" "/>
+         <Element type="string" id="_" />
+         <Element type="VPDM" id="Part.Version" />
+         <Element type="string" id="_" />
+         <Element type="VPDM" id="Document ID" />
+         <Element type="string" id="_" />
+         <Element type="VPDM" id="Revision" />
+         <Element type="string" id="_PartDocument" />
+      </NamingOperator>
+   </ExtractRule>
+
+   <!-- Rule for other document types -->
+
+   <ExtractRule id="Other_Document_name">
+      <Condition>
+      </Condition>
+      <NamingOperator>
+         <Element type="VPDM" id="Document ID" length="20" padding=" "/>
+         <Element type="string" id="_" />
+         <Element type="VPDM" id="Revision" />
+         <Element type="string" id="_Document" />
+      </NamingOperator>
+   </ExtractRule>
+</NamingRule>

@@ -1,0 +1,135 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Compartment Access</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+ </head>
+
+ <body>
+
+ <h1>Compartment Access<a name="ix-computed attributes::Compartment Access"></a></h1>
+ <p>The following computed attributes and methods are in the CompAccessLayout 
+ Knowledgeware dictionary. Not all methods take input parameters, and for those 
+ that do, the parameters are described in the Description column. </p>
+ <p>Whether you can see the value returned by the method depends upon how you 
+ are using it in Knowledgeware. For example, if you write a Knowledgeware rule 
+ or check causing a component to display differently based on the outcome of 
+ that rule or check, you won't see the calculated value; just the result of the 
+ calculated value. </p>
+ <p>You can see the value returned by a computed attribute in: </p>
+ <ul>
+   <li>A report you generate through the <kbd>Tools - Report Definition</kbd> 
+   dialog.</li>
+   <li>The text displayed in your diagram, after you define a text template 
+   using the <kbd>Insert Link Template</kbd> dialog.</li>
+   <li>The <kbd>Edit - Properties</kbd> dialog, providing the administrator 
+   configured them to display as described in <a href="page14589.html">Changing 
+   the Display Order of Properties</a>.</li>
+ </ul>
+ <p>&nbsp;</p>
+ <table border="2" style="border-collapse: collapse" bordercolor="#111111" width="100%" cellpadding="2" height="1022">
+   <tr>
+     <td width="15%" height="16"><b>Object Type</b></td>
+     <td width="25%" height="16"><b>Attribute/Method Name</b></td>
+     <td width="52%" height="16"><b>Description</b></td>
+   </tr>
+   <tr>
+     <td width="15%" height="32">CamAccessPart</td>
+     <td width="25%" height="32">OrientationBoundaryOffset</td>
+     <td width="52%" height="32">Returns the orientation boundary offset for the 
+     access part.</td>
+   </tr>
+   <tr>
+     <td width="15%" height="32">CamAccessPart</td>
+     <td width="25%" height="32">PlacementBoundaryOffset</td>
+     <td width="52%" height="32">Returns the placement boundary offset for the 
+     access part.</td>
+   </tr>
+   <tr>
+     <td width="15%" height="32">CATCptBoundary</td>
+     <td width="25%" height="32">AssociatedObject</td>
+     <td width="52%" height="32">Returns a string representing the object type 
+     of the boundary's associated object. For example, it would return either 
+     CATSPLMoldedForm, CATSPLWrappingSurf, or CATCamWallSystem (a boundary can 
+     be associated with either a molded form, a wrapping surface, or a wall 
+     system). This is useful for retrieving the attribute values from the 
+     associated object. In the following sample Knowledgeware rule, the value 
+     for the BulkheadIntegrity attribute on a boundary object is set to the 
+     BulkheadIntegrity attribute value on its associated object if that object 
+     is a molded form:
+     <p><kbd>let x (CATSPLMoldedForm) <br>
+     if (BDRY.AssociatedObject&nbsp;&gt;&nbsp;IsSupporting(&quot;CATSPLMoldedForm&quot;) == TRUE) <br>
+     { <br>
+     set x = BDRY.AssociatedObject <br>
+     BDRY.BulkheadIntegrity = x.BulkheadIntegrity <br>
+     }</kbd></td>
+   </tr>
+   <tr>
+     <td width="15%" height="32">CATCptBoundary</td>
+     <td width="20%" height="32">AssocatedObjectType</td>
+     <td width="52%" height="32">Returns a generic pointer to the object 
+     associated with the boundary. The following example tests if the boundary's 
+     associated object is a molded form:<br>
+     <kbd>if (BDRY.AssociatedObjectType == &quot;CATSPLMoldedForm&quot;)</kbd></td>
+   </tr>
+   <tr>
+     <td width="15%" height="32">CATCptBoundary</td>
+     <td width="20%" height="32">CompartmentID</td>
+     <td width="52%" height="32">Returns the name of the compartment to which 
+     the boundary belongs.</td>
+   </tr>
+   <tr>
+     <td width="15%" height="32">CATCptBoundary</td>
+     <td width="20%" height="32">SurfaceArea</td>
+     <td width="52%" height="32">Returns the boundary surface area as a double.</td>
+   </tr>
+   <tr>
+     <td width="15%" height="48">CATCptBoundary</td>
+     <td width="20%" height="48">TotalPaintThickness</td>
+     <td width="52%" height="48">Returns the sum of PaintThickness1 through 
+     PaintThickness6 for the input boundary.</td>
+   </tr>
+   <tr>
+     <td width="15%" height="32">CATCptBoundary</td>
+     <td width="22%" height="32">UserType</td>
+     <td width="52%" height="32">Returns the user-defined boundary type (Deck 
+     Boundary, Wall Boundary, Overhead Boundary, etc.)</td>
+   </tr>
+   <tr>
+     <td width="15%" height="32">CATCptCompartment</td>
+     <td width="22%" height="32">CompartmentMembers</td>
+     <td width="52%" height="32">Lists the names of all objects inside the 
+     compartment based on the compartment contents during the last <kbd>Update 
+     Compartment Members</kbd> command. (Note: if you load a work-in-progress 
+     but not all of its objects, this computed attribute lists only those 
+     objects present in the current session.)</td>
+   </tr>
+   <tr>
+     <td width="23%" height="32">CATCptCompartment</td>
+     <td width="25%" height="32">TotalSurfaceArea</td>
+     <td width="52%" height="32">Returns the total surface area of the 
+     boundaries that make up the compartment.</td>
+   </tr>
+   <tr>
+     <td width="23%" height="32">CATCptCompartment</td>
+     <td width="25%" height="32">UserType</td>
+     <td width="52%" height="32">Returns the user-defined compartment type 
+     (cabin, engine room, etc.)</td>
+   </tr>
+   <tr>
+     <td width="23%" height="32">CATCptCompartment</td>
+     <td width="25%" height="32">Volume</td>
+     <td width="52%" height="32">Returns the compartment volume.</td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,277 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Product-Setup Link in Manufacturing Hub Context</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Product-Setup Link in Manufacturing Hub Context</h1>
+ <p>As from V5R16, association or replacement of the NC Setup Assembly (or <i>
+ Product</i>) referenced by the Part Operation (or <i>Setup</i>) by selecting it 
+ in the Product List is possible in the Manufacturing Hub context.<br>
+ Now, when an NC detailing application handles Process Engineer project data in 
+ the Manufacturing Hub context, only <u><i>product instances</i></u> are managed 
+ using the Product List.</p>
+ <p>Prior to V5R16, NC product replacement or association to Part Operation 
+ could only be done in a file based context. </p>
+ <dl>
+   <dt><b>Manufacturing Hub context</b></dt>
+   <dd>Allows NC detailing in CATIA V5 environment and process planning in 
+   Process Engineer E5 environment.<br>
+   V5/E5 interoperability allows transferring project data from Process Engineer 
+   to NC detailing and saving NC detailing data in a Process Engineer project.</dd>
+ </dl>
+ <h2>Product-Setup Link Issues (Prior to V5R16)</h2>
+ <p>Prior to V5R16, the Part Operation (or <i>Setup</i>) references either <i>
+ product references</i> or <i>product instances</i> according to how these 
+ components are linked. In the Manufacturing Hub context, this is the source of 
+ two major issues:</p>
+ <ul>
+   <li><a href="#bkmk04">NC product association to Part Operation</a></li>
+   <li><a href="#bkmk05">NC product replacement (design change scenario)</a>.</li>
+ </ul>
+ <h3><b><a name="bkmk04"></a></b>NC Product Association to Part Operation</h3>
+ <p>Design Products are created and managed through the Engineering Hub. 
+ Machining Processes are defined and managed through the Manufacturing Hub. </p>
+ <p>In the figure below, the design (Product V1) was associated to the Product 
+ View in E5 (1). Only the <i>product instances</i> are available in this 
+ context.</p>
+ <p><img border="1" src="b35doc/english/online/mfgug_c2/images/ProductSetupLink02NLS.gif" width="749" height="285"></p>
+ <p>In V5R15, association by drag and drop in E5 (2a) is the only one which 
+ enables to associate a NC product to a Part Operation. The association through 
+ Part Operation (2b) in V5 does not work.</p>
+ <h3><b><a name="bkmk05"></a></b>NC Product Replacement (Design Change Scenario)</h3>
+ <p>In the figure below, Product V2 is a second version of Product V1 (1). </p>
+ <p><img border="1" src="b35doc/english/online/mfgug_c2/images/ProductSetupLink01NLS.gif" width="743" height="344"></p>
+ <p>A new Subassembly is created in E5 and Product V2 is associated to this new 
+ one (2). However, it is not possible to support a Design Change scenario with 
+ V5R15 services (Part Operation editor or Edit/Links) whose mechanism is based 
+ on links to product reference (3).</p>
+ <h2>Product-Setup Link Solutions (As from V5R16)</h2>
+ <p>To solve these problems in V5R16, the Product-Setup link will be the same 
+ since Part Operations will always be associated to product instances. This 
+ enables to associate or replace a Product whatever the methodology used.</p>
+ <p>In addition, the link to product instances enables the following: </p>
+ <ul>
+   <li>Making the Product-Setup link persistent after save in IPD. </li>
+   <li>Managing several machining phases of the same Product in a unique 
+   Process, each phase corresponding to one instance of the Product. You can 
+   manage different setups or constraints for the same Product.</li>
+   <li>Making design changes local to the Setup and not necessarily global to 
+   the Process.</li>
+ </ul>
+ <p>The different ways to associate a Product to a Part Operation and to replace 
+ a Product by a new one are discussed below. Most of the services described here 
+ already exist in V5R15 but they can only work in Manufacturing Hub context if 
+ there is a link to a product instance.</p>
+ <h3>How to Associate a NC Setup Assembly to the Part Operation</h3>
+ <p>This can be done as follows:</p>
+ <ul>
+   <li><a href="#bkmk01">NC Setup Assembly instance selection through Part 
+   Operation editor</a>.</li>
+   <li><a href="#bkmk02">Drag and drop in Process Engineer</a>.</li>
+   <li><a href="#bkmk03">Drag and drop in CATIA/DELMIA</a>.</li>
+ </ul>
+ <p>In what follows, we assume that you have already created a Process Engineer 
+ Project including a Process View and a Product View. In the Process View, you 
+ have already created a WorkPlan (machining process) including a 
+ ManufacturingSetUp (Part Operation). In the Product View, you have already 
+ created a NC subassembly.</p>
+ <p><b><a name="bkmk01"></a>NC Setup Assembly Instance Selection through Part 
+ Operation Editor</b></p>
+ <p>There are two ways to achieve this association:</p>
+ <p><i><a name="metho01"></a>Methodology 1</i>: </p>
+ <ul>
+   <li>Drag and drop of the NC Setup Assembly to the Workplan (machining 
+   process) in the Process Engineer Project (1). </li>
+   <li>Load this Project in CATIA\DELMIA by using the PPR Hub toolbar (2-3). <br>
+   NC Setup Assembly is inserted in the ProductList (4). </li>
+   <li>To associate this NC Setup Assembly to the Part Operation, edit the Part 
+   Operation by clicking on the <kbd>Product Instance Selection</kbd> icon and 
+   selecting the NC Setup Assembly in the ProductList (5-6).</li>
+ </ul>
+ <p><img border="1" src="b35doc/english/online/mfgug_c2/images/ProductSetupLink03NLS.gif" width="760" height="489"></p>
+ <p><i><a name="metho02"></a>Methodology 2</i>: </p>
+ <ul>
+   <li>Load the Project in CATIA\DELMIA (1-2-3).</li>
+   <li>Load the NC Setup Assembly in the ProductList in CATIA/DELMIA by using 
+   the PPR Hub toolbar (4).<br>
+   NC Setup Assembly is inserted in the ProductList (5). </li>
+   <li>To associate this NC Setup Assembly to the Part Operation, edit the Part 
+   Operation by clicking on the new <kbd>Product Instance Selection</kbd> icon 
+   and selecting the NC Setup Assembly in the ProductList (6-7).</li>
+ </ul>
+ <p><img border="1" src="b35doc/english/online/mfgug_c2/images/ProductSetupLink04NLS.gif" width="800" height="680"></p>
+ <p><b><a name="bkmk02"></a>Drag and Drop in Process Engineer</b></p>
+ <p>You can associate the NC Setup Assembly directly in the Process Engineer 
+ Project. In the Project you have already created a Subassembly (NC Setup 
+ Assembly) in the Design View and you have created a ManufacturingSetup (Part 
+ Operation). </p>
+ <ul>
+   <li>Select the Subassembly and drag and drop (1) it to the ManufacturingSetup.</li>
+   <li>Create a Process Processes Product type link (2).</li>
+ </ul>
+ <p><img border="1" src="b35doc/english/online/mfgug_c2/images/ProductSetupLink05NLS.gif" width="636" height="211"></p>
+ <p><b><a name="bkmk03"></a>Drag and Drop in CATIA/DELMIA</b></p>
+ <p>Assuming you already made either the steps (1) to (4) of <a href="#metho01">
+ Methodology 1</a> or the steps (1) to (5) of second <a href="#metho02">
+ Methodology 2</a>.<br>
+ In CATIA/DELMIA, to associate this NC Setup Assembly to the Part Operation, 
+ drag and drop the NC Setup Assembly instance from the ProductList to the Part 
+ Operation.</p>
+ <p><img border="1" src="b35doc/english/online/mfgug_c2/images/ProductSetupLink06NLS.gif" width="426" height="306"></p>
+ <h3>How to Replace a NC Setup Assembly in the Part Operation</h3>
+ <p>In CATIA V5, note that it becomes impossible to use Edit/Links functionality 
+ to replace the Product in the Machining context. In fact, Edit/Links is based 
+ on the exposition of an external link between the Part Operation and the 
+ product reference (Product/Part). This link no longer exists so it is 
+ impossible to expose it. The Part Operation now points to a product instance 
+ not to a product reference.</p>
+ <p>In what follows <b>Revision</b> means when the document is modified and 
+ saved on the same document and <b>Version</b> means when the document is 
+ modified and saved as a new document.</p>
+ <p>In Manufacturing Hub context, there are two ways to manage the NC Setup 
+ Assembly. In both cases you have to create a Product View, a Design View and a 
+ Subassembly in the Process Engineer Project. The Subassembly corresponds to the 
+ NC Setup Assembly. </p>
+ <p>Then you have two different modes to create the Subassembly:</p>
+ <ul>
+   <li>You can directly link this Subassembly to a Product (the structure of the 
+   NC Setup Assembly is not visible through Process Engineer): <br>
+   Double-click the Subassembly (1)<br>
+   Select the Graphic tab (2)<br>
+   Associate the Product to the Subassembly (3).<br>
+   <img border="1" src="b35doc/english/online/mfgug_c2/images/ProductSetupLink09NLS.gif" width="545" height="248"></li>
+   <li>You can split the Subassembly into subelements (Parts, IPMs, and so on) 
+   and associate Parts to these subelements (the structure of the NC Setup 
+   Assembly is visible through Process Engineer).<br>
+   Double-click a subelement of the Subassembly (1)<br>
+   Select the Graphic tab (2)<br>
+   Associate the Product to the Subassembly (3).<br>
+   <img border="1" src="b35doc/english/online/mfgug_c2/images/ProductSetupLink08NLS.gif" width="544" height="226"></li>
+ </ul>
+ <p><b>New Revisions of NC Setup Assembly or Part</b></p>
+ <p>If you just do revisions of your design documents, reconciliation is 
+ automatic. You just have to compute the tool path again if it is necessary.</p>
+ <p><b>New Versions of NC Setup Assembly</b></p>
+ <p>In the following methodologies the Subassembly is linked directly to a 
+ Product.</p>
+ <p><i><a name="metho03"></a>Methodology 1</i>:</p>
+ <ul>
+   <li><b>In E5</b>: You can directly replace the current NC Setup Assembly 
+   (ProductV1) associated to IPD Subassembly (Subassembly V1) by a new one 
+   (1-2-3) and save the Project. </li>
+   <li><b>In V5</b>: Open the Project in V5 and synchronize the Process (4). 
+   Here, the machining operation is no longer synchronized because the design 
+   change scenario was processed in E5 environment. <br>
+   Refer to <a href="page11445.html">NC Synchronization in Manufacturing Hub 
+   Context</a>.</li>
+ </ul>
+ <p><img border="1" src="b35doc/english/online/mfgug_c2/images/ProductSetupLink10NLS.gif" width="840" height="659"></p>
+ <p><i>Methodology 2</i>:</p>
+ <ul>
+   <li><b>In E5</b>: You can create a new IPD Subassembly under the same 
+   Production View (1) and link it to the new version of the NC Setup Assembly 
+   (2-3-4). Then you save the Project in IPD. </li>
+   <li><b>In V5</b>: Open the Project in V5, and edit the Part Operation (5). 
+   Click on <kbd>Product Instance Selection</kbd> icon and select the new NC 
+   Subassembly: Subassembly V2 (6). The replacement is done (7). <br>
+   Note that the Machining Operation is always synchronized because the design 
+   change scenario was processed in V5.</li>
+ </ul>
+ <p><img border="1" src="b35doc/english/online/mfgug_c2/images/ProductSetupLink11NLS.gif" width="849" height="791"></p>
+ <p><b>New Versioning of Part when the Subassembly is Linked Directly to a 
+ Product</b></p>
+ <p>In V5: You just have to replace the NC Part in the NC Setup Assembly 
+ (Product) and synchronize the Process.<br>
+ Refer to <a href="page11445.html">NC Synchronization in Manufacturing Hub 
+ Context</a>.</p>
+ <p><b>New Versioning of Part when the Subassembly is Split into Subelements</b></p>
+ <p><i><a name="metho04"></a>Methodology 1</i>:</p>
+ <ul>
+   <li><b>In E5</b>: You can directly replace the current Part (PartV1) 
+   associated to IPD Part (Part, 1) by a new one (1-2-3) and save the Project.
+   </li>
+   <li><b>In V5</b>: Open the Project in V5 and synchronize the Process (4). 
+   Here, the machining operation is no longer synchronized because the design 
+   change scenario was processed in E5 environment. <br>
+   Refer to <a href="page11445.html">NC Synchronization in Manufacturing Hub 
+   Context</a>.</li>
+ </ul>
+ <p><img border="1" src="b35doc/english/online/mfgug_c2/images/ProductSetupLink12NLS.gif" width="841" height="660"></p>
+ <p><i>Methodology 2</i>:</p>
+ <ul>
+   <li><b>In E5</b>: You can create a new IPD Subassembly and new IPD Part under 
+   the same Production View (1). Note that the name of the IPD Part must be the 
+   same in the both IPD Subassemblies. <br>
+   Then, link the new NC Part (PartV2) to the IPD Part of the new version of IPD 
+   Subassembly (2-3-4) and save the Project in IPD. </li>
+   <li><b>In V5</b>: Open the Project in V5, edit the Part Operation (5). Click 
+   on <kbd>Product Instance Selection</kbd> icon and select the new Subassembly 
+   (6). The replacement is done (7). <br>
+   Note that the Machining Operations are always synchronized.</li>
+ </ul>
+ <p><img border="1" src="b35doc/english/online/mfgug_c2/images/ProductSetupLink13NLS.gif" width="850" height="793"></p>
+ <p><b>Multi-replacement of NC Setup Assembly</b></p>
+ <p>In V5, it is possible to locally replace the Part Operation or globally 
+ replace all Part Operations pointing to the same NC Setup Assembly.</p>
+ <p><i>Case 1: In selected Part Operation only</i><br>
+ If you choose a local replacement, even if there are several Part Operations 
+ pointing to the same NC Setup Assembly, the design changes will impact only the 
+ edited Part Operation. All the other Part Operations, pointing to the same NC 
+ Setup Assembly, continue to point to that one. <br>
+ Nevertheless, if the other Part Operations reference some activities using some 
+ shared elements that are also used by the edited Part Operation (such as 
+ formula, Patterns, and Machining Areas) they will also be impacted by the 
+ design changes.</p>
+ <p><i>Case 2: In whole Process</i><br>
+ If you choose a global replacement, all Part Operations pointing to the same NC 
+ Setup Assembly will be impacted by the replacement. <br>
+ If the selected Part Operation is the only one pointing to a given NC Setup 
+ Assembly, the global mode is automatically applied.</p>
+ <p>As an example of this, imagine that several Part Operations point to &quot;New 
+ Subassembly 1&quot;. </p>
+ <ol>
+   <li>Edit the first one. </li>
+   <li>Replace the current NC Setup Assembly by &quot;New Subassembly 2&quot;. <br>
+   The Product Replacement dialog box appears. </li>
+   <li>If you select <kbd>In selected Part Operation only</kbd> then only the 
+   edited Part Operation will be impacted. If you select <kbd>In whole Process</kbd> 
+   then all the Part operations will be impacted.</li>
+ </ol>
+ <p><img border="1" src="b35doc/english/online/mfgug_c2/images/ProductSetupLink14NLS.gif" width="594" height="475"></p>
+ <h3>How to Copy Activities Between Projects</h3>
+ <p>This section deals with the inter-project copy of activities (that is, 
+ machining operations).</p>
+ <p>Reminder: In V5 application in Manufacturing Hub context, it is not possible 
+ to copy an activity from a Project A to a Project B if the Part Operation 
+ included in Project B is not already associated to a NC Setup Assembly.</p>
+ <p>When you copy activities from a Project A (1) to a Project B (2) in a Part 
+ Operation with an associated NC Setup Assembly, three different cases can occur 
+ according to NC Setup Assembly associated to the origin Part Operation and NC 
+ Setup Assembly associated to the target Part Operation (3). </p>
+ <p><i>Case 1</i>: The target NC Setup Assembly is the same as the origin NC 
+ Setup Assembly. In this case the activities will be rerouted on the new NC 
+ Setup Assembly instance. The status of the NC geometries does not change.</p>
+ <p><i>Case 2</i>: The target NC Setup Assembly is a <kbd>Save As</kbd> from the 
+ origin NC Setup Assembly. The status of NC geometries are &quot;Not up to date&quot; for 
+ geometries that have changed. </p>
+ <p><i>Case 3</i>: The target NC Setup Assembly is completely different from the 
+ origin NC Setup Assembly (or a <kbd>New From</kbd>). In this case, the status 
+ of all NC geometries are &quot;Not Found&quot;.</p>
+ <p>If you do not use the <kbd>Duplicate geometry links</kbd> option, all the 
+ activities will be disconnected in any case.</p>
+ <p><img border="1" src="b35doc/english/online/mfgug_c2/images/ProductSetupLink15NLS.gif" width="702" height="602"></p>
+
+ </body>
+
+</html>
+

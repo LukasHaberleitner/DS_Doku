@@ -1,0 +1,147 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+	<head>
+	<meta name="MonocodingType" content="0">
+	<meta name="MonocodingFlag" content="C2D2">
+	<meta http-equiv="Content-Language" content="en-us">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+	<meta name="ProgId" content="FrontPage.Editor.Document">
+	<title>Table Rotation and Machining Axis Origin</title>
+	<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+	</head>
+
+	<body>
+
+	<h1>
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" title="task target" width="32" height="32">Table Rotation and Machining Axis Origin</h1>
+	<p align="left">In V5 Machining workbenches, the origin of the machining axis 
+	is fixed on the NC machine. </p>
+	<p align="left">When a table rotation is performed:</p>
+	<ul>
+		<li><p align="left">the machining axis origin moves: it is rotated with 
+		the machined part during the table rotation (defined by a manual or automatic 
+		machine rotation or by a machine instruction)</p>
+		</li>
+		<li><p align="left">the machining axis direction (X, Y, Z) remain parallel 
+		to the NC machine axis.</p>
+		</li>
+	</ul>
+	<p align="left">The machining coordinates in the Tool Path replay and APT output 
+	are generated according to the machining axis computed with the table rotation.</p>
+	<p align="left">After a rotation, the tool motion coordinates are defined in 
+	the axis system defined by the matrix generated for the rotation (CATIAO matrix).</p>
+	<p align="left">However, some user&#39;s methodology imposes the definition of a 
+	machining axis origin that is fixed on the machined part.</p>
+	<p align="left">Prior to V5R18, this meant that you had to create a 
+	machining axis and insert a Machining Axis Change after an activity on which 
+	a table rotation is done.</p>
+	<p align="left">As from V5R18, a <kbd>Machining Axis Origin</kbd> with <kbd>
+	Fixed on the part after table rotation</kbd> option is available in
+	<a href="page1017.html#BM75">Tools &gt; 
+	Options &gt; Machining &gt; Output</a> to specify that the machining axis origin will 
+	be linked to the machined part when a table rotation is done.</p>
+	<h2 align="left">Behavior</h2>
+	<p align="left">The behavior of the <kbd>Machining Axis Origin</kbd> with
+	<kbd>Fixed on the part after table rotation</kbd> option is described below.</p>
+	<p align="left">If the option is selected, the origin axis of a machining axis 
+	system is defined as linked to the machined part. So it is kept at the same 
+	location when a table rotation is done.</p>
+	<p align="left">If the option is not selected: the machining axis origin moves 
+	according to the table rotation defined on the machining program. This is the 
+	behavior that was always applied prior to V5R18.</p>
+	<p align="left"><b>Note</b>: If the Machine rotation activity contains only 
+	a head rotation, then the behavior, tool path replay, and APT output are the 
+	same as prior to V5R18. </p>
+	<h2 align="left">Tool Path Replay </h2>
+	<p align="left">If the option is selected, the coordinates of tool motion that 
+	follow a Machine Rotation or Machine Instruction or Transition Path (that include 
+	a table rotation) are defined in the current machining axis system (see current 
+	machining axis system highlighted in black in the figure below).</p>
+	<p align="left">
+	<img border="1" src="b35doc/english/online/mfgug_c2/images/TableRotationMAXS.gif" width="604" height="213"></p>
+	<p align="left">The current machining axis system is defined as follows:</p>
+	<ul>
+		<li><p align="left">Directions are defined from the previous machining axis 
+		system and the table rotation angles are defined from the current machining 
+		operation. </p>
+		</li>
+		<li><p align="left">Origin axis is the same as in the previous machining 
+		axis change defined in the program (or the one defined on the Part operation).
+		</p>
+		</li>
+	</ul>
+	<h2 align="left">Output File Generation</h2>
+	<p align="left">If the option is selected, the CATIAO matrix generated for a 
+	table rotation (included in Machine Rotation, Machine Instruction, or Transition 
+	Path) automatically ensures that the machine axis origin is kept during the 
+	rotation. The axis origin is the same as in the previous machining axis change 
+	defined in the program.</p>
+	<p align="left">If no Machining axis change is defined before the replayed operation, 
+	the origin axis is the same as the origin of the machining axis defined on the 
+	part operation.</p>
+	<p align="left">Example:<br>
+	The coordinates of the origin are the same as defined in the previous machining 
+	axis change (or in the first machining axis defined on the program).</p>
+	<blockquote>
+			<p align="left"><code>$$ End of generation of : Profile Contouring.1<br>
+			$$ OPERATION NAME : Machine Rotation.1<br>
+			<b>$$ Start generation of : Machine Rotation.1<br>
+			ROTABL/ 270.000000,BOTH<br>
+			$$*CATIA0<br>
+			$$ UNKNOWN<br>
+			$$ 0.00000 0.00000 -1.00000 -40.00000<br>
+			$$ 0.00000 1.00000 0.00000 20.00000<br>
+			$$ 1.00000 0.00000 0.00000 30.00000<br>
+			$$ End of generation of : Machine Rotation.1</b><br>
+			$$ OPERATION NAME : Profile Contouring.2<br>
+			$$ Start generation of : Profile Contouring.2</code></p>
+	</blockquote>
+	<p align="left">If the new option is not activated, the axis origin <i>moves</i>.
+	</p>
+	<p align="left">Example:<br>
+	The coordinates are generated according to the table rotation angle.</p>
+	<blockquote>
+			<p align="left"><code>$$ End of generation of : Profile Contouring.1<br>
+			$$ OPERATION NAME : Machine Rotation.1<br>
+			<b>$$ Start generation of : Machine Rotation.1<br>
+			ROTABL/ 270.000000,BOTH<br>
+			$$*CATIA0<br>
+			$$ UNKNOWN<br>
+			$$ 0.00000 0.00000 -1.00000 -30.00000<br>
+			$$ 0.00000 1.00000 0.00000 20.00000<br>
+			$$ 1.00000 0.00000 0.00000 -40.00000<br>
+			$$ End of generation of : Machine Rotation.1</b><br>
+			$$ OPERATION NAME : Profile Contouring.2<br>
+			$$ Start generation of : Profile Contouring.2</code></p>
+	</blockquote>
+	<h3 align="left">APT Import</h3>
+	<p align="left">If you have imported the APT and the option is selected, then 
+	in the <kbd>Tool Path Replay </kbd>dialog box will show updated coordinates for Machine 
+	Rotation, Machine Instruction, and Transition Path.</p>
+	<p align="left">Now if you have generates the APT with the option activated, 
+	the APT output will show that the CATIAO matrix generated for a table rotation 
+	(included in a Machine Rotation, Machine Instruction, or Transition Path) automatically 
+	ensures that the machine axis origin is kept during the rotation. </p>
+	<p align="left">The axis origin is the same as that defined in the previous 
+	machining axis change defined in the program. If no Machining axis change is 
+	defined before the replayed operation, the origin axis is the same as the origin 
+	of the machining axis defined on the part operation.</p>
+	<h3 align="left">Already Computed Operations</h3>
+	<p align="left">If you selects the option on a program where all the manufacturing 
+	operations are already computed, the coordinates in the Tool Path Replay dialog 
+	box will be updated for Machine Rotation, Machine Instruction, and Transition 
+	Path.</p>
+	<p align="left">Now if you generate the APT with the option activated, 
+	the APT output will show that the CATIAO matrix generated for a table rotation 
+	(included in Machine Rotation, Machine Instruction, or Transition Path) automatically 
+	ensures that machine axis origin is kept during the rotation. </p>
+	<p align="left">The axis origin is the same as that defined in the previous 
+	machining axis change defined in the program. If no Machining axis change is 
+	defined before the replayed operation, the origin axis is the same as the origin 
+	of the machining axis defined on the part operation.</p>
+
+	</body>
+
+</html>
+

@@ -1,0 +1,587 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Running the CATPDMExtractEV4Batch Batch Process</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none">
+
+ </head>
+
+ <body>
+
+ <h1>Running the CATPDMExtractEV4Batch Batch Process
+ <a name="ix-batch processes::CATPDMExtractEV4Batch"></a></h1>
+ <p></p>
+ <table Border="0" CELLSPACING="3" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="3" height="521">
+   <tr>
+     <td valign="top" height="60">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top" height="60">The extraction of data from the VPDM can be 
+     automated by running the CATPDMExtractEV4Batch batch process. This batch is 
+     driven via a command line giving as input the root of the assembly on which 
+     the extraction will be done.<br>
+     <br>
+		<blink><strong>Note</strong>: It is not possible to extract alternate shape 
+		documents irrespective of the document type or extension such as cgr, 
+		CATShape in VPM V4 batch, as these documents are not reported by the 
+		interop service available in CATPDMExtractEV4Batch.</blink>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="151">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top" height="151">
+     <ol class="task">
+       <li>
+       <p class="task">To retrieve the help information: <kbd><br>
+       <br>
+       CATPDMExtractEV4Batch -help</kbd></li>
+       <li>
+       <p class="task">To run the extraction: <br>
+       <br>
+       CATPDMExtractEV4Batch [-part Env.PART_LIST.PartListName[.Version]]<br>
+       [-adddoc Env.DocTable.DocName.DocType[.Revision]]<br>
+		[-separator string] [-namingRules XMLNamingRulesPath] <blink>[-noDraftingUpdate]
+		</blink> <br>
+       -out ouputpath [-delete] [-epexml outputXmlFile] [-report xmlReportFile]<br>
+       [-connect xxx] [-role xxx] [-user xxx] [-pwd xxx] <blink>[-spwd xxx]</blink></li>
+     </ol>
+		<p class="task"><br>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="162"></td>
+     <td valign="top" height="0" bordercolor="#FFFFFF" width="0">
+     <h3>Arguments</h3>
+		<h4><font size="2">Connection Information</font></h4>
+		<p>-<b>connect</b> <kbd>xxx</kbd> : Server name.<br>
+     	-<b>role</b> <kbd>xxx</kbd> : Role used for ENOVIAVPM 
+     	connection.<br>
+     	-<b>user</b> <kbd>xxx</kbd> : User for ENOVIAVPM 
+     	connection.<br>
+     	-<b>pwd</b> <kbd>xxx</kbd> : User password for ENOVIAVPM
+     connection.<br>
+		<blink><strong>-spwd</strong> <kbd>xxx</kbd> : Secure password for 
+		ENOVIAVPM connection.</blink></p>
+		<h4><font size="2">General 
+		Information</font></h4>
+     <p>-<b>help</b> Help<br>
+		-<b>part</b> : Environment and PartList name of the root of the assembly 
+		to extract. Note that if you are extracting a single part, -adddoc 
+		should be used to specify the document directly. If you use -part, 
+		nothing will be extracted because the documents attached directly to the 
+		root part are not extracted. <br>
+     -<b>adddoc :</b> Environment, document table, document name and 
+		document type to load if not attached in an assembly. Can be used also 
+		to extract standalone documents. Several adddoc statements are possible. <br>
+		-<strong>separator</strong> <kbd>string:</kbd> used to specify a 
+		string to be used as a delimiter for the -part and -adddoc keywords 
+		(instead of the default delimiter, &quot;.&quot;).<br>
+     -<b>out</b> <kbd>outpath</kbd> : Path of the folder in which the session 
+		will be saved.<br>
+     <b>-delete</b> : Force deletion for files already existing in output 
+		folder before extraction.<br>
+     <b>-epexml</b> : To generate an XML template file that can be used by 
+		reconciliation batch.<br>
+     <b>-report</b> : To generate an XML report listing extracted documents.<br>
+		<b>-namingRules:</b> 
+		Define the XML file in which renaming rules are defined. Those rules use 
+		predicates on VPMD attributes of the Part or the document. Rules 
+		priority is mapped on rules order inside the XML files(Only the first 
+		rule encountered with predicate set to true will be used)<br>
+		<blink><strong>-noDraftingUpdate</strong>: Enables to inhibit the update 
+		of CATDrawing before save. It is highly recommended not to use this 
+		option in case of assembly drawing on top of storage mode set to 
+		structure exposed.</blink></p><p>Note that:</p>
+     <blockquote>
+       <ol class="task">
+		<li>
+		<p class="task">The -part and -adddoc options are optional.</p></li>
+		<li>
+		<p class="task">More than one ENOVIAVPM document can be added 
+		to the session: each document can be added by an -adddoc statement.</p>
+		</li>
+		<li>
+		<p class="task">Documents are extracted to path given by -out argument. If 
+		documents already exist with the same name the extraction will fail.</p>
+		</li>
+		<li>
+		<p class="task">When using the -part option, in order to specify the version of 
+		the PartList to be extracted, the attribute PART_LIST.C_PART_VERSION 
+		must be defined in the ENOVIA VPM V4's RESULT mask. If the correct 
+		version is not being extracted, please see your System Administrator to 
+		verify this attribute is defined.</p></li>
+		</ol>
+     </blockquote>
+		<h3><font size="2">Declaration of naming rule convention for Extract:</font></h3>
+		<p>Declaration is done in 
+		an XML file that contains a list of Naming Extract Rules. Each rule is 
+		made of one condition and one naming operator. If the condition is 
+		verified, the naming operator will be used to generate the file name used 
+		when saving the file to disk.</p>
+		<p><b><i>Condition</i></b> 
+		is made of a series of Predicates and each predicate is defined by an 
+		attribute <b><i>id</i></b>, a comparison <b><i>operator</i></b> and a <b>
+		<i>value</i></b>. The attribute can be selected from <b><i>VPDM 
+		attributes</i></b> or <b><i>internal</i></b> attributes of the document, 
+		or from the root product of this document for a <b><i>CATPart</i></b> or 
+		a <b><i>CATProduct</i></b>. Internal attributes are standard attributes 
+		such as document type, Part or document name or it could be specific to 
+		the <b><i>VPDM</i></b> system; for instance for <b><i>ENOVIAVPM</i></b>, 
+		we can access an environment or a table. The attribute of a Root Product of
+		<b><i>CATPart</i></b> or <b><i>CATProduct</i></b>, has an attribute id 
+		that starts with the string &#8220;<b><i>Part.</i></b>&#8221;.</p>
+		<p><b><i>Naming Operator</i></b> 
+		is a series of string elements that will be concatenated to define the 
+		name of the file. You do not have to add the file extension it 
+		will be automatically done by the program.</p>
+		
+			
+		 
+		<code>&lt;NamingRule&gt;<br>
+		<b></b>&lt;ExtractRule 
+		id=&quot;<b>CATProduct_name</b>&quot;&gt;<br>
+ &lt;Condition&gt;<br>
+ &lt;Predicate type<b>=</b>&#8220;<b>internal</b>&#8221;<b> </b>
+		id<b>=</b>&#8220;<b>Type</b>&#8221;<b>
+		</b>operator<b>=</b>&#8220;=&#8221;
+		value<b>=</b>&#8220;<b>CATProduct</b>&#8221;/&gt;<br>
+ &lt;Predicate type<b>=</b>&#8220;<b>internal</b>&#8221;<b> </b>
+		id<b>=</b>&#8220;<b>StorageMode</b>&#8221;<b> 
+		</b>
+		operator<b>=</b>&quot;<b>=</b>&quot;
+		<b>
+		</b>value<b>=</b>&#8220;<b>STRUCTURE_EXPOSED</b>&#8221;/&gt;<br>
+ &lt;/Condition&gt;<br>
+ &lt;NamingOperator&gt;<br>
+ &lt;Element type<b>=</b>&#8220;<b>internal</b>&#8221;<b> </b>
+		id<b>=</b>&#8220;<b>VPM.Environment</b>&quot;<b> </b>
+		length<b>=</b>&#8220;<b>8</b>&#8220;<b> </b>
+		padding<b>=</b>&#8220; 
+		&#8221;/&gt;<br>
+ 
+		<b>
+		&lt;</b>Element type<b>=</b>&#8220;<b>VPDM</b>&#8221;  
+		id<b>=</b>&#8220;<b>Part. 
+		Part Number</b>&#8221; /&gt;<br>
+ &lt;Element type<b>=</b>&#8220;<b>string</b>&#8221;<b> </b>
+		id<b>=</b>&#8220;_&quot; 
+		/&gt;<br>
+ &lt;Element type<b>=</b>&#8220;<b>VPDM</b>&#8221; 
+		id<b>=</b>&#8220;<b>Part. 
+		Part Version</b>&#8221; /&gt;<br>
+ &lt;/NamingOperator&gt;<br>
+&lt;/ExtractRule&gt;<br>
+		&lt;ExtractRule Name<b>=</b>&#8220;<b>R2</b>&#8221;&gt;<br>
+		<br>
+
+		
+		
+		<b>
+		&#8230; </b>   
+		&lt;/ExtractRule&gt;<br>
+		&lt;NamingRule&gt;</code> <b>
+		
+		</b></p>
+		
+		<h3>Example of XML naming rule file</h3>
+		<p class="MsoNormal"><b><i><u>For ENOVIA VPM V4:</u></i></b><!--[if gte mso 9]>
+		<![endif]--><a href="b35doc/english/online/wpeug_c2/samples/NamingRuleForEV4.xml">NamingRuleForVPM.xml</a><!--[if gte mso 9]><![endif]--></p>
+		<p class="MsoNormal"><b><i><u>For ENOVIA V5 VPM:</u></i></b> <a href="b35doc/english/online/wpeug_c2/samples/NamingRuleForEV5.xml">NamingRuleForEV5.xml</a><i><b><br clear="all" style="page-break-before:always">
+</b></i></p>
+		<h3><font size="2">List 
+		of xml node and attribute of XML naming file</font></h3>
+		<p></p>
+		<table class="MsoTableGrid" border="1" cellspacing="0" cellpadding="0" style="border-collapse: collapse; border: 1px none #FFFFFF; margin-left: .3in" id="table13" bgcolor="#FFFFFF" width="0" height="0" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF">
+			<tr style="height: 3.0pt">
+				<td width="114" style="width: 85.55pt; height: 3.0pt; border: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background: #C0C0C0" id="#E0E0E0" class="code">
+				<p align="center" style="text-align: center; margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b>XML Node</b></td>
+				<td width="68" style="width: 51.3pt; height: 3.0pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: 1.0pt solid #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background: #C0C0C0" id="#E0E0E0" class="code">
+				<p align="center" style="text-align: center; margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b>Attribute</b></td>
+				<td width="408" style="width: 305.9pt; height: 3.0pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: 1.0pt solid #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background: #C0C0C0" id="#E0E0E0" class="code">
+				<p align="center" style="text-align: center; margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b>Description</b></td>
+			</tr>
+			<tr>
+				<td width="114" style="width: 85.55pt; border-left: 1.0pt solid #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background: #E0E0E0">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b>NamingRule</b></td>
+				<td width="476" colspan="2" valign="top" style="width: 357.2pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background: #E0E0E0">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				Root of the XML document</td>
+			</tr>
+			<tr>
+				<td width="114" rowspan="2" style="width: 85.55pt; border-left: 1.0pt solid #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b>ExtractRule</b></td>
+				<td width="476" colspan="2" valign="top" style="width: 357.2pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				Define a new Naming rule for EPE extraction utilities. <i>&lt;ExtractRule 
+				Name=&#8220;R1&#8221;&gt;</i></td>
+			</tr>
+			<tr>
+				<td width="68" valign="top" style="width: 51.3pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b><i>Id</i></b></td>
+				<td width="408" valign="top" style="width: 305.9pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				Rule identifier.</td>
+			</tr>
+			<tr>
+				<td width="114" style="width: 85.55pt; border-left: 1.0pt solid #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background: #E0E0E0">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b>Condition</b></td>
+				<td width="476" colspan="2" valign="top" style="width: 357.2pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background: #E0E0E0">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				Define the condition to activate an extraction rule.</td>
+			</tr>
+			<tr>
+				<td width="114" rowspan="5" style="width: 85.55pt; border-left: 1.0pt solid #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b>Predicate</b></td>
+				<td width="476" colspan="2" valign="top" style="width: 357.2pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				Define a predicate for a condition.</td>
+			</tr>
+			<tr style="height: 10.95pt">
+				<td width="68" valign="top" style="width: 51.3pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b><i>type</i></b></td>
+				<td width="408" valign="top" style="width: 305.9pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				Define the type of attribute to test. Value could be: <b><i>
+				internal</i></b> or <b><i>VPDM</i></b>.</td>
+			</tr>
+			<tr>
+				<td width="68" valign="top" style="width: 51.3pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b><i>id</i></b></td>
+				<td width="408" valign="top" style="width: 305.9pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				Identifier of the attribute to be tested. If Id is prefixed by
+				<b><i>Part.</i></b> The string attribute will be found on the 
+				child Part (root product).</td>
+			</tr>
+			<tr>
+				<td width="68" valign="top" style="width: 51.3pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b><i>operator</i></b></td>
+				<td width="408" valign="top" style="width: 305.9pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				Test operator, it could be: <b><i>=</i></b> or <b><i>LIKE</i></b>.</td>
+			</tr>
+			<tr>
+				<td width="68" valign="top" style="width: 51.3pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b><i>value</i></b></td>
+				<td width="408" valign="top" style="width: 305.9pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				Value to be used for predicate evaluation.</td>
+			</tr>
+			<tr>
+				<td width="114" style="width: 85.55pt; border-left: 1.0pt solid #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background: #E0E0E0">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b>NamingOperator</b></td>
+				<td width="476" colspan="2" valign="top" style="width: 357.2pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background: #E0E0E0">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				 </td>
+			</tr>
+			<tr>
+				<td width="114" rowspan="5" style="width: 85.55pt; border-left: 1.0pt solid #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b>Element</b></td>
+				<td width="476" colspan="2" valign="top" style="width: 357.2pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				One element to be used to build a name by concatenation.</td>
+			</tr>
+			<tr>
+				<td width="68" valign="top" style="width: 51.3pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b><i>type</i></b></td>
+				<td width="408" valign="top" style="width: 305.9pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-top:2.0pt;margin-right:0in;margin-bottom:
+  0in;margin-left:0in;margin-bottom:4.8pt">Defines the type of attribute to 
+				test. Value could be: </p>
+				<p style="margin-top:2.0pt;margin-right:0in;margin-bottom:
+  0in;margin-left:0in;margin-bottom:4.8pt"><b><i>String</i></b>
+				Id is the string 
+				value to be inserted in the name.</p>
+				<p style="margin-top:2.0pt;margin-right:0in;margin-bottom:
+  0in;margin-left:0in;margin-bottom:4.8pt"><b><i>internal</i></b>
+				Id is the name of 
+				an internal attribute to be used.</p>
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b><i>VPDM</i></b>  Id 
+				is the name of a VPDM attribute to be used.</td>
+			</tr>
+			<tr>
+				<td width="68" valign="top" style="width: 51.3pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b><i>id</i></b></td>
+				<td width="408" valign="top" style="width: 305.9pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				Identifier of the attribute to be used. If Id is prefixed by <b>
+				<i>Part.</i></b> String attribute will be found on child Part 
+				(root product).</td>
+			</tr>
+			<tr>
+				<td width="68" valign="top" style="width: 51.3pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b><i>length</i></b></td>
+				<td width="408" valign="top" style="width: 305.9pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-top:2.0pt;margin-right:0in;margin-bottom:
+  0in;margin-left:0in;margin-bottom:.0001pt">Number of characters to be 
+				inserted.</p>
+				<p style="text-indent: -9.0pt; margin-left: 17.05pt; margin-right: 0in; margin-top: 2.0pt; margin-bottom: .0001pt">
+				
+				If the string is too small, we will pad 
+				with padding characters, if defined. Otherwise length is only 
+				considered as a maximal length of the string to be concatenated.
+				</p>
+				<p style="text-indent: -9.0pt; margin-left: 17.05pt; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				
+				If the string is too large only the length 
+				first characters will be used.</td>
+			</tr>
+			<tr>
+				<td width="68" valign="top" style="width: 51.3pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b><i>padding</i></b></td>
+				<td width="408" valign="top" style="width: 305.9pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+				<b><i>Optional</i></b>: Enables the use of a character string as 
+				padding if attribute length is smaller than the value defined in
+				<b><i>length</i></b>.</td>
+			</tr>
+		</table>
+		<p style="margin-left: 0in; margin-right: 0in; margin-top: 2.0pt; margin-bottom: 4.8pt">
+		</p>
+		<h3><font size="2">List 
+		of internal attributes</font></h3>
+		<p></p>
+		<table class="MsoTableGrid" border="1" cellspacing="0" cellpadding="0" style="border-collapse: collapse; border: 1px none #FFFFFF; margin-left: .3in" id="table14" width="0" height="0">
+			<tr>
+				<td width="140" style="width: 105.3pt; height: 3.0pt; border: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background: #C0C0C0" height="0">
+				<p align="center" style="margin-left:0in;text-align:center; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt">
+				<b>Attribute</b></td>
+				<td width="450" style="width: 337.45pt; height: 3.0pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: 1.0pt solid #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background: #C0C0C0" height="0">
+				<p align="center" style="margin-left:0in;text-align:center; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt">
+				<b>Description</b></td>
+			</tr>
+			<tr>
+				<td width="590" colspan="2" style="width: 442.75pt; border-left: 1.0pt solid #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background: #E0E0E0">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				<b>General internal attributes</b></td>
+			</tr>
+			<tr>
+				<td width="140" style="width: 105.3pt; border-left: 1.0pt solid #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				<b>Name</b></td>
+				<td width="450" style="width: 337.45pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				Current identifier of the document or the part.</td>
+			</tr>
+			<tr>
+				<td width="140" style="width: 105.3pt; border-left: 1.0pt solid #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				<b>Type</b></td>
+				<td width="450" style="width: 337.45pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				File extension for document or<b> <i>Part.</i></b></td>
+			</tr>
+			<tr>
+				<td width="140" style="width: 105.3pt; border-left: 1.0pt solid #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				<b>StorageMode</b></td>
+				<td width="450" style="width: 337.45pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				<b>PUBLICATION_EXPOSED or STRUCTURE_EXPOSED.</b></td>
+			</tr>
+			<tr>
+				<td width="140" style="width: 105.3pt; border-left: 1.0pt solid #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				<b>Environment</b></td>
+				<td width="450" style="width: 337.45pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				<b>ENOVIA5 or VPM1. </b>Indicates the environment:<b> </b></p>
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				<b>ENOVIA V5 VPM or ENOVIAVPM.</b></td>
+			</tr>
+			<tr>
+				<td width="590" colspan="2" style="width: 442.75pt; border-left: 1.0pt solid #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background: #E0E0E0">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				<b>Internal attributes for ENOVIAVPM</b></td>
+			</tr>
+			<tr>
+				<td width="140" style="width: 105.3pt; border-left: 1.0pt solid #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				<b>VPM.Environment</b></td>
+				<td width="450" style="width: 337.45pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				<b>ENOVIAVPM </b>environment.</td>
+			</tr>
+			<tr>
+				<td width="140" style="width: 105.3pt; border-left: 1.0pt solid #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				<b>VPM.Table</b></td>
+				<td width="450" style="width: 337.45pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				<b>ENOVIAVPM </b>table.</td>
+			</tr>
+			<tr>
+				<td width="590" colspan="2" style="width: 442.75pt; border-left: 1.0pt solid #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in; background: #E0E0E0">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				<b>Internal attributes for ENOVIA VPM V5:</b></td>
+			</tr>
+			<tr>
+				<td width="140" style="width: 105.3pt; border-left: 1.0pt solid #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				<b>EV5.Type</b></td>
+				<td width="450" style="width: 337.45pt; border-left: medium none #FFFFFF; border-right: 1.0pt solid #FFFFFF; border-top: medium none #FFFFFF; border-bottom: 1.0pt solid #FFFFFF; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+				<p style="margin-left:0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				Could be<b> <i>PRC, PV</i> </b>or<i><b> DR.</b></i></p>
+				<p style="margin-left: 0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				
+				<b><i>PRC</i> </b>stands for<b> <i>Product 
+				Root Class</i></b></p>
+				<p style="margin-left: 0in; margin-right:0in; margin-top:2.0pt; margin-bottom:4.8pt" align="left">
+				<b><i>PV </i></b>stands for<b><i> Part 
+				Version<br>
+				</i></b>
+				<b><i>DR </i></b>stands for <b><i>Document 
+				Revision</i></b></td>
+			</tr>
+		</table>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="20"></td>
+     <td valign="top" height="20">
+     <h3>Examples</h3>
+     <p>When running batches, you must always use the command <kbd>catstart</kbd>, 
+     of which the following is an example (for more details, see the <i>
+     Infrastructure Guide, Basic Tasks, Starting a Session on Windows</i>):</p>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p><code>catstart -run &quot;CATPDMExtractEV4Batch -adddoc 
+           RECV5_EXTRACT1_PART1.CATPart -out c:\temp\ &quot;</code></p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <ol class="task">
+		<li><p class="task">Extraction of a single Part:<br><br><code>CATPDMExtractEV4Batch -adddoc VPMENV1.DOCUMENT.RecVpmV4TestPart1.CATPart 
+       -out c:\temp\</code><br></li>
+		<li><p class="task">Extraction of two CATParts and CATDrawing based these CATParts:<br>
+		<br><code>CATPDMExtractEV4Batch -adddoc VPMENV1.DOCUMENT.RecVpmV4TestPart1.CATPart 
+       -adddoc VPMENV1.DOCUMENT.RecVpmV4TestPart2.CATPart -adddoc 
+       VPMENV1.DOCUMENT.RecVpmV4TestDrw.CATDrawing -out c:\temp\<br></code></li>
+		<li><p class="task">Extraction of an assembly:<br><br><code>CATPDMExtractEV4Batch -part VPMENV1.PART_LIST.RecVpmV4Root -out c:\temp\</code><br></li>
+		<li><p class="task">Extraction of an assembly drawing with its assembly:<br><br><code>CATPDMExtractEV4Batch -part VPMENV1.PART_LIST.RecVpmV4Root -adddoc 
+       VPMENV1.DOCUMENT.RecVpmV4TestDrw.CATDrawing -out c:\temp\<br><blink>
+		<span style="background-position: 0 0"><font face="Courier New">-connect 
+		SAMPLE -role VPMADMIN.ADMIN.DEFAULT -user xxx -spwd xxx</font></span></blink></code></li>
+		<li><p class="task">BlackBox assembly (CATProduct):<br><br><code>CATPDMExtractEV4Batch -adddoc 
+       VPMENV1.DOCUMENT.RecVpmV4BlackBox.CATProduct -out
+		c:\temp\<br></code></li>
+		<li><p class="task">Managing the file name 
+		after Extraction can be done by using:<br><br><code>CATPDMExtractEV4Batch -part VPMENV.PART_LIST.GEAR.CATProduct -out 
+		/u/users/xxx/GEAR/extract1 -delete -namingRules &quot;/u/users/xxx/namingrules.xml&quot; 
+		-connect SAMPLE -role VPMADMIN.ADMIN.DEFAULT -user xxx -pwd xxx</code></li>
+		<li>
+		<p class="task"><blink>Suppressing the updation of CATDrawing 
+		before save, while extracting can be done by using:<code><br>
+		CATPDMExtractEV4Batch -adddoc VPMENV.DOCUMENT.DocTeDr.CATDrawing -out 
+		/u/users/xhq/J15/Extract1 -noDraftingUpdate -connect SAMPLE</code></blink></li>
+		</ol>
+		<div class="Section1">
+			<p class="MsoNormal"></div>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="20"></td>
+     <td valign="top" height="20">
+     <h3>Limitations</h3>
+     <ol class="task">
+		<li><p class="task">Configured data is not supported.<br></li>
+		<li><p class="task">Impact graph:<br><br>The session to extract is not completed with &quot;impacted by&quot; or &quot;impacted 
+       on&quot; documents.<br></li>
+		<li><p class="task">Getting traces:<br><br>The batch is based on CATIA V5 ApplicationFrame infrastructure, therefore 
+       a CATIA V5 window may appear when running the batch.<br>The batch therefore needs a running window manager.<br>The batch runs as a background task and its traces are not displayed in 
+       the window from which it was started. Traces can be retrieved using 
+       CNEXTOUTPUT environment variable.</li>
+		<li>
+		<p class="task"><blink><span style="background-position: 0 0"><strong>-spwd
+		</strong>option:</span></blink><blockquote>
+         <blockquote>
+           <blockquote>
+             <ul>
+               <li>
+               <p class="MsoNormal"><font color="#000000">
+				<blink>This information cannot be hidden if running processes are listed 
+				using <strong>ps -ef | grep pwd</strong> command. </blink></font></li>
+               <li>
+				<p class="MsoNormal"><font color="#000000">
+				<blink><strong>&#8211;spwd</strong> 
+				and <strong>&#8211;pwd</strong> options are incompatible options.</blink></font></p></li>
+             </ul>
+           </blockquote>
+         </blockquote>
+       </blockquote></li>
+		</ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="20"></td>
+     <td valign="top" height="20">
+     <h3>Diagnostics</h3>
+     <p>Possible exit status values are:</p>
+     <blockquote>
+       <ul>
+         <li>0: Successful completion.</li>
+         <li>4: Failure due to one or more of the standalone documents (-adddoc 
+         documents).</li>
+         <li>8: Failure due to any of the following:</li>
+       </ul>
+       <blockquote>
+         <blockquote>
+           <blockquote>
+             <ul>
+               <li>Query failed</li>
+               <li>Load of PDM data failed</li>
+               <li>Save of loaded data failed</li>
+             </ul>
+           </blockquote>
+         </blockquote>
+       </blockquote>
+       <ul>
+         <li>202: Connection failed.</li>
+       </ul>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="20"></td>
+     <td valign="top" height="20"></td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2" height="35">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"><br>
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

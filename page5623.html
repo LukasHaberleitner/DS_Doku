@@ -1,0 +1,568 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="2">
+<meta name="MonocodingFlag" content="C2D2E2O2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="Author" content="support">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Methodologies and Advice</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta content="none, default" name="Microsoft Border">
+</head>
+
+<body>
+
+<h1>Methodologies and Advice</h1>
+<table style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td VALIGN="TOP">
+    <img src="b35doc/english/online/icons_C2/common/atarget.gif" hspace="0" ="32" height="32"></td>
+    <td valign="top">This section provides information regarding exact geometry 
+    that users should be familiar with prior to configuring <br>
+    and using  MULTICAx ID 
+    Plug-in. <br>
+    It also offers advice regarding when this technology should be used.</td>
+  </tr>
+  <tr>
+    <td>
+    &nbsp;</td>
+    <td VALIGN="TOP">
+    <h2><a name="ix-Output Formats">Output Formats</a></h2>
+    <p>Importing I-DEAS data into V5 results in a conversion of the imported 
+    data to one of three formats, selectable by the user. <br>
+    Depending on how the imported data will be used, the user can choose whether 
+    to create CGR, <br>
+    CGR with canonical information or CATPart data.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td VALIGN="TOP">
+    Please remember that I-DEAS file can contain three types of data:<ul>
+		<li>Exact (BRep data), that can be imported in Visu Snap or CATPart 
+		mode, </li>
+		<li>Tessellated (Faceted data), that can be imported in Visu mode,</li>
+		<li>Both (exact and tessellated), that can be imported in Visu, Visu 
+		Snap or CATPart mode.</li>
+	</ul>
+	<p>Some I-DEAS files contain both exact and tessellated data. </p>
+	<p>From the above table, you can see that an I-DEAS file containing both 
+	data formats can be imported in the three possible modes. This is the case 
+	for most I-DEAS files.</td>
+  </tr>
+  <tr>
+    <td>
+    <p align="center">&nbsp;</td>
+    <td VALIGN="TOP">
+    <p>Each format has its own advantages and limitations:</p>
+    <ul>
+      <li>CGR (Visu mode). CATIA Graphical Representation is the visualization 
+      format of CATIA V5. <br>
+      With this very light format, you can do approximate measurement and have 
+      access to all the basic DMU functionalities.</li>
+      <li>CGR with canonical information which enable exact measurement and 
+      exact snapping (Visu Snap mode)</li>
+      <li>CATPart (CATPart mode). It is a standard V5 CATPart which is locked, 
+      therefore you can use it as any other CATPart <br>
+      with the exception that you cannot modify it. You can just reference it.
+      </li>
+    </ul>
+    <h2><a name="ix-I-DEAS::supported features;features::supported">Supported 
+    Features</a></h2>
+    <ul>
+      <li>Access to part user attributes (via Edit-&gt;Properties)</li>
+      <li>Move</li>
+      <li>Exact positioning (Snap command) when using CATPart mode</li>
+      <li>Exact positioning when using Visu mode<ul>
+        <li>To activate the Exact snapping support, the user has to be in Visu 
+        mode <br>
+        (Tools&gt;Options&gt;General&gt;Compatibility&gt;ExternalFormats&gt;Link Mode). </li>
+        <li>Exact snapping for CGR conversion can be performed only if the IDI 
+        file contains BRep and Analytic data.</li>
+      </ul>
+      </li>
+      <li>Clash detection (on CGR)</li>
+      <li>Approximate measurements (or exact measurement with a CATPart)</li>
+      <li>Inertia and volume calculations.</li>
+      <li>Color support.</li>
+    </ul>
+    <h3>Translation of <a name="ix-Supported Features:FTA data">FTA data </a>
+    from IDI files to CATIA V5 CATPart files</h3>
+    <p>This functionality is available in CATPart mode, when the <kbd>IDI 3D 
+    Annotation</kbd> option is selected. <br>
+    See the <a href="page5632.html">Customizing</a> section for more details.<br>
+    <img border="1" src="b35doc/english/online/dilug_c2/images/IDIAnnotation01NLS.gif" width="373" height="322"></p>
+    <p>The annotations translated are:</p>
+    <ul>
+      <li>Dimensions as Dimensions,</li>
+      <li>Hole (matrix) as Note Object Attribute Hole,</li>
+      <li>Notes as Texts,</li>
+      <li>Spot Welds as Note Object Attribute Spot weld.</li>
+    </ul>
+    <p>The translation results in CATParts containing both BRep and FTA data,
+    <br>
+    with no conceptual link between the BRep data and the geometry.</p>
+    <p>The visual display of those annotations depends on the V5 settings.<h3><a name="ix-Naming Conventions in CGR">Naming Conventions in CGR</a></h3>
+    <p>The name of an IDEAS part or assembly inserted in V5 is as follows:</p>
+    <ul>
+      <li>if the Part Number of the inserted IDEAS part or assembly is <kbd>
+      xxxxx_yyyyy</kbd> and its Part Name is <kbd>abcd</kbd>,</li>
+      <li>the name in V5 will be <kbd>xxxxx_yyyyy_abcd.cgr</kbd>,</li>
+      <li>the name in CGR in the specification tree is <kbd>xxxxx_yyyyy#abcd.1</kbd>.</li>
+    </ul>
+    <h3><a name="ix-Supported Features:Conversion of Electrical Harness data">
+    Conversion of Electrical Harness data</a></h3>
+    <p>Electrical harness data are held in the Assembly section of the IDI file 
+    together <br>
+    with some parts called connectors as children. </p>
+    <p>They are converted as follows:</p>
+    <ul>
+      <li>the conversion of facetted data results in the creation of CGR file 
+      for the Harness geometry,</li>
+      <li>the conversion of Brep data conversion results in the creation of 
+      CATPart (or cgr in case of Visu Snap usage),</li>
+      <li>the harness data node is inserted as a subassembly node in the V5 
+      assembly hierarchy,</li>
+      <li>the harness geometry is converted and saved in a CATPart or CGR file,</li>
+      <li>the naming convention is &lt;&lt;PartName&gt;&gt;_&lt;&lt;Component ID of the part&gt;&gt;.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" ="32" height="32"></td>
+    <td VALIGN="TOP">
+    <ul>
+      <li>the harness geometry cannot be stored in the CATProduct file. <br>
+      An additional CATPart file will be created to contain the harness geometry 
+      and <br>
+      this will be referenced from the CATProduct file. </li>
+      <li>the harness data node in CATIAV5 has children: the Connector parts +
+      <br>
+      the CATPart in which the harness geometry will be placed.</li>
+      <li>the harness data are stored as a normal CATPart \ CGR on the disk and 
+      not as Harness-Representation in V5. </li>
+      <li>wireframe data (Tessellated \ precise) present in the harness geometry 
+      are not supported</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td VALIGN="TOP">
+    <h3><a NAME="ix-step attributes::support">Step Attribute support</a></h3>
+    <ul>
+      <li>The names of the parts present in an I-DEAS model file appear as Part 
+      Number attributes in <br>
+      the <kbd>Properties &gt; Product</kbd> tab page in DMU Navigator.</li>
+      <li>In addition, the I-DEAS part revision number is also imported into 
+      this tab page as the Revision attribute. <br>
+      These fields may be used for defining criteria used in the <kbd>Edit &gt; 
+		Search</kbd> command. </li>
+    </ul>
+    <h2>General warning about CAD converters</h2>
+    <p></p>
+    <p>V5 MultiCAD converters provide the best effort to match external CAD data 
+    and produced V5 data. <br>
+    However, due to various implementation choices and specific data models used 
+    by each CAD actor on the market, MultiCad direct solutions cannot guarantee 
+    that produced data perfectly matches original data at anytime in every 
+    possible situation. <br>
+    STEP is an international standard dedicated to interoperability. Each CAD 
+    system export from STEP or Import from STEP with a common certified 
+    specification which warranty the highest rates of reliability, of 
+    conformance and accuracy. <br>
+    Multi-Cad direct CAD to V5 solutions are the shortest and easiest way to 
+    proceed but may include some restrictions that customer must be aware of.
+    <br>
+    For support of sensitive customer process, it should be considered to use 
+    STEP(ST1) or Multi-Cad STEP (DTL) as an alternative solution when Multi-Cad 
+    direct CAD to V5 does not apply. </p>
+    <h2><a name="ix-Supported Features:Limitations">Limitations</a></h2>
+    <ul>
+      <li>The generated cgr are only surfacic, it means that no volume 
+      calculation can be performed on the models.</li>
+      <li>On Windows platform, if IDEAS contain a part with characters like &quot;&#62;&quot; 
+      or &quot;&#60;&quot; 
+      in its Part Name, the conversion will fail.</li>
+    </ul>
+    </a></li>
+    </ul>
+            </a></li>
+      </ul>
+    </blockquote>
+    <h3><a name="ix-IDI data in V5">IDI data in V5</a></h3>
+    <h3>Options to be set in IDEAS modeler to generate correct
+    <a name="ix-IDI file">IDI file</a></h3>
+    <p>Exporting of IDEAS part or assembly to IDI </p>
+    <ol class="task">
+      <li>
+      <p class="task">Select menu <kbd>File-&gt;Export-&gt;Viewer XML (IDI)</kbd>. </p>
+      <p class="task">User will be prompted to select part. After selection, 
+      options dialog box will pop-up. <br>
+      This box will have options listed in following table. Recommended setting 
+      of these options&nbsp; <br>
+      for type of IDI file ( BREP/FACET) are also listed in the table. </li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+    <table border="1" cellpadding="2" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1" width="749">
+      <tr>
+        <td class="code" valign="top" width="84">IDI File Type</td>
+        <td class="code" valign="top" width="133">
+        <p align="center">Option</td>
+        <td align="center" class="code" valign="top" width="51">Status</td>
+        <td align="center" class="code" valign="top" width="208">Location of 
+        option</td>
+        <td class="code" valign="top" width="247">
+        <p align="center">Comments</td>
+      </tr>
+      <tr>
+        <td width="84">&nbsp;</td>
+        <td valign="top" width="133">&nbsp;</td>
+        <td align="center" width="51">&nbsp;</td>
+        <td align="center" valign="top" width="208">Options&gt;Advanced&gt;<br>
+        Advanced Export Options</td>
+        <td valign="top" width="247">&nbsp;</td>
+      </tr>
+      <tr>
+        <td ="79" width="84">BRep</td>
+        <td valign="top" width="133">Auxiliary attributes</td>
+        <td align="center" width="51">ON</td>
+        <td align="center" valign="top" width="208">Part Options</td>
+        <td valign="top" width="247">Auxiliary attributes are exported</td>
+      </tr>
+      <tr>
+        <td width="84">&nbsp;</td>
+        <td valign="top" width="133">Precise BRep</td>
+        <td align="center" width="51">ON</td>
+        <td align="center" valign="top" width="208">Part Options</td>
+        <td valign="top" width="247">BRep data are exported</td>
+      </tr>
+      <tr>
+        <td width="84">&nbsp;</td>
+        <td valign="top" width="133">Analytic output</td>
+        <td align="center" width="51">ON</td>
+        <td align="center" valign="top" width="208">Part Options<p>&nbsp;</td>
+        <td valign="top" width="247">Analytic data are exported</td>
+      </tr>
+      <tr>
+        <td width="84">&nbsp;</td>
+        <td valign="top" width="133">Tessellated Content</td>
+        <td align="center" ="51" width="51">OFF</td>
+        <td align="center" valign="top" ="212" width="208">Part Options<p>&nbsp;</td>
+        <td valign="top" ="317" width="247">All the four options under this <br>
+        category to be put OFF.<p>Facetted data will not be exported.</td>
+      </tr>
+      <tr>
+        <td ="79" width="84">&nbsp;</td>
+        <td valign="top" ="121" width="133">Annotation Content</td>
+        <td align="center" ="51" width="51">ON/OFF</td>
+        <td align="center" valign="top" ="212" width="208">Part and Assembly 
+        Annotation Options</td>
+        <td valign="top" ="317" width="247">Put ON the options under this 
+        category <br>
+        f annotations are to be exported.</td>
+      </tr>
+      <tr>
+        <td ="79" width="84">&nbsp;</td>
+        <td valign="top" ="121" width="133">Compress</td>
+        <td align="center" ="51" width="51">OFF</td>
+        <td align="center" valign="top" ="212" width="208">File Options</td>
+        <td valign="top" ="317" width="247">IDI file written is not zipped.</td>
+      </tr>
+      <tr>
+        <td ="79" width="84">Facetted</td>
+        <td valign="top" ="121" width="133">Auxiliary attributes</td>
+        <td align="center" ="51" width="51">ON</td>
+        <td align="center" valign="top" ="212" width="208">Part Options</td>
+        <td valign="top" ="317" width="247">Auxiliary attributes are exported</td>
+      </tr>
+      <tr>
+        <td ="79" width="84">&nbsp;</td>
+        <td valign="top" ="121" width="133">Precise BRep</td>
+        <td align="center" ="51" width="51">OFF</td>
+        <td align="center" valign="top" ="212" width="208">Part Options</td>
+        <td valign="top" ="317" width="247">BRep data are not exported</td>
+      </tr>
+      <tr>
+        <td ="79" width="84">&nbsp;</td>
+        <td valign="top" ="121" width="133">Analytic output</td>
+        <td align="center" ="51" width="51">OFF</td>
+        <td align="center" valign="top" ="212" width="208">Part Options<p>&nbsp;</td>
+        <td valign="top" ="317" width="247">Analytic data are not exported</td>
+      </tr>
+      <tr>
+        <td ="79" width="84">&nbsp;</td>
+        <td valign="top" ="121" width="133">Tessellated Content</td>
+        <td align="center" ="51" width="51">ON</td>
+        <td align="center" valign="top" ="212" width="208">Part Options<p>&nbsp;</td>
+        <td valign="top" ="317" width="247">All the four options under this <br>
+        category to be put ON.<p>Facetted data will not be exported.</td>
+      </tr>
+      <tr>
+        <td ="79" width="84">&nbsp;</td>
+        <td valign="top" ="121" width="133">Triangle Strips</td>
+        <td align="center" ="51" width="51">ON</td>
+        <td align="center" valign="top" ="212" width="208">Advanced Options</td>
+        <td valign="top" ="317" width="247">Facets made of Tristrips</td>
+      </tr>
+      <tr>
+        <td ="79" width="84">&nbsp;</td>
+        <td valign="top" ="121" width="133">Triangle Fans</td>
+        <td align="center" ="51" width="51">ON</td>
+        <td align="center" valign="top" ="212" width="208">Advance Options</td>
+        <td valign="top" ="317" width="247">Facets made of Trifans</td>
+      </tr>
+      <tr>
+        <td ="79" width="84">&nbsp;</td>
+        <td valign="top" ="121" width="133">Annotation Content</td>
+        <td align="center" ="51" width="51">ON/OFF</td>
+        <td align="center" valign="top" ="212" width="208">Part and Assembly <br>
+        Annotation Options</td>
+        <td valign="top" ="317" width="247">Put ON the options under this 
+        category <br>
+        if annotations are to be exported.</td>
+      </tr>
+      <tr>
+        <td ="79" width="84">&nbsp;</td>
+        <td valign="top" ="121" width="133">Compress</td>
+        <td align="center" ="51" width="51">OFF</td>
+        <td align="center" valign="top" ="212" width="208">File Options</td>
+        <td valign="top" ="317" width="247">IDI file written is not zipped.</td>
+      </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>
+    <h2><a name="ix-IDEASIDIConv.exe">IDEASIDIConv.exe</a></h2>
+    <p>IDEAS to IDI converter executable name is IDEASIDIConv.exe.</p>
+    <p>IDEASIDIConv.exe converter will support reading of native IDEAS files.
+    <br>
+    IDEAS to IDI converter will take the name of the IDEAS file and other user 
+    options as command line parameters. <br>
+    Converter will launch IDEAS modeler session. <br>
+    Input IDEAS file will be loaded in the modeler and IDEAS macros will be used 
+    to generate IDI file <br>
+    with appropriate options. <br>
+    Command line options supported are:<br>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><kbd>-i&nbsp;<br>
+    </kbd>Input IDEAS file name ( <kbd>.mf1, .pkg, .prt , .asm</kbd>)</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><kbd>-o <br>
+    </kbd>Output IDI file name</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><kbd>-type<br>
+    Asm</kbd> for assembly and <kbd>Prt</kbd> for part( valid only for <kbd>.pkg
+    </kbd>and <kbd>.mf1 </kbd>file)</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><kbd>-facet <br>
+    </kbd>To generate only facet output</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><kbd>-brep<br>
+    </kbd>To generate only BREP output with analytic data</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><kbd>-all <br>
+    </kbd>To generate both facet + BREP with analytic data output.</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><kbd>-pro<br>
+    </kbd>To specify the project name ( valid only for <kbd>.asm, .pkg, .prt</kbd> 
+    files)</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><kbd>-lib<br>
+    </kbd>To specify library name ( valid only for <kbd>.asm, .pkg, .prt</kbd> 
+    files)</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><kbd>-a<br>
+    </kbd>To specify name Assembly to be exported ( valid only for <kbd>.asm</kbd> 
+    )</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><kbd>-p<br>
+    </kbd>To specify name of Part to be exported. ( valid only for<kbd> .asm</kbd> 
+    )</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><kbd>-rev<br>
+    </kbd>To specify revision number of part to be exported ( valid only for
+    <kbd>.prt</kbd> and <kbd>.pkg</kbd>)</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>IDEASIDIConv.exe will use IDEAS native modeler. Following environment 
+    variables need to be set <br>
+    to run the converter.<br>
+&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><kbd><font size="1">Set SDRC_INSTL=E:&#092;SDRC&#092;I-DEAS9
+    </font></kbd><font size="1">( location IDEAS software installation). <br>
+    </font><kbd><font size="1">set IONA=%SDRC_INSTL%&#092;Iona
+    <br>
+    set PATH=%PATH%;%SDRC_INSTL%&#092;sec;%SDRC_INSTL%&#092;ideas;E:&#092;SDRC&#092;Team&#092;MainConfig&#092;;%IONA%&#092;bin;%SDRC_INSTL%&#092;oirun&#092;lib;%SDRC_INSTL%&#092;bin;
+    <br>
+    set SDRC_SOFTWARE=I-DEAS <br>
+    set SDRC_SEC=%SDRC_INSTL%&#092;sec
+    <br>
+    set LM_LICENSE_FILE=%SDRC_INSTL%&#092;sec&#092;Sdrc_Ms9.lic;</font></kbd><font size="1"> 
+    ( if license is a node locked type) </font><kbd><font size="1"><br>
+    set LM_LICENSE_FILE=7609@octane</font></kbd><font size="1"> ( if license is 
+    floating type ( IDEAS daemon port @ license server name) <br>
+    </font><kbd><font size="1">set IDEAS_PARAM9=E:&#092;SDRC&#092;Team&#092;MainConfig</font></kbd><font size="1"> 
+    ( location of team configuration file.) <br>
+    </font><kbd><font size="1">set XKEYSYMDB=%SDRC_INSTL%&#092;xfiles&#092;Xkeysmdb
+    <br>
+    set ORBIX_BIN=%SDRC_INSTL%&#092;Iona&#092;bin
+    <br>
+    set SDRC_MPATHS=%SDRC_INSTL%&#092;SDRCHelp
+    <br>
+    set platform=winnt <br>
+    set SDRC_TEAM_SERVER_TYPE=FLEXLM <br>
+    set SETUPVARBS='1' <br>
+    set SystemDrive= D: <br>
+    set SystemRoot=C:&#092;WINNT
+    <br>
+    set QA_IDEAS_INSTALLDIR=%SDRC_INSTL% <br>
+    set QA_IDEAS_CURDIR=D:&#092;tmp&#092;test_dir</font></kbd><font size="1"> 
+    ( location of folder where IDEAS temporary files are generated).</font><p>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Some examples of use of command line parameters are
+    <p><kbd>IDEASIDIConv.exe -i a.mf1 -o a_mf1.idi -type Asm -facet <br>
+    IDEASIDIConv.exe -i b.mf1 -o b_mf1.idi -type Prt -brep <br>
+    IDEASIDIConv.exe -i c.pkg -o c_mk1.idi -type Asm -all -pro system 
+    -lib idimport -a Engine_Cover <br>
+    IDEASIDIConv.exe -i d.pkg -o d_pkg.idi -type Prt -all -pro system 
+    -lib idimport -p PartName -rev 2 <br>
+    IDEASIDIConv.exe -i e.pkg -o e_pkg.idi -type Asm -all -pro system 
+    -lib idimport -p Part_1 -rev 2 <br>
+    IDEASIDIConv.exe -i f.asm -o f_asm.idi -facet -pro system -lib 
+    idimport -a Intake_manifold -rev 2 <br>
+    IDEASIDIConv.exe -i f.asm -o f_asm.idi -brep -pro system -lib 
+    idimport -p Bolt_2 -rev 1 <br>
+    IDEASIDIConv.exe -i g.prt -o g_prt.idi -all -pro system -lib 
+    idimport -p RH_DOOR -rev 12 </kbd></p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" ="32" height="32"></td>
+    <td><h2>Limitations of IDI To CATIA V5 Converter</h2>
+    <ul>
+      <li>IDI-CGR Converter: converts IDI file with facet data to CATIA V5 CGR 
+      file.<ul>
+        <li>The generated CGR file does not have volume information: <br>
+        the input IDI file does not have connectivity information, hence CGR the 
+        file generated <br>
+        does not contain volume information.</li>
+      </ul>
+      </li>
+      <li>IDI files generated from IDEAS MS8 and containing isolated &quot;&#38;&quot; 
+      characters are not supported <br>
+      as they are not XML compliant. <br>
+      If you want to read them properly, you need to replace all the occurrences 
+      of the isolated &quot;&quot;&#38;&quot; 
+      by &quot;&#38;amp;&quot;
+      <br>
+      which is the correct XML syntax.</li>
+      <li>IDI files generated with IDEAS MS10 and <a name="MS11">MS11</a> are 
+      supported.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <p align="center">&nbsp;<p align="center"></td>
+    <td VALIGN="TOP">
+    <h2><a name="ix-Environment">Environment</a></h2>
+    <p>The ideal working environment makes use of the following:<br></p>
+    <ul>
+      <li>
+      <kbd><a name="ix-Environment:Cache mode ON">Cache mode 
+      ON </a></kbd><i><br>
+      </i>(set via <kbd>Tools-&gt;Options-&gt;Infrastructure-&gt;Product Structure-&gt;Cache 
+      Management</kbd>)</li>
+      <li>
+      <a name="ix-Environment:File format">File format</a>:
+      <ul>
+        <li>
+        <kbd>CGR</kbd><b> </b>for users that need better 
+        performance and do not require exact positioning (or exact measuring)</li>
+        <li>
+        <kbd>CATPart</kbd> for users that need the additional 
+        features provided by the CATPart format <br>
+        (such as exact measurement, exact positioning, kinematics, etc.)&nbsp;</li>
+      </ul>
+      </li>
+      <li>
+      Batch mode</li>
+    </ul>
+    <h2><font color="#282187">Using CATPart
+    <a name="ix-CATPart Mode vs Visu Mode">Mode vs Visu Mode</a></font></h2>
+    <p>The MULTICAx ID Plug-in supports 
+    CATPart mode, <br>
+    allowing for I-DEAS parts to be imported as CATPart data files. <br>
+    In this mode, I-DEAS part data contained by the solid body is transferred 
+    into a CATPart.<br>
+        Because CATPart files are large and take more time to convert, CATPart 
+    mode management is an optional feature.</p><h3>CATPart features and limitations</h3>
+    <p>The features and limitations of Multi-CAD CATParts are identical to those 
+    of all other V5 CATParts <br>
+    with the exception that the generated CATPart is locked and can be 
+    referenced but not modified.<br>
+    The user should be aware that the conversion to the CATPart 
+    format requires more time than only <br>
+    generating the CGR (faceted) format. In addition, CATPart files are larger 
+    than their corresponding CGR files. <br>
+    Therefore, it is recommended that CATPart mode is only enabled if exact 
+    positioning, exact measurement or <br>
+    putting constraints is required.</td>
+  </tr>
+  </table>
+
+</body>
+
+</html>
+

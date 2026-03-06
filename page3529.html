@@ -1,0 +1,171 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>About Working with a Cache System</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>About Working with a Cache System <a name="ix-working with:cache"></a>&nbsp;</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" style="border-collapse: collapse" cellpadding="0">
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" title="atarget.gif (1372 bytes)" width="32" height="32"></td>
+     <td>Using a cache system considerably 
+     reduces the time required to load your data. This task explains the 
+     principles of the cache system. For details on how to set cache system 
+     settings (including recommendations and requirements), see the <i>DMU 
+     Navigator User's Guide, Customizing, Cache Management.</i><br>
+&nbsp;</td>
+     
+   </tr>
+   <tr>
+     <td>
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>Two different modes are available 
+     when a component (V4 model, V5 CATPart, V5 CATProduct, etc.) is inserted 
+     into a DMU Navigator CATProduct document:<ul>
+       <li>Design mode: in this mode, the exact geometry is available and the 
+       document is inserted as is</li>
+       <li>Visualization mode: in this mode, a representation of the geometry 
+       only is available and the corresponding cgr file, if it exists, is 
+       inserted from the cache system.</li>
+     </ul>
+     </td>
+     
+   </tr>
+   <tr>
+     <td align="top">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td>When you work with the cache system activated, 
+     when you open a product, you will be working by default in Visualization 
+     mode. To access those functionalities that require that you be in Design 
+     mode, you must explicitly change to Design mode. For more details, see the
+     <i>Product Structure User Guide, Setting up the Design Mode</i>.</td>
+   </tr>
+   <tr><td>&nbsp;</td>
+     <td>The cache system is organized into two parts:<ul>
+       <li><kbd>Local cache</kbd>: a read/write directory located locally 
+       on your machine and used to store cgr files. The first time a component 
+       is inserted, it is tessellated . This means that the corresponding cgr 
+       file is computed and saved in the local cache as well as displayed in the 
+       document window. The next time this component is required, the cgr file 
+       which already exists (and not the original document) is automatically 
+       loaded from the local cache. The user is normally responsible for the 
+       local cache.</li>
+       <li><kbd>Released cache</kbd>: a read-only cache that can be 
+       located anywhere on your network.<br>
+       Several directories can be defined for the released cache. If a cgr file 
+       cannot be found in the local cache, the software browses the released 
+       cache directories in their listed order to see if the cgr file is located 
+       in one of them. If the cgr file is still not found, the component is 
+       tessellated&nbsp; and the resulting cgr file is saved in the local cache. 
+       The site administrator is normally responsible for the released cache.&nbsp;</li>
+     </ul>
+     <p>A timestamp enables the verification that no modifications have been 
+     made to a document since the generation of the corresponding cgr file found 
+     in either of the above caches:</p>
+     <ul>
+       <li><kbd>Timestamp</kbd>: the date and hour at which the origin 
+       document was last modified. If you activate the <kbd>Check timestamp</kbd> 
+       button, then before a cgr file is loaded into a viewer, its timestamp 
+       will be checked to verify that no modifications have been made to the 
+       document since the generation of the cgr file. If you don't activate the
+        <kbd>Check timestamp</kbd> button, then a cgr file of a document will be 
+       loaded without any verification of its time-wise coherence with the 
+       document.<br>
+&nbsp;</li>
+     </ul>
+     </td>
+     </tr>
+   <tr>
+     <td>&nbsp;</td>
+     <td>The process used for loading data using the caches is as follows:<br>
+		<br>
+		<img border="2" src="b35doc/english/online/cfyugdmu_c2/images/cacheconfig6NLS_s.gif" title="Click here to enlarge this image" width="314" height="236"> <script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js"></script>
+		</p>
+		<ol class="task">
+			<li>
+			<p class="task">The user requests the loading of a document into a 
+			viewer.</li>
+			<li>
+			<p class="task">The System searches for a corresponding tessellated file (cgr file) 
+       in the user's local&nbsp;cache. </li>
+			<li>
+			<p class="task">If the cgr file found, then the timestamp is checked. 
+			<br>
+&nbsp;<table border="0" cellspacing="0" width="500" id="table1">
+				<tr>
+					<td>
+					<ul>
+						<li>If the timestamp of the cgr file is more recent than 
+         that of the document, then the cgr file<b> </b>is<b> </b>loaded into the 
+         viewer.</li>
+						<li>If not, then the document is tessellated, the resulting 
+         cgr file is added to the user's local cache and the cgr file is 
+         loaded into the viewer.</li>
+					</ul>
+					</td>
+				</tr>
+		</table>
+			</li>
+			<li>
+			<p class="task">If the cgr file is not found, then the system searches for the 
+       corresponding tessellated file (cgr file) in the released cache.<br>
+			<br><table border="0" cellspacing="0" width="500" id="table1">
+				<tr>
+					<td>
+					<ul>
+						<li>If the cgr file is found in the released cache, then 
+						the timestamp is checked.<br>
+&nbsp;<ul>
+						<li>If the timestamp of the cgr file is more recent than 
+           that of the document, then the cgr fileisloaded into the 
+           viewer.</li>
+						<li>If not, then the document is tessellated, the 
+           resulting cgr file overwrites the existing cgr file in the user's 
+           local cache and the cgr file is loaded into the viewer.</li>
+					</ul>
+         </li>
+						<li>If the cgr file is not found in the released cache, then the 
+         document is tessellated&nbsp;and the resulting cgr file is added to 
+         the user's local cache and the cgr file is loaded into the viewer.</li>
+					</ul>
+					</td>
+				</tr>
+		</table>
+
+			</li>
+		</ol>
+     </td>
+   </tr>
+   
+   <tr>
+     <td></td>
+     <td>Reading Components from a Database: The cache system works 
+     in exactly the same way when components inserted into a CATProduct document 
+     come from a database. An additional check is run: if the cgr file is not 
+     found in the local or released caches, the DMU Navigator requests that, if 
+     the cgr file exists in the database, it be downloaded.<p>The cache system 
+     is managed via the Cache Management tab in the <kbd>Tools &gt; Options</kbd> dialog box. 
+     All cache options can be locked.</p>
+     </td>
+     
+   </tr>
+   
+ </table>
+
+ <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,1114 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Profile Contouring Operations</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style type="text/css">
+.style1 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+</head>
+
+<body>
+
+<a name="ix-Profile Contouring operation"></a>
+<h1>Profile Contouring Operations</h1>
+<table style="width: 100%">
+	<tr>
+		<td>&nbsp;</td>
+		<td>
+<p>The information in this section will help you create and edit <kbd>2.5 axis Profile 
+Contouring</kbd> operations in your manufacturing program. </p>
+<p>Select <kbd>Profile Contouring</kbd>
+<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgProfileContouringP2.gif" width="22" height="22"> 
+then select the <a href="#PCGeom">geometry</a> to be machined
+<img border="1" src="b35doc/english/online/pmgug_c2/images/TabGeomG.gif" align="middle" width="36" height="22">.
+</p>
+<p>A number of strategy parameters
+<img border="1" src="b35doc/english/online/pmgug_c2/images/TabStratG.gif" align="middle" width="36" height="22"> 
+are available for defining:</p>
+<ul>
+	<li><a href="#PCmachining">machining criteria</a> (including a
+	<a href="#R18Converter">3-axis to 5-axis converter</a>)</li>
+</ul>
+<ul>
+	<li><a href="#PCstepover">axial and radial stepover conditions</a></li>
+</ul>
+<ul>
+	<li><a href="#PCfinish">finishing</a></li>
+</ul>
+<ul>
+	<li><a href="#PChsm">high-speed milling</a>. </li>
+</ul>
+<p>Specify the <a href="#PCTool">tool</a> to be used
+<img border="1" src="b35doc/english/online/pmgug_c2/images/TabToolG.gif" align="middle" width="36" height="22">,
+<a href="#PCMacros">NC macros</a>
+<img border="1" src="b35doc/english/online/pmgug_c2/images/TabMacroG.gif" align="middle" width="36" height="22">, 
+and<a href="#PCFandS"> feeds and speeds</a>
+<img border="1" src="b35doc/english/online/pmgug_c2/images/TabFeedG.gif" align="middle" width="36" height="22"> 
+as needed.</p>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top">
+		<img height="32" src="b35doc/english/online/icons_C2/common/anew.gif" width="32"></td>
+		<td>
+<h2>Profile Contouring Strategy Parameters</h2>
+<h3><a name="PCmachining"></a>Profile Contouring Machining Parameters</h3>
+<table border="0" cellspacing="1">
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="596" colspan="2">
+		<kbd>Tool path style</kbd><br>
+		<a name="ix-Tool path style:Profile Contouring parameter"></a>Indicates 
+		the cutting mode of the operation:
+		<ul>
+			<li><kbd>Zig Zag</kbd>: the machining direction is reversed from one path to the 
+			next</li>
+		</ul>
+		<ul>
+			<li>One-Way: the same machining direction is used from one path to the 
+			next</li>
+			<li><kbd>Helix</kbd>: in <kbd>Between Two Planes machining</kbd> mode, machining is done by 
+			maintaining constant tool contact with the part (reduction of air time). 
+			Multiple radial passes are possible with control of maximum ramping 
+			angle and maximum depth of cut.</li>
+			<li><span class="uicontrol" xmlns=""><kbd>Concentric</kbd>: 
+			<span class="blink">&nbsp;Builds a safe-cutting trajectory by 
+			controlling the engagement of the tool.<br>The trajectory created by the <kbd>
+		Concentric</kbd> strategy adapts itself dynamically to ensure a safe 
+		cutting at nominal speed. <br>The engagement of the tool is controlled 
+		to never exceed a maximum value, even in corner areas.<br>This strategy 
+		is particularly recommended for hard-material milling.<br>In this type 
+		of material(e.g. titanium, stainless steel, ceramic, ...) the tool needs 
+		to be protected.<br>Other tool path styles -based on a constant distance 
+		between passes- are not appropriate because the tool load increases 
+		significantly when milling the inside of a radius.<p></span>
+			<img class="blink" height="279" src="b35doc/english/online/cfyugtpe_C2/images/ConcentricEngagementRadiusNLS.png" width="450"><span class="blink"><br>
+			whereas the engagement is equal to the step over when milling in a 
+			straight line.<p>
+			</span>
+		<img src="b35doc/english/online/cfyugtpe_C2/images/ConcentricEngagementStraightNLS.png" class="blink"><span class="blink"><br>
+			The <kbd>Concentric</kbd> strategy controls the tool load by 
+			modifying the distance between passes for each motion. <br>As a 
+			result, the tool lifetime is increased and the machining time is 
+			optimized.</span></span></li>
+		</ul>
+		<p><a name="R19HelicalInterProfCont"></a>Note: A helical interpolation instruction 
+		can be generated in the output file (APT source or Clfile) for a helix tool 
+		path. The machine specified on the Part Operation must support Helical interpolation 
+		and the corresponding check box must be selected in the
+		<a target="_blank" href="page11418.html">
+		Machine Editor</a>.<br>
+		The <kbd>Helical Interpolation</kbd> option must be set to <kbd>From machine</kbd> 
+		in the Generate NC Output dialog box. If this option is set to <kbd>None</kbd>, 
+		then GOTO instructions are generated for the helical motion. For more information, 
+		see
+		<a target="_blank" href="page11392.html">
+		Generate APT Source</a> or
+		<a target="_blank" href="page11398.html">
+		Generate Clfile</a>.</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="596" colspan="2">
+		<kbd>Direction of cut</kbd><br>
+		<a name="ix-Direction of cut:Profile Contouring parameter"></a>Specifies 
+		how machining is to be done. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="362" valign="top">In
+		<kbd>Climb milling</kbd>, the front of the advancing tool (in the machining 
+		direction) cuts into the material first.<p>&nbsp;</p>
+		</td>
+		<td style="padding-top: 5; padding-bottom: 5" width="231" valign="top">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpDirofCut01.gif" align="middle" width="150" height="150">
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="362" valign="top">In
+		<kbd>Conventional </kbd>, the rear of the advancing tool (in the machining direction) 
+		cuts into the material first.</td>
+		<td style="padding-top: 5; padding-bottom: 5" width="231" valign="top">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpDirofCut02.gif" align="middle" width="150" height="150">
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="596" colspan="2">
+		<kbd>Machining tolerance</kbd><br>
+		<a name="ix-Machining tolerance:Profile Contouring parameter"></a>Specifies 
+		the maximum allowed distance between the theoretical and computed tool path.
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="596" colspan="2">
+		<kbd>Fixture accuracy</kbd><br>
+		<a name="ix-Fixture accuracy:Profile Contouring parameter"></a>Specifies 
+		a tolerance applied to the fixture thickness. If the distance between the 
+		tool and fixture is less than fixture thickness minus fixture accuracy, 
+		the position is eliminated from the trajectory. If the distance is greater, 
+		the position is not eliminated. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="596" colspan="2">
+		<kbd>Type of contour</kbd><br>
+		<a name="ix-Type of contour:Profile Contouring parameter"></a>Indicates 
+		whether the contouring type of corners is: </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top" width="362">
+		<kbd>Circular</kbd>: the tool pivots around the corner point, following a contour 
+		whose radius is equal to the tool radius</td>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top" width="231">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpTypeOfContour01.gif" width="150" height="150">
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top" width="362">
+		<kbd>Angular</kbd>: the tool does not remain in contact with the corner point, 
+		following a contour comprised of two line segments</td>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top" width="231">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpTypeOfContour02.gif" width="150" height="150">
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top" width="362">
+		<kbd>Optimized</kbd>: the tool follows a contour derived from the corner that 
+		is continuous in tangent</td>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top" width="231">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpTypeOfContour03.gif" width="150" height="150">
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top" width="362">
+		<kbd>Forced circular</kbd>: This option may be used in certain complex cases 
+		when the Circular option does not give satisfactory results.<p>It creates 
+		tool paths comprising of portions of circular arcs (for example, when grooves 
+		are present along the trajectory and the tool is too big to penetrate).</p>
+		</td>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top" width="231">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpTypeOfContour04.gif" width="150" height="150">
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="596" colspan="2">
+		<kbd>Close tool path</kbd><br>
+		<a name="ix-Close tool path:Profile Contouring parameter"></a>Specifies 
+		whether or not the program must close the tool path.
+		<p>
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpClosePath01.gif" width="150" height="150">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpClosePath02.gif" width="150" height="150">
+		</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="596" colspan="2">
+		<kbd>Tool position ON guide</kbd><br>
+		<a name="ix-Tool position ON guide:Profile Contouring parameter"></a>Specifies 
+		the position of the tool tip on the guiding elements. Offset on contour 
+		and driving mode are already taken into account. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top" width="362">
+		<kbd>Percentage overlap</kbd><br>
+		<a name="ix-Percentage overlap:Profile Contouring parameter"></a>Specifies 
+		the amount that the tool must go beyond the end point of a closed tool path 
+		according to a percentage of the tool diameter. </td>
+		<td style="padding-top: 5; padding-bottom: 5" width="231">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpPercentOverlap.gif" width="150" height="150">
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="596" colspan="2">
+		<kbd><a name="WNR13CUTCOM"></a>Compensation output</kbd><br>
+		<a name="ix-Compensation output:Profile Contouring parameter"></a>Allows 
+		you to manage the generation of cutter compensation (CUTCOM) instructions 
+		in the NC data output in <kbd>Between Two Planes</kbd> machining mode.<p>The following 
+		options are proposed:</p>
+		<ul>
+			<li>If <kbd>2D Radial profile</kbd> is selected, both the tool tip and cutter 
+			profile will be visualized during tool path replay. Cutter compensation 
+			instructions are automatically generated in the NC data output. An approach 
+			macro must be defined to allow the compensation to be applied.<br>
+			Please note that only Circular contouring type is supported with this 
+			output type.<br>
+			<br>
+			Example of generated APT source:</li>
+		</ul>
+		<blockquote>
+			<p><kbd>$$ Start generation of : Profile Contouring.1<br>
+			FEDRAT/ 1000.0000,MMPM<br>
+			SPINDL/ 70.0000,RPM,CLW<br>
+			CUTCOM/LEFT<br>
+			$$ START CUTCOM PLANAR XP, YP, ZP<br>
+			GOTO / 100.00000, -115.00000, 10.00000<br>
+			GOTO / 0.00000, -115.00000, 10.00000<br>
+			CUTCOM/OFF<br>
+			$$ END CUTCOM PLANAR XP, YP, ZP <br>
+			$$ End of generation of : Profile Contouring.1</kbd></p>
+		</blockquote>
+		<ul>
+			<li>If <kbd>2D Radial tip</kbd> is selected, the tool tip will be visualized 
+			during tool path replay. Cutter compensation instructions are automatically 
+			generated in the NC data output. An approach macro must be defined to 
+			allow the compensation to be applied.<br>
+			Example of generated APT source:</li>
+		</ul>
+		<blockquote>
+			<p><kbd>$$ Start generation of : Profile Contouring.1<br>
+			FEDRAT/ 1000.0000,MMPM<br>
+			SPINDL/ 70.0000,RPM,CLW<br>
+			CUTCOM/LEFT<br>
+			$$ START CUTCOM PLANAR XT, YT, ZT<br>
+			GOTO / 100.00000, -125.00000, 10.00000<br>
+			GOTO / 0.00000, -125.00000, 10.00000<br>
+			CUTCOM/OFF<br>
+			$$ END CUTCOM PLANAR XT, YT, ZT <br>
+			$$ End of generation of : Profile Contouring.1</kbd></p>
+		</blockquote>
+		<ul>
+			<li>If <kbd>None</kbd> is selected, cutter compensation instructions are 
+			not automatically generated in the NC data output. However, CUTCOM instructions 
+			can be inserted manually. For more information, please refer to
+			<a href="page12421.html">How to generate CUTCOM syntaxes</a>. Editing tool path is supported only under None option. 
+For more information on editing tool path, refer to 
+ 			<a href="page5130.html">Editing Tool Paths</a>.</li>
+		</ul>
+		<p>Any user-defined PP words in macros are added to the cutter compensation 
+		instructions generated in the NC data output. Therefore, you should be careful 
+		when specifying CUTCOM instructions in macros.</p>
+		<p>A negative Offset on contour (parameter in <kbd>Geometry</kbd> tab page) is possible 
+		for 2D radial profile output.</p>
+		<p>
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/OutputType01NLS.gif" width="427" height="221">
+		</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="596" colspan="2">
+		<kbd>Compensation<br>
+		</kbd><a name="ix-Compensation:Profile Contouring parameter"></a>Specifies 
+		the tool corrector identifier to be used in the operation.
+		<p>The corrector type (P1, P2, P3, for example), corrector identifier, and 
+		corrector number are defined on the tool. When the NC data source is generated, 
+		the corrector number can be generated using specific parameters.&nbsp;
+		</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="596" colspan="2">
+		<kbd>Compensation application mode</kbd><br>
+		<a name="ix-Compensation application mode:Profile Contouring parameter">
+		</a>Specifies how the corrector type specified on the tool (P1, P2, P3, 
+		for example) is used to define the position of the tool: Output point or 
+		Guiding point. <br>
+		<p class="blink"><kbd>Movement</kbd><br></p>
+		<ul class="blink">
+			<li>When <kbd>Movement</kbd> is set to <kbd>One-Way</kbd>, the tool path 
+			uses the selected cutting direction.</li>
+			<li>When <kbd>Movement</kbd> is set to <kbd>Zig-Zag</kbd>, the tool 
+			path is optimized using both cutting directions (<kbd>Climb</kbd> 
+			and <kbd>Conventional</kbd>).<br>The selected cutting mode is the 
+			main direction. Modifying it could change the trajectory.</li>
+		</ul>
+		<p><span class="blink"><kbd>Reverse pass (radial %)</kbd><br>Lets your 
+		define the reverse radial engagement when milling in the reverse 
+		direction, that is in the direction that is not selected as the <kbd>
+		Direction of cut</kbd>.<br>The value is a percentage of the main radial 
+		engagement.<br>A value equal to 100% keeps the same engagement for the 
+		main and the reverse direction.</span><p class="blink"><kbd>Contouring Pass</kbd><br>
+		For profile contouring using a <kbd>Concentric</kbd> tool path style, allows a final machining pass around 
+		the exterior of the trajectory to remove scallops.</p>
+		<p class="blink"><kbd>Contouring Ratio</kbd><br>For profile contouring 
+		using a <kbd>Concentric</kbd> tool path style, adjusts the position of the final 
+		contouring pass to remove scallops. It is given as a percentage of the 
+		tool diameter (0 to 50).</p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="596" colspan="2">
+		<a name="ix-3/5-Axis Converter:Profile Contouring parameter"></a>
+		<a name="R18Converter"></a><kbd>3/5-Axis Converter</kbd><p>When check box is 
+		selected:</p>
+		<ul>
+			<li>switches from a 3-axis to a 5-axis orientation if a collision is 
+			detected with the tool holder </li>
+			<li>provides a global conversion of the tool path from 3-axis to 5-axis.
+			</li>
+		</ul>
+		<p>For more information, see
+		<a target="_blank" href="page5116.html">
+		3/5-Axis Converter</a>. </p>
+		<p><kbd>Notes</kbd> </p>
+		<ul>
+			<li>The converter is only available when a ball-end tool is used in 
+			the operation.</li>
+			<li>The <kbd>Fixed angle</kbd> and <kbd>Normal to part</kbd> tool axis modes 
+			provided by the converter are not available for <kbd>Profile Contouring</kbd> operations. 
+			These modes require contact points, whereas <kbd>Profile Contouring</kbd> operations 
+			use tip points.</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<h3><a name="PCstepover"></a>Profile Contouring Stepover Parameters</h3>
+<table border="0" cellspacing="1">
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top" colspan="2">
+		<kbd>Sequencing</kbd><br>
+		<a name="ix-Sequencing:Profile Contouring parameter"></a>Specifies the order 
+		in which machining is to be done. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top" width="378">
+		<kbd>Axial</kbd>: axial machining is done first then radial</td>
+		<td style="padding-top: 5; padding-bottom: 5; width: 387px;">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpSequence02.gif" width="150" height="150">
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top" width="378">
+		<kbd>Radial</kbd>: radial machining is done first then axial</td>
+		<td style="padding-top: 5; padding-bottom: 5; width: 387px;">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpSequence01.gif" width="150" height="150">
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5; " valign="top" colspan="2">
+		<strong><a name="SideStepFirst">Side Step First</a><br>
+		</strong>On selecting this check-box, each disconnected guide is 
+		handled for all the passes (radial, axial, and finishing) and then the 
+		tool moves to the next guide and finish all the passes for that guide. 
+		For a given contour, the sequence of passes is defined by the <kbd>
+		Sequencing</kbd> option. By default, this option is not selected for 
+		newly created operations. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5; " valign="top" colspan="2">
+		<strong>Mode<br>
+		</strong>For <span class="uicontrol" xmlns="">Concentric</span> tool 
+		path, specifies the maximum tool radial engagement value. The following 
+		modes are available:<ul>
+			<li><span class="uicontrol" xmlns=""><kbd>Maximum distance</kbd></span>: the 
+			tool radial engagement is based on the value defined in the
+			<span class="uicontrol" xmlns="">Distance between paths</span> box.</li>
+			<li><span class="uicontrol" xmlns=""><kbd>Tool diameter ratio</kbd></span>: the 
+			tool radial engagement is based on the tool diameter ratio defined 
+			in the <span class="uicontrol" xmlns="">Percentage of tool diameter</span> 
+			box.</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5; " valign="top" colspan="2">
+		<strong>Percentage of tool diameter<br>
+		</strong>For <span class="uicontrol" xmlns=""><kbd>Concentric</kbd></span> tool 
+		path, specifies the tool diameter in percentage. This value corresponds 
+		to the maximum tool radial engagement.</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" valign="top" width="378">
+		<kbd>Distance between paths</kbd><br>
+		<a name="ix-Distance between paths:Profile Contouring parameter"></a>Defines 
+		the maximum distance between two consecutive tool paths in a radial strategy.
+		<br><br>For <span class="uicontrol" xmlns=""><kbd>Concentric</kbd></span> tool path, 
+		corresponds to the maximum tool radial engagement. The distance between 
+		passes is not fixed and varies according to the radius of curvature of 
+		the trajectory.</td>
+		<td style="padding-top: 5; padding-bottom: 5; width: 387px;">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpDistBtwnPaths.gif" width="150" height="150">
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2">
+		<kbd>Number of paths</kbd><br>
+		<a name="ix-Number of paths:Profile Contouring parameter"></a>Defines the 
+		number of tool paths in a radial strategy. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2">
+		<kbd>Overhang for rework areas</kbd><br>
+		<a name="ix-Overhang for rework areas:Profile Contouring parameter"></a>
+		Allows a shift in the tool position with respect to the soft boundary of 
+		the rework area. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2">
+		<kbd>Axial strategy mode</kbd><br>
+		<a name="ix-Axial strategy mode:Profile Contouring parameter"></a>Defines 
+		how the distance between two consecutive levels is to be computed:
+		<ul>
+			<li><kbd>Maximum depth of cut</kbd></li>
+		</ul>
+		<ul>
+			<li><kbd>Number of levels</kbd></li>
+		</ul>
+		<ul>
+			<li><kbd>Number of levels without top</kbd>.</li>
+		</ul>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2">
+		<kbd>Maximum depth of cut</kbd><br>
+		<a name="ix-Maximum depth of cut:Profile Contouring parameter"></a>Defines 
+		the maximum depth of cut in an axial strategy. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5; height: 43px;" colspan="2">
+		<kbd>Number of levels</kbd><br>
+		<a name="ix-Number of levels:Profile Contouring parameter"></a>Defines the 
+		number of levels to be machined in an axial strategy. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2">
+		<kbd>Automatic draft angle</kbd><br>
+		<a name="ix-Automatic draft angle:Profile Contouring parameter"></a>Specifies 
+		the draft angle to be applied on the flanks between the top and bottom elements.
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" colspan="2">
+		<kbd>Breakthrough</kbd><br>
+		<a name="ix-Breakthrough:Profile Contouring parameter"></a>Specifies the 
+		distance in the tool axis direction that the tool must go completely through 
+		the part. Breakthrough is applied on the bottom element, which must be specified 
+		as <i>soft</i>. <br>
+		Only available in Between two planes mode. </td>
+	</tr>
+</table>
+<table border="0" cellspacing="1">
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="768">
+		<strong><a name="hj-Smoothing">Smoothing</a> 
+		tool path along Tool Axis (%)</strong> <br>
+		<a name="ix-Smoothing 
+		Tool path along Tool Axis:Profile Contouring parameter"></a>
+		Specifies the value to smooth the tool path when the tool path is 
+		going rapidly from a direction into a Z direction, without transition. <br>
+		If you specify the value as N%, the existing tool path points, within an 
+		area of size N% of tool diameter centered on the tool path 
+		discontinuity, are moved along the tool axis to smooth the tool path. 
+		<br>
+		<img title="" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" width="13" height="13">By default, the value is 0%.</td>
+	</tr>
+</table>
+<h3><a name="PCfinish">Profile Contouring Finishing Parameters</a></h3>
+<table border="0" cellspacing="1">
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="745" colspan="2">
+		<kbd>Finishing mode</kbd><br>
+		<a name="ix-Finishing mode:Profile Contouring parameter"></a>Indicates whether 
+		or not finish passes are to be generated on the sides and bottom of the 
+		area to machine.<br>
+		There are several possible combinations:<br>
+		<br>
+&nbsp;&nbsp;&nbsp;
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/Finish_PContouring.gif" width="232" height="78"><br>
+		<br>
+		Side finishing can be done at each level or only at the last level of the 
+		operation.<br>
+		Bottom finishing can be done without any side finishing or with different 
+		combinations of side finishing.</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="373" valign="top">
+		&nbsp;</td>
+		<td style="padding-top: 5; padding-bottom: 5" width="372" valign="top">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpFinishThk02.gif" width="150" height="150">
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="373" valign="top">
+		<kbd>Side thickness on bottom</kbd><br>
+		Specifies the thickness of material left on the side by the bottom finish 
+		pass.</td>
+		<td style="padding-top: 5; padding-bottom: 5" width="372" valign="top">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpFinishThk01.gif" width="150" height="150"></td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="373" valign="top">
+		<kbd>Bottom finish thickness</kbd><br>
+		Specifies the thickness of material that will be machined by the bottom 
+		finish pass.</td>
+		<td style="padding-top: 5; padding-bottom: 5" width="372" valign="top">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpFinishThk03.gif" width="150" height="150">
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="745" colspan="2">
+		<kbd>Bottom thickness on side finish</kbd><br>
+		<a name="ix-Bottom thickness on side finish:Profile Contouring parameter">
+		</a>Specifies the thickness of material left on the bottom by the last side 
+		finish pass.<p>
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/BottomThkOnSide01.gif" width="371" height="190"></p>
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="745" colspan="2">
+		<a name="WNR10FinishStyle"></a><kbd>Bottom finish path style</kbd><br>
+		<a name="ix-Bottom finish path style:Profile Contouring parameter"></a>Defines 
+		the bottom finish path style: <kbd>Zig zag</kbd> or <kbd>One way</kbd>. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="745" colspan="2">
+		<kbd>Spring pass</kbd><br>
+		<a name="ix-Spring pass:Profile Contouring parameter"></a>Indicates whether 
+		or not a spring pass is to be generated on the sides in the same condition 
+		as the previous Side finish pass. The spring pass is used to compensate 
+		the natural `spring&#39; of the tool. </td>
+	</tr>
+</table>
+<h3><a name="PChsm"></a>Profile Contouring High Speed Milling (HSM) Parameters</h3>
+<a name="ix-High Speed Milling:Profile Contouring parameter"></a>
+<p>In a Profile Contouring, cornering for HSM is available for Roughing and Finishing 
+passes in the following guiding modes:</p>
+<ul>
+	<li><kbd>Between two planes</kbd></li>
+</ul>
+<ul>
+	<li><kbd>Between curve and surfaces</kbd></li>
+</ul>
+<ul>
+	<li><kbd>Between two curves</kbd>.</li>
+</ul>
+<p>Cornering applies to inside corners for machining or finishing passes. It does 
+not apply to:</p>
+<ul>
+	<li>outside corners (for example, produced by angular or optimized contouring 
+	mode).</li>
+</ul>
+<ul>
+	<li>macros or default linking and return motions.</li>
+</ul>
+<table border="0" cellspacing="1">
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="694" colspan="2">
+		<kbd>Cornering</kbd><br>
+		<a name="ix-Cornering:Profile Contouring parameter"></a>Specifies whether 
+		or not cornering for HSM is to be done on the trajectory. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="347"><kbd>Corner radius</kbd><br>
+		<a name="ix-Corner radius:Profile Contouring parameter"></a>Specifies the 
+		radius used for rounding the corners along the trajectory of a HSM operation. 
+		Value must be smaller than the tool radius. </td>
+		<td style="padding-top: 5; padding-bottom: 5" width="347">
+		<img border="1" src="b35doc/english/online/pmgug_c2/images/helpHSMCornerRad.gif" width="150" height="150">
+		</td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="694" colspan="2">
+		<kbd>Cornering on side finish path</kbd><br>
+		<a name="ix-Cornering on side finish path:Profile Contouring parameter">
+		</a>Specifies whether or not tool path cornering is to be done on the side 
+		finish path. </td>
+	</tr>
+	<tr>
+		<td style="padding-top: 5; padding-bottom: 5" width="694" colspan="2">
+		<kbd>Corner radius on side finish path</kbd><br>
+		<a name="ix-Corner radius on side finish path:Profile Contouring parameter">
+		</a>Specifies the corner radius used for rounding the corners along the 
+		side finish path of a HSM operation. Value must be smaller than the tool 
+		radius. </td>
+	</tr>
+</table>
+<h2><a name="PCGeom"></a>Profile Contouring Geometry</h2>
+<p>A <kbd>Profile Contouring operation</kbd> can be created in one of the following Machining 
+modes. </p>
+<h3><a href="page12360.html#Between2Pln">Between Two Planes</a></h3>
+<p>Tool follows contour between top and bottom planes while respecting user-defined 
+geometry limitations and machining strategy parameters.</p>
+<p>You can specify the following Geometry:</p>
+<ul>
+	<li>Bottom (planar face or surface) with possible <kbd>Offset on Bottom</kbd>. Bottom may 
+	be <kbd>Hard</kbd> or <kbd>Soft</kbd>. </li>
+</ul>
+<ul>
+	<li>Guide contour (edges or sketch) with possible <kbd>Offset on Contour</kbd>.</li>
+</ul>
+<ul>
+	<li>Top plane with possible <kbd>Offset on Top</kbd>. Top may be <kbd>Hard</kbd> or
+	<kbd>Soft</kbd>.</li>
+</ul>
+<ul>
+	<li>Start and Stop Relimiting elements with possible <kbd>Offsets</kbd>. </li>
+</ul>
+<ul>
+	<li>Fixture or check elements with possible <kbd>Offset on Check</kbd>.</li>
+</ul>
+<h3><a href="page12364.html#Between2Crv">Between Two Curves</a> (P2 functionality)</h3>
+<p>Tool follows a trajectory defined by the Guide contour and Auxiliary Guide contour 
+while respecting user-defined geometry limitations and machining strategy parameters.</p>
+<p>You can specify the following Geometry:</p>
+<ul>
+	<li>Guide contour and Auxiliary Guide contour (edges or sketch) with possible 
+	offsets:<ul>
+		<li>a global radial <kbd>Offset on Contour</kbd></li>
+		<li>an <kbd>Axial Offset 1</kbd> the Guide contour</li>
+		<li>an <kbd>Axial Offset 2</kbd> the Auxiliary Guide contour.</li>
+	</ul>
+	</li>
+</ul>
+<ul>
+	<li>Start and Stop Relimiting elements with possible <kbd>Offsets</kbd>.
+	</li>
+</ul>
+<ul>
+	<li>Fixture or check elements with possible <kbd>Offset on Check</kbd>.</li>
+</ul>
+<a name="ix-Depth limitation:Profile Contouring parameter"></a>
+<p>Guide contour is used for positioning the flank of the tool (radial positioning).</p>
+<p><img border="1" src="b35doc/english/online/pmgug_c2/images/Contouring20NLS.gif" width="445" height="333"></p>
+<p>Auxiliary Guide contour is used for positioning the tool tip along the tool axis 
+(axial positioning).</p>
+<p><img border="1" src="b35doc/english/online/pmgug_c2/images/Contouring21NLS.gif" width="467" height="332"></p>
+<p><kbd>Cases when only the Guide contour is specified:</kbd></p>
+<ul>
+	<li>If no Auxiliary Guide contour is specified, the Guide contour is used for 
+	positioning both the flank and the tip of the tool.</li>
+	<li>If no Auxiliary Guide contour is specified, but an Auxiliary Guide contour 
+	offset (<kbd>Axial Offset 2</kbd>) is specified and it is different from the 
+	Guide contour offset (<kbd>Axial Offset 1</kbd>), the machining domain is defined 
+	between Guide contour Axial Offset 1 and Axial Offset 2 applied to the selected 
+	Guide contour.</li>
+	<li>Only one contour geometry selection is necessary to define a multi-level 
+	tool path. <br>
+	This is useful when the Guide contour is selected and there is no suitable auxiliary 
+	guide curve on the geometry to machine. In this case, just specify the <kbd>
+	Number of levels</kbd> in <kbd>Stepover</kbd> tab. <br>
+	See example below.<br>
+	<br>
+	<img border="1" src="b35doc/english/online/pmgug_c2/images/Contouring24NLS.gif" width="508" height="339"></li>
+</ul>
+<p>You can restrict machining to a specific zone by specifying <kbd>Minimum depth</kbd> 
+and <kbd>Maximum depth</kbd> values. The depths are taken from the Guide contour. 
+The <kbd>Depth limitation</kbd> check box must be activated in this case.</p>
+<p><strong><a name="hj-SidetoMachine">Side to Machine</a> Control</strong></p>
+<p>You can specify the material side by selecting one or several points 
+(vertices or Part Design points) in the authoring window. The contextual menu 
+for material side point is: </p>
+<p>
+<img title="" src="b35doc/english/online/pmgug_c2/images/dbSideToMachineContextMenuNLS.gif" width="285" height="232" class="style1"></p>
+<ul>
+	<li><kbd>Remove</kbd>: Remove all the selected points mentioned for material 
+	side.</li>
+	<li><kbd>Analyze</kbd>: <kbd>Geometry Analyser </kbd>dialog box appears 
+	containing the selected material side points </li>
+</ul>
+<p>
+<img title="" src="b35doc/english/online/pmgug_c2/images/dbGeometryAnalyserNLS.gif" width="574" height="275" class="style1"></p>
+<p>The side to machine for the <kbd>Profile Contouring </kbd>machining operation 
+depends on a number of factors like the tool axis, the tangent of the selected 
+curve, the sequence of curve selection, etc. <br>
+Any change in the side to machine parameter requires a tool path re-computation 
+to experience the effect of this parameter. <br>
+The side to machine is on the opposite side of the material side as compared to 
+the guiding curve when looking along the tool axis direction.<br>
+In the example below, you have selected the guide and the point indicating the 
+material side. Based on this additional input, the side to machine can be 
+calculated as shown below. The point is projected in the plane perpendicular to 
+the tool axis, the side to machine is the opposite of the side of the point 
+compared to the guiding curve. </p>
+<p>
+<img title="" src="b35doc/english/online/pmgug_c2/images/wnSideToMachineNLS.gif" width="539" height="243" class="style1"></p>
+<p>Selecting more than one point to indicate the material side is helpful in the 
+case of disconnected contours or guides (that is, more than one guide is present 
+in the operation). <br>
+If the projected point lies on the contour, it does not allow the system to 
+determine the side to machine. You have to ignore this point. Only one point 
+(the closest one) can be associated to a contour.<br>
+A point can be associated to more than one contour. If more points than the 
+number of disconnected contours are selected, the additional points are ignored. 
+These ignored points can be seen in the <kbd>Geometry Analyser </kbd>dialog box.<br>
+If the side to machine proposed is not the one you require, click the orange 
+arrow to select the other side. We recommend that you select the points first 
+and then the guiding contours. <br>
+In the rare cases where the projections of the points you have selected are 
+equidistant to the guide curves, the system cannot decide which point belongs to 
+which guide curve and requires you to pick more points to define the material 
+side. </p>
+<h3><a href="page12365.html#BetweenCrvSur">Between a Curve and Surfaces </a>(P2 
+functionality)</h3>
+<p>Tool follows trajectory defined by a top guide curve and bottom surfaces while 
+respecting user-defined geometry limitations and machining strategy parameters.</p>
+<p>You can specify the following Geometry:</p>
+<ul>
+	<li>Bottom (planar face or surface) with possible <kbd>Offset on Bottom</kbd>.<br>
+	If a negative offset value is specified, it must be less than the tool corner 
+	radius value.</li>
+</ul>
+<ul>
+	<li>Guide contour (edges or sketch) with possible radial <kbd>Offset on Contour</kbd> 
+	and <kbd>Axial Offset</kbd>.<br>
+	An Axial Offset is only taken into account when more than one axial level is 
+	defined.</li>
+</ul>
+<ul>
+	<li>Start and Stop Relimiting elements with possible <kbd>Offsets</kbd>.
+	</li>
+</ul>
+<ul>
+	<li>Fixture or check elements with possible <kbd>Offset on Check</kbd>.</li>
+</ul>
+<p>You can restrict machining to a specific zone by specifying <kbd>Minimum depth</kbd> 
+and <kbd>Maximum depth</kbd> values. The depths are taken from the top guiding contour. 
+The <kbd>Depth limitation</kbd> check box must be selected in this case.</p>
+<h3><a href="page12366.html">By Flank Contouring</a> (P2 functionality)</h3>
+<p>Tool flank machines vertical part surface while respecting user-defined geometry 
+limitations and machining strategy parameters.</p>
+<p>You can specify the following Geometry:</p>
+<ul>
+	<li>Guiding flank (face parallel to tool axis) with possible <kbd>Offset on 
+	Contour</kbd>.</li>
+</ul>
+<ul>
+	<li>Possible <kbd>Offset on Bottom</kbd>.</li>
+</ul>
+<ul>
+	<li>Start and Stop Relimiting elements with possible <kbd>Offsets</kbd>.
+	</li>
+</ul>
+<ul>
+	<li>Fixture or check elements with possible <kbd>Offset on Check</kbd>.</li>
+</ul>
+<h3>Specifying Guiding Contours</h3>
+<p>Guiding contours can be specified in several ways:</p>
+<a name="ix-contextual command::Contour Detection;Contour Detection contextual command">
+</a>
+<a name="ix-contextual command::By Belt of Faces;By Belt of Faces contextual command">
+</a>
+<a name="ix-contextual command::By Boundary of Faces;By Boundary of Faces contextual command">
+</a><a name="ix-contextual command::Sectioning;Sectioning contextual command">
+</a>
+<ul>
+	<li>if the <kbd>Contour Detection</kbd> contextual command is set in Between Two 
+	Planes mode, select the bottom element. The boundary of the selected face will 
+	be proposed as guiding contour. </li>
+</ul>
+<ul>
+	<li>select edges. In this case the
+	<a href="page11480.html#EdgeSelToolbar" target="ds_doc2">
+	Edge Selection toolbar</a> appears to help you specify the guiding contour.</li>
+</ul>
+<ul>
+	<li>select the <kbd>By Belt of Faces</kbd> or <kbd>By Boundary of Faces</kbd> contextual 
+	command. In this case the
+	<a href="page11480.html#FaceSelToolbar" target="ds_doc2">
+	Face Selection toolbar</a> appears to help you specify the guiding contour.</li>
+</ul>
+<ul>
+	<li>select the <kbd>Sectioning</kbd> contextual command. Please refer to
+	<a href="page4937.html" target="ds_doc2">
+	Sectioning</a> for details of how to use this capability.<br>
+	Please note that the sectioning selection method is not associative.</li>
+</ul>
+<h3><a name="WNR12RelimElem"></a>Specifying Relimiting Elements</h3>
+<a name="ix-contextual command::Relimitation point detection;Relimitation point detection contextual command">
+</a>
+<a name="ix-contextual command::Add relimiting point;Add relimiting point contextual command">
+</a>
+<p>The guiding contour can be restricted by means of Start and Stop relimiting elements. 
+The tool can be positioned <kbd>In</kbd>, <kbd>On</kbd> or <kbd>Out</kbd> with respect to a relimiting element. You 
+can select a point or a curve as relimiting element.</p>
+<p>You can use points created &quot;on the fly&quot; but be aware of the following 
+recommendation. By deciding to use explicitly &quot;on the fly&quot; created points as 
+limit, you discard any associativity with the part. Such points are only known 
+via their XYZ coordinates. Since they are not part of the same Product as the 
+part, we cannot ensure that their location is kept for each and any 
+transformation applied to the part. </p>
+<p>Basic scenario where points are created on the fly on part1, then part1 is 
+mounted on the machine once is supported. But Advanced scenario with several 
+transformations (e.g. create the points on the fly on part1, mount part1, change 
+part1 to part2, mount part2) are not supported. The usage of &quot;on the fly&quot; 
+created points should be limited to machining scenario where there is no move, 
+nor change of the part. </p>
+<p>If you expect the limiting points to always follow the part location, the 
+creation of CATPoint in the same product as the part is the correct methodology. </p>
+<p>If you do not look for part associativity, a fast way to specify relimiting points is to right-click the guiding contour 
+area in the sensitive icon of the dialog box and set the <kbd>Relimitation point 
+detection</kbd> contextual command.&nbsp; When you select a guiding contour, 
+its extremities will be used as relimiting elements.</p>
+<p><a name="R14relimitingpoint"></a>Note that a relimiting point can be created 
+anywhere along the guiding contour by means of the <kbd>Add relimiting point </kbd>contextual command. Just right-click the relimiting element area in the sensitive 
+icon of the dialog box and select any position along the guiding contour. </p>
+<p>More than one relimiting elements are not supported and if you select one 
+relimiting element after another then the following warning message appears.<br>
+<br>
+<img title="" src="b35doc/english/online/pmgug_c2/images/wnLimitWarn.gif" width="431" height="106" class="style1"> </p>
+<p>Relimiting point selection can be made easier depending on the selected screen 
+view. For example, you can select the <kbd>Normal View</kbd> icon in the View toolbar 
+and a suitable face. The screen view is then perpendicular to the selected face 
+and it is then easier to define relimiting point locations on the guide when moving 
+the cursor.</p>
+<p>Note that if only one relimiting element is defined along an open guiding contour, the area to be machined is located either between:<ul><li><kbd>Limit1</kbd> and the extremity of the guiding contour</li><li>The extremity of the guiding contour and <kbd>Limit2</kbd></li></ul></p>
+<p>When relimiting elements are defined on a closed contour, the recommendation 
+is to select the <kbd>Close tool path</kbd> option in order to respect the area 
+to machine according to the <kbd>Direction of cut</kbd> (Climb Milling or Conventional) 
+and the relimiting elements.</p>
+<h3>Machining Discontinuous Guiding Curves</h3>
+<p>You can machine several discontinuous groups of guiding elements in all Profile 
+Contouring modes (except By Flank Contouring). </p>
+<p>These contours can be selected using the
+<a target="ds_doc2" href="page11480.html">Edge 
+Selection Toolbar</a>. A <kbd>Guide.x </kbd>element is displayed for each selected continuous 
+ordered contour. </p>
+<p>
+<img border="1" src="b35doc/english/online/pmgug_c2/images/MAMultiCurveContour01NLS.gif" width="277" height="252">
+</p>
+<p>The side to mill is shown by the orange arrow. Click on the arrow to inverse 
+the side to mill. </p>
+<p align="left">The order of in which the geometric elements are selected determines 
+the order in which they will be machined. </p>
+<p><img border="1" src="b35doc/english/online/pmgug_c2/images/Contouring19NLS.gif" width="450" height="210">
+</p>
+<p>A linking macro can be used to link two discontinuous portions of the same tool 
+path. Otherwise, a straight line is generated. </p>
+<p>Once the selection of the guides is validated (that is, when the dialog box is 
+displayed again), the following contextual menus become available. </p>
+<a name="ix-contextual command::Remove Element;Remove Element contextual command">
+</a>
+<a name="ix-contextual command::Remove Guide;Remove Guide contextual command">
+</a>
+<a name="ix-contextual command::Remove All Guides;Remove All Guides contextual command">
+</a>
+<a name="ix-contextual command::Connect Guide;Connect Guide contextual command">
+</a>
+<a name="ix-contextual command::Connect All Guides;Connect All Guides contextual command">
+</a>
+<a name="ix-contextual command::Connection Mode;Connection Mode contextual command">
+</a>
+<p align="left">On a guide in the graphic area: </p>
+<p align="left">
+<img border="1" src="b35doc/english/online/pmgug_c2/images/MAMultiCurveContour02NLS.gif" width="315" height="298">
+</p>
+<p align="left">On a guide in the sensitive icon of the dialog box: </p>
+<p align="left">
+<img border="1" src="b35doc/english/online/pmgug_c2/images/MAMultiCurveContour03NLS.gif" width="315" height="120">
+</p>
+<p><kbd>Remove Element: </kbd>Removes the selected element from the Guide. </p>
+<p>You can also remove an element by picking it again, after having launched the 
+<kbd>Edge Selection</kbd> toolbar. If the guide is no longer continuous, another guide is created.
+</p>
+<p>Before
+<img border="1" src="b35doc/english/online/pmgug_c2/images/MAMultiCurveContour05NLS.gif" width="224" height="163"> 
+After
+<img border="1" src="b35doc/english/online/pmgug_c2/images/MAMultiCurveContour04NLS.gif" width="262" height="184">
+</p>
+<p>You can add elements to a guide by simply picking the element, after having launched 
+the Edge Selection toolbar<kbd>.</kbd> If the element picked is connected to that guide, 
+it is automatically added to that guide. If the element picked is connected to two 
+guides, the element is added and the two guides are merged into one. </p>
+<p><kbd>Remove Guide x: </kbd>Removes the selected guide. </p>
+<p>Before
+<img border="1" src="b35doc/english/online/pmgug_c2/images/MAMultiCurveContour05NLS.gif" width="224" height="163"> 
+After
+<img border="1" src="b35doc/english/online/pmgug_c2/images/MAMultiCurveContour06NLS.gif" width="231" height="163">
+</p>
+<p><kbd>Remove All Guides: </kbd>Removes all guides </p>
+<p>Before
+<img border="1" src="b35doc/english/online/pmgug_c2/images/MAMultiCurveContour05NLS.gif" width="224" height="163"> 
+After
+<img border="1" src="b35doc/english/online/pmgug_c2/images/MAMultiCurveContour07NLS.gif" width="216" height="163">
+</p>
+<p><kbd>Connect Guide.x: </kbd>Connects a guide to another one. Select the original 
+guide, then the item <kbd>Connect Guide.x</kbd> in the contextual menu and the target 
+guide. </p>
+<p>Before
+<img border="1" src="b35doc/english/online/pmgug_c2/images/MAMultiCurveContour08NLS.gif" width="246" height="197"> 
+After
+<img border="1" src="b35doc/english/online/pmgug_c2/images/MAMultiCurveContour09NLS.gif" width="232" height="196">
+</p>
+<p>The <kbd>Connection Mode </kbd>allows connection either by inserting a line or extrapolating 
+a contour. </p>
+<p>
+<img border="1" src="b35doc/english/online/pmgug_c2/images/MAMultiCurveContour10NLS.gif" width="353" height="67">
+</p>
+<p><kbd>Connect All Guides: </kbd>Connects all guides into one. </p>
+<p>Before
+<img border="1" src="b35doc/english/online/pmgug_c2/images/MAMultiCurveContour11NLS.gif" width="368" height="118"><br>
+After&nbsp; <kbd>
+<img border="1" src="b35doc/english/online/pmgug_c2/images/MAMultiCurveContour12NLS.gif" width="373" height="118"></kbd></p>
+<h2><a name="hj-ImproveProcessing">Improve Processing</a> of Join in Profile 
+Contouring</h2>
+<p>If you create a join with three contours, then each contiguous set of curves 
+is considered as a guide contour (linking motions are created before each 
+contour).<br>
+<kbd>
+<img border="1" src="b35doc/english/online/pmgug_c2/images/wnJoinProcessNLS.gif" width="677" height="328"></kbd></p>
+<h3 align="left"><a name="R14CollisionCheck"></a>
+<a name="ix-Collision checking:Profile Contouring parameter"></a>Checking for Collisions 
+between Tool and Guide Elements during Macro Motions and Machining Motions</h3>
+<p align="left">Collision checking is done during macro motions and machining motions 
+(for corner and angle contouring). All guiding elements defined on the operation 
+are taken into account during this verification. However, in some cases, it can 
+be useful to deactivate collision checking with the guides (see example below).
+</p>
+<p align="left">In the following figure, collision avoidance during the circular 
+approach macro is not necessary.<br>
+<kbd><img border="1" src="b35doc/english/online/pmgug_c2/images/Contouring23NLS.gif" width="350" height="300"></kbd></p>
+<p align="left">In the following figure, there is no collision avoidance during 
+the circular approach.<br>
+<kbd><img border="1" src="b35doc/english/online/pmgug_c2/images/Contouring22NLS.gif" width="350" height="300"></kbd></p>
+<p align="left">The Collision Avoidance capability allows you to manage this collision 
+checking. </p>
+<p align="left">When you select <kbd>Collision checking</kbd> on the <kbd>Geometry</kbd> tab page, 
+the following dialog box appears. </p>
+<p align="left">
+<img title="" src="b35doc/english/online/pmgug_c2/images/dbCollisionCheckingNLS.gif" width="267" height="154">&nbsp;</p>
+<p align="left">When the <kbd>Include Guiding elements </kbd>check box is 
+selected, guides are checked for collisions during macro motions and machining motions. 
+By default, the check box is selected. When the check box is not selected, no collision verification is 
+done with the guides for macro motions and for machining motions during tool plunges.
+</p>
+<p align="left">In the specific case when there is no selected top element and no 
+offset defined on the bottom element, there is no tool motion to avoid the guiding 
+elements, so no collisions will be detected (for macro motions only). </p>
+<p align="left">When the <kbd>Include Part from Part 
+<a name="hj-Operation1">Operation</a></kbd> check box 
+is selected, the part is retrieved from&nbsp;the <kbd>Part Operation</kbd> if part is not 
+defined at the Machining Operation level and used in collision check for 
+approach/retract macro.<br>
+		<img title="" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" width="13" height="13"> By default, the check box is not selected.<br>
+	When the  <kbd>Include only selected faces </kbd>check box is selected, 
+	faces are selected in the authoring window for collision checking. Face selection is activated only on selection of this check box, and the 
+selected faces are considered for collision checking with the macro.<br>
+	The <kbd>Include Part from Part 
+<a name="hj-Operation3">Operation</a></kbd> and &nbsp;<kbd>Include 
+	only selected faces</kbd> 
+	options are mutually exclusive.<br>
+<img title="" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" width="13" height="13"> By default, the check box is not selected.<br>
+</p>
+<h2><a name="PCTool"></a>Profile Contouring Tools</h2>
+<p>Recommended tools for Profile Contouring are End Mills, Face Mills, Conical Mills 
+and T-Slotters.</p>
+<p>Drills, Spot Drills, Center Drills, and Countersinks can also be used. </p>
+<h2><a name="PCFandS"></a>Profile Contouring Feeds and Speeds</h2>
+<p>In the <kbd>Feeds and Speeds</kbd> tab page, you can specify feedrates for approach, retract, 
+machining and finishing as well as a machining spindle speed.</p>
+<p>Feedrates and spindle speed can be defined in linear or angular units.</p>
+<p>A <kbd>Spindle output</kbd> check box is available for managing output of the 
+SPINDL instruction in the generated NC data file. If the check box is selected, 
+the instruction is generated. Otherwise, it is not generated. </p>
+<p>Feeds and speeds of the operation can be updated automatically according to tooling 
+data and the Rough or Finish quality of the operation. This is described in
+<a href="page11449.html#FSUpdate" target="ds_doc2">
+Update of Feeds and Speeds on Machining Operation</a>.</p>
+<h4><a name="WNR10PCFeedReduction"></a>Feedrate Reduction in Corners</h4>
+<a name="ix-Feedrate reduction in corners:Profile Contouring parameter"></a>
+<p>You can reduce feedrates in corners encountered along the tool path depending 
+on values given in the Feeds and Speeds tab page:
+<a name="ix-Reduction rate (feed reduction)"></a>
+<a name="ix-Maximum radius (feed reduction)"></a>
+<a name="ix-Minimum angle (feed reduction)"></a>
+<a name="ix-Distance before corner (feed reduction)"></a>
+<a name="ix-Distance after corner (feed reduction)"></a><kbd>reduction rate</kbd>, 
+<kbd>maximum 
+	radius</kbd>, <kbd>minimum angle</kbd>, and <kbd>distances before and after the corner</kbd>.</p>
+<div align="left">
+	<blockquote>
+		<table border="0">
+			<tr>
+				<td>
+				<img border="1" src="b35doc/english/online/pmgug_c2/images/dbFeedReduction01NLS.gif" width="260" height="154"></td>
+				<td>
+				<p align="left">
+				<img border="1" src="b35doc/english/online/pmgug_c2/images/FeedReduction02NLS.gif" width="263" height="171"></p>
+				</td>
+			</tr>
+		</table>
+	</blockquote>
+</div>
+<p>Feed reduction is applied to corners along the tool path whose radius is less 
+than the Maximum radius value and whose arc angle is greater than the Minimum angle 
+value. Corners can be angled or rounded.</p>
+<p>For Profile Contouring, feedrate reduction applies to inside corners for machining 
+or finishing passes. It does not apply for macros or default linking and return 
+motions.</p>
+<p>If a cornering is defined with a radius of 5mm and the Feedrate reduction in 
+corners set to a lower radius value, the feedrate will not be reduced.</p>
+<h2><a name="PCMacros"></a>Profile Contouring NC Macros</h2>
+<p>You can define transition paths in your machining operations by means of NC Macros. 
+These transition paths are useful for providing approach, retract and linking motion 
+in the tool path. </p>
+<p>An <kbd>Approach</kbd> macro is used to approach the operation start point.</p>
+<p>A <kbd>Retract</kbd> macro is used to retract from the operation end point.</p>
+<p class="0BodyContinued">A <kbd>Linking</kbd> macro may be used in several cases, for example:
+</p>
+<ul>
+	<li>to link two non consecutive paths</li>
+</ul>
+<ul>
+	<li>to access finish and spring passes.</li>
+</ul>
+<p>A <kbd>Return on Same Level </kbd>macro is used in a multi-path operation to link two consecutive 
+paths in a given level.</p>
+<p>A <kbd>Return between Levels </kbd>macro is used in a multi-level machining operation to 
+go to the next level.</p>
+<p>A <kbd>Return to Finish Pass</kbd> macro is used in a machining operation to go to the finish 
+pass.</p>
+<p>A <kbd>Clearance</kbd> macro can be used in a machining operation to avoid a fixture, for 
+example.</p>
+<p>Note: When a collision is detected between the tool and the part or a check element, 
+a clearance macro is applied automatically. If applying a clearance macro would 
+also result in a collision, then a linking macro is applied. In this case, the top 
+plane defined in the operation is used in the linking macro. The top plane element 
+must be selected in order to apply an automatic linking macro without collision.</p>
+<h2><a name="R18MultiEdit"></a>Editing Parameters of Several Profile Contouring 
+Operations</h2>
+<p>You can modify the parameters of several <kbd>Profile Contouring </kbd>operations in one 
+shot as follows: </p>
+<ul>
+	<li>Select two or more Profile Contouring operations either in the Specification 
+	tree or in the Process table.</li>
+	<li>Right-click the highlighted operations and select <kbd>Selected Objects 
+	&gt; Definition...</kbd>&nbsp; <br>
+	The <kbd>Profile Contouring</kbd> dialog box appears.</li>
+	<li>Modify any of the parameters that are available for edition.<br>
+	<kbd>Note</kbd>: Geometry and macro definitions can be edited if all the selected 
+	operations already have identical values.<br>
+	Some parameters may not be available for edition. Tool parameters cannot be 
+	edited and the <kbd>Replay</kbd> icon is disabled.</li>
+	<li>Click <kbd>OK</kbd> to apply the modified parameters of all the selected operations.</li>
+</ul>
+<h2>Profile Contouring P1/P2 Considerations</h2>
+<p>Note that <kbd>P2 functionalities</kbd> for Profile Contouring include Automatic 
+Draft Angle, all Finishing parameters, and Sectioning for guiding element selection.
+<br>
+To edit in <kbd>P1</kbd> a Profile Contouring operation that was created in <kbd>P2,
+</kbd>&nbsp;the following parameter values must be set: </p>
+<ul>
+	<li>Automatic draft angle = 0 deg</li>
+</ul>
+<ul>
+	<li>Finishing Mode = No finish path</li>
+</ul>
+<ul>
+	<li>Side finish thickness = 0.0 mm</li>
+</ul>
+<ul>
+	<li>Side finish thickness on bottom = 0.0 mm</li>
+</ul>
+<ul>
+	<li>Bottom finish thickness = 0.0 mm</li>
+</ul>
+<ul>
+	<li>Spring pass = no.</li>
+</ul>
+
+		</td>
+	</tr>
+</table>
+
+</body>
+
+</html>
+

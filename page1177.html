@@ -1,0 +1,171 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>About Distributing Version 5 on UNIX</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>About Distributing Version 5 on UNIX</h1>
+ <table Border="0" CELLSPACING="0" valign="top">
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td><a name="ix-installing code::distributing on UNIX"></a>There are 
+     basically two ways in which you can provide multiple end users with access 
+     to Version 5<a name="ix-distributing code on UNIX::overview"></a>.<p>You 
+     can:</p>
+     <ul>
+       <li>install the software on each computer, either directly from the 
+       media or from a server.<br>
+       This is the ideal solution if you want the best level of performance, but 
+       involves installing and maintaining the software on each computer.<p>When 
+       setting up the server you can:
+       <ul>
+         <li>copy all the software into the same folder (as illustrated above)</li>
+         <li>or, given that the software is distributed on several media ( 1, 2 
+         ...), copy the contents of each media into a separate folder for each 
+		 media, 
+         making sure that the name of each folder corresponds to the media number ( 
+         1, 2 ...) etc.</li>
+       </ul>
+       </li>
+       <li>or, set up the software on a server, and simply set up a minimum 
+       environment on each user's computer so end users can access the software 
+       over the network.<br>
+       This is the ideal solution if you want to save space on each computer, 
+       and facilitates future upgrades since means that you only have to upgrade 
+       the software on one computer: the server.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td rowspan="1">You can run Version 5 using CATIA Version 4 userids. Using 
+     Version 5 with a CATIA Version 4 userid is transparent as is the case for 
+     other userids.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td>
+     <h2>Mounting and Exporting File Systems</h2>
+     <p>The distribution scenarios described in this section are based on 
+     mounting <a name="ix-NFS file systems">NFS file systems</a>. Note that you 
+     can also use DFS (Distributed File System). DFS is an open, cross-platform 
+     distributed file system for managing network security and administration, 
+     and is compatible with Version 5.</p>
+     <p>The scenarios in this section involve mounting and exporting file 
+     systems between source and destination machines.</p>
+     <p>To mount a directory or a file system you must:</p>
+     <ul>
+       <li>on the source machine, export the file system to which the directory 
+       belongs</li>
+       <li>on the destination machine, mount the desired directory or file 
+       system.</li>
+     </ul>
+     <p>Furthermore, file mounts can be temporary or permanent.</p>
+     <h3>Temporary Mount</h3>
+     <h4>Export the directory</h4>
+     <p>If you do not export a directory or file system, it cannot be mounted 
+     elsewhere. On AIX machines, use the following command to 
+     temporarily export a directory or a file system:</p>
+     <p><code>exportfs &#045;vi 
+     [path of the file system]</code></p>
+     <p>Example:</p>
+     <p><code>exportfs &#045;vi 
+     [/home/<strong>VersionNumber</strong>/code/bin]</code></p>
+     <p>Note that you can only export file systems. If the directory you are 
+     trying to export is not a file system, depending on your OS level and your 
+     machine, either it will not work at all or it will export the higher-level 
+     file system in the path. If it doesn&#039;t 
+     work, use the command:</p>
+     <p><code>df &#045;k 
+     .</code> </p>
+     <p>in order to know which file system to export if it&#039;s 
+     done automatically.</p>
+     <h4>Mount a Directory</h4>
+     <p>On AIX&nbsp; machines, the command you must use in order to 
+     mount a directory on your machine is:</p>
+     <p><code>mount [machine name]:/[path to mount] [path of the mount]</code></p>
+     <p>Example:</p>
+     <p><code>mount tampa:/usr/<strong>VersionNumber</strong> /mnt</code></p>
+     <p>Note that the mount directory is not necessarily a file system, but the 
+     file system it depends on must be exported on the source machine as 
+     explained above.</p>
+     <p>Note that you must mount /media with the option ro (read only).</p>
+     <h4>Unmount a Directory</h4>
+     <p>You can unmount the directories, which are mounted on the system by 
+     using this command:</p>
+     <p><code>umount [path of the mount]</code></p>
+     <p>Example:</p>
+     <p><code>umount /mnt</code></p>
+     <h3>Permanent Mounts</h3>
+     <p>To make permanent mounts, the principle is the same. The only difference 
+     is that you must write the information in files instead of launching 
+     commands.</p>
+     <h4>Export the File Systems</h4>
+     <p>First, modify the file in which all the permanently exported directories 
+     are written.</p>
+     <p>On AIX, this file is:</p>
+     <p><code>/etc/exports</code></p>
+     <p>For each file system you want to export, you must add (or modify &#133; 
+     ) a line:</p>
+     <p><code>[path of the file system] &#045;[rights],root=[name 
+     of the computer]</code></p>
+     <p>Example:</p>
+     <p><code>/media -ro,root=verre</code></p>
+     <p>Again, we can only export file systems. If you want to mount a 
+     directory, you must export the higher-level file system in the path.</p>
+     <p>Once you&#039; 
+		have 
+     modified the file, you must use the following command. If you don&#039;t 
+     use this command, the computer will not take into account your 
+     modifications until the next restart:</p>
+     <p><code>exportfs -a</code></p>
+     <h4>Make a Permanent Mount</h4>
+     <p>In order to mount a directory permanently on an AIX computer, you must 
+     modify the file:</p>
+     <p><code>/etc/filesystems</code></p>
+     <p>For each directory, you must add certain lines in this file:</p>
+     <p><code>[local path]:<br>
+     dev = [original path]<br>
+     vfs = [mount type &#045; 
+     nfs, jfs, &#133;]<br>
+     node name = [name of the original machine]<br>
+     mount = [true/false/automatic] &#045; 
+     at start ? &#045;<br>
+     options = [rw ,ro,wo],Basefs=[original file system type]<br>
+     account = [true/false]</code></p>
+     <p>Example:</p>
+     <p><code>/data1:<br>
+     dev = &quot;/data1&quot;<br>
+     vfs = nfs<br>
+     nodename = cabochon<br>
+     mount = true<br>
+     options = bg,hard,intr<br>
+     account = false</code></p>
+     <p>Example:</p>
+     <p><code>caxhh940:/VPMDATA.auto/DMUDATA /VPMDATA/DMUDATA nfs rw,suid 0 0
+     </code></p>
+     <p>On all machine types, once you&#039; 
+		have 
+     modified the file, do no&#039;t 
+     forget to launch the command:</p>
+     <p><code>mount &#045;a</code></p>
+     <p>otherwise your modifications will not be taken into account until the 
+     machine is restarted.</td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

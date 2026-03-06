@@ -1,0 +1,211 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+ <title>Data Mapping</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <script language="Javascript" src="b35doc/english/online/icons_C2/Faq.js">
+ </script>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Data Mapping<a name="ix-data::mapping"></a><a name="hj-top"></a></h1>
+ <p class="task">This section gives you information about the Data Mapping 
+ process.</p>
+ <p class="task"><u>Note that</u>: this capability is only available with the
+ <b>ELFINI Structural Analysis (EST)</b> product
+ <img border="0" src="b35doc/english/online/estug_c2/images/icon_EST.gif" align="middle" width="32" height="32">.</p>
+ <p align="center"><a href="#hj-whatisit">What is Data Mapping?</a><br>
+ <a href="#hj-filling">How are Data Mapping files filled?</a><br>
+ <a href="#hj-algo">Which algorithm is used for Data Mapping?</a><br>
+ <a href="#hj-available">In which functionalities is the Data Mapping process 
+ available?</a></p>
+ <table border="0" cellspacing="1" style="border-collapse: collapse" id="AutoNumber2">
+   <tr>
+     <td><hr>
+     <p><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" title="Top" align="right" width="25" height="17"></a></p>
+     <h2>What <a name="hj-whatisit">is</a> Data Mapping?</h2>
+     <p>Data Mapping is a functionality allowing load import described by a 
+     scalar field from a text (.txt) or an Excel (.xls) file. This file must 
+     respect a pre-defined format.</p>
+     <p class="task">You can re-use data that are external data (experimental 
+     data or data coming from in-house codes or procedures).<br>
+     The imported values will be interpolated at the center of gravity of each 
+     element.<br>
+     You can also integrate user loading knowledge and processes into this 
+     version.</p>
+     <p class="task">The selected external data file will be either a <kbd>.txt</kbd> 
+     file (columns separated using the <kbd>Tab</kbd> key) or a <kbd>.xls</kbd> 
+     file. This file must respect a <a href="#hj-filling">pre-defined format</a>.</p>
+     <p class="task">Data Mapping is useful when you want to re-use a load field 
+     created without CATIA or with a former version of CATIA.</td>
+   </tr>
+   <tr>
+     <td><hr>
+     <p><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" title="Top" align="right" width="25" height="17"></a></p>
+     <h2>How are <a name="hj-filling">Data Mapping</a> files filled?</h2>
+     <p>Data Mapping files are text files (.txt) or Excel files (.xls) that must 
+     respect a pre-defined format.</p>
+		<p>For pressures, line force densities, surface force densities, body loads, 
+       temperatures, and shell properties, the data mapping file 
+       must respect the following format:</p>
+     <ul>
+       <li>Four columns.</li>
+		<li>Each cell must contain a numerical value.</li>
+		<li>The first three columns allow you to specify <kbd>X</kbd>, <kbd>Y</kbd> 
+         and <kbd>Z</kbd> point coordinates in the global axis.<br>Unit symbol written between parentheses must be specified.</li>
+		<li>The last one allows you to specify the amplification coefficient.<br>No unit symbol must be specified for the last column (the amplification 
+         coefficient is not assigned to a dimensional value).</li>
+     </ul>
+     <p class="task">Example of data mapping for a pressure:</p>
+		<p class="task">
+		<img border="0" src="b35doc/english/online/estug_c2/images/dbimportedtable03NLS.gif" width="193" height="241"><br>
+&nbsp;</p>
+		<p class="task">For imported forces and imported moments, 
+       the data mapping files must respect the following format:</p>
+		<ul>
+			<li>Six columns.</li>
+			<li>Each cell must contain a numerical value.</li>
+			<li>The first three columns allow you to specify <kbd>X</kbd>, <kbd>Y</kbd> 
+         and <kbd>Z</kbd> point coordinates in the global axis.<br>Unit symbol written between parentheses must be specified.</li>
+			<li>The last three columns allow you to specify <kbd>FX</kbd>, <kbd>FY</kbd> 
+         and <kbd>FZ</kbd> force coordinates in the global axis in case of 
+         imported forces or <kbd>MX</kbd>, <kbd>MY</kbd> and <kbd>MZ</kbd> 
+         moment coordinates in case of imported moment.<br>Unit symbol written between parentheses must be specified.</li>
+		</ul>
+		<p class="task">Example of data mapping for an imported force: </p>
+		<p class="task">
+		<img border="0" src="b35doc/english/online/estug_c2/images/dbimportedtable04NLS.gif" width="532" height="277"></p>
+     </td>
+   </tr>
+   <tr>
+     <td><hr>
+     <p><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" title="Top" align="right" width="25" height="17"></a></p>
+     <h2>Which <a name="hj-algo">algorithm</a> is used for Data Mapping?</h2>
+     <p class="task">For pressures, line force densities, surface force densities, 
+		volume force densities, 
+       temperatures, and shell properties, there are three steps in the data 
+		mapping algorithm:</p>
+     <ol class="task">
+       <li>
+       <p class="task">Checking that the center of gravity of each entity of the 
+       recipient mesh is inside the bounding box of the source mesh 
+       (automatic tolerance: <kbd>1.0 e<sup>-3</sup> m</kbd>).</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber12">
+         <tr>
+           <td align="center" valign="top">
+           <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+           <td>
+           <p class="task">An entity can be an element, an edge or a face.</p>
+           <p class="task">For example:</p>
+           <ul>
+             <li>For a temperature field, entity means element.</li>
+             <li>For a line force density, entity means edge.</li>
+             <li>For a pressure, entity means face.</li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Matching the center of gravity of each entity of the 
+		recipient mesh with some of the nearest points of the scalar field. For 
+		a 2D mapping, the matching is done with the three nearest points that 
+		define a triangle containing the center of gravity; for a 3D mapping, 
+		the matching is done with the four nearest points that define a 
+		tetrahedron containing the center of gravity.</p>
+       <table border="0" cellspacing="1" id="AutoNumber11">
+         <tr>
+           <td align="left" valign="top" colspan="2">
+           <p class="task">Example of a shell element:</p>
+			<p class="task">
+			<img border="0" src="b35doc/english/online/estug_c2/images/datamapping01NLS.gif" width="194" height="234"></td>
+         </tr>
+         <tr>
+           <td align="center" valign="top">
+           <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+           <td>
+           <ul>
+             <li>These points are processed as if they were the vertices of a 
+             finite element.</li>
+             <li>The matching is done at the centers of gravity of the recipient 
+             mesh entities, and not at their nodes, because it is the resulting 
+             loads location.</li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Interpolating the scalar field of the source mesh on the 
+       recipient mesh using the nodal functions of the finite element.</li>
+     </ol>
+     <p class="task">With this algorithm, some mapping points may be unused. 
+		<br>
+		Consider the example of a 2D mapping: to compute a pressure value at the 
+		center of gravity, the algorithm selects the three nearest points 
+		that define a triangle containing the center of gravity. Then the shape 
+		function of the triangle is used to compute the value at the center of 
+		gravity. If the nodes density in the mapping is greater than the mesh 
+		node density, some of the mapping points may be unused and the final 
+		value may be truncated.</p>
+		<p class="task">&nbsp;<p class="task">For imported forces and imported 
+		moments, the following algorithm is done for all mapping points:<ol class="task">
+		<li>
+		<p class="task">Checking that a mapping point can be projected on an 
+		element face.</li>
+		<li>
+		<p class="task">Transferring the load at this mapping point to the nodes 
+		of this element face using the shape function of this face.</li>
+		</ol>
+		</td>
+   </tr>
+   <tr>
+     <td><hr>
+     <p><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" title="Top" align="right" width="25" height="17"></a></p>
+     <h2>In <a name="hj-available"></a>which functionalities is the Data Mapping 
+     process available?</h2>
+     <p>The Data Mapping process is available in the following functionalities:</p>
+     <ul>
+       <li>
+       <a href="page7053.html" onclick="openFaqLink('estugbt0301.htm')" target="ds_doc2">
+       pressure</a></li>
+       <li>
+       <a href="page7056.html" onclick="openFaqLink('estugbt0304.htm')" target="ds_doc2">
+       line force density</a></li>
+       <li>
+       <a href="page7057.html" onclick="openFaqLink('estugbt0305.htm')" target="ds_doc2">
+       surface force density</a></li>
+       <li>
+       <a href="page7058.html" onclick="openFaqLink('estugbt0306.htm')" target="ds_doc2">
+       volume force density</a></li>
+       <li>
+       <a href="page7062.html" onclick="openFaqLink('estugbt0310.htm')" target="ds_doc2">
+       temperature field</a></li>
+       <li>
+       <a href="page7147.html" onclick="openFaqLink('estugbt0807.htm')" target="ds_doc2">
+       shell property</a></li>
+		<li>
+       <a href="page7064.html">imported force</a></li>
+		<li>
+       <a href="page7065.html">imported moment</a></li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,573 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head><meta name="MonocodingType" content="0"></meta>
+	  <meta name="MonocodingFlag" content="C2"></meta>
+	  <meta http-equiv="Content-Language" content="en-us"></meta>
+	  <meta name="GENERATOR" content="Microsoft FrontPage 6.0"></meta>
+	  <meta name="ProgId" content="FrontPage.Editor.Document"></meta>
+  	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	  <title>Connection Properties</title>
+          <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+          
+	 </head><body onload="newPage('pt02ch06s04.html');" ondblclick="newSelection();" bgcolor="#FFFFFF" text="#000000" vlink="#FF5113" alink="#004D48" link="#004D48" class="TEXT"><div class="sect1" id="ath-gen-asm-interactions">
+    <a name="ath-gen-asm-interactions"></a>
+
+    <div class="titlepage">
+      
+
+      <div class="title">
+        <h3>Connection Properties</h3>
+      </div>
+    </div>
+
+    <p>Connection properties are used to model the interaction
+    between bodies in an assembled product. The following sections
+    discuss the connection properties available in Nonlinear
+    Structural Analysis and Thermal Analysis:</p>
+
+    <p class="indent"><b><img src="b35doc/english/online/anlug_c2/images/ABQ_I_FastenedEnhancement.gif"></img><a href="page0426.html#ath-gen-asm-int-fastened-connection">Creating
+    Fastened Pair Properties</a></b>:&nbsp;Fastens bodies together
+    at their common interface. Fastened pairs take into account the
+    elastic deformability of the interfaces.</p>
+
+    <p class="indent"><b><img src="b35doc/english/online/anlug_c2/images/I_MshTightConn.gif"></img><a href="page0426.html#ath-gen-asm-int-bolttight-connection">Creating
+    Bolt Tightening Connection Properties</a></b>:&nbsp;Models
+    pre-tension in bolt-tightened assemblies.</p>
+
+    <p class="indent"><b><img src="b35doc/english/online/anlug_c2/images/I_FittingConnection.gif"></img><a href="page0426.html#ath-gen-asm-int-pressfit-connection">Creating
+    Pressure Fitting Connection Properties</a></b>:&nbsp;Prevents
+    bodies from penetrating each other at a common interface where
+    there are interferences or overlaps between the bodies.</p>
+
+    <div class="sect2" id="ath-gen-asm-int-fastened-connection">
+      <a name="ath-gen-asm-int-fastened-connection"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Creating Fastened Pairs</h3>
+        </div>
+      </div>
+
+      <p><a name="CATCommandHeader.ABQTiedContactHdr"></a>A fastened pair&nbsp;is the link between two part bodies
+      that are tied together at their common boundary and behave as
+      if they were a single body. From a finite element model point
+      of view, this is equivalent to the situation where the
+      corresponding nodes of two compatible meshes are merged
+      together. However, since part bodies can be meshed
+      independently, fastened pairs are designed to handle
+      incompatible meshes.</p>
+
+      <p>Fastened pairs take into account the elastic deformability
+      of the interfaces.</p>
+
+      <p>You can use a general analysis connection or a Contact or
+      Coincidence assembly constraint to define the surfaces that
+      are interacting. For more information, see <a href="page0461.html">Specifying Contact
+      Surfaces</a>. <a href="page0426.html#afc-table-fastenedconnprops">Table 6&#8211;2</a> summarizes the constraints and
+      connections that can be used to define a fastened pair in
+      Nonlinear Structural Analysis and Thermal Analysis.</p>
+
+      <div class="table">
+        <p><a name="afc-table-fastenedconnprops"></a><b><span class="gentxt_dkgry">Table
+        6&#8211;2</span></b> Fastened pairs.</p>
+
+        <table border="1"><thead><tr><th valign="top" colspan="2" align="center">Assembly
+              Design Workbench</th>
+
+              <th valign="top" align="center">Nonlinear Structural
+              Analysis and Thermal Analysis</th>
+            </tr><tr><th valign="top" align="center">Coincidence
+              Constraint</th>
+
+              <th valign="top" align="center">Contact
+              Constraint</th>
+
+              <th valign="top" align="center">General Analysis
+              Connection</th>
+            </tr></thead><tbody><tr><td align="center"><img height="19" width="15" src="b35doc/english/online/anlug_c2/images/ath_eqn00001.gif"></img></td>
+
+              <td align="center"><img height="19" width="15" src="b35doc/english/online/anlug_c2/images/ath_eqn00001.gif"></img></td>
+
+              <td align="center"><img height="19" width="15" src="b35doc/english/online/anlug_c2/images/ath_eqn00001.gif"></img></td>
+            </tr></tbody></table></div>
+
+      <p>The order in which the two surfaces are specified when the
+      constraint or connection is defined is critical because of
+      the manner in which their interaction is discretized. The
+      first surface selected is considered the
+      &#8220;main&#8221; surface, and the second surface
+      selected is considered the &#8220;secondary&#8221; surface.
+      When a constraint is added to the specification tree, the
+      surfaces are listed in this order, as shown in <a href="page0426.html#afc-masterslaveconstraint-2">Figure 6&#8211;7</a>.</p>
+
+      <div class="figure">
+        <p><a name="afc-masterslaveconstraint-2"></a><b><span class="gentxt_dkgry">Figure
+        6&#8211;7</span></b> The specification tree entry for a
+        Contact assembly constraint, showing the main and secondary
+        surfaces.</p>
+
+        <div class="graphic" id="d0">
+          <p><img src="b35doc/english/online/anlug_c2/images/afc-masterslaveconstraint.png"></img></p>
+        </div>
+      </div>
+
+      <p>For each node on the &#8220;secondary&#8221; surface the
+      solver attempts to find the closest point on the
+      &#8220;main&#8221; surface of the contact pair where the
+      main surface's normal passes through the node on the secondary
+      surface. The fastened pair is then discretized between the
+      point on the main surface and the secondary node.</p>
+
+      <p>A fastened pair does not necessarily fasten the entire
+      selected secondary surface to the main surface. Instead,
+      Nonlinear Structural Analysis and Thermal Analysis use a
+      position tolerance, or distance from the main surface, to
+      determine which nodes on the secondary surface should be fastened
+      to the main surface; any secondary nodes outside of this
+      tolerance in the initial model configuration are not included
+      in the fastened pair. The solver calculates a default
+      position tolerance based on a number of factors in the model.
+      This default tolerance is typically suitable for fastening
+      two proximate surfaces, but you can redefine the position
+      tolerance if necessary.</p>
+
+      <p>If you need to create multiple fastened pairs in a model,
+      you should consider using the interaction wizard. The
+      interaction wizard automates many of the steps involved in
+      defining fastened pairs and can create multiple fastened
+      pairs simultaneously. See <a href="page0427.html">Using the Interaction
+      Wizard</a> for more information.</p>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to create a fastened pair between
+      two parts.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Click the Fastened Pair Property icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_FastenedEnhancement.gif"></img>.</p>
+
+            <p>The <span class="guitext"><b class="guititle">Fastened Pair</b></span> dialog box appears,
+            and a Fastened Pair object appears in the specification
+            tree under the Properties objects set.</p>
+          </li>
+
+          <li>
+            <p>You can change the identifier of the fastened pair
+            by editing the <span class="guitext"><b class="guilabel">Name</b></span> field.</p>
+          </li>
+
+          <li>
+            <p>In the specification tree, select a general analysis
+            connection or a Contact or Coincidence assembly
+            positioning constraint to apply to the fastened
+            pair.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">Supports</b></span> field is updated to
+            reflect your selection. The first surface specified in
+            the connection or constraint is used as the main
+            surface in the contact pair; the second surface is used
+            as the secondary surface.</p>
+          </li>
+
+          <li>
+            <p>Optionally, if either or both of the surfaces
+            involved in the fastened pair are shells, click
+            <span class="guitext"><b class="guilabel">Flip
+            Main</b></span> and/or <span class="guitext"><b class="guilabel">Flip Secondary</b></span> to
+            reverse the direction of the surface normals.</p>
+          </li>
+
+          <li>
+            <p>To reverse the order of the main and secondary
+            surfaces in the fastened pair definition, toggle on
+            <span class="guitext"><b class="guilabel">Swap main
+            and secondary surfaces</b></span>.</p>
+
+            <p>The red highlighting and arrows indicating the
+            main surface replace the green highlighting and
+            arrows indicating the secondary surface, and vice
+            versa.</p>
+          </li>
+
+          <li>
+            <p>To help you view the configuration of the main and
+            secondary surfaces in a complex model, you can use the
+            <span class="guitext"><b class="guilabel">Visibility
+            Options</b></span> to view only the part containing the
+            main surface or only the part containing the secondary
+            surface.</p>
+          </li>
+
+          <li>
+            <p>Select the appropriate <span class="guitext"><b class="guilabel">Position
+            Tolerance</b></span> for the fastened pair:</p>
+
+            <ul type="disc"><li>
+                <p>Choose <span class="guitext"><b class="guilabel">Use computed default</b></span> to use
+                the position tolerance that is calculated
+                automatically by the solver.</p>
+              </li>
+
+              <li>
+                <p>To define the position tolerance directly,
+                choose <span class="guitext"><b class="guilabel">Specify distance</b></span>, and enter a
+                position tolerance.</p>
+
+                <p>If you define the position tolerance directly,
+                you can preview which secondary nodes are included in
+                the fastened pair by clicking <span class="guitext"><b class="guibutton">Highlight
+                nodes</b></span>; Nonlinear Structural Analysis or
+                Thermal Analysis highlights those nodes on the
+                secondary surface that lie within the specified
+                position tolerance from the main surface. Both
+                surfaces involved in the fastened pair must be
+                meshed to preview the fastened nodes. The previewed
+                nodes are approximations only; the nodes indicated
+                in the preview display may be slightly different
+                than the nodes that are fastened during the
+                analysis. However, the preview should identify
+                general regions of interest in the model when
+                configuring a fastened pair.</p>
+              </li>
+            </ul></li>
+
+          <li>
+            <p>By default, the solver moves all secondary nodes in a
+            fastened pair directly onto the main surface at the
+            beginning of an analysis. This adjustment does not
+            create strains in the model and typically improves
+            performance. To allow initial gaps between the fastened
+            surfaces to remain during the analysis, toggle off
+            <span class="guitext"><b class="guilabel">Adjust secondary
+            node initial position</b></span>.</p>
+          </li>
+
+          <li>
+            <p>Select the <span class="guitext"><b class="guilabel">Formulation option</b></span> for the
+            fastened pair:</p>
+
+            <ul type="disc"><li>
+                <p>Select <span class="guitext"><b class="guilabel">Solver Default</b></span> to use the
+                best formulation as determined by the solver.</p>
+              </li>
+
+              <li>
+                <p>Select <span class="guitext"><b class="guilabel">Node to Surface</b></span> to use the
+                node-to-surface formulation.</p>
+              </li>
+
+              <li>
+                <p>Select <span class="guitext"><b class="guilabel">Surface to Surface</b></span> to use the
+                surface-to-surface formulation.</p>
+              </li>
+            </ul></li>
+
+          <li>
+            <p>If you are not using the <span class="guitext"><b class="guilabel">Solver Default</b></span>
+            formulation, you can ignore the thickness associated
+            with shell elements in the fastened pair by toggling
+            off <span class="guitext"><b class="guilabel">Include
+            shell element thickness</b></span>.</p>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">OK</b></span> in the <span class="guitext"><b class="guititle">Fastened Pair</b></span>
+            dialog box.</p>
+
+            <p>A symbol representing the fastened pair appears on
+            the corresponding faces.</p>
+          </li>
+        </ol></div><span id="ath-gen-asm-int-fastened-connection"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div>
+
+    <div class="sect2" id="ath-gen-asm-int-bolttight-connection">
+      <a name="ath-gen-asm-int-bolttight-connection"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Creating Bolt Tightening
+          Connection Properties</h3>
+        </div>
+      </div>
+
+      <p>A bolt tightening connection property takes into account
+      pre-tension in bolt-tightened assemblies. The computation is
+      carried out according to a two-step approach. In the first
+      general static step of the analysis the model is submitted to
+      tension forces due to bolt tightening by applying opposite
+      forces on the bolt thread and on the support tapping,
+      respectively. In general, the first step in your simulation
+      history will not contain other loads, so the bolt tightening
+      connection property can be evaluated and used as a
+      precondition for the rest of the analysis. Then in the second
+      step of the analysis the relative displacement of the two
+      bolt surfaces (obtained in the first step) is fixed while
+      further loading is applied to the model. Since bodies can be
+      meshed independently, bolt tightening connection properties
+      are designed to handle incompatible meshes.</p>
+
+      <p>Bolt tightening connection properties account for the
+      elastic deformability of the interfaces.</p>
+
+      <p>A bolt tightening connection property is defined in terms
+      of the two surfaces that may interact. These surfaces are
+      indicated through the definition of an assembly constraint or
+      an analysis connection. You can use an assembly constraint
+      defined in the <span class="guitext"><b class="guilabel">Assembly Design</b></span> workbench to define the
+      contact surface pairing between the bolt thread and the bolt
+      support tapping. Alternatively, you can use a general
+      analysis connection to define the contact surface pairing.
+      <a href="page0426.html#afc-table-bolttightconnprops">Table 6&#8211;3</a> summarizes the constraints
+      that can be used to define a bolt tightening connection
+      property.</p>
+
+      <div class="table">
+        <p><a name="afc-table-bolttightconnprops"></a><b><span class="gentxt_dkgry">Table 6&#8211;3</span></b> Bolt tightening
+        connection properties.</p>
+
+        <table border="1"><thead><tr><th valign="top" colspan="2" align="center">Assembly
+              Design Workbench</th>
+
+              <th valign="top" align="center">Nonlinear Structural
+              Analysis</th>
+            </tr><tr><th valign="top" align="center">Coincidence
+              Constraint</th>
+
+              <th valign="top" align="center">Contact
+              Constraint</th>
+
+              <th valign="top" align="center">General Analysis
+              Connection</th>
+            </tr></thead><tbody><tr><td align="center"><img height="19" width="15" src="b35doc/english/online/anlug_c2/images/ath_eqn00001.gif"></img></td>
+
+              <td align="center"><img height="19" width="15" src="b35doc/english/online/anlug_c2/images/ath_eqn00001.gif"></img></td>
+
+              <td align="center"><img height="19" width="15" src="b35doc/english/online/anlug_c2/images/ath_eqn00001.gif"></img></td>
+            </tr></tbody></table></div>
+
+      <p>You can request history output of relative displacements
+      and rotations and of total, elastic, viscous, and reaction
+      forces and moments from a bolt tightening connection
+      property. The support for the history output request is the
+      connection mesh.</p>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to create a bolt tightening
+      connection property between two parts.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Click the Bolt Tightening Connection Property icon
+            <img src="b35doc/english/online/anlug_c2/images/I_MshTightConn.gif"></img>.</p>
+
+            <p>The <span class="guitext"><b class="guititle">Bolt
+            Tightening Connection Property</b></span> dialog box
+            appears. A symbol representing the bolt tightening
+            connection property appears on the corresponding faces,
+            and a Bolt Tightening Connection Property object
+            appears in the specification tree under the Properties
+            objects set.</p>
+          </li>
+
+          <li>
+            <p>You can change the identifier of the bolt tightening
+            connection property by editing the <span class="guitext"><b class="guilabel">Name</b></span>
+            field.</p>
+          </li>
+
+          <li>
+            <p>In the specification tree, select an assembly
+            constraint created previously in the <span class="guitext"><b class="guilabel">Assembly
+            Design</b></span> workbench or a general analysis
+            connection created previously in Nonlinear Structural
+            Analysis.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">Supports</b></span> field is updated to
+            reflect your selection.</p>
+          </li>
+
+          <li>
+            <p>If necessary, modify the default values of the force
+            and orientation parameters. Choose either the same or
+            the opposite orientation so that the graphic
+            representation of the bolt tightening connection
+            property matches the bolt direction (see <a href="page0426.html#afc-bolt-orientations">Figure 6&#8211;8</a>). A positive force
+            represents tightening.</p>
+
+            <div style="margin-left: 0.5in; margin-right: 0.5in;" class="note">
+              <p><b class="title"><a name="d0e8732">Note:&nbsp;</a></b> In some cases when the
+              centers of the bolt and nut supports are aligned
+              exactly, the graphic representation of the bolt may
+              not be oriented properly. As a result, the bolt force
+              may not be applied as intended. Nonlinear Structural
+              Analysis will issue a warning message to inform you
+              of these situations when you submit the simulation
+              for analysis.</p>
+            </div>
+
+            <div class="figure">
+              <p><a name="afc-bolt-orientations"></a><b><span class="gentxt_dkgry">Figure
+              6&#8211;8</span></b> Correct bolt orientation
+              (left); incorrect bolt orientation (right).</p>
+
+              <div class="graphic" id="d0">
+                <p><img src="b35doc/english/online/anlug_c2/images/afc-bolt-orientations.png"></img></p>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">OK</b></span> in the <span class="guitext"><b class="guititle">Bolt Tightening
+            Connection Property</b></span> dialog box.</p>
+          </li>
+        </ol></div><span id="ath-gen-asm-int-bolttight-connection"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div>
+
+    <div class="sect2" id="ath-gen-asm-int-pressfit-connection">
+      <a name="ath-gen-asm-int-pressfit-connection"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Creating Pressure Fitting
+          Connection Properties</h3>
+        </div>
+      </div>
+
+      <p>A pressure fitting connection property&nbsp;is the link
+      between two part bodies that are assembled in a press-fit
+      configuration. Two common approaches are used to model the
+      initial press fit: gradual resolution of an initial
+      interference or gradual forcing apart of initial contact to
+      open a gap. In both cases large contact pressure results
+      between the parts. Pressure fitting connection properties
+      take into account the elastic and plastic deformability of
+      the material.</p>
+
+      <p>Since part bodies can be meshed independently, pressure
+      fitting connection properties are designed to handle
+      incompatible meshes.</p>
+
+      <p>You can use a general analysis connection or a Contact or
+      Coincidence assembly constraint to define the surfaces that
+      are interacting. For more information, see <a href="page0461.html">Specifying Contact
+      Surfaces</a>. You cannot create a pressure fitting connection
+      property between surfaces of two-dimensional surface parts.
+      <a href="page0426.html#afc-table-pressfitconnprops">Table 6&#8211;4</a> summarizes the constraints and
+      connections that can be used to define a pressure fitting
+      connection in Nonlinear Structural Analysis.</p>
+
+      <div class="table">
+        <p><a name="afc-table-pressfitconnprops"></a><b><span class="gentxt_dkgry">Table
+        6&#8211;4</span></b> Pressure fitting connection
+        properties.</p>
+
+        <table border="1"><thead><tr><th valign="top" colspan="2" align="center">Assembly
+              Design Workbench</th>
+
+              <th valign="top" align="center">Nonlinear Structural
+              Analysis</th>
+            </tr><tr><th valign="top" align="center">Coincidence
+              Constraint</th>
+
+              <th valign="top" align="center">Contact
+              Constraint</th>
+
+              <th valign="top" align="center">General Analysis
+              Connection</th>
+            </tr></thead><tbody><tr><td align="center"><img height="19" width="15" src="b35doc/english/online/anlug_c2/images/ath_eqn00001.gif"></img></td>
+
+              <td align="center"><img height="19" width="15" src="b35doc/english/online/anlug_c2/images/ath_eqn00001.gif"></img></td>
+
+              <td align="center"><img height="19" width="15" src="b35doc/english/online/anlug_c2/images/ath_eqn00001.gif"></img></td>
+            </tr></tbody></table></div>
+
+      <p>For each node on the &#8220;secondary&#8221; surface the
+      solver attempts to find the closest point on the
+      &#8220;main&#8221; surface of the contact pair where the
+      main surface's normal passes through the node on the secondary
+      surface. This normal is considered the contact direction.</p>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to create a pressure fitting
+      connection property between two parts.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Click the Pressure Fitting Connection Property icon
+            <img src="b35doc/english/online/anlug_c2/images/I_FittingConnection.gif"></img>.</p>
+
+            <p>The <span class="guitext"><b class="guititle">Pressure Fitting Connection
+            Property</b></span> dialog box appears, a Pressure
+            Fitting Connection Property object appears in the
+            specification tree under the Properties objects set,
+            and a Pressure Fitting Connection Mesh object appears
+            in the specification tree under the Nodes and Elements
+            objects set.</p>
+          </li>
+
+          <li>
+            <p>You can change the identifier of the pressure
+            fitting connection property by editing the <span class="guitext"><b class="guilabel">Name</b></span>
+            field.</p>
+          </li>
+
+          <li>
+            <p>In the specification tree, select a general analysis
+            connection or a Contact or Coincidence assembly
+            positioning constraint to apply to the pressure fitting
+            connection property.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">Supports</b></span> field is updated to
+            reflect your selection. The first surface specified in
+            the connection or constraint is used as the main
+            surface in the contact pair; the second surface is used
+            as the secondary surface.</p>
+          </li>
+
+          <li>
+            <p>Enter a value for the minimum normal clearance in
+            the <span class="guitext"><b class="guilabel">Overlap</b></span> field.</p>
+
+            <ul type="disc"><li>
+                <p>Use a positive overlap value when the surfaces
+                are initially in contact. The surfaces are pressed
+                apart gradually over the time period of the step to
+                reach this overlap value.</p>
+              </li>
+
+              <li>
+                <p>Use a zero overlap value when the surfaces are
+                initially overclosed. Automatic shrink fit contact
+                interference is used to resolve the overclosure
+                gradually over the time period of the step.</p>
+              </li>
+
+              <li>
+                <p>A negative overlap value is not allowed.</p>
+              </li>
+            </ul>Underclosed nodes may cause solution problems;
+            therefore, you should always model the parts as just
+            fitting or overlapped.
+
+            <p>The coordinates of overclosed nodes are adjusted in
+            the output database; however, these coordinates are not
+            adjusted in CATIA V5. Therefore, when you view the
+            results of the analysis, the displacements are applied
+            to the original coordinates rather than the adjusted
+            ones.</p>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">OK</b></span> in the <span class="guitext"><b class="guititle">Pressure Fitting
+            Connection Property</b></span> dialog box.</p>
+
+            <p>A symbol representing the pressure fitting
+            connection property appears on the corresponding
+            faces.</p>
+          </li>
+        </ol></div><span id="ath-gen-asm-int-pressfit-connection"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div><span id="ath-gen-asm-interactions"></span>
+  </div></body></html>
+

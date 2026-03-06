@@ -1,0 +1,55 @@
+let i (integer)
+let p (Point)
+let p2 (Point)
+let l( line)
+
+let R (integer)
+let G (integer)
+let B (integer)
+
+i = 1
+
+For i while i <= NbPoints
+	{
+		set p = CreateOrModifyDatum("Point", `Geometrical Set.1`  ,Points,  i)
+		
+		p  = point(PartBody\Point.2\X + cos(i*XFactor) * 10mm, PartBody\Point.2\Y + cos(i*YFactor) * 10mm, PartBody\Point.2\Z + cos(i*ZFactor) * 10mm)
+		p.Name = "Point." + ToString(i)
+		
+		if PointsHidden == True
+			p.Show = False
+		else
+			{
+				p.Show = True
+				R = mod(i	, 255)
+				G = mod(i * 2, 255)
+				B = 255 - mod(i, 255)
+				
+				p.Color  = ToString(R) + "," + ToString(G) + "," + ToString(B)
+				
+			}
+			i = i +1
+		}
+		
+		if GenerateLines == True
+			{
+				i = 1
+				
+				For i while i <= `Relations\Knowledge Pattern.1\Points\ListSize`  - 1
+					{
+						set l = CreateOrModifyDatum("Line", `Geometrical Set.1` , Lines, i)
+						l.Name = "Line." + ToString(i)
+						p = Points.GetItem(i)
+						p2 = Points.GetItem(i + 1)
+						
+						l = line(p, p2)
+						
+						R = mod(i	, 255)
+						G = mod(i * 2, 255)
+						B = 255 - mod(i, 255)
+						
+						l.Color  = ToString(R) + "," + ToString(G) + "," + ToString(B)
+						
+						i = i + 1
+					}
+				}

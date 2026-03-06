@@ -1,0 +1,410 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+ <head>
+ <meta name="MonocodingType" content="2">
+ <meta name="MonocodingFlag" content="L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Activating Secured Tunneling Mode (SSL)</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Activating Secured Tunneling Mode (SSL)</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">
+     <h2>Introduction </h2>
+     <p>This document explains how to contact ENOVIA servers behind firewalls 
+     through tunneled and secured communications using Secure Socket Layer (SSL). 
+     SSL is implemented by inserting an additional protocol layer between the 
+     applicative messages (IIOP or HTTP protocols) and the transport protocol 
+     (TCP/IP).</p>
+     <p>For the moment SSL is only applicable on top of HTTP Tunneling. SSL is 
+     added to a working solution.</p>
+     <p>Unlike the &quot;port redirection only&quot; solution, the provided SSL-tunneling 
+     components imply heavy performance overhead due to the additional handling 
+     of the SSL protocol. SSL has also some impacts on the deployment and the 
+     administration due to the usage of certificates: to engage SSL 
+     communications, each peer must have access to its private key, its 
+     certificate, and the list of certificates it can accept from the other 
+     peers as detailed in the next section.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h3>Quick overview of SSL communications</h3>
+     <p>The general purpose of the SSL specification is to provide basics 
+     security features such as strong <b>authentication</b> using public key 
+     cryptography and certificates, <b>confidentiality</b> using symmetric 
+     encryption algorithms, and data <b>integrity</b> using message digest 
+     algorithms. <b>Authentication</b> allows a client and a server application 
+     to verify the identity of each other during the so-called handshake 
+     protocol to be detailed next, <b>confidentiality</b> ensures that all data 
+     transmitted between client and server applications cannot be understood by 
+     a third party, and <b>integrity</b> allows to detect if those data were 
+     modified during transmission. </p>
+     <p>In SSL, authentication is based on public key cryptography. Each 
+     application has a public (widespread) key and an associated private 
+     (secret) key: only one of this key can decrypt data encrypted by the other 
+     key. This feature allows an application to prove its identity by encrypting 
+     data with its private key: as no other application has access to this 
+     secret key, the encoded data must come from the true application. Then any 
+     other application can check the content of the data by decoding it with the 
+     public key issued by the application. </p>
+     <p>To prove that a public key (and thus the associated private key) really 
+     originates from a given application, a mechanism of certificates is needed. 
+     Certificates are digital documents whose role is to bind a public key to 
+     the identity of an application, and whose format has been standardized 
+     (X509 recommendation). A certificate is commonly issued and digitally 
+     signed by a third-party organization called a <b>Certificate Authority or 
+     CA</b> (e.g. Verisign, Thawte, etc.) that verifies the match between a 
+     public key and the name of the application. In order to validate the 
+     certificate of a given application, all other parties this application 
+     wants to engage SSL communications with must explicitly trust the CA that 
+     signed it.</p>
+     <p>Each new connection is followed by the <b>SSL handshake protocol</b> 
+     whose implementation is based on time-consuming algorithms. Here is a 
+     summary of the main steps involved in the SSL handshake: </p>
+     <ol>
+       <li>
+       <p class="MsoNormal" style="text-indent:.5in">The client initiates 
+       communications by sending the initial SSL handshake message to the server</li>
+       <li>
+       <p class="MsoNormal" style="text-indent:.5in">The server responds by 
+       sending its certificate to the client that contains its public key and 
+       requests the client's certificate</li>
+       <li>
+       <p class="MsoNormal" style="text-indent:.5in">The client uses the 
+       received certificate to authenticate the server by answering &quot;yes&quot; to two 
+       main questions: Is the issuing CA a trusted CA? Does issuing CA's public 
+       key validate issuer's digital signature?</li>
+       <li>
+       <p class="MsoNormal" style="text-indent:.5in">&nbsp;If step (3) is successful, 
+       the client sends its certificate (along with some data, digitally signed 
+       by its private key) and a secret encrypted with the server's public key</li>
+       <li>
+       <p class="MsoNormal" style="text-indent:.5in">The server uses the 
+       received certificate and data to authenticate the client by answering 
+       &quot;yes&quot; to three main questions: Does the client's public key validate the 
+       digitally signed data? Is the issuing CA a trusted CA? Does issuing CA's 
+       public key validate issuer's digital signature?</li>
+       <li>
+       <p class="MsoNormal" style="text-indent:.5in">If step (5) is successful, 
+       the server decrypts the secret with its private key and generates the 
+       session key (on its side, the client has generated the same session key 
+       from the shared secret)</li>
+       <li>
+       <p class="MsoNormal" style="text-indent:.5in">The session key is a 
+       symmetric key that will be used to encrypt and decrypt all subsequent 
+       messages exchanged between the two parties.</li>
+       <li>
+       <p class="MsoNormal" style="text-indent:.5in">The client sends a message 
+       to the server to inform it that the client portion of the handshake is 
+       done and that the session key will encrypt future messages</li>
+       <li>
+       <p class="MsoNormal" style="text-indent:.5in">The server sends a message 
+       to the client to inform it that the server portion of the handshake is 
+       done and that the session key will encrypt future messages</li>
+     </ol>
+     <p>From now on, each message sent (respectively received) is encrypted 
+     (respectively decrypted) using the shared session key and the integrity of 
+     each message is checked by calculating a digest.</p>
+     <p>In this SSL-Tunneling solution, the actual implementation of the SSL 
+     client and server processes are based on the <b>Java Secured Socket 
+     Extension</b> specification (<b>JSSE</b>). The version of the JSSE 
+     specification used in the current implementation is 1.0.2. This means that, 
+     to enable SSL communications between the clients and the servers, a 
+     specific provider for JSSE 1.0.2 has to be installed and properly 
+     configured on each peer on top of the existing JDK 1.3 installation. In 
+     other words, JDK 1.3 and JSSE 1.0.2 software are software requirements for 
+     SSL tunneling on clients and servers. A non-commercial reference 
+     implementation of JSSE 1.0.2 is provided by Sun Microsystems, Inc.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h3>Network considerations</h3>
+     <p>As far as the server network is concerned, no additional configuration 
+     for the firewall is needed since the port 443 or any other ports dedicated 
+     to SSL-enabled protocols can be used. However, this is not mandatory and 
+     any other port can be used, provided it is open on the firewall.</p>
+     <p>As said above, SSL is based on strong authentication using certificates. 
+     During the so-called SSL handshake, the server sends its certificate to the 
+     client. The client verifies the validity of the certificate to authenticate 
+     the server host. Reciprocally, but optionally in the current SSL 
+     specification, the client sends its own certificate back to the server so 
+     that the server can authenticate the client host by checking the validity 
+     of the client's certificate. Hence, it is required that the SSL server 
+     process be running on a host publicly accessible to clients or located in 
+     the DMZ of the server network for the SSL handshake to occur successfully 
+     between this server host and every client peers.</p>
+     <p>Note that on the server network, both direct and SSL-enabled connections 
+     are allowed with the same Orbix daemon. All servers and clients lying 
+     inside the firewall can connect to all other servers without SSL tunneling.</p>
+     <p>As far as the client network is concerned, security is still managed by 
+     a firewall and/or a HTTP proxy server, that enforce rules on which client 
+     can connect to which server. In particular, the SSL client process is able 
+     to handle authentication challenges issued by the HTTP proxy server (only 
+     base-64 &quot;Basic&quot; authentication is currently supported).</p>
+     <p>Once again, for the SSL handshake to occur successfully, it is required 
+     that the SSL communications be enabled through the HTTP proxy server. 
+     Practically, this means that the HTTP CONNECT method has to be explicitly 
+     allowed in the HTTP proxy server configuration on the secured port the 
+     server is listening to. With this configuration, the HTTP proxy server does 
+     not interfere in the encrypted communications and especially in the 
+     client/server mutual authentication procedure or handshake.</p>
+     <p>Here is a view of a typical configuration for SSL tunneling:</p>
+     <p></p>
+     <p></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h2><font color="#282187">Client-side Deployment </font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"></p>
+     <p></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">
+     <h2><font color="#282187">Server-side Deployment</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"></p>
+     <h5 align="left">The SSL server process</h5>
+     <p>The file CATTunnelServer.conf is provided and is located in &lt;Install 
+     Path&gt;/docs/javaserver. The content of this file is a series of properties 
+     that set the behavior of the SSL server process and have to be customized. 
+     There are two kinds of parameters in this file : the general parameters and 
+     the security parameters.</p>
+     <h4>To enable SSL on server modify Security parameters</h4>
+     <h5>Security parameters </h5>
+     <p align="left">These parameters are intimately linked to the JSSE 
+     implementation that is to be used along with this solution. All of them are 
+     optional provided the JSSE implementation is correctly configured on the 
+     server host. Excepting the so-called &quot;secured&quot; and &quot;authenticateClient&quot; 
+     parameters, most of them point to some Java-specific security properties 
+     that have to be set according to the documentation delivered with your JSSE 
+     provider's implementation. Each parameter and its Java equivalent is 
+     detailed next for the JSSE implementation provided by Sun Microsystems, 
+     Inc.&nbsp;The JAVA_HOME variable refers to the directory where the JRE 1.3 is 
+     installed. </p>
+     <p><font color="#800000"><b>secured : </b></font>boolean (true/false) to 
+     enable/disable SSL communications (default is false: SSL off).</p>
+     <p><b><font color="#800000">authenticateClient</font></b> : boolean 
+     (true/false) used to force clients to authenticate to the server (default 
+     is false: no client authentication). Client authentication is optional in 
+     SSL specification.</p>
+     <p><b><font color="#800000">securityProvider</font></b> : specifies the 
+     fully qualified name of the provider class. This parameter can be blank if 
+     properly set in the Java security properties file (JAVA_HOME/lib/security/java.security) 
+     using the line</p>
+     <p align="left"><code>security.provider.n=...</code></p>
+     <p align="left">where n is the preference order of this provider. For Sun 
+     JSSE it is &quot;com.sun.net.ssl.internal.ssl.Provider.&quot;</p>
+     <p align="left"><b><font color="#800000">keyStore</font></b> : specifies 
+     the location of the file where key materials are stored on the server host. 
+     Key material include the public and private key pair(s) and the 
+     corresponding certificate(s). This parameter is a Java system property that 
+     has no default value. To enable SSL communications, this parameter must be 
+     set to the actual key material of the server host and all clients must 
+     trust this certificate or the CA that issued this certificate.</p>
+     <p align="left"><b><font color="#800000">keyStoreType</font></b> : 
+     specifies the type of the key materials. The default is &quot;JKS&quot; (value of 
+     keystore.type in the file JAVA_HOME/lib/security/java.security)</p>
+     <p align="left"><b><font color="#800000">keyStorePassword</font></b> : 
+     specifies the password used to open the key store. The default is &quot;&quot;. 
+     Mandatory along with keyStore.</p>
+     <p align="left"><b><font color="#800000">keyManagerType</font></b> : 
+     specifies the type of the implementation managing the key store. This 
+     parameter can be set in the file JAVA_HOME/lib/security/java.security using 
+     the line</p>
+     <p align="left"><code>sun.ssl.keymanager.type=...</code></p>
+     <p align="left">The default value is &quot;SunX509&quot; with Sun JSSE provider.</p>
+     <p align="left"><b><font color="#800000">trustStore</font></b> : specifies 
+     the location of the file where trusted certificates are stored on the 
+     server host. This is a Java system property which defaults to JAVA_HOME/lib/security/jssecacerts 
+     or JAVA_HOME/lib/security/cacerts if the first file does not exist. If 
+     client authentication is not used, you can left it blank. </p>
+     <p align="left"><b><font color="#800000">trustStoreType</font></b> : same 
+     as keyStoreType.</p>
+     <p align="left"><font color="#800000"><b>trustStorePassword</b> </font>: 
+     specifies the password used to open the trust store. The default is &quot;&quot; so 
+     that this parameter is mandatory when client authentication is on.</p>
+     <p align="left"><b><font color="#800000">trustManagerType</font></b> : 
+     specifies the type of the implementation managing the trust store. This 
+     parameter can be set in the file JAVA_HOME/lib/security/java.security using 
+     the line</p>
+     <p align="left"><code>sun.ssl.trustmanager.type=...</code></p>
+     <p align="left">The default value is &quot;SunX509&quot; with Sun JSSE provider.</p>
+     <p align="left">Two examples of a customized CATTunnelServer.conf file is 
+     given in the summary section.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h2><font color="#282187">Example of the Overall Deployment without proxy</font></h2>
+     <p>To review the preceding points, here is an example of a typical 
+     deployment though simplified, going from the server to the client 
+     applications, explained step by step.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h3><font color="#282187">Server network</font></h3>
+     <p>Let's suppose a host named &quot;S1&quot; in the DMZ of the server network. On 
+     &quot;S1&quot; an ENOVIA server will be running, with Orbix daemon port 1570 and a 
+     range of IIOP ports from 1590 to 1790. This host has a public IP address 
+     that can be resolved anywhere by a name service lookup given the name &quot;S1&quot;. 
+     Let's suppose its operating system is <font SIZE="2">AIX 6.1 TL02</p>
+		</font>
+		<p>. </p>
+     <ol>
+       <li>Install a Java Runtime Environment 1.3.
+       <p>The variable JAVA_HOME will be /usr/j2se/jre. The command line</p>
+       <p><b>/usr/j2se/jre/bin/java -fullversion</b></p>
+       <p>should give something like:</p>
+       <p><b>java full version &quot;1.3.1_02-b02&quot;</b></li>
+       <li>Complete the JRE 1.3 installation with the installation of a JSSE 
+       1.0.2 provider
+       <p>To make things clearer, let's say this is Sun JSSE provider ( http://java.sun.com/products/jsse/ 
+       ). Once the JSSE software is downloaded and unzipped, copy the extension 
+       jar files <b>jsse.jar</b>, <b>jcert.jar</b>, and <b>jnet.jar</b> to the 
+       directory /usr/j2se/jre/lib/ext.</li>
+       <li>Create the key material for the server host
+       <p>We will use the Java keytool utility. Type:</p>
+       <p><code>/usr/j2se/jre/bin/keytool -genkey -keystore /usr/j2se/jre/lib/security/serverkeys 
+       -alias enovia -storepass passphrase -keypass passphrase</code></p>
+       <p>keytool will prompt you for information to put into the certificate. 
+       The first and last names should be set to the server name, here &quot;S1.&quot; The 
+       key store &quot;serverkeys&quot; now contains the certificate of the server. This 
+       certificate must be delivered to all clients so that they can add it to 
+       their list of trusted certificates. To export the certificate to a file, 
+       use the keytool command:</p>
+       <p><code>/usr/j2se/jre/bin/keytool -export -keystore /usr/j2se/jre/lib/security/serverkeys 
+       -alias enovia -storepass passphrase -file server.cer</code></p>
+       <p>The file &quot;server.cer&quot; can be distributed to the clients.</li>
+       <li>Install the ENOVIA server as explained in the dedicated 
+       documentation.<p>We suppose the installation is located in the directory 
+       &lt;Install Path&gt;, which will be something like:</p>
+       <p><code><strong>UNIXInstallPath</strong>/aix_a<br>
+&nbsp;</code></li>
+       <li>Edit the file &lt;Install Path&gt;/docs/javaserver/SSLTunnelServer.conf to 
+       configure the SSL tunnel server process.
+       <ul>
+         <li><code>listenPort=443 </code></li>
+         <li><code>forwardHost= </code></li>
+         <li><code>forwardPorts=1570,1590-1790 </code></li>
+         <li><code>webHost= </code></li>
+         <li><code>webPort= </code></li>
+         <li><code>retry=10 </code></li>
+         <li><code>delay=1 </code></li>
+         <li><code>secured=true </code></li>
+         <li><code>authenticateClient=false</code></li>
+         <li><code>securityProvider=com.sun.net.ssl.internal.ssl.Provider</code></li>
+         <li><code>keyStore=/usr/j2se/jre/lib/security/serverkeys</code></li>
+         <li><code>keyStoreType=JKS</code></li>
+         <li><code>keyStorePassword=passphrase</code></li>
+         <li><code>keyManagerType=SunX509</code></li>
+         <li><code>trustStore=</code></li>
+         <li><code>trustStoreType=</code></li>
+         <li><code>trustStorePassword= </code></li>
+         <li><code>trustManagerType= </code></li>
+       </ul>
+       <p>&nbsp;</li>
+       <li>Set the three environment variables CATTunnelingMode, 
+       CATTunnelingPropertiesFileName, and CATTunnelingPropertiesFilePath in the 
+       file whose name is given in &lt;Install Path&gt;/EnvName.txt and location is 
+       given in &lt;Install Path&gt;/EnvDir.txt.
+       <blockquote>
+         <ul>
+           <li>CATTunnelingMode=http</li>
+           <li>CATTunnelingPropertiesFileName=CATTunnelStartupServer.conf</li>
+           <li>CATTunnelingPropertiesFilePath=&lt;Install Path&gt;/docs/javaserver</li>
+         </ul>
+       </blockquote>
+       </li>
+       <li>
+       <p align="left" style="line-height: 50%">Start the starter process &quot;CATTunnelStartup&quot; 
+       with the following command line:</li>
+     </ol>
+     <blockquote>
+       <p><code>&lt;Install Path&gt;/code/command/catstart -run CATTunnelStartup</code></p>
+       <p>Check that the Java process is running. Otherwise edit the file 
+       &lt;Install Path&gt;/docs/javaserver/CATTunnelStartupServer.conf and replace 
+       line</p>
+       <p><code>ssl.aix_a=com.dassault_systemes...</code></p>
+       <p>with line</p>
+       <p><code>ssl.aix_a=-Xbootclasspath/p:/usr/j2se/jre/lib/ext/jsse.jar:/usr/j2se/jre/lib/ext/jnet.jar:/usr/j2se/jre/lib/ext/jcert.jar 
+       com.dassault_systemes...</code></p>
+       <p>and restart CATTunnelStartup. This should force the JVM to enable SSL.</p>
+     </blockquote>
+     <p></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top"></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;&nbsp;</td>
+     <td valign="top">
+     <h3><font color="#282187">Clients</font></h3>
+     <p>On the client network, we suppose that a HTTP proxy server is running on 
+     a host named &quot;MyHttpProxy,&quot; and is listening to the typical port 8080. This 
+     HTTP proxy server is configured to let go out only authorized users with 
+     valid Internet ID and password. Moreover it is configured to authorize the 
+     HTTP CONNECT method on port 443. </p>
+     <p>We suppose that the client machine has Windows for operating 
+     system. </p>
+     <ol>
+       <li>Install a Java Runtime Environment 1.3.
+       <p>The variable JAVA_HOME will be &quot;C:\Program Files\IBM\Java13\jre&quot;. The 
+       command line</p>
+       <p><b>&quot;C:\Program Files\IBM\Java13\jre\bin\java&quot; -fullversion</b></p>
+       <p>should give something like:</p>
+       <p><b>java.exe full version &quot;J2RE 1.3.0 IBM build cn130-20020124&quot;</b></p>
+       <p>This JRE 1.3 installation comes with its own JSSE provider.</p>
+       <p></li>
+       <li>Import the server's certificate from the file &quot;server.cer&quot; into the 
+       trust store of the client host<p>Again we use the keytool utility:</p>
+       <p><code>&quot;C:\Program Files\IBM\Java13\jre\bin\keytool&quot; -import -keystore 
+       &quot;C:\Program Files\IBM\Java13\jre\lib\security\jssecacerts&quot; -alias enovia 
+       -file server.cer -storepass changeit</code></p>
+       <p>Then, answer <b>yes</b> to the question : Trust this certificate?</p>
+       <p>Now the trust store &quot;jssecacerts&quot; contains the certificate of the 
+       server which is explicitly trusted by the client host. </p>
+       <p></p>
+       <p></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"></td>
+   </tr>
+   <tr>
+     <td colspan="2" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

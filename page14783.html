@@ -1,0 +1,128 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Welding Rule</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Welding Rule</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="34" width="40">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" title="atarget.gif (1372 bytes)" width="32" height="32"></td>
+     <td valign="top" height="34" width="932" colspan="2">This task explains the 
+     welding design rule.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="34" width="40">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32">
+     <p><a name="ix-welding design rule"></a></td>
+     <td valign="top" height="34" width="932" colspan="2">The welding design 
+     rule included with this application is used to determine the type of weld 
+     that should be placed between two parts. (For Piping Design it will also 
+     calculate the offset - see below.)<p>This is a specification-related design 
+     rule and the associated table is located in the directory ...&#092;intel_a&#092;Startup&#092;EquipmentAndSystems&#092;<font face="Courier">XXXXX&#092;Specification 
+     where XXXXX is the application name, such as Tubing.</font></td>
+   </tr>
+   <tr>
+     <td valign="top" width="40" height="38">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" title="ascenari.gif (1364 bytes)" width="32" height="32"><p>
+     <a name="ix-design rules::welding"></a></td>
+     <td valign="top" width="16" height="38"><font color="#1C1557"><strong>1.</strong></font></td>
+     <td rowspan="1" valign="top" width="100%">The image below shows the welding 
+     design table for the Tubing Design product. Tables for other applications 
+     will have different entries but function in the manner described below.
+     <p><img border="0" src="b35doc/english/online/ucfug_c2/images/CU0916A_NLS.gif" width="607" height="319"></p>
+     <p>The first five columns in the table contain the input values: EndStyle1, 
+     EndStyle2, MinWallThickness, MaxWallThickness and FabricationSite. 
+     EndStyle1 is data from one part connector while EndStyle2 is data from the 
+     second part connector. Only one value is input for wall thickness - the 
+     columns MinWallThickness and MaxWallThickness constitute a range, inclusive 
+     of the values in the two columns. Wall thickness from each of the 
+     connectors must fall within this range. The value for the column 
+     FabricationSite is obtained from the <a href="page14781.html">Shop 
+     Fabrication design table</a>.</p>
+     <p>If a user builds the Shop Fabrication table incorrectly, as a result of 
+     which the welding rule table gets both entries (shop and field), the first 
+     entry that it receives will be entered in the Fabrication Site field.</p>
+     <p>When all values match the input values, the table outputs the Weld Type. 
+     The value for weld type is used by the parts placement process to correctly 
+     select a weld. </p>
+     <p>You can enter any weld type keyword value relevant to your project in 
+     the WeldType column.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="40" height="38">&nbsp;</td>
+     <td valign="top" width="16" height="38"><strong><font color="#1C1557">2</font></strong><font color="#1C1557"><strong>.</strong></font></td>
+     <td valign="top" width="100%"><a name="ix-weld offset">For <b>Piping Design</b></a>, 
+     the rule also calculates the weld offset, which is necessary when placing a 
+     branch. An offset is the distance between the center line of the main pipe 
+     and the ends of the branch being placed. The offset value is used during 
+     parts placement to position the weld correctly with respect to the main 
+     pipe and branch. The weld gap that is defined on the weld is used to 
+     calculate the offset value, using the formulae shown below. Three kinds of 
+     end style are supported in the sample weld rules provided with this 
+     application: stub-on, stub-in and set-on.
+     <p>Calculation of the offset is hard coded in the application. </p>
+     <p>The default calculation is:</p>
+     <ul>
+       <li>Stub-on: Offset = square root of (OutsideRadRun<font face="Verdana">&#178; 
+       - InsideRadBranch&#178;) 
+       + weld gap</font></li>
+       <li><font face="Verdana">Stub-in: Offset = square root of InsideRadRun&#178; 
+       - (OutsideRadBranch + weld gap)&#178;</font></li>
+       <li><font face="Verdana">Set-on: Offset = OutsideRadRun + weld gap</font></li>
+       <li><font face="Verdana">Weld linear: Offset = weld gap</font></li>
+       <li><font face="Verdana">Weld calculated: Offset = weld gap</font></li>
+     </ul>
+     <p><font face="Verdana">If you want to change the default calculation you 
+     must implement </font>a routine (CAA Interface) named <kbd>
+     CATICloAppWeldOffset</kbd>. </p>
+     <p><font face="Verdana">You can add more weld end styles. To do this you 
+     must:</font></p>
+     <ul>
+       <li><font face="Verdana">Add entries to the <a href="page14780.html">
+       branch rules</a> table, making sure that the entry matches existing table 
+       conventions. Look at the table to find out what you need to add. 
+       Basically, you must identify the new parts that will use the new end 
+       style(s).</font></li>
+       <li><font face="Verdana">Modify the CAA Interface (</font><kbd>CATICloAppWeldOffset)
+       </kbd>to include<kbd> </kbd><font face="Verdana">the formula that must be 
+       used to calculate the weld offset for each new end style that you add. To 
+       add the formula you must change the code.</font></li>
+     </ul>
+     <p><font face="Verdana">To sum up the process for calculating a Piping 
+     offset: </font></p>
+     <ul>
+       <li><font face="Verdana">The end styles needed by the welding rule are 
+       obtained from the branch rule table.</font></li>
+       <li><font face="Verdana">The welding rule outputs the weld type.</font></li>
+       <li><font face="Verdana">The weld type is used to select a weld part from 
+       the catalog.</font></li>
+       <li><font face="Verdana">The weld gap is obtained from the weld part 
+       design table.</font></li>
+       <li><font face="Verdana">The weld gap is used to calculate the offset for 
+       the selected end style, according to the formulae given above.</font></li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="3" valign="top" height="34" width="990">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="aendtask.gif (1477 bytes)" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+
+ </body>
+
+</html>
+

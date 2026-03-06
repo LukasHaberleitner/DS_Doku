@@ -1,0 +1,111 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Script Structure</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="docCompliance" content="v 0.9; Thu Oct 13 09:35:18 2005">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>&nbsp;Script Structure<a name="ix-script structure"></a></h1>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32"></p>
+ <p>A generative script is written in text format and is organized in blocks 
+ consisting of related sets of statements.&nbsp;<br>
+ A block&nbsp;consists of an instruction designed to create an object followed by a 
+ set of statements surrounded by braces (<kbd>{ }</kbd>).&nbsp; Statement blocks 
+ can be nested and the most enclosing one within a script corresponds to the 
+ document creation.&nbsp;&nbsp;</p>
+ <p>A document is made up of a hierarchy containing objects, their properties 
+ and the features they own. A generative script reflects this object hierarchy. 
+ In the outermost statement block, you must create the document intended to 
+ contain all the features to be created later on.</p>
+ <h3><font color="#282187"><font color="#282187">Example 1</font></font></h3>
+ <p>Please find below the basic structure of a script. You can create this 
+ skeleton by using the <nobr><kbd>File &gt; New &gt; CATPart</kbd></nobr> document 
+ command of the Script Editor:</p>
+ <table border="0">
+   <tr>
+     <td bgcolor="#F0F0F0"><code>part isa CATPart<br>
+     {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mypart isa Part<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     PartBody isa BodyFeature<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+     }</code></td>
+   </tr>
+ </table>
+ <h3><font color="#282187"><font color="#282187">&nbsp;Example 2<i>&nbsp;</i></font></font></h3>
+ <table border="0" cellpadding="0" cellspacing="0">
+   <tr>
+     <td bgColor="#F0F0F0" valign="top">
+     <font color="#000000" face="Courier" size="1"><code>My</code></font><code><font color="#000000">Document&nbsp;
+     </font><font color="#3333ff">isa </font><font color="#000000">CATPart&nbsp;&nbsp;
+     </font><font color="#008000">// Creates a CATPart document</font><br>
+     <font color="#3333ff">{</font><br>
+     <font color="#000000">&nbsp;&nbsp;&nbsp; </font>MyPart
+     <font color="#0000ff">isa</font> Part<br>
+     <font color="#3333ff">&nbsp;&nbsp;&nbsp; {</font><br>
+     <font color="#3333ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font>
+     <font color="#000000">L = 30.0;</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#000000">PartBody </font>
+     <font color="#3333ff">isa </font><font color="#000000">BodyFeature&nbsp;
+     </font><font color="#008000">// Creates the main body</font><br>
+     <font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Length
+     <font color="#0000ff">=</font> 100.0<font color="#0000ff">; </font>
+     <font color="#008000">// Length is a parameter of the part</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cyl
+     <font color="#3333ff">isa</font> Cylinder<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <font color="#3333ff">{</font><br>
+     <font color="#3333ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     </font><font color="#000000">cylinderLength = 20.0;</font><br>
+     <font color="#3333ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     }</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Base
+     <font color="#0000ff">isa</font> Cylinder <font color="#008000">// Base is 
+     an instance of Cylinder owned by MyPart</font><br>
+     <font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     {</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     Height <font color="#0000ff">=</font> <font color="#0000ff">?</font>Length 
+     * 2<font color="#0000ff">; </font><font color="#008000">// a formula 
+     property using MyPart/Length;</font><br>
+     <font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     }</font><br>
+     <font color="#0000ff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</font><br>
+     <font color="#0000ff">&nbsp;&nbsp;&nbsp; }</font><br>
+     </code><font color="#0000ff"><code>}</code></font></td>
+     <td bgColor="#F0F0F0" valign="top">
+     <img border="1" src="b35doc/english/online/pktug_c2/images/pktCylinderNLS.gif" width="309" height="260"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+ <table border="0">
+   <tr>
+     <td bgcolor="#F2F2F2">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td bgcolor="#F2F2F2">For more information about the isa keyword and the ? 
+     operator, see <a href="page12238.html">isa</a> keyword and
+     <a href="page12214.html">? operator</a>.</td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

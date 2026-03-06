@@ -1,0 +1,298 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Transition Path Management</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Transition Path Management</h1>
+ <p align="left">This document describes the Transition Path Management 
+ capability. Transition paths can be generated between operations in a program. 
+ This is done by taking the following parameters into account:</p>
+ <ul>
+   <li>
+   <p align="left">the machine's kinematic characteristics</li>
+   <li>
+   <p align="left">specified transition planes</li>
+   <li>
+   <p align="left">selected transition path options.</li>
+ </ul>
+ <p align="left">A transition path can include one or more linear transitions 
+ and machine rotations.</p>
+ <p align="left">Transition paths can be created, deleted and updated using the 
+ commands of the <a href="page11486.html">Transition Path Management toolbar</a>.</p>
+ <blockquote>
+   <table Border="0" CELLSPACING="0" valign="top">
+     <tr valign="top" BORDER="0">
+       <td width="35">
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgAutomaticCompleteGenerate.gif" width="22" height="22"></td>
+       <td width="365" valign="top">Generate Transition Paths</td>
+     </tr>
+     <tr>
+       <td width="35">
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgAutomaticCompleteRemove.gif" width="22" height="22"></td>
+       <td width="365" valign="top">Remove Transition Paths</td>
+     </tr>
+     <tr>
+       <td width="35">
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgAutomaticCompleteUpdate.gif" width="22" height="22"></td>
+       <td width="365" valign="top">Update Transition Paths.</td>
+     </tr>
+   </table>
+ </blockquote>
+ <h2 align="left">Machine</h2>
+ <p>In order to use Transition Path Management, a
+ <a href="page11428.html#glgenericmach">generic machine</a> must be defined on the 
+ <kbd>Part Operation</kbd>. This is done using the <kbd>Part Operation's Machine Editor</kbd>.</p>
+ <p><img border="1" src="b35doc/english/online/mfgug_c2/images/dbPartOper04NLS.gif" width="356" height="146"></p>
+ <p><a name="WNR13NewMachines"></a>Available machine types are:</p>
+ <ul>
+   <li>3-axis machine with no rotary axis</li>
+   <li>3-axis machine with 1 rotary axis on table</li>
+   <li>3-axis machine with 2 rotary axes on table</li>
+   <li>3-axis machine with 1 rotary axis on table and 1 rotary axis on head</li>
+   <li>3-axis machine with 1 rotary axis on head</li>
+   <li>3-axis machine with 2 rotary axes on head</li>
+   <li>5-axis continuous machine (without generation of machine rotations).</li>
+ </ul>
+ <p>Each machine contains all the necessary NC parameters and kinematic 
+ definition data for the <kbd>Part Operation</kbd>.</p>
+ <h2 align="left">Transition Planes</h2>
+ <p>Transition Path Management takes into account the following planes defined 
+ in the <kbd>Part Operation</kbd>:</p>
+ <p><img border="1" src="b35doc/english/online/mfgug_c2/images/dbPartOper03NLS.gif" width="332" height="234"></p>
+ <ul>
+   <li>Traverse box planes to create linear tool path motions (5 planes 
+   representing a box are needed)</li>
+   <li>Transition planes to create linear tool path motions</li>
+   <li>Rotary planes to create machine rotations:<ul>
+     <li>between machining operations </li>
+     <li>between tool change and machining operation.</li>
+   </ul>
+   </li>
+ </ul>
+ <p>The Safety plane is not taken into account for the generation of transition 
+ paths.</p>
+ <h2 align="left"><a name="TransitionPathOptions"></a>Transition Path Options</h2>
+ <p>When <kbd>Generate Transition Paths</kbd>
+ <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgAutomaticCompleteGenerate.gif" align="middle" width="22" height="22"> 
+ is selected, the <kbd>Transition Paths</kbd> dialog box appears. You must select the 
+ manufacturing program to be processed and set the desired options.</p>
+ <p><img border="1" src="b35doc/english/online/mfgug_c2/images/dbAutoComplete01NLS.gif" width="294" height="537"></p>
+ <p><b><kbd>Transition Path Creation</kbd></b>: specifies where transition paths 
+ are to be added in the program:</p>
+ <ul>
+   <li><kbd>To Machining Operatio</kbd>n: transition paths are generated before each 
+   machining operation. If there is a machining axis before a machining 
+   operation, the transition path is added before the machining axis.</li>
+   <li><kbd>To Tool Change</kbd>: transition paths are added before each tool change.</li>
+ </ul>
+ <p><b><a name="WNR13Rothead"></a><kbd>Machine Rotation Creation</kbd></b>: 
+ allows creation of Rotary motion embedded in the transition path with:</p>
+ <ul>
+   <li>generation of machine rotation instructions in the output file (for 
+   example, ROTABL and ROTHED)</li>
+   <li>automatic checking of machine reachability for rotary motion.</li>
+ </ul>
+ <p><b><kbd>Priority Order</kbd></b>: specifies the preferred order between Tool 
+ Change and Machine Rotation when they are both present before a machining 
+ operation.</p>
+ <ul>
+   <li><kbd>Priority to Tool change</kbd>: the Machine Rotation is embedded in the 
+   Transition Path that is after the Tool change.</li>
+   <li><kbd>Priority to Machine Rotation</kbd>: the Machine Rotation is embedded in the 
+   Transition Path that is before the Tool change.</li>
+ </ul>
+ <p><b><kbd>Retract/Approach Motion</kbd></b>: specifies how retract and 
+ approach motions are to be done globally for all the transition paths of all 
+ selected programs:</p>
+ <ul>
+   <li>Perpendicular to transition (or traverse) plane </li>
+   <li>Along tool axis.</li>
+ </ul>
+ <p>If a specific retract or approach is required on a machining operation, it 
+ should be defined by macros on the operation.</p>
+ <p><b><a name="WNR13ForceTop"></a><kbd>Traverse Motion on Top</kbd></b>: this 
+ option is taken into account only when all five traverse planes are defined in the 
+ Part Operation. It is useful when a transition path needs to go from one side 
+ to the opposite side of the traverse box. <br>
+ The intermediate plane can be any one of the three other planes. <br>
+ If the check box is selected, then the top plane is used as the intermediate 
+ plane. <br>
+ Otherwise, the motion will be done using the intermediate plane that gives the 
+ shortest path.</p>
+ <p><b><kbd>Compute axial-radial motion</kbd></b>: if a traverse box is not 
+ defined and no transition plane is selected, selecting this check box 
+ authorizes 2.5 axis motion only. Tool axis direction at start and end of motion 
+ must be the same. </p>
+ <p><b><kbd>Return to machine home position</kbd></b>: Generates an additional 
+ Transition Path after the last Machining Operation in order to return to the 
+ machine home position.</p>
+ <h2 align="left">Transition Path Computation Overview</h2>
+ <p align="left">The general operation of Transition Path generation is outlined 
+ below. It assumes that an appropriate generic machine has been specified in the 
+ Part Operation.</p>
+ <h3 align="left">Transition Paths with Table Rotation</h3>
+ <p align="left">If <kbd>Table Rotation</kbd> option is selected, and if a table rotation 
+ is needed, the tool retracts to the specified rotary plane and makes the table 
+ rotation. A head rotation is also done if necessary.</p>
+ <p align="left">If <kbd>Compute axial-radial motion</kbd> is selected, the tool 
+ approaches the next point in 2.5 axis motion. <br>
+ Otherwise, the tool approaches the next point in linear motion.<br>
+ For a transition path with table motion, the tool approaches the next point in 
+ 2.5 axis motion after the table rotation.</p>
+ <h3 align="left">Transition Paths without Table Rotation</h3>
+ <p align="left">If <kbd>Table Rotation</kbd> option is not selected, or if a table 
+ rotation is not needed, the Transition Path capability checks whether or not a 
+ valid traverse box is defined.</p>
+ <h4 align="left">Traverse Box Defined</h4>
+ <p align="left">If a valid traverse box is defined, the traverse box motion is 
+ computed. This motion may be modified according whenever valid transition 
+ planes are specified. A head rotation are also done if necessary.</p>
+ <h4 align="left">Traverse Box Not Defined</h4>
+ <p align="left">If no valid traverse box is defined, the Transition Path 
+ capability verifies whether or not valid transition planes are defined.</p>
+ <p align="left">If valid transition planes are defined, the tool retracts to 
+ these planes.</p>
+ <p align="left">If no valid transition planes are defined, the Transition Path 
+ capability verifies whether or not the Axial Radial option is selected.<br>
+ If&nbsp; <kbd>Compute axial-radial motion</kbd> is selected, the tool 
+ approaches the next point in 2.5 axis motion. <br>
+ Otherwise, the tool approaches the next point in linear motion.</p>
+ <h2 align="left">Generation of Transition Paths without Machine Rotations</h2>
+ <p align="left">This is the case when a generic 5-axis machine is selected in 
+ the Part Operation.</p>
+ <h3 align="left">Transitions Between Operations</h3>
+ <p align="left">The 5 traverse box planes defined on the Part operation delimit 
+ a traverse box.<br>
+ First, the transition path is computed by taken into account this traverse box.</p>
+ <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/TransPath01.gif" width="354" height="244"></p>
+ <p align="left">Retract and Approach motions are automatically defined.<br>
+ The transitions motions are done in RAPID mode.</p>
+ <p align="left">The Retract/Approach option can be set to define the motions 
+ type:</p>
+ <ul>
+   <li>
+   <p align="left"><kbd>Perpendicular to transition plane</kbd> (the tool axis 
+   of the machining operation is kept)</li>
+   <li>
+   <p align="left"><kbd>Along operation tool axis</kbd>, until the transition 
+   plane.</li>
+ </ul>
+ <p align="left">Transition motions are done as follows:</p>
+ <p align="left">1.Perpendicular retract (1) to the plane (with the same tool 
+ axis of the operation) or retract along the tool axis <br>
+ 2.Transition motion (2) through the plane (P1) until the intersection of planes 
+ (P1 and P2) <br>
+ 3.Tool axis modification<br>
+ 4.Transition motion (3) through the plane (P2) until the perpendicular (or 
+ along the tool axis) of the next operation<br>
+ 5.Approach motion (4) to the next operation (tool axis of the operation)</p>
+ <p align="left">Note that during transition motions the tool tip is on the 
+ traverse planes.</p>
+ <p align="left">Then transition planes are used to modify these transition 
+ motions by reducing air cuts.</p>
+ <h3 align="left">Transitions Between Tool Change and Operation</h3>
+ <p align="left">First, transition motions are done as follows (respecting the 
+ traverse box):</p>
+ <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/TransPath02.gif" width="406" height="276"></p>
+ <p align="left">1. Perpendicular retract (1) to the plane (with the same tool 
+ axis than the operation) or retract along the tool axis<br>
+ 2. Transition motion (2) through the plane (P1) until the intersection of 
+ planes (P1 and P2) <br>
+ 3. Tool axis modification: Normal to the next plane (P2).<br>
+ 4. Transition motion (3) through the plane (P2) until the perpendicular of the 
+ tool change<br>
+ 5. Approach motion (4) to the tool change</p>
+ <p align="left">Then transition planes are used to modify these transition 
+ motions by reducing air cuts.</p>
+ <h2 align="left">Generation of Transition Paths with Machine Rotations</h2>
+ <h3 align="left"><a name="TransitionBtwnOpers"></a>Transitions Between 
+ Operations</h3>
+ <p align="left">The transition path is done between the last point of the 
+ machining operation (last point of the retract macro) and the first point of 
+ the next machining operation (first point of the approach macro).</p>
+ <p align="left">No control or cut of machining operation motions (including 
+ macro motions)&nbsp; is done outside the traverse box. The macro should be 
+ defined inside the traverse box. The transition paths are then generated up to 
+ the traverse box planes.</p>
+ <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/TransPath03.gif" width="512" height="270"></p>
+ <h4 align="left">Transitions with Generation of Machine Table Rotation</h4>
+ <p align="left">The rotary plane is taken into account in order to define a 
+ safety distance.<br>
+ The rotary plane must be parallel to the machine rotary axis. Thus, if the 
+ machine as several rotary axis, several planes must be selected.</p>
+ <p align="left">There are several cases: </p>
+ <ul>
+   <li>
+   <p align="left">None of the selected Rotary planes are parallel to the 
+   machine rotary axis: the furthest point between the rotary axis and the last 
+   point of the previous operation or the first point of the next operation 
+   defines the radius of the rotation.</li>
+   <li>
+   <p align="left">Some of the selected Rotary planes are parallel to the 
+   machine rotary axis: the plane that defines the maximum distance with the 
+   rotary axis is taken into account.</li>
+   <li>
+   <p align="left">The last point of the previous operation or the first point 
+   of the next operation is further from the machine rotation axis than all 
+   rotary planes: the rotary planes are not taken into account.</li>
+ </ul>
+ <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/TransPath04.gif" width="510" height="435"></p>
+ <h4 align="left">Transitions with Generation of Machine Head Rotation</h4>
+ <p align="left">In the previous example, if machine head rotation generation is 
+ chosen, the transition path is computed the same way as for a 5 axis machine 
+ without generation of machine rotations. The tool tip path follows traverse box 
+ planes and transition planes. The difference is that for each modification of 
+ the tool axis, a machine head rotation is generated as well as tool motions 
+ take back the tool tip on the planes.</p>
+ <p align="left"><b>Example1:</b></p>
+ <p align="left">The tool axes are different and the traverse planes are 
+ different: the head rotation is performed at the traverse plane intersection 
+ with the following behavior.</p>
+ <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/TransPath05.gif" width="565" height="339"></p>
+ <p align="left"><b>Example 2:</b></p>
+ <p align="left">The tool axes are different, the traverse plane is the same: 
+ the head rotation is performed as follows.</p>
+ <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/TransPath06.gif" width="518" height="276"></p>
+ <p align="left"><b>Example 3:</b></p>
+ <p align="left">The machining operations are defined at opposite sides of the 
+ traverse box.</p>
+ <p align="left">The transition motions are generated in 3 planes: then head 
+ rotations are done at the intersection of planes.</p>
+ <p align="left">In this case, in the intermediate plane, the tool axis is 
+ defined as&nbsp; being perpendicular to the plane during transition motion in 
+ this plane.</p>
+ <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/TransPath07.gif" width="725" height="357"></p>
+ <h3 align="left">Transitions when Traverse Plane and Transition Planes are 
+ Defined</h3>
+ <p align="left">The transition planes are used to modify the transition motions 
+ respecting the traverse box plane by reducing air cuts.</p>
+ <p align="left"><b>Example:</b></p>
+ <p align="left">A machining operation is defined at the bottom of the part.<br>
+ Motion mode is set to <kbd>Along operation tool axis</kbd>.<br>
+ A transition plane defines the bottom limit of the box.</p>
+ <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/TransPath08.gif" width="521" height="480"></p>
+ <h3 align="left">Transition Motions between Tool Change and Operation</h3>
+ <p align="left">The behavior is the same as that described in
+ <a href="#TransitionBtwnOpers">Transition Between Operations</a>.</p>
+ <h3 align="left">Rotation Generation</h3>
+ <p align="left">The tool path is a circular arc for table rotation and head 
+ rotation.<br>
+ Transition path needs to be computed before the computation of the machine 
+ rotation tool path in order to have the start position (position 2 in the 
+ figure below).</p>
+ <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/TransPath09.gif" width="526" height="223"></p>
+
+ </body>
+
+</html>
+

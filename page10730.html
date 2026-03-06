@@ -1,0 +1,667 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2E2O2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>3D IGES: Best Practices</title>
+<script language="JavaScript">
+  </script>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="docCompliance" content="v0.5; Tue Jul  5 17:25:10 2005">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1>3D IGES: Best Practices<a name="ix-IGES:best practices"></a></h1>
+<h2>Import<a name="hj-import"></a></h2>
+<table Border="0" CELLSPACING="0" valign="top" bordercolor="#111111" cellpadding="0">
+  <tr>
+    <td valign="top"></td>
+    <td valign="top">
+    <h3>Quality of conversion<a name="ix-best practices:STEP quality of conversion"></a></h3>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/amethod.gif" width="32" height="32"></td>
+    <td valign="top">Always check the
+    <a href="page10760.html#ix-3D IGES:report file">report and error files</a> 
+    after a conversion ! <br>
+    Some problems may have occurred without been visually highlighted.</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td rowspan="1">The
+    <a href="page0981.html#ix-3D IGES:detection of invalidity in input geometry">
+    Detection of Invalidity in Input Geometry&nbsp; </a>option is used to 
+    detect:<ul>
+      <li>
+      <p style="line-height: 12.0pt; text-autospace: none">the 3D curves of the 
+      loop boundary do not map with the support surface. </p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber1">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/Invalidite_loopSurface.gif" width="596" height="486"></td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p style="line-height: 12.0pt; text-autospace: none">the single loop 
+      (boundary of the surface) presents a hole.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber2">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/InvaliditeTrou.gif" width="681" height="327"></td>
+        </tr>
+      </table>
+      </li>
+      <li>two other cases of invalidity:<ul>
+        <li>The boundary and the surface are not in the same plane (a 
+        transformation matrix is missing). <br>
+        Apply the required transformation, join the boundary and split the 
+        surface with the result join.<table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber3">
+          <tr>
+            <td><img border="0" src="b35doc/english/online/itfug_c2/images/Invalidite_loopSurface2.gif" width="623" height="447"></td>
+          </tr>
+        </table>
+        </li>
+      </ul>
+      </li>
+      <li>The single boundary is open (a curve is missing). Hide the surface and 
+      re-create the missing curve. <br>
+      Then join all the curves and project them on the surface to split the 
+      surface.<table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber4">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/InvaliditeTrou2.gif" width="730" height="470"></td>
+        </tr>
+      </table>
+      </li>
+    </ul>
+    <p align="left">&nbsp;</td>
+  </tr>
+</table>
+<table Border="0" CELLSPACING="0" valign="top" bordercolor="#111111" cellpadding="0">
+  <tr valign="top" BORDER="0">
+    <td valign="top"></td>
+    <td>
+    <h2>How to Create a Topology<a name="ix-IGES:how to create a topology"></a></h2>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td rowspan="1">This task shows you how to generate the model topology if it 
+    is not contained in the CATPart corresponding to <br>
+    the original IGES file you have imported.<br>
+    You have seen how to recover a
+    <a href="page10729.html">maximum of the face geometry and individual 
+    topology</a>, when it failed during <br>
+    the import of either IGES.<br>
+    This scenario will show you how to create solids from IGES faces and also 
+    how to join the surfaces of an IGES <br>
+    model into a Part.&nbsp;<br>
+    It also shows you how to improve the quality of the geometry of the solid 
+    obtained thanks to the Healing operation <br>
+    in Generative Shape Design. I<br>
+    Therefore, this methodology allows you to improve IGES data 
+    interoperability and productivity (use of features).<br>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>It can also be applied to a STEP file, when the failure of the topology 
+    transfer occurs (in rare cases) and <br>
+    to improve geometry quality.</td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top"></td>
+    <td>Previously, you had 2 scenarios about the repairs of KO faces:
+    <ul>
+      <li><a href="page10729.html#hj-Open">Open an IGES file</a></li>
+      <li><a href="page10729.html#hj-Repair">Repair faces KO</a></li>
+    </ul>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top"></td>
+    <td>Now, with the following steps you will learn how to close the topology:
+    <ul>
+      <li><a href="#hj-Create">Create a topology</a></li>
+      <li><a href="#hj-Analyze">Analyze the topology</a></li>
+      <li><a href="#hj-Healing">Healing</a></li>
+      <li><a href="#hj-Solid">Create a solid</a></li>
+    </ul>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top"></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td valign="bottom"></td>
+    <td valign="top">
+    <h2><a name="hj-Create"></a>Create a topology</h2>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="center">
+    <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td valign="top">
+    <ol class="task">
+      <li>
+      <p class="task">Open the file <a href="b35doc/english/online/itfug_c2/samples/01_FaceKOrepaired.CATPart">
+      01_FaceKOrepaired.CATPart</a>. </p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber5">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt031NLS.gif" width="368" height="404"></td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p class="task">Select all surfaces of GeometricalSet.1 in order to apply 
+      the Join operation upon all these elements. <br>
+      The Join operation allows <kbd>to repair geometry</kbd> whereas <kbd>
+      topological healing</kbd> allows to close topology.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber6">
+        <tr>
+          <td>It is better to select the surfaces in the tree <br>
+          (select Surface.1, then select the last surface holding the Shift key)
+          <br>
+          to have them ordered by their numbers in the Join Definition dialog 
+          box.</td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt023NLS.gif" width="337" height="345"></td>
+        </tr>
+      </table>
+      </li>
+   <li value="3">
+      <p align="left" class="task">Keep merging distance = 0.001mm and 
+      deactivate the connexity Check option. <br>
+      The problem is not yet to check whether the surface is closed or even 
+      connex. <br>
+      This will be analyzed in the following step.</li>
+   <li>
+      <p class="task">Click Preview. <br>
+      An error message is displayed, saying that some surfaces cannot be 
+      integrated to the join.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber7">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt024NLS.gif" width="572" height="126"></td>
+        </tr>
+        <tr>
+          <td>The solution is to withdraw these surfaces. </td>
+        </tr>
+      </table>
+      </li>
+    <li>
+      <p class="task">The rejected surfaces are automatically selected in the 
+      list, in the Join Definition dialog <br>
+      box and you can use the Remove Mode button.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber8">
+        <tr>
+          <td><img border="1" src="b35doc/english/online/itfug_c2/images/bt035NLS.gif" width="329" height="318"></td>
+        </tr>
+      </table>
+      </li>
+   <li>
+      <p class="task">Click Apply.</li>
+      <li>
+      <p class="task">Click OK. The resulting join surface includes all surfaces 
+      of GeometricalSet.1 except <br>
+      those that have been rejected.</li>
+      <li>
+      <p class="task">Insert a new Geometrical set and name it SurfacesToAnalyze 
+      (for example).</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber9">
+        <tr>
+          <td><img border="1" src="b35doc/english/online/itfug_c2/images/bt036NLS.gif" width="226" height="100"></td>
+        </tr>
+      </table>
+      </li>
+   <li>
+      <p class="task">Move the rejected surfaces to the new Geometrical set. For 
+      this, right click them in the <br>
+      No Show space and <br>
+      select the <kbd>Change Geometrical set...</kbd> contextual command.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber10">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt033NLS.gif" width="188" height="290"></td>
+        </tr>
+      </table>
+      </li>
+    <li>
+      <p class="task">Hide GeometricalSet.1 and display the other geometrical 
+      set SurfacesToAnalyze.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber11">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt025NLS.gif" width="517" height="331"></td>
+        </tr>
+      </table>
+      </li>
+    <li>
+      <p class="task">Check the rejected surfaces. Usually rejected surfaces 
+      have a very sharp corner, for instance, <br>
+      a vertex where edges arrive tangent to each other.</li>
+      <li>
+      <p class="task">Reframe on the first surface to recreate (Surface.321 for 
+      instance):</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber12">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt026.gif" width="385" height="328"></td>
+        </tr>
+      </table>
+      </li>
+    <li>
+      <p class="task">Create its complete boundary by selecting the Boundary 
+      icon <img border="0" src="b35doc/english/online/itfug_c2/images/bt027.gif" width="31" height="29"> in the Operations toolbar.</li>
+      <li>
+      <p class="task">Disassemble the boundary in order to be able to see the 
+      curves by using the Disassemble <br>
+      icon <img border="0" src="b35doc/english/online/itfug_c2/images/bt028.gif" width="28" height="28"> in the Join-Healing toolbar. 
+      As a result, details about the curves contained in Surface.321 <br>
+      are displayed in the Specification tree.</li>
+      <li>
+      <p class="task">Untrim the surface to process (Surface.321) by clicking on 
+      this icon <img border="0" src="b35doc/english/online/itfug_c2/images/bt004.gif" width="29" height="31">&nbsp; Click OK when this 
+      message appears :&nbsp;</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber13">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt037NLS.gif" width="179" height="116"></td>
+        </tr>
+        <tr>
+          <td>A new element is displayed : SurfaceUntrim.1</td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt029NLS.gif" width="532" height="592"></td>
+        </tr>
+      </table>
+      </li>
+    <li>
+      <p class="task">Recreate the face by Split between Surface.710 and 
+      Curve.1, Curve.2 and Curve.9.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber14">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt005NLS.gif" width="357" height="459"></td>
+        </tr>
+      </table>
+      </li>
+   <li>
+      <p class="task" align="left">Join Curve 4, 5, 6 into Join.2</li>
+   <li>
+      <p class="task">Split the surface (in datum mode) with:</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber15">
+        <tr>
+          <td>
+          <ul>
+            <li>Element to cut: Split.1.</li>
+            <li>Cutting element: Join 2.</li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt004NLS.gif" width="348" height="524"></td>
+        </tr>
+        <tr>
+          <td>Repeat the same operations with the other rejected surfaces. You 
+          may also recreate only two of them <br>
+          and use asymmetry for the other two.</td>
+        </tr>
+      </table>
+      </li>
+    <li>
+      <p class="task">Double click Join.1 (in GeometricalSet.1) to edit it and 
+      select the four corrected faces to add them <br>
+      to the list (Add Mode):</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber16">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt038NLS.gif" width="212" height="196"></td>
+        </tr>
+      </table>
+      </li>
+    <li>
+      <p class="task" align="left">Click OK.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber17">
+        <tr>
+          <td>All the surfaces are now inserted into the join: <kbd>the topology 
+          is complete. </kbd>You can now delete SurfacesToAnalyze.</td>
+        </tr>
+      </table>
+      </li>
+    </ol>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top"></td>
+    <td></td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top"></td>
+    <td>
+    <h2><a name="hj-Analyze"></a>Analyze the topology</h2>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top" align="center">
+    <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td rowspan="3">
+    <ol class="task">
+      <li>
+      <p class="task">Open the file
+      <a href="b35doc/english/online/itfug_c2/samples/02_InitialTopology.CATPart">02_InitialTopology.CATPart.</a></li>
+      <li>
+      <p class="task">Activate the Surface boundary display option: select the
+      <kbd>Tools &gt; Options...</kbd> command, <br>
+      click <kbd>General &gt; Display</kbd> in the list of objects to the left of 
+      the <kbd>Options</kbd> dialog box. Select the Visualization tab.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber18">
+        <tr>
+          <td><img border="1" src="b35doc/english/online/itfug_c2/images/bt040NLS.gif" width="394" height="239"></td>
+        </tr>
+      </table>
+      </li>
+    </ol>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top"></td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top"></td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top"></td>
+    <td></td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>The <kbd>Analysis</kbd> is based on the free sides of the surface. Free 
+    sides may indicate:
+    <ul>
+      <li>gaps between elements</li>
+      <li>missing elements (not converted or not available in original IGES 
+      file)</li>
+      <li>overlaps (duplicated elements)</li>
+      <li>invalid elements (with unexpected shapes)</li>
+    </ul>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top" align="center">&nbsp;</td>
+    <td>
+    <ol class="task" start="3">
+      <li>
+      <p class="task">Double click the join surface Join.1 in the 
+      GeometricalSet.1 to change its merging distance parameter. <br>
+      Set it to 0.01mm (maximum possible value).</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber19">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt041NLS.gif" width="337" height="345"></td>
+        </tr>
+      </table>
+      </li>
+    </ol>
+    <p align="left">&nbsp;</td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>Increasing the merging distance will reduce the number of free sides due 
+    to gaps. <br>
+    It is a way to highlight the most important holes.</td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top" align="center">&nbsp;</td>
+    <td rowspan="5">
+    <ol class="task" start="3">
+      <li value="4">
+      <p class="task">Click Preview, then OK.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber20">
+        <tr>
+          <td>Few free sides remain: three on the top surface and two on the 
+          sides (symmetric to each other). <br>
+          Now you have to find the type of free side (gap, missing element, 
+          overlap, invalid shape). </td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt042NLS.gif" width="481" height="332"></td>
+        </tr>
+      </table>
+      </li>
+    </ol>
+    <ol class="task" start="4">
+      <li value="5">
+      <p class="task">Reframe on the side surface surrounded by a free side.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber21">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt043NLS.gif" width="364" height="346"></td>
+        </tr>
+      </table>
+      </li>
+    <li>
+      <p class="task">Display the No Show space to see the original surfaces.</li>
+      <li>
+      <p class="task">Use the Connect Checker
+      <img border="0" src="b35doc/english/online/itfug_c2/images/bt005.gif" width="26" height="27"> in the Analysis toolbar to measure 
+      the distance between <br>
+      the surface (Surface.707) and its neighbors. The maximum distance is 0. It 
+      means that the free side is not due to gap.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber22">
+        <tr>
+          <td><img border="1" src="b35doc/english/online/itfug_c2/images/bt044NLS.gif" width="478" height="539"></td>
+        </tr>
+      </table>
+      </li>
+    <li value="8">
+      <p class="task">Select the surface and send it to the visible space. Check 
+      it you see a hole instead. <br>
+      There is no hole, it means that this surface was duplicated. You have to 
+      delete one of the surfaces.</li>
+      <li>
+      <p class="task">Remove the surface 707 from Join.1, then delete it. </p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber23">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt045NLS.gif" width="348" height="418"></td>
+        </tr>
+      </table>
+      </li>
+    <li>
+      <p align="left" class="task">Repeat these steps with surface 706.</li>
+    <li>
+      <p class="task">Reframe on the area shown below and display the No Show 
+      space to see the original surfaces <br>
+      (Surface.526, Surface.534).</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber24">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt046NLS.gif" width="363" height="266"></td>
+        </tr>
+        <tr>
+          <td>They are obviously incorrect, their shapes look strange. The 
+          shaded display is typical of a problem in <br>
+          the definition of the boundaries (missing boundary curves, wrong 
+          order).</td>
+        </tr>
+      </table>
+    <li>
+      <p class="task">Remove them from Join.1 into SurfacesToAnalyze.<br>
+      <img border="0" src="b35doc/english/online/itfug_c2/images/bt047NLS.gif" width="172" height="256"> <br>
+    Then for each of the three faces to rebuild,</p>
+      </li>
+   <li>
+      <p class="task">Create the full boundary of the surface.</li>
+      <li>
+      <p class="task">Disassemble the boundary.</li>
+      <li>
+      <p class="task">Untrim the surface.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber26">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt048NLS.gif" width="325" height="349"></td>
+        </tr>
+      </table>
+      </li>
+   <li>
+      <p class="task">Check the boundary curves and create the missing ones</li>
+      <li>
+      <p class="task">Recreate the correct surfaces by Split (in datum mode).</li>
+      <li>
+      <p class="task">Add the recreated surfaces to Join.1.</li>
+    </ol>
+    <p class="task">The surface has now no visible free side, but there might be 
+    very small holes impossible to detect visually.&nbsp;</td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top" align="center">&nbsp;</td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top" align="center">&nbsp;</td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top" align="center">&nbsp;</td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top" align="center">&nbsp;</td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+    <td>
+    <p class="task">To make sure that the surface is closed: Select Join.1 and 
+    click the Boundary icon. <br>
+    If the selected surface is closed, you get an explicit message.</p>
+    <p align="left"><img border="0" src="b35doc/english/online/itfug_c2/images/bt049NLS.gif" width="451" height="125"></p>
+    <p align="left">It means that the surface is closed within 0.1mm.&nbsp;</td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>You may now try to reduce the merging distance to find the minimum value 
+    that gives a closed surface.
+    <p>Change the merging distance to 0.01mm and check for free sides: The 
+    surface is closed within 0.01mm. <br>
+    Check with 0.005mm: The surface has visible free sides.<br>
+    Check with 0.008mm: The surface is closed within 0.008mm. <br>
+    This distance is a good evaluation of the model accuracy.</td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top"></td>
+    <td></td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top"></td>
+    <td>
+    <h2><a name="hj-Healing"></a>Healing</h2>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top" align="center">
+    <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td>
+    <ol class="task">
+      <li>
+      <p class="task">You may open the file
+      <a href="b35doc/english/online/itfug_c2/samples/03_ClosedTopology.CATPart">03_ClosedTopology.CATPart.</a><br>
+      At that stage, you may decide that the evaluated accuracy is good enough 
+      but you may also create a solid <br>
+      and use the Healing to reduce the gaps between surfaces by actually 
+      modifying (deforming) the surfaces.</li>
+      <li>
+      <p class="task">Select the Healing icon
+      <img border="0" src="b35doc/english/online/itfug_c2/images/bt006.gif" width="32" height="31">.</li>
+      <li>
+      <p class="task">Select Join.1.</li>
+      <li>
+      <p class="task">Give the value of the tolerance found in the previous step 
+      (Merging distance is 0.008mm in this case).</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber27">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt050NLS.gif" width="267" height="381"></td>
+        </tr>
+      </table>
+      </li>
+   <li value="5">
+      <p class="task">Click OK.The surface is now both topologically and geometrically closed.</p>
+      </li>
+    </ol>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top"></td>
+    <td></td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top"></td>
+    <td>
+    <h2><a name="hj-Solid"></a>Create a solid</h2>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top" align="center">
+    <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td>
+    <ol class="task">
+      <li>
+      <p class="task">Start a Part Design workbench.</li>
+      <li>
+      <p class="task">Select the Close Surface icon
+      <img border="0" src="b35doc/english/online/itfug_c2/images/bt007.gif" width="26" height="29"> in the Surface-Based Features 
+      toolbar.</li>
+      <li>
+      <p class="task">Select Join.1 or Healing.1. The following message confirms 
+      the operation:</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber29">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt009NLS.gif" width="207" height="92"></td>
+        </tr>
+      </table>
+      </li>
+    <li value="5">
+      <p class="task">Click OK.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber30">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/bt008NLS.gif" width="192" height="303"></td>
+        </tr>
+        <tr>
+          <td>The solid is created and ready for use. The process is now 
+          completed.</td>
+        </tr>
+      </table>
+      </li>
+    </ol>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td colspan="2" valign="top">
+    <p align="center">
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+<h2>Export<a name="hj-export"></a></h2>
+<table Border="0" CELLSPACING="0" valign="top">
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">
+    <h3><a name="ix-best practices: export of large assemblies">Large Assemblies</a></h3>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/amethod.gif" width="32" height="32"></td>
+    <td valign="top">To export a large V5 Assembly in IGES, we recommend that 
+    you open it with the <kbd>Work with the cache system <br>
+    </kbd>option active (<kbd>Tools/Options/Infrastructure/Product 
+    Structure/Cache Management/Work with the cache system</kbd>): <br>
+    When this option is active, the referenced CATPart documents are loaded only 
+    during their transfer.</td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

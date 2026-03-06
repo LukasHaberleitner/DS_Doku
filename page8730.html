@@ -1,0 +1,354 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta content="0" name="MonocodingType">
+<meta content="C2" name="MonocodingFlag">
+<meta content="en-us" http-equiv="Content-Language">
+<meta content="Microsoft FrontPage 12.0" name="GENERATOR">
+<meta content="FrontPage.Editor.Document" name="ProgId">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link href="b35doc/english/online/icons_C2/dsdoc.css" rel="stylesheet" type="text/css">
+<title>Creating Loft Surfaces</title>
+</head>
+
+<body>
+
+<h1>Creating Loft Surfaces<a name="ICMCLAShape.Loft"></a> <a name="ix-commands::loft surface;surfaces::loft surface;creating::loft surface">
+</a></h1>
+<table cellpadding="5" cellspacing="2">
+  <tr>
+    <td valign="top"><img height="32" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32"></td>
+    <td colspan="2" valign="top">This task explains how to create a lofted surface through multiple profiles and guide curves.<br>The selected 
+    profiles define the U direction, the guide curves the V direction of the lofted surface. The profiles determine the surface shape. Often, 
+    the creation of a lofted surface requires that the profiles are driven along a spine curve. Depending on setting the check button
+    <a href="#Spine">Spine</a> in the dialog box, an internally computed (implicit) or a user-defined spine is used.</td>
+  </tr>
+  <tr>
+    <td valign="top"><img height="32" src="b35doc/english/online/icons_C2/common/areference.gif" width="32"></td>
+    <td colspan="2" valign="top">
+    <h2><a name="Implicit spine"></a>Implicit spine </h2>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td colspan="2" valign="top">The implicit spine (check button <kbd>Spine</kbd> OFF) is computed through first and last guide curve. Coupling 
+    points are calculated from the intersection with the profiles. <br>An implicit plane is created along the spine curve and normal to it determining 
+    the orientation of the internal profiles. The isoparametric flow of the lofted surface is then evenly distributed between the profiles and 
+    guides.<br><img src="b35doc/english/online/icmug_c2/images/Loft_ImplicitSpine.gif"><br><br>If a user-defined spine curve is used, the loft is calculated using the implicit 
+    spine curve to control the parametrization. </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td colspan="2" valign="top">
+    <h2><a name="User-defined spine"></a>User-defined Spine</h2>
+    <h3>Construction of the spine curve</h3>
+    The user-defined spine (check button <kbd>Spine</kbd> ON) must respect several criteria.<ul class="st">
+      <li>Only connected curves are supported.</li>
+      <li>Crossed curves (loops) are not supported.<br><br><img height="343" src="b35doc/english/online/icmug_c2/images/Loft_SpineConstruction.gif" width="468">&nbsp; </li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td colspan="2" valign="top">
+    <h3>Length and position of the spine curve</h3>
+    <ul class="st">
+      <li>The spine curve must have at minimum the same length as the maximum distance between the first and last selected profile. <br>
+        <img height="277" src="b35doc/english/online/icmug_c2/images/Loft_SpineLength1.gif" width="644"><br>
+        <img height="247" src="b35doc/english/online/icmug_c2/images/Loft_SpineLength2.gif" width="644"></li>
+      <li>The implicit plane created normal to the spine curve ensures that the profiles are driven perpendicularly along the spine curve. This 
+        plane MUST intersect all selected guide curves at all points. Therefore the spine curve positioning regarding the guides and profiles 
+        is equally important. <br>&nbsp;<img height="220" src="b35doc/english/online/icmug_c2/images/Loft_SpinePosition1.gif" width="622"><br>
+        <img height="212" src="b35doc/english/online/icmug_c2/images/Loft_SpinePosition2.gif" width="636"></li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td colspan="2" valign="top">
+    <h3>Orientation of the spine curve</h3>
+    The selected profiles determine the shape of the lofted surface. It is required that the orientation of the spine curve in relation to the 
+    selected profiles is perpendicular.
+    <ul class="st">
+      <li><kbd>2D Profiles (planar)</kbd><br>In many cases, the profiles are created already in a 2D plane and in 3D space. Thus the spine orientation 
+        is automatically defined perpendicular to the plane lying on the section profile.<br>
+        <img height="241" src="b35doc/english/online/icmug_c2/images/Loft_SpineOrientation2DProfile1.gif" width="636"><br>When only 2D profiles and no internal profiles are 
+        selected for the start and end of the lofted surface, the internal profiles are implicitly calculated and are perpendicularly swept 
+        along the spine curve.<br><img height="251" src="b35doc/english/online/icmug_c2/images/Loft_SpineOrientation2DProfile2.gif" width="620"><br>If the spine curve is then 
+        adjusted or a new spine is selected, it influences the shape of the loft as the internal profiles are consequently adjusted.<br>Start 
+        and end of the spine curve must remain perpendicular to the selected 2D profile curves. <br><br>
+        <img height="250" src="b35doc/english/online/icmug_c2/images/Loft_SpineOrientation2DProfile3.gif" width="620"></li>
+      <li><kbd>3D Profiles</kbd><br>If it is impossible to use 2D profiles for start and end profiles, the input profiles are considered to 
+        be 3D. When a 3D curve is used as profile, the orientation of the spine curve is equally important.<br>
+        <img height="270" src="b35doc/english/online/icmug_c2/images/Loft_SpineOrientation3DProfile.gif" width="715"></li>
+      <li><kbd>Internal Profiles</kbd><br>The spine curve must smoothly flow through each profile, such that an internal cusp in the loft result 
+        is not created.<br><br>&nbsp;<img height="302" src="b35doc/english/online/icmug_c2/images/Loft_SpineOrientationInternalProfile.gif" width="715"></li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td colspan="2" valign="top">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top"><img height="32" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32"></td>
+    <td colspan="2" valign="top">Open the <a href="b35doc/english/online/icmug_c2/samples/Loft.CATPart">Loft.CATPart</a> document.</td>
+  </tr>
+  <tr>
+    <td style="height: 103px" valign="top"><img height="32" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32"></td>
+    <td style="width: 648px; height: 103px;" valign="top">
+    <ol class="task">
+      <li><p class="task">Click the <kbd>Loft</kbd> icon
+        <img align="middle" height="22" src="b35doc/english/online/icons_C2/images/I_ICMLoftLT.gif" width="22">.<br>The Loft dialog opens.</p>
+      </li>
+    </ol>
+    </td>
+    <td style="height: 103px" valign="top"><img src="b35doc/english/online/icmug_c2/images/dbLoftSurface_main.png"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td style="width: 648px">
+    <ol class="task">
+      <li value="2"><p class="task">Select the elements 3D Curve.1 to 3D Curve.4 as Guides.</p>
+      </li>
+    </ol>
+    </td>
+    <td><img src="b35doc/english/online/icmug_c2/images/loft01.png"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td style="width: 648px">
+    <ol class="task">
+      <li value="3"><p class="task">Select the elements 3D Curve.5 to 3D Curve.8 as Profiles.</p>
+      </li>
+    </ol>
+    </td>
+    <td><img src="b35doc/english/online/icmug_c2/images/loft02.png"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td style="width: 648px">
+    <ol class="task">
+      <li value="4"><p class="task">Enter in the text field <a href="#Intersection">Tolerance Intersection</a> the value 0,5 mm.</p>
+      </li>
+      <li><p class="task">Click <kbd>OK</kbd> to create the Loft surface Loft.1.</p>
+      </li>
+    </ol>
+    </td>
+    <td><img src="b35doc/english/online/icmug_c2/images/loft03.png"></td>
+  </tr>
+</table>
+<table cellpadding="5" cellspacing="2">
+  <tr>
+    <td valign="top"><img height="32" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32"></td>
+    <td colspan="2" valign="top">You can define the following options:
+    <ul class="st">
+      <li><kbd>Guides</kbd>: Selection of one or several curve elements as guides&nbsp; (V direction of the loft).</li>
+      <li><kbd>Profiles</kbd>: Selection of one or several curve elements as profile (U direction of the loft).<br>
+        <img height="240" src="b35doc/english/online/icmug_c2/images/Loft_ProfilesGuides.gif" width="472">
+        <table cellpadding="5" cellspacing="2">
+          <tr>
+            <td valign="top"><img height="32" src="b35doc/english/online/icons_C2/common/tips.gif" width="32"></td>
+            <td class="code" valign="top">Note: The curve elements selected as guides and profiles must all lie in the corresponding direction.<br>
+            Otherwise the selection will not be considered as valid input.<br>&nbsp;<img height="229" src="b35doc/english/online/icmug_c2/images/Loft_ProfilesGuidesDirection.gif" width="449"></td>
+          </tr>
+        </table>
+      </li>
+      <li><kbd><a name="Spine"></a>Spine</kbd>: Selection of one or several curve elements as spine curves.<br>The profiles/sections are driven 
+        along a spine curve, whereby they lie upon a 2D plane which is perpendicular to the spine curve.<br>A separate spine curve can be selected 
+        for each edge of the lofted surface.<ul class="st">
+          <li><kbd>OFF</kbd>: Usage of an implicit spine curve which is calculated from the selected profiles and guides.<br>For more information, 
+            see <a href="#Implicit spine">Implicit spine</a>.</li>
+          <li><kbd>ON</kbd>: Selection of a user-defined spine curve.<br>For more information, see <a href="#User-defined spine">User-defined 
+            spine</a>.</li>
+        </ul>
+      </li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">Options tab</td>
+    <td valign="top"><img border="1" src="b35doc/english/online/icmug_c2/images/dbLoftSurface_options.png"></td>
+  </tr>
+  <tr>
+    <td valign="top" width="32">&nbsp;</td>
+    <td colspan="2" valign="top" width="1054">
+    <ul class="st">
+      <li><kbd>Tolerance</kbd>:
+        <ul class="nd">
+          <li><kbd><a name="Intersection"></a>Intersection</kbd>: The intersection points of the selected guides and profiles must be lying 
+            within the specified tolerance.<br>Moreover, the Intersection tolerance defines the maximum distance to the support surfaces which 
+            influence the continuity condition of the result.<br><br>
+            <img height="262" src="b35doc/english/online/icmug_c2/images/Loft_ToleranceIntersection.gif" width="435"></li>
+          <li><kbd>Segment</kbd>: The Segment tolerance determines the segment boundaries of the resulting surface at the intersection point 
+            between guide and profile according to the following criteria:
+            <ul class="nd">
+              <li>If the value is exceeded at the point of intersection, the segment position results from the guide and profile curve intersection. 
+                The internal segmentation of the curves is ignored.<br><br>
+                <img height="226" src="b35doc/english/online/icmug_c2/images/Loft_ToleranceSegment01.gif" width="442"></li>
+              <li>If the tolerance value is met at the point of intersection, the segment position in the result uses a segment point in the 
+                curves used.<br><br><img height="225" src="b35doc/english/online/icmug_c2/images/Loft_ToleranceSegment02.gif" width="435"></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><kbd>Guide/Profile Segmentation</kbd>: The segmentation of the loft surface can be influenced according to the segmentation points 
+        on the guide and profile curves. The following options are available:
+        <ul class="nd">
+          <li><kbd>First</kbd>: The segmentation is taken from the curve defined as first guide or profile from the selection process. All other 
+            curves are ignored.<br><br><img height="211" src="b35doc/english/online/icmug_c2/images/Loft_SegFirst.gif" width="472"></li>
+          <li><kbd>Max.</kbd>: The segmentation will be taken from the guide or profile with the maximum number of segments.<br><br>
+            <img height="209" src="b35doc/english/online/icmug_c2/images/Loft_SegMax.gif" width="526"></li>
+          <li><kbd>All</kbd>: The segmentation of the result will be calculated from the segment boundaries of all guides and profiles.<br>
+            <br><img height="211" src="b35doc/english/online/icmug_c2/images/Loft_SegAll.gif" width="570"></li>
+        </ul>
+      </li>
+      <li><kbd>Guide/Profile Trim</kbd>: Input curves that do not have coincident ends can be trimmed temporarily at their <kbd>Start</kbd> 
+        and/or <kbd>End</kbd>.<br>The resultant surface is then created between temporary trimmed guides and profiles.<br><br>
+        <table border="1" cellpadding="5" cellspacing="2">
+          <tr>
+            <td align="center" colspan="2"><img border="1" height="40" src="b35doc/english/online/icmug_c2/images/Loft_dbTrimOff.gif" width="422"></td>
+          </tr>
+          <tr>
+            <td><img height="202" src="b35doc/english/online/icmug_c2/images/Loft_TrimOrig.gif" width="413"></td>
+            <td><img height="234" src="b35doc/english/online/icmug_c2/images/Loft_TrimOff.gif" width="413"></td>
+          </tr>
+          <tr>
+            <td align="center" colspan="2"><img border="1" src="b35doc/english/online/icmug_c2/images/Loft_dbTrimOn.gif"></td>
+          </tr>
+          <tr>
+            <td align="center" colspan="2"><img height="207" src="b35doc/english/online/icmug_c2/images/Loft_TrimOn.gif" width="413"></td>
+          </tr>
+        </table>
+      </li>
+      <li><kbd>Guide/Profile Coupling</kbd>: The parametrization of the resultant surface can be influenced by coupling the parametrization 
+        of the individual sets of curves (guides and profiles).
+        <ul class="nd">
+          <li><kbd>None</kbd>: The coupling is defined automatically.<br><br>
+            <img height="206" src="b35doc/english/online/icmug_c2/images/Loft_CouplingNone.gif" width="413"><br></li>
+          <li><kbd>Segments</kbd>: The calculation of the coupling is defined by the number of segments contained within the set of curves defining 
+            the profiles and guides allowing the user to re-parameterize according to the internal continuities.<br><br>
+            <img height="206" src="b35doc/english/online/icmug_c2/images/Loft_CouplingSegments.gif" width="413"><br></li>
+          <li><kbd>Cells</kbd>: The calculation of the coupling is defined by the number of cells (individual curves) defining the profiles 
+            and guides allowing the user to re-parameterize according to the internal continuities.<br><br>
+            <img height="206" src="b35doc/english/online/icmug_c2/images/Loft_CouplingCells.gif" width="413"><br></li>
+          <li><kbd>Bends</kbd>: The calculation of the coupling is defined by the number of bends (cells and segments) defining the profiles 
+            and guides allowing the user to re-parameterize according to the internal continuities.<br><br>
+            <img height="206" src="b35doc/english/online/icmug_c2/images/Loft_CouplingBends.gif" width="413"><br></li>
+          <li><kbd>G0, G1, G2 </kbd>: A level of continuity is imposed on the selected curves, thus reducing the number of cells within the 
+            result depending upon the inputs. <br><img height="206" src="b35doc/english/online/icmug_c2/images/Loft_CouplingContinuities.gif" width="413"></li>
+        </ul>
+      </li>
+      <li><kbd>Guide/Profile Alignment</kbd>: These options allow to influence the continuity condition of the selected <kbd>Start</kbd> and
+        <kbd>End</kbd> curves for either guide or profile to an adjacent set of support surfaces.<ul class="nd">
+          <li><kbd>Support</kbd>: For each side of the lofted surface you can define more than one support.<br>Their order is managed by the 
+            command, so that you are not required to organize the data before commencing the construction of the lofted surface.<br><br>
+            <img height="242" src="b35doc/english/online/icmug_c2/images/Loft_support.gif" width="451"><br></li>
+          <li><kbd>Start/End: G0, G1, G2, G3</kbd>: Setting the continuity condition for start and end curves.<br>After creating the lofted 
+            surface manipulators for graphically editing the continuity are displayed at the support surfaces.<br><br>
+            <img height="245" src="b35doc/english/online/icmug_c2/images/Loft_Alignment.gif" width="540"></li>
+        </ul>
+        <br>The images below demonstrate the acceptable configurations for the use of support surfaces for aligning guides and profiles.<br>
+        <br><img height="248" src="b35doc/english/online/icmug_c2/images/Loft_AlignmentCriteria01.gif" width="462"><br><br>
+        <img height="267" src="b35doc/english/online/icmug_c2/images/Loft_AlignmentCriteria02.gif" width="436"></li>
+      <li><kbd>Alignment Influence</kbd>:
+        <ul class="nd">
+          <li><kbd>Local</kbd>: The continuities assigned to a specific edge only influence the surface shape locally between the 1st and 2nd 
+            curve according to the continuity specified.<br>As a result of local continuity matching, the result in addition attempts to pass 
+            through the guide and profile curves.<br>Therefore depending upon the continuity settings, the positions of the curves and the approximation 
+            settings, result attempts to create a non oscillating result.<br><br>
+            <img height="164" src="b35doc/english/online/icmug_c2/images/Loft_AlignmentInfluenceLocal.gif" width="446"><br></li>
+          <li><kbd>Spread</kbd>: The continuities assigned to a specific edge influence the surface shape through all the selected internal 
+            guide and profiles according to the continuity specified.<br>Therefore depending upon the continuity settings, the positions of 
+            the curves and the approximation settings, an oscillating result may be produced.<br><br>
+            <img height="167" src="b35doc/english/online/icmug_c2/images/Loft_AlignmentInfluenceSpread.gif" width="634"><br></li>
+          <li><kbd>Global</kbd>: The continuities assigned to a specific edge, influence entire surface shape. Depending upon the approximation 
+            settings the result accuracy to the guide and profile curve inputs can be lost.<br><br>
+            <img height="152" src="b35doc/english/online/icmug_c2/images/Loft_AlignmentInfluenceGlobal.gif" width="445"><br></li>
+            <table cellpadding="5" cellspacing="2">
+              <tr>
+                <td valign="top"><img height="32" src="b35doc/english/online/icons_C2/common/tips.gif" width="32"></td>
+                <td class="code" valign="top">Note: The images are for demonstration only and show exaggerated conditions.<br>&nbsp;</td>
+              </tr>
+            </table>
+          </li>
+        </ul>
+      </li>
+      <li><kbd>Adjust</kbd>: With these options you can determine which input elements shall have priority for the surface calculation.
+        <ul class="nd">
+          <li><kbd>Adjust to Guide</kbd>: The guides have most influence on the result.<br>The profiles are then used as a guide to assist in 
+            achieving the smoothest transition of the result between the guides. <br><br>
+            <img height="226" src="b35doc/english/online/icmug_c2/images/Loft_AdjustToGuides.gif" width="590"></li>
+          <li><kbd>Mean</kbd>: The result is calculated through the &#8220;mean&#8221; point between the intersection of all profiles and guides 
+            with the influence on achieving the smoothest interpolation in both U and V direction.<br><br>
+            <img height="234" src="b35doc/english/online/icmug_c2/images/Loft_AdjustMean.gif" width="609"></li>
+          <li><kbd>Adjust to Profile</kbd>: The profiles have most influence on the result.<br>The guides are then used as a guide to assist 
+            in achieving the smoothest transition of the result between the profiles.<br><br>
+            <img height="223" src="b35doc/english/online/icmug_c2/images/Loft_AdjustToProfiles.gif" width="590"></li>
+        </ul>
+        The approximation settings used will effect the accuracy of the result. Any deviation of the final result from the true mathematical 
+        result is displayed in the dialog box (button <kbd>More Info</kbd>...) and in the graphics.</li>
+      <li><kbd>Shape</kbd>: Specifies the shape of the surface, i. e. the transition type between the individual selected profiles.<br><br>
+        <table cellpadding="0" cellspacing="0">
+          <tr>
+            <td><p align="center"><u>Linear Shape<br></u><img height="137" src="b35doc/english/online/icmug_c2/images/sweep_05.gif" width="261"></p>
+            </td>
+            <td><p align="center"><u>Local Shape<br></u><img height="136" src="b35doc/english/online/icmug_c2/images/sweep_10.gif" width="257"></p>
+            </td>
+          </tr>
+          <tr>
+            <td><p align="center"><u>Smooth Shape<br></u><img height="135" src="b35doc/english/online/icmug_c2/images/sweep_11.gif" width="259"></p>
+            </td>
+            <td><p align="center"><u>Global Shape<br></u><img height="140" src="b35doc/english/online/icmug_c2/images/sweep_12.gif" width="258"></p>
+            </td>
+          </tr>
+        </table>
+      </li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="32">&nbsp;</td>
+    <td colspan="2" valign="top" width="1054">See <a href="page8765.html">Approximation tab</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="32">&nbsp;</td>
+    <td colspan="2" valign="top" width="1054">See <a href="page8766.html">Output tab</a></td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">Click &#39;More Info&#39; to display deviations and output results.</td>
+    <td valign="top"><img border="1" src="b35doc/english/online/icmug_c2/images/dbLoftSurface_more.gif"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2">
+    <ul class="st">
+      <li><kbd>Display</kbd>: Depending on the options selected, values are displayed in the graphics area.</li>
+      <li><kbd>U+V</kbd>: Display of the UV vectors of curves and surfaces.</li>
+      <li><kbd>Static, None</kbd>: See <a href="page8769.html">Apply Modes</a></li>
+      <li><kbd>Deviation</kbd>:
+        <ul class="nd">
+          <li><kbd>Guides</kbd>: Displays the maximum deviation of the Guide curves from its true mathematical position.</li>
+          <li><kbd>Profiles</kbd>: Displays the maximum deviation of the Profile curves from its true mathematical position.</li>
+          <li><kbd>Support G0...G3</kbd>: Displays the maximum deviation of the result from the support surfaces at the surface limits defined 
+            by the first and last Guide and Profile curves.<br><br>
+            <img height="220" src="b35doc/english/online/icmug_c2/images/Loft_DeviationGuideProfile.gif" width="413"><br></li>
+        </ul>
+      </li>
+      <li><kbd>Output Result</kbd>: See <a href="page8767.html">Output Result</a></li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3"><p align="center"><img height="32" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64"></p>
+    </td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

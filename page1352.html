@@ -1,0 +1,183 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Calculating and Checking a Volume</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+ </head>
+
+ <body>
+
+ <h1>Calculating and Checking a Volume</h1>
+ <p align="center"><img src="b35doc/english/online/basug_c2/images/KwrDesConfig2.gif" width="256" height="272"></p>
+ <p align="center"><font size="2"><b><i>Configuration 2</i></b><br>
+ &nbsp;of <a href="b35doc/english/online/basug_c2/samples/KwrProfilesDesignTable.xls">KwrProfilesDesignTable.xls</a><br>
+ applied to <a href="b35doc/english/online/basug_c2/samples/KwrBottleProfiles.CATPart">
+ KwrBottleProfiles.CATPart</a></font></p>
+ <p>The bottle we start from is described in <a href="page1357.html">Appendix: 
+ Creating a Deformable Revolution Body</a>. First of all, we want to be able to 
+ measure the bottle's volume, then each time the bottle's profile is modified, 
+ we want to be warned about whether the resulting volume is still in the&nbsp; 
+ [230 cm3 - 280cm3] range. To achieve this goal, we will be using two CATIA
+ <span lang="fr">K</span>nowledgeware capabilities, the <i>measures</i> and the
+ <i>checks</i>.<br>
+ Measures are functions provided by various applications such as Part Design or 
+ Generative Shape Design to compute data. These functions can be used in 
+ formulas as well as in rules and checks. They can be accessed from an 
+ interactive dictionary. Checks are relations that don't modify<u> </u>the 
+ document but just tell you whether certain specified criteria are fulfilled.</p>
+ <h2><font color="#282187">Specifying the Proper Settings</font></h2>
+ <p>Before going any further in the scenario developed in this Part, check the 
+ settings below:</p>
+ <div align="left">
+   <table border="0" cellpadding="5" cellspacing="5" width="100%">
+     <tr>
+       <td valign="top">
+       <ul>
+         <li>In <font face="Courier"><kbd>Tools&nbsp;&gt;&nbsp;Options&nbsp;&gt;&nbsp;General&nbsp;&gt;&nbsp;Parameters 
+         and Measure</kbd></font>. </li>
+       </ul>
+       <table border="0" cellpadding="0" cellspacing="0" width="100%">
+         <tr>
+           <td valign="top" width="100%">
+           <ul>
+             <li>In the <kbd><span lang="fr">Knowledge Environment</span></kbd> tab, the
+             <font face="Courier"><kbd>Load extended language libraries</kbd></font>&nbsp; 
+             box must be checked otherwise you won't be able to access the
+             <font face="Courier"><kbd>Measures</kbd></font> in the 
+             knowledgeware dictionary.</li>
+           </ul>
+           </td>
+         </tr>
+         <tr>
+           <td valign="top" width="100%">
+           <ul>
+             <li>In the <font face="Courier"><kbd>Knowledge</kbd></font> tab, 
+             check the <font face="Courier"><kbd>With Value</kbd></font><kbd> 
+             and </kbd><font face="Courier"><kbd>With Formula</kbd></font> check 
+             boxes.</li>
+           </ul>
+           </td>
+         </tr>
+         <tr>
+           <td valign="top" width="100%">
+           <ul>
+             <li>In the <font face="Courier"><kbd>Units</kbd></font> tab,&nbsp; 
+             specify <font face="Courier"><kbd>cm3</kbd></font> as the default 
+             volume unit.</li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+       </td>
+     </tr>
+     <tr>
+       <td valign="top">
+       <ul>
+         <li>In <font face="Courier"><kbd>Tools&nbsp;&gt;&nbsp;Options&nbsp;&gt;&nbsp;Infrastructure&nbsp;&gt;&nbsp;Part 
+         Infrastructure&nbsp;&gt;&nbsp;Display</kbd></font>, check at least the
+         <font face="Courier"><kbd>Relations</kbd></font> and
+         <font face="Courier"><kbd>Parameters</kbd></font> boxes. But it is 
+         recommended to check all the options below&nbsp;the specification tree 
+         settings.<span lang="fr"> Click <kbd>OK</kbd> to validate.</span></li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+ </div>
+ <h2><font color="#282187">Calculating the Bottle Volume</font></h2>
+ <ol class="task">
+   <li>
+   <p class="task">Open the <a href="b35doc/english/online/basug_c2/samples/KwrThickSurface.CATPart">
+   KwrThickSurface.CATPart</a> document.</li>
+   <li>
+   <p class="task">Click the&nbsp;<img src="b35doc/english/online/icons_C2/images/I_FormulaP2.gif" width="24" height="24"> 
+   icon or select the <font face="Courier"><kbd>Tools&nbsp;&gt;&nbsp;Formula</kbd></font> 
+   command from the standard menu bar. The &quot;<font face="Courier"><kbd>Formula</kbd></font>&quot; 
+   dialog box is displayed.</li>
+   <li>
+   <p class="task">Select the <font face="Courier">Volume</font> item in the
+   <font face="Courier"><kbd>New Parameter of type</kbd></font> list. Then click
+   <font face="Courier"><kbd>New Parameter of type</kbd></font>. A parameter 
+   called Volume.1 is displayed and highlighted in the parameters list.</li>
+   <li>
+   <p class="task">In the <font face="Courier"><kbd>Edit name or value of the 
+   current parameter</kbd></font> field, replace the Volume.1 name with 
+   BottleVolume.&nbsp;<span lang="fr">Click the <kbd>Add Formula</kbd> button.</span></li>
+   <li>
+   <p class="task">In the dictionary, select the <font face="Courier"><kbd>
+   Measures</kbd></font> item, then double-click <font face="Courier"><kbd>
+   Volume</kbd></font> in the measure list. If need be, add parentheses after 
+   the function name in the formula editor. At this stage the formula must be:<br>
+   <font face="Courier10 BT"><kbd>BottleVolume = volume()</kbd></font></li>
+   <li>
+   <p class="task">Position the cursor between the parentheses and capture the 
+   joined surface (Join.1) definition from the specification tree. To do this, 
+   just double-click the Join.1 feature. The formula definition you should get 
+   in the editor is something like:<br>
+   <font face="Courier10 BT"><kbd>BottleVolume = volume (<span lang="fr">Geometrical 
+   Set.1</span>\Join.1)</kbd></font></li>
+   <li>
+   <p class="task">Click <font face="Courier"><kbd>OK</kbd></font> in the 
+   Formula Editor.&nbsp;You are back to the <font face="Courier"><kbd>Formulas</kbd></font> 
+   dialog box. The new formula is displayed in the parameter list opposite the 
+   BottleVolume parameter. It is also displayed in the specification tree under 
+   the Parameters and Relations nodes. Click <font face="Courier"><kbd>OK</kbd></font> 
+   again in the <font face="Courier"><kbd>Formulas</kbd></font> dialog box to 
+   exit the <font face="Courier"><kbd>Formulas</kbd></font> dialog.<br>
+   <img src="b35doc/english/online/basug_c2/images/KwrTipFormula.gif" vspace="9" width="439" height="297"></li>
+ </ol>
+ <h2><font color="#282187">Checking the Volume Value</font></h2>
+ <ol class="task">
+   <li>
+   <p class="task">Select the document root feature, then access the Knowledge 
+   Advisor workbench.&nbsp;<br>
+   To do this, select the <nobr><font face="Courier"><kbd>Start&nbsp;&gt;&nbsp;<span lang="fr">Knowledgeware</span>&nbsp;&gt;&nbsp;Knowledge 
+   Advisor</kbd></font></nobr> command from the tool bar.</li>
+   <li>
+   <p class="task">Click the
+   <img border="0" src="b35doc/english/online/basug_c2/images/KwrCheckEditorP2.gif" width="24" height="24"> 
+   icon to display the Check Editor. In the first dialog box, replace the 
+   default name with VolumeCheck. Click <font face="Courier"><kbd>OK</kbd></font>. 
+   The Check Editor is displayed.&nbsp;</li>
+   <li>
+   <p class="task">Define your check. To do this:
+   <ol type="a">
+     <li>
+     <p class="task">Select <font face="Courier"><kbd>Information</kbd></font> 
+     or <font face="Courier"><kbd>Warning</kbd></font> in the
+     <font face="Courier"><kbd>Type of Check</kbd></font> list.</li>
+     <li>
+     <p class="task">Enter the string &quot;Volume out of range&quot; in the message 
+     field.</li>
+     <li>
+     <p class="task">Enter the statement below in the edition window:<br>
+     <nobr><font face="Courier"><code>(BottleVolume &gt; 230 cm3) and (BottleVolume 
+     &lt; 280 cm3)&nbsp;</code></font></nobr></li>
+   </ol>
+   </li>
+   <li>
+   <p class="task">Click <font face="Courier"><kbd>OK</kbd></font> to exit the 
+   dialog box and add the check to the document.&nbsp; In the specification 
+   tree, the check icon is green.</p>
+   <table border="0" cellspacing="1">
+     <tr>
+       <td>
+       <img border="0" src="b35doc/english/online/basug_c2/images/KwrTipVolumeCheck.gif" width="425" height="309"></td>
+     </tr>
+   </table>
+   </li>
+ </ol>
+ <p style="margin-right: 21">The&nbsp;resulting document is
+ <a href="b35doc/english/online/basug_c2/samples/KwrVolumeCheck.CATPart">KwrVolumeCheck.CATPart</a>. </p>
+
+ </body>
+
+</html>
+

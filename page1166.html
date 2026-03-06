@@ -1,0 +1,202 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="C2D2E2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Migrating Vault Data to File Collaboration Server</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style type="text/css">
+.style2 {
+	margin-left: 40px;
+}
+</style>
+ </head>
+
+ <body>
+
+ <h1>Migrating Vault Data to File Collaboration Server</h1>
+ <table Border="0" CELLSPACING="0" valign="top">
+   <tr valign="top" BORDER="0">
+     <td valign="top" style="width: 92px; height: 186px;">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td style="height: 186px">
+     <a name="ix-distributing code on UNIX::accessing code over the network">
+     A &quot;FCSMigration&quot; batch tool is provided</a> to migrate the existing data from 
+		ENOVIA vault to File 
+	 Collaboration Server (FCS).<br>
+		<br>
+		The migration tool can only be run by a user assigned with 
+		Administrator privileges and access rights to update various ENOVIA V5 
+		tables (VPMDocFile, 
+		V514TechPackVersion, VPMNavRep_VaultItem, VPMSpacemapProperty, and 
+		VPMContext) and the new FCS tables. <br>
+		<br>
+		This tool manages the migration seamlessly by mapping the ENOVIA V5 
+		vault metadata and the FCS metadata so that you can start using FCS 
+		after the migration.<p>Before running the &#8220;FCSMigration&#8221; batch tool, update the Config.xml and 
+		dbinfo.properties files that are located at <em>&lt;installdir&gt;\&lt;OS&gt;\code\bin</em></p>
+		<p>When the ENOVIA vault data is migrated to File Collaboration Server, 
+		you cannot use the same migrated data in the ENOVIA vault.</p>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" style="width: 92px">&nbsp;</td>
+     <td>
+     <h2>Updating the Configuration File</h2>
+     </td>
+   </tr>
+	<tr>
+     <td valign="top" style="width: 92px; height: 380px;">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td style="height: 380px">
+		<p>Edit the Config.xml file with the following installation parameters:</p>
+     <p>The configuration file provides the details about the mapping of the 
+	 vault server and the vault location to the new FCS store.<ul>
+		 <li><strong>properties</strong> - Root node to define the properties of 
+		 mapping.</li>
+		 <li><strong>vaultmapping</strong> - Node representing each mapping 
+		 between vault and FCS.</li>
+		 <li><strong>vaultserver</strong> - Name of the vault server.</li>
+		 <li><strong>vaultloc</strong> - Absolute path of the vault server where 
+		 physical files are present.</li>
+		 <li><strong>fcsserver</strong> - Name of the FCS store for the vault 
+		 server which need to be migrated.</li>
+	 </ul>
+	   <p class="style2">
+			<img src="b35doc/english/online/basil_c2/images/MigConfiguration.gif" width="422" height="247"></p>
+     </td>
+   </tr>
+	<tr>
+     <td valign="top" style="width: 92px; height: 78px;">&nbsp;</td>
+     <td style="height: 78px">
+     <h2>Updating the dbinfo.properties File</h2>
+     </td>
+   </tr>
+	<tr>
+     <td valign="top" style="width: 92px; height: 78px;">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td style="height: 78px">
+		<p>Edit the dbinfo.properties file with the following installation 
+		parameters:</p>
+		<p>For Oracle:<br>
+		jdbcurl=jdbc:oracle:thin:@&lt;SDAMServerInstallationMachine&gt;:&lt;ListenPort&gt;:&lt;DBNAME&gt;<br>
+		user=&lt;fcs_admin&gt;<br>
+		password=&lt;fcs_admin_password&gt;<br>
+		DB=oracle</p>
+		<p>For DB2:<br>
+		jdbcurl=jdbc:db2://&lt;SDAMServerInstallationMachine&gt;:&lt;TCP Port for DB2 
+		service&gt;/&lt;DB Name&gt;<br>
+		user=&lt;fcs_admin&gt;<br>
+		password=&lt;fcs_admin_password&gt;<br>
+		DB=DB2 or db2 or ibm<br>
+		</p>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" style="width: 92px">&nbsp;</td>
+     <td>
+     <h2>Running the Migration Tool</h2>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" style="width: 92px">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+		<p>&nbsp;</p>
+		<p>The &#8220;FCSMigration&#8221; batch file is located at <em>&lt;installdir&gt;\&lt;OS&gt;\code\bin</em>. 
+		Run the migration tool providing certain parameters like the following:</p>
+		<p><strong>In Simul Mode</strong>:</p>
+		<p><em>FCSMigration.bat -StartDate &lt;DD-MMM-YYYY&gt; -EndDate &lt;DD-MMM-YYYY&gt; -OutDir 
+		&quot;&lt;Absolute Path to output directory&gt;&quot; -InputFile &quot;&lt;Absolute 
+		path to the Config.xml file&gt;&quot; -simul</em></p>
+		<p>The output shows the number of documents that will be processed if 
+		the tool is run with the same input parameters in the non simul mode.</p>
+		<p><strong>In Actual or Non-simul Mode</strong>:</p>
+		<p><em>FCSMigration.bat -StartDate &lt;DD-MMM-YYYY&gt; -EndDate &lt;DD-MMM-YYYY&gt; -OutDir 
+		&quot;&lt;Absolute Path to output directory&gt;&quot; -InputFile &quot;&lt;Absolute path to the 
+		Config.xml file&gt;&quot;&nbsp;</em></p>
+		<p>The output file shows the status of the documents that are migrated to FCS.</p>
+		<p>For example,&nbsp;</p>
+		<p><em>
+	 FCSMigration.bat -StartDate 03-MAR-2020 -EndDate 04-MAR-2021 -OutDir 
+	 &quot;C:\temp&quot; -InputFile &quot;C:\temp\Config.xml&quot;</em></p>
+		<p>The description of the parameters used while running the migration 
+		tool are as follows:&nbsp;</p>
+	 
+	 <ul>
+		 <li>
+		 <div>
+			 -<b>StartDate</b> - The date in DD-MMM-YYYY format that indicates 
+				the created date of documents. </div>
+		 </li>
+		 
+		 <li>
+		 <div>
+			 -<strong>EndDate</strong> - The date in DD-MMM-YYYY format that 
+				indicates the last modified date of documents.</div>
+		 </li>
+	 </ul>
+	 <div>
+		 <strong>Note</strong>: This date is inclusive that means the documents, 
+			which are created or updated on this EndDate will be considered for 
+			migration. </div>
+	 <ul>
+		 <li>-<strong>InputFile - </strong>&nbsp;Absolute path of the Config.xml file.</li>
+		 <li>-<strong>simul</strong> - The simulation mode. Displays the number 
+		 of documents that are considered for migration. This is the optional 
+			parameter.</li>
+		 <li>-<strong>OutDir</strong> - The existing absolute path on which the 
+		 output is generated.</li>
+		 <li>-<strong>help</strong> - Displays the help.</li>
+	 </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" style="width: 92px">&nbsp;</td>
+     <td>
+	 <h2>Output</h2>
+	   </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" style="width: 92px">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td rowspan="1"><br>
+		When you run the migration tool, the following output files 
+	 are generated in the OutDir location. <br>
+     <ul>
+       <li><strong>ImportedData.xml</strong> &#8211; This file consists of the vault OIDs 
+	   from the <em>VAULTDOCUMENT</em> table that indicates whether the 
+		attributes related to these OIDs are inserted in the FCS tables. If the 
+		status value is <em>TRUE, </em>the&nbsp;OIDs are inserted successful. If the 
+		status value is <em>FALSE</em>, check the migration tool traces to verify 
+		the failed OIDs. You can also check 
+	   the failed OIDs in the UpdateResults.xml. </li>
+     </ul>
+		<p><img src="b35doc/english/online/basil_c2/images/ImportData.gif" width="524" height="213"></p>
+		<ul>
+       <li><strong>UpdateResults.xml</strong> &#8211; This file consists of the name of a 
+	   document and the OID from the tables such as VPMDocFile, 
+	   V514TechPackVersion, VPMNavRep_VaultItem, VPMSpacemapProperty, and 
+	   VPMContext. If status is &#8220;<em>SUCCESS</em>&#8221;, the document is 
+	   migrated&nbsp;successfully. If status is &#8220;<em>FAILED</em>&#8221;, the 
+		reason for the failed migration is provided in the file.</li>
+     </ul>
+		<p><img src="b35doc/english/online/basil_c2/images/MigUpdateResult.gif" width="513" height="134"></p>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="2" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" border="0" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+
+</html>
+

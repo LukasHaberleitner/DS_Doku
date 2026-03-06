@@ -1,0 +1,195 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Importing DLName Settings in Batch Mode</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Importing DLName Settings in Batch Mode</h1>
+ <table Border="0" CELLSPACING="0" valign="top" height="1238">
+   <tr>
+     <td valign="top" height="34">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top" height="34">
+     <a name="ix-DLNames::importing DLName settings in batch mode"></a>This 
+     section explains how to use the CATSysDLExport batch tool to implement a 
+     data storage strategy for a large number of users, based on the DLName 
+     mechanism.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="41"></td>
+     <td valign="top" height="41">
+     <h2><font color="#282187">
+     <a name="ix-DLNames::importance of DLNames to administrators"></a>How 
+     Administrators Can Exploit the DLName Mechanism</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="224"></td>
+     <td valign="top" height="224">To avoid anarchy, as a data administrator you 
+     can exploit the DLName mechanism to prevent end users (on a given machine 
+     and using the same Version 5 environment) from reading and writing 
+     documents anywhere they like.<p>To do so, you start Version 5 in 
+     administration mode, set up the DLNames, then lock them as described in
+     <a href="page1201.html">Setting Up DLNames in Administrator Mode</a>. 
+     This also means that you have to export the DLNames to a .txt file.</p>
+     <p>You can then:</p>
+     <ul>
+       <li>if you have a small number of end users, import the .txt file 
+       containing the DLNames (but the DLNames will not be locked)</li>
+       <li>or, use the <b><code>CATSysDLExport </code></b>batch: you can write a 
+       script using this batch syntax to automate the process and distribute the 
+       DLNames over a large number of machines; the batch provides an option 
+       ensuring that the imported DLNames are locked.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="64">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" height="64">Once the file containing the DLNames has been 
+     imported in batch mode, end users must first activate DLName mode by 
+     selecting the <kbd>Tools&nbsp;&gt;&nbsp;Options... </kbd>command, then the Document tab 
+     in the <kbd>General</kbd> category, then the DLName option in the Document 
+     Environment list, and finally by clicking the Configure... button to 
+     display the Configure dialog box.</td>
+   </tr>
+   <tr>
+     <td width="62" valign="top" height="36"></td>
+     <td width="898" valign="top" height="36">
+     <h3><font color="#282187">On Windows</font></h3>
+     </td>
+   </tr>
+   <tr>
+     <td width="62" valign="top" height="56"></td>
+     <td width="898" valign="top" height="56">Run the program:
+     <p><code>
+     <strong>WindowsInstallPath</strong>\win_b64\code\bin\CATSysDLExport.exe 
+		(64-bit code on Windows, x64 Edition)<br>
+     <strong>WindowsInstallPathx86</strong>\intel_a\code\bin\CATSysDLExport.exe 
+     (32-bit code on Windows, x64 Edition)</code></td>
+   </tr>
+   <tr>
+     <td width="62" valign="top" height="36"></td>
+     <td width="898" valign="top" height="36">
+     <h3><font color="#282187">On UNIX</font></h3>
+     </td>
+   </tr>
+   <tr>
+     <td width="62" valign="top" height="32">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="898" valign="top" height="32">1. Log on as root.</td>
+   </tr>
+   <tr>
+     <td width="62" valign="top" height="54"></td>
+     <td width="898" valign="top" height="54">2. Enter the command:<p><code>
+     <strong>UNIXInstallPath</strong><font color="#976970">/OS/code/command/<b>catstart 
+     -run CATSysDLExport</b></font></code></td>
+   </tr>
+   <tr>
+     <td valign="top" height="36"></td>
+     <td valign="top" height="36">
+     <h3><font color="#282187"><a name="ix-commands::CATSysDLExport"></a>
+     <a name="ix-DLNames::CATSysDLExport command"></a>CATSysDLExport Command 
+     Syntax<a name="ix-CATSysDLExport command"></a></font></h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="86"></td>
+     <td valign="top" height="86"><b><code><br>
+     CATSysDLExport -admin -il filename -r ReportFile</code></b><p>to import 
+     file <i>filename</i> with the current DLNames, only in admin mode, and lock 
+     all the DLNames in the file (the option -il is available only in admin 
+     mode); a report file is generated to log the encountered problems</td>
+   </tr>
+   <tr>
+     <td valign="top" height="86"></td>
+     <td valign="top" height="86"><b><code><br>
+     CATSysDLExport [-admin] -i filename -r ReportFile</code></b><p>to import 
+     the file <i>filename</i> with the current DLNames, either in user mode or 
+     in admin mode; a report file is generated to log the encountered problems</td>
+   </tr>
+   <tr>
+     <td valign="top" height="173"></td>
+     <td valign="top" height="173"><b><code><br>
+     CATSysDLExport -a DLName 'NTPath' UPath<br>
+     or:<br>
+     CATSysDLExport -a DLName &quot;NTPath&quot; UPath</code></b>
+     <p>to add the DLName with the values NTPath and UPath for the current real 
+     UNIX and Windows path.</p>
+     <p>Note that the <i>CATSysDLExport</i> command behaves like a standard UNIX 
+     or Windows command: names including blanks should be surrounded by single 
+     ('&nbsp; ') or double (&quot; &quot;) quotation marks. Backslashes (\) should be 
+     doubled (\\).</td>
+   </tr>
+   <tr>
+     <td valign="top" height="87"></td>
+     <td valign="top" height="87"><b><code><br>
+     CATSysDLExport -d DLName</code></b><p>to remove the DLName from the current 
+     settings<br>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="54"></td>
+     <td valign="top" height="54"><b><code>CATSysDLExport [-admin] -e filename</code></b>
+     <p>to export the current DLNames to the file <i>filename</i>, either in 
+     user mode or in admin mode.</p>
+     <p>The <code>-</code><b><code>nocheck </code></b><font color="#000000">
+     option<b> </b>avoids checking the existence of the physical paths and their 
+     possible creation.</font></td>
+   </tr>
+   <tr>
+     <td valign="top" height="70"></td>
+     <td valign="top" height="70"><b>Notes</b><ul>
+       <li>The text file must be suitable for the platform on which the import 
+       is to be performed, consequently with carriage returns followed by a line 
+       feed (CRLF) on Windows, and just line feeds (LF) on UNIX. Therefore, if 
+       you use Notepad to create it, use either Windows directly or transfer it 
+       in FTP ASCII mode to UNIX before using it.</li>
+       <li>If you import a first file containing, for example, DLName1 and 
+       DLName2, then import another file containing DLName3, the additional 
+       DLName3 will be added to the settings, so you will now have three DLNames 
+       to choose from.</li>
+       <li>The format of the file to be imported (exported when configuring the 
+       DLNames interactively) is like this:<br>
+       <code>...<br>
+       DLName1;C:\MyDLnames;/tmp;<br>
+       DLName2;E:\AdditionalDLNames;/tmp;<br>
+       ...<br>
+       </code><font color="#000000">where the first part contains the DLName, the second part contains the path on Windows, and the third part contains 
+       the path on UNIX.</font></li>
+       <li>No previously existing DLName will be updated during the import in 
+       user mode. These DLNames in the import file will be skipped, and can be 
+       updated only in administrator mode. This means that, for example, if the 
+       first file you import contains DLName2, and the second file also contains 
+       DLName2, but the path for DLName2 is different in the second file from 
+       the value in the first file, the path for DLName2 will be updated in the 
+       settings if imported in administrator mode.</li>
+       <li>If a previously existing DLName did not have a lock, but is then 
+       updated with a lock by using the -il option, , the settings will be 
+       locked.</li>
+       <li>For the changes to take effect after importing a file, you have to 
+       stop then restart Version 5.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2" height="35">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+
+ </body>
+
+</html>
+

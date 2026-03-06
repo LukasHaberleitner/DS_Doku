@@ -1,0 +1,904 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta HTTP-EQUIV="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Setting Up the Vault Server</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Setting Up the Vault Server</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td colspan="2">This section explains how to set up a vault server using 
+     both interactive and batch tools.<p>It contains enough information to get 
+     you through the vault deployment stage during installation. 
+		Vault (64-bit) is supported on AIX 
+		platforms. For more detailed information about the vault, refer to
+       <a href="page1217.html">Setting Up Vault Servers and Clients</a>. </p>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img title="" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td colspan="2">
+    When using DB2 9.7, the administrator of the 
+		instance may not have sufficient DB2 security privileges to perform the 
+		V5 setup, if the database got created using a different DB2 userid. &nbsp;It 
+		is advisable to use this latest userid &nbsp;when running the installation 
+		procedures.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td colspan="2">
+     <h2>Procedure</h2>
+     <ol>
+       <li>You can start the vault server administration tool in either of two 
+       ways.<br>
+		<p>If you are still in the installation procedure, and if you 
+       selected the Vault Administration configuration, the <kbd>Vault Setup
+       </kbd>dialog box appears AFTER the <kbd>PLMDBSetup</kbd> step.</p>
+       <p>Or, if the installation is finished:</p>
+       <p>Log on as root, open a shell window, go to the following installation 
+       directory:</p>
+       <p><code><strong>UNIXInstallPath</strong>/OS/code/command</code></p>
+       <p>where&nbsp; &quot;OS&quot; is:<ul>
+         <li>aix_a</li>
+         <li>aix_a64</li>
+       </ul>
+       <p>and enter the command:<br>
+       <br>
+       <code>./catstart -run <a name="ix-VaultSetup command"></a>VaultSetup<a name="ix-commands::VaultSetup"></a></code><br>
+&nbsp;</p>
+		</li>
+       <li>Because you have not yet created a vault server, in the <kbd>Vault Setup
+       </kbd>dialog box click <kbd>Add...</kbd>.
+       <p>The <kbd>Vault Server Authentication</kbd> dialog box appears.</p>
+       <p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/UNIX_VaultSetupAuthentication_NLS.gif" width="330" height="270"><br>
+&nbsp;</li>
+       <li>Provide the vault administrator userid and password.<p>The vault administrator can 
+       be any operating system userid recognized on the computer on which you 
+       are creating the vault server. This userid is the same as the userid to 
+       which the vault server process belongs. Furthermore, the files created in 
+       the vault by applications will be owned by this userid. </p>
+       <p>The Vault Administrator:<ul>
+         <li>must have the privileges to administrate the vault (the user must 
+         have write authorization on the vault directories)</li>
+         <li>must already exist as a system user.</li>
+       </ul>
+       <h3>Vault Identification<br>
+&nbsp;</h3>
+       </li>
+       <li>Click <kbd>OK</kbd> to continue to the <kbd>Vault Server Add </kbd>
+		dialog box.<p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/UNIXInstallVaultServerAdd_NLS.gif" width="715" height="576"></p>
+       <h4>Vault Server Name</h4>
+       <p>The <kbd>Vault server name</kbd> is the way for vault client 
+       applications to identify a vault server. A vault client application needs 
+       three items of information to connect to a vault server:<ul>
+         <li>the Orbix service name under which the vault server is registered 
+         via Orbix</li>
+         <li>the Orbix listening port on the remote machine where the vault 
+         server is running</li>
+         <li>the remote machine name.</li>
+       </ul>
+       <p>The vault client properties file (set up when installing a vault 
+       client) is used to provide the link between a given vault server name and 
+       the three items of information identifying a given vault server.</p>
+       <p>The default server name is ENOVIAVaultServer, but can be customized.</p>
+       <h4>Vault administrator</h4>
+       <p>The userid of the <kbd>Vault administrator</kbd> you entered in the 
+       Vault Server Authentication dialog box is displayed for information 
+       purposes.</p>
+       <h4>Server hostname</h4>
+       <p>The <kbd>server hostname</kbd> is the name of the machine on which you 
+       are creating the vault server.</p>
+       <h4>Orbix daemon port</h4>
+       <p>The Orbix daemon will listen on the specified <kbd>Orbix daemon port</kbd> 
+       on the machine hosting the vault server. This value is the initial value 
+       entered during the unload step in the installation procedure.</p>
+       <p><b>Warning:</b> When attempting to install an 
+       <strong>ENOVIAV5VPM</strong> server and a Vault 
+       server on the same machine, the administrator may be allowed to specify 
+       two different port numbers for the servers. If you do so, the application 
+       does not work afterwards. This is particularly important since the vault 
+       server and <strong>ENOVIAV5VPM</strong> server can be more easily installed separately, that is on 
+       two different server paths, which implies two different port numbers.</p>
+       <h4>Thread number</h4>
+       <p>Set the <kbd>thread number</kbd>, which is the number of threads 
+       waiting for client requests. A vault server can answer several vault 
+       client applications simultaneously. This number specifies the number of 
+       simultaneous requests that can be processed. The default is 2. 
+       Multi-processing capacity depends on the number of processors on the 
+       workstation.</p>
+       <h4>Timeout</h4>
+       <p>Set the <kbd>timeout value</kbd> in minutes. The timeout is applied if 
+       the vault server does not receive a request from a vault client after the 
+       specified period of time starting when the last connection to the Vault 
+       server was closed. The default is 900 minutes.</p>
+       <h4>Time zone offset</h4>
+       <p>Set the <kbd>time zone offset</kbd> in hours. The server time zone 
+       offset (in milliseconds) is used for document creation and modification 
+       dates. For example, if you set the value to 3600000, the server time zone 
+       is GMT+1 hour.<br>
+&nbsp;</li>
+       <li>Click the <kbd>Database setup...</kbd> button to access the Vault 
+       Server Database dialog box, then check the DB2 or Oracle option to 
+       specify which database you are working with, fill in the fields, and set 
+       the desired options.<h3>Database Setup</h3>
+       <p>Each vault server requires its own data structure in the database. 
+       During this step, you are going to create tables in the database to 
+       support the vault server.</p>
+       <p>The options specific to your database are displayed.</p>
+       <p><b>Note that, before entering this phase, you must have already 
+       created a database on DB2 or Oracle. If you already created a database 
+       intended to be used for the </b><kbd>PLMDBSetup</kbd><b> procedure, 
+       you can use that database here.</b></p>
+       <p><b>Note that a tablespace also has to be created first before you 
+       enter this phase.</b></p>
+       <h3>For DB2</h3>
+       <p>The <kbd>Vault Server Database </kbd>dialog box looks like this for DB2:</p>
+       <p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/InstallVaultServerDatabaseDB2UNIX_NLS.gif" width="567" height="705"></p>
+       <h3>Options Specific to DB2</h3>
+           <h4>DB2 install path</h4>
+           <p>Click the <kbd>Browse...</kbd> button to select the DB2 install 
+			path. This install path must contain:</p>
+		<p><code>instance/db2ilist</code></p>
+		<p>Selecting the install path automatically detects the DB2 
+			instance, Database alias name and Database directory. </p>
+           <h4>DB2 instance</h4>
+           <p>Click on the selection button to select the DB2 instance. </p>
+       <h4>Database alias name</h4>
+       <p>Select the database alias name for the chosen DB2 instance.</p>
+       <p><b>Note</b>: All available database alias names, remote as well as local, 
+		will appear in the selection list.</p>
+       <h4>Database directory</h4>
+       <p>If the database directory of the chosen database alias is LOCAL, the database directory field will contain its path. Note that due to a 
+       DB2 problem, if you want to use a local database, you must previously 
+       catalog it in remote node.</p>
+       <p>If the database 
+		directory of the chosen database alias is REMOTE, the database 
+		directory field will simply specify the text REMOTE.</p>
+       <h4>Database table owner</h4>
+           <p>The Database table owner is known in the database, but is not known in 
+           <strong>ENOVIA LCA</strong>.</p>
+       <h3>For Oracle</h3>
+       <p>The <kbd>Vault Server Database</kbd> dialog box looks like this for Oracle:</p>
+       <p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/InstallVaultServerDatabaseOracleUNIX_NLS.gif" width="567" height="705"></p>
+       <h4>Options Specific to Oracle</h4>
+		<h4>Oracle home directory</h4>
+       <p>Click the <kbd>Browse... </kbd>button and browse to select the home directory of 
+       the Oracle installation if it is not already detected automatically.</p>
+       <h4>Database service name</h4>
+       <p>Oracle clients communicate with Oracle servers through service names, 
+       which are easy-to-remember aliases for database addresses. Service names 
+       can be resolved using various methods:<ul>
+         <li><b>Local Naming method</b>: resolves service names using a local 
+         configuration file (TNSNAMES.ORA, SQLNET.ORA, LISTENER.ORA).</li>
+         <li><b>Centralized Naming method</b>: resolves service names using 
+         Oracle Names (highly recommended to centrally administer large Oracle 
+         networks).</li>
+       </ul>
+       <p>To use the Local Naming method, check the TNS_ADMIN option (this is the default): the path of the 
+         default tnsnames.ora file containing the list of database service names 
+         is highlighted, but you can click the browse button and choose the file 
+         at a different location<p><b>Note</b>: If you don't check the above button, the Centralized 
+       Naming method will be used.</p>
+       <p>To use the Centralized Naming method:<ul>
+         <li>uncheck the TNS_ADMIN option</li>
+         <li>enter the database service name in this field.</li>
+       </ul>
+              <h3>Note about Oracle Userids</h3>
+              <p>For Oracle, do not choose userids starting with a numeric 
+       character, an error may occur. If you do, a warning message will prompt 
+				you to correct the problem.</p>
+              <h3>Options Common to Both DB2 and Oracle</h3>
+              <h4>Database table owner</h4>
+              <p>Enter the database table owner. This name is a database userid 
+            and is used as a prefix in the name of the vault tables. For 
+            example, if you enter VPMADM, the table name will be: 
+            VPMADM.VAULTDOCUMENT. The userid is the owner of the database 
+            structures created. The resources created in the database for the 
+            vault will belong to this owner.</p>
+              <p>For DB2, the owner name could be any database userid accepted by 
+            DB2, whereas the connection user must exist at the operating system 
+            level.</p>
+              <p>On Oracle, you have to provide a password. This password is not 
+            required in DB2.</p>
+              <h4>Vault database connection user</h4>
+       <p>For DB2, this is a system userid used by the vault to connect to the 
+            database. For Oracle, this is a user database. All connections to the database will be performed under 
+            this id (the main interest of this specific user being for remote 
+            database connectivity, since server authentication is being used). 
+            With a local database, it might identical to be the vault 
+            administrator.</p>
+       <h4>Password</h4>
+       <p>Enter the vault connection password.</p>
+       <h4>Database administrator</h4>
+       <p>Enter the user name of the database administrator.</p>
+       <p>The Database Administrator User:<ul>
+         <li>has the privileges to administrate the database</li>
+         <li>creates tablespaces (spaces for the data structures that will 
+         contain the data).</li>
+       </ul>
+       <h4>Password</h4>
+       <p>Enter the database administrator password.</p>
+              <p><b>Notes</b>: For <b>Oracle</b>, both the <kbd>Vault database connection user</kbd> 
+            and the
+       		<kbd>Database table owner </kbd>will have to exist as Oracle users 
+            (and will be created as such if needed), but do not have to exist at 
+            the operating system level.</p>
+       <h4>Database minimum pool size</h4>
+       <p>Minimum number of connections for the vault server database connection 
+       pool.</p>
+       <h4>Database maximum pool size</h4>
+       <p>Maximum number of connections for the vault server database connection 
+       pool.</p>
+       <h3>Tablespaces</h3>
+       <p><b>Reminder: </b>a tablespace has to be created first before you enter 
+		this phase. You cannot create one interactively at this stage (unlike 
+		during the ENOVIA database setup). Note that the table space for the 
+		vault does not require a size of 8K (unlike the ENOVIA database setup 
+		which does require a size of 8K). You can select the default tablespace, 
+		for example USERSPACE1, or the tablespace created by the ENOVIA database 
+		setup phase (if you already created the ENOVIA database). <br>
+&nbsp;</li>
+       <li>After filling in all the fields, click the <kbd>Tablespace...</kbd> 
+       button.<p><b>Note</b>: on Oracle, if you already performed a previous 
+       installation and created a table schema, and want to reuse the same 
+       schema, you will be prompted to reuse it. If so, click Yes. If you do not 
+       succeed, use the Oracle Enterprise Manager Console and delete the 
+       corresponding schema name. To delete, the schema name, you may first have 
+       to delete the tables in the schema.</p>
+       <p>The <kbd>Vault Server - Tablespace</kbd> dialog box looks like this, 
+				for example on <b>DB2</b>:</p>
+       <p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/UNIX_PLMDBSetupDB2Tablespace_NLS.gif" width="594" height="336"></p>
+       <p>and like this, 
+				for example on <b>Oracle</b>:</p>
+		<p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/UNIX_PLMDBSetupOracleTablespace_NLS.gif" width="478" height="307"></p>
+		<p>Select the tablespace and click OK, then click OK again.</p>
+       <p>This returns you to the <kbd>Vault Server - Add</kbd> dialog box, for 
+		example for <b>DB2</b>:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/UNIXInstallVaultServerAdd02DB2_NLS.gif" width="715" height="576"></p>
+       <p>and on <b>Oracle</b>:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/UNIXInstallVaultServerAdd02Oracle_NLS.gif" width="715" height="576"></p>
+       <p>The database type, database name and vault database connection user 
+       you just configured are now displayed next to the <kbd>Database setup...</kbd> 
+       button. </p>
+       <h3>Setting Up Repositories</h3>
+       <p>Data is stored in the vault server repository. A vault server 
+       repository is characterized by:<ul>
+         <li>its name</li>
+         <li>a tmp directory: when vault client applications create new 
+         documents, they are stored temporarily in this directory, and are 
+         written to a secured directory when saved</li>
+         <li>and a set of secured directories.</li>
+       </ul>
+       <p>These directories have to be on the same file system for a specific 
+       vault server repository to improve performance and reliability.<br>
+&nbsp;</li>
+       <li>Click the <kbd>Repositories setup...</kbd> button to access the <kbd>Vault 
+       Server Repositories</kbd> dialog box:<p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/InstallVaultServerRepositoriesUNIX_NLS.gif" width="752" height="479"><br>
+&nbsp;</li>
+       <li>Click the <kbd>Add...</kbd> button to access the <kbd>Repository Add</kbd> dialog box:<p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/InstallVaultServerRepositoriesAddUNIX_NLS.gif" width="751" height="523"></p>
+       <h4>Name</h4>
+       <p>Enter a name for the vault server repository.</p>
+       <h4>Path</h4>
+       <p>Click the <kbd>Browse...</kbd> button, double-click a directory in the 
+       list to select the repository path, then click OK. This path will contain 
+       the tmp and secured directories. You can select an existing directory or 
+       create a new one using the <kbd>Browse...</kbd> button.</p>
+       <p>If you have already created a directory used by another repository, 
+       you cannot choose the same directory used by the other repository, either 
+       in the same vault server or a different vault server, and either in the 
+       same installation or in a different installation.</p>
+       <h4>Tmp path</h4>
+       <p>Click the <kbd>Browse...</kbd> button, double-click a directory in the 
+       list to select the path of the temporary directory, then click OK. The 
+       directory must already exist. You can select an existing directory or 
+       create a new one using the <kbd>Browse...</kbd> button.</p>
+       <h4>Secured list</h4>
+       <p>Secured storage occurs when the saved documents are actually committed 
+       into the database.</p>
+       <p>The secured list displays the list of secured directories. To add a 
+       secured directory, click the <kbd>Add...</kbd> button, double-click a 
+       directory in the list to select the secured directory, then click OK. The 
+       secured directory must already exist. You can select an existing 
+       directory or create a new one using the <kbd>Browse...</kbd> button.</p>
+       <p>A warning will also inform you if the Repository's path contains 
+       something else other than the Tmp path and the Secured paths, however you 
+		can maintain your choice.</p>
+       <p>Select a directory and click the <kbd>Delete...</kbd> button to delete 
+       it.<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/InstallVaultServerRepositoriesAddUNIX02_NLS.gif" width="751" height="523"><br>
+&nbsp;</li>
+       <li>Click <kbd>OK</kbd> to confirm, and return to a summary of your repository 
+            setup in the <kbd>Repositories</kbd> dialog box which looks like 
+            this:<p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/InstallVaultServerRepositoriesConfirmUNIX_NLS.gif" width="752" height="479"><br>
+&nbsp;</li>
+       <li>Click the <kbd>Close</kbd> button.<p>If the user names you used for the <kbd>
+       Database schema name</kbd> and <kbd>Vault database connection user</kbd> 
+       exist already in the database, the following warning message appears:</p>
+       <p><code>The user xxx already exists in the database.<br>
+       Do you want to use this user?</code></p>
+       <p>If so, click <kbd>Yes</kbd>. If it does not exist, you will be prompted to create 
+       it later on.</p>
+       <p>The <kbd>Vault Server Add </kbd>dialog box now displays all the 
+		information you entered, and now looks like this, for example on DB2:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/InstallVaultServerUNIXAdd03DB2_NLS.gif" width="715" height="576"></p>
+		<p>&nbsp;</p>
+       </li>
+       <li>Check the appropriate global vault server administration options at 
+       the bottom of the dialog box.<h4>Read only</h4>
+		<p>Check the <kbd>Read only</kbd> option to set the entire vault to read 
+       only mode. This is useful when the vault is full and you want users to be 
+       able to continue to read data from the vault. Obviously, no documents can 
+       be saved in the vault in this mode.</p>
+		<h4>Remove files</h4>
+		<p>Check the <kbd>Remove files</kbd> option to trigger file deletion on 
+       disk. When you request a deletion operation using a vault client 
+       application (CATIA V5, 
+       	<strong>ENOVIAV5VPM</strong> lifecycle application, etc.), a line 
+       containing the instruction to remove the file is stored in the database: 
+       the file itself is not removed from the vault. This option must be 
+       checked if you want files to be physically removed. This option is 
+       checked by default.</p>
+		<h4>Log Removed Files</h4>
+		<p>Check the <kbd>Log removed files</kbd> option to trigger the logging 
+       of deletion operations requested by vault client applications. If you did 
+       not check the <kbd>Remove files</kbd> option, your files will remain in 
+       the vault. You can then use the log containing the list of deletion 
+       operations as input for your own deletion batch programs.</p>
+		<h4>Authorize NFS access</h4>
+		<p>Check the <kbd>Authorize NFS access</kbd> option to ensure that the 
+       authorization rights set for the vault directories are correctly set for 
+       NFS access. NFS access is an alternative enabling vault client 
+       applications to access the vault directly by the vault server. Refer to
+       	<a href="page1247.html">How to Set Up File Transfer Mode 
+       for the Vault</a> for details about different file transfer modes 
+       supported.<br>&nbsp;</li>
+		<li>Click <kbd>OK</kbd> again.<p>If this is the first time you are creating a vault, 
+       you will be prompted to create the user if the database. Click Yes to do 
+       so. If the user you declared already exists in the database, you may be 
+       prompted to choose whether you want to use this user. If so, click OK to 
+       confirm.</p>
+		<p>You then return to the <kbd>Vault Setup</kbd> dialog box:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/InstallVaultSetupFinalUNIX_NLS.gif" width="768" height="469"></p>
+		<p>Note that you can also modify an existing vault or delete a vault 
+       using the <kbd>Modify... </kbd>and <kbd>Delete...</kbd> buttons. You will 
+       be prompted to log on using the Vault Server Authentication dialog box.</p>
+		<h3>Modifying a Vault Server</h3>
+		<p>You can edit most vault server properties. However, you cannot select 
+       another database for your vault server: the corresponding options are 
+       grayed out in the <kbd>Database setup...</kbd> dialog box.</p>
+		<h3>Deleting a Vault Server</h3>
+		<p>If you attempt to delete a vault server, you will be warned that the 
+       catalogued entries for the vault server you want to delete will be 
+       deleted, along with the associated properties file, but the associated 
+       database and repositories will not be deleted. However, the 
+       ENOVIAVaultServer.imp file is deleted.</p>
+		<p>If there is only one vault server, you cannot delete it. If you 
+       attempt to do so, a warning will inform you that there must always be at 
+       least one default vault alias name.</p>
+		<p>The characteristics of the vault server you created are displayed in 
+       the Vault Setup dialog box.</li>
+		<li>Click the <kbd>Close</kbd> button to exit the vault setup.</li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p><b>Note:</b> creating the vault server does NOT start the vault 
+           server process.</p>
+           <p>The installation procedure then initializes the database setup 
+           process. Refer to
+           <a href="page1283.html#hj-enoviadbsetupUNIX">ENOVIA Database Setup Process</a> 
+           to continue with the installation.</p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2">
+           <h3>Vault Setup Log Files</h3>
+           <p>Vault setup log files are located in:</p>
+			<p><code>$HOME/VaultSetup.log</code></p>
+           <h3>Which Objects Are Created?</h3>
+           <p>Setting up a vault client and vault server creates the following 
+           objects:</p>
+           <ul>
+             <li>the vault database tables</li>
+             <li>the following files:<br>
+             <br>
+             <code>XXXVaultServer.properties<br>
+             VaultClient.properties</code><br>
+             <code>VaultLocalServerList.properties </code><br>
+             <br>
+             are created, where &quot;XXXVaultserver&quot; is the appropriate name of the 
+             vault server (Orbix service name) in:<p style="margin-top:12.0pt;tab-stops:.25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">
+             <code>install_dir/docs/java</code></p>
+             <p style="tab-stops: .25in .5in 1.0in 1.5in 2.0in 2.5in 3.0in">For 
+             example, the default vault server name and resulting file are 
+             named: <code>ENOVIAVaultServer.properties</code></li>
+             <li>the following files:<br>
+             <br>
+             <code>ENOVIAVaultServer.imp</code><br>
+             <br>
+             are created with the appropriate name (Orbix service name) in:<br>
+             <br>
+             <code>install_dir/startup/orbix/config/Repositories/ImpRep</code></li>
+           </ul>
+           <h3>Properties File Contents</h3>
+           <p>In a default installation, for example, the <code>ENOVIAVaultServer.properties 
+           </code>file looks like this:</p>
+           <p><code>## Vault Server Properties File </code></p>
+           <p><code>## Orbix parameters<br><b>VaultServer_Name = ENOVIAVaultServer</b><br>VaultServer_HostName = jane2dsy<br>VaultServer_DaemonPort = 1570<br>VaultServer_TimeOut = 54000000
+           </code></p>
+           <p><code>## Request execution parameters<br>VaultServer_ThreadNumber = 2<br>VaultServer_TimeZoneRawOffset = 0
+           </code></p>
+           <p><code>## Database connection pool parameters<br>VaultServer_DBMINPoolSize = 4<br>VaultServer_DBMAXPoolSize = 6
+           </code></p>
+           <p><code>## Database connection parameters<br>VaultServer_DBName = 
+			DBSESR19<br>VaultServer_DBVendor = Oracle<br>VaultServer_DBUser = SES<br>VaultServer_DBPassword = 252C252C
+           </code></p>
+           <p><code>## Other parameters<br>VaultServer_VaultAdministrator = ses<br>VaultServer_ReadOnly = false<br>VaultServer_LogRemovedFiles = false<br>VaultServer_RemoveFiles = true<br>VaultServer_AuthorizeNfsAccess = false<br>VaultServer_Trace = OFF
+           </code></p>
+           <p><code>## Repositories parameters<br>VaultServer_NumOfRepo = 1<br>VaultServer_DBSchema = SES<br>VaultServer_Repo_0_Name = MyRepo1<br>VaultServer_Repo_0_ReadOnly = false<br>VaultServer_Repo_0_Path = E:\\users\\ses\\MyRepo1<br>VaultServer_Repo_0_TmpDirName = tmp<br>VaultServer_Repo_0_NumOfSecDir = 2<br>VaultServer_Repo_0_SecDirName_0 = Secured<br>VaultServer_Repo_0_SecDirName_1 = secured2</code></p>
+           <p>The corresponding <code>VaultClient.properties </code>file looks 
+           like this:</p>
+           <p><code>## Vault Client Properties File </code></p>
+           <p><code>## File read protocol<br>VaultClient_ReadProtocol = 3<br>VaultClient_ReadProtocol_0 = CORBA<br>VaultClient_ReadProtocol_1 = NFS<br>VaultClient_ReadProtocol_2 = HTTP 
+           </code></p>
+           <p><code>## File write protocol<br>VaultClient_WriteProtocol = 2<br>VaultClient_WriteProtocol_0 = CORBA<br>VaultClient_WriteProtocol_1 = NFS
+           </code></p>
+           <p><code>## File transfer protocol activation<br>VaultClient_Active_ReadProtocol = CORBA<br>VaultClient_Active_WriteProtocol = CORBA
+           </code></p>
+           <p><code>## Data BlockSize parameter<br>VaultClient_BlockSize = 1048576
+           </code></p>
+           <p><code>## Trace parameter<br>VaultClient_Trace = OFF </code></p>
+           <p><code>## Default alias name<br>VaultClient_DefaultAliasName = <b>ENOVIAVaultServer</b><br>## Vault server alias ENOVIAVaultServer<br>VaultClient_<b>ENOVIAVaultServer</b>_ReadVaultServerName = 
+           ENOVIAVaultServer<br>VaultClient_<b>ENOVIAVaultServer</b>_ReadVaultServerHostName = 
+           jane2dsy<br>VaultClient_<b>ENOVIAVaultServer</b>_ReadVaultServerDaemonPort = 1570<br>VaultClient_<b>ENOVIAVaultServer</b>_WriteVaultServerName = 
+           ENOVIAVaultServer<br>VaultClient_<b>ENOVIAVaultServer</b>_WriteVaultServerHostName = 
+           jane2dsy<br>VaultClient_<b>ENOVIAVaultServer</b>_WriteVaultServerDaemonPort = 
+           1570</code></p>
+           <p>the corresponding <code>VaultLocalServerList.properties </code>contains the vault server alias name:</p>
+           <p><code><b>ENOVIAVaultServer</b></code></p>
+           <p>and the <code>ENOVIAVaultServer.imp </code>file containing the 
+           name of the Orbix service name looks like this:</p>
+           <p><code>Name : ENOVIAVaultServer <br>Comms : cdr/tcp <br>Activation : shared 
+           <br>Owner : ses<br>Launch : ;all;<br>Invoke : ;all;<br>ImpRep Version : 2<br>no. of servers : 1<br>server's port : 0 
+           </code></p>
+           <p><code>Marker Launch Command </code></p>
+           <h4>How to deal with Multiple Network Domain Names </h4>
+           <p>Use the full qualified name in the VaultClient.properties file on 
+           client side in order to avoid the problem of network domain name 
+           resolution. For instance, if the Vault server machine name is &quot;reverdsy&quot; 
+           and the network domain name is &quot;ds.dsy&quot;, you should replace &quot;reverdsy&quot; 
+           in the VaultClient.properties file by &quot;reverdsy.ds.dsy&quot;.</p></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2">
+     <h2><a name="hj-VaultBatchTools"></a>Setting Up the Vault Server and Client 
+     in Batch Mode</h2>
+     <h3>Setting Up the Vault Server</h3>
+     <p>The batch tool provides the same functions as the interactive tool, with 
+     some minor exceptions indicated below.</p>
+     <ol>
+       <li>Log on as root.</li>
+       <li>Enter the command:</li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p><code>
+           <strong>UNIXInstallPath</strong>/OS/code/command/<b>catstart -run
+           </b><strong>VaultServerSetupB</strong></code></p>
+           <p>where&nbsp; &quot;OS&quot; is:</p>
+           <ul>
+             <li>aix_a</li>
+				<li><blink>aix_a64</blink></li>
+           </ul>
+           <p>with the appropriate arguments.</p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <h3>Command Syntax</h3>
+     <p><code><strong><a name="ix-VaultServerSetupB command"></a></strong><b>
+     VaultServerSetupB</b><strong><a name="ix-commands::VaultServerSetupB"></a></strong></code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><code><b>-list </b></code></td>
+     <td><code>[VaultServerName | -a]</code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><code><b>-add </b></code></td>
+     <td><code>VaultServerName -adm domain@VaultAdministrator:password<br>
+		[-thread ThreadNumber] [-timeout TimeOut] [-offset TimeZoneOffset]<br>
+		-db_vendor db2|oracle<br>
+		-db2_path DB2InstallPath<br>
+		-instance DB2Instance -db DBAliasName -schema DBTableOwner<br>
+		-tbs Tablespace | -new_tbs NewTablespace<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		[-new_tbs_dir TablespaceDirectory]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		-bp Bufferpool | -new_bp NewBufferpool<br>
+		or:<br>
+		<br>
+		-oracle_home OracleHomeDiretory -db DBServiceName<br>
+		[-tns_admin true|false] [-tns_path tnsnames.oraPath]<br>
+		-schema DBTableOwner:password<br>
+		-tbs Tablespace | -new_tbs NewTablespace<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		[-new_tbs_dir TablespaceDirectory]</code><p><code>-connect 
+		DBConnectionUser:password -db_adm DBAdministrator:password<br>
+		[-min_pool DBMinimumPoolSize] [-max_pool DBMaximumPoolSize]<br>
+		-repo RepositoryName -repo_path RepositoryPath -tmp RepositoryTmpPath<br>
+		-secured SecuredPath [-secured OtherSecuredPath ...]<br>
+		[-repo OtherRepoName -repo_path OtherRepoPath -tmp OtherRepoTmpPath<br>
+		-secured SecuredPath [-secured OtherSecuredPath ...] ...]<br>
+		[-read_only true|false] [-log_removed_files true|false]<br>
+		[-remove_files true|false] [-nfs_access true|false] [-add_privileges]<br>
+		[-generate_settings_only [-no_check]]</code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">&nbsp;</td>
+     <td><br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><code><b>-modify</b></code><p>(to modify <br>
+     general-purpose<br>
+     options)</td>
+     <td><code>VaultServerName -adm domain@VaultAdministrator:password<br>
+		[-thread ThreadNumber] [-timeout TimeOut] [-offset TimeZoneOffset]<br>
+		[-min_pool DBMinimumPoolSize] [-max_pool DBMaximumPoolSize]<br>
+		[-read_only true|false] [-log_removed_files true|false]<br>
+		[-remove_files true|false] [-nfs_access true|false] [-add_privileges]&nbsp;</code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">&nbsp;</td>
+     <td><br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><code><b>-modify</b></code><p>(to add <br>
+     repositories)</td>
+     <td><code>&nbsp;VaultServerName -adm domain@VaultAdministrator:password<br>
+		-add_repo RepositoryName<br>
+		-repo_path RepositoryPath -tmp RepositoryTmpPath<br>
+		-secured SecuredPath [-secured OtherSecuredPath ...]<br>
+		[-add_repo OtherRepositoryName<br>
+		-repo_path OtherRepositoryPath -tmp OtherRepositoryTmpPath<br>
+		-secured SecuredPath [-secured OtherSecuredPath ...] ...]</code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">&nbsp;</td>
+     <td><br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><code><b>-modify</b></code><p>(to modify<br>
+     existing<br>
+     repositories)</td>
+     <td><code>VaultServerName -adm domain@VaultAdministrator:password<br>
+		-modify_repo RepositoryName<br>
+		[-add_secured SecuredPath [-add_secured OtherSecuredPath ...]]<br>
+		[-del_secured SecuredPath [-del_secured OtherSecuredPath ...]]<br>
+		[-repo_read_only true|false]<br>
+		[-modify_repo OtherRepositoryName<br>
+		[-add_secured SecuredPath [-add_secured OtherSecuredPath ...]]<br>
+		[-del_secured SecuredPath [-del_secured OtherSecuredPath ...]]<br>
+		[-repo_read_only true|false] ...]</code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><code><b>-modify</b></code><p>(to delete<br>
+     existing<br>
+     repositories)</td>
+     <td valign="top"><code>VaultServerName -adm domain@VaultAdministrator:password<br>
+		-del_repo RepositoryName [-del_repo OtherRepositoryName ...]</code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">&nbsp;</td>
+     <td><br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><code><b>-delete</b></code></td>
+     <td><code>VaultServerName -adm [domain@]VaultAdministrator:password</code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">&nbsp;</td>
+     <td><br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><code><b>-h</b></code></td>
+     <td><code>help</code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2"><br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2">Options:<ul>
+       <li><code><b>-list</b></code>: lists the vault servers<br>
+       <code><b>-list VaultServerName</b></code>: lists the properties of 
+       VaultServerName<br>
+       <code><b>-list -a</b></code>: lists the properties of all Vault servers.</li>
+       <li><code><b>-add</b></code>: creates the Vault server VaultServerName.<br>
+       <br>
+       Default values with <code><b>-add</b></code>:<ul>
+         <li><code>thread</code>: 2, <code>timeout</code>: -1, <code>offset</code>: 
+         0, <code>min_pool</code>: 4, <code>max_pool</code>: 6, <code>read_only</code>: 
+         false,</li>
+         <li><code>log_removed_files</code>: false, <code>remove_files</code>: 
+         true, <code>nfs_access</code>: false</li>
+         <li><code>instance</code>: the DB2INSTANCE value in the environment 
+         file.</li>
+         <li><code>oracle_home</code>: the ORACLE_HOME value in the environment 
+         file.</li>
+         <li><code>tns_admin</code>: true</li>
+         <li><code>tns_path</code>: the TNS_ADMIN value in the environment file.<br>
+         If not valued, the default value is:<br>
+         <code>%ORACLE_HOME%\network\ADMIN</code>.</li>
+       </ul>
+       </li>
+       <li><code><b>-modify</b></code>: modifies the vault server 
+       VaultServerName. You can add, modify or delete repositories. <b>Note:</b> 
+       unlike in interactive mode, you cannot create repositories from scratch 
+       in batch mode so you must create them manually beforehand. You can also 
+       change general-purpose vault properties.<p>Default values with <code><b>
+       -modify</b></code>: the parameters keep their current values (at 
+       creation, <code>repo_read_only</code> is false).</li>
+       <li><code><b>-delete</b></code>: deletes the VaultServerName's catalogued 
+       entries and properties file; the data (database, repositories) are not 
+       deleted.</li>
+       <li><code><b>-h</b></code>: this help.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">
+     <h3>Vault Server Setup Batch Examples</h3>
+     <p>The following commands were run on Windows in a Command Prompt window in 
+     the installation directory:</p>
+     <p><code>UnixInstallPath\intel_a\code\command</code></p>
+     <p><code>Command:</code></p>
+     <p><code>catstart -run ksh &quot;VaultServerSetupB.exe -add ENOVIAVaultServer -adm 
+     the:pwd -db_vendor db2 -instance DB2 -db THEDB2A8 -schema the -connect 
+     the:pwd -db_adm db2admin:db2admin -tbs USERPACE1 -repo Repo1 -repo_path /usr/Repositories/Repo1 
+		-tmp /usr/Repositories/Repo1/Tmp -secured /usr/Repositories/Repo1/Secured 
+		-secured /usr/Repositories/Repo1/Secured2&quot;</code></p>
+     <p>Output:</p>
+     <p><code>C:\Temp\Repositories\Repo1: directory not found.<br>
+     The command failed.</code></p>
+     <p>The command failed because the repositories had not been created, so you 
+		must create them first using the following Unix command:</p>
+     <p><code>mkdir /usr/Repositories/Repo1 /usr/Repositories/Repo1/Tmp /usr/Repositories/Repo1/Secured<br>
+		/usr/Repositories/Repo1/Secured2</code></p>
+     <p>Then, the following command was run:</p>
+     <p><code>catstart -run &quot;VaultServerSetupB.exe -add ENOVIAVaultServer -adm 
+     the:pwd -db_vendor db2 -instance DB2 -db THEDB2A8 -schema the -connect 
+     the:pwd -db_adm db2admin:db2admin -tbs <b>USERPACE1</b> -repo Repo1 -repo_path 
+		/usr/Repositories/Repo1 -tmp /usr/Repositories/Repo1/Tmp -secured /usr/Repositories/Repo1/Secured 
+		-secured /usr/Repositories/Repo1/Secured2&quot;</code></p>
+     <p>Output:</p>
+     <p><code>The Tablespace parameter is not found in the following list:<br>
+     USERSPACE1<br>
+     The command failed.</code></p>
+     <p>There was a spelling mistake in the tablespace name (&quot;USERPACE1&quot; instead 
+     of &quot;USERSPACE1&quot;), so it was corrected and the command was run again:</p>
+     <p><code>catstart -run &quot;VaultServerSetupB.exe -add ENOVIAVaultServer -adm 
+     the:pwd -db_vendor db2 -instance DB2 -db THEDB2A8 -schema the -connect 
+     the:pwd -db_adm db2admin:db2admin -tbs <b>USERSPACE1</b> -repo Repo1 -repo_path 
+		/usr/Repositories/Repo1 -tmp /usr/Repositories/Repo1/Tmp -secured /usr/Repositories/Repo1/Secured 
+		-secured /usr/Repositories/Repo1/Secured2&quot;</code></p>
+     <p>Output:</p>
+     <p><code>[2672: New Connection (vagu1dsy.dsy.ds,IT_daemon,*,the,pid=2808,optimised) 
+     ]<br>
+     [2324: New Connection (vagu1dsy.dsy.ds,IT_daemon,*,the,pid=2808,optimised) 
+     ]<br>
+     [2672: New Connection (vagu1dsy.dsy.ds,IT_daemon,*,the,pid=2808,optimised) 
+     ]<br>
+     Command successful.</code></p>
+     <p>The vault server is created.</p>
+     <p>The following command lists the vault servers created:</p>
+     <p><code>catstart -run &quot;VaultServerSetupB -list&quot;</code></p>
+     <p>Output:</p>
+     <p><code>Vault servers created in the current installation:<br>
+     -------------------------------------------------------------------------------<br>
+     Server hostname: VAGU1DSY<br>
+     -------------------------------------------------------------------------------<br>
+     Alias name | Orbix daemon port | Vault administrator<br>
+     -------------------------------------------------------------------------------<br>
+     ENOVIAVaultServer | 1570 | the</code></p>
+     <p>The following commands list the characteristics of the vault server you 
+     just created:</p>
+     <p><code>catstart -run ksh &quot;VaultServerSetupB -list ENOVIAVaultServer&quot;</code></p>
+     <p>or:</p>
+     <p><code>catstart -run &quot;VaultServerSetupB -list -a&quot;</code></p>
+     <p>Output:</p>
+     <p><code>Alias name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ENOVIAVaultServer<br>
+     Vault administrator&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the<br>
+     Server hostname&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     VAGU1DSY<br>
+     Orbix daemon port&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     1570<br>
+     Threads number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     2<br>
+     Time Out (minutes)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     900<br>
+     Time zone offset&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0<br>
+     Database type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DB2<br>
+     Database name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     THEDB2A8<br>
+     Database schema name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; THE<br>
+     Database connection user&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; THE<br>
+     Database minimum pool size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4<br>
+     Database maximum pool size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6<br>
+     Repositories number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1<br>
+     Repositories list:<br>
+     1) Repo1<br>
+&nbsp;&nbsp;&nbsp; Read only&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     false<br>
+&nbsp;&nbsp;&nbsp; Path&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		/usr/Repositories/Repo1/<br>
+&nbsp;&nbsp;&nbsp; Tmp path&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		/usr/Repositories/Repo1/Tmp<br>
+&nbsp;&nbsp;&nbsp; Secured number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		/usr/Repositories/Repo1/Secured<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		/usr/Repositories/Repo1/Secured2</code></p>
+     <p><code>Read only&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;false<br>
+     Log removed files&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;false<br>
+     Remove files&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;true<br>
+     Authorize NFS access&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+     false</code></p>
+     <p>The following command modifies the general-purpose properties of the 
+     vault server:</p>
+     <p><code>catstart -run ksh &quot;VaultServerSetupB.exe -modify ENOVIAVaultServer -adm 
+     the:pwd -thread 8 -timeout 9 -offset -10 -min_pool 11 -max_pool 12 -read_only 
+     true -log_removed_files true -remove_files false -nfs_access true&quot;</code></p>
+     <p>Output:</p>
+     <p><code>[1708: New Connection (vagu1dsy.dsy.ds,IT_daemon,*,the,pid=2808,optimised) 
+     ]<br>
+     [2328: New Connection (vagu1dsy.dsy.ds,IT_daemon,*,the,pid=2808,optimised) 
+     ]<br>
+     [1708: New Connection (vagu1dsy.dsy.ds,IT_daemon,*,the,pid=2808,optimised) 
+     ]<br>
+     Command successful.</code></p>
+     <p>The following command deletes the vault server:</p>
+     <p><code>catstart&nbsp; -run ksh &quot;VaultServerSetupB.exe -delete ENOVIAVaultServer -adm the:pwd&quot;</code></p>
+     <p>Output:</p>
+     <p><code>Command successful.</code></p>
+     <p>The following command lists the vault servers, and the list is now 
+     empty:</p>
+     <p><code>catstart&nbsp; -run ksh &quot;VaultServerSetupB.exe -list&quot;</code></p>
+     <p>Output:</p>
+     <p><code>Vault servers created in the current installation:<br>
+     -------------------------------------------------------------------------------<br>
+     Server hostname: VAGU1DSY<br>
+     -------------------------------------------------------------------------------<br>
+     Alias name | Orbix daemon port | Vault administrator<br>
+     -------------------------------------------------------------------------------</code></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2">
+     <h3>Setting Up the Vault Client</h3>
+     <ol>
+       <li>Log on as root.</li>
+       <li>Enter the command:</li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p><code>
+           <strong>UNIXInstallPath</strong>/OS/code/command/<b>catstart -run
+           </b><strong>VaultClientSetupB</strong></code></p>
+           <p>where&nbsp; &quot;OS&quot; is:</p>
+           <ul>
+             <li>aix_a</li>
+				<li><blink>aix_a64</blink></li>
+           </ul>
+           <p>with the appropriate arguments.</p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <h3>Command Syntax</h3>
+     <p><code><strong><a name="ix-VaultClientSetupB command"></a></strong><b>
+     VaultClientSetupB</b><strong><a name="ix-commands::VaultClientSetupB"></a></strong></code></p>
+     <p><code>-list <br>
+     -add VaultAlias -host ServerHostname -port OrbixDaemonPort <br>
+     -modify VaultAlias [-host ServerHostname] [-port OrbixDaemonPort] <br>
+     -delete VaultAlias <br>
+		-h help</code></p>
+     <p>&nbsp;</p>
+     <ul>
+       <li><code><b>-list</b></code>: lists the catalogued vault servers<br>
+       <br>
+       Example:<br>
+       <br>
+       <code>Catalogued Vault servers:<br>
+       -------------------------------------------------------------------------------<br>
+       Vault alias name | Server hostname | Orbix daemon port<br>
+       -------------------------------------------------------------------------------<br>
+       ENOVIAVaultServer | jane2dsy | 1570</code><br>
+&nbsp;</li>
+       <li><code><b>-add</b></code>: catalogues the vault server VaultAliasName</li>
+       <li><code><b>-modify</b></code>: modifies the catalogued Vault server 
+       VaultAliasName in order to update the server hostname and Orbix daemon 
+       port</li>
+       <li><code><b>-delete</b></code>: deletes the VaultAliasName's catalogued 
+       entries; the VaultAliasName properties file and the data (database, 
+       repositories) are not deleted.</li>
+       <li><code><b>-h</b></code>: this help.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td colspan="3" width="885">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p align="center">&nbsp;</p>
+ <table>
+ </table>
+ <table>
+ </table>
+ <table>
+ </table>
+
+ </body>
+
+</html>
+

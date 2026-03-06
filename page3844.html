@@ -1,0 +1,125 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Saving Child Components Without Locking the Parent</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+	<h1>
+     <img src="b35doc/english/online/icons_C2/common/anew.gif" width="32" height="32">Saving Child Components Without Locking the Parent<a name="Saving Child Components Without Locking the Parent"></a><a name="ix-saving child components without locking the parent"></a></h1>
+ <div align="left">
+   <table Border="0" CELLSPACING="0" valign="top" cellpadding="5" style="border-collapse: collapse" bordercolor="#111111" height="246">
+     <tr valign="top" BORDER="0">
+       <td valign="top" align="left" height="102">
+       <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+       <td valign="top" align="left" height="68">
+       You can define the appropriate 
+		lock policy that is applied when an instance is added, moved, replaced 
+		or deleted under an assembly parent.<p>This task shows you how to add, 
+		move, replace, delete a 
+     Part instance under a Product without first having to lock 
+     the parent.</td>
+     </tr>
+     <tr>
+     <td valign="top" height="32" width="32">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td height="32" width="791" valign="top">You need to setup a user variable 
+		in<cite> VPMAdmin.CATSetting</cite> file to set the declaration 
+		parameters.</td>
+   	</tr>
+		<tr>
+     <td valign="top" height="210" width="32">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="210" width="791" valign="top">
+     <ol class="task">
+       <li>
+		<p class="task">Using the VPMSettings tool, change the <cite>
+		VPMAdmin.CATSetting </cite>file and set the declaration parameter
+       <font face="Courier New"><code>CV5EV5_PARENT_LOCK_REQUIRED</code></font> to:</p>
+		<ul class="task">
+			<li>
+			<p class="task"><code>ReferenceAndInstance</code> - When used, both 
+			instance and reference of the parent must be locked by current user 
+			for add, move (parent reference lock only), replace or delete of a 
+			child instance.&nbsp; This is the same as the default behavior when 
+			no parameter is set.</p></li>
+			<li>
+			<p class="task"><code>ReferenceOnly</code> - When used, only the parent 
+			reference must be locked for add, move, replace, or delete of a 
+			child.</p></li>
+			<li>
+			<p class="task"><code>None</code> - When used, neither instance nor 
+			reference of the parent has to be locked for add, move or replace. 
+			However, for delete, lock on the parent reference will still be required.</p>
+		</li>
+		</ul>
+		<p class="task">Example:</p>
+		<p><code>VPMSettings -&#045;f 
+		VPMAdmin -&#045;a 
+		-&#045;n 
+		CV5EV5_PARENT_LOCK_REQUIRED -v [ReferenceAndInstance]</code></p>
+		<p class="task">or<code><br>
+		VPMSettings -&#045;f 
+       VPMAdmin -&#045;a 
+		-&#045;n 
+       CV5EV5_PARENT_LOCK_REQUIRED -v [ReferenceOnly]</code></p>
+		<p class="task">or<code><br>
+		VPMSettings -&#045;f 
+       VPMAdmin -&#045;a 
+		-&#045;n 
+       CV5EV5_PARENT_LOCK_REQUIRED -v [None]</code></p>
+       <p></li>
+       <li>
+       <p class="task">Add, move, replace, or delete instance (a Part, a component or a 
+       Product) under the unlocked parent product, or under the product locked 
+		by other user, either by means of insertion 
+       or copy-paste.</li>
+       <li>
+       <p class="task">Save the instance in the ENOVIA database.<br>
+       Depending on the specified conditions of the variable and the lock 
+		status, the save is performed. If save is unsuccessful, error message is 
+		displayed indicating the cause of the failure.</li>
+     </ol>
+     <p class="task">Please refer to the following matrix which describes the 
+		menu items enabled (x) for the 3 values of <code>CV5EV5_PARENT_LOCK_REQUIRED</code> 
+		and various combinations of parent lock.<p><kbd>IL</kbd> = Instance 
+		Locked by User&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <kbd>RL</kbd> = Reference 
+		Locked by User&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<br>
+		<kbd>ILO</kbd> = Instance Locked by Other&nbsp;&nbsp;&nbsp; <kbd>RLO</kbd> = Reference Locked 
+		by Other<br>
+		<kbd>IU</kbd> = Instance Unlocked&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<kbd> 
+		RU</kbd> = Reference Unlocked<p class="task">
+		<img border="0" src="b35doc/english/online/cfyugews_c2/images/LockingInfoTable1NLS.png" width="439" height="16"></p>
+		<p class="task">In Product and Part Editors, you can Add, Replace, Cut, and Delete a 
+		descendent instance when the parent instance is locked by another user. 
+		By default, the lock on parent instance is ignored.</p>
+		<p class="task">
+		<img border="0" src="b35doc/english/online/cfyugews_c2/images/MultiUserAssemblyTable2NLS.png" width="838" height="338"></td>
+   	</tr>
+     <tr valign="top" BORDER="0">
+       <td valign="top" align="left" height="22">
+       &nbsp;</td>
+       <td valign="top" align="left" height="22">
+		<p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+     </tr>
+   </table>
+ </div>
+ <p align="center">
+ &nbsp;</p>
+
+ </body>
+
+</html>
+

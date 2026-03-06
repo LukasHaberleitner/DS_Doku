@@ -1,0 +1,636 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Batch Processing Interference Analysis</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1 align="center"><a name="hj-top"></a>Batch Processing Interference Analysis</h1>
+ <div align="center">
+   <center>
+   <table border="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+     <tr>
+       <td valign="top">
+       <p class="task">
+       <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+       <td>
+       <p class="task">This section deals with clashes batch processing when 
+       working with both CATIA (V4 and V5) and&nbsp; ENOVIA<span style="font-variant: small-caps">VPM</span></p>
+       <ul>
+         <li>
+         <p class="task"><a href="#hj-catif">CATITF batch program </a><br>
+         (for users CATIA V4 users)</li>
+         <li>
+         <p class="task"><a href="#hj-itfcheck">ITFCHECK batch program </a><br>
+         (for users CATIA V5 users)</li>
+         <li>
+         <p class="task"><a href="#hj-saveinvpm">Saving Clash Calculation in &nbsp;ENOVIA<span style="font-variant: small-caps">VPM</span></a></li>
+         <li>
+         <p class="task"><a href="#hj-accessclashresult">Accessing Clash Results 
+         in &nbsp;ENOVIA<span style="font-variant: small-caps">VPM</span></a></li>
+         <li>
+         <p class="task"><a href="#hj-interactivecatiav5">Interactive 
+         Interference Analysis (CATIA V5/ ENOVIA<span style="font-variant: small-caps">VPM)</span></a></li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td></td>
+       <td>
+       <h2><a name="hj-catif"></a>CATITF Batch Program<a name="ix-CATITF"></a><a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" alt="Top" align="right" width="25" height="17"></a></h2>
+       <p>This batch program requires a CATIA V4 session. This session can be 
+       built through CATIA or the VPM session maker. The session contains the 
+       assembly (or the part of the assembly) on which the clash calculation is 
+       performed. </p>
+       <p>You need a specific input file (named FT05) to run your CATITF batch 
+       process, a typical FT05 file looks like this:</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+         <tr>
+           <td valign="top">
+           <p class="task"><font face="Courier New">*PROJECT<br>
+           *GROUP<br>
+           *USER<br>
+           *PASSWORD<br>
+           *READ ZCATITF<br>
+           *SESSION<br>
+           CATITF-MMS-2001-04-26.14.12.1<br>
+           *WRITE ZCATITF<br>
+           *REPLACE NO<br>
+           *CLEARANCE *DISTANCE 20<br>
+           *ACCURACY 0.2<br>
+           *GR1<br>
+           *mdl0<br>
+           *GR2<br>
+           *mdl1<br>
+           *mdl2<br>
+           *RUN</font></td>
+         </tr>
+       </table>
+       <h3>How does CATITF communicate clash calculation results to ENOVIA<span style="font-variant: small-caps">VPM 
+       ?</span></h3>
+       <p>Specific declaration variables are necessary to establish 
+       communication between the batch and&nbsp; ENOVIA<span style="font-variant: small-caps">VPM</span></p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3" width="610">
+         <tr>
+           <td width="602">
+           <h4>Example: </h4>
+           </td>
+         </tr>
+         <tr>
+           <td width="602">
+           <p class="task"><code>catia.INTERFER_OPTION_VPM : LOGICAL ;<br>
+           catia.INTERFER_OPTION_VPM = TRUE ;<br>
+           /* For the new clash detection software */<br>
+           catia.INTERFER_NEW_DETECT : LOGICAL ;<br>
+           catia.INTERFER_NEW_DETECT = TRUE ;<br>
+           /* Creation of ccv instead of non-integrated PLL */<br>
+           catia.INTERFER_CREATE_CCV : LOGICAL ;<br>
+           catia.INTERFER_CREATE_CCV = TRUE ;<br>
+           /* For option -i */<br>
+           alias Z0058=CATIA.SESSION = '$HOME/db' ;<br>
+           alias Z0059=CATIA.SESSION = '$HOME/dbwri' ;<br>
+           alias EDIT01=catia.REPORT = '$HOME/g20/CATITF';</code></td>
+         </tr>
+       </table>
+       <h3>How does it work?</h3>
+       <p class="task">You ran the batch execution.At the end of the batch 
+       execution:<br>
+&nbsp;</p>
+       <ul>
+         <li>
+         <p class="task">the batch looks for a VPM session.</li>
+         <li>
+         <p class="task">If one is found, the batch communicates the clash 
+         calculation results to the VPM session via XCO </li>
+         <li>
+         <p class="task">The results are then saved in the VPM session.</li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td></td>
+       <td>
+       <h2><a name="hj-itfcheck"></a>ITFCHECK Batch Program<a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" alt="Top" align="right" width="25" height="17"></a></h2>
+       <p class="task">To access<a name="ix-Accessing ITFCHECK;ITFCHECK"></a> ITFCHECK 
+		in ENOVIA<span style="font-variant: small-caps">VPM </span>the 
+       following declaration parameters are required (here on V4 models): </p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4">
+         <tr>
+           <td><code>CATCDMA.METHOD_LIST(x).CATAB = 'CATIA_MODEL';</code></dd><br>
+           <code>CATCDMA.METHOD_LIST(x).TYPE = 'Reserved';<br>
+           CATCDMA.METHOD_LIST(x).COMMAND = 'ITFCHECK';<br>
+           CATCDMA.METHOD_LIST(x).WHERE = 'PSN';<br>
+           CATCDMA.METHOD_LIST(x).ROLE = 'Tools';<br>
+           CATCDMA.METHOD_LIST(x).TAG = 'CdmaPrincPanelOpenITFCHECK';</code></td>
+         </tr>
+         <tr>
+           <td>
+           <p class="task">where &quot;x&quot; must be replaced by the appropriate value 
+           higher than the last value in your declaration parameter. </td>
+         </tr>
+         <tr>
+           <td>
+           <p class="task">ITFCHECK can be declared in the tables DOC<i>xxx</i> 
+           and CATIA_MODEL. Adding this declaration parameter enables the 
+           display of the following window (from the PSN):</td>
+         </tr>
+         <tr>
+           <td>
+           <p class="task"><img border="0" src="b35doc/english/online/xomugspa_c2/images/cu007nls.gif" width="551" height="467"></td>
+         </tr>
+         <tr>
+           <td>
+           <p class="task">This allows you to enter the current parameters of 
+           ITFCHECK and to launch it if required.</p>
+           <p align="JUSTIFY" class="task">More than one selection can be made 
+           in this window before clicking on <i>OK</i>. Not until you select the
+           <i>OK</i> button are the FT05s generated.</td>
+         </tr>
+       </table>
+       <h2><font color="#282187"><a name="hj-saveinvpm"></a>Saving Clash 
+       Calculations in </font>&nbsp;ENOVIA<span style="font-variant: small-caps">VPM</span><a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" alt="Top" align="right" width="25" height="17"></a></h2>
+       <p class="task">Two tables (per environment) are available in ENOVIA<span style="font-variant: small-caps">VPM</span>. 
+       They are structured as follows:</p>
+       <h4><font color="#282187">CLASH</font></h4>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5" width="426" height="395">
+         <tr>
+           <td width="143" align="center" bgcolor="#E0E0E0" height="34">
+           <h5><b>Column&nbsp;</b></h5>
+           </td>
+           <td width="152" align="center" bgcolor="#E0E0E0" height="34">
+           <h5><b>NameNULL?</b></h5>
+           </td>
+           <td width="123" align="center" bgcolor="#E0E0E0" height="34">
+           <h5><b>Type</b></h5>
+           </td>
+         </tr>
+         <tr>
+           <td width="143" align="left" bgcolor="#F2F2F2" height="16">
+           <p class="task">$COID</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">NOT NULL</td>
+           <td width="123" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">RAW(8)</td>
+         </tr>
+         <tr>
+           <td width="143" align="left" bgcolor="#F2F2F2" height="16">
+           <p class="task">$COMPID</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">NOT NULL</td>
+           <td width="123" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">RAW(8)</td>
+         </tr>
+         <tr>
+           <td width="143" align="left" bgcolor="#F2F2F2" height="16">
+           <p class="task">TYPEOFCALC</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">NOT NULL</td>
+           <td width="123" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">NUMBER(38)</td>
+         </tr>
+         <tr>
+           <td width="143" align="left" bgcolor="#F2F2F2" height="16">
+           <p class="task">CLEARANCEVALUE</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">NOT NULL</td>
+           <td width="123" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">FLOAT(126)</td>
+         </tr>
+         <tr>
+           <td width="143" align="left" bgcolor="#F2F2F2" height="16">
+           <p class="task">TYPEOFRESULT</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">&nbsp;</td>
+           <td width="123" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">INTEGER</td>
+         </tr>
+         <tr>
+           <td width="143" align="left" bgcolor="#F2F2F2" height="16">
+           <p class="task">MINIMALDISTANCE</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">&nbsp;</td>
+           <td width="123" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">FLOAT</td>
+         </tr>
+         <tr>
+           <td width="143" align="left" bgcolor="#F2F2F2" height="16">
+           <p class="task">INSTANCE_1_COMPID</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">NOT NULL</td>
+           <td width="123" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">RAW(8)</td>
+         </tr>
+         <tr>
+           <td width="143" align="left" bgcolor="#F2F2F2" height="16">
+           <p class="task">INSTANCE_2_COMPID</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">NOT NULL</td>
+           <td width="123" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">RAW(8)</td>
+         </tr>
+         <tr>
+           <td width="143" align="left" bgcolor="#F2F2F2" height="16">
+           <p class="task">STATUS</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">NOT NULL</td>
+           <td width="123" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">NUMBER(38)</td>
+         </tr>
+         <tr>
+           <td width="143" align="left" bgcolor="#F2F2F2" height="16">
+           <p class="task">COMMENTITF</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">&nbsp;</td>
+           <td width="123" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">CHAR(80)</td>
+         </tr>
+         <tr>
+           <td width="143" align="left" bgcolor="#F2F2F2" height="16">
+           <p class="task">C_RESPONSIBLE</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">NOT NULL</td>
+           <td width="123" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">CHAR(8)</td>
+         </tr>
+         <tr>
+           <td width="143" align="left" bgcolor="#F2F2F2" height="16">
+           <p class="task">C_ORG_RESPONSIBLE</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">NOT NULL</td>
+           <td width="123" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">CHAR(10)</td>
+         </tr>
+         <tr>
+           <td width="143" align="left" bgcolor="#F2F2F2" height="16">
+           <p class="task">C_LASTMOD</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">NOT NULL</td>
+           <td width="123" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">DATE</td>
+         </tr>
+         <tr>
+           <td align="left" bgcolor="#F2F2F2" height="22" width="143">
+           <p class="task">INSTANCE1_NAME</td>
+           <td align="center" bgcolor="#F2F2F2" height="22" width="152">
+           <p class="task">&nbsp;</td>
+           <td bgcolor="#F2F2F2" height="22" width="123" align="center">
+           <p class="task">VARCHAR2(254)</td>
+         </tr>
+         <tr>
+           <td bgcolor="#F2F2F2" height="13" width="143">
+           <p class="task">INSTANCE2_NAME</td>
+           <td align="center" bgcolor="#F2F2F2" height="13" width="152">
+           <p class="task">&nbsp;</td>
+           <td bgcolor="#F2F2F2" height="13" width="123" align="center">
+           <p class="task">VARCHAR2(254)</td>
+         </tr>
+         <tr>
+           <td width="143" bgcolor="#F2F2F2" height="16">
+           <p class="task">REP1_NAME</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">&nbsp;</td>
+           <td width="123" bgcolor="#F2F2F2" height="16" align="center">
+           <p class="task">VARCHAR2(254)</td>
+         </tr>
+         <tr>
+           <td width="143" bgcolor="#F2F2F2" height="16">
+           <p align="left" class="task">REP2_NAME</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">&nbsp;</td>
+           <td width="123" bgcolor="#F2F2F2" height="16" align="center">
+           <p class="task">VARCHAR2(254)</td>
+         </tr>
+         <tr>
+           <td width="143" bgcolor="#F2F2F2" height="16">
+           <p class="task">REP1_NAME_COMPID</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">&nbsp;</td>
+           <td width="123" bgcolor="#F2F2F2" height="16" align="center">
+           <p class="task">RAW(8)</td>
+         </tr>
+         <tr>
+           <td width="143" bgcolor="#F2F2F2" height="16">
+           <p class="task">REP2_NAME_COMPID</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">&nbsp;</td>
+           <td width="123" bgcolor="#F2F2F2" height="16" align="center">
+           <p class="task">RAW(8)</td>
+         </tr>
+         <tr>
+           <td width="143" bgcolor="#F2F2F2" height="16">
+           <p class="task">C_CREATE</td>
+           <td width="152" align="center" bgcolor="#F2F2F2" height="16">
+           <p class="task">&nbsp;</td>
+           <td width="123" bgcolor="#F2F2F2" height="16" align="center">
+           <p class="task">DATE</td>
+         </tr>
+       </table>
+       <h4 align="JUSTIFY"><font color="#282187">PART_PTR</font></h4>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber6">
+         <tr>
+           <td width="190" align="center" bgcolor="#E0E0E0">
+           <h5><b>Column Name</b></h5>
+           </td>
+           <td width="95" align="center" bgcolor="#E0E0E0">
+           <h5><b>NULL?</b></h5>
+           </td>
+           <td width="119" align="center" bgcolor="#E0E0E0">
+           <h5><b>Type</b></h5>
+           </td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">$COID</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">NOT NULL</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">RAW(8)</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">$COMPID</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">NOT NULL</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">RAW(8)</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">NAME</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">VARCHAR(254)</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">NB_LINK</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">NOT NULL</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">INTEGER</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">OID</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">NOT NULL</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">RAW(254)</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_COID_PART</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">RAW(8)</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_ENV_PART</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">CHAR(8)</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_RESPONSIBLE</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">CHAR(8)</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_ORG_RESPONSIBLE</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">CHAR(10)</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_USED_CLASH</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">CHAR(1)</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_USED_ASSY</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">CHAR(1)</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_MAT01</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">FLOAT</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_MAT02</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">FLOAT</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_MAT03</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">FLOAT</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_MAT04</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">FLOAT</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_MAT05</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">FLOAT</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_MAT06</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">FLOAT</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_MAT07</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">FLOAT</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_MAT08</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">FLOAT</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_MAT09</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">FLOAT</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_MAT10</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">FLOAT</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_MAT11</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">FLOAT</td>
+         </tr>
+         <tr>
+           <td width="190" bgcolor="#F2F2F2">
+           <p class="task">C_MAT12</td>
+           <td width="95" bgcolor="#F2F2F2" align="center">
+           <p class="task">&nbsp;</td>
+           <td width="119" bgcolor="#F2F2F2" align="center">
+           <p class="task">FLOAT</td>
+         </tr>
+       </table>
+       </td>
+     </tr>
+     <tr>
+       <td valign="top">
+       <p class="task">
+       <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="30"></td>
+       <td>
+       <ul>
+         <li>
+         <p class="task">The CLASH table is managed just like a standard CDMA 
+         table via a profile, except <code><br>
+         </code>columns<code> INSTANCE_1_COMPID </code>and<code>&nbsp; 
+         INSTANCE_2_COMPID </code>are mandatory<code>.</code></li>
+         <li>
+         <p class="task">For ORACLE, this feature can only be implemented on 
+         databases for which <font color="#000000">
+         <span style="letter-spacing: 0; font-weight: 400"><code>catcdm.raw_coid=TRUE.</code></span></font></li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td></td>
+       <td>
+       <h2><font color="#282187"><a name="hj-accessclashresult"></a>Accessing 
+       Clash Results in </font>&nbsp;ENOVIA<span style="font-variant: small-caps">VPM</span><a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" alt="Top" align="right" width="25" height="17"></a></h2>
+       <p class="task">In the PSN, an icon enables you to access the 
+       Interferences Management dialog box. <br>
+       You can perform queries to find in the PSN those instances implicated in 
+       the interferences, to modify comments, etc.</td>
+     </tr>
+     <tr>
+       <td></td>
+       <td>
+       <h2><font color="#282187"><a name="hj-interactivecatiav5"></a></font>
+       Interactive Interference Analysis (CATIA V5/ ENOVIA<span style="font-variant: small-caps">VPM)</span><a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" alt="Top" align="right" width="25" height="17"></a></h2>
+       <p>You can search for interferences interactively in CATIA and to save 
+       them in in &nbsp;ENOVIA<span style="font-variant: small-caps">VPM</span>.<br>
+       You can also load CATIA V4 models and/or CATIA V5 documents into the DMU 
+       Navigator from in ENOVIA<span style="font-variant: small-caps">VPM.</span></p>
+       <p>To access this functionality on V4 models, add the following 
+       declaration variables: </p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber7" height="146">
+         <tr>
+           <td height="130">
+           <p class="task"><code>CATCDMA.METHOD_LIST(x).CATAB = 'CATIA_MODEL';<br>
+           CATCDMA.METHOD_LIST(x).TYPE = 'Reserved';<br>
+           CATCDMA.METHOD_LIST(x).COMMAND = 'CATIAV5';<br>
+           CATCDMA.METHOD_LIST(x).WHERE = 'PSN';<br>
+           CATCDMA.METHOD_LIST(x).ROLE = 'Tools';<br>
+           CATCDMA.METHOD_LIST(x).TAG = 'CdmaPrincPanelOpenCATIAV5';</code></td>
+         </tr>
+         <tr>
+           <td height="16">Where x should be replaced by the value immediately 
+           superior to the value of the last declared method. </td>
+         </tr>
+       </table>
+       <p>Before launching the interference calculation, make sure CATIA V5 can 
+       communicate the results to VPM. For this:<br>
+       In <font size="3"><kbd>Tools &gt; Options &gt; Digital Mockup &gt; DMU Space 
+       Analysis &gt; DMU Clash</kbd>.</font>..&nbsp; select <kbd>Retrieve 
+       information from VPM</kbd> option button.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber8">
+         <tr>
+           <td><img border="1" src="b35doc/english/online/xomugspa_c2/images/dboptionsclashPDM01NLS.gif" width="208" height="106"></td>
+         </tr>
+       </table>
+       <ol class="task">
+         <li>
+         <p class="task">Load your product in CATIA V5</li>
+         <li>
+         <p class="task">Switch to the DMU Space Analysis workbench (<kbd>Start 
+         &gt; Digital Mockup &gt; DMU Space Analysis</kbd>)</li>
+         <li>
+         <p class="task">Click <kbd>Clash</kbd>
+         <img border="0" src="b35doc/english/online/icons_C2/images/I_ClashP2.gif" width="24" height="24"> 
+         in <kbd>DMU Space Analysis</kbd> toolbar,<br>
+         to search for interferences </li>
+       </ol>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+         <tr>
+           <td>
+           <p class="task">&nbsp;</td>
+           <td>
+           <p class="task">For more detailed information, refer to
+           <a href="page15683.html">Comparing Clash Command Results</a></td>
+         </tr>
+       </table>
+       </td>
+     </tr>
+     <tr>
+       <td colspan="2">
+       <p align="center" class="task">
+       <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+     </tr>
+   </table>
+   </center>
+ </div>
+
+ </body>
+
+</html>
+

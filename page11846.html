@@ -1,0 +1,93 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>Split with Surface Reduction</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1><a name="ix-split with surface reduction">Split with Surface Reduction</a></h1>
+<table border="0" style="border-collapse: collapse" cellpadding="0" cellspacing="0" id="table1">
+  <tr>
+    <td></td>
+    <td>
+    <p>The <kbd>Tools &gt; Options &gt; Mold Tooling Design&gt;
+    <a href="page1040.html">Split</a></kbd><a href="page1040.html"> 
+    tab</a> lets you choose between a standard split or a split with surface 
+    reduction.<br>
+    By default, the <kbd>Split wit surface reduction</kbd> check box is selected (see description 
+    below). If you clear this check box, a standard split will be applied.</p>
+    <h2>How the Split with Surface Reduction Works</h2>
+    <p>To optimize the memory usage when splitting a component, V5 projects a contour onto the splitting surface so that only the surface inside 
+          the contour (and not the whole surface) will be used to split the 
+          component.</p>
+    <p>This contour is a circle, defined by a hidden parameter found as follows 
+    in standard components:</p>
+    <ul>
+      <li><kbd>CorePin: D </kbd></li>
+      <li><kbd>Ejector: D </kbd></li>
+      <li><kbd>EjectorPin: D </kbd></li>
+      <li><kbd>EjectorSleeve: InD </kbd></li>
+      <li><kbd>SprueBushing: ShD </kbd></li>
+      <li><kbd>SpruePuller: RunD </kbd></li>
+      <li><kbd>FlatEjector: max (H, G) </kbd></li>
+      <li><kbd>Insert: max ( L, W)</kbd> or <kbd>D</kbd> depending of the type 
+      of the insert. </li>
+    </ul>
+    <p>To use this functionality in user components, you must define a <kbd>
+    D_Split</kbd> parameter in the user components.<br>
+    For the components not listed above, only a standard split is available.</p>
+    <p>A coefficient of reduction can be applied to the radius of the circular 
+    contour (see <kbd>Tools &gt; Options &gt; Mold Tooling Design&gt;
+    <a href="page1040.html">Split</a>).</kbd></p>
+    <p>Example of a split with surface reduction (this is a description of what happens, not of what you see):<br>
+    Original splitting surface:<br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/SurfReduc01.gif" width="311" height="242"><br>
+    Contour projected:<br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/SurfReduc02.gif" width="311" height="244"><br>
+    Surface reduction actually used for the split:<br>
+    <img border="0" src="b35doc/english/online/mtdug_c2/images/SurfReduc03.gif" width="279" height="277"></p>
+    <p>For the components that allow a split with surface reduction, you do not have to choose between a standard split or a split with 
+    surface reduction. <br>
+    This choice is done automatically by the command:</p>
+    <ul>
+      <li>For all the components listed above, priority is given to a split with 
+      surface reduction.</li>
+      <li>If the split with surface reduction fails, the command switches to a 
+      standard split.</li>
+      <li>For all the components not listed above, the split is a standard 
+      split.</li>
+    </ul>
+    <p>A split with surface reduction will fail if the required parameter is not 
+    defined, or if the splitting surface you have selected does not allow the 
+    projection of the circle.&nbsp; </p>
+    <p>When you modify the parameters of a component already split with a 
+    surface reduction, the reduced surface is automatically recomputed by V5 
+    update mechanism. <br>This update may fail, e.g. because the length of an insert 
+    or the diameter of an ejector have been increased. <br>In most cases it fails 
+    because the projection of the circle onto the surface originally selected is 
+    no longer possible (no more projection result). </p>
+    <p>The only possible bypass is the following:</p>
+    <ul>
+      <li>delete the split before modifying the component,</li>
+      <li>modify the component,</li>
+      <li>Redo a split.</li>
+    </ul>
+    <p>This time, since a split with surface reduction will not be possible, 
+    this will be a standard split.</td>
+  </tr>
+  </table>
+
+</body>
+
+</html>
+

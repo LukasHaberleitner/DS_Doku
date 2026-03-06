@@ -1,0 +1,1123 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head><meta name="MonocodingType" content="0"></meta>
+	  <meta name="MonocodingFlag" content="C2"></meta>
+	  <meta http-equiv="Content-Language" content="en-us"></meta>
+	  <meta name="GENERATOR" content="Microsoft FrontPage 6.0"></meta>
+	  <meta name="ProgId" content="FrontPage.Editor.Document"></meta>
+  	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	  <title>Contact Properties</title>
+          <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+          
+	 </head><body onload="newPage('pt02ch06s03.html');" ondblclick="newSelection();" bgcolor="#FFFFFF" text="#000000" vlink="#FF5113" alink="#004D48" link="#004D48" class="TEXT"><div class="sect1" id="ath-gen-asm-contact">
+    <a name="ath-gen-asm-contact"></a>
+
+    <div class="titlepage">
+      
+
+      <div class="title">
+        <h3>Contact Properties</h3>
+      </div>
+    </div>
+
+    <p>You can use Nonlinear Structural Analysis and Thermal
+    Analysis to model contact between two bodies. For example, you
+    can model the assembly of a cylinder head gasket, metal forming
+    simulations, and analyses of rubber seals being compressed
+    between two components. You can also model finite-sliding
+    self-contact of a single deformable body; for example, a
+    complex rubber seal that folds over on itself. Nonlinear
+    Structural Analysis and Thermal Analysis use contact pairs to
+    model contact interactions.</p>
+
+    <p>The following sections discuss contact modeling in Nonlinear
+    Structural Analysis and Thermal Analysis:</p>
+
+    <p class="indent"><b><img src="b35doc/english/online/anlug_c2/images/ABQ_I_ContactEnhancement.gif"></img><a href="page0424.html#ath-gen-asm-int-contact-pair">Contact
+    Pairs</a></b>:&nbsp;Prevents two bodies from penetrating each
+    other at a common interface.</p>
+
+    <p class="indent"><b><img src="b35doc/english/online/anlug_c2/images/ABQ_I_GeneralContact.gif"></img><a href="page0424.html#ath-gen-asm-int-generalcontact">General
+    Contact</a></b>:&nbsp;Prevents multiple bodies from
+    penetrating each other at any exterior surface. (Available in
+    Nonlinear Structural Analysis only)</p>
+
+    <div class="sect2" id="ath-gen-asm-int-contact-pair">
+      <a name="ath-gen-asm-int-contact-pair"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Contact Pairs</h3>
+        </div>
+      </div>
+
+      <p><a name="CATCommandHeader.ABQSurfaceToSurfaceContactHdr"></a>A contact pair describes contact between two deformable
+      surfaces or between a deformable surface and a rigid surface.
+      You can also use a contact pair to describe self-contact
+      interactions between different areas on a single surface. You
+      can create a contact pair in a Nonlinear Structural case or a
+      Thermal case.</p>
+
+      <p>A contact pair is the link between two part bodies that
+      are prevented from interpenetrating at their common boundary.
+      When they come into contact, the bodies can still separate or
+      slide relative to each other in the tangential plane. Since
+      part bodies can be meshed independently, contact pairs are
+      designed to handle incompatible meshes. Contact pairs take
+      into account the elastic deformability of the interfaces.</p>
+
+      <p>You can use a general analysis connection or a Contact or
+      Coincidence assembly constraint to define the surfaces that
+      are interacting. For more information, see <a href="page0461.html">Specifying Contact
+      Surfaces</a>. <a href="page0424.html#afc-table-contactconnprops">Table 6&#8211;1</a> summarizes the constraints and
+      connections that can be used to define a contact pair in
+      Nonlinear Structural Analysis and Thermal Analysis.</p>
+
+      <div class="table">
+        <p><a name="afc-table-contactconnprops"></a><b><span class="gentxt_dkgry">Table 6&#8211;1</span></b> Contact
+        pairs.</p>
+
+        <table border="1"><thead><tr><th valign="top" colspan="2" align="center">Assembly
+              Design Workbench</th>
+
+              <th valign="top" align="center">Nonlinear Structural
+              Analysis and Thermal Analysis</th>
+            </tr><tr><th valign="top" align="center">Coincidence
+              Constraint</th>
+
+              <th valign="top" align="center">Contact
+              Constraint</th>
+
+              <th valign="top" align="center">General Analysis
+              Connection</th>
+            </tr></thead><tbody><tr><td align="center"><img height="19" width="15" src="b35doc/english/online/anlug_c2/images/ath_eqn00001.gif"></img></td>
+
+              <td align="center"><img height="19" width="15" src="b35doc/english/online/anlug_c2/images/ath_eqn00001.gif"></img></td>
+
+              <td align="center"><img height="19" width="15" src="b35doc/english/online/anlug_c2/images/ath_eqn00001.gif"></img></td>
+            </tr></tbody></table></div>
+
+      <p>You cannot select a GPS contact connection properties to
+      define the surfaces for use with contact pairs. However,
+      existing contact connection properties will be accounted for
+      in the nonlinear case.</p>
+
+      <p>You must use a general analysis connection defined in
+      Nonlinear Structural Analysis or Thermal Analysis to define
+      contact involving shells and beams; you cannot use an
+      assembly constraint. You can specify which side of a shell
+      surface should be involved in contact. By default, the
+      positive side is used; the positive side is defined as the
+      side in the direction of the positive element normal, which
+      is indicated by arrows.</p>
+
+      <p>You must create a contact pair to include self-contact in
+      your model. To include self-contact, you select a general
+      analysis connection that refers to the same face for both the
+      first and second components. You can use a Contact or
+      Coincidence assembly constraint for defining only
+      solid-to-solid contact.</p>
+
+      <p>For each node on the &#8220;secondary&#8221; surface, the
+      solver attempts to find the closest point on the
+      &#8220;main&#8221; surface of the contact pair where the
+      main surface's normal passes through the node on the secondary
+      surface. The contact connection is then discretized between
+      the point on the main surface and the secondary node. You can
+      reverse the order of the two surfaces.</p>
+
+      <p>The default behavior for a contact pair in mechanical
+      simulations consists of a frictionless relationship in the
+      tangential direction and a &#8220;hard&#8221; contact
+      relationship in the normal direction, in which no penetration
+      of the secondary nodes into the main surface is allowed and no
+      tensile stress is transferred across the interface. In
+      thermal simulations the default behavior for a contact pair
+      consists of a perfectly conducting interface when surfaces
+      have no clearance and a perfectly insulated, or adiabatic,
+      interface when the pair is separated by the maximum allowed
+      clearance distance (<tt class="userinput">1e+6</tt>).</p>
+
+      <div style="margin-left: 0.5in; margin-right: 0.5in;" class="note">
+        <p><b class="title"><a name="d0e7434">Note:&nbsp;</a></b>
+        The default conductance behavior leads to high conductance
+        values for the relatively small clearances allowed for a
+        contact pair. It is strongly recommended that you create a
+        thermal connection behavior to modify these values.</p>
+      </div>
+
+      <p>You can modify either of these behaviors by assigning a
+      new mechanical or thermal connection behavior, respectively,
+      to the contact pair. See <a href="page0455.html">Creating a Connection
+      Behavior</a> for more information.</p>
+
+      <p>If you need to create multiple contact pairs in a model,
+      you should consider using the interaction wizard. The
+      interaction wizard automates many of the steps involved in
+      defining contact pairs and can create multiple contact pairs
+      simultaneously. See <a href="page0427.html">Using the Interaction
+      Wizard</a> for more information.</p>
+
+      <p>You can request history output of contact variables, such
+      as contact displacement (<span class="abqoutputvar">CDISP</span>), from a contact pair. However,
+      if you defined surface-to-surface contact using the
+      finite-sliding contact formulation, you cannot use Nonlinear
+      Structural Analysis and Thermal Analysis to generate images
+      of contact variables and you cannot export history output of
+      contact variables.</p>
+
+      <p>The default quadratic tetrahedral element in Nonlinear
+      Structural Analysis and Thermal Analysis is C3D10M, and that
+      element is suitable for many contact-related analyses.
+      However, if you are specifying <span class="guitext"><b class="guititle">Surface-to-surface</b></span>
+      as the contact formulation for a contact pair, C3D10 elements
+      can yield improved results.</p>
+
+      <p>The <span class="guitext"><b class="guititle">Contact
+      Pair</b></span> dialog box includes a <span class="guitext"><b class="guibutton">Defaults</b></span> button
+      that you can click to restore all contact pair options in the
+      dialog box to their default values.</p>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to create a contact pair.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Click the Contact Pair icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_ContactEnhancement.gif"></img>.</p>
+
+            <p>The <span class="guitext"><b class="guititle">Contact Pair</b></span> dialog box appears,
+            and a Contact Pair object appears in the specification
+            tree under the Connections objects set for the current
+            step in the active analysis case.</p>
+          </li>
+
+          <li>
+            <p>You can change the identifier of the contact pair by
+            editing the <span class="guitext"><b class="guilabel">Name</b></span> field.</p>
+          </li>
+
+          <li>
+            <p>In the specification tree, select a general analysis
+            connection or a Contact or Coincidence assembly
+            positioning constraint to apply to the contact
+            pair.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">Support</b></span> field is updated to
+            reflect your selection, and arrows indicate the
+            surfaces involved in contact and the direction of the
+            surface normal (red arrows indicate the main surface
+            and green arrows indicate the secondary surface).</p>
+          </li>
+
+          <li>
+            <p>By default, Nonlinear Structural Analysis and
+            Thermal Analysis choose the <span class="guitext"><b class="guilabel">Finite-sliding</b></span>
+            formulation. This formulation allows for arbitrary
+            separation, sliding, and rotation of the surfaces.
+            Alternatively, you can choose the <span class="guitext"><b class="guilabel">Small sliding</b></span>
+            formulation. Small-sliding contact assumes that
+            although two bodies may undergo large motions, there
+            will be relatively little sliding of one surface along
+            the other and a secondary node will interact with the same
+            local area of the main surface throughout the
+            analysis. Therefore, small-sliding contact is less
+            expensive computationally than finite-sliding
+            contact.</p>
+
+            <p>Self-contact is typically the result of large
+            deformation in a model. Therefore, self-contact cannot
+            use the small-sliding contact formulation.</p>
+          </li>
+
+          <li>
+            <p>Toggle on <span class="guitext"><b class="guilabel">Stabilize rigid body modes</b></span> to
+            allow calculation of the default damping coefficient
+            that will be used to stabilize rigid body motions in
+            contact problems using viscous damping.</p>
+          </li>
+
+          <li>
+            <p>The following sections describe the options that
+            allow you to define a contact pair. The most commonly
+            used settings are grouped with the general options.</p>
+
+            <ul type="disc"><li>
+                <p><a href="page0424.html#ath-gen-asc-contactpair-general">Configuring the General
+                Options in a Contact Pair</a></p>
+              </li>
+
+              <li>
+                <p><a href="page0424.html#ath-gen-asc-contactpair-separation">Configuring the Separation
+                Options in a Contact Pair</a></p>
+              </li>
+
+              <li>
+                <p><a href="page0424.html#ath-gen-asc-contactpair-status">Viewing the Status of a
+                Contact Pair</a></p>
+              </li>
+
+              <li>
+                <p><a href="page0424.html#ath-gen-asc-contactpair-advanced">Configuring the Advanced
+                Options in a Contact Pair</a></p>
+              </li>
+
+              <li>
+                <p><a href="page0424.html#ath-gen-asc-contactpair-interference">Configuring the Interference
+                Fit Settings in a Contact Pair</a></p>
+              </li>
+            </ul></li>
+        </ol>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div>
+
+      <div class="sect3" id="ath-gen-asc-contactpair-general">
+        <a name="ath-gen-asc-contactpair-general"></a>
+
+        <div class="titlepage">
+          <div class="title">
+            <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Configuring the General Options in a
+            Contact Pair</h3>
+          </div>
+        </div>
+
+        <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to configure the general options
+        in a contact pair.</p>
+
+        <div class="procedure" id="d0">
+          <ol class="type1"><li>
+              <p>From the <span class="guitext"><b class="guititle">Contact Pair</b></span> dialog box, select
+              the <span class="guitext"><b class="guilabel">General</b></span> tab.</p>
+            </li>
+
+            <li>
+              <p>Optionally, if either or both of the surfaces
+              involved in contact are shells, click <span class="guitext"><b class="guilabel">Flip Main</b></span>
+              and/or <span class="guitext"><b class="guilabel">Flip
+              Secondary</b></span> to reverse the direction of the
+              contact normals. Nonlinear Structural Analysis and
+              Thermal Analysis indicate which face is colored in
+              red and which face is colored in green with colored
+              arrow icons under the <span class="guitext"><b class="guilabel">Flip Main</b></span> and <span class="guitext"><b class="guilabel">Flip Secondary </b></span>
+              buttons.</p>
+            </li>
+
+            <li>
+              <p>To reverse the order of the main and secondary
+              surfaces in the contact connection definition, toggle
+              on <span class="guitext"><b class="guilabel">Swap
+              main and secondary surfaces</b></span>.</p>
+
+              <p>The red arrows indicating the main surface
+              replace the green arrows indicating the secondary surface
+              and vice versa. Nonlinear Structural Analysis and
+              Thermal Analysis update the colored arrows under
+              <span class="guitext"><b class="guilabel">Flip
+              Main</b></span> and <span class="guitext"><b class="guilabel">Flip Secondary</b></span> accordingly as
+              well.</p>
+            </li>
+
+            <li>
+              <p>Optionally, in the specification tree, select a
+              Mechanical or Thermal Connection Behavior to apply to
+              the contact connection. See <a href="page0455.html">Creating a Connection
+              Behavior</a> for information on defining
+              connection behaviors.</p>
+
+              <p>The <span class="guitext"><b class="guilabel">Connection Behavior</b></span> field is
+              updated to reflect your selection.</p>
+            </li>
+
+            <li>
+              <p>To help you view the configuration of the main
+              and secondary surfaces in a complex model, you can use
+              the <span class="guitext"><b class="guilabel">Visibility Options</b></span> to view only
+              the part containing the main surface or only the
+              part containing the secondary surface.</p>
+            </li>
+
+            <li>
+              <p>Select the <span class="guitext"><b class="guilabel">Formulation Options</b></span>.</p>
+
+              <ul type="disc"><li>
+                  <p>If you are creating a Nonlinear Structural
+                  case, do the following:</p>
+
+                  <div class="orderedlist" id="d0">
+                    <ol type="a"><li>
+                        <p>By default, the <span class="guitext"><b class="guilabel">Formulation
+                        Option</b></span> is <span class="guitext"><b class="guilabel">Surface to
+                        Surface</b></span>, and the solver
+                        formulates contact such that the stress
+                        accuracy is optimized for the selected
+                        main and secondary surfaces. If you select
+                        <span class="guitext"><b class="guilabel">Node to Surface</b></span>, the
+                        solver formulates contact at the point
+                        where the secondary node projects onto the
+                        main surface. While the
+                        surface-to-surface method provides improved
+                        stress accuracy, the computational cost can
+                        be significant; for example, if a large
+                        fraction of your model is involved in
+                        contact.</p>
+                      </li>
+
+                      <li>
+                        <p>Accounting for initial shell element
+                        thicknesses in contact calculations is
+                        generally desirable. If you choose to
+                        account for shell thickness in your model,
+                        you must separate the contact surfaces by
+                        the appropriate distance and toggle on
+                        <span class="guitext"><b class="guilabel">Include shell element
+                        thickness</b></span> if the option is
+                        available. Shell thickness cannot be
+                        accounted for if you are using the
+                        finite-sliding, node-to-surface contact
+                        formulation.</p>
+                      </li>
+
+                      <li>
+                        <p>For surface-to-surface formulations in a
+                        Nonlinear Structural case, toggle on
+                        <span class="guitext"><b class="guilabel">Automatically smooth geometry
+                        surfaces</b></span> to apply geometric
+                        corrections in the contact formulation for
+                        the contact surfaces. The contact smoothing
+                        definition recognizes cylindrically or
+                        spherically shaped surfaces and
+                        automatically smooths the surfaces. Using
+                        the smoothed surface geometry can greatly
+                        improve the results in some cases.</p>
+                      </li>
+                    </ol></div>
+                </li>
+              </ul></li>
+          </ol></div><span id="ath-gen-asc-contactpair-general"></span>
+      <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div>
+
+      <div class="sect3" id="ath-gen-asc-contactpair-separation">
+        <a name="ath-gen-asc-contactpair-separation"></a>
+
+        <div class="titlepage">
+          <div class="title">
+            <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Configuring the Separation Options in
+            a Contact Pair</h3>
+          </div>
+        </div>
+
+        <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to configure the separation
+        options in a contact pair.</p>
+
+        <div class="procedure" id="d0">
+          <ol class="type1"><li>
+              <p>From the <span class="guitext"><b class="guititle">Contact Pair</b></span> dialog box, select
+              the <span class="guitext"><b class="guilabel">Separation</b></span> tab.</p>
+            </li>
+
+            <li>
+              <p>If desired, toggle on <span class="guitext"><b class="guilabel">Clearance</b></span>,
+              and specify a precise initial clearance. In a
+              Nonlinear Structural case, you can also enter a
+              negative clearance to specify an overclosure value. A
+              positive or zero clearance value (used to specify a
+              known gap between the surfaces) means that the
+              surfaces can approach each other through the
+              specified distance until they come in contact. The
+              solver treats the two surfaces as not being in
+              contact, regardless of their nodal coordinates.</p>
+
+              <p>Specifying a clearance is useful when the solver
+              would not compute it accurately enough from the nodal
+              coordinates; for example, if the initial clearance is
+              very small compared to the coordinate values. The
+              solver uses the value that you supply to overwrite
+              the initial clearance value calculated at every secondary
+              node based on the coordinates of the secondary node and
+              the main surface. This procedure does not alter the
+              coordinates of the secondary nodes. You can define an
+              initial clearance value only for small-sliding
+              contact.</p>
+
+              <p>In a Nonlinear Structural case a negative
+              clearance (overclosure) models a pressure fitting.
+              The mechanical connection behavior specifies the
+              friction coefficient between the parts in the
+              pressure fitting. The solver treats the two surfaces
+              as an interference fit and attempts to resolve the
+              overclosure in the first increment. See <a href="page0455.html#ath-gen-fem-prop-mechconnectbehav">
+              Creating a Mechanical Connection
+              Behavior</a> for more information.</p>
+            </li>
+
+            <li>
+              <p>To adjust the secondary nodes in a Nonlinear
+              Structural case, do one of the following:</p>
+
+              <ul type="disc"><li>
+                  <p>Choose <span class="guitext"><b class="guilabel">Do not adjust secondary nodes</b></span>
+                  to maintain the original position of the secondary
+                  nodes. Secondary nodes that are overclosed in the
+                  initial configuration will remain overclosed at
+                  the start of the simulation, which may cause
+                  convergence problems.</p>
+                </li>
+
+                <li>
+                  <p>Choose <span class="guitext"><b class="guilabel">Adjust only overclosed
+                  nodes</b></span> to move any secondary nodes that are
+                  penetrating the main surface so they are
+                  precisely on the main surface.</p>
+                </li>
+
+                <li>
+                  <p>Choose <span class="guitext"><b class="guilabel">Adjust nodes within</b></span>, and
+                  enter a value for the distance of the nodes from
+                  the main surface; any secondary nodes that are
+                  within this &#8220;adjustment zone&#8221; in
+                  the initial mesh of the model are moved precisely
+                  onto the main surface. If you define a
+                  <span class="guitext"><b class="guilabel">Clearance</b></span> value for the
+                  contact pair, the solver ignores the adjustment
+                  value.</p>
+                </li>
+              </ul>Adjusting the position of the surfaces at the
+              start of the analysis can eliminate small gaps or
+              penetrations caused by numerical roundoff and, thus,
+              prevent possible convergence problems in the
+              analysis. Adjusting surface nodes does not create
+              strains in the model. You cannot adjust the secondary
+              nodes if you are defining self-contact.
+
+              <p>If you selected the <span class="guitext"><b class="guilabel">Adjust nodes
+              within</b></span> option, you can preview which nodes
+              are affected by choosing one of the following options
+              and clicking <span class="guitext"><b class="guibutton">Preview</b></span>:</p>
+
+              <ul type="disc"><li>
+                  <p>Choose <span class="guitext"><b class="guilabel">Highlight nodes</b></span> to
+                  highlight those nodes in the model that will be
+                  moved by the adjustment options.</p>
+
+                  <div style="margin-left: 0.5in; margin-right: 0.5in;" class="note">
+                    <p><b class="title"><a name="d0e7803">Note:&nbsp;</a></b> Nodes of 1D
+                    beams cannot be highlighted in Nonlinear
+                    Structural Analysis and Thermal Analysis.</p>
+                  </div>
+                </li>
+
+                <li>
+                  <p>Choose <span class="guitext"><b class="guilabel">Move nodes</b></span> to view the mesh
+                  of the model after the adjustment options are
+                  applied. Nonlinear Structural Analysis and
+                  Thermal Analysis use color coding to identify the
+                  quality of elements in the adjusted model
+                  display: green elements are considered good
+                  quality, yellow elements are considered poor
+                  quality, and red elements are considered bad
+                  quality. These colors are based on the quality
+                  criteria currently defined in the CATIA V5
+                  Quality Analysis tool (see <a href="page0467.html">Using Abaqus
+                  Element Quality Checks</a>
+                  for more information).</p>
+                </li>
+              </ul>Both surfaces involved in the contact pair must
+              be meshed to preview the adjustment options. The node
+              adjustment previews are approximations only; the
+              nodes affected by the preview display may not be the
+              same nodes that are adjusted by the solver. However,
+              the preview should identify general regions of
+              interest in the model when configuring adjustment
+              options. The model display returns to the original
+              geometry when you exit the <span class="guitext"><b class="guititle">Contact Pair</b></span>
+              dialog box.
+            </li>
+
+            <li>
+              <p>If you chose to adjust secondary nodes, you can toggle
+              on <span class="guitext"><b class="guilabel">Tie
+              adjusted surfaces</b></span> to indicate that the
+              surfaces of the contact pair are to be
+              &#8220;tied&#8221; together for the duration of the
+              simulation. You must adjust the secondary nodes because
+              it is very important that the tied surfaces be
+              precisely in contact at the start of the
+              simulation.</p>
+            </li>
+
+            <li>
+              <p>In a Nonlinear Structural Case, click the
+              <span class="guitext"><b class="guilabel">Interference Fit Settings</b></span>. See
+              <a href="page0424.html#ath-gen-asc-contactpair-interference">Configuring the Interference Fit
+              Settings in a Contact Pair</a> for more
+              information.</p>
+            </li>
+          </ol></div>
+
+        <div style="margin-left: 0.5in; margin-right: 0.5in;" class="note">
+          <p><b class="title"><a name="d0e7867">Note:&nbsp;</a></b> Displacement results for a
+          contact analysis do not show adjusted node positions when
+          attached to the original model; the undeformed model
+          shows the original positions, and the deformed model
+          shows the final positions. To display results including
+          the nodal adjustments, do the following:</p>
+
+          <div class="orderedlist" id="d0">
+            <ol class="type1"><li>
+                <p>Create a new empty <tt class="filename">.CATAnalysis</tt> document with an empty
+                Analysis case.</p>
+              </li>
+
+              <li>
+                <p>Import the output database file created by the
+                analysis.</p>
+              </li>
+            </ol></div>
+        </div><span id="ath-gen-asc-contactpair-separation"></span>
+      <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div>
+
+      <div class="sect3" id="ath-gen-asc-contactpair-status">
+        <a name="ath-gen-asc-contactpair-status"></a>
+
+        <div class="titlepage">
+          <div class="title">
+            <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Viewing the Status of a Contact
+            Pair</h3>
+          </div>
+        </div>
+
+        <p>To view the status of a contact pair, click the
+        <span class="guitext"><b class="guilabel">Status</b></span>
+        tab. The <span class="guitext"><b class="guilabel">Status</b></span> tabbed page indicates the
+        following:</p>
+
+        <ul type="disc"><li>
+            <p>Whether the contact pair was <span class="guitext"><b class="guilabel">Created</b></span> in
+            this step or <span class="guitext"><b class="guilabel">Propagated</b></span> into this step.</p>
+          </li>
+
+          <li>
+            <p>Whether the contact pair is <span class="guitext"><b class="guilabel">Active</b></span> or
+            <span class="guitext"><b class="guilabel">Inactive</b></span>.</p>
+          </li>
+        </ul><span id="ath-gen-asc-contactpair-status"></span>
+      </div>
+
+      <div class="sect3" id="ath-gen-asc-contactpair-advanced">
+        <a name="ath-gen-asc-contactpair-advanced"></a>
+
+        <div class="titlepage">
+          <div class="title">
+            <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Configuring the Advanced Options in a
+            Contact Pair</h3>
+          </div>
+        </div>
+
+        <p>The standard solution controls are usually sufficient,
+        but additional controls are helpful to obtain
+        cost-effective solutions for models involving complicated
+        geometries and numerous contact interfaces, as well as for
+        models in which rigid body motions are initially not
+        constrained.</p>
+
+        <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to configure the advanced
+        options in a contact pair.</p>
+
+        <div class="procedure" id="d0">
+          <ol class="type1"><li>
+              <p>From the <span class="guitext"><b class="guititle">Contact Pair</b></span> dialog box, select
+              the <span class="guitext"><b class="guilabel">Advanced</b></span> tab.</p>
+            </li>
+
+            <li>
+              <p>If desired, in the <span class="guitext"><b class="guilabel">Scale default damping by</b></span> field,
+              enter a value for the scaling factor. The damping
+              coefficient will be multiplied by this value.</p>
+            </li>
+
+            <li>
+              <p>If desired, click the <span class="guitext"><b class="guilabel">Damping
+              parameters</b></span> icon <img src="b35doc/english/online/anlug_c2/images/I_BcEditGreen.png"></img> and do the
+              following:</p>
+
+              <ul type="disc"><li>
+                  <p>Enter a value for the <span class="guitext"><b class="guilabel">Tangent
+                  friction</b></span>. This is the fraction of the
+                  normal stabilization by which to modify the
+                  tangential stabilization. By default, the
+                  tangential and normal stabilization are the
+                  same.</p>
+                </li>
+
+                <li>
+                  <p>Enter a value for the <span class="guitext"><b class="guilabel">Fraction of damping
+                  at end of step</b></span>. Enter a value of 1 to
+                  keep the damping constant over the step. If you
+                  specify a nonzero value, convergence problems may
+                  occur in a subsequent step if stabilization is
+                  not used in that step. The default value is
+                  zero.</p>
+                </li>
+
+                <li>
+                  <p>By default, the default clearance value is
+                  computed based on the facet size associated with
+                  the contact pair. Alternatively, you can toggle
+                  on <span class="guitext"><b class="guilabel">Specify</b></span> and enter a value
+                  for the clearance at which the damping becomes
+                  zero. Enter a large value to obtain damping
+                  independent of the opening distance.</p>
+                </li>
+              </ul></li>
+          </ol></div><span id="ath-gen-asc-contactpair-advanced"></span>
+      <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div>
+
+      <div class="sect3" id="ath-gen-asc-contactpair-interference">
+        <a name="ath-gen-asc-contactpair-interference"></a>
+
+        <div class="titlepage">
+          <div class="title">
+            <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Configuring the Interference Fit
+            Settings in a Contact Pair</h3>
+          </div>
+        </div>
+
+        <p>If there are large overclosures in the initial
+        configuration of the model, the solver may not be able to
+        resolve the interference fit in a single increment. You can
+        specify interference fit options that help the solver to
+        resolve excessive overclosure between contacting surfaces
+        gradually over multiple increments.</p>
+
+        <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to configure the interference
+        fit options in a contact pair. Interference fit options are
+        not available in the Initialization step.</p>
+
+        <div class="procedure" id="d0">
+          <ol class="type1"><li>
+              <p>From the <span class="guitext"><b class="guilabel">Separation</b></span> tabbed page of the
+              <span class="guitext"><b class="guititle">Contact
+              Pair</b></span> dialog box, click the <span class="guitext"><b class="guilabel">Interference fit
+              settings</b></span> tool.</p>
+            </li>
+
+            <li>
+              <p>By default, an interference fit is not allowed. To
+              prescribe allowable interferences, toggle on
+              <span class="guitext"><b class="guilabel">Gradually
+              remove overclosure of secondary nodes during
+              step</b></span>.</p>
+            </li>
+
+            <li>
+              <p>Choose the <span class="guitext"><b class="guilabel">Overclosure Adjustment</b></span>
+              method.</p>
+
+              <ul type="disc"><li>
+                  <p>Choose <span class="guitext"><b class="guilabel">Automatic shrink fit (first general
+                  analysis step only)</b></span> if you want to
+                  assign a different allowable interference to each
+                  secondary node that is equal to that node's initial
+                  penetration. You can select this option only in
+                  the first general static step of an analysis.</p>
+                </li>
+
+                <li>
+                  <p>Choose <span class="guitext"><b class="guilabel">Uniform allowable
+                  interference</b></span> to specify a single
+                  allowable interference that will be applied to
+                  every secondary node.</p>
+                </li>
+              </ul></li>
+
+            <li>
+              <p>If you chose <span class="guitext"><b class="guilabel">Uniform allowable interference</b></span>,
+              do the following:</p>
+
+              <div class="substeps" id="d0">
+                <ol type="a"><li>
+                    <p>By default, the solver applies the
+                    prescribed interference immediately at the
+                    beginning of the step and ramps it down to zero
+                    linearly over the step. Alternatively, you can
+                    toggle on <span class="guitext"><b class="guilabel">Select amplitude</b></span> and
+                    select an existing amplitude from the
+                    specification tree. The solver uses the
+                    selected amplitude curve to define the
+                    magnitude of the prescribed interference during
+                    the step. For more information, see <a href="page0433.html">Amplitudes</a>.</p>
+                  </li>
+
+                  <li>
+                    <p>In the <span class="guitext"><b class="guilabel">Magnitude at start of
+                    step</b></span> field, enter the magnitude of
+                    the allowable interference at the start of the
+                    step.</p>
+                  </li>
+
+                  <li>
+                    <p>If desired, toggle on <span class="guitext"><b class="guilabel">Along
+                    direction</b></span> to specify a shift
+                    direction vector. The relative shift is applied
+                    to the secondary nodes before the solver determines
+                    the contact conditions. In certain
+                    applications, such as contact simulations of
+                    threaded connectors, shifting the surfaces in a
+                    specified direction is more effective than
+                    simply allowing an interference. If you select
+                    this option, enter the following:</p>
+
+                    <ul type="disc"><li>
+                        <p>Enter the <span class="guitext"><b class="guilabel">X</b></span>-direction
+                        cosine of the shift direction vector.</p>
+                      </li>
+
+                      <li>
+                        <p>Enter the <span class="guitext"><b class="guilabel">Y</b></span>-direction
+                        cosine of the shift direction vector.</p>
+                      </li>
+
+                      <li>
+                        <p>Enter the <span class="guitext"><b class="guilabel">Z</b></span>-direction
+                        cosine of the shift direction vector.</p>
+                      </li>
+                    </ul></li>
+                </ol></div>
+            </li>
+
+            <li>
+              <p>Click <span class="guitext"><b class="guibutton">OK</b></span> to save your interference
+              fit settings.</p>
+            </li>
+          </ol></div><span id="ath-gen-asc-contactpair-interference"></span>
+      <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div><span id="ath-gen-asm-int-contact-pair"></span>
+    </div>
+
+    <div class="sect2" id="ath-gen-asm-int-generalcontact">
+      <a name="ath-gen-asm-int-generalcontact"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3>General Contact</h3>
+        </div>
+      </div>
+
+      <p><a name="CATCommandHeader.ABQGeneralContactHdr"></a>General contact allows you to create a very simple
+      definition of contact in your model during a Nonlinear
+      Structural case. You select multiple faces that can interact
+      and rely on the solver to track the interactions between the
+      faces. You typically define general contact by selecting all
+      surfaces in your model (including analytical rigid surfaces).
+      To refine the contact domain, you can include or exclude
+      specific pairs of surface groups. The surfaces that you
+      select can span multiple unattached bodies, so self-contact
+      is not limited to contact of a single body with itself. For
+      example, self-contact of a surface that spans two bodies
+      implies contact between the bodies as well as contact of each
+      body with itself.</p>
+
+      <p>Alternatively, Nonlinear Structural Analysis allows you to
+      choose selected surface pairs to include in the interaction
+      and selected surface pairs to exclude. The primary motivation
+      for specifying contact exclusions is to avoid physically
+      unreasonable contact interactions. For example, your model
+      may contain multiple forming tools, but not all of the tools
+      participate in the forming process simultaneously. If you
+      specify contact exclusions, you can prevent certain tools
+      from participating in the contact model in certain steps. You
+      do not need to be concerned with specifying contact
+      exclusions for parts of the model that are not likely to
+      interact, since these exclusions typically will have minimal
+      effect on computational performance.</p>
+
+      <p>You can use general contact in conjunction with contact
+      pairs (i.e., some interactions can be modeled with general
+      contact, while others are modeled with contact pairs).
+      General contact uses only the finite-sliding,
+      surface-to-surface contact formulation in a Nonlinear
+      Structural case. This formulation allows for arbitrary
+      separation, sliding, and rotation of the surfaces.</p>
+
+      <p>You cannot specify an initial clearance for general
+      contact. However, during the first step of the analysis the
+      solver adjusts the positions of surfaces to remove small
+      initial overclosures that exist in the general contact
+      domain. The adjustments are made with strain-free initial
+      displacements. This automatic adjustment of surface position
+      is intended to correct only minor mismatches associated with
+      mesh generation.</p>
+
+      <p>The following topics are discussed in this section:</p>
+
+      <ul type="disc"><li>
+          <p><a href="page0424.html#ath-gen-asm-contact-gccreate">Creating a General Contact
+          Interaction</a></p>
+        </li>
+
+        <li>
+          <p><a href="page0424.html#ath-gen-asm-contact-init">General Contact Initialization
+          Properties</a></p>
+        </li>
+      </ul><div class="sect3" id="ath-gen-asm-contact-gccreate">
+        <a name="ath-gen-asm-contact-gccreate"></a>
+
+        <div class="titlepage">
+          <div class="title">
+            <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Creating a General Contact
+            Interaction</h3>
+          </div>
+        </div>
+
+        <p>General contact in a Nonlinear Structural case is
+        defined in the Initialization step and will appear in the
+        Connections container for that step. You must define a
+        general contact initialization property for use in the
+        <span class="guitext"><b class="guilabel">Initialization
+        Behavior</b></span> tabbed page of the <span class="guitext"><b class="guilabel">General Contact</b></span>
+        dialog box. In addition, main and secondary surfaces are
+        assigned automatically and cannot be modified. Only one
+        general contact interaction can be created in a Nonlinear
+        Structural case.</p>
+
+        <p>When you are selecting a surface pair to include or
+        exclude in the interaction or to associate with a
+        mechanical connection behavior, you can select a surface
+        pair that represents all of the surfaces in your model by
+        selecting <span class="guitext"><b class="guilabel">Nodes
+        and Elements</b></span> from the specification tree.
+        Individual points that you created with the point tool are
+        not included in the selection of all surfaces. (In most
+        cases you use the point tool to create a handler point for
+        a part constraint.)</p>
+
+        <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to create a general contact
+        interaction.</p>
+
+        <div class="procedure" id="d0">
+          <ol class="type1"><li>
+              <p>Click the General Contact icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_GeneralContact.gif"></img>.</p>
+
+              <p>The <span class="guitext"><b class="guititle">General Contact</b></span> dialog box
+              appears. For a Nonlinear Structural case, a General
+              Contact object appears in the specification tree
+              under the Connections objects set for the
+              Initialization step.</p>
+            </li>
+
+            <li>
+              <p>You can change the identifier of the contact pair
+              by editing the <span class="guitext"><b class="guilabel">Name</b></span> field.</p>
+            </li>
+
+            <li>
+              <p>Toggle on <span class="guitext"><b class="guilabel">Stabilize rigid body modes for entire
+              model</b></span> to activate stabilization.</p>
+            </li>
+
+            <li>
+              <p>To define the surfaces that will interact, do
+              either of the following from the <span class="guitext"><b class="guilabel">Contact
+              Domain</b></span> tabbed page:</p>
+
+              <ul type="disc"><li>
+                  <p>Choose <span class="guitext"><b class="guilabel">All</b></span> to include all surfaces
+                  of your model in the contact domain. If you
+                  choose <span class="guitext"><b class="guilabel">All</b></span>, Nonlinear Structural
+                  Analysis selects all exterior faces, beam
+                  segments, and analytical rigid surfaces; however,
+                  stand-alone points are not selected.</p>
+                </li>
+
+                <li>
+                  <p>Choose <span class="guitext"><b class="guilabel">Selected Surface Pairs</b></span>, and
+                  select pairs of surface groups to include in the
+                  contact domain. You cannot select surfaces
+                  directly; you must select surface groups that
+                  include the desired surfaces. To select a surface
+                  group that represents all surfaces in the model,
+                  select <span class="guitext"><b class="guilabel">Nodes and Elements</b></span> from the
+                  specification tree. See <a href="page0464.html">Creating
+                  Groups</a> for more information.</p>
+                </li>
+              </ul></li>
+
+            <li>
+              <p>To exclude surfaces from the contact interaction,
+              select the <span class="guitext"><b class="guilabel">Exclusion Domain</b></span> tabbed page,
+              and select pairs of surface groups to exclude from
+              the contact domain. The solver excludes contact for
+              the surface groups that you specify, even if you
+              included the same pair of surface groups directly or
+              indirectly in the contact domain. To select a surface
+              group that represents all surfaces in the model,
+              select <span class="guitext"><b class="guilabel">Nodes and Elements</b></span> from the
+              specification tree.</p>
+            </li>
+
+            <li>
+              <p>To modify the default contact property model, do
+              the following from the <span class="guitext"><b class="guilabel">Connection
+              Behavior</b></span> tabbed page:</p>
+
+              <ul type="disc"><li>
+                  <p>From the specification tree, select a
+                  <span class="guitext"><b class="guilabel">Global
+                  Connection Behavior</b></span> that Nonlinear
+                  Structural Analysis will apply to the entire
+                  model.</p>
+                </li>
+
+                <li>
+                  <p>Select pairs of surface groups and a
+                  <span class="guitext"><b class="guilabel">Local
+                  Connection Behavior</b></span> that applies to
+                  the selected groups. In many cases you will
+                  select a global connection contact behavior for
+                  the entire model, but you will assign a specific
+                  local connection behavior to a subset of the
+                  model. Local connection behaviors take precedence
+                  over the global connection behavior. The solver
+                  ignores any contact property assignments for
+                  surface groups that fall outside of the general
+                  contact domain. To select a surface group that
+                  represents all surfaces in the model, select
+                  <span class="guitext"><b class="guilabel">Nodes
+                  and Elements</b></span> from the specification
+                  tree.</p>
+                </li>
+              </ul></li>
+
+            <li>
+              <p>For a Nonlinear Structural case, you must define
+              initialization behaviors. In the <span class="guitext"><b class="guilabel">Initialization
+              Behaviors</b></span> tabbed page, select the surface
+              groups and a general contact initialization property
+              to complete the table. See <a href="page0424.html#ath-gen-asm-contact-init">General Contact Initialization
+              Properties</a> for more information on
+              defining initialization properties.</p>
+            </li>
+          </ol></div><span id="ath-gen-asm-contact-gccreate"></span>
+      <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div>
+
+      <div class="sect3" id="ath-gen-asm-contact-init">
+        <a name="ath-gen-asm-contact-init"></a>
+
+        <div class="titlepage">
+          <div class="title">
+            <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>General Contact Initialization
+            Properties</h3>
+          </div>
+        </div>
+
+        <p><a name="CATCommandHeader.ABQContactInitilizationHdr"></a>General contact initialization properties are used with
+        general contact for Nonlinear Structural cases.</p>
+
+        <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to create a general contact
+        initialization property.</p>
+
+        <div class="procedure" id="d0">
+          <ol class="type1"><li>
+              <p>Click the General Contact Initialization Property
+              icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_ContactInitialization.gif"></img>.</p>
+
+              <p>The <span class="guitext"><b class="guititle">General Contact Initialization
+              Property</b></span> dialog box appears, and a General
+              Contact Initialization Property object appears in the
+              specification tree under the Nonlinear and Thermal
+              Properties objects set.</p>
+            </li>
+
+            <li>
+              <p>You can change the identifier of the property by
+              editing the <span class="guitext"><b class="guilabel">Name</b></span> field.</p>
+            </li>
+
+            <li>
+              <p>Specify the treatment of initial overclosures
+              between surfaces:</p>
+
+              <ul type="disc"><li>
+                  <p>Select <span class="guitext"><b class="guilabel">Resolve with strain-free
+                  adjustments</b></span> to adjust certain surfaces
+                  to be exactly touching at the beginning of the
+                  analysis without creating strain in the model.
+                  Only portions of surfaces that lie within the
+                  specified distance range are adjusted.</p>
+                </li>
+
+                <li>
+                  <p>Select <span class="guitext"><b class="guilabel">Treat as interference fits</b></span>
+                  to resolve surface overclosures gradually over
+                  the course of the first step in the analysis;
+                  this technique creates strain in the model as the
+                  surfaces are displaced. Only portions of surfaces
+                  that lie within the specified overclosure
+                  distance range are adjusted using the
+                  interference fit.</p>
+                </li>
+              </ul></li>
+
+            <li>
+              <p>Specify a distance beyond which initial
+              overclosures can be ignored. Smaller overclosures
+              will be treated as specified in the previous
+              step.</p>
+
+              <ul type="disc"><li>
+                  <p>Select <span class="guitext"><b class="guilabel">Analysis default</b></span> to let the
+                  solver calculate a maximum overclosure adjustment
+                  distance based on the size of the elements on
+                  each surface.</p>
+                </li>
+
+                <li>
+                  <p>Select <span class="guitext"><b class="guilabel">Specify value</b></span> to enter a
+                  maximum overclosure adjustment distance directly.
+                  If you enter a value that is smaller than the
+                  calculated analysis default for a surface, the
+                  solver uses the analysis default value for that
+                  surface.</p>
+
+                  <div style="margin-left: 0.5in; margin-right: 0.5in;" class="warning">
+                    <p><img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32" style="vertical-align: middle"></img><b class="title"><a name="d0e8308">Warning:&nbsp;</a></b> If there are
+                    any regions with initial overclosures greater
+                    than the specified distance, contact between
+                    these regions will not be recognized in the
+                    analysis.</p>
+                  </div>
+                </li>
+              </ul></li>
+
+            <li>
+              <p>If you selected <span class="guitext"><b class="guilabel">Resolve with strain-free
+              adjustments</b></span> in Step 3, you can also
+              specify treatment of initially open nodes.</p>
+
+              <ul type="disc"><li>
+                  <p>Select <span class="guitext"><b class="guilabel">Analysis default</b></span> to ignore
+                  all open nodes during the initialization
+                  adjustments.</p>
+                </li>
+
+                <li>
+                  <p>Select <span class="guitext"><b class="guilabel">Specify value</b></span> to enter a
+                  maximum opening adjustment distance directly.</p>
+
+                  <p>Nodes separated from the opposing surface by a
+                  value less than the specified distance are
+                  adjusted to lie exactly on the opposing
+                  surface.</p>
+                </li>
+              </ul></li>
+          </ol></div>
+
+        <p>General contact initialization properties are applied to
+        the model using the <span class="guitext"><b class="guilabel">Initialization Behavior</b></span> tabbed page
+        in the <span class="guitext"><b class="guilabel">General
+        Contact</b></span> dialog box. For more information, see
+        <a href="page0424.html#ath-gen-asm-contact-gccreate">Creating a General Contact
+        Interaction</a>.</p><span id="ath-gen-asm-contact-init"></span>
+      <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div><span id="ath-gen-asm-int-generalcontact"></span>
+    </div><span id="ath-gen-asm-contact"></span>
+  </div></body></html>
+

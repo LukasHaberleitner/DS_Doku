@@ -1,0 +1,416 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+	<head>
+	<meta name="MonocodingType" content="0">
+	<meta name="MonocodingFlag" content="C2D2">
+	<meta http-equiv="Content-Language" content="en-us">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Define Macros on a Milling Operation</title>
+	<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+	<meta name="ProgId" content="FrontPage.Editor.Document">
+	<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+	<style type="text/css">
+.style1 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+	</head>
+
+	<body>
+
+	<h1>Define Macros on a Milling Operation</h1>
+	<table border="0">
+			<tr>
+					<td width="32" valign="top">
+					<img src="b35doc/english/online/icons_C2/common/atarget.gif" title="task target" width="32" height="32"></td>
+					<td valign="top" colspan="2">
+					This task shows you how to define macros on a milling operation.
+					<p>This is done using the Macros tab page
+					<img border="1" src="b35doc/english/online/mfgug_c2/images/TabMacroG.gif" width="36" height="22"> 
+					of the machining operation editor. In this example you will 
+					add circular approach, circular retract, and linking macros 
+					to a Profile Contouring operation.</p>
+					<p>For more general information about macros, see
+					<a href="page11448.html">NC Macros</a>.</p>
+					</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					<img src="b35doc/english/online/icons_C2/common/ainfo.gif" title="task target" width="32" height="32"></td>
+					<td valign="top" colspan="2" rowspan="5">
+					<h3>Predefined Macros</h3>
+					<p>You can use <i>predefined</i> macros. These are made up from 
+					one or more paths in a specific order. Just select the desired 
+					mode in the Current Macro Toolbox. You can then adjust parameters 
+					of the macro (such as path length and feedrate).</p>
+					<h3>User-Built Macros</h3>
+					<p>You can also build your own macros using the <kbd>Build by 
+					user</kbd> mode.</p>
+					<p>Depending on the context, you can use the following icons 
+					to specify macro paths:</p>
+					<blockquote>
+							<p>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgTgtElemMacroMotion.gif" width="22" height="22"> 
+							tangent motion<br>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgNorElemMacroMotion.gif" width="22" height="22"> 
+							normal motion<br>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgAxialElemMacroMotion.gif" width="22" height="22"> 
+							axial motion<br>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgCircularElemMacroMotion.gif" width="22" height="22"> 
+							circular motion<br>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgRampElemMacroMotion.gif" width="22" height="22"> 
+							ramping motion<br>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgHelixElemMacroMotion.gif" width="22" height="22">
+							<a href="#R18HelixMacro">helix motion</a><br>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgPPwordElemMacroMotion.gif" width="22" height="22"> 
+							PP word<br>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgGoToAPlaneElemMacroMotion.gif" width="22" height="22"> 
+							motion perpendicular to a plane<br>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgAxialToPlaneMacroMotion.gif" width="22" height="22">
+							<a name="WNR9newaxialmotion"></a>axial motion to a plane<br>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgGoToALineElemMacroMotion.gif" width="22" height="22"> 
+							motion perpendicular to a line<br>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgDeltaLnDistElemMacroMotion.gif" width="22" height="22"> 
+							distance along a given direction<br>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgToolAxisElemMacroMotion.gif" width="22" height="22"> 
+							tool axis motion<br>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgGoToAPointElemMacroMotion.gif" width="22" height="22"> 
+							motion to a point.</p>
+					</blockquote>
+					<p>In addition, the following icons allow you to:</p>
+					<blockquote>
+							<p>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgRemoveMacroMotion.gif" width="22" height="22"> 
+							remove all macro paths<br>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgRemoveCurrentMacroMotion.gif" width="22" height="22"> 
+							remove current macro paths<br>
+							<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgCopyToAllMacroMotion.gif" width="22" height="22"> 
+							copy the paths defined on the Approach macro on to the 
+							approach paths of other macros <kbd>or</kbd> copy the 
+							paths defined on the Retract macro on to the retract 
+							paths of other macros.</p>
+					</blockquote>
+					<h3>Macro Edition</h3>
+					<p>A sensitive icon representing the elementary paths of the 
+					macro will help you to build or edit your macro. The current 
+					macro path is colored magenta (it turns dark red when 
+					selected). Right-clicking a macro path gives 
+					you access to a contextual menu.</p>
+					<a name="ix-contextual command::Deactivate (macro path);Deactivate (macro path) contextual command">
+					</a>
+					<a name="ix-contextual command::Activate (macro path);Activate (macro path) contextual command">
+					</a>
+					<a name="ix-contextual command::Feedrate (macro path);Feedrate (macro path) contextual command">
+					</a>
+					<a name="ix-contextual command::Parameter (macro path);Parameter (macro path) contextual command">
+					</a>
+					<a name="ix-contextual command::Delete (macro path);Delete (macro path) contextual command">
+					</a>
+					<a name="ix-contextual command::Insert (macro path);Insert (macro path) contextual command">
+					</a><p align="left">&nbsp;<img src="b35doc/english/online/mfgug_c2/images/Macros06.gif" width="338" height="226" class="style1"></p>
+					<ul>
+						<li><p align="left"><kbd>Deactivate</kbd>: Deactivates the 
+						selected macro path.</p>
+						</li>
+						<li><p align="left"><kbd>Activate</kbd>: Activates a path 
+						that was previously deactivated.</p>
+						</li>
+						<li><p align="left"><kbd>Feedrate</kbd>: Allows you to modify 
+						the feedrate type associated to the selected macro path 
+						by making a selection in the sub-menu. If local is selected, 
+						you can assign a local feedrate value.</p>
+						</li>
+						<li><p align="left"><kbd>Parameter</kbd>: Gives access to 
+						parameters of the selected macro path.</p>
+						</li>
+						<li><p align="left"><kbd>Delete</kbd>: Deletes the selected 
+						macro path.</p>
+						</li>
+						<li><p align="left"><kbd>Insert</kbd>: Inserts a macro path 
+						depending on the type chosen in the sub-menu.</p>
+						</li>
+					</ul>
+					</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					<a name="WNR11FeedMenu"></a>&nbsp;</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top" style="padding-bottom: 10">
+					</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top" style="padding-bottom: 20">
+&nbsp;</td>
+					<td valign="top" colspan="2" style="padding-bottom: 20">
+					<h3>Inherited Macros</h3>
+					<p>If you create a machining operation and there are other operations 
+					of the same type in the program, the new operation will <i>inherit</i> 
+					the macros used in the most-recently edited operation of the 
+					same type. An operation is considered edited when you click 
+					OK to quit the operation definition dialog box.</p>
+					</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					<img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+					<td valign="top" colspan="2">
+					Create a <kbd>Profile Contouring</kbd> operation as described in the <i>
+					Prismatic Machining User&#39;s Guide</i>.</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					<img src="b35doc/english/online/icons_C2/common/ascenari.gif" title="scenario" width="32" height="32"></td>
+					<td valign="top">
+					<font color="#1C1557"><kbd>1.</kbd></font></td>
+					<td valign="top">
+					Double-click the <kbd>Profile Contouring </kbd>operation in the specification 
+					tree to edit that operation.</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					</td>
+					<td valign="top">
+					<font color="#1C1557"><kbd>2.</kbd></font></td>
+					<td valign="top">
+					Select the <kbd>Macros</kbd> tab page
+					<img border="1" src="b35doc/english/online/mfgug_c2/images/TabMacroG.gif" width="36" height="22"> 
+					in the operation definition dialog box. The initial status of 
+					all the macros in the <kbd>Macro Management</kbd> list is <kbd>Inactive</kbd>.</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					</td>
+					<td valign="top">
+					<font color="#1C1557"><kbd>3.</kbd></font></td>
+					<td valign="top">
+					Right-click the <kbd>Approach</kbd> macro line and activate 
+					the macro by means of <kbd>Activate</kbd>.<p>In the <kbd>Current 
+					Macro Toolbox</kbd> select the <kbd>Circular horizontal axial</kbd> mode.</p>
+					<p>A sensitive icon representing the 3 elementary paths of this 
+					macro appears.</p>
+					<p>
+					<img src="b35doc/english/online/mfgug_c2/images/Macros01.gif" width="403" height="461" class="style1"></p>
+					</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					</td>
+					<td valign="top">
+					<font color="#1C1557"><kbd>4.</kbd></font></td>
+					<td valign="top">
+					Double-click each elementary path to display a dialog box that 
+					allows you to specify the exact characteristics the path.<p>
+					The following dialog box allows you to specify the exact characteristics 
+					of the circular path. </p>
+					<p>
+					<img src="b35doc/english/online/mfgug_c2/images/Macros05.gif" width="249" height="92" class="style1"></p>
+					<p>Set the values of the circular approach paths so as to have 
+					a 10mm vertical path followed by a 15mm radius circular path.
+					</p>
+					</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					</td>
+					<td valign="top">
+					<font color="#1C1557"><kbd>5.</kbd></font></td>
+					<td valign="top">
+					You can then click <kbd>Replay</kbd>
+					<img border="0" src="b35doc/english/online/icons_C2/images/I_ReplayP2.gif" align="middle" width="24" height="24"> 
+					to check the circular approach. The status of the macro becomes
+					<kbd>Up to date</kbd>.</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					</td>
+					<td valign="top">
+					<font color="#1C1557"><kbd>6.</kbd></font></td>
+					<td valign="top">
+					Activate the <kbd>Retract</kbd> macro in the <kbd>Macro Management</kbd> 
+					list and create a circular retract macro in the same way.
+					</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					</td>
+					<td valign="top">
+					<font color="#1C1557"><kbd>7.</kbd></font></td>
+					<td valign="top">
+					Select the <kbd>Linking Retract</kbd> macro line in the Macro 
+					Management list, then in the <kbd>Current Macro Toolbox</kbd> select the 
+					<kbd>Axial</kbd> mode.</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					</td>
+					<td valign="top">
+					<font color="#1C1557"><kbd>8.</kbd></font></td>
+					<td valign="top">
+					Double-click the displayed value, then assign a 20mm value to 
+					the retract path. <p>
+					<img src="b35doc/english/online/mfgug_c2/images/Macros02.gif" width="404" height="469" class="style1"></p>
+					</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					</td>
+					<td valign="top">
+					<font color="#1C1557"><kbd>9.</kbd></font></td>
+					<td valign="top">
+					Select the <kbd>Linking Approach</kbd> line in the <kbd>Macro Management</kbd> 
+					list, then select the <kbd>Axial</kbd> mode. Assign a 20mm value to the 
+					approach path. </td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					</td>
+					<td valign="top">
+					<font color="#1C1557"><kbd>10.</kbd></font></td>
+					<td valign="top">
+					In the <kbd>Options</kbd> tab, select the <kbd>Cornerized clearance with 
+					radius</kbd> check box, then enter a corner radius value of 
+					3mm.<p>
+					<img src="b35doc/english/online/mfgug_c2/images/Macros03.gif" width="399" height="221" class="style1"></p>
+					</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					</td>
+					<td valign="top">
+					<font color="#1C1557"><kbd>11.</kbd></font></td>
+					<td valign="top">
+					<p align="left">Click <kbd>Replay</kbd> to validate the tool path. Make 
+					sure that the <kbd>Different colors</kbd> mode is activated 
+					by selecting this icon
+					<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgReplayColorOn.gif" align="middle" width="22" height="22"> 
+					in the <kbd>Tool Path Replay</kbd> dialog box.</p>
+					<p align="left">
+					<img src="b35doc/english/online/mfgug_c2/images/Contouring05.gif" width="557" height="305" class="style1"></p>
+					</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					</td>
+					<td valign="top">
+&nbsp;</td>
+					<td valign="top">
+					In the <kbd>Replay</kbd> dialog box select the <kbd>By colors</kbd> mode 
+					in order to visualize feedrate changes. The tool path is displayed 
+					with the following colors:<ul>
+						<li>Yellow: approach feedrate</li>
+						<li>Green: machining feedrate</li>
+						<li>Blue: retract feedrate</li>
+						<li>Red: Rapid feedrate</li>
+						<li>White: user-defined feedrate.</li>
+					</ul>
+					<p>Please note that&nbsp; transition paths are represented by 
+					dashed white lines.</p>
+					</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+&nbsp;</td>
+					<td valign="top">
+&nbsp;</td>
+					<td valign="top">
+					The status of the macros are now <kbd>Up to date</kbd>.<p>
+					<img src="b35doc/english/online/mfgug_c2/images/Macros07.gif" width="399" height="208" class="style1"></p>
+					</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					</td>
+					<td valign="top">
+					<font color="#1C1557"><kbd>12.</kbd></font></td>
+					<td valign="top">
+					Click <kbd>OK</kbd> to accept the modifications made to the operation.<p>
+					The operation is updated with the specified macros.</p>
+					</td>
+			</tr>
+			<tr>
+					<td width="32" valign="top">
+					<img src="b35doc/english/online/icons_C2/common/ainfo.gif" title="task target" width="32" height="32"></td>
+					<td valign="top" colspan="2">
+					<h3>PP Words in Macros</h3>
+					<p><a name="PPinMacro"></a>You can insert PP words in macros 
+					by double-clicking the green X symbols in the sensitive icons.
+					</p>
+					<p>The<kbd> PP Words Selection</kbd> dialog box is displayed. You can enter 
+					the syntax in the following ways:</p>
+					<ul>
+						<li>enter one or more PP word syntaxes directly in the text 
+						field</li>
+						<li>click
+						<img src="b35doc/english/online/icons_C2/images/I_MfgPPInstructionP2.gif" align="middle" width="22" height="22"> 
+						to access the PP words table that is referenced in the current 
+						part operation. You can then select predefined syntaxes 
+						from this table using the dialog box that appears.</li>
+					</ul>
+					<p>For <kbd>Pocketing</kbd> and <kbd>Profile Contouring
+					</kbd>operations, you should 
+					select the NC_CUTCOM_ON instruction in the list of available 
+					syntaxes if you want the program to interpret cutter compensation 
+					automatically (that is, by a CUTCOM/LEFT or CUTCOM/RIGHT instruction). 
+					If you choose different syntax in the list, it will be used 
+					as selected.<br>
+					The methodology for this is described in the section &quot;How to 
+					Generate CUTCOM Syntaxes&quot; in&nbsp; the <i>Prismatic Machining 
+					User&#39;s Guide</i>.</p>
+					<h3>Default Linking Macros in Case of Collision</h3>
+					<p>If a user-defined linking macro is not collision free, a 
+					default linking macro is applied.</p>
+					<h3>Macro Motion Tangent to Tool Path and Parallel to Tool Axis</h3>
+					<p>When the tangent to the tool path is parallel to the tool 
+					axis, the following macro motions are replaced by an axial motion:</p>
+					<ul>
+						<li>tangent motion</li>
+						<li>normal motion</li>
+						<li>circular motion</li>
+						<li>ramping motion.</li>
+					</ul>
+					<h3>
+					<a name="R18HelixMacro"></a>Helix 
+					Approach Macro</h3>
+					<p>For <kbd>Pocketing</kbd>, <kbd>Profile Contouring</kbd>,
+					<kbd>Multi-axis Curve Machining</kbd>, 
+					and <kbd>Multi-Axis Flank Contouring</kbd> operations, a 
+					<kbd>Helix</kbd> approach 
+					macro
+					<img border="0" src="b35doc/english/online/icons_C2/images/I_MfgHelixElemMacroMotion.gif" width="22" height="22"> 
+					can be used rather than a Ramping approach macro when a cutter 
+					approaches raw material.</p>
+					<p>The helix is specified by defining radius, height and angle 
+					values.</p>
+					<p>The figure below illustrates a helix approach macro when 
+					the <kbd>Direction of cut</kbd> is <kbd>Climb</kbd> and the tool&#39;s Way of rotation 
+					is Right: <br>
+					<img border="1" src="b35doc/english/online/mfgug_c2/images/HelixMacro01.gif" width="255" height="185"></p>
+					<p>The figure below illustrates a helix approach macro when 
+					the <kbd>Direction of cut</kbd> is <kbd>Conventional</kbd> and the tool&#39;s Way of rotation 
+					is Right: <br>
+					<img border="1" src="b35doc/english/online/mfgug_c2/images/HelixMacro02.gif" width="255" height="185"></p>
+					</td>
+			</tr>
+			<tr>
+					<td colspan="3" width="664">
+					<p align="center">
+					<img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="end of task" width="64" height="32"></p>
+					</td>
+			</tr>
+	</table>
+
+	</body>
+
+</html>
+

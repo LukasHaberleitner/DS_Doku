@@ -1,0 +1,121 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Loading a PPR from a Project</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta content="none, default" name="Microsoft Border">
+</head>
+
+ <body>
+
+ <h1>Loading a PPR from a Project</h1>
+ <a name="DNBProcCmdHeader.DELMPrcFilterPPR_ProjectHdr"></a>
+ <table border="0" width="100%" cellspacing="3" cellpadding="3">
+   <tr>
+     <td valign="top"><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">
+     <p style="margin-bottom: 1em">Manufacturing Hub allows for the insertion of entire projects or selected PPRs from projects 
+     into the current DPM PPR tree.&nbsp;Inserting a PPR from another project in the 
+		Manufacturing Hub is achieved by:</p>
+     <ul>
+       <li><a href="page4404.html">Selecting a project</a> from the list of projects currently stored in the 
+		Manufacturing Hub.</li>
+       <li><a href="page4405.html">Applying Filters</a> to limit the number of PPRs displayed.</li>
+       <li><a href="page4407.html">Browsing the selected project</a> to locate the item of interest.</li>
+       <li><a href="page4407.html#Specify detailing to load">Selecting the detailing options</a> to load.</li>
+       <li><a href="page4408.html">Selecting the product and resource BOMs</a> for the current process.<br>
+&nbsp;</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <h2><img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></h2>
+     </td>
+     <td valign="top">
+     <h2>Notes</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">
+     <h3 align="left">Product and resource behavior</h3>
+     <p align="left">Products and resources linked to processes loaded from the Manufacturing Hub are made flexible by 
+     default. For details about flexible and rigid modes, please refer to Using Flexible Sub-Products in the <i>DELMIA 
+     Product Structure Users Guide</i> for more information.</p>
+     <p align="left">Product and resource data loaded in in DPM will be visualized at the position specified in the 
+     Manufacturing Hub, and any modifications to the resource positions are saved back to the Manufacturing Hub when the 
+     process is saved. This default behavior can be modified to convert the flexible assembly to rigid assembly through 
+     commands available in the product structure workbench. The flexible or rigid status of a product or resource is 
+     saved in the detailing when the process is saved back to the Manufacturing Hub.</p>
+     <p align="left">When loading a process with detailing in DPM, any modifications to the position of products and 
+     resources in the Manufacturing Hub will not be seen in the 3D window for the flexible products and resources. This 
+     is because the modified position information is updated on the first instance, but not on the last instance of the 
+     product/resource. 3D window displays the position of the last instance which still contains the old position. To 
+     see the products and resources in the new position (as specified in the Manufacturing Hub), use the
+     <a href="page4997.html">Restore Design Positions</a> command.&nbsp;
+     </p>
+     <h3 align="left">Saving simulation activities</h3>
+     <p align="left">After inserting a PPR from a project, any V5 simulation activities that are then defined and saved 
+     back to the Manufacturing Hub database are saved at the same level as the inserted PPR.&nbsp;</p>
+     <p align="left">For example, if you inserted a PPR named &quot;Workplan&quot; from a project, and then defined a Move 
+     activity under an operation, the newly-defined Move activity will be saved back into the database at the Workplan 
+		level.&nbsp;</p>
+     <h3>Working with read-only data</h3>
+     <p style="margin-bottom: 1em">If any of the data is designated as read-only, it can be loaded and used, but 
+     modifications can not be saved.&nbsp;</p>
+     <h3 style="margin-bottom: 1em">Loading multiply instantiated data</h3>
+		<p style="margin-bottom: 1em">A product or resource that is 
+		multiply instantiated in the Manufacturing Hub is not loaded unless it 
+		is a leaf in the structure (i.e., it has no children). This is also true 
+		of multiply instantiated processes.</p>
+     <h3 style="margin-bottom: 1em">Displaying icons based on plan type</h3>
+		<p style="margin-bottom: 1em">Icons used in the PPR tree for 
+		different process plan types can be the same as those used in Process 
+		Engineer by adding the path of the directory containing those icons to 
+		the CATGraphicPath environment variable.</p>
+	 <h3 style="margin-bottom: 1em">Client-server connection</h3>
+		<p style="margin-bottom: 1em">If the connection between the V5 
+		client and Manufacturing Hub server is lost, V5 will reinitiate the 
+		connection when a Manufacturing Hub command requesting a connection to 
+		the server is executed on the V5 client. If the connection is lost 
+		during the execution of a Manufacturing Hub command, that command will 
+		stop. In this case, the command must be restarted to 
+		reconnect to the server and execute the command properly.</p>
+		<h3 style="margin-bottom: 1em">Plantype naming restrictions</h3>
+		<p style="margin-bottom: 1em">When loading data from Manufacturing Hub, 
+		an activity type library is created in DPM that corresponds to the 
+		Manufacturing Hub plantypeset. All process types in DPM are derived from 
+		a base type named &quot;Activity&quot; and you cannot create a new type named 
+		&quot;Activity&quot;. Due to this DPM restriction, you cannot create a process 
+		plantype named &quot;Activity&quot; in the Manufacturing Hub. If a plantype named 
+		&quot;Activity&quot; is created in Manufacturing Hub, no objects of this plantype 
+		will be loaded in DPM.</p>
+		<h3 style="margin-bottom: 1em">Loading a Project that has an Activity 
+		with Multiple Parent Activities</h3>
+		<p style="margin-bottom: 1em">When you load an existing DPE 
+		project that includes an activity which have two or more father 
+		activities in the loaded process hierarchy, then the load fails at least 
+		partially and the following message will appear &quot;Multiple fathers are 
+		not allowed, hence some activities cannot be created more than once.&quot; </p></td>
+   </tr>
+ </table>
+ <p align="center">
+  </p>
+ <p align="center"><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

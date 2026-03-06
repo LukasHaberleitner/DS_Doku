@@ -1,0 +1,176 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="us">
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>VB Macros with Arguments</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="Microsoft Border" content="none, default">
+ <meta name="docCompliance" content="v 0.9; Fri Oct 14 14:45:30 2005">
+ </head>
+
+ <body>
+
+ <h1>&nbsp; Creating a 
+ <a name="CATKnowledgewareHeader.CATkwrMacro">VB Macro with Arguments</a> &nbsp;<a name="ix-launching a vb macro with arguments"></a>
+ <a name="ix-vb macro"></a><a name="ix-commands::Macros With Arguments"></a></h1>
+ <table border="0" cellpadding="4" Width="0">
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">The task below illustrates how to add arguments to a 
+     macro.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top">Macros with arguments are features that can be:<table border="0" cellpadding="0" cellspacing="0">
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>stored in CATPart or CATProduct documents,</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>stored in catalogs. Double-click them in the catalog to run them,</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>called from a rule (<a href="page11042.html#Run Method">VBScriptRun</a>) 
+           or a reaction. In this case, arguments are passed from the rule.</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+     <p>The
+     <img border="0" src="b35doc/english/online/icons_C2/images/I_KweMacroP2.gif" width="24" height="24"> 
+     icon enables you to access the macro editor. In addition to the usual 'edit 
+     and run' capabilities, this editor allows you to:</p>
+     <table border="0" cellpadding="0" cellspacing="0">
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>specify arguments&nbsp;</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>carry forward a feature definition to the editor by selecting the 
+           feature either in the tree or in the geometry area.</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo_custo.gif" width="32" height="32"></td>
+     <td valign="top">
+     <ul>
+       <li>Note that the VB macro with arguments functionality is 
+     intended to help you write macros. It is not intended to find the code of 
+     other objects: Only the objects that were correctly integrated to the 
+     macros are supported. </li>
+       <li><span lang="fr">Output values are not supported. </span></li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <p align="center" class="task">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" title="ascenari.gif (1364 bytes)" width="32" height="32"></td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">Click the
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_KweMacroP2.gif" width="24" height="24"> 
+       icon. The script editor is displayed.</li>
+       <li>
+       <p class="task">Copy/paste the script below into the editor:<br>
+       </p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" bgcolor="#EFEFEF">
+           <tr>
+             <td valign="top">
+             <pre><code>Dim oActiveDoc As Document
+Set oActiveDoc = CATIA.ActiveDocument
+
+If (InStr(oActiveDoc.Name,&quot;.CATPart&quot;)) &lt;&gt; 0 Then
+
+Dim oParams As Parameters
+Set oParams = oActiveDoc.Part.Parameters
+
+Dim strParam1 As StrParam
+Set strParam1 = oParams.CreateString(&quot;FirstName&quot;, &quot;&quot;)
+
+Dim strParam2 As StrParam
+Set strParam2 = oParams.CreateString(&quot;LastName&quot;, &quot;&quot;)
+
+strParam1.Value = fname
+strParam2.value = lname
+
+Else MsgBox &quot;The active document must be a CATPart&quot;
+End If
+
+End Sub</code></pre>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Enter the fname and lname arguments in the field located 
+       between the parentheses. The arguments must always be separated by a 
+       comma.</li>
+       <li>
+       <p class="task">Click OK to add the macro to the document. A 'VB Scripts' 
+       sub-node is added to the specification tree below the Relations node. A 
+       VB Script object is added below this sub node.</li>
+       <li>
+       <p class="task">Double-click the VB Script object. The Script Editor is 
+       displayed. <kbd>Insert Object Resolution</kbd> allows you to retrieve a 
+       feature definition. The VB Script.2 macro of the
+       <a href="b35doc/english/online/kwrug_c2/samples/KwrObject.CATPart">KwrObject.CATPart</a> sample 
+       illustrates how to use this capability.</li>
+       <li>
+       <p class="task">Click <kbd>Run script...</kbd>. The Select Inputs for 
+       Script Arguments is displayed.</li>
+       <li>
+       <p class="task">If need be, select fname from the argument list, then 
+       enter a string into the value field (no quotation marks). Then select 
+       lname and enter the lname value.</li>
+       <li>
+       <p class="task">Click OK to run the script.&nbsp; The two string type 
+       parameters are added to the document. Their values are those you have 
+       specified.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top">Note that the VB script features with arguments are 
+     provided with a contextual menu enabling you to launch the script. </td>
+   </tr>
+ </table>
+ <p align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="aendtask.gif (1477 bytes)" width="64" height="32">
+ </p>
+
+ </body>
+
+</html>
+

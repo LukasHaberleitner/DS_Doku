@@ -1,0 +1,117 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>The System of Three Equations in Three Variables</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="docCompliance" content="v 0.9; Fri Oct 14 14:45:30 2005">
+<style>
+<!--
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>System of Three Equations in Three Variables&nbsp;&nbsp;</h1>
+ <p>When designing a product, you may come across a system of equations to be 
+ solved. Whatever these equations (linear or not), CATIA provides you with 
+ resolution methods. These methods are the <i> <kbd>Simulated Annealing </kbd> 
+ </i>algorithm 
+ and the <kbd><i>&quot;SetOfEquations&quot;</i></kbd> capability.</p>
+ <p><i>Can you use either method ?</i><br>
+ If your set of equations is purely mathematical, the answer is yes. Otherwise, 
+ no. The SetOfEquations capability cannot solve systems using CATIA functions 
+ such as measures.<br>
+ To solve a system of equations using measures, you&nbsp; must use the <i><kbd>Simulated 
+ Annealing </kbd></i>algorithm<span lang="en-us"> </span>or the Constraints 
+	satisfaction functionality of PEO<span lang="en-us">.</span><br>
+ The <kbd><i>Simulated Annealing</i></kbd> algorithm is provided with the Product Engineering 
+ Optimizer product.&nbsp; The set of equations is to be specified as constraints 
+ and the variables are to be specified as free parameters. This resolution 
+ method is quite good although sometimes a bit long and you can use it to solve 
+ a broad range of cases. The trick about this algorithm is to adjust the 
+ precision and the other algorithm parameters. The example developed below works 
+ well with both methods. Just to illustrate a system that cannot be solved by 
+ both methods, you can draw a cube and create two user parameters: CubeSurface 
+ (of Area type) and CubeVolume (of Volume type). To calculate CubeSurface and 
+ CubeVolume, you can write either:</p>
+ <p><code>CubeSurface = smartWetarea ( PartBody&#092;Pad.1 
+ )<br>
+ CubeVolume = smartVolume ( PartBody&#092;Pad.1 
+ )</code></p>
+ <p><code>or</code></p>
+ <p><code>CubeVolume = smartVolume ( PartBody&#092;Pad.1 
+ )<br>
+ </code></p>
+ <h2><font color="#282187">
+ <a name="ix-system of three equations in three variables::solving the system of equations by a simulated annealing">
+ </a>Solving the System of Equations by a Simulated Annealing</font></h2>
+ <ol class="task">
+   <li>
+   <p class="task">Open a new part document.</li>
+   <li>
+   <p class="task">Create six real type parameters by using the f(x) 
+   capabilities. Name these parameters x1, y1, z1 and x2, y2, z2.</li>
+   <li>
+   <p class="task">Access the Product Engineering Optimizer product and click 
+   the
+   <img border="0" src="b35doc/english/online/icons_C2/images/I_OptimizeP2.gif" width="24" height="24"> 
+   icon.</li>
+   <li>
+   <p class="task">In the Constraints tab, specify the three constraints (enter 
+   the constraints one-by-one)<br>
+   <code>x1 + y1 - z1 == 0<br>
+   x1*y1 - z1 == 0<br>
+   sin(x1*1rad)**2 - y1 - 1 == 0<br>
+   </code>Specify a precision of 0.01 for all three constraints.<br>
+   If need be, see the <i>Product Engineering Optimizer User's Guide.</i></li>
+   <li>
+   <p class="task">In the Problem tab, specify x1, y1, z1 as free parameters and 
+   1 as Step value for all three parameters.</li>
+   <li>
+   <p class="task">Run the optimization process in Simulated Annealing mode. You 
+   can use the default termination criteria. After the process has finished 
+   running, the x1, y1 and z1 values are close to the one below:</p>
+   <pre><code>x1 = 0.454
+y1 = -0.807
+z1 = -0.363</code></pre>
+   <p class="task">Keep your document open and proceed to the next task.</li>
+ </ol>
+ <h2><font color="#282187"><font color="#282187">
+ <a name="ix-system of three equations in three variables::solving the system of equations by the setofequations capability">
+ </a>Solving the System of Equations by the &quot;SetOfEquations&quot; Capability</font></font></h2>
+ <ol class="task">
+   <li>
+   <p class="task">Access the Knowledge Advisor workbench, then click the
+   <img border="0" src="b35doc/english/online/icons_C2/images/I_SetOfEquationsP2.gif" width="24" height="24"> 
+   icon.</li>
+   <li>
+   <p class="task">In the &quot;Set of Equations&quot; editor, enter the set of equations 
+   below:<br>
+   <code>x2 + y2 == z2 ;<br>
+   x2*y2 == z2;<br>
+   sin(x2*1rad)**2 == y2 +1<br>
+   </code>Specify x2, y2 and z2 as <a href="page10995.html#Unknown parameters">
+   Unknown parameters</a> by using the <a href="page10995.html#Parse arrow">
+   Parse arrow</a> button (<img border="0" src="b35doc/english/online/icons_C2/images/I_ParseIOP2.gif" width="24" height="24">).</li>
+   <li>
+   <p class="task">Click <kbd>OK</kbd>. The system of equations is solved. The 
+   values below are displayed in the specification tree<br>
+   <code>x2 = 0.448043478<br>
+   y2 = -0.812335288<br>
+   z2 = -0.364229828</code></li>
+ </ol>
+
+ </body>
+
+</html>
+

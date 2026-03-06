@@ -1,0 +1,806 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2E2O2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>DXF/DWG: Import</title>
+<script language="JavaScript">
+ </script>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="docCompliance" content="v0.5; Tue Jul  5 15:29:06 2005">
+<meta content="none, default" name="Microsoft Border">
+<style type="text/css">
+.style2 {
+				vertical-align: top;
+}
+</style>
+</head>
+
+<body>
+
+<h1><a name="ix-DXF/DWG:import;DWG:import"></a>DXF/DWG: Import</h1>
+<table Border="0" CELLSPACING="0" valign="top" cellpadding="3" bordercolor="#111111">
+  <tr valign="top" BORDER="0">
+    <td valign="top" bgcolor="#FFFFFF">
+    <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td>This task lets you quickly see how to import or to insert 
+    the 2D geometric data <br>
+    contained in a DXF file into a CATDrawing document. <br>
+    Once imported, the data can be handled and edited just as if they had been 
+    created <br>
+    in a Drafting session using 2D geometry creation commands.<br>
+    The table entitled <a href="#ix-DXF/DWG:imported elements">What about 
+    the elements you import ?</a> provides information on the entities you can 
+    import.
+    <br>
+    You can find further information in the Advanced Tasks: 
+    <ul>
+      <li><a href="page10733.html#hj-import">Trouble Shooting,</a></li>
+      <li><a href="page10734.html#hj-import">Best Practices,</a></li>
+      <li><a href="page10735.html#hj-import">FAQ</a>,</li>
+      <li><a href="page10736.html#ix-DXF/DWG:import VBScript macros">VBScript 
+      Macros</a></li>
+      <li>and in the Customizing
+      <a href="page0980.html#hj-import">DXF/DWG Settings</a> chapter.</li>
+    </ul>
+    <p>Statistics about each import operation can be found in the
+    <a href="#ix-DXF/DWG:report file">report file</a> created.</td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top" bgcolor="#FFFFFF">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td rowspan="1">Open your session (Open your CATDrawing document if you want 
+    to insert a DXF file.).</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#FFFFFF">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td valign="top">
+    <ol class="task">
+      <li>
+      <p class="task">To import an existing DXF/DWG file, select the <kbd>File &gt; 
+      Open</kbd> items or <br>
+      To insert a DXF/DWG file in an existing CATDrawing document, select the
+      <kbd>Tools &gt; Import From File</kbd>.<br>
+      The File Selection dialog box is displayed:</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber1">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/importingdxfdwg.gif" width="426" height="308"></td>
+        </tr>
+      </table>
+      </li>
+      <li value="2">
+      <p class="task"><a name="ix-DXF/DWG:extension"></a>Select the .dxf/.dwg 
+      extension from the field called Files of type.<br>
+      All .dxf/.dwg files contained in the selected directory are now displayed.
+      </li>
+      <li>
+      <p class="task">Click the .dxf/.dwg file of your choice. </li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#FFFFFF">
+    &nbsp;</td>
+    <td valign="top">
+    <ol class="task" start="4">
+      <li>
+      <p class="task">Click <kbd>Open</kbd>.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber2">
+        <tr>
+          <td>
+          <ul>
+            <li>In import mode, a CATDrawing is created in session which 
+            contains all the geometry converted from the DXF/DWG file. This 
+            CATDrawing becomes the current document. </li>
+            <li>In insertion mode, the geometry of the DXF/DWG file is created 
+            in the current drawing.</li>
+			  <li>If 
+						<uicontrol><kbd>Unit of the file</kbd></uicontrol> 
+					  option is set to 
+						<uicontrol><kbd>Automatic</kbd></uicontrol>, the
+						unit used in the Autocad file is detected and used. The scale of the view is
+						automatically set to take the real size of the drawing into account.
+          	<li>If the model is far from the origin (more than 1000 km away),
+				  to support geometries with precision as well as texts, annotations and hatches:
+          	<ul>
+				<li>The geometry is translated near the origin [0.,0.] and
+						created in a view with the corresponding scale. 
+					 </li>
+				<li>The geolocalisation definition of the Autocad file is kept,
+						only the information of the translation vector is displayed in the report file.
+						
+					 </li>
+				<li>Performance issues that may occur when importing a civil
+						plan far from the origin are solved provided the computed bounding box is in
+						the correct design range. <br>Data out of range design are not properly imported.
+					 <br>Importing a very large file or a file where numerous DXF
+						  layers are mapped with 2D layout for 3D Design Sheets can still be time
+						  consuming. 
+											  </li>
+				<li>Only the Model Space (not the Paper Space) is taken into
+						account. 
+					 </li>
+			  </ul>
+          </td>
+        </tr>
+      </table>
+      </li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+    <td>
+    <h2><a name="ix-DXF/DWG:import of multiple viewports and layouts">Import of 
+    multiple viewports and layouts</a></h2>
+    <p>If the model 
+    is referenced, at least partially, 
+    by one or several viewports, the model is not created in a sheet of its own. 
+    <br>
+    Only layouts are created.
+    They will contain eventual viewports.<br>
+    In this case, select the option <kbd>
+    <a href="page0980.html#ix-DXF/DWG:keep model space">
+    Keep model space</a></kbd> to force the creation of the model space in its 
+    own sheet. <br>
+    V5 does not create empty viewports or layouts.</p>
+    <p>In insertion mode, the first layout (or the model space) is inserted in 
+    the current sheet but it cannot be inserted in a detail sheet: if the 
+    current sheet is a detail sheet, new sheets are created.</p></td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#FFFFFF">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>Viewport with a not null twist angle (group code 51) are not correctly 
+    handled during import.</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+    <td>
+    <h2><a name="ix-DXF/DWG:format">Format</a></h2>
+    <p>V5 determines systematically and automatically the most suitable format 
+    (A0 ISO, A1 ISO, etc.) <br>
+    for each sheet (layout) i.e. V5 chooses the smallest format in which the 
+    drawing can be totally included, in conjunction with the unit either chosen 
+    or automatically computed depending on the import options:</p>
+    <ul>
+      <li>If the standard is ISO, V5 chooses the format among A0, A1, A2, etc.
+      </li>
+      <li>If the standard is ANSI, &nbsp;V5 chooses the format among A, B, C, etc.</li>
+      <li>If no standard format fits the sheet, the format is set to the largest 
+      one i.e. A0 ISO and <br>
+      made invisible with a message &quot;No standard format can be applied to this 
+      sheet&quot; in the report file. </li>
+      <li>If you are not satisfied with this automatic result, use the Page 
+      Setup command to modify the format.</li>
+      <li>The resulting views are automatically centered in the sheet and take 
+      the format into account.</li>
+    </ul>
+    <p>Information on what has been determined automatically is written in the 
+    report file:</p>
+    <p><img border="0" src="b35doc/english/online/itfug_c2/images/IG2-Automatisation-ReportNLS.gif" width="519" height="204"></p>
+    <p>For more information on Formats, <br>
+    see the Defining a Sheet chapter in the Generative Drafting User's Guide.</p>
+    <p>In insertion mode, when new views are inserted in the current sheet, this 
+    sheet will take the name of the corresponding DXF/DWG layout and the format 
+    of the sheet will be modified. So it is recommended to insert DXF/DWG files 
+    in a new sheet.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">
+    <h2>Code pages</h2>
+    <p>DBCS (Double Byte Character Set) Supported Code Pages are:</p>
+    <ul>
+      <li>932 (Japanese) </li>
+      <li>936 (Simplified Chinese) </li>
+		<li>949 (Korean) </li>
+      <li>950 (Traditional Chinese) </li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+    <td>
+    <h2>Customization</h2>
+    <p>Import of a DXF/DWG file can be improved by
+    <a href="page0980.html#hj-import">
+    customization</a>:</p>
+    <p>DXF/DWG specific import settings are:</p>
+    <ul>
+      <li>
+      <a href="page0980.html#ix-DXF/DWG:standards">
+      Standards</a>. The lists of attributes are not the same in V5 and AutoCAD.
+      <br>
+      A DXF mapping standard file is used to come as close as possible to the 
+      AutoCAD attributes, <br>
+      or to switch them to V5 attributes.&nbsp;</li>
+      <li>
+      <a href="page0980.html#ix-DXF/DWG:unit of the file">
+      Unit of the file</a></li>
+    </ul>
+    <ul>
+      <li>
+      <a href="page0980.html#ix-DXF/DWG:paper spaces in background">
+      Papers Spaces and Model Space </a></li>
+    </ul>
+    <ul>
+      <li>
+      <a href="page0980.html#ix-DXF/DWG:create end points">
+      Create end points</a></li>
+      <li>
+      <a href="page0980.html#ix-DXF/DWG:convert dimensions as">
+      Convert dimensions as</a></li>
+    </ul>
+    <p>The definitions of dimensions are not the same in V5 and AutoCAD. <br>
+    This option is used to give priority either to the graphic closeness or to 
+    the re-usability in V5.&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#FFFFFF" colspan="2">
+    <p align="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+<h2>Report File<a name="ix-DXF/DWG:report file"></a></h2>
+<table Border="0" CELLSPACING="0" valign="top" cellpadding="2">
+  <tr>
+    <td valign="top"></td>
+    <td valign="top">
+    <p class="task">After the recovery of DXF/DWG files, the system generates:</p>
+    <ul>
+      <li>
+      a <a href="page10753.html#DXF/DWG:Import Report File">
+      report file</a> (<kbd>name_of_file.rpt</kbd>) where you can find 
+      references about the quality of the transfer&nbsp;</li>
+    </ul>
+    <p class="task">This file is created in a location referenced by&nbsp; </p>
+    <ul>
+      <li>
+      the CATUserSettingPath <kbd>USERPROFILE</kbd> variable on 
+      NT. Its default value is&nbsp;<kbd><br>
+      Profiles&#092;\user&#092;\Local 
+      Settings&#092;\Application 
+      \Data\&#092;Dassault 
+      Systemes&#092;CATReport</kbd> 
+      on NT&nbsp;(<kbd>user</kbd> being you logon id)</li>
+      <li>
+     the <kbd>HOME</kbd> variable on UNIX. Its default value is
+      <kbd>$HOME/CATReport</kbd> on UNIX. </li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td valign="top">Always check the report&nbsp; file after a conversion ! 
+    Some problems may have occurred without been visually highlighted.</td>
+  </tr>
+</table>
+<h2>What About The Elements You Import ? <a name="ix-DXF/DWG:imported elements">
+</a></h2>
+<table Border="0" CELLSPACING="0" valign="top" cellpadding="3">
+  <tr valign="top" BORDER="0">
+    <td valign="top" bgcolor="#FFFFFF">
+    &nbsp;</td>
+    <td><a name="ix-AUTOCAD2000"></a>V5 supports the import DXF/DWG formats version 
+    12,13, 14 and AutoCAD2000, AutoCAD2000i, AutoCAD2002 to AutoCAD2018.</td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top" bgcolor="#FFFFFF">
+    <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+    <td>The following DXF entity types introduced since AutoCAD2004 are not 
+	supported, nor mentioned in the report file: Helix, Image, Light, Mesh, 
+	Mleader, Section, Sun, Surface, Table, Underlay, Wipeout.</td>
+  </tr>
+</table>
+<p>To make sure the elements you need to handle in your session are those you 
+expected, <br>
+here is a list presenting the DXF/DWG data supported&nbsp; when imported into a 
+CATDrawing file.</p>
+<table border="1" bordercolor="#111111" cellpadding="0" cellspacing="0" width="852">
+  <tr>
+    <td align="center" valign="top" width="4">&nbsp;</td>
+    <td align="center" valign="top" width="94"><kbd>DXF/DWG element</kbd></td>
+    <td align="center" valign="top" width="107"><kbd>DXF/DWG sub-type</kbd></td>
+    <td align="center" valign="top" width="130"><kbd>&nbsp;V5 element</kbd></td>
+    <td align="center" valign="top" width="511"><kbd>Notes</kbd></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" colspan="4">
+    <p align="center"><kbd>Geometry</kbd></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">point</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Point</td>
+    <td valign="top" width="511">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">line</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Line</td>
+    <td valign="top" width="511">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td valign="top" class="code" width="4">&nbsp;</td>
+    <td valign="top" class="code" width="94">ray</td>
+    <td valign="top" class="code" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" class="code" width="130">None</td>
+    <td valign="top" class="code" width="511">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td valign="top" class="code" width="4">&nbsp;</td>
+    <td valign="top" class="code" width="94">xline</td>
+    <td valign="top" class="code" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" class="code" width="130">None</td>
+    <td valign="top" class="code" width="511">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">circle</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Circle</td>
+    <td valign="top" width="511">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">arc</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Arc</td>
+    <td valign="top" width="511">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">ellipse</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Ellipse</td>
+    <td valign="top" width="511">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">polyline/2D polyline/<br>
+    lightweight polyline</td>
+    <td valign="top" width="107">non adjustable width, <br>
+    made of line segments</td>
+    <td valign="top" width="130">Polyline</td>
+    <td valign="top" width="511">Not editable in V5</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="107">non adjustable width, <br>
+    made of line and arc segments</td>
+    <td valign="top" width="130">segments and arc <br>
+    with no structure</td>
+    <td valign="top" width="511">Structure is lost</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="107">adjustable width</td>
+    <td valign="top" width="130">Filled area (pattern)</td>
+    <td valign="top" width="511">Structure is lost</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="107">fit curve</td>
+    <td valign="top" width="130">Polyline</td>
+    <td valign="top" width="511">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">mline</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Lines</td>
+    <td valign="top" width="511">Structure and closing attributes are lost</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">spline</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">NURBS</td>
+    <td valign="top" width="511">Not editable in V5</td>
+  </tr>
+  <tr>
+    <td valign="top" class="code" width="4">&nbsp;</td>
+    <td valign="top" class="code" width="94">3D face</td>
+    <td valign="top" class="code" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" class="code" width="130">none</td>
+    <td valign="top" class="code" width="511">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td valign="top" class="code" width="4">&nbsp;</td>
+    <td valign="top" class="code" width="94">3D solid</td>
+    <td valign="top" class="code" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" class="code" width="130">none</td>
+    <td valign="top" class="code" width="511">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td valign="top" class="code" width="4">&nbsp;</td>
+    <td valign="top" class="code" width="94">UCS</td>
+    <td valign="top" class="code" width="107">
+    &nbsp;</td>
+    <td valign="top" class="code" width="130">none</td>
+    <td valign="top" class="code" width="511">
+    USER CO-ORDINATE SYSTEM is not taken into account</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" colspan="4">
+    <p align="center"><kbd>Annotations</kbd></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">text</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Text</td>
+    <td valign="top" width="511">
+    Mirrored text is not taken into account.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">mtext</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Text</td>
+    <td valign="top" width="511">Changing fonts, changing attributes and <br>
+    line break are not taken into account.<br>
+	Text alignment is not taken into account.<br>
+	Mirrored text is not taken into account.</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#808080" class="code" width="4">&nbsp;</td>
+    <td valign="top" bgcolor="#808080" class="code" width="94">Arc aligned text</td>
+    <td valign="top" bgcolor="#808080" class="code" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" bgcolor="#808080" class="code" width="130">none</td>
+    <td valign="top" bgcolor="#808080" class="code" width="511">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#808080" class="code" width="4">&nbsp;</td>
+    <td valign="top" bgcolor="#808080" class="code" width="94">rtext</td>
+    <td valign="top" bgcolor="#808080" class="code" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" bgcolor="#808080" class="code" width="130">none</td>
+    <td valign="top" bgcolor="#808080" class="code" width="511">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">dimensions</td>
+    <td valign="top" width="107">aligned, <br>
+    linear and rotated, <br>
+    radius and diameter, <br>
+    angular,&nbsp; ordinate (x or y)</td>
+    <td valign="top" width="130">According to option:
+    <p>dimension or&nbsp; </p>
+    <p>details or&nbsp;</p>
+    <p>geometry+texts</td>
+    <td valign="top" width="511">See
+    <a href="page0980.html#ix-DXF/DWG:convert dimensions as">
+    dimensions</a>
+    <p>In a few &quot;dimensions&quot; cases, the text of the <br>
+    dimension can be a text with an associative link</p>
+    <p>In all &quot;dimensions&quot; cases, the geometry support is <br>
+    in No Show</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">
+	&nbsp;</td>
+    <td valign="top" width="94">leader</td>
+    <td valign="top" width="107">
+    
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Arrow + text</td>
+    <td valign="top" width="511">DXF Leaders are imported as arrow 
+	and text.<br>When possible, DXF arrows are mapped with 
+	CATIA arrows. <br>
+	There is no link between the text and the arrow of leaders.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94"><a name="hj-tolerance"></a>tolerance</td>
+    <td valign="top" width="107">
+    </td>
+    <td valign="top" width="130">Semantic geometrical tolerance</td>
+    <td valign="top" width="511">
+    The semantic geometrical tolerance is editable in Interactive 
+	Drafting.<br>
+	The semantic import of leaders is always applied, whatever the dimension 
+	import mode is.<br>
+	The following mappings are applied:<ul>
+		<li>Automatic mapping (nearest value) for line thickness and 
+		color.</li>
+		<li>DXF standard for text font and line type.</li>
+		<li>Drafting standard for arrowhead (default one).</li>
+	</ul>
+	<p>Inner graphic attributes in the tolerance are not taken into 
+	account.<br>
+	DXF tolerances not beginning with a symbol corresponding to the tolerance 
+	type are not supported.<br>
+	Spline leaders are converted to polylines leaders, with the precision 
+	defined by the fitting points of the DXF file.<br>
+	Specific arrowheads of leaders defined in DXF are converted to V5 default 
+	arrowheads.<br>
+	There is no link between the text and the arrow of leaders.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">hatch</td>
+    <td valign="top" width="107">non-associative</td>
+    <td valign="top" width="130">Filled area (pattern)</td>
+    <td valign="top" width="511"></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="107">associative</td>
+    <td valign="top" width="130">Filled area (pattern)</td>
+    <td valign="top" width="511">The contour of the hatch is created in the No Show <br>
+    and the associativity is created with this hidden contour.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">solid</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Filled area (colored)</td>
+    <td valign="top" width="511">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">block attribute</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Text</td>
+    <td valign="top" width="511">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td valign="top" align="center" width="4">&nbsp;</td>
+    <td valign="top" colspan="4" align="center"><kbd>Structures</kbd></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">block</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Detail<br>
+    (2D component)</td>
+    <td valign="top" width="511">The details are created in a new Detail Sheet <br>
+    named &quot;Imported Details&quot;.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">insert (Block Reference)</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Ditto<br>
+    (instance of 2D component)</td>
+    <td valign="top" width="511">If the insert is defined with different scales, <br>
+    on x-axis and y-axis, no detail instance is created <br>
+    but only the geometry is transferred.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">external reference</td>
+    <td valign="top" width="107">
+    &nbsp;</td>
+    <td valign="top" width="130">&nbsp;</td>
+    <td valign="top" width="511">not supported</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" bgcolor="#808080" class="code" width="94">group</td>
+    <td valign="top" bgcolor="#808080" class="code" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" bgcolor="#808080" class="code" width="130">none</td>
+    <td valign="top" bgcolor="#808080" class="code" width="511">The structure of the group 
+    is lost whereas its contents <br>
+    is transferred</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">viewport</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">View</td>
+    <td valign="top" width="511">see&nbsp;
+    <a href="#ix-DXF/DWG:import of multiple viewports and layouts">above</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">Layout (paper space)</td>
+    <td valign="top" width="107">&nbsp;</td>
+    <td valign="top" width="130">Sheet</td>
+    <td valign="top" width="511">see&nbsp;
+    <a href="#ix-DXF/DWG:import of multiple viewports and layouts">above</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" bgcolor="#808080" class="code" width="94">OLE frame</td>
+    <td valign="top" bgcolor="#808080" class="code" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" bgcolor="#808080" class="code" width="130">none</td>
+    <td valign="top" bgcolor="#808080" class="code" width="511">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td valign="top" height="53" width="4">
+    &nbsp;</td>
+    <td valign="top" height="53" width="94"><a name="hj-proxy">proxy</a></td>
+    <td valign="top" height="53" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" height="53" width="130">Detail</td>
+    <td width="511">
+   The proxy is converted into standard elements (lines, arcs, texts, &#8230;) 
+   that are imported at the place of the proxy. <br>
+   The proxy must contain its graphic representation.<br>
+   The graphic representation must be consistent with the proxy.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" bgcolor="#808080" class="code" width="94">region</td>
+    <td valign="top" bgcolor="#808080" class="code" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" bgcolor="#808080" class="code" width="130">none</td>
+    <td valign="top" bgcolor="#808080" class="code" width="511">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td valign="top" align="center" width="4">&nbsp;</td>
+    <td valign="top" colspan="4" align="center"><kbd>Attributes</kbd></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">color</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Color</td>
+    <td valign="top" width="511">see
+    <a href="page0980.html#ix-DXF/DWG:standards">
+    Standards</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">Line weight</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Line thickness</td>
+    <td valign="top" width="511">see
+    <a href="page0980.html#ix-DXF/DWG:standards">
+    Standards</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">line type</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Line type</td>
+    <td valign="top" width="511">see
+    <a href="page0980.html#ix-DXF/DWG:standards">
+    Standards</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">point markers</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Point type</td>
+    <td valign="top" width="511">Markers may be different since V5 and <br>
+    AutoCAD do not have the same markers.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">layer</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Layer</td>
+    <td valign="top" width="511">Invisible layers are gathered in a filter <br>
+    named Invisible Imported Layers.
+    <p>Visible layers are gathered in a filter <br>
+    named Visible Imported Layers.</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">
+    &nbsp;</td>
+    <td valign="top" width="94">layer name</td>
+    <td valign="top" width="107">
+    &nbsp;</td>
+    <td valign="top" width="130">&nbsp;</td>
+    <td valign="top" width="511">When an AutoCAD layer has a name that corresponds to 
+    a number between 0 and 999, this layer will be imported as a V5 layer with 
+    the number associated:<ul>
+      <li>if a V5 layer with the same number already exists, the AutoCAD 
+      layer is imported in this V5 layer, without changing its name.</li>
+      <li>if there is no V5 layer with the same number, the AutoCAD layer 
+      is imported in a new V5 layer, with the same name as in AutoCAD.</li>
+    </ul>
+    <p>If the AutoCAD layer has a name that does not match any number 
+      in the available range, the layer is mapped on the first existing V5 layer 
+      that has the same name, or a new one is created on the first available V5 
+      layer number with the AutoCAD layer name. 
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">font</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Font</td>
+    <td valign="top" width="511">see
+    <a href="page0980.html#ix-DXF/DWG:standards">
+    Standards</a></td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">Pattern</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Pattern</td>
+    <td valign="top" width="511">Automatic mapping&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">BYBlock attribute</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Attribute</td>
+    <td valign="top" width="511">The value of the attribute of the block is <br>
+    set to a default value</td>
+  </tr>
+  <tr>
+    <td valign="top" width="4">&nbsp;</td>
+    <td valign="top" width="94">BYLAYER attribute</td>
+    <td valign="top" width="107">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+    <td valign="top" width="130">Attribute</td>
+    <td valign="top" width="511">The value of the attribute of the layer is <br>
+    applied to each element imported</td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

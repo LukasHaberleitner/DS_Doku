@@ -1,0 +1,171 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head><meta name="MonocodingType" content="0"></meta>
+	  <meta name="MonocodingFlag" content="C2"></meta>
+	  <meta http-equiv="Content-Language" content="en-us"></meta>
+	  <meta name="GENERATOR" content="Microsoft FrontPage 6.0"></meta>
+	  <meta name="ProgId" content="FrontPage.Editor.Document"></meta>
+  	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	  <title>Using User Subroutines</title>
+          <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+          
+	 </head><body onload="newPage('pt04ch14s06.html');" ondblclick="newSelection();" bgcolor="#FFFFFF" text="#000000" vlink="#FF5113" alink="#004D48" link="#004D48" class="TEXT"><div class="sect1" id="ath-gen-res-anlcntrl-subroutines">
+    <a name="ath-gen-res-anlcntrl-subroutines"></a>
+
+    <div class="titlepage">
+      
+
+      <div class="title">
+        <h3>Using User Subroutines</h3>
+      </div>
+    </div>
+
+    <p>This section describes how you include user subroutines in a
+    Nonlinear Structural Analysis or Thermal Analysis analysis. The
+    following topics are covered:</p>
+
+    <ul type="disc"><li>
+        <p><a href="page0490.html#ath-gen-res-anlcntrl-subroutine-create">
+        Creating User Subroutines</a></p>
+      </li>
+
+      <li>
+        <p><a href="page0490.html#ath-gen-res-anlcntrl-subroutine-compile">
+        Compiling and Attaching User Subroutine
+        Files</a></p>
+      </li>
+    </ul><div class="sect2" id="ath-gen-res-anlcntrl-subroutine-create">
+      <a name="ath-gen-res-anlcntrl-subroutine-create"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3>Creating User
+          Subroutines</h3>
+        </div>
+      </div>
+
+      <p>Abaqus user subroutines can be used to extend the
+      functionality of several capabilities in Nonlinear Structural
+      Analysis or Thermal Analysis for which the usual data input
+      methods may be too restrictive. User subroutines are written
+      as FORTRAN code; during an analysis, Nonlinear Structural
+      Analysis or Thermal Analysis refers to this code to calculate
+      and define the specified properties or conditions. A
+      subroutine must be compiled and attached to a model when you
+      submit a job.</p>
+
+      <p>The following user subroutines are available in Nonlinear
+      Structural Analysis or Thermal Analysis:</p>
+
+      <div class="indent" id="d0">
+        <p><b><tt class="computeroutput">DFLUX</tt></b></p>
+
+        <div class="indent" id="d0">
+          <p>Defines a nonuniform and variable heat flux. For more
+          information, see <a href="page0442.html#ath-gen-env-gen-load-createsurfheatflux-thm">
+          Creating
+          Surface Heat Fluxes</a> and
+          <a href="page0442.html#ath-gen-env-gen-load-createbodyheatflux-thm">
+          Creating Body
+          Heat Fluxes</a>.</p>
+        </div>
+      </div>
+
+      <div class="indent" id="d0">
+        <p><b><tt class="computeroutput">DISP</tt></b></p>
+
+        <div class="indent" id="d0">
+          <p>Defines a boundary condition magnitude that varies as
+          a function of time and position. For more information,
+          see <a href="page0437.html">Boundary
+          Conditions</a> and <a href="page0438.html">Boundary
+          Conditions</a>.</p>
+        </div>
+      </div>
+
+      <div class="indent" id="d0">
+        <p><b><tt class="computeroutput">DLOAD</tt> or <tt class="computeroutput">VDLOAD</tt></b></p>
+
+        <div class="indent" id="d0">
+          <p>Defines a pressure load magnitude that varies as a
+          function of time and position. For more information, see
+          <a href="page0441.html#ath-gen-env-gen-load-createpressure-mch">
+          Creating
+          Pressure Loads</a>.</p>
+        </div>
+      </div>
+
+      <div class="indent" id="d0">
+        <p><b><tt class="computeroutput">FILM</tt></b></p>
+
+        <div class="indent" id="d0">
+          <p>Defines a nonuniform and variable film coefficient.
+          For more information, see <a href="page0442.html#ath-gen-env-gen-load-createfilmcondition-thm">
+          Creating Film
+          Conditions</a>.</p>
+        </div>
+      </div>
+
+      <div class="indent" id="d0">
+        <p><b><tt class="computeroutput">FRIC</tt> or <tt class="computeroutput">VFRIC</tt></b></p>
+
+        <div class="indent" id="d0">
+          <p>Defines shear transmission between contacting surfaces
+          due to complex frictional behavior. For more information,
+          see <a href="page0455.html#ath-gen-fem-prop-mechconnectbehav">
+          Creating a Mechanical Connection
+          Behavior</a>.</p>
+        </div>
+      </div>
+
+      <div class="indent" id="d0">
+        <p><b><tt class="computeroutput">UTEMP</tt></b></p>
+
+        <div class="indent" id="d0">
+          <p>Defines a nonuniform and variable temperature history
+          in Nonlinear Structural Analysis. For more information,
+          see <a href="page0439.html#ath-gen-env-gen-field-createtemphist-mch">
+          Creating
+          Temperature Histories</a>.</p>
+        </div>
+      </div><span id="ath-gen-res-anlcntrl-subroutine-create"></span>
+    </div>
+
+    <div class="sect2" id="ath-gen-res-anlcntrl-subroutine-compile">
+      <a name="ath-gen-res-anlcntrl-subroutine-compile"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3>Compiling and Attaching
+          User Subroutine Files</h3>
+        </div>
+      </div>
+
+      <p>Before including a user subroutine in an analysis, you
+      must compile the subroutine using the <b class="abqexecproc">abaqus make</b> utility. From a command line,
+      execute the following command:</p>
+      <pre class="programlisting">
+abaqus make library=<i class="replaceable">source_file</i> directory=<i class="replaceable">destination</i>
+</pre>
+
+      <p><i class="replaceable">Source_file</i> is the name of the
+      user subroutine source file, and <i class="replaceable">destination</i> is the location to which the
+      compiled subroutine object and shared library files will be
+      written. When configuring a job in Nonlinear Structural
+      Analysis or Thermal Analysis, you must specify the location
+      of the compiled dynamic link library (<tt class="filename">.dll</tt>) file for the user subroutine (see
+      <a href="page0491.html#ath-gen-res-anlcntrl-filestorage">
+      Specifying File Storage
+      Directories</a>).</p>
+
+      <p>You can refer to only one compiled user subroutine file
+      when you submit a job. If your model involves more than one
+      user subroutine, you must combine the user subroutines and
+      compile them into a single <tt class="filename">.dll</tt>
+      file.</p><span id="ath-gen-res-anlcntrl-subroutine-compile"></span>
+    </div><span id="ath-gen-res-anlcntrl-subroutines"></span>
+  </div></body></html>
+

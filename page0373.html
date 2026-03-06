@@ -1,0 +1,495 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+	<head>
+	<meta name="MonocodingType" content="0">
+	<meta name="MonocodingFlag" content="C2">
+	<meta http-equiv="Content-Language" content="en-us">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Multi-Axis Helix Machining: Interpolation</title>
+	<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+	<meta name="ProgId" content="FrontPage.Editor.Document">
+	<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+	</head>
+
+	<body>
+
+	<h1><font face="Arial, Arial, Helvetica" color="#282187">Create 
+	a Multi-Axis Helix Machining Operation in Interpolation Mode</font></h1>
+	<a name="ix-Multi-Axis Helix Machining;Multi-Axis Helix Machining tool axis mode:Interpolation">
+	</a>
+	<div align="left">
+		<table border="0">
+				<tr>
+						<td valign="top" width="32">
+						<img src="b35doc/english/online/icons_C2/common/atarget.gif" title="task target" width="32" height="32"></td>
+						<td valign="top" colspan="2">
+						This task illustrates how to insert a
+						<a href="page0392.html">Multi-Axis Helix Machining operation</a> 
+						in the program. This operation will be used to generate 
+						a single helix tool path to mill a
+						<a href="page0379.html#glblisk">blisk</a> blade, while avoiding 
+						collisions with neighboring blades. <p>The scenario below 
+						show how to quickly create an operation. The recommended 
+						procedure is described in <a href="page0388.html">Collision-Free 
+						Multi-Axis Helix Machining</a> in the Methodology section.</p>
+						<p>To create the operation you must define: </p>
+						<ul>
+							<li>the <a href="#Geometry">geometry </a>to be machined
+							<img border="1" src="b35doc/english/online/amgug_c2/images/TabGeomG.gif" align="middle" width="36" height="22"></li>
+						</ul>
+						<ul>
+							<li>the <a href="#Tool">tool</a> that will be used
+							<img border="1" src="b35doc/english/online/amgug_c2/images/TabToolG.gif" align="middle" width="36" height="22"></li>
+						</ul>
+						<ul>
+							<li>the parameters of the <a href="#Strategy">machining 
+							strategy</a>
+							<img border="1" src="b35doc/english/online/amgug_c2/images/TabStratG.gif" align="middle" width="36" height="22"> 
+							with the tool axis guided in <b>Interpolation </b>mode</li>
+						</ul>
+						<ul>
+							<li>the <a href="#FeedSpeed">feedrates and spindle speeds</a>
+							<img border="1" src="b35doc/english/online/amgug_c2/images/TabFeedG.gif" align="middle" width="36" height="22"></li>
+						</ul>
+						<ul>
+							<li>the <a href="#Macros">macros (transition paths)</a>
+							<img border="1" src="b35doc/english/online/amgug_c2/images/TabMacroG.gif" align="middle" width="36" height="22">.</li>
+						</ul>
+						</td>
+				</tr>
+				<tr>
+						<td valign="top" width="32">
+						<img src="b35doc/english/online/icons_C2/common/aprereq.gif" title="pre-requisites" width="32" height="32"></td>
+						<td valign="top" colspan="2">
+						Open the <a href="b35doc/english/online/amgug_c2/samples/Blisk.CATPart">Blisk.CATPart</a> 
+						document, then select <kbd>Machining</kbd> &gt; <kbd>Advanced 
+       Machining</kbd>&nbsp;
+						from the <kbd>Start</kbd> menu. Make the <kbd>Manufacturing Program</kbd> 
+						current in the specification tree.&nbsp; <p>
+						<img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelixPart01.gif" width="555" height="384"></p>
+						<p>The following procedure describes how to machine the 
+						middle (green) blade with no tool collisions with the two 
+						neighboring blades.</p>
+						</td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+						<img src="b35doc/english/online/icons_C2/common/ascenari.gif" title="scenario" width="32" height="32"></td>
+						<td valign="top" width="23">
+						<font color="#1C1557"><b>1.</b></font></td>
+						<td valign="top">
+						Select the <kbd>Multi-Axis Helix Machining</kbd> icon
+						<img border="0" src="b35doc/english/online/icons_C2/images/I_Mfg5AxisHelixMachiningP2.gif" align="middle" width="22" height="22">. 
+						A <kbd>Helix Machining</kbd> entity along with a default tool is added 
+						to the program. The <kbd>Multi-Axis Helix Machining</kbd> dialog box 
+						appears directly at the <a name="Geometry"><kbd>Geometry
+						</kbd>tab page</a>
+						<img border="1" src="b35doc/english/online/amgug_c2/images/TabGeomR.gif" align="middle" width="36" height="22">.
+						<p>
+						<img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelix04NLS.gif" width="300" height="300"></p>
+						<p>The part surface, upper and lower contours, and leading 
+						and trailing edges of the sensitive icon are colored red 
+						indicating that this geometry is required and must be selected. 
+						The upper and lower contours and the leading and trailing 
+						edges must lie on the faces selected as part surface.</p>
+						<p>Selection of check elements (such as neighboring blades 
+						or fixtures) is optional. </p>
+						</td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+						</td>
+						<td valign="top" width="23">
+						<font color="#1C1557"><b>2.</b></font></td>
+						<td valign="top">
+						Click the red part surface in the icon then select the faces 
+						to be machined in the 3D window. In this scenario, you must 
+						select four faces: the front face, the back face, the leading 
+						face, and the trailing face.<p>The <kbd>Face Selection</kbd> toolbar 
+						appears to help you select these faces. Note that faces 
+						must be continuous. Gaps between faces may result in a bad 
+						tool path.</p>
+						</td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+						</td>
+						<td valign="top" width="23">
+						<font color="#1C1557"><b>3.</b></font></td>
+						<td valign="top">
+						Select the upper and lower contours. The <kbd>Edge Selection</kbd> 
+						toolbar appears to help you select these contours. They 
+						must be closed contours.</td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+						</td>
+						<td valign="top" width="23">
+						<font color="#1C1557"><b>4.</b></font></td>
+						<td valign="top">
+						Select the leading and trailing edges to define the limits 
+						of the machining. The <kbd>Edge Selection</kbd> toolbar appears to 
+						help you select these edges. They must intersect the upper 
+						and lower contours.</td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+&nbsp;</td>
+						<td valign="top" width="23">
+&nbsp;</td>
+						<td valign="top">
+						<img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelix12NLS.gif" width="423" height="496"></td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+						<img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+						<td valign="top" width="23">
+						</td>
+						<td valign="top">
+						<ul>
+							<li>The geometry entities of the icon are now colored 
+							green indicating that this geometry is now defined.</li>
+							<li>At this stage, make sure the <kbd>Collision Checking</kbd> 
+							option in the <kbd>Geometry</kbd> tab is deactivated.</li>
+						</ul>
+						</td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+&nbsp;</td>
+						<td valign="top" width="23">
+						<font color="#1C1557"><b>5.</b></font></td>
+						<td>
+						A tool is proposed by default when you want to create a 
+						machining operation. If the proposed tool is not suitable, 
+						just select the <a name="Tool"><kbd>Tool </kbd>tab page</a>
+						<img border="1" src="b35doc/english/online/amgug_c2/images/TabToolO.gif" align="middle" width="36" height="22"> 
+						to specify the tool you want to use. For example, you can 
+						create a conical mill tool with the following characteristics.<p>
+						<img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelix14NLS.gif" width="228" height="299"></p>
+						<p>Please refer to
+						<a href="page11358.html" target="ds_doc2">
+						Edit the Tool of an Operation</a> for more information.</p>
+						</td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+						</td>
+						<td valign="top" width="23">
+						<font color="#1C1557"><b>6.</b></font></td>
+						<td valign="top">
+						Select the <a name="Strategy"><kbd>Strategy </kbd>tab 
+						page</a>
+						<img border="1" src="b35doc/english/online/amgug_c2/images/TabStratG.gif" align="middle" width="36" height="22">.<p>
+						Set the <a href="page0392.html#CFtoolaxis">Tool axis mode</a> 
+						to <kbd>Interpolation</kbd>. <br>
+						Select a <kbd>Start</kbd> point by clicking on the sensitive icon then 
+						picking any point on the part surface.</p>
+						<p>
+						<img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelix11NLS.gif" width="358" height="372"></p>
+						</td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+&nbsp;</td>
+						<td valign="top" width="23">
+						<font color="#1C1557"><b>7.</b></font></td>
+						<td valign="top">
+						<a name="R18InterpolAxis"></a>Click one of the interpolation 
+						axis symbols in the sensitive icon. <p>Default Interpolation 
+						axes (I.1 to I.4) are displayed at the four corners of the 
+						part.</p>
+						<p>
+						<img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelix20NLS.gif" width="286" height="334"></p>
+						<p>The <kbd>Interpolation Axes </kbd>dialog box is displayed.</p>
+						<p>
+						<img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelix19NLS.gif" width="595" height="203"></p>
+						<p>All the interpolation vectors are listed with 
+						their position, direction and status.<br>
+						Pick a vector in the dialog box. It is highlighted in the 
+						3D viewer.<br>
+						Click <img border="1" src="b35doc/english/online/amgug_c2/images/InterpolationAdd.gif" width="28" height="28"> 
+						to add an interpolation vector: <br>
+						The <kbd>Interpolation Axes</kbd> dialog box disappears. <br>
+						Pick in the 3D viewer to indicate the position of this new 
+						interpolation vector. <br>
+						Its <kbd>Axis Definition</kbd> dialog box appears (see below). <br>
+						Click <kbd>OK</kbd> in the dialog boxes when you are done.
+						</p>
+						<p>Click
+						<img border="1" src="b35doc/english/online/amgug_c2/images/InterpolationRemove.gif" width="28" height="28"> to 
+						remove the interpolation vector selected in the dialog box.</p>
+						<p>Click
+						<img border="1" src="b35doc/english/online/amgug_c2/images/InterpolationEdit.gif" width="28" height="28"> to edit 
+						the interpolation vector selected in the dialog box. The 
+						<kbd>Axis Definition </kbd>dialog box is displayed. </p>
+						<p><img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelix13NLS.gif" width="305" height="288"> </p>
+						<p>General information about this dialog box is available 
+						in the <a href="page0392.html#Interpolation">Reference</a> 
+						section. </p>
+						<p>Click <kbd>OK</kbd> in the dialog boxes when the interpolation 
+						axes are defined. </p>
+						</td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+&nbsp;</td>
+						<td valign="top" width="23">
+						<font color="#1C1557"><b>8.</b></font></td>
+						<td valign="top">
+						Set the <a href="page0392.html#CFmachining">Machining</a> 
+						parameters, for example:<p>
+						<img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelix09NLS.gif" width="356" height="145"></p>
+						</td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+&nbsp;</td>
+						<td valign="top" width="23">
+						<font color="#1C1557"><b>9.</b></font></td>
+						<td valign="top">
+						Set the <a href="page0392.html#CFaxial">Radial</a> parameters, 
+						for example:<p>
+						<img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelix10NLS.gif" width="356" height="175"></p>
+						</td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+&nbsp;</td>
+						<td valign="top" width="23">
+						<font color="#1C1557"><b>10.</b></font></td>
+						<td valign="top">
+						<a href="page11390.html" target="ds_doc2">
+						Replay the tool path</a> to verify that the tool can be 
+						positioned at each point on the trajectory. <p>If the tool 
+						cannot be positioned at each point on the trajectory, adjust 
+						the default interpolation axes and possibly insert additional 
+						interpolation axes until this criteria is satisfied. </p>
+						<p>You can add an additional axis by clicking one of the 
+						interpolation axis symbols in the <kbd>Strategy</kbd> tab page then 
+						either selecting an existing point on the part or selecting 
+						anywhere on the part.</p>
+						<p>You can delete an additional axis by right-clicking it 
+						and selecting the <kbd>Remove</kbd> contextual command.&nbsp;&nbsp;&nbsp;
+						<br>
+						You can delete all additional axes by right-clicking one 
+						of the interpolation axis symbols in the <kbd>Strategy</kbd> tab page 
+						and selecting the <kbd>Remove all additional axes</kbd> 
+						contextual command.<br>
+						Default axes cannot be removed.</p>
+						<p>Note that interpolation axes are applied at contact points 
+						on the trajectory. The application point of an interpolation 
+						axis must be on a selected face. If the point is not on 
+						a selected face, it will be projected onto the part. This 
+						may give undesirable results. </p>
+						<p>Once the tool can be positioned at each point on the 
+						trajectory, you can set the collision checking option on 
+						the <kbd>Geometry</kbd> tab page.</p>
+						</td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+&nbsp;</td>
+						<td valign="top" width="23">
+						<font color="#1C1557"><b>11.</b></font></td>
+						<td valign="top">
+						If there are collisions detected, adjust the interpolation 
+						axes until the tool path is collision free.<p>Once there 
+						are no collisions, you can select the faces of neighboring 
+						blades as check surfaces. </p>
+						<p>
+						<img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelix15NLS.gif" width="382" height="448"></p>
+						<p>You can then replay the tool path to check for collisions 
+						with the selected faces.</p>
+						</td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+&nbsp;</td>
+						<td valign="top" width="23">
+						<font color="#1C1557"><b>12.</b></font></td>
+						<td valign="top">
+						You may need to adjust the interpolation axes and possibly 
+						insert additional interpolation axes until the tool path 
+						is collision free.<p>The following figure shows an example 
+						of the default and additional interpolation axes that will 
+						give a collision-free trajectory.</p>
+						<p>
+						<img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelix17NLS.gif" width="413" height="545"></p>
+						</td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+						<img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+						<td valign="top" width="23">
+&nbsp;</td>
+						<td valign="top">
+						The corresponding data is as follows:<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="68%" id="AutoNumber1">
+								<tr>
+										<td width="6%" align="center">
+										<b>Axis</b></td>
+										<td width="47%" align="center">
+										<b>Application point coordinates</b></td>
+										<td width="47%" align="center">
+										<b>Interpolation axis vectors</b></td>
+								</tr>
+								<tr>
+										<td width="5%" align="center">
+										1</td>
+										<td width="47%">
+										Intersection point</td>
+										<td width="48%">
+										u=0.224917 v=0.0174524 w=0.974222</td>
+								</tr>
+								<tr>
+										<td width="5%" align="center">
+										2</td>
+										<td width="47%">
+										Intersection point</td>
+										<td width="48%">
+										u=0.292194 v=-0.0348995 w=0.955722</td>
+								</tr>
+								<tr>
+										<td width="5%" align="center">
+										3</td>
+										<td width="47%">
+										Intersection point</td>
+										<td width="48%">
+										u=0.15643 v=0 w=0.987688</td>
+								</tr>
+								<tr>
+										<td width="5%" align="center">
+										4</td>
+										<td width="47%">
+										Intersection point</td>
+										<td width="48%">
+										u=0.308264 v=0.0697565 w=0.94874</td>
+								</tr>
+								<tr>
+										<td width="5%" align="center">
+										5</td>
+										<td width="47%">
+										x=-20.8009 y=18.814 z=192.1 </td>
+										<td width="48%">
+										u=-0.0688977 v=0.156434 w=0.985282 </td>
+								</tr>
+								<tr>
+										<td width="5%" align="center">
+										6</td>
+										<td width="47%">
+										x=23.0488 y=-11.0264 z=192.676</td>
+										<td width="48%">
+										u=0.103351 v=-0.529919 w=0.841727 </td>
+								</tr>
+								<tr>
+										<td width="5%" align="center">
+										7</td>
+										<td width="47%">
+										x=12.9556 y=-22.0174 z=252</td>
+										<td width="48%">
+										u=0 v=-0.45399 w=0.891007</td>
+								</tr>
+								<tr>
+										<td width="5%" align="center">
+										8</td>
+										<td width="47%">
+										x=-10.2918 y=16.9498 z=252 </td>
+										<td width="48%">
+										u=-0.069714 v=0.0348995 w=0.996956 </td>
+								</tr>
+								<tr>
+										<td width="5%" align="center">
+										9</td>
+										<td width="47%">
+										x=-14.1239 y=9.91563 z=192.142</td>
+										<td width="48%">
+										u=0.25878 v=-0.0174524 w=0.965779 </td>
+								</tr>
+								<tr>
+										<td width="5%" align="center">
+										10</td>
+										<td width="47%">
+										x=-4.66894 y=1.32628 z=191.888</td>
+										<td width="48%">
+										u=0.207785 v=-0.0348995 w=0.977552 </td>
+								</tr>
+								<tr>
+										<td width="5%" align="center">
+										11</td>
+										<td width="47%">
+										x=-5.69227 y=-3.93598 z=192.877</td>
+										<td width="48%">
+										u=0.0347667 v=-0.0871557 w=0.995588 </td>
+								</tr>
+								<tr>
+										<td width="5%" align="center">
+										12</td>
+										<td width="47%">
+										x=-20.6779 y=19.1817 z=191.995</td>
+										<td width="48%">
+										u=0.137059 v=0.173648 w=0.975224</td>
+								</tr>
+						</table>
+						</td>
+				</tr>
+				<tr>
+						<td valign="top" width="32">
+&nbsp;</td>
+						<td valign="top" width="23">
+						<font color="#1C1557"><b>13.</b></font></td>
+						<td valign="top">
+						The tool path can be replayed and checked for collisions.<p>
+						<img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelix16NLS.gif" width="340" height="509"></p>
+						</td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+						</td>
+						<td valign="top" width="23">
+						<font color="#1C1557"><b>14.</b></font></td>
+						<td>
+						Click <kbd>OK</kbd> to create the operation.</td>
+				</tr>
+				<tr>
+						<td width="32" valign="top">
+						<img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+						<td valign="top" width="23">
+&nbsp;</td>
+						<td valign="top">
+						<ul>
+							<li>A default reference tool axis (A) is displayed. 
+							You can double click on this axis to modify it. You 
+							can also click the tool axis (A) symbol in the <kbd>Strategy</kbd> 
+							tab page to modify the orientation of the reference 
+							axis. This axis is not used in the interpolation.</li>
+							<li>If needed, you can select the <a name="Macros">
+							<kbd>Macros</kbd></a> 
+							tab page
+							<img border="1" src="b35doc/english/online/amgug_c2/images/TabMacroG.gif" align="middle" width="36" height="22"> 
+							to specify the operation&#39;s transition paths (approach 
+							and retract motion, for example). See
+							<a href="page11363.html" target="ds_doc2">
+							Define Macros of an Operation</a> for an example of 
+							specifying transition paths on a multi-axis machining 
+							operation. </li>
+							<li>If needed, you can select the
+							<a name="FeedSpeed"><kbd>Feeds and Speeds</kbd></a> tab page
+							<img border="1" src="b35doc/english/online/amgug_c2/images/TabFeedG.gif" align="middle" width="36" height="22"> 
+							to specify the <a href="page0392.html#CFFandS">feedrates 
+							and spindle speeds</a> for the operation.</li>
+						</ul>
+						</td>
+				</tr>
+				<tr>
+						<td valign="top" colspan="3">
+						<p align="center">
+						<img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="end of task" width="64" height="32"></p>
+						</td>
+				</tr>
+		</table>
+	</div>
+
+	</body>
+
+</html>
+

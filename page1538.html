@@ -1,0 +1,1203 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Running Batches Using the Batch Monitor</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta content="none, default" name="Microsoft Border">
+ <style type="text/css">
+.auto-style1 {
+	border-collapse: collapse;
+}
+</style>
+</head>
+
+ <body>
+
+ <h1>Running Batches Using the Batch Monitor&nbsp;<font size="4">&nbsp;<a name="CATFrame.Utility"></a></font><code><a name="ix-CATUTIL command;commands::CATUTIL"></a><a name="ix-utilities::Batch Monitor;Batch Monitor"></a></code></h1>
+ <p align="center">&nbsp;</p>
+ <table Border="0" valign="top" width="103%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" height="0">
+   <tr>
+     <td valign="top" height="41" width="2%">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top" height="41" colspan="2">
+         <p class="header">The <kbd>
+     CATUTIL</kbd> functionality, available on both Windows and UNIX, lets you 
+         run some of the batches available in V5.
+         These batches can be run either from the command line, 
+         or using a dedicated tool called the Batch Monitor.</p></td>
+   </tr>
+   <tr>
+     <td valign="top" height="166" width="2%">&nbsp;</td>
+     <td valign="top" height="166" colspan="2"><a name="hj-top"></a>This task shows you how 
+     to:<ul>
+       <li><a href="#hj-batch monitor from command line">Access the Batch 
+       Monitor</a></li>
+       <li><a href="#hj-help">Get contextual help</a></li>
+       <li><a href="#hj-define batch parameters">Define the batch parameters</a></li>
+       <li><a href="#hj-directbatch">Run a batch directly from the Batch Monitor</a> 
+       </li>
+       <li><a href="#hj-batch from command line">Run a batch 
+		from the command line</a></li>
+       <li><a href="#hj-RemoteMode">Run a batch in remote mode</a>.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="2%">&nbsp;</td>
+     <td valign="top" colspan="2">Bear in mind that:<ul>
+       <li>The <kbd>Batch Monitor</kbd> does not run within the Version 5 
+       process, whether it is accessed from a V5 session or from the 
+       command line. The <kbd>Batch Monitor</kbd> is a standalone process. It 
+		means that it remains open after closing your V5 session and that 
+		the licenses dynamically granted during the V5
+		session (via <kbd>Tools&gt;Options&gt;Shareable Products</kbd> tab) are not granted
+		to the <kbd>Batch Monitor.</kbd></li>
+       <li>You must not run batches using the root userid on UNIX (if you do so, 
+       the batch returns an error code 45).</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" colspan="2">
+     <h2><a name="hj-batch monitor from command line"></a>Accessing the Batch 
+		Monitor</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td colspan="2">
+     <h3>Method 1: Accessing the Batch Monitor from the command line</h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" bgcolor="#FFFFFF" width="2%">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="middle" colspan="2">
+     <ol class="task">
+       <li>
+		<p class="task">Access the default installation folder:</p>
+		<div align="left">
+			<table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="table9" height="125">
+				<tr>
+					<td height="122"><code>C:&#092;Program&nbsp;Files&#092;Dassault&nbsp;Systemes&#092;Bn&#092;OS_a&#092;code&#092;bin&nbsp;
+             		</code>(on Windows)<p>or</p>
+					<p class="task"><code>/usr/DassaultSystemes/Bn/OS_a/code/command/&nbsp;
+             		</code>(on UNIX)</p>
+					<p>(where <code>n</code> is the current release number)</td>
+				</tr>
+			</table></div></li>
+		<li>
+		<p class="task">Still in the default folder, enter the command:</p>
+		<div align="left">
+			<table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="table10" height="135" width="869">
+				<tr>
+					<td height="98" colspan="2"><code>CATUTIL</code>&nbsp;&nbsp; 
+             (on Windows)<p>or&nbsp;</p>
+					<p><code>./catstart -run CATUTIL&nbsp;&nbsp;</code>(on UNIX)</p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" height="35">The <kbd>Batch Monitor</kbd> opens.</td>
+				</tr>
+				<tr>
+					<td valign="top" bgcolor="#E0E0E0" width="32">
+             <img border="0" src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+					<td bgcolor="#E0E0E0" width="830"><font SIZE="2">If you want to use an 
+					environment file, launch CATUTIL with the CATSTART command 
+					using the <kbd>-env</kbd> and <kbd>-direnv</kbd> options:<br>
+					<code>catstart &#8211;run CATUTIL 
+					-direnv env_dir -env env_file</code> (on Windows and UNIX)</font><p>
+					<font SIZE="2">where <code>env_dir</code> is the name of the directory containing the 
+					environment file and <code>env_file</code> is the 
+					environment file.</font></p>
+					<p><font SIZE="2">See 
+					<a href="page1360.html#hj-catstart">Method 5: Using the catstart Command</a> for more information.</font></td>
+				</tr>
+			</table></div></li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" colspan="2">
+     <h3><a name="hj-Batch Monitor from Version 5"></a>Method 2: Accessing the Batch 
+     Monitor from a V5 session</h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" bgcolor="#FFFFFF" width="2%">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top" colspan="2">
+     <ol class="task">
+       <li>
+       <p class="task">Start a V5 session.</li>
+       <li>
+       <p class="task"><a name="ix-commands::Utility;Utility command"></a>Select
+       <kbd>Tools &gt; Utility</kbd>.</p>
+       <div align="left">
+         <table border="0" cellpadding="0" style="height: 105;" bordercolor="#111111" id="AutoNumber35" width="100%" class="auto-style1">
+           <tr>
+             <td height="20">The <kbd>Batch Monitor</kbd> opens.</td>
+           </tr>
+           <tr>
+             <td height="20">A list of Version 5 
+             batches along with their description is displayed in the Type 
+             column. <a name="hj-batch list"></a>This list varies according to 
+			 the licenses you set up during installation.<br><br>For more 
+			 information on a specific batch, see the documentation of interest.</td>
+           </tr>
+           </table>
+       </div>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td colspan="3" rowspan="1" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+   <tr>
+     <td valign="top" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" colspan="2">
+     <p align="right"><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></td>
+   </tr>
+   <tr>
+     <td valign="top" width="2%"></td>
+     <td valign="middle" colspan="2">
+     <h2><a name="hj-help"></a>Getting contextual help</h2>
+     <blockquote>
+       <p>You cannot use <kbd>F1</kbd> to access contextual help. The methods 
+       available for displaying the online documentation are detailed below: </p>
+       <p>Selecting <kbd>Help &gt; Batch Monitor Help</kbd> lets you access the 
+       general online documentation on the <kbd>Batch Monitor</kbd>. This menu 
+       item is available in all tabs, i.e. <kbd>Utilities</kbd>, <kbd>Start</kbd> 
+       and <kbd>Processes</kbd>. Note that in the <kbd>Utilities</kbd> tab, the
+       <kbd>Batch Monitor Help</kbd> command opens the general documentation if 
+       no batch is selected in the list.</p>
+       <p>When a batch is selected in the Utilities tab, you can use the <kbd>
+       Batch Monitor Help</kbd> contextual command or select <kbd>Help &gt; Batch 
+       Monitor Help</kbd> to open the batch-specific online documentation. <br>
+       This batch-specific documentation can also be accessed when clicking
+       <img border="0" src="b35doc/english/online/basug_c2/images/whatsthis02.gif" width="17" height="15"> in the top-right corner (on 
+       Windows) or <kbd>Help</kbd> (on UNIX) in the corresponding batch 
+       interface.</p>
+       <p>However, when accessing the online documentation from the <kbd>Batch 
+       Monitor</kbd>, the framed layout containing the Home Page, Full-Text Search, 
+       Workbench Indexes, Automation, Conventions and Copyrights buttons is not 
+       available.</p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" colspan="2">
+     <p align="right"><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></td>
+   </tr>
+   <tr>
+     <td valign="top" width="2%"></td>
+     <td valign="middle" colspan="2">
+     <h2><font color="#282187"><a name="hj-define batch parameters"></a>Defining 
+     the batch parameters</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="2231" width="2%">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="2231" valign="top" colspan="2">
+     <ol class="task">
+       <li>
+       <p class="task">Access the <kbd>Batch Monitor</kbd>, either
+       <a href="#hj-batch monitor from command line">from the command line</a> 
+       or <a href="#hj-Batch Monitor from Version 5">from a Version 5 session</a>.</li>
+       <li>
+       <p class="task">Double-click the batch to run from the list to open the 
+	   corresponding batch interface.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber18" height="105" width="617">
+           <tr>
+             <td height="25" width="8" valign="top" bgcolor="#E0E0E0">
+             <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+             <td height="25" width="602" bgcolor="#E0E0E0">You can also access the batch interface 
+             by:<ul>
+               <li>right-clicking the desired batch then selecting
+               <font color="#666666"><b>New parameter file</b></font></li>
+               <li>or selecting the batch from the list then <b>
+               <font color="#666666">File &gt; New parameter file</font></b>.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task"><a name="hj-related documentation"></a>Set the batch 
+       parameters as explained in the corresponding 
+       documentation. </p>
+       </li>
+       <li>
+       <p class="task"><a name="hj-licensing setup"></a>Click
+       <font color="#666666"><b>Licensing Setup...</b></font> and select a 
+       license authorizing the use of the batch you want to run.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber20" width="100%">
+           <tr>
+             <td>
+             <p class="task">If you run a batch without previously selecting a 
+             license, the system reads the <i>License.CATSettings</i> file and 
+             tries to run the batch with the licenses found in this file.<br>
+             Because this file does not contain the licenses acquired in <kbd>
+             Tools &gt; Options &gt; General &gt; Shareable Products</kbd>, if the batch 
+             monitor was started using <kbd>Tools &gt; Utility...</kbd>, the batch 
+             will not acquire any licenses of this type.<br>
+             <br>
+             If you do not succeed in running the batch due to a licensing 
+             problem, click <kbd>Licensing Setup...</kbd> and select a license 
+             from the list.<br>
+             When you click this button, the system searches for both nodelock 
+             licenses installed on your computer and network licenses accessible 
+             from your computer and displays the list of licenses found. The 
+             list displayed contains the same licenses visible in <kbd>Tools &gt; 
+             Options &gt; Licensing</kbd>.<br>
+             Then, select the appropriate license from the list.<br>
+             The license is only acquired temporarily for the duration of the 
+             batch execution.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Click <font color="#666666"><b>Save</b></font> then 
+       navigate to save your XML file in the desired location. By default, it is 
+		saved in a temporary folder.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber21" width="100%">
+           <tr>
+             <td colspan="2" height="92">
+             <p class="task">Of course, the contents of this XML file varies 
+             according to the batch you run since it contains the values you set 
+             for the parameters displayed in the batch interface. <br>
+				This file is named &quot;BatchParameters&quot; suffixed with the hour at 
+				which the batch was run (for instance, 
+				&quot;BatchParameters_14.41.25.xml&quot; to indicate that the batch was 
+				run at 14.21.25 PM).<p class="task">When saved, this file can be edited manually and used later on to
+             <a href="#hj-directbatch">run the batch directly</a> without having 
+             to re-access the batch interface. However, bear in mind that to be 
+				able to open and edit the XML file, you must use a text or XML 
+				editor.</td>
+           </tr>
+           <tr>
+             <td width="35" height="43" valign="top" bgcolor="#E0E0E0">
+             <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+             <td height="43" valign="top" bgcolor="#E0E0E0">
+             It is recommended to open the XML file in a text editor, other than 
+				Internet Explorer. As the Parameters.dtd file is not located in 
+				the same folder than the XML file being validated, the file may 
+				not open. To open the file in Internet Explorer, copy the Parameters.dtd file from intel_a\resources\batchdesc to the 
+				folder of the XML file.</td>
+           </tr>
+           <tr>
+             <td colspan="2">
+             <p class="task">You can now either click <font color="#666666"><b>
+             Run</b></font> to run the batch from the interface of the selected 
+             batch, or click <font color="#666666"><b>Cancel</b></font> to close 
+             the batch window and go back to the <kbd>Batch Monitor</kbd> window 
+             (if you want to start other batches for instance).</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">In the <kbd>Batch Monitor</kbd> window, access the <kbd>
+       Start</kbd> tab which now displays the name and location of the XML file 
+       containing the batch parameters you defined in the previous steps (as 
+       well as the name of the host computer if you run the batch in remote 
+       mode):</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber22" height="360">
+           <tr>
+             <td height="357">
+             <img border="0" src="b35doc/english/online/basug_c2/images/batchmonitor05NLS.gif" width="570" height="348"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">If you did not run the batch in step 4, select
+       <font color="#666666"><b>File&gt; Run</b></font> (or right-click the batch 
+       to run then select <font color="#666666"><b>Run</b></font>): the batch 
+       executes.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber23" width="100%" height="52">
+           <tr>
+             <td valign="top" bgcolor="#E0E0E0">
+             <img border="0" src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+             <td bgcolor="#E0E0E0">The <kbd>Start</kbd> tab lets you instantiate another batch 
+             while the current batch is running. It also lets you delete a batch 
+             from the list by selecting it from the list then choosing<font color="#666666">
+             <b>Edit &gt; Delete</b></font> (or by right-clicking then 
+             selecting <font color="#666666"><b>Delete</b></font>).</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Access the <kbd>Processes</kbd> tab to get some 
+       information on the batch execution.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="height: 323;" bordercolor="#111111" id="AutoNumber24" width="100%" class="auto-style1">
+           <tr>
+             <td style="height: 3px"><a name="hj-progress"></a>The following batch-related information is 
+             displayed:<ul>
+               <li>Name of the batch</li>
+               <li>Name of the parameter file used to run the batch</li>
+               <li>Name of the host computer (if you run the batch on a remote 
+               computer)</li>
+               <li>Status of the batch (&quot;Ended&quot;, &quot;Running&quot;, etc.)</li>
+               <li>Feedback on the 
+               batch completion in the &quot;Progress&quot; column. &quot;100%&quot; is displayed 
+               when the batch is ended</li>
+               <li>Start and end time, respectively in the &quot;Beginning at&quot; and 
+               &quot;Ending at&quot; columns</li>
+               <li>Return code: &quot;0&quot; means that the batch executed correctly ; a 
+               code other than zero means that the batch has failed. For more 
+               information, refer to
+               <a href="#hj-Generic Batch Monitor Error Codes">Generic Batch 
+               Monitor Error Codes</a> and to
+               <a href="#hj-Generic Batch Error Codes">Generic Batch Error Codes</a></li>
+               <li>Result of the batch execution (either &quot;Succeeded&quot; or 
+               &quot;Failed&quot;)</li>
+               <li>Batch identification number.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td height="64">The <kbd>Processes</kbd> tab also lets you 
+             interrupt the batch execution. To do so, right-click the desired 
+             batch from the list then select <font color="#666666"><b>Interrupt</b></font>.
+             <br>
+             You can also delete a batch from the list by right-clicking the 
+             corresponding line then selecting <b><font color="#666666">Delete</font></b>.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task"><a name="hj-results"></a>To display the result of the batch execution, 
+       double-click the desired batch in the list to open the <kbd>Results</kbd> 
+       window:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber25" height="467" width="1318">
+           <tr>
+             <td height="306">
+             <img border="0" src="b35doc/english/online/basug_c2/images/batchmonitor07NLS.gif" width="477" height="304"></td>
+           </tr>
+           <tr>
+             <td height="158">This window indicates the beginning and end date 
+             and time of the batch execution as well as the name and path of the 
+             documents that have been processed.<p>You can then click:</p>
+             <ul>
+               <li><kbd>Save</kbd> to save your results in the folder of 
+               your choice. The file formats available are .txt and .xml.<br>
+               Note that this file is different from the one you save from the 
+               batch interface: the <kbd>Save</kbd> button in the <kbd>Batch 
+               Monitor</kbd> lets you save the batch results (i.e. the 
+               data displayed in the <kbd>Results</kbd> window displayed above) 
+               whereas the <kbd>Save</kbd> button available in the specific batch 
+               interface lets you save the batch parameters.</li>
+               <li><kbd>Close</kbd> to close the window and go back to the
+               <kbd>Batch Monitor</kbd>.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+		<p class="task"><a name="hj-output"></a>To read the reports generated by 
+		the batch execution, access the folder <code>c:\temp\batchID</code> 
+       (on Windows) or <code>/temp/batchID</code> (on UNIX).</p>
+		<table border="0" id="table1" height="327">
+			<tr>
+				<td>Three files are created:<ul>
+					<li>A report in text format named <i>batchID</i>LOG.txt&nbsp;
+					</li>
+					<li>A report in XML format named <i>batchID</i>LOG.xml</li>
+					<li>A log containing the output named <i>batchID</i>OUTPUT.xml. 
+					This .xml file can contain information such as the database 
+					connection, the user name and password (i.e. encrypted or 
+					not), the server, etc. Of course, this depends on the batch 
+					you run. Refer to the documentation of interest for more 
+					information about the type of information that can be stored 
+					in the .xml file.</li>
+				</ul>
+				<p>where <i>batchID</i> is the number identifying the batch.</td>
+			</tr>
+			<tr>
+				<td>You can modify the default storage location of these files 
+				by exporting the following variable:<p><code>set BATCH_HOME=new_path</code>&nbsp; (on Windows)</p>
+       <p>or</p>
+       <p><code>export BATCH_HOME=new_path<i>&nbsp; </i></code>(on UNIX)</p>
+       <p>where <code>new_path</code> is the path of the new storage location.</p>
+				</td>
+			</tr>
+		</table>
+		</li>
+		<li>
+		<p class="task">Select <b><font color="#666666">File &gt; Exit</font></b> to 
+       exit the <kbd>Batch Monitor</kbd>.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td colspan="3" rowspan="1" valign="top" height="35">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+   <tr>
+     <td valign="top" height="17" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" height="17" colspan="2">
+     <p align="right"><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></td>
+   </tr>
+   <tr>
+     <td valign="top" height="64" width="2%"></td>
+     <td height="64" valign="middle" colspan="2">
+     <h2><font color="#282187"><a name="hj-directbatch"></a>Running a batch 
+     directly from the Batch Monitor</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td height="51" width="2%"></td>
+     <td height="51" colspan="2">
+     <blockquote>
+       <p>If you already have an XML file containing all the necessary inputs, 
+       there is no need for you to define the batch parameters and therefore, 
+       you can run the batch directly by associating the corresponding XML file 
+       to the batch to be run.</p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="2279" width="2%">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="2279" valign="top" colspan="2">
+     <ol class="task">
+       <li>
+       <p class="task">Access the <kbd>Batch Monitor</kbd>, either
+       <a href="#hj-batch monitor from command line">from the command line</a> 
+       or <a href="#hj-Batch Monitor from Version 5">from a Version 5 session</a>.</li>
+       <li>
+       <p class="task">In the <kbd>Utilities</kbd> tab, click the batch then 
+       select <font color="#666666"><b>File &gt; Associate a parameter file</b></font> 
+       (or right-click the batch then select <b><font color="#666666">Associate 
+       a parameter file</font></b>), navigate to the folder in which you saved 
+       the XML file then click <kbd>Open</kbd>.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber13" height="561" width="100%">
+           <tr>
+             <td height="49"><blink><a name="hj-DLName"></a></blink>If you set 
+             the DLName environment as &quot;Current&quot; in <kbd>Tools &gt; Options &gt; 
+             General &gt; Document</kbd>, the usual <kbd>File Selection</kbd> 
+             dialog box is replaced by the following one dedicated to the DLName 
+             environment:</td>
+           </tr>
+           <tr>
+             <td height="341"><img border="0" src="b35doc/english/online/basug_c2/images/batchmonitor03NLS.gif" width="425" height="339"></td>
+           </tr>
+           <tr>
+             <td height="167">The DLName document environment lets you restrict 
+             the access to specific folders referenced by logical names referred 
+             to as &quot;DLNames&quot;&nbsp;(each folder is assigned a logical name).<br>
+             In this mode, the different file opening and saving commands only 
+             allow end users to access documents in directories referenced by 
+             DLNames.<p>The <kbd>File Selection</kbd> dialog box displayed above 
+             lets you navigate to the DLName in which the parameter file to be 
+             used is stored. You can also search for DLNames using a specific 
+             interface by clicking
+             <img border="0" src="b35doc/english/online/icons_C2/images/small/IDB_DLNameSearch.gif" width="16" height="16">.<br>
+             For detailed information on how to use this dialog box, refer to 
+             the
+             <a target="ds_doc2" href="page0913.html#hj-using the dialog box">
+             Document</a> task.</p>
+             <p>Click <kbd>OK</kbd> when finished selecting your documents.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Access the <kbd>Start</kbd> tab which now displays the 
+       name and location of the XML file you associated to the batch: </p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber14" height="358">
+           <tr>
+             <td height="355">
+             <img border="0" src="b35doc/english/online/basug_c2/images/batchmonitor05NLS.gif" width="570" height="348"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Select <font color="#666666"><b>File &gt; Run</b></font> (or 
+       right-click the batch to run then select <b><font color="#666666">Run</font></b>)to 
+		start the batch execution.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber15" width="1089" height="58">
+           <tr>
+             <td valign="top" bgcolor="#E0E0E0">
+             <img src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+             <td bgcolor="#E0E0E0">You can instantiate another batch while the 
+             current batch is running.<br>
+             The <kbd>Start</kbd> tab also lets you delete a batch from the list 
+             by selecting it from the list then selecting <font color="#666666">
+             <b>Edit &gt; Delete</b></font> (or by right-clicking then selecting <b>
+             <font color="#666666">Delete</font></b>).</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Access the <kbd>Processes</kbd> tab to get some 
+		information on the batch execution.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber16" height="634" width="100%">
+           <tr>
+             <td height="67">The following batch-related information is 
+             displayed:<ul>
+               <li>Name of the batch</li>
+               <li>Name of the parameter file used to run the batch</li>
+               <li>Status of the batch (&quot;Ended&quot;, etc.)</li>
+               <li>Start and end time, respectively in the &quot;Beginning at&quot; and 
+               &quot;Ending at&quot; columns</li>
+               <li>Return code: &quot;0&quot; means that the batch executed correctly ; a 
+               code other than zero means that the batch has failed. For more 
+               information, refer to
+               <a href="#hj-Generic Batch Monitor Error Codes">Generic Batch 
+               Monitor Error Codes</a> and to
+               <a href="#hj-Generic Batch Error Codes">Generic Batch Error Codes</a></li>
+               <li>Result of the batch execution (either &quot;Succeeded&quot; or 
+               &quot;Failed&quot;)</li>
+               <li>Batch identification number.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td height="303">
+             <h4><a name="hj-Generic Batch Monitor Error Codes"></a>Generic 
+             Batch Monitor Error Codes</h4>
+             <p>1: Command line syntax error.<br>
+             2: Error in XML parameter file.<br>
+             3: Communication layer error.<br>
+             5: License acquisition error.<br>
+             6: Invalid library error.<br>
+             7: Error attempting to launch a batch requiring a graphic adapter 
+             on a machine without an adapter.<br>
+             9: Miscellaneous.</p>
+             <h4><a name="hj-Generic Batch Error Codes"></a>Generic Batch Error 
+             Codes</h4>
+             <p>0: Batch completely successful.<br>
+             4: Batch partially successful.<br>
+             8: Batch failed.<br>
+             20: Error checking licenses.<br>
+             21: Error accessing INPUT/OUTPUT.</td>
+           </tr>
+           <tr>
+             <td height="77"><a name="hj-Processes tab"></a>The <kbd>Processes</kbd> 
+             tab also lets you interrupt the batch execution. To do so, 
+             right-click the desired batch in the list then select
+             <font color="#666666"><b>Interrupt</b></font>.<p>You can also 
+             delete a batch from the list by right-clicking the corresponding 
+             line then selecting <kbd>Delete</kbd>.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">To display the report of the batch execution, 
+       double-click the desired batch in the list to open the <kbd>Results</kbd> 
+       window.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber17" height="431" width="100%">
+           <tr>
+             <td height="310">
+             <img border="0" src="b35doc/english/online/basug_c2/images/batchmonitor07NLS.gif" width="477" height="304"></td>
+           </tr>
+           <tr>
+             <td height="116">This window indicates the beginning and end date 
+             and time of the batch execution as well as the name and path of the 
+             documents that have been processed.<p>You can then click:</p>
+             <ul>
+               <li><kbd>Save</kbd> to save your results (i.e. the data 
+               displayed in the <kbd>Results</kbd> window) in the folder of your 
+               choice. The file formats available are .txt and .xml</li>
+               <li><kbd>Close</kbd> to close the window and go back to the
+               <kbd>Batch Monitor</kbd>.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Select <b><font color="#666666">File &gt; Exit</font></b> to 
+       exit the <kbd>Batch Monitor</kbd>.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td colspan="3" rowspan="1" valign="top" height="35">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+   <tr>
+     <td valign="top" height="21" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" height="21" colspan="2">
+     <p align="right"><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></td>
+   </tr>
+   <tr>
+     <td valign="top" height="53" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" height="53" colspan="2">
+     <h2><a name="hj-batch from command line"></a>Running a 
+     batch from the command line</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="62" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" height="62" colspan="2">
+     <ul>
+		<li><a href="#hj-CATBatchStarter">Using CATBatchStarter</a></li>
+		<li><a href="#hj-CATUTIL">Using CATUTIL</a>.</li>
+		</ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="45" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" height="45" colspan="2">
+     <h3><a name="hj-CATBatchStarter"></a>Using CATBatchStarter</h3>
+     </td>
+   </tr>
+	<tr>
+     <td valign="top" height="50" bgcolor="#FFFFFF" width="2%">
+     &nbsp;</td>
+     <td height="60" colspan="2">
+     If you already have an XML file containing all the necessary inputs, this 
+		parameter file can be used later on to run the batch through the <kbd>
+		CATBatchStarter</kbd> command. The example below uses only the -input 
+		option. To learn more about the other available options, see
+		<a href="page1543.html#hj-options">About the CATBatchStarter Command</a>.</td>
+   </tr>
+	<tr>
+     <td valign="top" height="329" bgcolor="#FFFFFF" width="2%">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="middle" height="329" colspan="2">
+     <ol class="task">
+       <li>
+       <p class="task">Access the default installation folder:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="table5" height="121">
+           <tr>
+             <td height="119"><code>C:&#092;Program&nbsp;Files&#092;Dassault&nbsp;Systemes&#092;Bn&#092;OS_a&#092;code&#092;bin&nbsp;
+             </code>(on Windows)<p>or</p>
+             <p class="task"><code>/usr/DassaultSystemes/Bn/OS_a/code/command/&nbsp;
+             </code>(on UNIX)</p>
+             <p>(where <code>n</code> is the current release number)</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="2">
+       <p class="task">Run the following command:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="table6" height="207" width="864">
+           <tr>
+             <td height="205"><code>CATBatchStarter -input xml_file</code>&nbsp;&nbsp; 
+             (on Windows)<p>or&nbsp;</p>
+             <p><code>./catstart -run &quot;CATBatchStarter -input xml_file&quot;&nbsp;&nbsp;</code>(on UNIX)</p>
+             <p>where <code>xml_file</code> is the 
+             path and name of the XML file.<p>For instance:</p>
+				<p><code>CATBatchStarter -input e:\users\my_parameters.xml</code></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     	<li>
+		<p class="task">To check if the batch executed correctly, access the 
+		folder <code>c:\temp\</code> 
+       (on Windows) or <code>/temp/</code> (on UNIX).</p>
+		<table border="0" id="table15" height="56">
+			<tr>
+				<td>A .txt file named &quot;BatchMonitorResults_&quot; suffixed with the 
+				hour at which the batch was run (e.g. 
+				&quot;BatchMonitorResults_8.46.34.txt&quot;) gives you information on the 
+				batch execution and indicates the folder where the reports 
+				generated by the batch execution are stored.</td>
+			</tr>
+		</table>
+		</li>
+		<li>
+		<p class="task">To read the reports generated by 
+		the batch execution, access the folder <code>c:\temp\batchID</code> 
+       (on Windows) or <code>/temp/batchID</code> (on UNIX)</p>
+		<table border="0" id="table14">
+			<tr>
+				<td height="123">Three files are created:<ul>
+					<li>A report in text format named <i>batchID</i>LOG.txt&nbsp;
+					</li>
+					<li>A report in XML format named <i>batchID</i>LOG.xml</li>
+					<li>A log containing the output named <i>batchID</i>OUTPUT.xml. 
+					This .xml file can contain information such as the database 
+					connection, the user name and password (i.e. encrypted or 
+					not), the server, etc. Of course, this depends on the batch 
+					you run. Refer to the documentation of interest for more 
+					information about the batch information that can be stored 
+					in the .xml file.</li>
+				</ul>
+				<p>where <i>batchID</i> is the number identifying the batch.</td>
+			</tr>
+			<tr>
+				<td>You can modify the default storage location of these files 
+				by exporting the following variable:<p><code>set BATCH_HOME=new_path</code>&nbsp; (on Windows)</p>
+       <p>or</p>
+       <p><code>export BATCH_HOME=new_path<i>&nbsp; </i></code>(on UNIX)</p>
+       <p>where <code>new_path</code> is the path of the new storage location.</p>
+				</td>
+			</tr>
+		</table>
+		</li>
+     </ol>
+     </td>
+   </tr>
+	<tr>
+     <td valign="top" height="43" bgcolor="#FFFFFF" width="2%">
+     &nbsp;</td>
+     <td valign="middle" height="43" colspan="2">
+     <h3><a name="hj-CATUTIL"></a>Using CATUTIL</h3>
+     </td>
+   </tr>
+	<tr>
+     <td valign="top" height="44" bgcolor="#FFFFFF" width="2%">
+     &nbsp;</td>
+     <td height="44" colspan="2">
+     If you already have an XML file containing all 
+     the necessary inputs, this parameter file can be used later on to run the batch using 
+     the <kbd>Batch Monitor</kbd> capability through the <kbd>CATUTIL</kbd> 
+		command.</td>
+   </tr>
+	<tr>
+     <td valign="top" height="55" bgcolor="#FFFFFF" width="2%">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="middle" height="55" colspan="2">
+     <ol class="task">
+       <li>
+       <p class="task">Access the default folder:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="table11">
+           <tr>
+             <td><code>C:&#092;Program&nbsp;Files&#092;Dassault&nbsp;Systemes&#092;Bn&#092;OS_a&#092;code&#092;bin&nbsp;
+             </code>(on Windows)<p>or</p>
+             <p class="task"><code>/usr/DassaultSystemes/Bn/OS_a/code/command/&nbsp;
+             </code>(on UNIX)</p>
+             <p class="task"><br>
+             where <code>n</code> is the current release number.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Run the following command:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="table12" height="119" width="871">
+           <tr>
+             <td height="117" colspan="2"><code>CATUTIL -Name batch_name xml_file</code>&nbsp; 
+				(on Windows)<p>or</p>
+				<p><code>./catstart -run &quot;CATUTIL -Name DownwardCompatibility 
+				xml_file&quot; </code>(on UNIX)</p>
+				<p>where <code>batch_name</code> is the name of the batch you 
+				want to run and <code>xml_file</code> is the 
+             path and name of the XML file.</p>
+				<p>For instance:</p>
+				<p><code>CATUTIL -Name DownwardCompatibility 
+				e:\users\my_parameters.xml</code></td>
+           </tr>
+           <tr>
+             <td height="10" colspan="2"></td>
+           </tr>
+           <tr>
+             <td height="117" valign="top" bgcolor="#E0E0E0">
+             <img border="0" src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+             <td height="117" bgcolor="#E0E0E0"><font SIZE="2">If you want to use an environment 
+				file, launch CATUTIL with the CATSTART command using the <kbd>-env</kbd> 
+				and <kbd>-direnv</kbd> options:<br>
+				<code>catstart &#8211;run &quot;CATUTIL -Name batch_name xml_file&quot; -direnv 
+				env_dir -env env_file</code> (on Windows and UNIX)<p>Where:</p>
+				<ul>
+				<li><code>batch_name</code> is the name of the batch you want to run 
+				and <code>xml_file</code> is the path and name of the XML file.</li>
+				<li><code>env_dir</code> is the name of the directory containing the 
+				environment file and <code>env_file</code> is the environment file.</li>
+				</ul>
+				<p>See <a href="page1360.html#hj-catstart">Method 5: Using the catstart Command
+				</a>for more 
+				information.</font></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     	<li>
+		<p class="task">To check if the batch executed correctly, access the 
+		folder <code>c:\temp\</code> 
+       (on Windows) or <code>/temp/</code> (on UNIX).</p>
+		<table border="0" id="table18" height="58">
+			<tr>
+				<td>A .txt file named &quot;BatchMonitorResults_&quot; suffixed with the 
+				hour at which the batch was run (e.g. 
+				&quot;BatchMonitorResults_8.46.34.txt&quot;) gives you information on the 
+				batch execution and indicates the folder where the reports 
+				generated by the batch execution are stored.</td>
+			</tr>
+		</table>
+		</li>
+		<li>
+		<p class="task">To read the reports generated by 
+		the batch execution, access the folder <code>c:\temp\batchID</code> 
+       (on Windows) or <code>/temp/batchID</code> (on UNIX)</p>
+		<table border="0" id="table19">
+			<tr>
+				<td>Three files are created:<ul>
+					<li>A report in text format named <i>batchID</i>LOG.txt&nbsp;
+					</li>
+					<li>A report in XML format named <i>batchID</i>LOG.xml</li>
+					<li>A log containing the output named <i>batchID</i>OUTPUT.xml. 
+					This .xml file can contain information such as the database 
+					connection, the user name and password (i.e. encrypted or 
+					not), the server, etc. Of course, this depends on the batch 
+					you run. Refer to the documentation of interest for more 
+					information about the batch information that can be stored 
+					in the .xml file.</li>
+				</ul>
+				<p>where <i>batchID</i> is the number identifying the batch.</td>
+			</tr>
+			<tr>
+				<td>You can modify the default storage location of these files 
+				by exporting the following variable:<p><code>set BATCH_HOME=new_path</code>&nbsp; (on Windows)</p>
+       <p>or</p>
+       <p><code>export BATCH_HOME=new_path<i>&nbsp; </i></code>(on UNIX)</p>
+       <p>where <code>new_path</code> is the path of the new storage location.</p>
+				</td>
+			</tr>
+		</table>
+		</li>
+     </ol>
+     </td>
+   </tr>
+	<tr>
+     <td colspan="3" rowspan="1" valign="top" height="35">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+	<tr>
+     <td valign="top" height="20" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" height="20" colspan="2">
+     <p align="right"><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></td>
+   </tr>
+   <tr>
+     <td valign="top" height="47" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" height="47" colspan="2">
+     <h2><a name="hj-RemoteMode"></a>Running Batches in Remote Mode</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="278" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" height="278" colspan="2">You have already learnt how to run batches 
+     on your local machine.
+     <p>However, certain batches are CPU-intensive, so in certain cases it may 
+     be advisable to distribute batch processing to optimize CPU time on the 
+     local machine. The batch monitor lets you submit certain batches on remote 
+     machines accessible on your network.</p>
+     <p>Two implementations for remote batch execution are supported:</p>
+     <ul>
+       <li>with the first implementation, the batch monitor requires no external 
+       software as a prerequisite since it can work using the communications 
+       backbone packaged with the core Version 5 software</li>
+       <li>if you install and configure the IBM MQSeries Version 5.2 product, 
+       you will be able to run and monitor batches on a remote computers using 
+       both the batch monitor and the MQSeries command line syntax.</li>
+     </ul>
+     <p>This section concentrates on running remote batches using the batch 
+     monitor.</p>
+     <p>For full details about the administration tasks involved in setting up 
+     both the local and remote machines using both implementations, refer to
+     <a target="ds_doc2" href="page1267.html">
+     Setting Up Batch Monitoring Using the Communications Backbone and MQSeries</a> 
+     in your <i>Infrastructure Installation Guide</i>.</td>
+   </tr>
+   <tr>
+     <td height="42" bgcolor="#FFFFFF" width="2%">
+     &nbsp;</td>
+     <td height="42" bgcolor="#E0E0E0" width="2%">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td height="42" bgcolor="#E0E0E0" width="95%">Documents containing links to other 
+     documents (for example, CATProducts) cannot be processed in remote batch 
+     mode.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="54" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" height="54" colspan="2">
+     <h4>Using the Communications Backbone</h4>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="65" bgcolor="#FFFFFF" width="2%">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="middle" height="65" colspan="2">
+     <ol class="task">
+       <li>
+       <p class="task">Log onto the remote machine on which you want to run the 
+       batch.</li>
+       <li>
+       <p class="task">Start the server monitor as follows:</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="1594" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" height="1594" colspan="2">
+     <blockquote>
+       <p class="task"><b><font color="#353A90">On Windows</font></b></p>
+       <ol>
+         <li>Open a Command Prompt window and go to the following Version 5 
+         installation folder, for example:<div align="left">
+           <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber26" height="34">
+             <tr>
+               <td height="31"><code>C:&#092;Program 
+               Files&#092;Dassault 
+               Systemes&#092;B32&#092;win_b64&#092;code&#092;bin</code></td>
+             </tr>
+           </table>
+         </div>
+         </li>
+         <li>Run the command:<div align="left">
+           <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber27" height="62">
+             <tr>
+               <td height="59"><code>catstart -run &quot;CATBatSrvMonitorExe BB&quot;<br>
+               <br>
+               </code></td>
+             </tr>
+           </table>
+         </div>
+         </li>
+       </ol>
+       <p class="task"><b><font color="#353A90">On UNIX</font></b></p>
+       <ol>
+         <li>Open a window and go to the following Version 5 installation 
+         folder, for example:<br>
+         <code>/usr/DassaultSystemes/B20/os_a/code/command</code><div align="left">
+           <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber28">
+             <tr>
+               <td>where&nbsp; &quot;OS_a&quot; is:<ul>
+                 <li>aix_a</li>
+                 <li>hpux_b.</li>
+               </ul>
+               </td>
+             </tr>
+           </table>
+         </div>
+         </li>
+         <li>Run the command:<div align="left">
+           <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber29" height="29">
+             <tr>
+               <td height="26"><code>catstart -run &quot;CATBatSrvMonitorExe BB&quot;</code></td>
+             </tr>
+           </table>
+         </div>
+         </li>
+       </ol>
+     </blockquote>
+     <ol class="task">
+       <li value="3">
+       <p class="task">Log onto the local machine and start a Version 5 session.</li>
+       <li>
+       <p class="task">Select the <kbd>Tools &gt; Utility</kbd> to access the Batch 
+       Monitor.</li>
+       <li>
+       <p class="task">Select a batch which can be run on a remote machine (for 
+       example, the Downward Compatibility batch) by double-clicking it in the 
+       list.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber30" height="27">
+           <tr>
+             <td height="44">As is the case for all batch dialog boxes 
+             supporting remote batch execution, the dialog box contains the 
+             following area:</td>
+           </tr>
+           <tr>
+             <td height="58">
+             <img border="0" src="b35doc/english/online/basug_c2/images/remotebatchmonitor01NLS.gif" width="463" height="47"></td>
+           </tr>
+           <tr>
+             <td height="31">By default, the &quot;Run Local&quot; option is active.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="6">
+       <p class="task">Check the &quot;Run Remote&quot; option and enter the hostname of 
+       the remote machine on which you started the server monitor:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber31">
+           <tr>
+             <td><img border="0" src="b35doc/english/online/basug_c2/images/remotebatchmonitor02NLS.gif" width="463" height="47"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="7">
+       <p class="task">Click <kbd>Licensing Setup...</kbd>. </p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber32" height="436">
+           <tr>
+             <td height="166">If the following error message occurs:<p><code>
+             Client Batch Monitor ERROR : cannot connect to xxxx</code></p>
+             <p>it is due to one of the following causes:</p>
+             <ul>
+               <li>the remote machine &quot;xxxx&quot; to which you are trying to connect 
+               does not exist</li>
+               <li>the server monitor was not started on the remote machine 
+               &quot;xxxx&quot;.</li>
+             </ul>
+             <p>The list of licenses <b>installed on or accessible to the remote 
+             machine</b> is displayed:</td>
+           </tr>
+           <tr>
+             <td height="240">
+             <img border="0" src="b35doc/english/online/basug_c2/images/remotebatchmonitor03NLS.gif" width="468" height="231"></td>
+           </tr>
+           <tr>
+             <td height="21"><font color="#000000">It is essential to understand 
+             that the list of licenses comes from the remote machine.</font></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li value="8">
+       <p class="task">Select a license and click <kbd>OK</kbd>:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber33" height="315" width="875">
+           <tr>
+             <td><img border="0" src="b35doc/english/online/basug_c2/images/remotebatchmonitor04NLS.gif" width="468" height="231"></td>
+           </tr>
+           <tr>
+             <td>If you run the batch without <font color="#000000">selecting a 
+             license using the <i>Licensing Setup&#133;</i> 
+             button, the software uses the <kbd>Licensing.CATSettings</kbd> file 
+             located on the local machine, transmits the license requests to the 
+             remote machine, and tries to locate the license on the remote 
+             machine.</font><p>If no license is found, it will try to locate and 
+             use <font color="#000000">a nodelock license on the remote machine.</font></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Submit the batch.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="51" bgcolor="#FFFFFF" width="2%">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td valign="middle" height="51" colspan="2">
+     <b>Using DLNames and mapped drives when running batches in remote mode</b><p>
+		Batches can be successfully run with the data path containing a DLNAME 
+		or mapped drive. However, these paths are decoded by the batch as if 
+		they are defined on the remote machine not on the local machine. Hence, 
+		when submitting a batch in remote mode, the exact same mapped drive (or 
+		DLNAME) should also be defined on the remote machine.<br>
+		Only defining it on the local machine will cause the batch to fail due 
+		to non-availability of data.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="51" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" height="51" colspan="2">
+     <h4>Using IBM MQSeries</h4>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="190" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" height="190" colspan="2">Using IBM MQSeries for running batches is 
+     more complicated than using the communications backbone, as far as setting 
+     the product up is concerned.
+     <p>On the local machine from which you submit the batch for remote 
+     execution:</p>
+     <ul>
+       <li>you need the Version 5 core software</li>
+       <li>the local machine must be configured as an MQSeries client</li>
+       <li>and the remote machine must be configured as an MQSeries server</li>
+       <li>the server monitor must be started on the remote machine</li>
+       <li>and a variable must be exported on the local machine before starting 
+       Version 5.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="229" bgcolor="#FFFFFF" width="2%">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="middle" height="229" colspan="2">
+     <ol class="task">
+       <li>
+       <p class="task">Once all the IBM MQSeries setup tasks on both the client 
+       and server have been performed (including starting the server monitor as 
+       was the case for the communications backbone) log onto the local machine.</li>
+       <li>
+       <p class="task">Export the following variable on the client:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber34">
+           <tr>
+             <td>
+             <p class="task"><code>CATBATCHMQ=1</code><br>
+             <br>
+             to specify that you are using the MQSeries communications driver.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Start a Version 5 session.</li>
+       <li>
+       <p class="task">Select <kbd>Tools &gt; Utility</kbd> to access the Batch 
+       Monitor.</li>
+     </ol>
+     <blockquote>
+       <p class="task">From here onwards, you submit remote batches in exactly 
+       the same way as described above for the communications backbone.</p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td colspan="3" rowspan="1" valign="top" height="35">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+   <tr>
+     <td valign="top" height="17" bgcolor="#FFFFFF" width="2%">&nbsp;</td>
+     <td valign="middle" height="17" colspan="2">
+     <p align="right"><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

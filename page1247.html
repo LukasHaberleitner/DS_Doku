@@ -1,0 +1,288 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>How to Set Up File Transfer Mode for the Vault</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>How to Set Up File Transfer Mode for the Vault</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td rowspan="1" valign="top">This document will show you how to set up the 
+     Vault file transfer mode. This vault administration documentation is for 
+     UNIX only.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td rowspan="1" valign="top">First of all, a short explanation about the 
+     different Vault file transfer mode available and theirs benefits. Three 
+     file transfer modes are available for the Vault: CORBA, HTTP and NFS.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>
+     <h2><font color="#282187">CORBA file transfer mode</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>This mode enables vault client applications (for instance: 
+     CATIAV5/CATIAV4, ENOVIA desktop and server) to access vault file by CORBA 
+     protocol to transfer data. This is the default mode, no particular needs 
+     are required, very simple to setup. Client applications do not need to 
+     access the Vault directories (high security level).</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>
+     <h2><font color="#282187">HTTP file transfer mode (read operations only)</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>This mode enables vault client applications (for instance: 
+     CATIAV5/CATIAV4, ENOVIA desktop and server) to access vault file by HTTP 
+     protocol to transfer data for all read operations. Write operations are 
+     done by CORBA protocol. This mode requires an apache HTTP server with 
+     access to Vault directories, but client applications still do not need to 
+     access the Vault directories. The benefit is a smaller cpu usage for the 
+     Vault Server. Thus, Vault Server can serve more user request 
+     simultaneously.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>
+     <h2><font color="#282187">NFS file transfer mode</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>This mode enables vault client applications (for instance: 
+     CATIAV5/CATIAV4, ENOVIA desktop and server) to access vault file by NFS. 
+     The benefits are a better elapsed time for users and a smaller cpu usage 
+     for the Vault Server. Thus, the Vault Server can serve more user requests 
+     simultaneously. The drawbacks are that you need to have a fully functional 
+     NFS link between the clients and the Vault server. It is also less secured 
+     as all clients are able to access the vault directories.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>
+     <h2><font color="#282187">File transfer protocol declaration</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>File transfer protocols are declared in the VaultClient.properties 
+     file. You can modify default protocol for read or write operations and set 
+     a specific one for a given VaultAliasName.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td><code>VaultClient properties file example: </code>
+     <p><code>## Vault Client Properties File</code></p>
+     <p><code>## File read protocol declaration<br>
+     VaultClient_ReadProtocol = 3<br>
+     VaultClient_ReadProtocol_0 = CORBA <br>
+     VaultClient_ReadProtocol_1 = NFS<br>
+     VaultClient_ReadProtocol_2 = HTTP</code></p>
+     <p><code>## File write protocol declaration<br>
+     VaultClient_WriteProtocol = 2<br>
+     VaultClient_WriteProtocol_0 = CORBA<br>
+     VaultClient_WriteProtocol_0 = NFS</code></p>
+     <p><code><br>
+     ## Default file transfer protocol<br>
+     VaultClient_Active_ReadProtocol = CORBA<br>
+     VaultClient_Active_WriteProtocol = CORBA</code></p>
+     <p><code>##Data BlockSize parameter<br>
+     VaultClient_BlockSize = 1048576</code></p>
+     <p><code>## Trace parameter<br>
+     VaultClient_Trace = OFF</code></p>
+     <p><code>## Default alias name<br>
+     VaultClient_DefaultAliasName = Vault1</code></p>
+     <p><code>## Vault1 alias entry<br>
+     <b>## Use default file transfer protocol which is CORBA</b><br>
+     VaultClient_Vault1_ReadVaultServerName = Vault1OrbSrv<br>
+     VaultClient_Vault1_ReadVaultServerHostName = laureen<br>
+     VaultClient_Vault1_ReadVaultServerDaemonPort = 1570<br>
+     VaultClient_Vault1_WriteVaultServerName = Vault1OrbSrv<br>
+     VaultClient_Vault1_WriteVaultServerHostName = laureen<br>
+     VaultClient_Vault1_WriteVaultServerDaemonPort = 1570</code></p>
+     <p><code>## Vault2 alias entry<br>
+     <b>## Use NFS file transfer protocol</b><br>
+     VaultClient_Vault2_ReadVaultServerName = Vault2OrbSrv<br>
+     VaultClient_Vault2_ReadVaultServerHostName = floydsy<br>
+     VaultClient_Vault2_ReadVaultServerDaemonPort = 1572<br>
+     <b>VaultClient_Vault2_ReadProtocol = NFS</b><br>
+     VaultClient_Vault2_WriteVaultServerName = Vault2OrbSrv<br>
+     VaultClient_Vault2_WriteVaultServerHostName = floydsy<br>
+     VaultClient_Vault2_WriteVaultServerDaemonPort = 1572<br>
+     <b>VaultClient_Vault2_WriteProtocol = NFS</b></code></p>
+     <p><code>## Vault3 alias entry<br>
+     <b>## Use HTTP file transfer protocol (read operations only)<br>
+     </b>VaultClient_Vault3_ReadVaultServerName = Vault3OrbSrv<br>
+     VaultClient_Vault3_ReadVaultServerHostName = bayeux<br>
+     VaultClient_Vault3_ReadVaultServerDaemonPort = 1576<br>
+     <b>VaultClient_Vault3_ReadProtocol = HTTP<br>
+     VaultClient_Vault3_ReadHTTPServerHost = caen<br>
+     VaultClient_Vault3_ReadHTTPServerPort = 8080</b><br>
+     VaultClient_Vault3_WriteVaultServerName = Vault3OrbSrv<br>
+     VaultClient_Vault3_WriteVaultServerHostName = bayeux<br>
+     VaultClient_Vault3_WriteVaultServerDaemonPort = 1576</code></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>
+     <h2><font color="#282187">Example Explanation</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>This VaultClient properties file declares three VaultAliasName: Vault1, 
+     Vault2 and Vault3.<br>
+     VaultClient_Active_ReadProtocol, and VaultClient_Active_WriteProtocol keys 
+     define the default read/write file transfer protocol. In the example above 
+     it is CORBA. There are no file transfer protocol keys defined for 
+     VaultAliasName Vault1, it means that the default protocol is used. As 
+     VaultClient_Vault2_ReadProtocol and VaultClient_Vault2_WriteProtocol are 
+     set to NFS, the file transfer mode for VaultAliasName Vault2 is NFS. In the 
+     case of VaultAliasName Vault3, there is no protocol defined for write 
+     operation, so the default one is used (CORBA). However HTTP protocol is 
+     defined for read operations. In order to be consistent, two additional keys 
+     are required for HTTP protocol. Theses keys are used to define the HTTP 
+     server host and communication port.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>
+     <h2><font color="#282187">How to Set Up CORBA File Transfer Mode</font></h2>
+     <p>This is the default mode so you have nothing to do, but you can 
+     explicitly set the CORBA transfer mode by setting the following keys.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>
+     <h3>Vault Client side modifications</h3>
+     <p>Modify or add the following lines in the $CATInstallPath/docs/java/VaultClient.properties 
+     file according to the application behavior you want:</p>
+     <p>Default file transfer protocol update:</p>
+     <p><code>VaultClient_Active_ReadProtocol = CORBA<br>
+     VaultClient_Active_WriteProtocol = CORBA </code></p>
+     <p>File transfer protocol update for a given VaultAliasName:</p>
+     <p><code>VaultClient_MyVaultAliasName_ReadProtocol = CORBA<br>
+     VaultClient_MyVaultAliasName_WriteProtocol = CORBA</code></p>
+     <h3>Additional features</h3>
+     <p>You have the ability to specify a default block size for CORBA protocol 
+     by setting the following key to the wanted value (CORBA block size is 
+     limited up to 7M):</p>
+     <p>VaultClient_CORBABlockSize = 1048576</p>
+     <p>You can specify block size for CORBA protocol for a given VaultAliasName:</p>
+     <p>VaultClient_MyVaultAliasName_ReadCORBABlockSize = 1048576<br>
+     VaultClient_MyVaultAliasName_WriteCORBABlockSize = 1048576</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>
+     <h2><font color="#282187">How to Set Up HTTP File Transfer Mode (read 
+     operations only)</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>Keep in mind that an HTTP server is supposed to be installed correctly. 
+     This server must have access to VaultServer directories. In order to avoid 
+     file access right problems, we advise you to run the HTTP server under the 
+     same operating system user you already use for the VaultServer. Vault HTTP 
+     file transfer mode is only certified with the Apache HTTP server.
+     <h3><font color="#282187">Vault Client Side Modifications</font></h3>
+     <p>Modify or add the following lines in the $CATInstallPath/docs/java/VaultClient.properties 
+     file according to the application behavior you want:</p>
+     <p>Default file transfer protocol update:<br>
+     VaultClient_Active_ReadProtocol = HTTP</p>
+     <p>File transfer protocol update for a given VaultAliasName:<br>
+     <code>VaultClient_MyVaultAliasName _ReadProtocol = HTTP</code></p>
+     <p>And for each VaultAliasName where HTTP protocol is wanted:<br>
+     <code>VaultClient_MyVaultAliasName_ReadHTTPServerHost = Hostname<br>
+     VaultClient_MyVaultAliasName_ReadHTTPServerPort = PortNumber</code></p>
+     <p><code>Hostname</code>: the name of the workstation where the HTTP server 
+     is installed.<br>
+     <code>PortNumber</code>: the communication port number of the HTTP server.</p>
+     <h3>Additional features</h3>
+     <p>You have the ability to specify a default block size for HTTP protocol 
+     by setting the following key to the wanted value:<br>
+     <code>VaultClient_HTTPBlockSize = 1048576</code></p>
+     <p>You can specify block size for HTTP protocol for a given VaultAliasName:<br>
+     <code>VaultClient_MyVaultAliasName_ReadHTTPBlockSize = 1048576</code> </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>
+     <h2><font color="#282187">How to Set Up NFS File Transfer Mode</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>Keep in mind that NFS is supposed to be installed correctly. 
+     VaultServer directories are supposed to be accessible from client and 
+     server applications under the same path on each workstation.
+     <h3><font color="#282187">Vault Server Side Modifications</font></h3>
+     <p>Add the following lines in the $CATInstallPath/docs/java/VaultServer.properties 
+     file:</p>
+     <p><code>&nbsp;&nbsp;&nbsp; VaultServer_TmpFilesAccessRights = 666<br>
+&nbsp;&nbsp;&nbsp; VaultServer_SecuredFilesAccessRights = 444</code></p>
+     <h3><font color="#282187">Vault Client Side Modifications</font></h3>
+     <p>Modify or add the following lines in the $CATInstallPath/docs/java/VaultClient.properties 
+     file according to the application behavior you want:</p>
+     <p>Default file transfer protocol update:<code><br>
+&nbsp;&nbsp;&nbsp; VaultClient_Active_ReadProtocol = NFS<br>
+&nbsp;&nbsp;&nbsp; VaultClient_Active_WriteProtocol = NFS</code></p>
+     <p>File transfer protocol update for a given VaultAliasName:<code><br>
+&nbsp;&nbsp;&nbsp; VaultClient_MyVaultAliasName _ReadProtocol = NFS<br>
+&nbsp;&nbsp;&nbsp; VaultClient_MyVaultAliasName _WriteProtocol = NFS</code></p>
+     <p>Beware: If the vault server is not empty, you have to change the file 
+     access rights of the already existing files in order to allow client 
+     application to read secured files and read/write temporary files.</p>
+     <h3>Additional features</h3>
+     <p>You have the ability to specify a default block size for NFS protocol by 
+     setting the following key to the wanted value:<br>
+     <code>VaultClient_NFSBlockSize = 1048576</code></p>
+     <p>You can specify block size for NFS protocol for a given VaultAliasName:<br>
+     <code>VaultClient_MyVaultAliasName_ReadNFSBlockSize = 1048576<br>
+     VaultClient_MyVaultAliasName_WriteNFSBlockSize = 1048576</code></p>
+     <p>You have the ability to specify a mount directory and a mount point in 
+     order to have a client file access path different from the server side by 
+     setting the following keys to the wanted value:<br>
+     <code>VaultClient_MyVaultAliasName_NFSMountDir = /u/users/ojh<br>
+     VaultClient_MyVaultAliasName_NFSMountPoint = F:</code></p>
+     <p>The example above illustrates a Windows client accessing a Unix Server 
+     with the <code>/u/users/ojh</code> UNIX path mounted on F: on the Windows workstation.<p>
+     If you use a \ (backslash) in the value of the properties:<p><code>
+     VaultClient_MyVaultAliasName_NFSMountDir<br>
+     VaultClient_MyVaultAliasName_NFSMountPoint </code>
+     <p>you must double each backslash. For example, if the mount point is:<p>
+     <code><b>\\</b>remoteVaultDir<b>\</b>VSRepo</code><p>you must double the 
+     backslashes like this:<p><code>VaultClient_MyVaultAliasName_NFSMountPoint =<b>\\\\</b>remoteVaultDir<b>\\</b>VSRepo</code></td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <table>
+ </table>
+
+ </body>
+
+</html>
+

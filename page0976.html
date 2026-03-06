@@ -1,0 +1,624 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2E2L2O2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>About Validation Properties</title>
+<script language="JavaScript">
+  </script>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="docCompliance" content="v0.5; Tue Jul  5 17:13:29 2005">
+<style>
+.auto-style3 {
+	text-decoration: blink;
+}
+</style>
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1>
+    About Validation Properties</h1>
+<table Border="0" CELLSPACING="0" valign="top" cellpadding="3">
+  <tr>
+    <td style="width: 16px">&nbsp;</td>
+    <td>The STEP interface provides a check of imported or exported content via 
+	the validation properties.</td>
+  </tr>
+  <tr>
+    <td style="width: 16px; height: 22px">
+      </td>
+    <td style="height: 22px">
+    Check recommended practices, licensing and application protocol 
+	requirements! <br>Following validation properties are available:<ul><li>
+		<a href="#ix-STEP:GVP for exact geometry">Geometric Validation Properties for 3D Exact Geometry</a></li>
+		<li><a href="#ix-STEP:GVP for tessellated geometry">Geometric 
+	Validation Properties for Tessellated Geometry</a><br></li>
+		<li><a href="#ix-STEP:annotation validation properties">Annotation Validation 
+	Properties for 3D Tolerancing &amp; Annotation</a><br></li>
+		<li>
+		<a href="#ix-STEP:validation properties for User Defined Attributes">Validation Properties for User 
+	Defined Attributes</a><br></li>
+		<li><a href="#ix-STEP:composites validation properties">Validation Properties for Composites</a><br></li>
+		<li><a href="#ix-STEP:assembly validation properties">Assembly 
+	Validation Properties</a></li></ul><br> </td>
+  </tr>
+  <tr>
+    <td style="width: 16px">&nbsp;</td>
+    <td rowspan="1">
+	<h2>General In<a name="ix-STEP:general information"></a>formation</h2>
+	<div>
+		<p>For each type of data, validation properties are specified 
+		through the recommended practices. </p>
+		<p>The following validation properties are available:</p>
+		<ul>
+			<li>Geometric Validation Properties (GVP) for geometric exchange (at 
+			part and assembly level)</li>
+			<li>Assembly Validation Properties (AVP) for assembly structure 
+			exchange (at assembly level)</li>
+			<li>Annotation validation properties for 3D Tolerancing &amp; 
+			Annotation exchange (at part level)</li>
+			<li>Validation Properties for User Defined Attributes</li>
+			<li>Validation Properties for Composites.</li>
+		</ul>
+		<p>For AP 242 XML files, GVP are used for geometry (.stp or .stpZ files) 
+		and not for assembly (.stpx or .stpxZ). Assembly .stpx or .stpxZ files 
+		support only AVP.</p>
+		<p>Validation properties are: </p>
+		<ul>
+			<li>Computed on the native data at export and are stored in the STEP 
+			file,</li>
+			<li>Computed on the imported data at import and compared with the 
+			validation properties found in the STEP file. A status of comparison 
+			is provided in the report file.</li>
+		</ul>
+		<p><kbd>Validation Properties (VP)</kbd> can be activated in <kbd>Tools &gt; 
+		Options &gt; STEP</kbd>, under <kbd>General</kbd>.
+		<kbd>Parameters</kbd> becomes available to let you 
+		select the options and set the parameters in the 
+		<kbd>Parameters for Validation Properties</kbd> dialog box.</p>
+		<ul>
+			<li>Under <kbd>Assemblies</kbd>:<ul>
+				<li><kbd>Geometric Validation Properties (GVP)<br></kbd>
+				GVP are not supported by STEP XML files.</li>
+				<li>Or <kbd>Assembly Validation Properties (AVP)</kbd> 
+				(recommended for assemblies, supported by 
+				STEP XML files) according to your needs.</li>
+			</ul>
+			</li>
+		</ul>
+	</div>
+	</td>
+  </tr>
+  <tr>
+    <td style="width: 16px">
+	&nbsp;</td>
+    <td>
+	<h2>Geometric Validation Properties for 3D 
+	Exact Geometry</h2>
+	<div >
+		<p>Geometric Validation Properties can be used at several levels.
+		<a name="ix-STEP:GVP for exact geometry"></a></p>
+		<ul>
+			<li>Geometric Validation Properties are defined independently for 
+			each class of geometry (solids/surfaces/curves), for each part, each 
+			assembly node and each geometric element.</li>
+			<li>Geometric Validation Properties for curves are supported at 
+			assembly level.</li>
+			<li>Geometric Validation Properties for bounding box are supported 
+			at part level.</li>
+		</ul>
+		
+			<h3>Validation Properties of Elements of a Part 
+			At Export</h3>
+			<p>The STEP file includes geometric validation properties for </p>
+			<ul>
+				<li>Each solid<ul>
+					<li>Centroid: Coordinates of the center of gravity</li>
+					<li>Area: Area of the entity (wetted area for solids) </li>
+					<li>Volume: Volume of the entity </li>
+				</ul>
+				</li>
+				<li>Each shell or surface<ul>
+					<li>Centroid: Coordinates of the center of gravity</li>
+					<li>Area: Area of the entity </li>
+				</ul>
+				</li>
+				<li>Each contour or curve<ul>
+					<li>Centroid: Coordinates of the center of gravity </li>
+					<li>Length: Length of the entity (applied to contour).</li>
+				</ul>
+				</li>
+				<li>The bounding box of the part<ul>
+					<li><span class="auto-style3">It is defined by two points 
+					and a diagonal in space.</span><br class="auto-style3">
+					<img class="auto-style3" height="163" src="b35doc/english/online/bascuitf_c2/images/BoundingBosGVP.png" width="248"></li>
+					<li><span class="auto-style3">Only the visible 3D elements 
+					of the geometry are taken into account. </span>
+					<br class="auto-style3"><span class="auto-style3">
+					Annotations and axis systems are not taken into account.</span></li>
+					<li class="auto-style3">The edges of the bounding box are 
+					parallel to the axes of the part coordinate system.</li>
+				</ul>
+				</li>
+			</ul>
+			<p>These properties are completed in the export report with the 
+			estimation of their computation errors for each solid and each shell 
+			at export and at import.</p>
+			<ul>
+				<li>The estimation of the computation error on the area or the 
+				volume is provided as a relative value.</li>
+				<li>The estimation of the computation error on the centre of 
+				gravity is provided as an absolute value for each coordinate and 
+				a bounding box of the entity.</li>
+			</ul>
+		
+			<h3>Validation Properties of Elements of a Part 
+			At Import</h3>
+			<p>For each imported solid, shell, surface, 
+			contour or curve and for the imported part as a 
+			whole, the report file indicates the geometric validation properties 
+			computed on the imported data, the GVP read in the STEP file and the 
+			status of comparison between the two sets of GVP.</p>
+			<p>In addition, the report at import provides the GVP status and the 
+			following error information computed on each imported solid or 
+			shell.</p>
+			<ul>
+				<li>In most cases, the centroid deviation error that applies to 
+				solid, shell, product or instance, is given as a percentage 
+				based on the bounding box. However, when the deviation error is 
+				under a threshold, it is given as a distance.</li>
+				<li>The surface area difference value and error ratio apply to 
+				solid, shell or product.</li>
+				<li>Volume difference value and error ratio apply to solid or 
+				product.</li>
+				<li>The bounding box appears with the two 
+				points and the diagonal in space shown above.</li>
+			</ul>
+			<p>These properties are completed with the estimation of their 
+			computation errors for each solid and each shell.</p>
+			<ul>
+				<li>The estimation of the computation error on the area or the 
+				volume is provided as a relative value.</li>
+				<li>The estimation of the computation error on the centre of 
+				gravity is provided as an absolute value for each coordinate and 
+				a bounding box of the entity.</li>
+			</ul>
+		
+			<h3>Clouds of Points (COPS)</h3>
+			<p><a name="ix-STEP:clouds of points (COPS)"></a>When standard 
+			validation properties are not accurate enough, e.g. for aeronautic 
+			long term archiving, COPS ensure that the archived data are 
+			equivalent to the native data, within a given tolerance by comparing 
+			any face with any check point lying on it.</p>
+			<ul>
+				<li>At export:<ul>
+					<li>The STEP file is enriched with COPS properties (i.e. a 
+					cloud of points) for each exported face. </li>
+					<li>These points are computed inside the face, on the 
+					support of the face, or on the boundary of the face.</li>
+					<li>The syntax of the STEP file respects the Recommended 
+					Practices.</li>
+				</ul>
+				</li>
+				<li>At import:
+				<ul>
+					<li>For each face, the COPS properties are read and the 
+					distance between each point of the cloud and the support 
+					surface of the face is computed. </li>
+					<li>If the distance is greater than a user defined 
+					tolerance, there is an error message in the err file. </li>
+				</ul>
+				</li>
+			</ul>
+			<p>Note: </p>
+			<ul>
+				<li>The check at import is reported only in the report and error 
+				files. </li>
+				<li>The repartition of the points in the face is automatic. A 
+				high curvature generates many points. </li>
+				<li>You cannot define an area to be controlled by COPS. The 
+				whole product exported is checked. </li>
+				<li>The unit used for geometric validation properties is the 
+				STEP length user unit. </li>
+			</ul>
+		<h3>Validation Properties of a Part</h3>
+			<p>The exported STEP file includes geometric validation properties 
+			for a Part :</p>
+			<ul>
+				<li>Centroid: Coordinates of the center of gravity (applies to 
+				solid, shell and contour)</li>
+				<li>Area: Area of the entity (wetted area for solids) (applies 
+				to solid and shell)</li>
+				<li>Volume: Volume of the entity (applies to solid)</li>
+				<li>Length: Length of the entity (applied to contour)</li>
+			</ul>
+		<h3>Validation Properties of an Assembly</h3>
+			<p>When the option is selected the exported STEP file includes 
+			geometric validation properties for Products and intances :</p>
+			<ul>
+				<li>Centroid: Coordinates of the center of gravity (applies to 
+				product and instances)</li>
+				<li>Area: Area of the entity (wetted area for solids) (applies 
+				to product)</li>
+				<li>Volume: Volume of the entity (applies to product).</li>
+			</ul>
+		<h3>Validation Criteria</h3>
+			<p>The status of comparison for a given solid or shell or contour is 
+			ok if:</p>
+			<ul>
+				<li>Ratios (Volume difference and Surface area difference and 
+				Length difference) are lower than the user tolerance.</li>
+				<li>And the centroid deviation is lower than the user tolerance, 
+				or the ratio (centroid deviation versus entity size) is lower 
+				than the user tolerance.</li>
+			</ul>
+			<p><Converter for STEP 
+			and >Extended STEP 
+			Interface use the most relevant criterium: Ratio is 
+			appropriate for large size models, while centroid deviation is 
+			adapted for smaller models.</p>
+		
+	  </div></td>
+  </tr>
+  <tr>
+    <td style="width: 16px">
+	&nbsp;</td>
+    <td>
+	<h2>
+	<a name="ix-STEP:geometric validation properties for 3D tessellated geometry">
+	</a>Geometric Validation Properties for 3D 
+		Tessellated Geometry</h2>
+		<div >
+			<p>Geometric Validation Properties can be used at several 
+			levels. The check for area and centroid is performed according to 
+			fixed tolerances.
+			<a name="ix-STEP:GVP for tessellated geometry"></a></p>
+			<h3>Validation Properties of Elements of a 
+				Part</h3>
+				<p>Available validation properties are:</p>
+				<ul>
+					<li>For solid, shell or surface set<ul>
+						<li>Number of facets, </li>
+						<li>Surface area, </li>
+						<li>Centroid</li>
+					</ul>
+					</li>
+					<li>For wire or curve set<ul>
+						<li>Number of segments</li>
+						<li>Total length</li>
+						<li>Centroid</li>
+					</ul>
+					</li>
+					<li>For point set:<ul>
+						<li>Centroid</li>
+					</ul>
+					</li>
+				</ul>
+			<h3>Validation Properties of a Part</h3>
+				<p>Available validation properties are:</p>
+				<ul>
+					<li>Number of facets</li>
+					<li>Surface area</li>
+					<li>Number of segments</li>
+					<li>Total length of all contours of the part</li>
+					<li>Centroid of the part</li>
+					<li>Bounding box (defined by two opposite points).</li>
+				</ul>
+				<p>The centroid represents the centroid of facets if there are 
+				solids, shells or surface sets. Otherwise it represents the 
+				centroid of wire or curve, if any, otherwise it represents the 
+				centroid of point sets. </p>
+			<h3>Validation Criteria</h3>
+				<p>They are:</p>
+				<ul>
+					<li>The maximum percentage of variation for volume, area, 
+					length for solids, shells, contours and variation for 
+					centroid deviation versus model size</li>
+					<li>The maximum variation for centroid.</li>
+				</ul>
+				<p>Note: For a centroid, a deviation higher than the maximum 
+				variation is valid if the percentage of variation for the 
+				centroid deviation versus the model size is lower than the 
+				maximum percentage.</p>
+			<h3>Examples</h3>
+			<p>Below are some extracts of import report files.</p>
+			<ul>
+				<li>Curve<br><code>#176 Circle.2 Type: COMPOSITE_CURVE 
+				Transferred correctly <br>Computed Properties: 
+				Length:3.544908e+mm - wire centroid:(0.000000 mm,10.000000 
+				mm,0.000000 mm) <br>Read Properties : Length:3.744908e+mm - wire 
+				centroid:(0.000000 mm,10.000000 mm,0.000000 mm) <br>Validation 
+				failed : Error ratio: Length:5.641896% - wire centroid:0.000000% 
+				/ 0.000000mm - </code></li>
+				<li>Solid<code><br>#2614 PartBody Type: MANIFOLD_SOLID_BREP 
+				transferred correctly <br>Computed Properties: 
+				Area:1.840000e+004 mm2 - Volume:1.200000e+005 mm3 - 
+				Centroid:(-130.000000 mm,70.000000mm,10.000000 mm) -&nbsp;&nbsp; 
+				Area:Relative Error:0.000% - Volume:Relative Error:0.000% <br>
+				Centroid:Absolute Errors:(0.000 mm,0.000 mm,0.000 mm) - Box 
+				sizes:(100.0 mm,60.0 mm,20.0 mm) <br>Read properties: 
+				Area:1.840000e+004 mm2 - Volume:1.200000e+005 mm3 - 
+				Centroid:(-130.000000 mm,70;000000 mm,10.000000 mm) - <br>
+				Validation successful: Error Ratio: Area:0.000000% - 
+				Volume:0.000000% - Centroid: 0.000000% / 0.000000mm </code></li>
+				<li>Surface with AP242 ed1<code><br>#335 Surface.1 Type: 
+				OPEN_SHELL Transferred correctly <br>Computed properties: Shell 
+				Area:3.698668e+004mm2 - Shell Centroid:(-64.086136 mm,1.631528 
+				mm,6.504039 mm) - Relative error:0.000% Centroid: Absolute 
+				Errors:(0.000 mm,0.000 mm,0.000 mm) - Box sizes:(125.4 mm,260.2 
+				mm,41.2 mm) <br>Read Properties: Shell Area:3.698668e+004 mm2 - 
+				Shell Centroid:(-64.086021 mm,1.631612 mm,6.504087 mm) - <br>
+				Validation succesful: Error ratio: Shell Area:0.000227% - Shell 
+				Centroid:0.000052% / 0.000150mm - </code></li>
+				<li>Surface with AP 214<code><br>#197 Fill.1 Type:OPEN8SHELL 
+				Transferred correctly <br>Computed Properties: 
+				Area:1.000000e+002 mm2 - Centroid:(0.000000 mm,10.000000 
+				mm,0.000000 mm) - Area:Relative error:0.000% Centroid:Absolute 
+				Error:(0.000 mm,0.000 mm,0.000 mm)- Box sizes:(0.0 mm,11.3 
+				mm,11.1 mm) <br>Read Properties: Area:1.000000e+002 mm2 - 
+				Centroid:(0.000000 mm,10.000000 mm,0.000000 mm) - <br>Validation 
+				successful : Error Ratio: Area:0.000000% - Centroid: 0.000000% / 
+				0.000000mm </code></li>
+				<li>Part<code><br>Geometric Validation Properties at Part level:
+				<br>Computed Properties: Area:1.840000e+004 mm2 - Shell 
+				Area:3.698676e+004 mm2 - Volume:1.200000e+005 mm3 - 
+				Length:2.049061e+003 mm - Centroid:(-130.000000 mm,70.000000 
+				mm,10.000000 mm) - Shell Centroid:(-64.086136 mm,1.631528 mm, 
+				6.540039 mm) - Wire Centroid:(12.11368 mm,58.306047 mm,-2.138570 
+				mm) Bounding Box: Corner Points:(-180.00 mm,-132.36 mm,-66.35 
+				mm)(107.23 mm,241.84 mm,87.94 mm) - Diagonal: 496.315883 mm <br>
+				Read Properties: Area:1.840000e+004 mm2 - Shell 
+				Area:3.698668e+004 mm2 - Volume:1.200000e=005 mm3 - 
+				Length:2.049.61e+003 mm - Centroid:(-130.000000 mm,70.000000 
+				mm,10.000000 mm) - Shell Centroid:(-64.086136 mm,1.631528 mm, 
+				6.540039 mm) - Wire Centroid:(12.11368 mm,58.306047 mm,-2.138570 
+				mm) Bounding Box: Corner Points:(-180.00 mm,-132.36 mm,-66.35 
+				mm)(107.23 mm,241.84 mm,87.94 mm) - Diagonal: 496.315883 mm <br>
+				Validation successful: Error Ratio: Area:0.000000% - Shell 
+				Area:0.000227% - Volume:0.000000% - Length0.000000% - 
+				Centroid:0.000000%/ 0.000000mm - Shell Centroid:0.000030% / 
+				0.000150mm - Wire Centroid:0.000000% / 0.000000mm - Bounding 
+				box:0.000000% </code></li>
+				<li>Instance<code><br>Assemblage Composition: <br>
+				Centroid:(-29.380994 mm,105.876987 mm,-111.474132 mm) - Centroid 
+				read:(-29.380994 mm,105.876987 mm,-1411.474132 mm) <br>
+				Validation successful: Centroid Position Error:0.000000 mm
+				</code></li>
+				<li>Assembly Product<code><br>#71 Composition1: <br>Computed 
+				Properties: Area:9.089815e+002 mm2 - Shell Area:1.000000e+002mm2 
+				- Volume:2.000000e+003mm3 - Length:1.354491e+002 mm - 
+				Centroid:(50.000000 mm,-0.000000 mm,10.000000 mm) - Shell 
+				Centroid:(0.000000 mm,10.00000 mm,0.000000 mm) - Wire 
+				Centroid:(-0.000000 mm,2.617152 mm,22.343627 mm) <br>Read 
+				Properties: Area:9.089815e+002 mm2 - Shell Area:1.000000e+002mm2 
+				- Volume:2.000000e+003mm3 - Length:1.354491e+002 mm - 
+				Centroid:(50.000000 mm,0.000000 mm,10.000000 mm) - Shell 
+				Centroid:(0.000000 mm,10.000000 mm,0.000000 mm) - Wire 
+				Centroid:(0.000000 mm,2.617152 mm,22.343627 mm) <br>Validation 
+				successful: Error Ration: Area:0.000000% - Shell Area:0.000000% 
+				- Volume:0.000000% - Length:0.000000% - Centroid Position 
+				Error:0.000000 mm - Centroid Shell Position Error: 0.000000 mm 
+				Centroid Wire Position error:0.000000 mm - </code></li>
+				<li>Maximum Errors<code><br>Geometric validation properties 
+				check: OK <br>Maximum errors: <br>Centroid: #2614: 0.000000 mm
+				<br>Volume: #2614: 0.000000 % <br>Area: #2614: 0.000000 % <br>
+				Length: #242 : 0.000000 % <br>Shell centroid: #335: 0.000150 mm
+				<br>Wire Centroid: #242: 0.000000 mm <br>Shell Area: #335: 
+				0.000227% </code></li>
+			</ul>
+			</div>
+		</td>
+  </tr>
+  <tr>
+    <td style="width: 16" valign="top">
+	&nbsp;</td>
+    <td>
+	<h2><a name="ix-STEP:annotation validation properties"></a>Annotation Validation Properties for
+	3D Tolerancing &amp; Annotation</h2>
+	<div >
+		<p>Annotations, also known as Product Manufacturing Information (PMI) 
+		can be presented as polylines <br>
+		<img src="b35doc/english/online/bascuitf_c2/images/PMIPolyline.png" height="45" width="104"><br>
+		or as tessellated <br>
+		<img src="b35doc/english/online/bascuitf_c2/images/PMITessellated.png" height="38" width="103"></p>
+		<p>Validations properties apply to graphic annotations only.<br>
+		</p>
+		<h3><a name="hj-captures">Va</a>lidation Properties for Captures</h3>
+			<p>They are:</p>
+		<ul>
+			<li>Area of the Affected Geometry, defined as the sum of the areas 
+			of all faces displayed by the saved view/capture.</li>
+			<li>Length of the Affected Geometry, defined as the sum of the 
+			lengths of all curves displayed by the saved view/capture.</li>
+			<li>Expected number of 3D annotations, defined as the number of 3D 
+			annotations displayed by the saved view/capture.</li>
+		</ul>
+		<p>Example</p>
+		<p class="MsoNormal">
+		<span style="font-family:&quot;Courier New&quot;"><code>
+		Capture: MBD_C - Expected number of 3D annotations: 22, found: 22<br>
+		Computed Properties : Affected length:2.866e+02 mm - Affected 
+		area:2.834e+05 mm2 <br>Read Properties&nbsp;&nbsp;&nbsp;&nbsp; : 
+		Affected length:2.866e+02 mm - Affected area:2.834e+05 mm2<br>Validation 
+		successful : Affected Area Error:0.000000 % - Affected Length 
+		Error:0.000000 %</code><o:p></o:p></span></p>
+		<h3>Validation Properties of Elements of a Part</h3>
+			<p>For the saved views (captures), see
+			<a href="#hj-captures">Validation Properties for Captures</a>.</p>
+		<p>For the polyline presentation, they are:</p>
+			<ul>
+				<li>Total length of the polylines representing each annotation</li>
+				<li>Centroid of the polylines representing each annotation</li>
+				<li>Affected geometry (AP 242 only).</li>
+			</ul>
+			<p>For the tessellated presentation, they are:</p>
+			<ul>
+				<li>Total length of the lineic tessellations found in each 
+				annotation</li>
+				<li>Centroid of the lineic tessellations found in each 
+				annotation </li>
+				<li>Number of the lineic elements</li>
+				<li>Total area of the surfacic tessellations found in each 
+				annotation</li>
+				<li>Centroid of the surfacic tessellations found in each 
+				annotation </li>
+				<li>Number of surfacic elements</li>
+				<li>Affected geometry (AP 242 only).</li>
+			</ul>
+	<p>Affected geometry contains:
+		<ul>
+			<li>The area of the geometry linked to the PMI, if the geometry is a face (Affected area).
+			</li>
+			<li>The length of the geometry linked to the PMI, if the geometry is a curve (Affected curve length).</li></ul>
+			
+			<p>At import, the Affected Geometry properties are computed and 
+			compared with the values found in the STEP file. The computed error is given as a percentage 
+			in the report file. If this percentage exceeds 5%, the validation fails.</p>
+		<p>Export and import as both exact and tessellated are not supported.</p>
+			<p>Example</p>
+			<p><code><span style="font-size:10.0pt">Computed Properties : Number 
+			of Facets:8 - Number of Segments:9 - Centroid:(-63.329167 
+			mm,5.603107 mm,15.392448 mm) - Total area:4.221e+000 mm2 - Centroid 
+			of facets:(-89.998539 mm,5.603107 mm,10.004080 mm) - Total 
+			length:9.803e+001 mm &#8211; Affected area: 25.40000 mm2 </span></code><o:p></o:p>
+		</p>
+		<p><code><span style="font-size:10.0pt">Read Properties : Number of 
+		Facets:8 - Number of Segments:9 - Centroid:(-63.329168 mm,5.603107 
+		mm,15.392448 mm) - Total area:4.221e+000 mm2 - Centroid of 
+		facets:(-89.998539 mm,5.603107 mm,10.004080 mm) - Total 
+		length:9.803e+001 mm - Affected area: 25.3900 mm2 </span></code><o:p></o:p>
+		</p>
+		<p><code><span style="font-size:10.0pt">Validation successful: Length 
+		Error:0.000000 mm - Area Error:0.000000 % - Number of segments Error:0 - 
+		Number of facets Error:0 - Centroid Position Error:0.000000 mm &#8211; 
+		Affected Area Error:0.040000 % </span></code><o:p></o:p></p>
+		<h3>Validation Properties of a Part</h3>
+			<p>They are:<ul><li>Number of annotations</li>
+			<li>Number of saved views (captures).</li></ul>
+			<p>Example of validation properties of a part:</p>
+			<code><>Expected number of annotations: 48, found: 48
+<br>Expected number of captures: 0, found: 0
+<br>Annotation Validation Properties Check: OK</code>
+	</div></td>
+  </tr>
+  <tr>
+    <td style="width: 16px" valign="top">
+	&nbsp;</td>
+    <td>
+	<title>Validation Properties for Graphic PMI</title>	  </td>
+  </tr>
+  <tr>
+    <td style="width: 16px">
+	&nbsp;</td>
+    <td>
+	<h2><a name="ix-STEP:validation properties for User Defined Attributes"></a>Validation Properties for User Defined 
+	Attributes</h2>
+	<div >
+		<p>There are two types of validation properties for the
+		<kbd>User Defined Attributes</kbd>.</p>
+		<h3 class="sectiontitle">Validation Properties of Elements</h3>
+			<p>
+			For elements, they are:</p>
+			<ul>
+				<li>The counts of User Defined 
+				Attributes for a given type of link, i.e. linked to a 
+				solid or a shell.</li>
+				<li>The counts of User Defined 
+				Attributes for a given type:<ul>
+					<li>Real or measure with unit</li>
+					<li>Integer</li>
+					<li>String</li>
+					<li>Boolean.</li>
+				</ul>
+				</li>
+				<li>Count of User Defined Attributes linked to a contour.</li>
+				<li>Count of User Defined Attributes linked to a point. </li>
+			</ul>
+			<p>At export, when a count is null, the validation property is not 
+			exported in the STEP file. There are no trails of these validations 
+			properties in the report file.</p>
+			<p>At import, when a validation property is found in the STEP file 
+			or computed, a comparison status is provided in the report.</p>
+		
+	  </div></td>
+  </tr>
+  <tr>
+    <td style="height: 398px; width: 16px;">
+	  </td>
+    <td style="height: 398px">
+	<h2><a name="ix-STEP:composites validation properties"></a>Composites 
+	Validation Properties</h2>
+	<div >
+		<p>Composites Validation Properties can be used at several levels.</p>
+		<h3>Validation Properties of Elements of a Part</h3>
+			<p>They are:</p>
+			<ul>
+				<li>Count of sequences (applies to a laminate table) </li>
+				<li>Count of plies (applies to a sequence) </li>
+				<li>Count of core (applies to a sequence) </li>
+				<li>Count of cut pieces (applies to a ply). </li>
+			</ul>
+		<h3>Validation Properties of a Part</h3>
+			<p>They are:</p>
+			<ul>
+				<li>Count of laminate tables</li>
+				<li>Count of sequences </li>
+				<li>Count of plies</li>
+				<li>Count of cores. </li>
+			</ul>
+		
+	 </div> </td>
+  </tr>
+  <tr>
+    <td style="width: 16px">
+	</td>
+    <td>
+	<h2><a name="ix-STEP:assembly validation properties"></a>Assembly Validation Properties</h2>
+	
+		<p>Assembly Validation Properties can be used at several levels</p>
+		<p>For each product having instances, the number of instances and a 
+		notional centroid are stored in the STEP file as validation properties 
+		at export and checked at import. </p>
+		<ul>
+			<li>At export, for each product, 2 properties are stored in the STEP 
+			file<ul>
+				<li>The number of instances </li>
+				<li>The notional centroid (useful for checking the position of 
+				each instance of the product). </li>
+			</ul>
+			</li>
+			<li>
+			<p >At import, the status for validation properties in the 
+			report file takes into account the validation properties check at 
+			assembly level, done according to the option. </p>
+			<ul>
+				<li>If product assembly properties are found, these properties 
+				are checked and Product/Instances geometric validation 
+				properties, if any, are ignored. </li>
+				<li>When assembly properties are checked, the result of the 
+				comparison of the assembly properties appears in the report file 
+				for each product. </li>
+			</ul>
+			</li>
+		</ul>
+	
+	</td>
+  </tr>
+  <tr>
+    <td style="width: 16px">&nbsp;</td>
+    <td>
+	&nbsp;</td>
+  </tr>
+  </table>
+
+</body>
+
+</html>
+

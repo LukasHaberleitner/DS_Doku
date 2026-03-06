@@ -1,0 +1,1101 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>About Kawasaki AS Translators</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+ .auto-style1 {
+	 text-align: center;
+	 border-width: 1px;
+	 background-color: #E0E0E0;
+ }
+ .auto-style3 {
+	 border-width: 1px;
+	 background-color: #F2F2F2;
+ }
+ .auto-style4 {
+	 border-style: solid;
+	 border-width: 0;
+ }
+ .auto-style5 {
+	 border-style: solid;
+	 border-width: 1px;
+ }
+ -->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>About Kawasaki AS Translators<a name="ix-about:Kawasaki AS"></a></h1>
+ <table border="0" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/anew.gif" width="32" height="32"></td>
+     <td valign="top">This section provides basic information about the 
+		Kawasaki AS translator. The information includes:&nbsp;<ul>       
+       <li>Supported Activities</li>
+       <li>Command Mapping</li>
+		 <li>Block Format</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h2><a name="ix-Kawasaki AS:supported activities"></a>Supported Activities</h2>
+     </td>
+     </tr>
+   <tr>
+     <td height="156">
+     <h2 align="right">&nbsp;</h2>
+     </td>
+     <td valign="top" height="156">
+     <p>Currently, the following
+     V5 entities are supported in download and upload for the Kawasaki AS translator: </p>
+		<ul>
+			<li>Controller profiles (motion, accuracy, tool, and object 
+			frame)</li>
+			<li>Motion activities (linear, joint, and circular motion 
+			types)</li>
+			<li>Set IO activity</li>
+			<li>Wait for IO activity</li>
+			<li>Delay activity</li>
+			<li>Spot Weld action </li>
+			<li>Part Pick action</li>
+			<li>Part Drop action</li>
+			<li>Tool Pick action</li>
+			<li>Tool Drop action</li>
+		</ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h2><a name="ix-Kawasaki AS:command mapping"></a>Command Mapping</h2>
+     </td>
+     </tr>
+   <tr>
+     <td valign="top" height="387">
+     &nbsp;</td>
+     <td valign="top" height="387">
+     <p>This table displays the mapping between V5 
+		entities and the Kawasaki AS commands, categorized as follows: </p>
+		<ul>
+			<li><a href="#hj-comments">Comments</a> </li>
+			<li><a href="#hj-cntrllerprofiles">Controller Profiles and 
+			Configuration </a></li>
+			<li><a href="#hj-tool">Tool, Object Frame offsets, and Tag 
+			Points </a></li>
+			<li><a href="#hj-digsignal">Digital Signals and Delays</a></li>
+			<li><a href="#hj-cntrlflow">Control Flow Statements</a></li>
+			<li><a href="#hj-move">Move Statements</a></li>
+			<li><a href="#hj-robottool">Robot Tool Statements </a>
+			</li>
+		</ul>
+		<p class="task">&nbsp;</p>
+		
+     <table border="0" width="100%" cellspacing="3" cellpadding="3" class="Indented" style="border-collapse: collapse" bordercolor="#111111" id="table1">
+       <tr>
+         <th valign="top" width="46%">KAWASAKI-AS COMMAND </th>
+         <th valign="top" width="52%">V5 Entity</th>
+       </tr>
+       <tr>
+         <td valign="top" class="code2" colspan="2"><b><a name="hj-comments">
+			</a>Comments </b></td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2" width="46%">; &lt;comment statement&gt; </td>
+         <td valign="top" class="code2" width="52%"><kbd>Comment</kbd> attribute associated 
+			with any activity within a robot task</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2" width="46%">&lt;kawasaki statement&gt;
+			<p class="task">Any Kawasaki statement that is not found in this <kbd>
+			V5 Entity Mapping</kbd> section is uploaded as a specially named 
+			attribute
+			<kbd>Robot Language</kbd>. On download, these statements are 
+			restored. </td>
+         <td valign="top" class="code2" width="52%"><kbd>Robot Language</kbd> attribute 
+			associated with any activity within a robot task</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2" colspan="2"><b>
+			<a name="hj-cntrllerprofiles"></a>Controller Profiles and 
+			Configuration </b></td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2" width="46%">
+			SPEED &lt;number&gt; ALWAYS<br>
+			&lt;number&gt; is between 0 and 100.  
+			<p>SPEED &lt;number&gt; MM/S ALWAYS </p> </td>
+         <td valign="top" class="code2" width="52%">
+			<p>RobotController.MotionProfile.Speed(Unit = %, Value = &lt;number&gt;)
+			</p>
+			<p>&nbsp;</p>RobotController.MotionProfile.Speed(Unit = m/s, Value = &lt;number&gt;)</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2" width="46%">ACCEL &lt;number&gt; ALWAYS<br>
+			DECEL &lt;number&gt; ALWAYS</td>
+         <td valign="top" class="code2" width="52%">
+			RobotController.MotionProfile.Acceleration (Value = &lt;number&gt;)</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2" width="46%">ACCURACY &lt;number&gt; ALWAYS </td>
+         <td valign="top" class="code2" width="52%">
+			RobotController.AccuracyProfile.Distance (Unit = &lt;number&gt; )</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2" width="46%">UWRIST BELOW RIGHTY<br>
+			DWRIST BELOW RIGHTY<p>
+			UWRIST ABOVE RIGHTY<br>
+			DWRIST ABOVE RIGHTY</p>
+			<p>
+			UWRIST BELOW LEFTY<br>
+			DWRIST BELOW LEFTY</p>
+			<p>
+			UWRIST ABOVE LEFTY<br>
+			DWRIST ABOVE LEFTY</td>
+         <td valign="top" class="code2" width="52%">RobotMotionActivity.Config1<br>
+			RobotMotionActivity.Config2<p>
+			RobotMotionActivity.Config3<br>
+			RobotMotionActivity.Config4</p>
+			<p>
+			RobotMotionActivity.Config5<br>
+			RobotMotionActivity.Config6</p>
+			<p>
+			RobotMotionActivity.Config7<br>
+			RobotMotionActivity.Config8</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2" width="98%" colspan="2"><b>
+			<a name="hj-tool"></a>Tool, Object 
+			Frame offsets, and Tag Points </b></td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2" width="46%">.TRANS<br>
+			...<br>
+			&lt;tag_name&gt; &lt;xx&gt; &lt;yy&gt; &lt;zz&gt; &lt;oo&gt; &lt;aa&gt; &lt;tt&gt;<br>
+			...<br>
+			.END </td>
+         <td valign="top" class="code2" width="52%">All the tag points 
+			referenced by RobotMotionActivities as their targets.</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2" width="46%">.JOINTS<br>
+			...<br>
+			# &lt; location_name &gt; &lt;j1&gt; &lt;j2&gt; &lt;j3&gt; &lt;j4&gt; &lt;j5&gt; &lt;j6&gt;<br>
+			...<br>
+			.END </td>
+         <td valign="top" class="code2" width="52%">All the joint targets 
+			referenced by RobotMotionActivities will be uploaded by creating
+			<kbd>Location Name</kbd> attribute with the value of &lt;location_name&gt;. </td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2" width="46%">.AUXDATA<br>
+			&lt;tool_name1&gt; &lt;xx&gt; &lt;yy&gt; &lt;zz&gt; &lt;oo&gt; &lt;aa&gt; &lt;tt&gt;<br>
+			&lt;tool_name1&gt; &lt;xx&gt; &lt;yy&gt; &lt;zz&gt; &lt;oo&gt; &lt;aa&gt; &lt;tt&gt;<br>
+			&lt;tool_name1&gt; &lt;xx&gt; &lt;yy&gt; &lt;zz&gt; &lt;oo&gt; &lt;aa&gt; &lt;tt&gt;<br>
+			..........<br>
+			..........<br>
+			&lt;tool_name1&gt; &lt;xx&gt; &lt;yy&gt; &lt;zz&gt; &lt;oo&gt; &lt;aa&gt; &lt;tt&gt;<br>
+			.END </td>
+         <td valign="top" class="code2" width="52%">All the tools profiles 
+			stored in Robot Controller node in the PPR tree.</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2" width="46%">.PROGRAM<br>
+			..........<br>
+			TOOL &lt;tool_name&gt;<br>
+			..........<br>
+			.END
+			<p>.TRANS<br>
+			..........<br>
+			..........<br>
+			&lt;tool_name&gt; &lt;xx&gt; &lt;yy&gt; &lt;zz&gt; &lt;oo&gt; &lt;aa&gt; &lt;tt&gt;<br>
+			..........<br>
+			.END</td>
+         <td valign="top" class="code2" width="52%">Tool profiles stored in 
+			Robot Controller node in the PPR tree. This works only on uploading 
+			side (no on-the-fly tool offsets will be downloaded from V5 model).</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2" colspan="2"><b><a name="hj-digsignal">
+			</a>Digital Signals and 
+			Delays</b></td>
+       </tr>
+		<tr>
+         <td valign="top" class="code2" width="46%">SIGNAL &lt;number&gt;<p>SIGNAL 
+			&lt;number&gt; </td>
+         <td valign="top" class="code2" width="52%">
+			DNBIgpSetSignalActivity.PortNumber (Value = &lt;number&gt;).SignalValue 
+			(Value = ON)
+			<p>DNBIgpSetSignalActivity.PortNumber (Value = &lt;number&gt;).SignalValue 
+			(Value = OFF)</td>
+       </tr>
+		<tr>
+         <td valign="top" class="code2" width="46%">PULSE &lt;number&gt; &lt;time&gt;</td>
+         <td valign="top" class="code2" width="52%">
+			DNBIgpSetSignalActivity.PortNumber (Value = &lt;number&gt;).SignalValue 
+			(Value = ON).Duration (Value = &lt;time&gt;)</td>
+       </tr>
+		<tr>
+         <td valign="top" class="code2" width="46%">SWAIT (&lt;number&gt; or 
+			&lt;-number&gt;)</td>
+         <td valign="top" class="code2" width="52%">
+			DNBIgpWaitSignalActivity.PortNumber (Value = &lt;number&gt;).SignalValue 
+			(Value = ON or OFF)</td>
+       </tr>
+		<tr>
+         <td valign="top" class="code2" width="46%">TWAIT &lt;number&gt;<br>
+			&lt;number&gt; is in seconds </td>
+         <td valign="top" class="code2" width="52%">DelayActivity.WaitTime 
+			(Value = &lt;number&gt;) </td>
+       	</tr>
+		<tr>
+         <td valign="top" class="code2" colspan="2"><b><a name="hj-cntrlflow">
+			</a>Control Flow Statements</b></td>
+       	</tr>
+		<tr>
+         <td valign="top" class="code2" width="46%">CALL &lt;proc_name&gt; </td>
+         <td valign="top" class="code2" width="52%">
+			DNBIgpCallRobotTask.CallTaskName (Value = &lt;proc_name&gt;) </td>
+       	</tr>
+		<tr>
+         <td valign="top" class="code2" colspan="2"><b><a name="hj-move"></a>Move Statements</b></td>
+       	</tr>
+		<tr>
+         <td valign="top" class="code2" width="46%">HOME, HOME2<p>&nbsp;</td>
+         <td valign="top" class="code2" width="52%">
+			DNBRobotMotionActivity.JointTarget.HomeName
+			<p class="task">HOME and HOME2 must be set as V5 resource parameters on any 
+			Kawasaki robot used for OLP. </p>
+			<p class="task">The values of these parameters are robot home position names as 
+			defined in V5.</td>
+       	</tr>
+		<tr>
+         <td valign="top" class="code2">JAPPRO &lt;tag_name&gt; &lt;distance_along_Z_axis&gt;<p>
+		 &nbsp;</td>
+         <td valign="top" class="code2" width="52%">
+			DNBRobotMotionActivity.JointInterpolation.CartesianTarget<p>(TargetType 
+			= Tag, TagName = &lt;tag_name&gt;, shift the target along approach vector 
+			for &lt;distance_along_Z_axis&gt; value). </p>
+			<p>UPLOAD ONLY.</td>
+         </tr>
+		<tr>
+         <td valign="top" class="code2">LAPPRO &lt;tag_name&gt; &lt;distance_along_Z_axis&gt;</td>
+         <td valign="top" class="code2" width="52%">
+			DNBRobotMotionActivity.LinearInterpolation.CartesianTarget.
+			<p>(TargetType = Tag, TagName = &lt;tag_name&gt;, shift the target along 
+			approach vector for &lt;distance_along_Z_axis&gt; value) </p>
+			<p>UPLOAD ONLY.</td>
+         </tr>
+		<tr>
+         <td valign="top" class="code2">C1MOVE &lt;tag_name&gt;</td>
+         <td valign="top" class="code2" width="52%">
+			DNBRobotMotionActivity.CircularInterpolation.CartesianTarget.CircularViaPoint<p>
+			(TargetType = Tag, TagName = &lt;tag_name&gt;) </td>
+         </tr>
+		<tr>
+         <td valign="top" class="code2">C2MOVE &lt;tag_name&gt;</td>
+         <td valign="top" class="code2" width="52%">
+			DNBRobotMotionActivity.CircularInterpolation.CartesianTarget.CircularEndPoint<p>
+			(TargetType = Tag, TagName = &lt;tag_name&gt;)</td>
+         </tr>
+		<tr>
+         <td valign="top" class="code2">JMOVE &lt;tag_name&gt;<br><br><br>JMOVE TRANS(tX, tY, tZ, tYaw, tPitch, tRoll)<br>
+			<br>
+			<p>JMOVE #P1<br>
+			<br>
+			</p>
+			<p>JMOVE TRANS(ofX, ofY, ofZ, ofYaw, ofPitch, ofRoll) + Tag1 <br>
+			OR<br>
+			JMOVE TRANS(ofX, ofY, ofZ, ofYaw, ofPitch, ofRoll) + TRANS(tX, tY, 
+			tZ, tYaw, tPitch, tRoll)</td>
+         <td valign="top" class="code2" width="52%">
+			DNBRobotMotionActivity.JointInterpolation.CartesianTarget. (TargetType 
+			= Tag, TagName = &lt;tag_name&gt;)
+			<br><br>In case of Cartesian targets (as opposed to Tag targets), target 
+			position and orientation is used to create corresponding AS syntax 
+			
+			<p>In case of joint targets, joint location name is used to create 
+			corresponding AS syntax </p>
+			<p></p><p>In case of non-zero object frame and Cartesian or Tag target, 
+			both object frame offset and target position/orientation are used to 
+			create corresponding AS syntax</td>
+         </tr>
+		<tr>
+         <td valign="top" class="code2">LMOVE &lt;tag_name&gt;<br>
+			<br>
+			<p>LMOVE TRANS(X, Y, Z, Yaw, Pitch, Roll) </p>
+			<p><br>LMOVE #P1 </p>
+			<p><br>LMOVE TRANS(ofX, ofY, ofZ, ofYaw, ofPitch, ofRoll) + Tag1 <br>
+			OR<br>
+			LMOVE TRANS(ofX, ofY, ofZ, ofYaw, ofPitch, ofRoll) + TRANS(tX, tY, 
+			tZ, tYaw, tPitch, tRoll)</td>
+         <td valign="top" class="code2" width="52%">
+			DNBRobotMotionActivity.LinearInterpolation.CartesianTarget. (TargetType 
+			= Tag, TagName = &lt;tag_name&gt;)
+			<p>In case of Cartesian targets (as opposed to Tag targets), target 
+			position and orientation is used to create corresponding AS syntax 
+			</p>
+			<p>In case of joint targets, joint location name is used to create 
+			corresponding AS syntax </p>
+			<p>In case of non-zero object frame and Cartesian or Tag target, 
+			both object frame offset and target position/orientation are used to 
+			create corresponding AS syntax</p></td>
+         </tr>
+		<tr>
+         <td valign="top" class="code2" colspan="2"><b><a name="hj-robottool">
+			</a>Robot Tool Statements </b></td>
+         </tr>
+		<tr>
+         <td valign="top" class="code2">CLOSE &lt;clamp_number&gt; </td>
+         <td valign="top" class="code2" width="52%">
+			KawasakiASSpotPick <br>
+			<kbd>Clamp Number</kbd> is an action attribute which has &lt;clamp_number&gt; 
+			value</td>
+         </tr>
+		<tr>
+         <td valign="top" class="code2">OPEN &lt;clamp_number&gt; </td>
+         <td valign="top" class="code2" width="52%">
+			KawasakiASSpotDrop <br>
+			<kbd>Clamp Number</kbd> is an action attribute which has &lt;clamp_number&gt; 
+			value</td>
+         </tr>
+		<tr>
+         <td valign="top" class="code2">TOOL &lt;tool_name&gt;</td>
+         <td valign="top" class="code2" width="52%">
+			KawasakiASToolPick.SetToolProfile (Value = &lt;tool_profile_name&gt;)</td>
+         </tr>
+		<tr>
+         <td valign="top" class="code2">TOOL &lt;tool_name&gt;</td>
+         <td valign="top" class="code2" width="52%">
+			KawasakiASToolDrop.SetToolProfile (Value = &lt;tool_profile_name&gt;)</td>
+       	</tr>
+		<tr>
+         <td valign="top" class="code2">CALL Weld&lt;ws_number&gt;<br>
+			&#8230;<p>.PROGRAM Weld&lt;ws_number&gt; ()<br>
+			BITS &lt;ws_start_signal&gt;, &lt;num_ws_signals&gt; = &lt;ws_number&gt;<br>
+			PULSE &lt;pulse_signal&gt;, 1<br>
+			SWAIT &lt;wait_signal&gt;<br>
+			.END</td>
+         <td valign="top" class="code2" width="52%">
+			KawasakiASSpotWeld<br>
+&nbsp;<p class="task">Weld Schedule Number, is action attribute which has &lt;ws_number&gt; value</p>
+			<p class="task">Weld Schedule Start Signal Number, is action attribute which has &lt;ws_start_signal&gt; 
+			value</p>
+			<p class="task">Number of Weld Schedule Signals, is action attribute which has &lt;num_ws_signals&gt; 
+			value</p>
+			<p class="task">Pulse Signal Number, is action attribute which has &lt;pulse_signal&gt; 
+			value</p>
+			<p class="task">Wait Signal Number, is action attribute which has &lt;wait_signal&gt; 
+			value. </p>
+			<p class="task"><kbd>Note:</kbd> Since there is no explicit spot 
+			weld instruction in AS language, a call to a subprogram is made to 
+			perform spot welding operation.</p></td>
+       </tr>
+		</table>
+     		</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top" class="auto-style4">
+     <h2>Block Format</h2>
+	 <p>Two formats are supported on all Kawasaki controllers (which include 
+	 the C, D and E controllers): the Kawasaki AS language format and 
+	 the Kawasaki block format. For upload, either format is read. For download, 
+	 the default format is the AS language.</p>
+	 <p>The following is an example of the Kawasaki AS format: </p>
+	 <pre>.PROGRAM bbb() 
+TOOL utool_1 
+SPEED 40 ALWAYS 
+ACCEL 100 ALWAYS 
+DECEL 100 ALWAYS 
+CP OFF 
+ACCURACY 0 ALWAYS 
+JMOVE t1 
+JAPPRO t1, 25 
+JDEPART 25 
+JMOVE t1 
+JMOVE t2 
+LMOVE t3 
+HOME 
+CALL proc_a 
+CALL proc_b 
+.END </pre>
+<p>The following is an example of the Kawasaki block format:</p>
+	 <pre>.PROGRAM proc_a() 
+JOINT SPEED9 ACCU1 TIMER1 TOOL3 WORK0 CLAMP1 (OFF,0,0,C) 2 (OFF,0,0,C) 3 (OFF,0,0,C) 4 (OFF,0,0,C) OX= WX= 
+#[34.131302,17.329000,6.235760,-99.103798,34.628201,101.019997] ; 
+JOINT SPEED9 ACCU1 TIMER1 TOOL1 WORK0 CLAMP1 (OFF,0,0,C) 2 (OFF,0,0,C) 3 (OFF,0,0,C) 4 (OFF,0,0,C) OX= WX= 
+#[19.223200,20.541700,18.259501,96.235001,71.779701,-109.260002] ; 
+.END 
+</pre>
+<p>Note that in the block format case the speed, accuracy, timer, tool, and work are referenced as an index number.   Control of peripheral devices and I/O signals is handled in the block format command via the CLAMP, OX, and WX values.   Also, the joint values for the robot motion are provided in the block format.  The key difference from AS being that all information required for each move is in the same block step.  In the AS case speed, accuracy and I/O signals are all handled as separate command line arguments.  Also for AS the robot motion target is typically stored as a variable.</p>
+	 <p>In the block format case, more information is needed for SPEED, ACCU, 
+	 TIMER, TOOL and WORK than just an index. The Kawasaki controller stores the 
+	 index values in what is called an AUXDATA block, as shown in the following example:</p>
+	 <pre> .AUXDATA
+TOOL1  0.000 0.000 0.000 0.000 0.000 0.000
+TOOL9 0.000 0.000 0.000 0.000 0.000 0.000
+WORK1 0.000 0.000 0.000 0.000 0.000 0.000
+WORK9 0.000 0.000 0.000 0.000  0.000 0.000
+ACCUR 1.000 5.000 30.000 50.000
+SPEED  10.000 20.000 30.000 40.000 50.000 60.000 70.000 80.000 90.000 100.000
+TIMER 0.000 0.100 0.200 0.300 0.400 0.500 0.600 0.700 0.800 0.900
+.END
+</pre>
+<p>During upload, in addition to parsing the block format, the translator parses the .AUXDATA values in 
+either the program uploaded or in other programs with the .AS extension.   If the .AUXDATA values are not found, default values 
+are used. </p>
+<h3>Controller-specific Block Format</h3>
+<p>There are several variations of the block format, and each is supported in the Kawasaki translator. Default is determined using 
+the parameters <kbd>EndOfArmToolType</kbd> and <kbd>Controller</kbd> shown in translator attributes table below.  Default is AIRGUN with E controller.</p>
+<h4>C, D, E Controller for Handling or Air gun</h4>
+<pre>JOINT SPEED9 ACCU1 TIMER0 TOOL1 WORK0 CLAMP1 (OFF,0,0,O) 2 (OFF,0,0,O) OX= WX=  #[0,0,0,0,0,0,0]
+JOINT		: Joint ( motion ) Type
+SPEED		: Speed	( from 0 to 9 )
+ACCU		: Accuracy	( from 0 to 4 )
+TIMER		: Timer	(from 0 to 9 )
+TOOL		: Tool	( from 1 to 9 )
+WORK		: Work	( from 0 to 9 and C )
+CLAMP&#12288;X&#65288;OFF,0,0,O)	: Clamp	CLAMP&#12288;1&#65288;2,3,4,5&#65289;
+		1:Clamp Number  2:ON/OFF  3:WS  4:CC  5:O/C
+OX		: OX Signal
+WX		: WX Signal
+#[0,0,0,0,0,0,0]: Position information (for each axes)
+</pre>
+<h4>C Controller for Servo Gun</h4>
+<p>Weld position information (Servo Clamp: from 0 to 7) is added to the format of C Controller for Servo. </p>
+<pre>JOINT SPEED9 ACCU1 TIMER0 TOOL1 WORK0 CLAMP1 (ON,0,1,1) 2 (OFF,0,0,O) OX= WX= #[0,0,0,0,0,0,58.584]
+JOINT		: Joint ( motion ) Type
+SPEED		: Speed	( from 0 to 9 )
+ACCU		: Accuracy	( from 0 to 4 )
+TIMER		: Timer	(from 0 to 9 )
+TOOL		: Tool	( from 1 to 9 )
+WORK		: Work	( from 0 to 9 and C )
+CLAMP&#12288;X&#65288;OFF,0,0,O)	: Clamp	CLAMP&#12288;1&#65288;2,3,4,5&#65289;
+		1:Clamp Number  2:ON/OFF  3:WS  4:CC 5 Weld position information: (Servo Clamp : from 0 to 7) (Others : O/C)
+OX		: OX Signal
+WX		: WX Signal
+#[0,0,0,0,0,0,0]: Position information (for each axes)
+</pre>
+<h4>D Controller for Servo Gun</h4>
+<p>Clamp information is added to the format of D Controller for Servo gun. </p>
+<pre>JOINT SPEED9 ACCU1 TIMER0 TOOL1 WORK0 CLAMP1 (ON,0,1,1) 2 (OFF,0,0,O) OX= WX= CL1=0.000,0.0,0.0,0.0,0.0  #[0,0,0,0,0,0,58.584]
+JOINT		: Joint ( motion ) Type
+SPEED		: Speed	( from 0 to 9 )
+ACCU		: Accuracy	( from 0 to 4 )
+TIMER		: Timer	(from 0 to 9 )
+TOOL		: Tool	( from 1 to 9 )
+WORK		: Work	( from 0 to 9 and C )
+CLAMP&#12288;X&#65288;OFF,0,0,O)	: Clamp	CLAMP&#12288;1&#65288;2,3,4,5&#65289;
+		1:Clamp Number  2:ON/OFF  3:WS  4:CC 5:Weld position information (Servo Clamp : from 0 to 7) (Others : O/C)
+OX		: OX Signal
+WX		: WX Signal
+CLn=0.000,0.0,0.0,0.0,0.0	: Clamp Information
+		CL1=2,3,4,5,6
+		1 Number that is assigned to the Servo Gun
+		2 Pressure ( 3 below a decimal point, from 0.000 to 9.799 )&#12288;Unit : kN
+		3 Clearance by the side of movable ( 1 below a decimal point, from 0.0 to 999.9 )&#12288;Unit : mm
+		4 Clearance by the side of fixation ( 1 below a decimal point, from 0.0 to 999.9 )&#12288;Unit : mm
+		5 Before a welding point clearance movable side ( 1 below a decimal point, from 0.0 to 999.9 )&#12288;Unit : mm
+		6 Before a welding point clearance fixation side ( 1 below a decimal point, 0.0 to 999.9 )&#12288;Unit : mm
+#[0,0,0,0,0,0,0]		: Position information (for each axes)
+</pre>
+<h4>E Controller for Servo Gun</h4>
+<p>Two arguments are added in the Clamp information to the format of E Controller for Servo gun.</p>
+<pre>JOINT SPEED9 ACCU1 TIMER0 TOOL1 WORK0 CLAMP1 (ON,0,1,1) 2 (OFF,0,0,O) OX= WX= CL1=0.000,0.0,0.0,0.0,0.0,0.0,0.0  #[0,0,0,0,0,0,58.584]
+JOINT		: Joint ( motion ) Type
+SPEED		: Speed	( from 0 to 9 )
+ACCU		: Accuracy	( from 0 to 4 )
+TIMER		: Timer	(from 0 to 9 )
+TOOL		: Tool	( from 1 to 9 )
+WORK		: Work	( from 0 to 9 and C )
+CLAMP&#12288;X&#65288;OFF,0,0,O)	: Clamp	CLAMP&#12288;1&#65288;2,3,4,5&#65289;
+		1:Clamp Number  2:ON/OFF  3:WS  4:CC 5: Weld position information (Servo Clamp : from 0 to 7) (Others : O/C)
+OX		: OX Signal
+WX		: WX Signal
+CLn=0.000,0.0,0.0,0.0,0.0	: Clamp Information
+		CL1=1,2,3,4,5
+		1 Number that is assigned to the Servo Gun
+		2 Pressure ( 3 below a decimal point, from 0.000 to 9.799 )&#12288;Unit : kN
+		3 Clearance by the side of movable ( 1 below a decimal point, from 0.0 to 999.9 )&#12288;Unit : mm
+		4 Clearance by the side of fixation ( 1 below a decimal point, from 0.0 to 999.9 )&#12288;Unit : mm
+		5 Before a welding point clearance movable side ( 1 below a decimal point, from 0.0 to 999.9 )&#12288;Unit : mm
+		6 Before a welding point clearance fixation side ( 1 below a decimal point, 0.0 to 999.9 )&#12288;Unit : mm
+		7 After a welding point clearance movable side ( 1 below a decimal point, from 0.0 to 999.9 )&#12288;Unit : mm
+		8 After a welding point clearance fixation side ( 1 below a decimal point, 0.0 to 999.9 )&#12288;Unit : mm
+#[0,0,0,0,0,0,0]		: Position information (for each axes)
+</pre>
+<h3>Block Format Attributes</h3>
+<p>
+<table cellpadding="3" cellspacing="3" style="width: 100%">
+	<tr>
+		<td class="auto-style1">
+		<strong>Attribute
+		Type
+		</strong>
+		</td>
+		<td class="auto-style1">
+		<strong>Parameter Name
+		(Tentative)
+		</strong>
+		</td>
+		<td class="auto-style1">
+		<strong>Value
+		Type
+		</strong>
+		</td>
+		<td class="auto-style1">
+		<strong>Default Value
+		</strong>
+		</td>
+		<td class="auto-style1">
+		<strong>Usage
+		</strong>
+		</td>
+		<td class="auto-style1">
+		<strong>Possible values
+		</strong>
+		</td>
+		<td class="auto-style1">
+		<strong>Description
+		</strong>
+		</td>
+	</tr>
+	<tr>
+		<td class="auto-style3" valign="top">
+		Device/Task/Activity
+		</td>
+		<td class="auto-style3" valign="top">
+		DownloadBlockFormat
+		</td>
+		<td class="auto-style3" valign="top">
+		Boolean
+		</td>
+		<td class="auto-style3" valign="top">
+		false
+		</td>
+		<td class="auto-style3" valign="top">
+		Download
+		</td>
+		<td class="auto-style3" valign="top">
+		false/true
+		</td>
+		<td class="auto-style3" valign="top">
+		If false, Download to general AS format.
+		If true, download to Block format
+		</td>
+	</tr>
+	<tr>
+		<td class="auto-style3" valign="top">
+		Device
+		</td>
+		<td class="auto-style3" valign="top">
+		SpeedAbsTime
+		</td>
+		<td class="auto-style3" valign="top">
+		Boolean
+		</td>
+		<td class="auto-style3" valign="top">
+		false
+		</td>
+		<td class="auto-style3" valign="top">
+		Upload/Download
+		</td>
+		<td class="auto-style3" valign="top">
+		true/false
+		</td>
+		<td class="auto-style3" valign="top">
+		If false, speeds are defined only &quot;%&quot;.
+		If true, speeds are defined &quot;mm/sec&quot;. &quot;sec&quot; and 
+		&quot;%&quot;.
+		</td>
+	</tr>
+	<tr>
+		<td class="auto-style3" valign="top">
+		Device
+		</td>
+		<td class="auto-style3" valign="top">
+		OXWXNegative
+		</td>
+		<td class="auto-style3" valign="top">
+		Boolean
+		</td>
+		<td class="auto-style3" valign="top">
+		false
+		</td>
+		<td class="auto-style3" valign="top">
+		Upload/Download
+		</td>
+		<td class="auto-style3" valign="top">
+		true/false
+		</td>
+		<td class="auto-style3" valign="top">
+		If false, &quot;OX=&quot; and &quot;WX=&quot; are only available 
+		positive integer.
+		If true,&nbsp; &quot;OX=&quot; and &quot;WX=&quot; are available 
+		negative integer 
+		</td>
+	</tr>
+	<tr>
+		<td class="auto-style3" valign="top">
+		Device
+		</td>
+		<td class="auto-style3" valign="top">
+		OX_PreOutput 
+		</td>
+		<td class="auto-style3" valign="top">
+		Boolean
+		</td>
+		<td class="auto-style3" valign="top">
+		true
+		</td>
+		<td class="auto-style3" valign="top">
+		Upload/Download
+		</td>
+		<td class="auto-style3" valign="top">
+		true/false
+		</td>
+		<td class="auto-style3" valign="top">
+		If true, V5 translates &quot;OX=&quot; as if OX.PREOUT 
+		SWTITCH=ON
+		If false, V5 translates &quot;OX=&quot; as if OX.PREOUT 
+		SWTCH=OFF.
+		</td>
+	</tr>
+	<tr>
+		<td class="auto-style3" valign="top">
+		Device
+		</td>
+		<td class="auto-style3" valign="top">
+		NumberOfClamp
+		</td>
+		<td class="auto-style3" valign="top">
+		Integer
+		</td>
+		<td class="auto-style3" valign="top">
+		2
+		</td>
+		<td class="auto-style3" valign="top">
+		Download
+		</td>
+		<td class="auto-style3" valign="top">
+		1/2/3/4
+		</td>
+		<td class="auto-style3" valign="top">
+		Define downloading format of CLAMP information1,
+		when no CLAMP_information1 attribute under robot 
+		motion.
+		<p><o:p>&nbsp;</o:p>
+		</td>
+	</tr>
+	<tr>
+		<td class="auto-style3" valign="top">
+		Device
+		</td>
+		<td class="auto-style3" valign="top">
+		EndOfArmToolType
+		</td>
+		<td class="auto-style3" valign="top">
+		String
+		</td>
+		<td class="auto-style3" valign="top">
+		AIRGUN
+		</td>
+		<td class="auto-style3" valign="top">
+		Download
+		</td>
+		<td class="auto-style3" valign="top">
+		SERVOGUN/AIRGUN/HANDLING
+		</td>
+		<td class="auto-style3" valign="top">
+		Define downloading format of CLAMP information1 and 
+		CLAMP information2, when no CLAMP_information1/2 attribute under robot 
+		motion.
+		<p><o:p>&nbsp;</o:p>
+		</td>
+	</tr>
+	<tr>
+		<td class="auto-style3" valign="top">
+		Device
+		</td>
+		<td class="auto-style3" valign="top">
+		Controller
+		</td>
+		<td class="auto-style3" valign="top">
+		String
+		</td>
+		<td class="auto-style3" valign="top">
+		E
+		</td>
+		<td class="auto-style3" valign="top">
+		Download
+		</td>
+		<td class="auto-style3" valign="top">
+		C/D/E
+		</td>
+		<td class="auto-style3" valign="top">
+		Define downloading format of CLAMP information2, 
+		when no CLAMP_information2 attribute under robot motion.
+		<p><o:p>&nbsp;</o:p>
+		</td>
+	</tr>
+	<tr>
+		<td class="auto-style3" valign="top">
+		Device
+		</td>
+		<td class="auto-style3" valign="top">
+		AUXDATA_SPEED
+		</td>
+		<td class="auto-style3" valign="top">
+		String
+		</td>
+		<td class="auto-style3" valign="top">
+		
+		10.000,20.000,30.000,40.000,50.000,<br>60.000,70.000,80.000,90.000,100.000
+		<p><o:p>&nbsp;</o:p>
+		</td>
+		<td class="auto-style3" valign="top">
+		Download/Upload
+		</td>
+		<td class="auto-style3" valign="top">
+		10 positive real CSV
+		</td>
+		<td class="auto-style3" valign="top">
+		Define SPEED levels when no SPEED0-9 motion 
+		profiles
+		</td>
+	</tr>
+	<tr>
+		<td class="auto-style3" valign="top">
+		Device
+		</td>
+		<td class="auto-style3" valign="top">
+		AUXDATA_ACCU
+		</td>
+		<td class="auto-style3" valign="top">
+		String
+		</td>
+		<td class="auto-style3" valign="top">
+		1.000,10.000,50.000,100.000,1.000
+		</td>
+		<td class="auto-style3" valign="top">
+		Download/Upload
+		</td>
+		<td class="auto-style3" valign="top">
+		5 positive real CSV
+		</td>
+		<td class="auto-style3" valign="top">
+		Define ACCURACY levels 
+		in case Accuracy profiles' name&nbsp; is not 
+		ACCU0-ACCU4
+		</td>
+	</tr>
+	<tr>
+		<td class="auto-style3" valign="top">
+		Device 
+		</td>
+		<td class="auto-style3" valign="top">
+		AUXDATA_TIMER
+		</td>
+		<td class="auto-style3" valign="top">
+		String
+		</td>
+		<td class="auto-style3" valign="top">
+		<span lang="DA">
+		0.000,0.100,0.200,0.300,0.400,0.500,<br>0.600,0.700,0.800,0.900</span>
+		<p><o:p>&nbsp;</o:p>
+		</td>
+		<td class="auto-style3" valign="top">
+		Download/Upload
+		</td>
+		<td class="auto-style3" valign="top">
+		10 positive real CSV
+		</td>
+		<td class="auto-style3" valign="top">
+		Define TIMER levels
+		in case Robot delay activity's&nbsp; name&nbsp; is 
+		not TIMER0-TIMER9.
+		<p><o:p>&nbsp;</o:p>
+		</td>
+	</tr>
+	<tr>
+		<td class="auto-style3" valign="top">
+		Activity Attribute
+		</td>
+		<td class="auto-style3" valign="top">
+		CLAMP_Information1
+		</td>
+		<td class="auto-style3" valign="top">
+		String
+		</td>
+		<td class="auto-style3" valign="top">
+		<span lang="DA">-</span>
+		</td>
+		<td class="auto-style3" valign="top">
+		Upload/Download
+		</td>
+		<td class="auto-style3" valign="top">
+		-
+		</td>
+		<td class="auto-style3" valign="top">
+		When uploading save CLAMP syntax. When downloading 
+		use for CLAMP syntax.
+		</td>
+	</tr>
+	<tr>
+		<td class="auto-style3" valign="top">
+		Activity Attribute
+		</td>
+		<td class="auto-style3" valign="top">
+		CLAMP_Information2
+		</td>
+		<td class="auto-style3" valign="top">
+		String
+		</td>
+		<td class="auto-style3" valign="top">
+		<span lang="DA">-</span>
+		</td>
+		<td class="auto-style3" valign="top">
+		Upload/Download
+		</td>
+		<td class="auto-style3" valign="top">
+		-
+		</td>
+		<td class="auto-style3" valign="top">
+		When uploading save CLAMP syntax. When downloading 
+		use for CLAMP syntax.
+		</td>
+	</tr>
+</table>
+	 </p>
+	 <h3>Robot Block Motion Data</h3>
+	 <p>The motion type, speed, accuracy, tool, work, and target values from the block format are all uploaded to or downloaded from the robot motion activity.</p>
+	 <h4>Block Motion Type</h4>
+	 <p>The following is an example of a JOINT motion type for Kawasaki block format:</p>
+	 <pre>JOINT SPEED9 ACCU1 TIMER0 TOOL1 WORK0 CLAMP1 (ON,0,1,1) 2 (OFF,0,0,O) OX= WX= CL1=0.000,0.0,0.0,0.0,0.0,0.0,0.0 #[0,0,0,0,0,0,58.584]</pre>
+	 <p>Other motion types and how they will be uploaded/downloaded is shown here:</p>
+	 <p>
+	 <img height="196" src="b35doc/english/online/cfyugolp_c2/images/BlockMotionType.png" width="800" class="auto-style5"></p>
+	 <h4>Block SPEED</h4>
+	 <p>The following is an example of a SPEED value for Kawasaki block format:</p>
+	 <pre>JOINT SPEED9 ACCU1 TIMER0 TOOL1 WORK0 CLAMP1 (ON,0,1,1) 2 (OFF,0,0,O) OX= WX= CL1=0.000,0.0,0.0,0.0,0.0,0.0,0.0 #[0,0,0,0,0,0,58.584]</pre>
+	 <p>The SPEED index can be 0-9.   If the SPEED values are declared in the .AUXDATA section of the program uploaded or in a .AS file in the same directory then those values will be used to set the motion profile speeds.  Default values are shown here.</p>
+	 <pre>SPEED  10.000 20.000 30.000 40.000 50.000 60.000 70.000 80.000 90.000 100.000</pre>
+	 <p>If the parameter SpeedAbsTime is not set or is set to False then all speed values are in percent. If the parameter is True then SPEED0-5 are absolute mm/sec, SPEED6-7 are time seconds, SPEED8-9 are percent.   During upload a motion profile will be created for each SPEED value found (i.e. SPEED0-9) and the type will be percent, absolute or time depending on the SpeedAbsTime parameter value. If no SPEED values are found then AUXDATA_SPEED parameter values will be used which are defaulted to 10,20,30,40,50,60,70,80,90,100. One value for each SPEED0-9 respectively.</p>
+	 <p>For download, if SPEED0-9 motion profiles are used that name will be output to the block format regardless of values. </p>
+	 <p>If no SPEED0-9 are used and SpeedAbsTime is False, the absolute or percent speed will be used to calculate the index as follows:</p>
+	 <pre>Percent = <motion profile percent speed> </pre>
+	 <p>Or,</p>
+	 <pre>Percent = < motion profile absolute speed>/<max. tcp speed>*100</pre>
+	 <p>The index used is based on the AUXDATA_SPEED parameter values which default to 10,20,30,40,50,60,70,80,90,100. The percent value is always truncated so if it is less than 50 but greater than or equal to 40 then index 3 would be used.  If a timed motion profile is used then translation will fail.</p>
+	 <p>If no SPEED0-9 are used and SpeedAbsTime is True, SPEED0 is always output and a warning is displayed.</p>
+	 <h4>Block ACCU</h4>
+	 <p>The following is an example of a ACCU value for Kawasaki block format:</p>
+<pre>JOINT SPEED9 ACCU1 TIMER0 TOOL1 WORK0 CLAMP1 (ON,0,1,1) 2 (OFF,0,0,O) OX= WX= CL1=0.000,0.0,0.0,0.0,0.0,0.0,0.0 #[0,0,0,0,0,0,58.584]</pre>
+<p>The ACCU index can be 0-4.  If the ACCU values are declared in the .AUXDATA section of the program uploaded or in a .AS file in the same directory then those values will be used to set the accuracy profile distance.  Default values are shown here.</p>
+	 <pre>ACCUR 1.000 5.000 30.000 50.000 1.000</pre>
+<p>The first four values are ACCU1-4.   The 5th value here is ACCU0.   During upload a accuracy profile will be created for each ACCU value found (i.e. ACCU0-4) and the type will be distance.   For ACCU0 the flyby will be off.   If no ACCU values are found then AUXDATA_ACCU parameter values will be used which are defaulted to 1.0, 5.0, 30.0, 50.0, 1.0.   The first four values are ACCU1-4 and the 5th is ACCU0.</p>
+<p>For download, if the names ACCU0-4 are used then that name will be output to the block format. If no, the distance will be used to map the value to the AUXDATA_ACCU parameter values which default to 1.0, 5.0, 30.0, 50.0, 1.0. The distance value will always be truncated  so if a value less than 50.0 but greater than or equal to 30.0 is found ACCU3 will be output. If speed based rounding is used then translation will fail.</p>
+</p>
+<h4>Block TOOL</h4>
+<p>The following is an example of a TOOL value for Kawasaki block format:<p>
+<pre>JOINT SPEED9 ACCU1 TIMER0 TOOL1 WORK0 CLAMP1 (ON,0,1,1) 2 (OFF,0,0,O) OX= WX= CL1=0.000,0.0,0.0,0.0,0.0,0.0,0.0 #[0,0,0,0,0,0,58.584]</pre>
+<p>The TOOL index can be TOOL1-9. During upload, a tool profile is created for TOOL1-9. If the TOOL values are declared in the .AUXDATA section of the program uploaded or in a .AS file in the same directory, those values are used to set the tool profile.  Default value is all zeros for each TOOL.   
+<pre>TOOL1  0.000 0.000 0.000 0.000 0.000 0.000
+.
+TOOL9 0.000 0.000 0.000 0.000 0.000 0.000</pre>
+
+<p>Each TOOL entry contains the x,y,z,o,a,t for the tool profile. These will be converted into x,y,z,yaw,pitch and roll. If no TOOL values are found then all zeros will be used.</p> 
+<p>For download, if tool profiles named TOOL1-9 are used then that name will be output into the block format. If not, the count in the list of profiles will be use where Default will always be the first in the count or TOOL1.</p>
+<h4>Block WORK</h4>
+<p>The following is an example of a WORK value for Kawasaki block format:</p>
+<pre>JOINT SPEED9 ACCU1 TIMER0 TOOL1 WORK0 CLAMP1 (ON,0,1,1) 2 (OFF,0,0,O) OX= WX= CL1=0.000,0.0,0.0,0.0,0.0,0.0,0.0 #[0,0,0,0,0,0,58.584]</pre>
+<p>The WORK index can be WORK0-9. During upload a object frame profile will be created for WORK0-9. If the WORK values are declared in the .AUXDATA section of the program uploaded or in a .AS file in the same directory then those values will be used to set the object frame profile. Default value is all zeros for each Objectframe.</p>
+<pre>WORK1  0.000 0.000 0.000 0.000 0.000 0.000
+.
+WORK9 0.000 0.000 0.000 0.000 0.000 0.000</pre>
+
+<p>Each WORK entry contains the x,y,z,o,a,t for the object frame profile. These will be converted into x,y,z,yaw,pitch and roll. If no WORK values are found then all zeros will be used. WORK0 will always be all zeros because there is never a declaration for this.</p>
+<p>For download if object frame profiles named WORK0-9 are used then that name will be output into the block format. If not then WORK0 is used as the default.</p>
+<h4>Block Position</h4>
+<p>The following is an example of a position value for Kawasaki block format:</p>
+<pre>JOINT SPEED9 ACCU1 TIMER0 TOOL1 WORK0 CLAMP1 (ON,0,1,1) 2 (OFF,0,0,O) OX= WX= CL1=0.000,0.0,0.0,0.0,0.0,0.0,0.0 #[0,0,0,0,0,0,58.584]</pre>
+<p>The position values are always joint and will be uploaded into a jointtarget.   For download of block format all target types joint, cartesian, and tag will be output as joint values.</p>
+<h3>Block TIMER</h3>
+<p>The following is an example of a TIMER value for Kawasaki block format:</p>
+<pre>JOINT SPEED9 ACCU1 TIMER0 TOOL1 WORK0 CLAMP1 (ON,0,1,1) 2 (OFF,0,0,O) OX= WX= CL1=0.000,0.0,0.0,0.0,0.0,0.0,0.0 #[0,0,0,0,0,0,58.584]</pre>
+<p>The TIMER index can be 0-9.  If the TIMER values are declared in the .AUXDATA section of the program uploaded or in a .AS file in the same directory then those values will be used to create a robot delay activity. Default values are shown here.</p>
+<pre>TIMER 0.000 0.100 0.200 0.300 0.400 0.500 0.600 0.700 0.800 0.900</pre>
+<p>During upload TIMER0 will always be ignored and assumed to be 0.0. If TIMER1-9 are used they will be read from the values declared.   If no TIMER values are declared then AUXDATA_TIMER parameter values will be used which are defaulted to 0.0, .1, .2, .3, .4, .5, .6, .7, .8, .9. The robot delay activity will have the delay specified based on the TIMER index.</p>
+<p>For download if a robot delay activity named TIMER0-9 is used then that name will be output to the block format.  If not then the delay will be used to map the value to the AUXDATA_TIMER parameter values which default to 0.0, .1, .2, .3, .4, .5, .6, .7, .8, .9.   The timer value will always be truncated  so if a value less than .5 but greater than or equal to .4  is found TIMER4 will be output.  If no delay is used then TIMER0 is output.</p>
+<h3>Block Robot Motion Attributes</h3>
+<p>The CLAMP and CL values from the block format will all be uploaded to or downloaded from attributes on the robot motion activity.</p>
+<h4>Block CLAMP</h4>
+<p>The following is an example of a CLAMP value for Kawasaki block format:</p>
+<pre>JOINT SPEED9 ACCU1 TIMER0 TOOL1 WORK0 CLAMP1 (ON,0,1,1) 2 (OFF,0,0,O) OX= WX= CL1=0.000,0.0,0.0,0.0,0.0,0.0,0.0 #[0,0,0,0,0,0,58.584]</pre>
+<p>The CLAMP values will be uploaded exactly as found into an attribute called CLAMP_Information1 which is on the robot motion activity. This same attribute is used during download to output the CLAMP information to the block format. If no CLAMP attribute is found on a robot motion activity during download then the following will be used to determine the output:</p>
+	 <table cellpadding="3" cellspacing="3">
+		 <tr>
+			 <td class="auto-style1"><strong>NumberOfClamp</strong></td>
+			 <td class="auto-style1"><strong>EndOfArmToolType</strong></td>
+			 <td class="auto-style1"><strong>Downloading Strings</strong></td>
+		 </tr>
+		 <tr>
+			 <td class="auto-style3">1</td>
+			 <td class="auto-style3">HANDLING</td>
+			 <td class="auto-style3">CLAMP1 (OFF,0,0,C)</td>
+		 </tr>
+		 <tr>
+			 <td class="auto-style3">1</td>
+			 <td class="auto-style3">AIRGUN</td>
+			 <td class="auto-style3">CLAMP1 (OFF,0,0,O)</td>
+		 </tr>
+		 <tr>
+			 <td class="auto-style3">1</td>
+			 <td class="auto-style3">SERVOGUN</td>
+			 <td class="auto-style3">CLAMP1 (OFF,0,0,0)</td>
+		 </tr>
+		 <tr>
+			 <td class="auto-style3">2</td>
+			 <td class="auto-style3">HANDLING</td>
+			 <td class="auto-style3">CLAMP1 (OFF,0,0,C) 2 (OFF,0,0,O)</td>
+		 </tr>
+		 <tr>
+			 <td class="auto-style3">2</td>
+			 <td class="auto-style3">AIRGUN</td>
+			 <td class="auto-style3">CLAMP1 (OFF,0,0,O) 2 (OFF,0,0,O)</td>
+		 </tr>
+		 <tr>
+			 <td class="auto-style3">2</td>
+			 <td class="auto-style3">SERVOGUN</td>
+			 <td class="auto-style3">CLAMP1 (OFF,0,0,0) 2 (OFF,0,0,O)</td>
+		 </tr>
+		 <tr>
+			 <td class="auto-style3">3</td>
+			 <td class="auto-style3">HANDLING</td>
+			 <td class="auto-style3">CLAMP1 (OFF,0,0,C) 2 (OFF,0,0,O) <br>CLAMP1 
+			 (OFF,0,0,O)</td>
+		 </tr>
+		 <tr>
+			 <td class="auto-style3">3</td>
+			 <td class="auto-style3">AIRGUN</td>
+			 <td class="auto-style3">CLAMP1 (OFF,0,0,O) 2 (OFF,0,0,O) <br>CLAMP1 
+			 (OFF,0,0,O)</td>
+		 </tr>
+		 <tr>
+			 <td class="auto-style3">3</td>
+			 <td class="auto-style3">SERVOGUN</td>
+			 <td class="auto-style3">CLAMP1 (OFF,0,0,0) 2 (OFF,0,0,O) <br>CLAMP1 
+			 (OFF,0,0,O)</td>
+		 </tr>
+		 <tr>
+			 <td class="auto-style3">4</td>
+			 <td class="auto-style3">HANDLING</td>
+			 <td class="auto-style3">CLAMP1 (OFF,0,0,C) 2 (OFF,0,0,O) <br>CLAMP1 
+			 (OFF,0,0,O) CLAMP1 (OFF,0,0,O)</td>
+		 </tr>
+		 <tr>
+			 <td class="auto-style3">4</td>
+			 <td class="auto-style3">AIRGUN</td>
+			 <td class="auto-style3">CLAMP1 (OFF,0,0,O) 2 (OFF,0,0,O) <br>CLAMP1 
+			 (OFF,0,0,O) CLAMP1 (OFF,0,0,O)</td>
+		 </tr>
+		 <tr>
+			 <td class="auto-style3">4</td>
+			 <td class="auto-style3">SERVOGUN</td>
+			 <td class="auto-style3">CLAMP1 (OFF,0,0,0) 2 (OFF,0,0,O) <br>CLAMP1 
+			 (OFF,0,0,O) CLAMP1 (OFF,0,0,O)</td>
+		 </tr>
+	 </table>
+   	<h4>Block CL</h4>
+<p>The following is an example of a CL value for Kawasaki block format:</p>
+<pre>JOINT SPEED9 ACCU1 TIMER0 TOOL1 WORK0 CLAMP1 (ON,0,1,1) 2 (OFF,0,0,O) OX= WX= CL1=0.000,0.0,0.0,0.0,0.0,0.0,0.0 #[0,0,0,0,0,0,58.584]</pre>
+<p>The CL values are uploaded exactly as found into an attribute called CLAMP_Information2 on the robot motion activity.   This same attribute is used during download to output the CL information to the block format. If no CL attribute is found on a robot motion activity during download, the following will be used to determine the output:
+</p>
+ <table cellpadding="3" cellspacing="3">
+	 <tr>
+		 <td class="auto-style1"><strong>EndOfArmToolType</strong></td>
+		 <td class="auto-style1"><strong>Controller</strong></td>
+		 <td class="auto-style1"><strong>Downloading Strings</strong></td>
+		 <td class="auto-style1"><strong>Note</strong></td>
+	 </tr>
+	 <tr>
+		 <td class="auto-style3">HANDLING</td>
+		 <td class="auto-style3">-</td>
+		 <td class="auto-style3">-(Do not write CLAMP information2)</td>
+		 <td class="auto-style3">&nbsp;</td>
+	 </tr>
+	 <tr>
+		 <td class="auto-style3">AIRGUN</td>
+		 <td class="auto-style3">-</td>
+		 <td class="auto-style3">-(Do not write CLAMP information2)</td>
+		 <td class="auto-style3">&nbsp;</td>
+	 </tr>
+	 <tr>
+		 <td class="auto-style3">SERVOGUN</td>
+		 <td class="auto-style3">C</td>
+		 <td class="auto-style3">-(Do not write CLAMP information2)</td>
+		 <td class="auto-style3">&nbsp;</td>
+	 </tr>
+	 <tr>
+		 <td class="auto-style3">SERVOGUN</td>
+		 <td class="auto-style3">D</td>
+		 <td class="auto-style3">CL1=0.000,0.0,0.0,0.0,0.0 </td>
+		 <td class="auto-style3">5 arguments</td>
+	 </tr>
+	 <tr>
+		 <td class="auto-style3">SERVOGUN</td>
+		 <td class="auto-style3">E</td>
+		 <td class="auto-style3">CL1=0.000,0.0,0.0,0.0,0.0,0.0,0.0 </td>
+		 <td class="auto-style3">7 arguments</td>
+	 </tr>
+ </table>
+ <h3>Block I/O Signals</h3>
+ <p>The OX and WX values from the block format are uploaded to or downloaded from Set Signal activities or Wait Signal activities.</p>
+<h4>Block OX</h4>
+<p>The following is an example of a OX value for Kawasaki block format:</p>	
+<pre>JOINT SPEED9 ACCU1 TIMER0 TOOL1 WORK0 CLAMP1 (ON,0,1,1) 2 (OFF,0,0,O) OX=1,2,-3,-4 WX= CL1=0.000,0.0,0.0,0.0,0.0,0.0,0.0 #[0,0,0,0,0,0,58.584]</pre>
+<p>The OX values will be uploaded into set signal commands. If the OXWXNegative device parameter is false (the default) then only positive OX values will be used.</p>
+<p>
+<img height="294" src="b35doc/english/online/cfyugolp_c2/images/BlockOXUploadFalse.png" width="576" class="auto-style5"></p>
+ <p>
+ <img height="362" src="b35doc/english/online/cfyugolp_c2/images/BlockOXDownloadFalse.png" width="751" class="auto-style5"></p>
+ <p>If the OXWXNegative parameter is true then both positive and negative values will be used.</p>
+ <p>
+ <img class="auto-style5" height="352" src="b35doc/english/online/cfyugolp_c2/images/BlockOXUploadTrue.png" width="573"></p>
+ <p>
+ <img class="auto-style5" height="356" src="b35doc/english/online/cfyugolp_c2/images/BlockOXDownloadTrue.png" width="712"></p>
+ <p>The parameter OX_PreOutput device parameter will also be used to control upload/download of OX signals. If the value is true (the default) then the set ON and set OFF activities will go to the previous robot motion.</p>
+ <p><img height="145" src="b35doc/english/online/cfyugolp_c2/images/BlockOXUpDownTrue.png" width="800"></p>
+ <p><img height="139" src="b35doc/english/online/cfyugolp_c2/images/BlockOXUpDownFalse.png" width="800"></p>
+ <h4>Block WX</h4>
+ <p>The following is an example of a WX value for Kawasaki block format:</p>
+<pre>JOINT SPEED9 ACCU1 TIMER0 TOOL1 WORK0 CLAMP1 (ON,0,1,1) 2 (OFF,0,0,O) OX= WX=1,2,-3,-4 CL1=0.000,0.0,0.0,0.0,0.0,0.0,0.0 #[0,0,0,0,0,0,58.584]</pre>
+<p>The WX values will be uploaded in wait signal activities.</p>
+<p><img height="390" src="b35doc/english/online/cfyugolp_c2/images/BlockWXUp.png" width="573"></p>
+ <p><img height="375" src="b35doc/english/online/cfyugolp_c2/images/BlockWXDown.png" width="636"></p>
+	 <p>&nbsp;</p>
+	 </td>
+   </tr>
+   	</table>
+   	</body>
+
+</html>
+
+

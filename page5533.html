@@ -1,0 +1,159 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2E2O2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<title>Improved Associativity Support on Multi-CAD Data</title>
+<meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 12.0">
+<meta NAME="ProgId" CONTENT="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta content="none, default" name="Microsoft Border">
+</head>
+
+<body>
+
+<h1>Improved Associativity Support on Multi-CAD Data</h1>
+<table BORDER="0" CELLSPACING="0" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+  <tr>
+    <td VALIGN="top" ALIGN="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" hspace="1" width="32" height="32"></td>
+    <td>This section describes the concepts of improved associative support on 
+    Multi-CAD data in Batch mode, and discusses the conditions under which this 
+    associativity can be guaranteed.</td>
+  </tr>
+  <tr>
+    <td>
+    <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+    <td VALIGN="top">Associativity applies to the document level, not to the 
+    geometry level. If you perform a Multi-CAD update, all applicative links 
+    will be broken.</td>
+  </tr>
+  <tr>
+    <td VALIGN="top" ALIGN="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+    <td>
+    <h2><a name="ix-Associative mode:How it works">H</a>ow associative mode 
+    works</h2>
+    <p>When launching the Conversion Batch on Multi-CAD data, Multi-CAD files 
+    are converted and stored but this information (source or origin of the part 
+    files) cannot be visible by the user and CGR files are not stored into Cache 
+    Memory. Only the 3D view can be seen by the user. </p>
+    <p>By doing a batch conversion over an Acis/DXF 3D/Inventor/VDA-FS part, 
+    this part is transferred into a V5 format file: a CATPart. During this 
+    transcription, all the part structure, geometrical information as well as 
+    original links are transferred.<br>
+    After this conversion, the CATPart reproduces the 3D View of the original 
+    part and also stores a link onto the original file. The last information 
+    will enable the Multi-CAD Update Batch to check if V5 data are up-to-date 
+    compared with their original data.<p>The following schema draws a parallel between the CAD System and CATIA 
+    V5. Step 3 corresponds to the modification or review of Imported CAD Data in 
+    CATIA V5. </p>
+    <h3>From the Import of CAD data to the Synchronization of V5 Session:</h3>
+    <p ALIGN="left"><img border="0" src="b35doc/english/online/dalug_c2/images/CAD_SynchronizationNLS.gif" width="632" height="345"><p STYLE="margin-top: 8">Launching the Update Batch means using the 
+    associative mode; the Batch operates on V5 data in order to update their 
+    structure or geometry according to the changes made by the Acis designer 
+    onto the original data.<p>Here is a schema showing the conversion and update processes of an 
+    assembly structure when importing CAD data into CATIA V5.</p>
+    <h3>
+    <a name="ix-Associative mode:Multi-CAD Conversion">Multi-CAD Conversion</a> 
+    and <a name="ix-Associative mode:Update Processes">Update Processes</a>:</h3>
+    <p ALIGN="left"><img border="0" src="b35doc/english/online/dalug_c2/images/Conversion1_2NLS.gif" width="457" height="219"></p>
+    <p ALIGN="left"><img border="0" src="b35doc/english/online/dalug_c2/images/Conversion3_4NLS.gif" width="569" height="380"><p>The associative mode is the default mode. But if you do not launch the 
+    Batch, you will use what was called the non-associative mode in the previous 
+    V5 versions.</p>
+    <p>Associative mode is useful when a user wants to maintain 
+    synchronization with structure and/or geometry changes. But if you prefer to 
+    keep your assembly as it was at the moment of the conversion, you do not 
+    need to launch the Batch. Therefore, in this case, you will not do any 
+    synchronization between V5 data and original Acis data.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td>
+    <h2>How to use the <a name="ix-Associative mode:Update Batch">Update Batch</a> 
+    for Multi-CAD Data</h2>
+    <p>This task shows you how to convert Acis/DXF 3D/Inventor/VDA-FS parts into 
+    V5 CATParts and how to keep associativity between the modified CAD data and 
+    the converted part files, in V5. <br>
+    Please note that this conversion will take into account the settings 
+    from the <kbd>Tools -&gt; Options -&gt; General -&gt; Compatibility -&gt; External 
+    Formats</kbd>.</p>
+    <ol CLASS="task">
+      <li>
+      <p CLASS="task">On Windows,&nbsp; in a Command Prompt window, you can 
+      launch the conversion Batch by entering the following command:</p>
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+        <tr>
+          <td>
+          <p CLASS="task">&quot;<kbd>C:&#092;&lt;install_dir&gt;&#092;intel_a&#092;code&#092;bin&#092;CATDMUUtility.exe&quot; 
+          -env CATIA.V5R10.B10 -direnv &quot;C:&#092;Winnt&#092;Profiles&#092;All 
+          Users&#092;Application 
+          Data&#092;Dassault 
+          Systemes&#092;CATEnv&quot; 
+          -f E:&#092;tmp&#092;acis_part.sat&nbsp; 
+          -part&nbsp; E:&#092;tmp&#092;Part1.CATPart</kbd></td>
+        </tr>
+        <tr>
+          <td>Where
+          <br>
+          <kbd>-env</kbd> ... is the default environment and <br>
+          <kbd>-direnv </kbd>... is the directory path containing this 
+          environment.<br>
+          <kbd>CATIA.V5R10.B10 </kbd>is an example of environment name, it 
+          will vary with the level of CATIA installed.</td>
+        </tr>
+      </table>
+      </li>
+    <li>
+      <p class="task">Insert the CATPart into a CATProduct interactively in 
+      CATIA V5 using <kbd>Insert -&gt; Existing Component</kbd>.</li>
+      <li>
+      <p class="task">Save the CATProduct as <kbd>E:&#092;tmp&#092;prod1.CATProduct</kbd></li>
+      <li>
+      <p CLASS="task">Modify the
+		data in the original CAD system, or update the time stamp of the 
+		file to ensure the file is more recent than the V5 CATProduct.</li>
+      <li>
+      <p CLASS="task">Launch the update Batch by entering the command:</p>
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+        <tr>
+          <td>
+          <p CLASS="task"><kbd>&quot;C:&#092;&lt;install_dir&gt;&#092;intel_a&#092;code&#092;bin&#092;CATMCIReplace.exe&quot; 
+          -env CATIA.V5R10.B10 -direnv &quot;C:&#092;Winnt&#092;Profiles&#092;All 
+          Users&#092;Application 
+          Data&#092;Dassault 
+          Systemes&#092;CATEnv&quot; 
+          -i&nbsp;E:&#092;tmp&#092;prod1.CATProduct&nbsp; 
+          -update</kbd></td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p class="task">If you open prod1.CATProduct interactively in CATIA V5, 
+      you will be able to see the geometry modification.</li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td ALIGN="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>For more information about the <kbd>CATDMUUtility</kbd> launching, 
+    please refer to Running <kbd>CATDMUUtility </kbd>Batch Process, in <i>DMU 
+    Navigator User Guide</i>.</td>
+  </tr>
+  <tr>
+    <td ALIGN="center" colspan="2">
+<img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+<p ALIGN="center">
+&nbsp;</p>
+
+</body>
+
+</html>
+

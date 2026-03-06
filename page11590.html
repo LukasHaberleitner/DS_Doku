@@ -1,0 +1,592 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Multi-Axis Sweeping</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+</head>
+
+<body>
+
+<a name="ix-commands::Multi-Axis Sweeping"></a>
+<h1>Multi-Axis Sweeping&nbsp;</h1>
+<table style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>&nbsp;</td>
+    <td>The information in this section will help you create and edit Multi-Axis 
+    Sweeping&nbsp; operations in your Machining program.
+    <br>
+    Click
+    <img src="b35doc/english/online/icons_C2/images/I_Mfg5AxisGuidedCuttingP2.gif" width="22" height="22" align="middle">, then select the <a href="#CFGeometry">geometry</a> to be machined
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/TabGeomG.gif" align="middle" width="36" height="22">.&nbsp;
+    <p>More information can be found in
+    <a href="page5138.html">
+    Selecting Geometry</a>.</p>
+    <p>A number of strategy parameters
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/TabStratG.gif" align="middle" width="36" height="22"> are available for 
+    defining:</p>
+    <ul>
+      <li><a href="#ix-multi-axis sweeping:machining parameters">machining 
+      criteria</a></li>
+      <li><a href="#ix-multi-axis sweeping:radial parameters">radial conditions</a></li>
+      <li><a href="#ix-multi-axis sweeping:tool axis parameters">tool axis 
+      guidance</a></li>
+      <li><a href="#ix-multi-axis sweeping:cutter compensation parameters">
+      cutter compensation</a>.</li>
+    </ul>
+    <p>Specify the <a href="#CFTools">tool</a> to be used
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/TabToolO.gif" align="middle" width="36" height="22">,
+    <a href="#CFFandS">feeds and speeds</a>
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/TabFeedG.gif" align="middle" width="36" height="22">, and
+    <a href="#ix-multi-axis sweeping:macros">NC macros</a>
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/TabMacroG.gif" align="middle" width="36" height="22"> as needed.<p>The <kbd>Stepover </kbd>tab has been renamed into <kbd>Radial</kbd> tab.</p>
+    <h2>Multi-Axis Sweeping: Strategy Parameters</h2>
+    <h3><a name="ix-multi-axis sweeping:machining parameters">Multi-Axis 
+    Sweeping: Machining Parameters</a></h3>
+    <p><img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping02NLS.gif" width="382" height="248"></p>
+    <p><kbd>Tool path style</kbd><br>
+    <a name="ix-multi-axis sweeping:tool path style"></a>Indicates the 
+    cutting mode of the operation: </p>
+    <ul>
+      <li>Zig Zag: the machining direction is reversed from one path to the next</li>
+      <li>One way: the same machining direction is used from one path to the 
+      next.</li>
+    </ul>
+    <p><kbd>Machining tolerance</kbd><br>
+    <a name="ix-multi-axis sweeping:machining tolerance"></a>Specifies 
+    the maximum allowed distance between the theoretical and computed tool path.
+    <br>
+    Consider it to be the acceptable chord error.</p>
+    <p><kbd>Maximum discretization step</kbd><br>
+    <a name="ix-multi-axis sweeping:maximum discretization step"></a>
+    Ensures linearity between points that are far apart. </p>
+    <p><kbd>Maximum discretization angle</kbd><br>
+    <a name="ix-multi-axis sweeping:maximum discretization angle"></a>
+    Specifies the maximum angular change of tool axis between tool positions.
+    <br>
+    It is used to add more tool positions (points and axis) if value is 
+    exceeded. </p>
+    <p><kbd>Minimum path length</kbd><br>
+    <a name="ix-multi-axis sweeping:minimum path length"></a>Specifies 
+    the minimum length of path to be taken into account. </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>
+    <ul>
+      <li>The <kbd>Maximum discretization step</kbd> and <kbd>Maximum 
+      discretization angle</kbd> influence the number of points on the tool 
+      path. </li>
+      <li>The values should be chosen carefully if you want to avoid having a 
+      high concentration of points along the tool trajectory. </li>
+      <li>These parameters also apply to macro paths that are defined in 
+      machining feedrate. <br>
+      They do not apply to macro paths that do not have machining feedrate 
+      (RAPID, Approach, Retract, User, and so on). </li>
+      <li>Default value for <kbd>Maximum discretization step</kbd> is 100 m. 
+      Default value for <kbd>Maximum discretization angle</kbd> is 180 degrees.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+    <h3><a name="ix-multi-axis sweeping:radial parameters">Multi-Axis Sweeping: 
+    Radial Parameters</a></h3>
+    <p><img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping03NLS.gif" width="382" height="248"></p>
+    <p><kbd><a name="ix-multi-axis sweeping:radial strategy">Radial strategy </a>
+    </kbd><br>
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/dbMASweeping16NLS.gif" width="190" height="54"><br>
+    <a name="ix-multi-axis sweeping:radial strategy mode">D</a>efines 
+    how the distance between two consecutive paths is to be computed. </p>
+    <p><kbd>Scallop height:<br>
+    </kbd><img border="1" src="b35doc/english/online/mmgug_c2/images/I_MfgMfg5AxisRadialStrategy_1.gif" width="150" height="150"><br>
+    The associated parameter is <kbd>Scallop height</kbd>
+    <a name="ix-multi-axis sweeping:scallop height"></a>that specifies 
+    the maximum scallop height between <br>
+    two consecutive tool paths in a radial strategy. <br>
+    Note that the machining tolerance influences the distance between two 
+    consecutive paths. <br>
+    When the machining tolerance value is increased, the distance between two 
+    consecutive paths is decreased according to the specified maximum scallop 
+    height value.</p>
+    <p><kbd>Distance on part:<br>
+    </kbd><img border="1" src="b35doc/english/online/mmgug_c2/images/I_MfgMfg5AxisRadialStrategy_2.gif" width="150" height="150"><br>
+    The associated parameter is <kbd>Distance between paths</kbd>
+    <a name="ix-multi-axis sweeping:distance between paths"></a>that 
+    defines the maximum distance between <br>
+    two consecutive tool paths in a radial strategy. </p>
+    <p><kbd>Distance on plane:<br>
+    </kbd><img border="1" src="b35doc/english/online/mmgug_c2/images/I_MfgMfg5AxisRadialStrategy_3.gif" width="150" height="150"><br>
+    The associated parameter is <kbd>Distance between paths</kbd>
+    <a name="ix-multi-axis sweeping:distance between paths"></a>that 
+    defines the maximum distance between <br>
+    two consecutive tool paths in a radial strategy. </p>
+    <p><kbd>Number of paths:<br>
+    </kbd><img border="1" src="b35doc/english/online/mmgug_c2/images/I_MfgMfg5AxisRadialStrategy_4.gif" width="150" height="150"><br>
+    The associated parameter is <kbd>Number of paths</kbd>
+    <a name="ix-multi-axis sweeping:number of paths"></a>that defines 
+    the number of tool paths in a radial strategy. </p>
+    <p><kbd>Stepover side</kbd><br>
+    <a name="ix-multi-axis sweeping:stepover side"></a>Specifies the 
+    side of the guiding plane that will be used to determine the overall 
+    machining direction. </p>
+    <h3><a name="ix-multi-axis sweeping:tool axis parameters">Multi-Axis 
+    Sweeping: Tool Axis Parameters</a></h3>
+    <p>Note that modifications of the tool axis generated by the mode you have 
+    selected apply only to the machining passes, not to the between paths 
+    passes. </p>
+    <p>(Only Tool Axis Parameters tabs containing parameters have been captured)</p>
+    <p><img border="1" src="b35doc/english/online/mmgug_c2/images/SweepingMachiningDirection.gif" width="300" height="270"></p>
+    <p>You can define several axes with this icon:</p>
+    <ul>
+      <li><kbd>V</kbd>, for the view direction,</li>
+      <li><kbd>S</kbd>, for the start direction,</li>
+      <li><kbd>A</kbd>, for the tool axis direction. </li>
+    </ul>
+    <p>The view and the start directions define the machining guiding plane: 
+    machining is done in planes parallel to the guiding plane.</p>
+    <p>The view direction defines the accessible areas for the tool. These areas 
+    are accessible if the angle between the view direction and the normal to 
+    surface is less than 85 degrees. </p>
+    <p>The tool axis definition depends on the Tool axis mode. The tool axis 
+    arrow turns white when its definition box is not available <br>
+    (e.g. when the tool axis is defined through a point or a line, ...).</p>
+    <p>Clicking one of the direction arrows displays its definition box. </p>
+    <ul>
+      <li>View direction:<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/mmgug_c2/images/SweepingViewDirectionNLS.gif" width="202" height="242"></td>
+        </tr>
+      </table>
+      </li>
+      <li>Start direction:<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/mmgug_c2/images/SweepingStartDirectionNLS.gif" width="202" height="242"></td>
+        </tr>
+      </table>
+      </li>
+      <li>Tool axis direction:<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/mmgug_c2/images/SweepingToolAxisDirectionNLS.gif" width="276" height="286"></td>
+        </tr>
+      </table>
+      </li>
+    </ul>
+    <p><img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping04NLS.gif" width="382" height="248"></p>
+    <p><kbd>Tool axis mode<br>
+    </kbd><img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping17NLS.gif" width="218" height="104"><br>
+    <a name="ix-multi-axis sweeping:tool axis guidance"></a>Specifies 
+    how the tool axis is to be guided.
+    </p>
+    <p>Below you will find the explanations of the various modes, then the 
+    explanations of the associated parameters.</p>
+    <p><kbd><a name="ix-multi-axis sweeping:lead and tilt">Lead and Tilt</a></kbd><br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping14NLS.gif" width="300" height="270"></p>
+    <p><img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping04NLS.gif" width="382" height="248"><br>
+    In this mode the tool axis is normal to the part surface with respect to 
+    a given lead angle (alpha) in the forward tool motion and <br>
+    with respect to a given tilt angle (beta) in the perpendicular direction to 
+    this forward motion.&nbsp;<br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/ToolAxisLeadAndTilt.gif" width="150" height="150"></p>
+    <p>There are several guidance modes as follows:<br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping18NLS.gif" width="218" height="39"></p>
+    <p><kbd><a name="ix-multi-axis sweeping:fixed lead and tilt">Fixed lead and tilt</a>:&nbsp; 
+    <br>
+    </kbd><img border="1" src="b35doc/english/online/mmgug_c2/images/I_MfgMfg5AxisAngleManagement_1.gif" width="150" height="150"><br>
+    Here both the lead and tilt angles are constant.</p>
+    <p><kbd><a name="ix-multi-axis sweeping:variable lead and fixed tilt">Variable lead and fixed tilt</a>: 
+    <br>
+    </kbd><img border="1" src="b35doc/english/online/mmgug_c2/images/I_MfgMfg5AxisAngleManagement_2.gif" width="150" height="150"><br>
+    Here the tool axis can vary from the specified lead angle within an 
+    allowed range, the tilt angle remaining constant. <br>
+    The allowed range is defined by Minimum and Maximum lead angles.</p>
+    <p><kbd><a name="ix-multi-axis sweeping:fixed lead and variable tilt">Fixed lead and variable tilt</a>: 
+    <br>
+    </kbd><img border="1" src="b35doc/english/online/mmgug_c2/images/I_MfgMfg5AxisAngleManagement_3.gif" width="150" height="150"><br>
+    Here the tool axis can vary from the specified tilt angle within an 
+    allowed range, the lead angle remaining constant. <br>
+    The allowed range is defined by an Allowed tilt (the tool axis can move 
+    within a range of +/ - Allowed tilt angle).<a name="ix-multi-axis sweeping:fixed"></a></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>The purpose of the variable modes is to avoid collisions between the 
+    part to machine and the tool.</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+    <kbd><a name="ix-multi-axis sweeping:fixed axis">Fixed Axis</a></kbd><br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping15NLS.gif" width="300" height="270"><br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/ToolAxisFixed.gif" width="150" height="150"><br>
+    The tool axis remains constant for the operation.<p><kbd><a name="ix-multi-axis sweeping:thru a point">Thru a Point</a></kbd><br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping09NLS.gif" width="300" height="270"><br>
+    The tool axis passes through a specified point. The tool axis can be 
+    oriented To the point&nbsp; or From the point.<br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/ToolAxisThruAPoint.gif" width="150" height="150"><br>
+    Click the point in the sensitive icon and select a point in the graphic 
+    area. <br>
+    Then decide whether the tool axis is defined from that point <br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/helpThruPtTo.gif" width="150" height="150"><br>
+    or to that point<br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/helpThruPtFrom.gif" width="150" height="150"><br>
+    by clicking of the toggle <kbd>From/To</kbd> in the sensitive icon.</p>
+    <p><kbd><a name="ix-multi-axis sweeping:normal to line">Normal to Line</a></kbd><br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping11NLS.gif" width="300" height="270"><br>
+    The tool axis passes through a specified curve, and is normal to this 
+    curve at all points. <br>
+    The tool axis can be oriented To the line or From the line.<br>
+    Click the point in the sensitive icon and select a line in the graphic 
+    area. <br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/ToolAxisNormaltoCurve.gif" width="150" height="150"><br>
+    Then decide whether the tool axis is defined from that line <br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/helpThruLnTo.gif" width="150" height="150"><br>
+    or to that line <br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/helpThruLnFrom.gif" width="150" height="150"><br>
+    by clicking of the toggle <kbd>From/To</kbd> in the sensitive icon.</p>
+    <p><kbd><a name="ix-multi-axis sweepoing:optimized lead">Optimized Lead</a></kbd><br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping14NLS.gif" width="300" height="270"><br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping20NLS.gif" width="382" height="248"></p>
+    <p><kbd>Optimized lead</kbd> is not available for a barrel tool.</p>
+    <p>The tool axis is allowed to vary from the specified lead angle within an 
+    allowed range. <br>
+    The allowed range is defined by Minimum and Maximum lead angles. <br>
+    The back of the cutter is to be kept clear of the part by means of a Minimum 
+    heel distance.<br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/ToolAxisOptimizedLead.gif" width="150" height="150"></p>
+    <p>Optimized lead works as follows:</p>
+    <ul>
+      <li>lead defined as minimum to fit the part curvature</li>
+      <li>lead increases if necessary to respect the Minimum heel distance.</li>
+    </ul>
+    <p>If the required lead is outside the allowed range, the tool position will 
+    not be kept in the tool path.<br>
+    The maximum material removal is obtained when the tool curvature along 
+    the trajectory matches the part curvature.</p>
+    <p>C1= tool curvature along motion<br>
+    C2= part curvature along motion<br>
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/mmgoptimzedlead.gif" width="220" height="130"></p>
+    <p><kbd><a name="ix-multi-axis sweeping:4-axis lead/lag">4-axis Lead/Lag</a></kbd><br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping12NLS.gif" width="300" height="270"><br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping05NLS.gif" width="382" height="248"></p>
+    <p><kbd>4-Axis lead/lag</kbd> is not available for a barrel tool.</p>
+    <p>The tool axis is normal to the part surface with respect to a given lead 
+    angle in the forward direction and 
+    constrained to a specified plane.&nbsp;</p>
+    <p>Click the 4-Axis Constraint arrow (<kbd>N&nbsp; </kbd>in the 3D window or 
+    the arrow normal to the plane in the sensitive icon) and 
+    set this direction in the dialog box that appears. This is the normal to the 
+    plane in which the tool axis is constrained. <u><br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/ToolAxis4AxisLead.gif" width="150" height="150"><br>
+    </u>The tool axis is computed like in Lead and Tilt mode and then projected 
+    into the constraint plane.</p><kbd>Lead angle</kbd><br>
+    <a name="ix-multi-axis sweeping:lead angle"></a>Specifies a 
+    user-defined incline of the tool axis in a plane defined by the direction of 
+    motion and <br>
+    the normal to the part surface. <br>
+    The lead angle is with respect to the part surface normal.
+    <p><kbd>Maximum lead angle</kbd><br>
+    <a name="ix-multi-axis sweeping:maximum lead angle"></a>Specifies 
+    a&nbsp;maximum lead angle. </p>
+    <p><kbd>Minimum lead angle</kbd><br>
+    <a name="ix-multi-axis sweeping:minimum lead angle"></a>Specifies 
+    a&nbsp;minimum lead angle. </p>
+    <p><kbd>Tilt angle</kbd><br>
+    <a name="ix-multi-axis sweeping:tilt angle"></a>Specifies a 
+    user-defined incline of the tool axis in a plane normal to the direction of 
+    motion.&nbsp;<br>
+    The tilt angle is with respect to the part surface normal. </p>
+    <p><kbd>Allowed tilt</kbd><br>
+    <a name="ix-multi-axis sweeping:allowed tilt"></a>Specifies the 
+    range of allowed tilt variation. </p>
+    <p><kbd>Minimum heel distance</kbd><br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/I_MfgMfg5AxisMinHealDistance.gif" width="150" height="150"><br>
+    <a name="ix-multi-axis sweeping:minimum heel distance"></a>Allows 
+    the back of the cutter to be kept clear of the part <br>
+    (for example, when machining a smooth concave ruled part in Optimized Lead).</p></td>
+  </tr>
+  <tr>
+    <td>
+    &nbsp;</td>
+    <td>
+    <kbd><a name="ix-multi-axis sweeping:thru a guide">Thru a guide</a></kbd><br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping21NLS.gif" width="300" height="270"><br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping22NLS.gif" width="381" height="248"><br>
+    This strategy is used mainly to machine revolute surfaces, e.g. hub 
+    machining, deep pockets, ...<br>
+    The tool orientation is controlled by a geometrical curve (guide), that 
+    must be continuous. <br>
+    An open guide can be extrapolated at its extremities.<br>
+    Click the red curve in the sensitive icon and select a curve in the 3D 
+    viewer.<br>
+    The tool can be oriented <kbd>From</kbd> or <kbd>To</kbd> the guide.<p><kbd><a name="ix-multi-axis sweeping:mode">Mode</a></kbd><br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping23NLS.gif" width="317" height="66"><br>
+    Defines how the position of the tool is computed:</p>
+    <ul>
+      <li><kbd><a name="ix-multi-axis sweeping:normal to the path">Normal to the path</a></kbd>: for a given contact point, the 
+      intersection of the plane normal to the path with the guide give the tilt 
+      angle of tool. <br>
+      If several intersection are found, the nearest one is taken 
+      into account.<br>
+      <img border="0" src="b35doc/english/online/mmgug_c2/images/ThruGuideNormaltoPathNLS.gif" width="506" height="270"></li>
+      <li><kbd><a name="ix-multi-axis sweeping:nearest position">Nearest position</a></kbd>: the tool is oriented by the point that 
+      gives the shortest distance between the guide and the contact point.<br>
+      <img border="0" src="b35doc/english/online/mmgug_c2/images/ThruGuideNearestPositonNLS.gif" width="297" height="224"></li>
+      <li><kbd>
+      <a name="ix-multi-axis sweeping:nearest position along view direction">
+      Nearest position along view direction</a></kbd>: the guide is 
+      projected on a plane normal to the view direction. <br>
+      The tool is oriented 
+      by the point that give the shortest distance between the projected guide 
+      and the current contact point.<br>
+      <img border="0" src="b35doc/english/online/mmgug_c2/images/ThruGuideNormalViewNLS.gif" width="355" height="260"></li>
+    </ul>
+    <p><kbd><a name="ix-multi-axis sweeping:offset on guide">Offset on guide</a></kbd><br>
+    You can define an 
+    offset on the guide. The offset is computed on a plane defined by the 
+    tangent of the guide and the view direction.<br>
+    Click the <kbd>Axis Guide</kbd> arrow to define on which side the offset is 
+    applied.<br>
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/ThruGuideOffsetNLS.gif" width="297" height="274"></td>
+  </tr>
+  <tr>
+    <td valign="top">
+    </td>
+    <td>
+    <kbd><a name="ix-multi-axis sweeping:lead angle for thru a guide">
+    Lead angle</a></kbd><br>
+    Specifies an angle in the forward 
+    direction, between the default tool axis and the actual tool axis:<br>
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/ThruGuideAngle.gif" width="196" height="306"><p>
+    <span style="background-color: #E5F3FF; background-position: 0% 0%">Note 
+    that depending on the Lead angle, the tool axis will not remain on the 
+    tilting guide:<br>
+    Example:<br>
+    Lead angle=0<br>
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/LeadAngle0.gif" width="395" height="187"><br>
+    Lead angle=20 <br>
+    </span>
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/LeadAngle20.gif" width="410" height="179"></td>
+  </tr>
+  <tr>
+    <td>
+    &nbsp;</td>
+    <td>
+    <p>
+    <kbd><a name="ix-multi-axis sweeping:extend guide">Extend guide</a></kbd><br>
+    Select this check box to 
+    extrapolate the extremities of an open guide.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    </td>
+    <td>
+    <kbd><a name="ix-multi-axis sweeping:normal to drive surface">Normal to drive surface</a></kbd><br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping25NLS.gif" width="300" height="270"><br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping26NLS.gif" width="381" height="248"><br>
+    Use the red surface in the graphic icon to select the drive surface.<br>
+    We recommend that you use a smooth surface.<p><kbd>
+    <a name="ix-multi-axis sweeping:lead angle for normal to drive surface">Lead angle</a></kbd><br>
+    Specifies an angle in the forward direction, between the default 
+    tool axis and the actual tool axis:<br>
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/ThruGuideAngle.gif" width="196" height="306"></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    &nbsp;</td>
+    <td>
+    <h3><a name="ix-multi-axis sweeping:cutter compensation parameters">
+    Multi-Axis Sweeping: Cutter Compensation Parameters</a></h3>
+    <p>(Double-click the part operation and push the Machine icon to open the 
+    Machine Editor)<br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/CompensationNLS.gif" width="334" height="139"></p>
+    <p>In the
+    <a target="_blank" href="page11418.html">
+    Machine Editor</a>, the <kbd>Compensation</kbd> tab contains options for:
+    </p>
+    <ul>
+      <li>globally defining the 3D contact cutter compensation mode: <kbd>
+      None/Contact/Tip and Contact</kbd></li>
+      <li>imposing the compensation mode to all operations supporting the 
+      selected mode <br>
+      whatever the choice defined at machining operation level.</li>
+    </ul>
+    <p>If the options are set as follows, compensation can be managed at 
+    machining operation level.<br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbPOCutCom01NLS.gif" width="468" height="87"><br>
+    In this case a <kbd>Compensation</kbd> tab appears in the Strategy page 
+    of the machining operation editor, <br>
+    and the following options are available.</p><kbd>Output type</kbd><br>
+    <a name="ix-multi-axis sweeping:output type"></a>Allows you to 
+    manage the generation of Cutter compensation (CUTCOM) instructions in the NC 
+    data output:<p>The following options are proposed:</p>
+    <ul>
+      <li><a href="#3Dcontact">3D Contact (G29/CAT3Dxx)</a></li>
+      <li><a href="#noComp">None</a>.</li>
+    </ul>
+    <p><kbd><a name="3Dcontact"></a>3D Contact (G29/CAT3Dxx)<br>
+    </kbd>The tool contact point will be visualized during tool path replay.&nbsp;<br>
+    Cutter compensation instructions are automatically generated in the NC data 
+    output. <br>
+    An approach macro must be defined to allow the compensation to be applied.<br>
+    Example of generated APT source:</p>
+    <blockquote>
+      <p><code>$$ Start generation of : Multi-Axis Sweeping.1<br>
+      FEDRAT/ 1000.0000,MMPM<br>
+      SPINDL/ 70.0000,RPM,CLW<br>
+      CUTCOM/NORMPS<br>
+      $$ START CUTCOM NORMPS XC, YC, ZC, XN, YN, ZN, I, J, K<br>
+      .../...<br>
+      CUTCOM/OFF<br>
+      $$ END CUTCOM NORMPS XC, YC, ZC, XN, YN, ZN, I, J, K<br>
+      $$ End of generation of : Multi-Axis Sweeping.1</code></p>
+    </blockquote>
+    <p><kbd><a name="noComp"></a>None<br>
+    </kbd>Cutter compensation instructions are not automatically generated in the 
+    NC data output. <br>
+    However, CUTCOM instructions can be inserted manually. <br>
+    For more information, please refer to How to generate CUTCOM syntaxes 
+    provided in the <i>Prismatic Machining User's Guide.</i>&nbsp;</p>
+    <h2><a name="CFGeometry"></a>Multi-Axis Sweeping: Geometry</h2>
+    <p><img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping01NLS.gif" width="300" height="300"></p>
+    <p>You can specify the following Geometry:</p>
+    <ul>
+      <li>Part with possible Offset on Part.&nbsp;</li>
+    </ul></td>
+  </tr>
+  <tr>
+    <td height="36" valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td height="36">
+    <ul>
+		<li>The thickness of the offset can be negative. </li>
+		<li>If you want to use a negative value, the tool corner radius must be 
+		greater than the absolute value of the offset.</li>
+	</ul>
+	</td>
+  </tr>
+  <tr>
+    <td height="36" valign="top">
+    &nbsp;</td>
+    <td height="36">
+    <ul>
+		<li>Check elements with possible Offset on Check.</li>
+	</ul>
+	</td>
+  </tr>
+  <tr>
+    <td height="36" valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td height="36">
+    Note that infinite geometries e.g. planes, selected as part or check geometries, 
+      are ignored in the tool path replay.</td>
+  </tr>
+  <tr>
+    <td height="36" valign="top">
+    &nbsp;</td>
+    <td height="72" rowspan="2">
+    <ul>
+      <li>Areas to avoid.</li>
+    </ul>
+    <ul>
+      <li><a name="ix-multi-axis sweeping:limiting contour">Limiting Contour</a> with possible 
+      <a name="ix-multi-axis sweeping:offset on limiting contour">offset</a>.<br>
+      <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMASweeping24NLS.gif" width="301" height="76"><br>
+      The area to machine is defined by the projection of the limiting contour 
+      on the part along the view direction.<br>
+      The value of <kbd>Offset</kbd> can be positive, to extend the area to 
+      machine (up to the part boundaries), <br>
+      <img border="0" src="b35doc/english/online/mmgug_c2/images/MAsweeping01NLS.gif" width="346" height="172"><br>
+      or negative to reduce the area to machine.<br>
+      <img border="0" src="b35doc/english/online/mmgug_c2/images/MAsweeping02NLS.gif" width="398" height="232"><br>
+      The <kbd>Limiting Contour</kbd> re-limits the contact path (in red above) 
+      and not the tool tip path (in green above).<br>
+      <a name="ix-multi-axis sweeping:side to machine"><kbd>Side to machine</kbd>
+      </a>lets you define which portion of the part you want to machine (<kbd>Inside</kbd> 
+      or <kbd>Outside</kbd> of the limiting contour).<br>
+</li>
+    </ul>
+    <p>You can use
+    <a href="page5123.html" target="_blank">
+    Offset Groups and Features</a> when defining geometry.</td>
+  </tr>
+  <tr>
+    <td height="36" valign="top">
+   </td>
+  </tr>
+  <tr>
+    <td height="36">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td height="36">In R13, the behavior of offset group has changed and is now similar to 
+    that of <a href="page5123.html">3 Axis 
+    Surface Machining</a>.</td>
+  </tr>
+  <tr>
+    <td height="36">
+    &nbsp;</td>
+    <td height="36"><img border="1" src="b35doc/english/online/mmgug_c2/images/dbMACollCheck01NLS.gif" width="321" height="167"><p>
+    <a href="page11588.html">Collision Checking</a> is also available.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+   </td>
+    <td height="36"><h2><a name="CFTools"></a>Multi-Axis Sweeping: Tools</h2>
+    <p>Recommended tools for Multi-Axis Sweeping are End Mills, Face Mills, 
+    Conical Mills, T-Slotters and <a name="hj-barrel_tools">barrel tools</a>.</p>
+    <p>In general, you should choose:</p>
+    <ul>
+      <li>a ball-end tool for<kbd> Fixed lead and variable tilt</kbd> tool axis 
+      guidance</li>
+      <li>a filleted-end tool for<kbd> Variable lead and fixed tilt</kbd> tool 
+      axis guidance.</li>
+      <li>a barrel tool to machine composite structures, for the <kbd>
+      Fixed axis</kbd>, <kbd>Lead and tilt</kbd>, <kbd>Thru a point</kbd> and
+      <kbd>Normal to line</kbd> tool axis modes (<kbd>4-Axis lead/lag</kbd> and
+      <kbd>Optimized lead</kbd> are not available for this tool).</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+    <h2><a name="CFFandS"></a>Multi-Axis Sweeping: Feeds and Speeds</h2>
+    <p>In the Feeds and Speeds tab page, feedrates for approach, retract and 
+    machining as well as a machining spindle speed.<br>
+    Feedrates and spindle speed can be defined in linear or angular units.</p>
+    <p>A Spindle output checkbox is available for managing output of the SPINDL 
+    instruction in the generated NC data&nbsp; file. <br>
+    If the checkbox is selected, the instruction is generated. Otherwise, it is 
+    not generated.&nbsp;</p>
+    <p>Feeds and speeds of the operation can be updated automatically according 
+    to tooling data and <br>
+    the <font color="#000000">Rough or Finish quality of the operation</font>.
+    <br>
+    This is described in
+    <a href="page11449.html#FSUpdate">Update 
+    of Feeds and Speeds on Machining Operation</a>.</p>
+    <h2>Multi-Axis Sweeping: <a name="ix-multi-axis sweeping:macros">Macros</a></h2>
+    <p>General information about macros can be found in
+    <a href="page11448.html">NC Macros</a>.<br>
+    Information about the operating mode can be found in 
+     <a href="page5125.html">Defining Macros</a>.<br>
+    Information about Surface Machining macro parameters can be found in
+    <a href="page5140.html">Macro Parameters</a>.</p>
+    </td>
+  </tr>
+  </table>
+
+</body>
+
+</html>
+

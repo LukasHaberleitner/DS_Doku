@@ -1,0 +1,285 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Writing a Path Finder Macro</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Writing a Path Finder Macro
+ <a name="ix-writing:path finder in macro;path finder::writing macros"></a></h1>
+ <table Border="0" cellspacing="3" cellpadding="3" valign="top" width="100%">
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top">A macro is a series of functions, written in a scripting 
+     language, that you group in a single command to perform the requested task 
+     automatically. You can for example use a macro to automate the generation 
+     of an automatic path finding.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">This task shows how to use the automatic path finding 
+     functionality in batch mode, which means you are going to record an 
+     interaction sequence in a macro.&nbsp;&nbsp; This task also lists the macros 
+     that can be <a href="#hj-macros">edited</a>.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td valign="top">Open the <a href="b35doc/english/online/fitug_c2/samples/mastervac.CATProduct">
+     mastervac.CATProduct</a> document.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">Select <kbd>Tools &gt; Macro &gt; Start Recording</kbd>.</p>
+       <table border="0" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+         <tr>
+           <td>The <kbd>Record macro</kbd> dialog box appears.</td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/fitug_c2/images/dbrecordmacro01NLS.gif" width="489" height="171"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">In the <kbd>Record macro</kbd> dialog box, specify the 
+       current macro library or document. </p>
+       <table border="0" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+         <tr>
+           <td>This means deciding where the macro is going to be stored:<ul>
+             <li>in a <b><kbd>macro library</kbd></b>: the macro will be stored 
+             in a directory (or a VBA project if it exists)</li>
+             <li>in a <b><kbd>document</kbd></b>: the macro will be stored in 
+             the current document.</li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Give a name to the macro, e.g., MacroPF.CATScript.</li>
+       <li>
+       <p class="task">Click <kbd>Start</kbd> to begin recording the macro.</li>
+       <li>
+       <p class="task">In the specification tree, select <kbd>Simulation.1.</kbd>
+       </li>
+       <li>
+       <p class="task">Click <kbd>Path Finder </kbd><img border="0" src="b35doc/english/online/icons_C2/images/I_PathFinderP2.gif" width="24" height="24"> 
+       from the <kbd>DMU Check</kbd> toolbar.</li>
+       <li>
+       <p class="task">Set the options in the <kbd>Path Finder</kbd> dialog box 
+       as displayed. </p>
+       <table border="0" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+         <tr>
+           <td><img border="0" src="b35doc/english/online/fitug_c2/images/dbpathfinder03NLS.gif" width="414" height="313"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Click <kbd>Apply</kbd> to launch the operation.</li>
+       <li>
+       <p class="task">When done, click <kbd>OK</kbd> to smooth the path result.</li>
+       <li>
+       <p class="task">When this is complete, click <kbd>Stop</kbd> in the <kbd>
+       Stop Recording</kbd> dialog box, or select <kbd>Tools &gt; Macro &gt; Stop 
+       Recording </kbd>. </p>
+       <table border="0" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+         <tr>
+           <td>Your macro is now ready for replay.</td>
+         </tr>
+         <tr>
+           <td>The macro looks like this:</td>
+         </tr>
+         <tr>
+           <td>
+           <table border="0" cellpadding="3" cellspacing="3" width="100%" class="code" id="AutoNumber1">
+             <tr>
+               <td width="50%"><b>MACRO</b></td>
+               <td width="50%"><b>EXPLANATIONS</b></td>
+             </tr>
+             <tr>
+               <td width="50%" class="code2">Language=&quot;VBSCRIPT&quot;
+               <p>Sub CATMain()</p>
+               <p>Dim FittingWorkbench0 As Workbench</p>
+               <p>Set FittingWorkbench0 = CATIA.ActiveDocument.GetWorkbench ( &quot;FittingWorkbench&quot; 
+               )</p>
+               <p>Dim PathFinder1 As PathFinder</p>
+               <p>Set PathFinder1 = FittingWorkbench0.PathFinders.Add ( &quot;PathFinder&quot; 
+               )</td>
+               <td width="50%" class="code2">&nbsp;</td>
+             </tr>
+             <tr>
+               <td width="50%">PathFinder1.set_SimulationByName &quot;Simulation.1&quot;</td>
+               <td width="50%">Name of the simulation selected.</td>
+             </tr>
+             <tr>
+               <td width="50%" class="code2">PathFinder1.set_DoubleParameter 
+               &quot;Accuracy&quot;, 14.758000</td>
+               <td width="50%" class="code2">Corresponds to the accuracy value 
+               chosen in the Path Finder dialog box.<p>
+               <img border="1" src="b35doc/english/online/fitug_c2/images/smallestdetailNLS.gif" width="194" height="21"></td>
+             </tr>
+             <tr>
+               <td width="50%">PathFinder1.set_DoubleParameter &quot;TranslationStep&amp;qu</td>
+               <td width="50%">Corresponds to the translation step value chosen 
+               in the Path Finder dialog box.<p>
+               <img border="1" src="b35doc/english/online/fitug_c2/images/translationstepfieldNLS.gif" width="186" height="18"></td>
+             </tr>
+             <tr>
+               <td width="50%" class="code2">PathFinder1.set_DoubleParameter &quot;RotationGain&quot;, 
+               2.000000</td>
+               <td width="50%" class="code2">Corresponds to the rotation gain 
+               valuechosen in the Path Finder dialog box.<p>
+               <img border="1" src="b35doc/english/online/fitug_c2/images/rotationgainfieldNLS.gif" width="201" height="21"></td>
+             </tr>
+             <tr>
+               <td width="50%">PathFinder1.set_IntegerParameter &quot;Repulse&quot;, 5790</td>
+               <td width="50%">&nbsp;</td>
+             </tr>
+             <tr>
+               <td width="50%" class="code2">PathFinder1.set_BoxParameter &quot;Box&quot;,
+               <b>-205.110550, -1115.599648, -341.661041, 918.198769, 
+               460.187050, 694.402138</b>
+               <p>PathFinder1.Compute</td>
+               <td width="50%" class="code2">You resized the bounding box : the 
+               new values are displayed.<p>
+               <img border="1" src="b35doc/english/online/fitug_c2/images/resizeboundingboxNLS.gif" width="124" height="21"></td>
+             </tr>
+             <tr>
+               <td width="50%">PathFinder1.FillSimulation</td>
+               <td width="50%">Insert the above result into the simulation</td>
+             </tr>
+             <tr>
+               <td width="50%" class="code2">
+               FittingWorkbench0.PathFinders.RemovePathFinder PathFinder1<p>End 
+               Sub</td>
+               <td width="50%" class="code2">&nbsp;</td>
+             </tr>
+           </table>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Open the
+       <a href="b35doc/english/online/cfysm_C2/samples/MacroPF.CATScript">
+       MacroPF.CATScript </a>document. </p>
+       <table border="0" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+         <tr>
+           <td>
+           <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+           <td>You can edit your macro if necessary. For more detailed 
+           information, please refer to
+           <a href="page1518.html">
+           Recording, Running, and Editing Macros</a> in the <i>Infrastructure 
+           User's Guide</i>.&nbsp;</td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h2>Parameters You Can Edit<a name="hj-macros"></a></h2>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <table border="0" cellpadding="3" cellspacing="3" class="code">
+       <tr>
+         <td align="center"><b>Parameter Name</b>
+         <p>&nbsp;</td>
+         <td align="center"><b>Default Value</b><p>&nbsp;</td>
+         <td align="center" valign="top"><b>Method</b><p>&nbsp;</td>
+         <td align="center"><b>Macro</b>
+         <p>&nbsp;</td>
+         <td align="center" valign="top"><b>Example</b><p>&nbsp;</td>
+       </tr>
+       <tr>
+         <td class="code2"><kbd>MaxTime</kbd></td>
+         <td align="center" class="code2">60 min</td>
+         <td class="code2">&nbsp;</td>
+         <td align="center" class="code2">can be added to the macro</td>
+         <td class="code2">&nbsp;</td>
+       </tr>
+       <tr>
+         <td><kbd>Accuracy</kbd></td>
+         <td align="center">
+         <p align="center"><b>_</b></td>
+         <td><kbd>PathFinder1.set_DoubleParameter &quot;Accuracy&quot;,value </kbd></td>
+         <td align="center">can be edited</td>
+         <td><kbd>PathFinder1.set_DoubleParameter &quot;Accuracy&quot;, 14.758000</kbd></td>
+       </tr>
+       <tr>
+         <td class="code2"><kbd>TranslationStep</kbd></td>
+         <td align="center" class="code2">
+         <p align="center"><b>_</b></td>
+         <td class="code2"><kbd>PathFinder1.set_DoubleParameter &quot;TranslationStep&quot;,value</kbd></td>
+         <td align="center" class="code2">can be edited</td>
+         <td class="code2"><kbd>PathFinder1.set_DoubleParameter &quot;TranslationStep&quot;, 
+         14.758000</kbd></td>
+       </tr>
+       <tr>
+         <td><kbd>RotationGain</kbd></td>
+         <td align="center">
+         <p align="center">1.0</td>
+         <td>&nbsp;</td>
+         <td align="center">can be edited</td>
+         <td><kbd>PathFinder1.set_DoubleParameter &quot;RotationGain&quot;, 2.000000</kbd></td>
+       </tr>
+       <tr>
+         <td class="code2"><kbd>Repulse</kbd></td>
+         <td align="center" class="code2">High</td>
+         <td class="code2"><kbd>PathFinder1.set_IntegerParameter &quot;Repulse&quot;,value</kbd></td>
+         <td align="center" class="code2">can be edited</td>
+         <td class="code2"><kbd>PathFinder1.set_IntegerParameter &quot;Repulse&quot;, 5790</kbd><kbd>
+         </kbd>
+         <p>&nbsp;</td>
+       </tr>
+       <tr>
+         <td><kbd>Box</kbd></td>
+         <td>
+         <p align="center"><b>_</b></td>
+         <td><kbd>PathFinder1.set_BoxParameter &quot;Box&quot;,values</kbd></td>
+         <td align="center">can be edited</td>
+         <td><kbd>PathFinder1.set_BoxParameter &quot;Box&quot;, -205.110550, -1115.599648, 
+         -341.661041, 918.198769, 460.187050, 694.402138</kbd></td>
+       </tr>
+       <tr>
+         <td class="code2"><b>VisuMode</b></td>
+         <td colspan="4" rowspan="2" class="code2">do not appear in the macro.</td>
+       </tr>
+       <tr>
+         <td class="code2"><b>Steps</b></td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

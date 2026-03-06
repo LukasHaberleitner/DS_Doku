@@ -1,0 +1,246 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Messages and macros</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="docCompliance" content="v 0.9; Fri Oct 14 14:45:30 2005">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Messages and macros</h1>
+ <div align="center">
+   <center>
+   <table border="0" cellpadding="4" cellspacing="1" Width="0">
+     <tr>
+       <td bgcolor="#F0F0F0" valign="top"><nobr><a href="#LaunchMacroFromDoc">
+       LaunchMacroFromDoc&nbsp;Function</a></nobr></td>
+       <td bgcolor="#F0F0F0"><nobr><a href="#Question Function">
+       Question&nbsp;Function</a></nobr></td>
+     </tr>
+     <tr>
+       <td bgcolor="#F0F0F0" valign="top"><nobr><a href="#LaunchMacrofromFile Function">
+       LaunchMacroFromFile&nbsp;Function</a></nobr></td>
+       <td bgcolor="#F0F0F0"><nobr><a href="#Run Method">VBScriptRun</a></nobr></td>
+     </tr>
+     <tr>
+       <td bgcolor="#F0F0F0" valign="top"><nobr><a href="#Message Function">Message&nbsp;Function</a></nobr></td>
+       <td bgcolor="#FFFFFF">&nbsp;</td>
+     </tr>
+   </table>
+   </center>
+ </div>
+ <p>&nbsp;</p>
+ <h2>LaunchMacroFromDoc Function <a name="ix-launchmacrofromdoc function"></a>&nbsp;
+ <a name="LaunchMacroFromDoc"></a></h2>
+ <p>Executes a macro stored in a document from a rule.<br>
+ A macro is stored in a document when you don't specify any external file before 
+ recording it.</p>
+ <p>Warning: It is up to you to check that the macro which is run is not going 
+ to cause an infinite loop or result in a system crash.</p>
+ <h3><font color="#282187">Syntax</font></h3>
+ <kbd>
+ <p><code>LaunchMacroFromDoc(</code></kbd><code><i>MacroName</i></code><kbd><code> 
+ )</code></kbd></p>
+ <h3><font color="#282187">Example</font></h3>
+ <pre><code>LaunchMacroFromDoc(&quot;Macro1&quot;)</code> </pre>
+ <h2>Question Function <a name="ix-question function"></a>&nbsp;<a name="Question Function"></a></h2>
+ <p>Displays a message in a dialog box, waits for you to click a button and 
+ returns a value indicating which button you clicked (true if Yes was clicked, 
+ false if No was clicked)</p>
+ <h3><font color="#282187">Syntax</font></h3>
+ <p><kbd><code>Question(String [# String1&nbsp; # String2 ..., Param1Name, 
+ Param2Name, ...] ): Boolean</code></kbd></p>
+ <p>The <kbd>Question </kbd>function takes one required argument and several 
+ optional arguments depending on whether parameter values are to be displayed in 
+ the message.</p>
+ <table border="1" cellpadding="4" cellspacing="4">
+   <tr>
+     <td><em><font size="2"><kbd>Arguments</kbd></font></em></td>
+     <td><em><font size="2"><kbd>Description</kbd></font></em></td>
+   </tr>
+   <tr>
+     <td valign="top"><i>String</i></td>
+     <td>Required. String to be displayed in the dialog box (to be put in 
+     quotes).</td>
+   </tr>
+   <tr>
+     <td valign="top"><i># String1, Param1Name...</i></td>
+     <td>Optional. When parameter values are to be displayed within the message, 
+     the arguments are specified as follows:
+     <table border="0" cellpadding="0" cellspacing="0">
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>one string in quotes including a&nbsp; #&nbsp; symbol wherever a 
+           parameter value is to be displayed</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>as many [, parameter name] statements as parameter values 
+           declared with a &quot;#&quot; in the message.</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+ <p>Use the &quot;|&quot; symbol to insert a carriage return in a prompt.</p>
+ <h3><font color="#282187">Example</font></h3>
+ <blockquote>
+   <pre><code>Boolean2 =
+Question(&quot;SketchRadius is # | Do you want to change this value ?&quot;,
+PartBody&#092;Sketch.1&#092;Radius.3&#092;Radius )</code></pre>
+ </blockquote>
+ <div align="left">
+   <table border="0" cellpadding="2" id="AutoNumber1">
+     <tr>
+       <td valign="top">
+       <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+       <td valign="top">Note that you can use the Question function together 
+       with the
+       <a href="page4311.html">
+       BuildMessageNLS</a> function for your question to display in your 
+       language. To use this function, use the following syntax:<p>
+       question(BuildMessageNLS (&quot;x&quot;,&quot;xx&quot;,a,b))</p>
+       <ul>
+         <li>x corresponds to the name of the CATXXX.CATNls file where you will 
+         find the NLS message (it is the CATXXX name without the CATNls 
+         extension).</li>
+         <li>xx corresponds to the key name in this catalog.</li>
+         <li>a and b are the arguments (values that will be replaced in the 
+         message)</li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+ </div>
+ <h2>LaunchMacrofromFile Function <a name="ix-launchmacrofromfile function"></a>
+ &nbsp;<a name="LaunchMacrofromFile Function"></a></h2>
+ <p>Executes a macro CATScript from a rule.</p>
+ <p>Warning: It is up to you to check that the macro which is run is not going 
+ to cause an infinite loop or result in a system crash.</p>
+ <h3><font color="#282187">Syntax</font></h3>
+ <p><kbd><code>LaunchMacroFromFile(&quot;MacroName.CATScript&quot; )</code></kbd></p>
+ <h3><font color="#282187">Example</font></h3>
+ <p><kbd><code>LaunchMacroFromFile(&quot;Macro1.CATScript&quot;) </code></kbd></p>
+ <h2>Run Method <a name="Run Method"></a></h2>
+ <p>Runs a macro with arguments.</p>
+ <p>Warning: It is up to you to check that the macro which is run is not going 
+ to cause an infinite loop or result in a system crash.</p>
+ <h3><font color="#282187">Syntax</font></h3>
+ <p><i><code>VB Script</code></i><code><kbd>.Run(</kbd><i>valueOrFeature:ObjectType,...</i><kbd>):
+ </kbd>Void</code></p>
+ <p>where <i>valueOrFeature </i>is the macro argument name. There can be several 
+ arguments.</p>
+ <h3><font color="#282187">Example</font></h3>
+ <p>You must have created the VB Script.1 macro before creating the rule below:</p>
+ <p><code>if PartBody&#092;Pad.1.HasAttribute(&quot;String.1&quot;) 
+ == true<br>
+ </code><nobr><code>`VB Script.1` .Run(PartBody&#092;Pad.1 
+ .GetAttributeString(&quot;String.1&quot;),PartBody&#092;Pad.1.Name() 
+ )</code></nobr></p>
+ <h3><font color="#282187">Sample</font></h3>
+ <p><a href="b35doc/english/online/kwrug_c2/samples/KwrObject.CATPart">KwrObject.CATPart</a></p>
+ <h2><a name="Message">Message</a> Function <a name="ix-message function"></a>&nbsp;
+ <a name="Message Function"></a></h2>
+ <p>Displays a message in an information box. The message can include one or 
+ more parameter values.</p>
+ <h3><font color="#282187">Syntax</font></h3>
+ <p><kbd><code>Message(String [# String1&nbsp; # String2 ..., Param1Name, 
+ Param2Name, ...] ) : Void</code></kbd></p>
+ <p>The <kbd>Message </kbd>function takes one required argument and several 
+ optional arguments depending on whether parameter values are to be displayed in 
+ the message.</p>
+ <table border="1" cellpadding="4" cellspacing="4">
+   <tr>
+     <td><em><font size="2"><kbd>Arguments</kbd></font></em></td>
+     <td><em><font size="2"><kbd>Description</kbd></font></em></td>
+   </tr>
+   <tr>
+     <td valign="top"><i>String</i></td>
+     <td>Required. String to be displayed in the information box (to be put in 
+     quotes).</td>
+   </tr>
+   <tr>
+     <td valign="top"><i># String1, Param1Name...</i></td>
+     <td>Optional. When parameter values are to be displayed within the message, 
+     the arguments are specified as follows:
+     <table border="0" cellpadding="0" cellspacing="0">
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>one string in quotes including a&nbsp; #&nbsp; symbol wherever a 
+           parameter value is to be displayed</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <ul>
+           <li>as many [, parameter name] statements as parameter values 
+           declared with a &quot;#&quot; in the message.</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+ </table>
+ <p>Use the &quot;|&quot; symbol to insert a carriage return in a message.</p>
+ <h3><font color="#282187">Example 1</font></h3>
+ <blockquote>
+   <pre><code>Message(&quot;External radius is: # | Internal Radius is: #&quot;, 
+PartBody&#092;Sketch.1&#092;Radius.3&#092;Radius,
+PartBody&#092;Hole.1&#092;Diameter)  </code></pre>
+ </blockquote>
+ <h3>Example 2</h3>
+ <p align="left">Note that this function can be used along with the 
+ buildMessageNLS function</p>
+ <div align="center">
+   <center>
+   <table border="0" cellspacing="1" id="AutoNumber3">
+     <tr>
+       <td><code>Message (BuildMessageNLS(&quot;KwrCATCatalog.CATNls&quot;,&quot;Zero&quot;))</code><p>
+       Where x,y,z are parameters.</td>
+     </tr>
+   </table>
+   </center>
+ </div>
+ <p align="center">&nbsp; </p>
+ <table border="0" cellpadding="2" id="AutoNumber4">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top">Note that you can use the Message function together with 
+     the <a href="page4311.html">
+     BuildMessageNLS</a> function for your question to display in your language. 
+     To use this function, use the following syntax:<p>Message(BuildMessageNLS 
+     (&quot;x&quot;,&quot;xx&quot;,a,b))</p>
+     <ul>
+       <li>x corresponds to the name of the CATXXX.CATNls file where you will 
+       find the NLS message (it is the CATXXX name without the CATNls 
+       extension).</li>
+       <li>xx corresponds to the key name in this catalog.</li>
+       <li>a and b are the arguments (values that will be replaced in the 
+       message)</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

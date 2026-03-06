@@ -1,0 +1,713 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Crossing a Wide Area Network (WAN) Using HTTP Tunneling for ENOVIA V5 VPM</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Crossing a Wide Area Network (WAN) Using HTTP Tunneling for
+ <strong>ENOVIAV5VPM</strong></h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr>
+     <td valign="top" width="35"><img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top" width="100%">The solution exposed in this document is 
+     based on HTTP-tunneling technique. HTTP tunneling consists in wrapping 
+     application layers (here IIOP messages) in HTTP requests and responses. The 
+     main advantage of this technique is that most firewalls may be configured 
+     to accept HTTP messages.<p>The provided HTTP-tunneling 
+     component implies some performance overhead due to the additional handling 
+     of the HTTP protocol semantics. Though, it still has no impact on 
+     application code and remains easy to deploy and administrate.</p>
+     <p>Activating this solutions involves the following operations:</p>
+     <ul>
+       <li>client-side deployment</li>
+       <li>a tunnel client process that runs on each client hosts</li>
+       <li>a tunnel server process that runs on each server hosts.</li>
+     </ul>
+     <p>&nbsp;</p>
+     <p>&nbsp;</p>
+     <p>&nbsp;</p>
+     <p>&nbsp;</p>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="35">&nbsp;</td>
+     <td valign="top" width="100%">
+     <h2><font color="#282187">Client-side Deployment</font></h2>
+     <h3>Enabling HTTP tunneling</h3>
+     <p>A first variable named <b>CATProxify</b> has to be valuated to a 
+     comma-separated list of &lt;hostname&gt;:&lt;tunneling port&gt; to reference all the 
+     servers to be contacted behind the firewall through some specified 
+     tunneling port numbers. By default, all messages are redirected to port 
+     12872 (not 80). </p>
+     <p>Examples: </p>
+     <p><code>CATProxify=LCA,Vault:12345</code></p>
+     <p><strong>ENOVIAV5VPM</strong> and Vault servers are to be contacted respectively on ports 12872 and 
+     12345. These ports have to be open on the firewalls.</p>
+     <p><code>CATProxify=LCA:80,Vault:80</code></p>
+     <p><strong>ENOVIAV5VPM</strong> and Vault servers are both to be contacted on port 80, which is a 
+     commonly open port on firewalls. </p>
+     <p>In addition, a second variable named <b>CATProxyGateway</b> has to be 
+     valuated with a single host / port couple as &lt;gateway host&gt;:&lt;gateway port&gt; 
+     to reference the host name and port number where the tunnel client process 
+     is running (see below). We strongly recommend that a tunnel client process 
+     runs on each client host, so that &lt;gateway host&gt; be always set to &quot;localhost&quot; 
+     (this is in particular mandatory to impose individual HTTP proxy 
+     authentication). Default port is set to 18271. </p>
+     <p>Example:</p>
+     <p><code>CATProxyGateway=localhost:2222</code></p>
+     <p>Means that all messages will be redirected to the local machine on port 
+     2222. </p>
+     <p>Note: &quot;localhost&quot; is a common machine name alias declared by the 
+     operating system to represent the local machine. </p>
+     <p>According to the client application, two methods exist to set these two 
+     variables. For CATIA clients for interoperability, they have to be added to 
+     the CATIA runtime environment file using the Environment Editor. For clients, they have to be set in the file <b>corbaProxy.properties</b> 
+     located in the directory &lt;Install Path&gt;/docs/java. </p>
+     <h3>The starter process</h3>
+     <p>Each client host has to act as a gateway (see CATProxyGateway variable). 
+     Actually, the tunneling gateway process is started by a dedicated process 
+     named &quot;CATTunnelStartup.&quot; The role of this process is to start and control 
+     the lifecycle of the tunneling gateway process which is in charge of 
+     alternatively wrapping all outgoing IIOP requests into HTTP requests and 
+     unwrapping all incoming HTTP responses back into IIOP responses. </p>
+     <p>CATTunnelStartup is automatically launched if and only if the following 
+     variables are properly set in the runtime environment of the client 
+     process: </p>
+     <ol>
+       <li>CATTunnelingMode=http</li>
+       <li>CATTunnelingPropertiesFileName=CATTunnelStartupClient.conf</li>
+       <li>CATTunnelingPropertiesFilePath=&lt;Install Path&gt;/docs/java</li>
+     </ol>
+     <p>Note that the file name and the file path properties can be customized 
+     and be different from the above default values. However it is mandatory 
+     that the file name at least contains the string &quot;Client&quot;.&nbsp; </p>
+     <p>The file name and file path properties point to the provided file 
+     CATTunnelStartupClient.conf located in &lt;Install Path&gt;/docs/java. The role 
+     of this file is to list the commands to be launched by the starter process 
+     CATTunnelStartup. </p>
+     <h3>Configuring the HTTP-tunneling gateway process</h3>
+     <p>The configuration of the tunneling gateway process itself is made in a 
+     dedicated file. That's why the command line is not to be modified except to 
+     set extra properties specific to the JVM. </p>
+     <p>The file to configure the HTTP tunneling process is pointed to by two 
+     environment variables to set its name and its location on the file system. 
+     Both variables are optional. Their default values are listed below: </p>
+     <p>1. <code>CATProxyPropertiesFileName=CATTunnelClient.conf <br>
+     </code>2.<code> CATProxyPropertiesFilePath=&lt;Install Path&gt;/docs/java </code>
+     </p>
+     <p>The file CATTunnelClient.conf is provided and is located in &lt;Install 
+     Path&gt;/docs/java. The content of this file is a series of properties that 
+     set the behavior of the HTTP tunneling process and have to be customized. 
+     There are two kinds of parameters in this file : the general parameters and 
+     the security parameters.</p>
+     <h4>General parameters</h4>
+     <p>We here detail all the general parameters that can be set in the HTTP 
+     client process configuration file. You can open it to follow the 
+     explanations and to customize it:</p>
+     <p><code>&lt;Install Path&gt;/docs/java/CATTunnelClient.conf</code></p>
+     <p><code><b>listenPort</b></code>: sets the port the process will be 
+     listening to (default is 18271).</p>
+     <p><code><b>proxyHost</b></code> and <code><b>proxyPort</b></code>: used to 
+     specify the host name and port of the HTTP proxy server if, and only if, it 
+     exists (default is no HTTP proxy server). </p>
+     <p><code><b>proxyAuthorization</b></code>: provides a credential used to 
+     handle the &quot;Basic&quot; HTTP proxy server authorization challenge. The expected 
+     value is user:password typed in clear. Note that setting this parameter is 
+     not recommended for obvious security reasons. To avoid using this 
+     parameter, a GUI component dedicated to the handling of proxy challenge is 
+     provided. It is automatically started as soon as the user clicks OK in the 
+     logon CATlet. When the tunneling gateway contacts the HTTP proxy server for 
+     the first time, the user is prompted for his / her internet id and password 
+     to safely pass through the HTTP proxy server. This challenge reappears 
+     unless the credentials are validated by the HTTP proxy server. Once the 
+     user has been authorized by the HTTP proxy server, no more challenge occurs 
+     during the login session.</p>
+     <p><code><b>noCONNECT</b></code>: to be set to true when the HTTP CONNECT 
+     method is not allowed on port set for tunneling by the Proxy server. 
+     Default value: false.</p>
+     <p><code><b>forwardHost</b></code> and <code><b>forwardPort</b></code>: 
+     used to specify the host name and port of the machine hosting the HTTP 
+     server process if, and only if, it is different from the machine hosting 
+     the ENOVIA servers. The default recommendation assumes that the ENOVIA 
+     servers and the HTTP server processes are running on the same machine. </p>
+     <p><code><b>retry</b></code> and <code><b>delay</b></code>: used to specify 
+     the number of tentative reconnections and the delay in seconds between two 
+     tries (default is 10 every 1 second). This parameter can be useful when the 
+     HTTP proxy server is temporarily unavailable. </p>
+     <p><code><b>acceptTimeout</b></code>: Maximum time in millisecond between 
+     the end of the client application and the end of the Tunneling client 
+     process. Default value=10000. </p>
+     <p><code><b>threadNb</b></code>: Number of threads started at the beginning 
+     in the pool and also minimum number of threads present at any time in the 
+     pool. Default value=5 (resp. 10). </p>
+     <p><code><b>threadNbMax</b></code>: Maximum number of threads present in 
+     the pool. Above this limit the jobs are queued waiting for a busy thread to 
+     be freed. Default value=10 (resp. 20). </p>
+     <p><code><b>threadIdleTimeout</b></code>: Time in millisecond between the 
+     moment at which a busy thread is freed and the moment at which this thread 
+     will be removed from the pool (applicable when there are more than threadNb 
+     threads in the pool). Default value=60000 (resp. 60000). </p>
+     <p><code><b>prefixURL</b></code>: Tells whether (value=true) or not 
+     (value=false) the URL built by the Tunneling client process should be 
+     prefixed by the name of the back-end server host or not. This feature can 
+     be useful when several servers are to be accessed: based on the value of 
+     the URL, the messages can be directed to the right server host. For example 
+     if we consider a server host named enolca001, using this switch, the URL 
+     will be <code>/enolca001/cgi-bin/CATHttpTunnelHandler</code> instead of 
+     simply <code>/cgi-bin/CATHttpTunnelHandler</code>. Default value=false (no 
+     prefix).</td>
+   </tr>
+   <tr>
+     <td valign="top" width="35">&nbsp;</td>
+     <td valign="top" width="100%">
+     <h2><font color="#282187">Server-side Deployment</font></h2>
+     <h3>The starter process</h3>
+     <p>On all server hosts where ENOVIA servers are running, a starter process 
+     named &quot;CATTunnelStartup&quot; needs to be running. Its role is exactly 
+     reciprocal to the role of the client starter process: start and control the 
+     HTTP server process which is specifically in charge of alternatively 
+     encoding all outgoing IIOP responses and decoding all incoming IIOP 
+     requests.</p>
+     <p align="left">The following variables must be properly set in the 
+     environment of the starter process. These variables can be exported in the 
+     server environment file whose name is given in &lt;Install Path&gt;/EnvName.txt 
+     and location is given in &lt;Install Path&gt;/EnvDir.txt. </p>
+     <ol>
+       <li>CATTunnelingMode=http</li>
+       <li>CATTunnelingPropertiesFileName=CATTunnelStartupServer.conf</li>
+       <li>CATTunnelingPropertiesFilePath=&lt;Install Path&gt;/docs/javaserver</li>
+     </ol>
+     <p>Note that the name and the location properties of the file to configure 
+     the starter process can be customized and be different from the above 
+     default values. However it is mandatory that the file name at least 
+     contains the string &quot;Server&quot;. </p>
+     <p>The file CATTunnelStartupServer.conf provided in <code>&lt;Install 
+     Path&gt;/docs/javaserver</code> lists all the commands that can launch the 
+     process CATTunnelStartup. Each command line is solution specific (i.e. iiop, 
+     http). The customer has the possibility to change each command line for 
+     tuning or tracing purposes. However, as far as HTTP is concerned, the 
+     appropriate command line is not to be modified except for eventually 
+     setting up the BOOTCLASSPATH to point to the JSSE implementation (see 
+     client section for an example).</p>
+     <p>When the environment variables are set, the process CATTunnelStartup 
+     have to be started with the &quot;catstart&quot; command such as:</p>
+     <p align="left"><code>&lt;Install Path&gt;/code/command/catstart -run 
+     CATTunnelStartup </code></p>
+     <h3 align="left">The HTTP server process</h3>
+     <p align="left">The configuration of the HTTP server process itself is made 
+     in a dedicated file. That's why the command line is not to be modified 
+     except to set extra properties specific to the JVM.</p>
+     <p align="left">The file to configure the HTTP server process is pointed to 
+     by two environment variables to set its name and its location on the file 
+     system. Both variables are optional. Their default values are listed below:</p>
+     <p align="left">1. <code>CATProxyPropertiesFileName=CATTunnelServer.conf
+     </code><br>
+     2. <code>CATProxyPropertiesFilePath=&lt;Install Path&gt;/docs/javaserver </code>
+     </p>
+     <p align="left">The file CATTunnelServer.conf is provided and is located in
+     <code>&lt;Install Path&gt;/docs/javaserver</code>. The content of this file is a 
+     series of properties that set the behavior of the HTTP server process and 
+     have to be customized. Only one kind of parameters is concerned by http : 
+     the general parameters.</p>
+     <h4 align="left">General parameters</h4>
+     <p align="left">We here detail all the general parameters that can be set 
+     in the HTTP server configuration file (you can open it to follow the 
+     explanations and customize it).</p>
+     <p align="left"><code><b>listenPort</b></code>: sets the port the process 
+     will be listening to (default is 12872). </p>
+     <p align="left"><code><b>forwardHost</b></code>: used to specify the ENOVIA 
+     server host name. This property is optional and blank is recommended since 
+     the ENOVIA servers and the HTTP server processes are running on the same 
+     host. </p>
+     <p align="left"><code><b>forwardPorts</b></code>: used to specify the range 
+     of allowed ports on which the client can contact the ENOVIA servers 
+     (default is the Orbix default range of ports). </p>
+     <p align="left"><code><b>webHost</b></code> and <code><b>webPort</b></code>: 
+     used to specify the host name and port of a HTTP server that will handle 
+     any true HTTP requests eventually arriving to the HTTP server process (the 
+     default is a HTTP server hosted by the same machine and listening to port 
+     80).<br>
+     retry and delay : used to specify the number of tentative reconnections and 
+     the delay in seconds between two tries (default is 10 every 1 second). This 
+     parameter is useful during initialization when ENOVIA servers are not yet 
+     ready to be accessed by their clients. <br>
+     threadNb: Number of threads started at the beginning in the pool and also 
+     minimum number of threads present at any time in the pool. Default value=5 
+     (resp. 10). </p>
+     <p align="left"><code><b>threadNbMax</b></code>: Maximum number of threads 
+     present in the pool. Above this limit the jobs are queued waiting for a 
+     busy thread to be freed. Default value=10 (resp. 20). </p>
+     <p align="left"><code><b>threadIdleTimeout</b></code>: Time in millisecond 
+     between the moment at which a busy thread is freed and the moment at which 
+     this thread will be removed from the pool (applicable when there are more 
+     than threadNb threads in the pool). Default value=60000 (resp. 60000). </td>
+   </tr>
+   <tr>
+     <td valign="top" width="35">&nbsp;</td>
+     <td valign="top" width="100%">
+     <h2>Summary of the Overall Deployment without Proxy</h2>
+     <p>To sum-up the preceding points here is now an example of a typical 
+     deployment, going from the server to the client.</p>
+     <h3>Local network</h3>
+     <p>Let's suppose there are two hosts, named &quot;S1&quot; and &quot;S2&quot;, and having 
+     private IP addresses &quot;IP1&quot; and &quot;IP2&quot; respectively on the local network. On 
+     &quot;S1&quot; a <strong>ENOVIAV5VPM</strong> server will be running, with Orbix daemon port 1570 and a range 
+     of IIOP ports from 1590 to 1790. The logical name &quot;LCA&quot; is given to this 
+     server in the Orbix configuration file. On &quot;S2&quot; a Vault server will be 
+     running, with Orbix daemon port 2570 and a range of IIOP ports from 2590 to 
+     2790. The logical name &quot;Vault&quot; is given to this server. </p>
+     <p>Each server environment file is updated to configure the process 
+     CATTunnelStartup for the server side (name from &lt;Install Path&gt;/EnvName.txt 
+     and location from &lt;Install Path&gt;/EnvDir.txt):</p>
+     <p>1. <code>CATTunnelingMode=http </code><br>
+     2. <code>CATTunnelingPropertiesFileName=CATTunnelStartupServer.conf </code>
+     <br>
+     3. <code>CATTunnelingPropertiesFilePath=&lt;Install Path&gt;/docs/javaserver
+     </code></p>
+     <p>On each host the starter process is launched like this:</p>
+     <p><strong>ENOVIAV5VPM</strong>:</p>
+     <p><code>&lt;Install Path&gt;/code/command/catstart -run CATTunnelStartup </code>
+     </p>
+     <p>Vault:</p>
+     <p><code>&lt;Install Path&gt;/code/command/catstart -run CATTunnelStartup </code>
+     </p>
+     <p>The files CATTunnelServer.conf are updated to start the process with the 
+     following arguments:</p>
+     <p><strong>ENOVIAV5VPM</strong>:</p>
+     <ul>
+       <li><code>listenPort=80</code></li>
+       <li><code>forwardHost= </code></li>
+       <li><code>forwardPorts=1570,1590-1790 </code></li>
+       <li><code>webHost= </code></li>
+       <li><code>webPort= </code></li>
+       <li><code>retry=10 </code></li>
+       <li><code>delay=1 </code></li>
+       <li><code>secured=false</code></li>
+     </ul>
+     <p>Vault:</p>
+     <ul>
+       <li><code>listenPort=80</code></li>
+       <li><code>forwardHost= </code></li>
+       <li><code>forwardPorts=2570,2590-2790 </code></li>
+       <li><code>webHost= </code></li>
+       <li><code>webPort= </code></li>
+       <li><code>retry=10 </code></li>
+       <li><code>delay=1 </code></li>
+       <li><code>secured=false </code></li>
+     </ul>
+     <h3>Clients</h3>
+     <p>On the client network, suppose a HTTP proxy server running on a host 
+     named &quot;MyHttpProxy,&quot; on typical port 8080. This proxy is configured to let 
+     go out only authorized users. Moreover it is configured to authorize the 
+     CONNECT method on port 80 between the internal network (or a part of it) 
+     and IP address &quot;IP0&quot; (this is almost MANDATORY). </p>
+     <p>For the <strong>LCA Classic</strong> client application, the corbaProxy.properties file is 
+     updated like this:</p>
+     <p><code>CATProxify=LCA:80,Vault:80<br>
+     CATProxyGateway=localhost </code></p>
+     <p>For the CATIA application, the same variables are exported in the 
+     runtime environment. On each client host, before running any application, 
+     the process &quot;CATHttpTunnelClient&quot; is configured like this by editing the 
+     file CATTunnelClient.conf :</p>
+     <ul>
+       <li><code>listenPort=18271 </code></li>
+       <li><code>proxyHost=MyHttpProxy </code></li>
+       <li><code>proxyPort=8080 </code></li>
+       <li><code>secured=false</code></li>
+     </ul>
+     <p>When beginning an
+     <strong>LCA Classic</strong> client session, besides userID and password, the 
+     user types the following server name: &quot;LCA:1570.&quot; Moreover, in the 
+     VaultClient.properties file, the Vault server host name and daemon port 
+     have been set to &quot;Vault&quot; and &quot;2570&quot;, respectively. </p>
+     <p><b>From now on, everything should be transparent from the client point 
+     of view, except for the HTTP proxy server authorization panel, that appears 
+     for the user to enter his / her Internet id and password just after login.
+     </b></td>
+   </tr>
+   <tr>
+     <td valign="top" width="35">&nbsp;</td>
+     <td valign="top" width="100%">
+     <h2>Example of the overall deployment with Internet proxy and reverse proxy 
+     servers</h2>
+     <p>To make clear the new deployment of the HTTP Tunneling solution, an 
+     example of a typical deployment is presented and explained step by step, 
+     going from the server side to the client side.</p>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/LCA_HTTPTunnelTopology02_NLS.gif" width="684" height="479"></p>
+     <p>Our purpose is to go from the back end to the front end and see at each 
+     step what is required to deploy the HTTP Tunneling solution successfully.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="35">&nbsp;</td>
+     <td valign="top" width="100%">
+     <h3>General DNS configuration</h3>
+     <p>Three domains are present on the network:<br>
+     1. .supplier.com: public domain of the supplier company, managed by a DNS 
+     server in the supplier public network <br>
+     2. .dmz.com: public domain of the oem company, managed by a DNS server in 
+     the oem public network. <br>
+     3. .oem.com: private domain of the oem company, managed by a DNS server in 
+     the oem internal network </p>
+     <p>Here is what could be found in the DNS records of the:</p>
+     <p>1. supplier domain: </p>
+     <p><code>enoclient001 192.168.4.3 <br>
+     proxy 192.168.4.2 </code></p>
+     <p>2. oem public domain: </p>
+     <p><code>www 192.168.2.2 </code></p>
+     <p>3. oem private domain: </p>
+     <p><code>enolca001 192.168.1.1 </code></p>
+     <p>(We use private addresses 192.168.x.x for illustration purpose only. Of 
+     course they are irrelevant in the context of Internet.) FQDN of hosts 
+     pertaining to the oem public domain (e.g. www.dmz.com) can be resolved from 
+     anywhere in the network. On the contrary, FQDN of hosts pertaining to the 
+     oem internal network (e.g. enolca001.oem.com) can only be resolved from the 
+     internal network itself and from the DMZ.</p>
+     <p>To permit the client hosts to contact the 
+     <strong>ENOVIAV5VPM</strong> servers, the FQDN of the 
+     machine hosting the servers MUST be resolvable from the client network. 
+     Hence a record has to be added to the public DNS server of the oem company:</p>
+     <ul>
+       <li>oem public domain: </li>
+     </ul>
+     <blockquote>
+       <p><code>www 192.168.2.2 <br>
+       enolca001 192.168.2.2 </code></p>
+     </blockquote>
+     <p>It is mandatory that the Reverse Proxy and 
+     <strong>ENOVIAV5VPM</strong> servers share the same 
+     public IP address for the HTTP Tunneling solution to work.<br>
+     We have added two routers to filter the traffic between the different 
+     networks, hence to play the role of the corporate firewalls. They are not 
+     mandatory for our example: they only ensure that non authorized / direct 
+     traffic occurs between the separated networks. Since there is a lot of 
+     commercial routers, each coming with its own configuration procedure, we 
+     won't delve into the details of their setup. This task is left to the 
+     network administrator.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="35">&nbsp;</td>
+     <td valign="top" width="100%">
+     <h3>Overview of the solution</h3>
+     <p>Here follows a schematic representation of what happens to the 
+     <strong>ENOVIAV5VPM</strong> 
+     messages using the HTTP Tunneling solution:</p>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/LCA_HTTPTunnelTopology03_NLS.gif" width="669" height="494"></p>
+     <p>Three network hosts are represented along with the running processes of 
+     interest:</p>
+     <p>1. the client host (running the 
+     <strong>LCA Classic</strong> client application, the HTTP 
+     Tunneling client process); <br>
+     2. the bastion host (running a Reverse Proxy server); <br>
+     3. the server host (running the 
+     <strong>ENOVIAV5VPM</strong> server applications, the HTTP Tunneling 
+     server process). </p>
+     <p>The HTTP Tunneling client process is speaking to the Reverse Proxy 
+     server in HTTP. <strong>ENOVIAV5VPM</strong> IIOP messages are redirected to the HTTP Tunneling 
+     client process that eventually handles:</p>
+     <ul>
+       <li>the Proxy server authentication challenge (optional) </li>
+       <li>the Reverse Proxy server authentication challenge (optional) </li>
+     </ul>
+     <p>Then the Reverse Proxy server is speaking to the HTTP Tunneling server 
+     process which finally dispatches them to the right applicative server 
+     process (in IIOP). We will now detail the configuration of each box.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="35">&nbsp;</td>
+     <td valign="top" width="100%">
+     <h4>Configuring the server host</h4>
+     <p>Let's suppose a host named enolca001 located in the internal network of 
+     the oem company, with operating system IBM AIX.</p>
+     <p>This host has a private IP address that can be resolved from the 
+     internal network and the DMZ using a DNS lookup on the FQDN 
+     enolca001.oem.com. However, as seen in the DNS configuration setup, from a 
+     client point of view, this host has also a public IP address (the one of 
+     the bastion host) that can be resolved from anywhere using a DNS lookup on 
+     the FQDN enolca001.dmz.com.</p>
+     <p>On this machine, 
+     <strong>ENOVIAV5VPM</strong> servers will be running: the Orbix daemon will be 
+     listening on port 1570 and each applicative server on a port ranging from 
+     1590 to 1789. Hence we start the HTTP Tunneling configuration after a 
+     standard <strong>ENOVIAV5VPM</strong> installation has been done as explained in the dedicated 
+     product documentation. This supposes in particular that a JRE 1.3 be 
+     present and correctly installed on the machine.</p>
+     <p>Let's say that the 
+     <strong>ENOVIAV5VPM</strong> installation is located in the directory &lt;InstallPath&gt;, 
+     which could be something like:</p>
+     <p><code>/usr/DassaultSystemes/enoLCA/aix_a</code></p>
+     <h5>Orbix daemon configuration</h5>
+     <p>1. To support that 
+     <strong>ENOVIAV5VPM</strong> servers and Reverse Proxy server belong to two 
+     distinct domain names, the Orbix configuration has to be modified. </p>
+     <p>Change the following Orbix parameters in file <code>&lt;InstallPath&gt;/startup/orbix/config/common.cfg:</code></p>
+     <p><code>IT_LOCAL_DOMAIN = &quot;dmz.com&quot;; <br>
+     IT_LOCAL_NAME = &quot;enolca001&quot;; </code></p>
+     <p>and in the file <code>&lt;InstallPath&gt;/startup/orbix/Orbix.cfg:</code></p>
+     <p><code>IT_LOCAL_DOMAIN dmz.com <br>
+     IT_LOCAL_NAME enolca001 </code></p>
+     <p>Then edit the file /etc/hosts and add enolca001.dmz.com at the end of 
+     the server host's IP address line, so that:</p>
+     <p><code>192.168.1.1 enolca001 </code></p>
+     <p>should now read:</p>
+     <p><code>192.168.1.1 enolca001 enolca001.dmz.com </code></p>
+     <p>The Orbix daemon must be restarted to account for its new configuration.</p>
+     <p>I<b>mportant Notes:</b></p>
+     <ol>
+       <li><b>This step is not required if the 
+       <strong>ENOVIAV5VPM</strong> servers and the Reverse Proxy 
+       server share the same domain name, for example oem.com. The Orbix 
+       configuration set up during a standard installation is sufficient in that 
+       case. </b></li>
+       <li><b>This change to the Orbix configuration prevents 
+       <strong>LCA Classic</strong> clients 
+       located in the internal network to connect to the 
+       <strong>ENOVIAV5VPM</strong> servers. Only 
+       external access is possible. </b></li>
+     </ol>
+     <h5>HTTP Tunneling server process configuration</h5>
+     <p>2. Edit the file &lt;InstallPath&gt;/docs/javaserver/CATTunnelServer.conf to 
+     configure the HTTP Tunneling server process.</p>
+     <p>Change:</p>
+     <p><code>listenPort=12872 </code></p>
+     <p>to:</p>
+     <p><code>listenPort=80 </code></p>
+     <p>(Note: you can also adapt the forwardPorts parameter to match the actual 
+     port range of the 
+     <strong>ENOVIAV5VPM</strong> servers declared in the Orbix configuration.)</p>
+     <p>3. Set the three environment variables CATTunnelingMode, 
+     CATTunnelingPropertiesFileName, and CATTunnelingPropertiesFilePath in the 
+     file whose name is given in &lt;InstallPath&gt;/EnvName.txt and location is given 
+     in &lt;InstallPath&gt;/EnvDir.txt:</p>
+     <p><code>CATTunnelingMode=http<br>
+     CATTunnelingPropertiesFileName=CATTunnelStartupServer.conf <br>
+     CATTunnelingPropertiesFilePath=&lt;InstallPath&gt;/docs/javaserver </code></p>
+     <p>4. Launch the starter process CATTunnelStartup with the following 
+     command line: </p>
+     <p><code>&lt;InstallPath&gt;/code/command/catstart -run CATTunnelStartup</code></p>
+     <p>Check that the Java process is running.</p>
+     <p>This step ends the configuration of the server host.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="35">&nbsp;</td>
+     <td valign="top" width="100%">
+     <h4>Configuring the bastion host</h4>
+     <p>In this section we illustrate the installation and the configuration of 
+     a Reverse Proxy server. We assume that this server is an Apache server. As 
+     already stated, these steps are intended to anyone</p>
+     <p>1. Make sure GZip and Perl are installed and accessible through the 
+     commands gzip and perl.<br>
+     2. Put the following zipped file in directory /usr/src (this software is 
+     freely available on the Internet)</p>
+     <blockquote>
+       <p><code>apache_1.3.29.tar.gz </code></p>
+     </blockquote>
+     <p>3. Extract in directory /usr/src the required package:</p>
+     <blockquote>
+       <p><code>gzip -d -c apache_1.3.29.tar.gz | tar xvf - </code></p>
+     </blockquote>
+     <p>4. Build the Apache Web server:</p>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p>1. cd apache_1.3.29 <br>
+           2. ./configure --prefix=/usr/local/apache --enable-module=rewrite 
+           --enable-shared=rewrite --enable-module=proxy --enable-shared=proxy
+           <br>
+           3. make <br>
+           4. make install <br>
+           5. cd .. </p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <p>5. Configure the Apache Web server with the virtual host feature.</p>
+     <p>Edit the Apache configuration file /usr/local/apache/httpd.conf and add 
+     the following lines:</p>
+     <p><code>&lt;VirtualHost *:80&gt;<br>
+     ServerAlias enolca001.dmz.com<br>
+     ErrorLog logs/enolca001.dmz.com-error_log<br>
+     CustomLog logs/enolca001.dmz.com-access_log common<br>
+     &lt;Directory proxy:*&gt;<br>
+     Order deny, allow<br>
+     Allow from all<br>
+     &lt;/Directory&gt;<br>
+     ProxyPass / http://enolca001.oem.com/<br>
+     ProxyPassReverse / http://enolca001.oem.com/<br>
+     &lt;/VirtualHost&gt;</code></p>
+     <p>6. Restart the Apache Web server:</p>
+     <p><code>/usr/local/apache/bin/apachectl restart</code></p>
+     <p>Note: the Reverse Proxy server can be configured to issue an 
+     authentication challenge to the end user using HTTP code 401. In that case, 
+     the HTTP Tunneling client process will prompt the user for an ID and 
+     password (the so-called Basic authentication is the only supported scheme).</p>
+     <p>This step ends the configuration of the bastion host.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="35">&nbsp;</td>
+     <td valign="top" width="100%">
+     <h4>Configuring a Forward Proxy server (optional)</h4>
+     <p>In most companies, Proxy servers are present to allow end users to go 
+     outside the internal network. We illustrate here the installation and the 
+     configuration of a Proxy server. It will be configured to issue an 
+     authentication challenge to the end user using HTTP code 407. In that case, 
+     the HTTP Tunneling client process will prompt the user for an ID and 
+     password (the so-called Basic authentication is the only supported scheme). 
+     We assume that this server is an Apache server. As already stated, these 
+     optional steps are primarily intended to anyone</p>
+     <p>1. Make sure GZip and Perl are installed and accessible through the 
+     commands gzip and perl.<br>
+     2. Put the following zipped file in directory /usr/src:</p>
+     <blockquote>
+       <p><code>apache_1.3.29.tar.gz </code></p>
+     </blockquote>
+     <p>3. Extract in directory /usr/src the required package:</p>
+     <blockquote>
+       <p><code>gzip -d -c apache_1.3.29.tar.gz | tar xvf - </code></p>
+     </blockquote>
+     <p>4. Build the Apache Web server:</p>
+     <blockquote>
+       <blockquote>
+         <p>1. cd apache_1.3.29 <br>
+         2. ./configure --prefix=/usr/local/apache --enable-module=rewrite 
+         --enable-shared=rewrite --enable-module=proxy --enable-shared=proxy <br>
+         3. make <br>
+         4. make install</p>
+       </blockquote>
+     </blockquote>
+     <p>5. Generate user ID and password for Basic authentication (replace &lt;UserID&gt; 
+     and &lt;UserPwd&gt; with actual values):</p>
+     <blockquote>
+       <blockquote>
+         <p>1. mkdir passwd <br>
+         2. cd bin <br>
+         3. ./htpasswd -c /usr/local/apache/passwd/passwords &lt;UserID&gt; <br>
+         <br>
+         htpasswd will ask for a password, and ask it twice for confirmation:</p>
+         <p>New password: &lt;UserPwd&gt; <br>
+         Re-type new password: &lt;UserPwd&gt; </p>
+       </blockquote>
+     </blockquote>
+     <p>6. Configure Apache Web server with authentication and cache features:</p>
+     <p>Edit the Apache configuration file /usr/local/apache/httpd.conf and edit 
+     / add the following lines:</p>
+     <blockquote>
+       <p><code>ServerName proxy.supplier.com<br>
+       &lt;IfModule mod_proxy.c&gt;<br>
+       ProxyRequests on<br>
+       ProxyVia On<br>
+       &lt;Directory proxy:*&gt;<br>
+       Order deny, allow<br>
+       Allow from all<br>
+       AuthType Basic<br>
+       AuthName &quot;My supplier realm&quot;<br>
+       AuthUserFile /usr/local/apache/passwd/passwords<br>
+       require valid-user<br>
+       &lt;/Directory&gt;<br>
+       &lt;/IfModule&gt;<br>
+       CacheRoot &quot;/usr/local/apache/proxy&quot;<br>
+       CacheSize 5<br>
+       CacheGcInterval 4<br>
+       CacheMaxExpire 24<br>
+       CacheLastModifiedFactor 0.1<br>
+       CacheDefaultExpire 1</code></p>
+     </blockquote>
+     <p>Note: if the HTTP CONNECT method is to be allowed on port 80 (using the 
+     Apache directive AllowCONNECT 80 in the above httpd.conf file) then you can 
+     set to false the related parameter of file &lt;InstallPath&gt;\docs\java\CATTunnelClient.conf 
+     that configures the HTTP Tunneling client process (see Configuring the 
+     client hosts section below):</p>
+     <p><code>noCONNECT=false </code></p>
+     <p>This will significantly increase network performance since the Proxy 
+     server will be transparent as far as HTTP protocol is concerned.</p>
+     <p>7. Restart the Apache Web server:</p>
+     <p><code>/usr/local/apache/bin/apachectl restart</code></p>
+     <p>This step ends the configuration of the optional Proxy server host.</p>
+     <p><b>Important Note: To reduce the overhead introduced by HTTP protocol, 
+     HTTP Tunneling uses the Keep-Alive feature of HTTP/1.1, that is it reuses 
+     the same TCP connection to send several messages. But as seen in the 
+     current deployment of the solution, on the path from the client host to the 
+     server host, there can be at least one or two Web servers. These Web 
+     servers can be configured to restrict the number of messages that can be 
+     send on the same TCP connection before closing it (for Apache Web server 
+     the parameter to tune is MaxKeepAliveRequests). In some scenarios (when 
+     downloading huge or numerous models for example), it is possible that the 
+     number of messages exceeds this limit and the tunnel gets broken. Hence be 
+     sure that MaxKeepAliveRequests or equivalent be as high as possible on each 
+     traversed Web server to avoid such a shortcoming. Alternatively, the packet 
+     size of the <strong>ENOVIAV5VPM</strong> messages can be increased so that:</b></p>
+     <p><code>sizeof( all data to download at once ) / (packet size) &lt;= min( all 
+     traversed MaxKeepAliveRequests ) </code></td>
+   </tr>
+   <tr>
+     <td valign="top" width="35">&nbsp;</td>
+     <td valign="top" width="100%">
+     <h4>Configuring the client hosts</h4>
+     <p>We suppose that the client machines have Windows for operating 
+     system. We start the HTTP Tunneling configuration after a standard 
+     <strong>ENOVIAV5VPM</strong> 
+     installation as explained in the dedicated product documentation. Let's say 
+     that the <strong>ENOVIAV5VPM</strong> installation is located in the directory &lt;InstallPath&gt;, which 
+     could be something like:</p>
+     <p><code>C:\Program Files\Dassault Systemes\enoLCA\intel_a<br>
+     C:\Program Files\Dassault Systemes\enoLCA\win_b64</code></p>
+     <h5>Proxy configuration</h5>
+     <p>On the client network, we suppose that the Proxy server described above 
+     is running on a host named proxy and is listening to port 8080. This Proxy 
+     server is configured to let go out only authorized users with valid user ID 
+     and password.</p>
+     <h5>HTTP Tunneling client process configuration</h5>
+     <p>1. Edit the file &lt;InstallPath&gt;\docs\java\CATTunnelClient.conf to 
+     configure the HTTP Tunneling client process. Add the lines:</p>
+     <blockquote>
+       <p><code>noCONNECT=true <br>
+       proxyHost=proxy.supplier.com <br>
+       proxyPort=8080 </code></p>
+     </blockquote>
+     <p>2. Set the three environment variables CATTunnelingMode, 
+     CATTunnelingPropertiesFileName, and CATTunnelingPropertiesFilePath in the 
+     file whose name is given in &lt;InstallPath&gt;\EnvName.txt and location is given 
+     in &lt;InstallPath&gt;\EnvDir.txt:</p>
+     <blockquote>
+       <p><code>CATTunnelingMode=http <br>
+       CATTunnelingPropertiesFileName=CATTunnelStartupClient.conf <br>
+       CATTunnelingPropertiesFilePath=&lt;InstallPath&gt;\docs\java </code></p>
+     </blockquote>
+     <p>3. Edit the file &lt;InstallPath&gt;\docs\java\corbaProxy.properties to enable 
+     port redirection on the client side and set:</p>
+     <blockquote>
+       <p><code>CATProxify=enolca001.dmz.com:80 <br>
+       CATProxyGateway=localhost </code></p>
+     </blockquote>
+     <p>When beginning a 
+     <strong>LCA Classic</strong> client session, the user has to type the server 
+     name and port as:</p>
+     <p><code>enolca001.dmz.com:1570</code></p>
+     <p>The CATTunnelStartup process will be automatically started by the 
+     <strong>LCA Classic</strong> 
+     client application and will control the HTTP Tunneling client process. The 
+     user will have to type his/her 
+     <strong>ENOVIAV5VPM</strong> user ID and password in the logon CATlet, 
+     his/her Internet user ID and password (to pass the Proxy server), and 
+     eventually to type his/her secondary Internet user Id and password (to pass 
+     the Reverse Proxy server). From now on, everything should be transparent 
+     from the user's point of view.</td>
+   </tr>
+   <tr>
+     <td colspan="2" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,140 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>CATProduct and CATProcess Document Management</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>CATProduct and CATProcess Document Management</h1>
+ <a name="ix-Document Management"></a>
+ <p>This document explains how a Product (CATProduct document) is managed in a 
+ Process (CATProcess document), what happens when the Product is modified, and 
+ the recommended methodology in a Machining context.</p>
+ <h2>What is a Product</h2>
+ <p>A basic Product comprises Parts, Products and elements (constraints, 
+ positions). These constraints and positions define the relative/absolute 
+ position of the Parts and Products. The Part and Product documents are 
+ referenced by the Product by means of links.</p>
+ <blockquote>
+   <p><img border="1" src="b35doc/english/online/mfgug_c2/images/DocManage03NLS.gif" width="579" height="429"></p>
+ </blockquote>
+ <h2>Product in a Process</h2>
+ <p>When a basic Product is to be used by a Process, an instance of the Product 
+ is created in the Process. The Product document is referenced by this Product 
+ instance by means of link.</p>
+ <p>The instance keeps the Product as reference according to one of two possible 
+ modes: <b>Flexible</b> (default mode) and <b>Rigid</b>.</p>
+ <blockquote>
+   <p><img border="1" src="b35doc/english/online/mfgug_c2/images/DocManage02NLS.gif" width="532" height="484"></p>
+ </blockquote>
+ <h3>What is Impacted by Flexible and Rigid Modes</h3>
+ <p>There are three types of modifications that can be done inside and under the 
+ Product structure that is inserted in the Process:</p>
+ <ul>
+   <li>part modifications: for example, geometry modifications done in the Part 
+   Design workbench</li>
+   <li>modifications to the structure of the products: addition, deletion or 
+   reordering products</li>
+   <li>modification of geometric position data located in the CATProduct 
+   document.</li>
+ </ul>
+ <p>Only modifications to geometric position data will function differently in 
+ Flexible and Rigid modes. </p>
+ <h3>Part Modifications</h3>
+ <p>Part modifications function in the same way in Flexible and Rigid modes. </p>
+ <p>Any modification to the Part does not impact Product or Process documents.</p>
+ <h3>Modifications to the Structure of the Products</h3>
+ <p>Modifications to the structure of the products function in the same way in 
+ Flexible and Rigid modes. </p>
+ <p>Propagation mechanisms of changes between the instance and the reference of 
+ the Product exist. The following are propagated immediately:</p>
+ <ul>
+   <li>insertion, destruction of constraints</li>
+   <li>insertion, destruction and replacement of links to a Part</li>
+   <li>insertion, destruction, or modification of parameters and rules.</li>
+ </ul>
+ <h3>Geometric Position Data Modifications</h3>
+ <p>Modifications to geometric position data function differently in Flexible 
+ and Rigid modes. </p>
+ <p>Modification and update of the position of the Parts and the Products (using 
+ the compass) or the constraint values (such as offset, angle, and side) are 
+ propagated or not depending on the <b>Rigid</b> or <b>Flexible</b> mode.</p>
+ <h5>In Rigid mode</h5>
+ <p>Modification and update are propagated immediately.</p>
+ <h5>In Flexible mode</h5>
+ <p>In general, modification on the reference is propagated to the instance. 
+ However, when constraint or position data is changed on the instance, then 
+ instance and reference position data are no longer correlated. Any later 
+ modification to the reference is not propagated to the instance<br>
+ Therefore, a modification done in the Product Structure workbench will be 
+ propagated on the Process document only if constraint or position data has not 
+ been overridden.</p>
+ <p>Note that data update is not propagated to the instance and has to be 
+ performed on the instance. <br>
+ To update the instance from the CATProcess document, go into the Assembly 
+ Design workbench and use the <b>Update All</b> command.</p>
+ <p>Modification and constraint update on the instance are not propagated to the 
+ reference.</p>
+ <p>To force the propagation of all modifications on the instance to the 
+ reference, use the <b>Propagate position to reference</b> command on the 
+ instance.<br>
+ To forget all modifications on the instance and retrieve the reference state, 
+ use the <b>Flexible/Rigid Sub-Assembly</b> command twice on the instance.</p>
+ <p>These commands are available in the Assembly Design and Product Structure 
+ workbenches.</p>
+ <h3>How to Change Mode</h3>
+ <p>The mode can be changed on the instance using the <b>Flexible/Rigid 
+ Sub-Assembly</b> command. Modifications of positions and constraint values on 
+ the instance will be lost.</p>
+ <h3>CATProduct Generic Machines</h3>
+ <p>A generic machine is a CATProduct representation created using the NC 
+ Machine Tool Builder product. It can be referenced in a Part Operation in a 
+ CATProcess. The characteristics of the machine can be modified using the Part 
+ Operation's <a href="page11418.html">Machine Editor</a>.</p>
+ <p>These machines adhere to the Instance/Reference mechanism described above. A 
+ generic machine is added to the ResourceList in <b>Flexible</b> mode. This 
+ means that any modification to the machine in the CATProcess is valid only for 
+ that instance of the machine in that CATProcess: the modification is not 
+ propagated to the reference (that is, the CATProduct file).</p>
+ <h2>Methodology</h2>
+ <h4>Rigid Mode</h4>
+ <p>You can modify the instance or the reference, they are both impacted by 
+ modifications. The Product has a strong link to the Processes where it is 
+ used.&nbsp;You are allowed to modify (and save) the CATProduct document.</p>
+ <p>For a Machining-dedicated Product that is used in a Machining CATProcess 
+ document, the preferred mode is <b>Rigid</b>.&nbsp;</p>
+ <h4>Flexible Mode</h4>
+ <p>You can modify the instance or the reference depending on what you want to 
+ do:</p>
+ <ul>
+   <li>For a specific position for the Process, modify the instance (through the 
+   Process document).</li>
+   <li>For a specific position for the Product, modify the reference (through 
+   the Product document).</li>
+   <li>The Product can be tuned for each Process where it is used.&nbsp;</li>
+ </ul>
+ <p>For a Product that is not Machining-dedicated and used in a Machining 
+ CATProcess document, the preferred mode is <b>Flexible</b>.</p>
+ <h2>Selective Loading of Machining Data</h2>
+ <p>When the user loads a CATProcess in an NC Detailing workbench (NC 
+ Manufacturing Review, Prismatic Machining, Surface Machining, Advanced 
+ Machining or Lathe Machining), the associated CATProducts and CATParts are 
+ activated in Design mode. This is because the commands in these workbenches 
+ often require geometry selection. This is the case even when working with Cache 
+ management. </p>
+ <p>If the CATProduct or CATPart was saved in Visualization mode, this mode may 
+ be conserved for machine simulation, for example. So it is possible to work 
+ with Cache management in this case. </p>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,173 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Turning on a Milling Center with Facing Head</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Turning on a Milling Center with Facing Head</h1>
+ <p align="left">This section provides information about creating turning 
+ operations on a 3-axis milling machine that is equipped with a rotary table and 
+ facing head. The main objective is to machine large diameter holes using 
+ turning techniques, which will give better quality results than milling.</p>
+ <p align="left">In particular, this section explains how to:</p>
+ <ul>
+   <li>
+   <p align="left"><a href="#setup">set up your part and machining environment</a></li>
+   <li>
+   <p align="left"><a href="#Tplanes">define local machining axis systems and 
+   turning planes</a></li>
+   <li>
+   <p align="left"><a href="#method">create your program using either Machining 
+   Axis Changes or Table Rotations</a></li>
+   <li>
+   <p align="left"><a href="#verify">replay and simulation</a></li>
+   <li>
+   <p align="left"><a href="#NCDataOut">generate NC data from your program.</a></li>
+ </ul>
+ <h2><a name="setup"></a>Set Up the Part and Machining Environment</h2>
+ <p>The <kbd>Part Operation</kbd> editor allows you to set up the part and the machining 
+ environment.</p>
+ <p><img border="1" src="b35doc/english/online/lmgug_c2/images/TurningOnMillCenter13.gif" width="362" height="508"></p>
+ <h3>Define the Reference Machining Axis System</h3>
+ <p>Click <kbd>Reference Machining Axis System</kbd>
+ <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgCoordinateSystemP2.gif" align="middle" width="22" height="22">. 
+ The <kbd>Machining Axis System</kbd> dialog box appears for assigning a reference 
+ machining axis system to the part operation. This is similar to the procedure 
+ described in
+ <a href="page11380.html" target="ds_doc2">
+ Insert Machining Axis Change</a>.</p>
+ <p>The coordinates of the NC output data will be expressed in this axis system. 
+ However, when a local machining axis system is inserted in the program, 
+ coordinates will be expressed in the local axis system.</p>
+ <p>The reference machining axis system should be positioned such that it is 
+ Y-axis is collinear with the rotary axis of the machine (B).</p>
+ <h3>Assign the Part to be Machined</h3>
+ <p>Click <kbd>Product</kbd>
+ <img border="0" src="b35doc/english/online/icons_C2/images/I_ProductP2.gif" align="middle" width="24" height="24"> 
+ to associate the part to machine (CATProduct or CATPart) to the part operation.
+ </p>
+ <p>Other important parameters to set in the <kbd>Part Operation</kbd> Editor are: </p>
+ <ul>
+   <li>Tool change point</li>
+   <li>Home Point: From Machine.</li>
+ </ul>
+ <h3>Select the Machine and Set Parameters</h3>
+ <p>Click the <kbd>Machine</kbd> icon then select the <kbd>3-axis with Rotary Table Machine</kbd> 
+ type in the <kbd>Machine Editor</kbd>. </p>
+ <p>In the case of an actual machine with facing head on the shop floor, the 
+ XYZIJK output could be post-processed to pilot the U-axis of the facing head.<br>
+ The tool mounted on the facing head machines along the profile of the hole.<br>
+ Note that this information is not specified in the Machine Editor dialog box.</p>
+ <p>In the <kbd>Numerical Control</kbd> tab, select the following sample PP word 
+ table is delivered with the product in<br>
+ <code>\Startup\Manufacturing\PPTables\TURNING_ON_MILLING_CENTER.pptable</code></p>
+ <p><img border="1" src="b35doc/english/online/lmgug_c2/images/TurningOnMillCenter14.gif" width="414" height="281"></p>
+ <p>Other important parameters to set in the <kbd>Machine Editor</kbd> are: </p>
+ <ul>
+   <li><kbd>Reference orientation of rotary table</kbd>: set to 0, 0, 1 for 
+   example</li>
+   <li><kbd>Rotary axis</kbd>: set to B for example</li>
+   <li><kbd>Home point</kbd>: this is the start position when replaying a 
+   rotation if any motion is defined in the program.</li>
+ </ul>
+ <h2><a name="Tplanes"></a>Define Local Machining Axis Systems and Turning 
+ Planes</h2>
+ <p>If you specify turning operations on a milling machine, they will be 
+ described in the ZX <a href="page11180.html#glTurnPlane">turning plane</a> of the 
+ reference machining axis system.</p>
+ <p>To specify turning operations on a milling machine equipped with a facing 
+ head and rotary table, you must define local machining axis systems. Local 
+ turning planes will be derived from the Z and X axes of these axis systems. The 
+ geometry to machine must lie in the turning plane in order to create the 
+ turning operations.<br>
+ The figure below shows a local machining axis system with the ZX turning plane 
+ and the selected geometry (Part Element in red) that lies in this plane.</p>
+ <p><img border="1" src="b35doc/english/online/lmgug_c2/images/TurningOnMillCenter15.gif" width="300" height="350"></p>
+ <p>Therefore at each change of turning plane, you must define a local machining 
+ axis for turning operations. This is needed for processing geometry and 
+ visualizing the tool assembly.</p>
+ <h2><a name="method"></a>Methodology: Machining Axis Changes or Table Rotations</h2>
+ <h3>Using Machining Axis Changes</h3>
+ <p>To output NC data in the axis system defining the local plane, you must 
+ define a Machining Axis System Change before each turning plane.</p>
+ <p>A typical program is shown in the figure below:</p>
+ <p><img border="1" src="b35doc/english/online/lmgug_c2/images/TurningOnMillCenter12.gif" width="650" height="170"></p>
+ <p>When NC data is generated in XYZIJK format, the IJK components will be the 
+ Z-axis of the local plane (see <a href="#NCDataOut">NC Data Output</a> for more 
+ information).</p>
+ <h3>Using Table Rotations</h3>
+ <p>Define your turning operations in the corresponding local axis systems, then 
+ generate Machine Rotation instructions in the program using the command <kbd>
+ Generate Machine Rotation</kbd> command.</p>
+ <p>A typical program is shown in the figure below:</p>
+ <p><img border="1" src="b35doc/english/online/lmgug_c2/images/TurningOnMillCenter16.gif" width="650" height="149"></p>
+ <p>When NC data is generated in XYZIJK format, the IJK components will be the 
+ Z-axis of the local plane (see <a href="#NCDataOut">NC Data Output</a> for more 
+ information).</p>
+ <h2><a name="verify"></a>Replay and Simulation</h2>
+ <p>You should replay the tool path to check each operation.</p>
+ <p>You should simulate the material removed by the program. You will need to 
+ specify design part and stock in the Part Operation editor.</p>
+ <h2><a name="NCDataOut"></a>NC Data Output</h2>
+ <p>NC data output can be generated in XYZ or XYZIJK format. <br>
+ For XYZ data, you must generate table rotations in your program.<br>
+ For XYZIJK data, the value that is output for IJK is taken on the Z axis 
+ (spindle) of the local machining axis system.</p>
+ <p>The following NC data statements will be generated at the start of each 
+ turning operation:</p>
+ <ul>
+   <li>The coordinates of the origin of the local machining axis</li>
+   <li>An order to switch from the X-axis to the U-axis.<br>
+   This is done through parameterized syntaxes in the PP table (NC_SPINDLE_LATHE 
+   or NC_LATHE_MO_START_COMMENT).</li>
+ </ul>
+ <p><b>Using NC_SPINDLE_LATHE:</b></p>
+ <blockquote>
+   <p><code>*START_NC_COMMAND NC_SPINDLE_LATHE<br>
+   *START_LIST MFG_SPNDL_UNIT <br>
+   RPM ,SFM<br>
+   *END<br>
+   LOCAL_ORIGIN,%MFG_NCAXIS_X_ORIG,%MFG_NCAXIS_Y_ORIG,%MFG_NCAXIS_Z_ORIG<br>
+   $$ SWITCH_FROM_X_TO_U<br>
+   SPINDL/%MFG_SPNDL_SPEED,&amp;MFG_SPNDL_UNIT<br>
+   *END<br>
+   *END</code></p>
+ </blockquote>
+ <p><b>Using NC_LATHE_MO_START_COMMENT:</b></p>
+ <blockquote>
+   <p><code>*START_NC_INSTRUCTION NC_LATHE_MO_START_COMMENT<br>
+   *START_SEQUENCE<br>
+   LOCAL_ORIGIN,%MFG_NCAXIS_X_ORIG,%MFG_NCAXIS_Y_ORIG,%MFG_NCAXIS_Z_ORIG<br>
+   $$ SWITCH_FROM_X_TO_U<br>
+   *END<br>
+   *END</code></p>
+ </blockquote>
+ <p>A typical APT output would be:</p>
+ <blockquote>
+   <p><code>$$ OPERATION NAME : Profile Finish Turning.1<br>
+   $$ Start generation of : Profile Finish Turning.1<br>
+   SWITCH/9<br>
+   FEDRAT/ 0.3000,MMPR<br>
+   LOCAL_ORIGIN, 0.00000, 130.00000, 0.000000<br>
+   $$ SWITCH_FROM_X_TO_U<br>
+   SPINDL/ 70.0000,RPM<br>
+   GOTO / ...</code></p>
+ </blockquote>
+ <h2>Some Points to Note&nbsp;</h2>
+ <p>The <kbd>Update Input Stock</kbd> capability is not available for turning 
+ operations on milling centers. The corresponding commands are not available in 
+ the Part Operation or Turning Operation editors.</p>
+
+ </body>
+
+</html>
+

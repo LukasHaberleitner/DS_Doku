@@ -1,0 +1,421 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+	<head>
+	<meta name="MonocodingType" content="0">
+	<meta name="MonocodingFlag" content="C2D2">
+	<meta http-equiv="Content-Language" content="en-us">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title>Ramp Rough Turning Operations</title>
+	<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+	<meta name="ProgId" content="FrontPage.Editor.Document">
+	<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+	<style type="text/css">
+.style2 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+	</head>
+
+	<body>
+
+	<h1><a name="22672"></a>Ramp Rough Turning Operations<br>
+	<img src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32"></h1>
+	<a name="ix-Ramp Rough Turning operation"></a><p>The information in this section 
+	will help you create and edit <kbd>Ramp Rough</kbd> Turning operations in your manufacturing 
+	program. This type of operation is suitable for machining hard materials using 
+	round ceramic inserts, thereby minimizing wear and cutting stress.</p>
+	<p>The <kbd>Ramp Rough</kbd> Turning operation allows you to specify:
+	<a name="ix-Longitudinal Ramp Rough Turning;Ramp Rough Turning mode:Longitudinal">
+	</a><a name="ix-Face Ramp Rough Turning;Ramp Rough Turning mode:Face"></a>
+	</p>
+	<ul>
+		<li>Longitudinal and Face roughing modes</li>
+		<li>external, internal, or frontal machining according to the type of area 
+		to machine</li>
+		<li>relimitation of the area to machine</li>
+		<li>various approach and retract path types</li>
+		<li>various lead-in and lift-off options with specific feedrates</li>
+		<li>rework machining.</li>
+	</ul>
+	<p>The following topics are dealt with in the paragraphs below:</p>
+	<ul>
+		<li><a href="#tools">Tooling</a></li>
+		<li><a href="#pgfId=53790">Geometry</a> including
+		<a href="#pgfId=1033624">Part and Stock Offsets</a></li>
+		<li><a href="#pgfId=1032946">Location and Limits</a></li>
+		<li><a href="#pgfId=1043420">Machining Strategy Parameters</a></li>
+		<li><a href="#FandSRoughing">Feeds and Speeds</a></li>
+		<li><a href="#pgfId=1048560">Tool Compensation</a></li>
+		<li><a href="#pgfId=54086">Macros</a>.</li>
+	</ul>
+	<table border="0">
+			<tr>
+					<td width="770">
+					<h3><a name="tools"></a>Tooling for Ramp Rough Turning</h3>
+					<p>The following tooling may be used: </p>
+					<ul>
+						<li>External and Internal insert-holders with round inserts.
+						</li>
+					</ul>
+					<p>Note that the following attributes may influence machining 
+					(they are located on the Insert-holder&#39;s Technology tab):</p>
+					<ul>
+						<li>Trailing angle</li>
+						<li>Leading angle</li>
+						<li>Max Recessing Depth</li>
+						<li>Max Boring Depth.</li>
+					</ul>
+					<p>These attributes take tooling accessibility into account 
+					and may reduce the machined area.<br>
+					However, you can use the <b>Insert-Holder Constraints</b> option 
+					on the operation editor to either ignore or apply these tooling 
+					attributes. You can replay the operation to verify the influence 
+					of these attributes on the generated tool path.</p>
+					<p>Note that the <b>Insert-Holder Constraints </b>setting does 
+					not influence the <a href="#SafetyAngles">Entry Flank Angle</a> 
+					defined in the operation editor.</p>
+					<h3><a name="pgfId=53790"></a>Geometry for Ramp Rough Turning</h3>
+					<p>Part and Stock profiles are required. They can be specified 
+					as follows:</p>
+					<a name="ix-contextual command::By Curve;By Curve contextual command">
+					</a>
+					<a name="ix-contextual command::Sectioning;Sectioning contextual command">
+					</a><ul>
+						<li>select edges either directly or after selecting the
+						<b>By Curve</b> contextual command. In this case the
+						<a href="page11480.html#EdgeSelToolbar" target="ds_doc2">
+						Edge Selection toolbar</a> appears to help you specify the 
+						guiding contour.</li>
+						<li>select the <b>Sectioning</b> contextual command. Please 
+						refer to
+						<a href="page4937.html" target="ds_doc2">
+						Sectioning</a> for details of how to use this capability.<br>
+						Please note that the sectioning selection method is not 
+						associative.</li>
+					</ul>
+					<p><a name="pgfId=1091232"></a>The <a name="marker=1091241">
+					</a><a name="ix-Ramp Rough Turning parameter:End Limit"></a>
+					<b>End Limit </b>option allows you to specify a point, line, 
+					curve or face to relimit or extrapolate the selected part profile. 
+					If a face is specified, the end element is the intersection 
+					of the face and the working plane. The position of the end of 
+					machining is defined with respect to this element by one of 
+					the following settings: None / In / On / Out.</p>
+					<p><a name="R18StockExtension"></a>The <b>Stock Extension 
+					distance</b> </p>
+					<p>allows you to extend the stock in the machining direction 
+					and, to any desired length. This can be useful in Rough turning 
+					scenarios, where you want to machine beyond the stock profile. 
+					This extension is taken into account for tool path computation 
+					when an End limit element is defined and used on the operation 
+					(when End limit mode is different from <kbd>None</kbd>).</p>
+					<p>The extension distance defines the extended domain 
+					for tool path computation. Note that the end limit is respected 
+					only when it is specified (according to the <kbd>In / On / Out</kbd> 
+					mode) inside the extended domain.</p>
+					<p>The figures below show that an End limit is defined 
+					(selected and mode different from <kbd>None</kbd>) and a Stock 
+					Extension distance is defined (greater than 0).</p>
+					<p>
+					<img border="1" src="b35doc/english/online/lmgug_c2/images/StockExtension03.gif" width="305" height="369">
+					<img border="1" src="b35doc/english/online/lmgug_c2/images/StockExtension01.gif" width="410" height="367"></p>
+					<p>The tool moves beyond the stock (extension distance). 
+					This distance defines the machining domain extension for tool path 
+					computation. </p>
+					<p>Note that in this particular case, the limit is not 
+					reached (<kbd>In / On / Out</kbd>) because it is outside the 
+					extended machining domain.</p>
+					<p><b>Relimiting the area to machine by means of limit elements</b></p>
+					<p>If you specify a point, it is projected onto the part profile.
+					<br>
+					A line through the projected point parallel to the radial axis 
+					delimits the area to machine.<br>
+					<br>
+					If you specify a line, its intersection with the part profile 
+					is calculated (if necessary, the line is extrapolated). <br>
+					A line through the intersection point parallel to the radial 
+					axis delimits the area to machine.<br>
+					<br>
+					If you specify a curve, its intersection with the part profile 
+					is calculated (if necessary, the curve is extrapolated using 
+					the tangent at the curve extremity). <br>
+					A line through the intersection point parallel to the radial 
+					axis delimits the area to machine.</p>
+					<h4><a name="pgfId=1032297"></a><a name="67000"></a>
+					<a name="ix-Ramp Rough Turning parameter:Orientation"></a>Orientation 
+					for Ramp Rough Turning</h4>
+					<p><a name="pgfId=1032913"></a>The following
+					<a name="marker=1079981"></a><b>Orientations</b> are proposed: 
+					Internal, External and Frontal (for Face Roughing only).</p>
+					<p><a name="pgfId=1032914"></a>The selected Orientation defines 
+					the type of geometric relimitation to be done between the stock 
+					and part geometry in order to determine the area to machine. 
+					Selected part and stock profiles do not need to be joined (see 
+					the following figures).</p>
+					<p><a name="pgfId=1032926"></a><a name="F1@CYC09"></a>
+					<a name="marker=1064964"></a>
+					<a name="ix-External Ramp Rough Turning"></a><b>External Ramp 
+					Rough Turning</b></p>
+					<p>
+					<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-5.gif" width="500" height="322">
+					</p>
+					<p><a name="pgfId=1032932"></a><a name="F1@CYC17"></a>
+					<a name="marker=1064965"></a>
+					<a name="ix-Internal Ramp Rough Turning"></a><b>Internal Ramp 
+					Rough Turning</b></p>
+					<p>
+					<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-6.gif" width="500" height="249">
+					</p>
+					<p><a name="pgfId=1032943"></a><a name="F1@CYC16"></a>
+					<a name="marker=1064966"></a>
+					<a name="ix-Frontal Ramp Rough Turning"></a><b>Frontal Ramp 
+					Rough Turning</b> </p>
+					<p><a name="pgfId=1032933"></a>Frontal machining is proposed 
+					for face Ramp Rough Turning. In that case, the minimum and maximum 
+					diameters of the area to machine are determined by the stock 
+					profile dimensions. </p>
+					<p><a name="pgfId=1032937"></a>For example, in the following 
+					figure the area to machine is relimited by the spindle axis 
+					because the stock profile is also relimited by the spindle axis.
+					</p>
+					<p>
+					<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-7.gif" width="500" height="293">
+					</p>
+					<h4><a name="pgfId=1033624"></a><a name="40336"></a>
+					<a name="marker=1064970"></a>Part and Stock Offsets for Ramp 
+					Rough Turning</h4>
+					<ul>
+						<li><b>Stock offset</b>: specifies a virtual displacement 
+						of the stock profile.</li>
+						<li><b>Part offset</b>: specifies a virtual displacement 
+						of the part profile.<blockquote>
+								<blockquote>
+										<p>
+										<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-11.gif" width="340" height="280">
+										</p>
+								</blockquote>
+						</blockquote>
+						</li>
+						<li><b>Axial part offset</b>: specifies a virtual displacement 
+						of the part profile along the spindle axis direction.<blockquote>
+								<blockquote>
+										<p>
+										<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-12.gif" width="340" height="280">
+										</p>
+								</blockquote>
+						</blockquote>
+						</li>
+						<li><b>Radial part offset</b>: specifies a virtual displacement 
+						of the part profile in the radial axis direction.<blockquote>
+								<blockquote>
+										<p>
+										<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-13.gif" width="340" height="280">
+										</p>
+								</blockquote>
+						</blockquote>
+						</li>
+						<li><b>End limit offset</b>: distance with respect to the 
+						end element (only if end element is a line or a curve, and 
+						when In or Out&nbsp; is set for end element positioning).</li>
+					</ul>
+					<p><a name="pgfId=1033643"></a>Offsets can be positive or negative 
+					with any absolute value. <a name="pgfId=1033644"></a>The global 
+					offset applied to the part profile is the resulting value of 
+					the normal, axial and radial offsets.</p>
+					<h3><a name="pgfId=1032946"></a>Location and Limits for Ramp 
+					Rough Turning</h3>
+					<p>The following machining <a name="marker=1079982"></a>
+					<a name="ix-Ramp Rough Turning parameter:Location"></a><b>Locations</b> 
+					are proposed:</p>
+					<ul>
+						<li>Front, the part is machined toward the head stock</li>
+						<li>Back, the part is machined from the head stock.</li>
+					</ul>
+					<p>
+					<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-8.gif" width="600" height="270">
+					</p>
+					<p><a name="pgfId=1032955"></a>Orientation and Location settings 
+					determine the way the program closes the area to machine.&nbsp;
+					<a name="pgfId=1045483"></a>The following options allow you 
+					to restrict the area to machine that is pre-defined by the stock 
+					and part. You may want to restrict this area due to the physical 
+					characteristics of the tool and the type of machining to be 
+					done.</p>
+					<p><a name="pgfId=1045486"></a><b>
+					<a name="ix-Ramp Rough Turning parameter:Minimum Machining Radius">
+					</a>Minimum Machining Radius</b> </p>
+					<blockquote>
+							<p>
+							<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-9.gif" width="500" height="319">
+							</p>
+					</blockquote>
+					<p><a name="pgfId=1045489"></a><a name="marker=1079996"></a>
+					<b>
+					<a name="ix-Ramp Rough Turning parameter:Maximum Machining Radius">
+					</a>Maximum Machining Radius</b> (for internal machining)
+					</p>
+					<blockquote>
+							<p>
+							<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-10.gif" width="600" height="329">
+							</p>
+							<p>Note that Max Boring Depth is defined on the tool.</p>
+					</blockquote>
+					<p><a name="pgfId=1032313"></a><a name="marker=1079997"></a>
+					<b>
+					<a name="ix-Ramp Rough Turning parameter:Axial Limit for Chuck Jaws">
+					</a>Axial Limit for Chuck Jaws</b> (for external or frontal 
+					machining): Offset defined from the machining axis system.
+					</p>
+					<h3><a name="pgfId=1043420"></a>Machining Strategy Parameters 
+					for Ramp Rough Turning</h3>
+					<h4><a name="pgfId=1048396"></a><a name="75626"></a>Path Definition 
+					for Ramp Rough Turning</h4>
+					<a name="ix-Ramp Rough Turning parameter:Entry Flank Angle">
+					</a><ul>
+						<li><b>Machining tolerance</b></li>
+						<li><b>Max Depth of Cut</b><br>
+						This option is used to specify the maximum distance between 
+						passes.</li>
+						<li><b>Under Spindle Axis Machining</b><br>
+						For Face Ramp Rough Turning, this option allows you to request 
+						machining under the spindle axis.</li>
+						<li><b>Machining Direction</b> (only for Face Roughing with 
+						Frontal machining) <br>
+						You can specify the machining direction with respect to 
+						the spindle axis by means of the To/From Spindle Axis choice.</li>
+						<li><b><a name="SafetyAngles"></a>Entry Flank Angle</b><br>
+						The insert geometry is taken into account to avoid collision 
+						by reducing the maximum slope on which machining can be 
+						done. Defining a Entry Flank Angle on the operation allows 
+						you to further reduce the area to machine. <br>
+						<br>
+						Note that a leading angle can also be defined on the insert-holder 
+						to define the maximum slope on which machining can be done. 
+						In this case and if the<b> Insert-Holder Constraints </b>
+						setting is applied (<a href="#tools">see above</a>), the 
+						angle that reduces the slope the most will be taken into 
+						account.</li>
+						<li><b>Start pass mode</b> is defined by one of the following 
+						settings:&nbsp; Chamfer, Rounded, None.</li>
+						<li>If <b>Rework</b> mode is set, the following options 
+						are available:<ul>
+							<li>Distance before Rework Plunge</li>
+							<li>Angle before Rework Plunge.</li>
+						</ul>
+						</li>
+					</ul>
+					<h4><a name="pgfId=1043425"></a><a name="56371"></a>Lead-in 
+					and Lift-off for Ramp Rough Turning</h4>
+					<p><a name="pgfId=1043432"></a>These options allow penetration 
+					into the workpiece at a reduced feedrate in order to prevent 
+					tool damage. </p>
+					<ul>
+						<li><b>Lead-in Distance</b><br>
+						Defined with respect to the cutting direction. It takes 
+						the stock profile and stock clearance into account. The 
+						tool is in RAPID mode before this distance.</li>
+					</ul>
+					<ul>
+						<li><b>Lift-off Distance</b> and <b>Lift-off Angle</b><br>
+						These parameters define the lift-off vector at the end of 
+						each pass with respect to the cutting direction.</li>
+					</ul>
+					<blockquote>
+							<p>
+							<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-16.gif" width="350" height="252">
+							</p>
+					</blockquote>
+					<h3>
+					<a name="ix-Ramp Rough Turning parameter:Feeds and Speeds">
+					</a><a name="FandSRoughing"></a>Feeds and Speeds for Ramp Rough 
+					Turning</h3>
+					<p><a name="pgfId=1034563"></a><a name="marker=1080025"></a>
+					Speed unit can be set to: </p>
+					<ul>
+						<li>Angular: spindle speed in revolutions per minute</li>
+						<li>Linear: constant cutting speed in units per minute</li>
+					</ul>
+					<p><a name="pgfId=1043029"></a>then you can give a Machining 
+					speed value. </p>
+					<p>You can also set a Maximum spindle speed value for 
+					the operation (by default, this value is the same as the 
+					Maximum spindle speed set on the Part Operation).</p>
+					<p>The following feedrates can be set to either Angular 
+					units (length per revolution) or Linear units (length per minute):</p>
+					<ul>
+						<li>Machining </li>
+						<li>Lead-in </li>
+						<li>Lift-off </li>
+						<li>Plunge</li>
+						<li>Light loading </li>
+						<li>Air cutting.</li>
+					</ul>
+					<p><a name="WNR11AirCut"></a>Feedrates are also available 
+					for air cutting trajectories such as macro motions 
+					and path transitions.<br>
+					Note that RAPID feedrate can be replaced by Air cutting feedrate 
+					in tool trajectories (except in macros) by selecting the check box 
+					in the Feed and Speeds tab page
+					<img border="1" src="b35doc/english/online/lmgug_c2/images/TabFeedG.gif" align="middle" width="36" height="22">.</p>
+		<p>
+		<img src="b35doc/english/online/lmgug_c2/images/AirCutting01.gif" width="363" height="76" class="style2"></p>
+		<p>You can select <kbd>Air Cutting feed-rate</kbd> as Linear (feed per 
+		minute) or Angular (feed per revolution). When you select it as Angular the 
+		unit is set to mm_turn, the unit is set to mm_mn for Linear.</p>
+		<p>The changes in unit of <kbd>Air cutting feed-rate</kbd>, are also reflected in APT 
+		file output. Calculated cycle time in Properties dialog box of MO also 
+		get changed. There are changes in total time and machining time on tool 
+		path replay dialog box.</p>
+					<p><a name="pgfId=1080797"></a><a name="marker=1100846"></a>
+					Dwell setting indicates whether the tool dwell at the end of 
+					each path is to be set in seconds or a number of spindle revolutions.</p>
+					<p><a name="WNR10REVDEC"></a>Please note that decimal values 
+					can be used for the number of revolutions. For example, when 
+					machining big parts that have a large volume, it can be useful 
+					to specify a dwell using a value of less than one revolution 
+					(0.25, for example).</p>
+					<h3><a name="pgfId=1048560"></a><a name="35525"></a>
+					<a name="ix-Ramp Rough Turning parameter:Tool Compensation">
+					</a>Tool Compensation <a name="pgfId=1048571"></a>for Ramp Rough 
+					Turning&nbsp; </h3>
+					<p>You can select a <b>tool compensation number</b> corresponding 
+					to the desired tool output point. Note that the usable compensation 
+					numbers are defined on the tool assembly linked to the machining 
+					operation. <a name="pgfId=1061795"></a>If you do not select 
+					a tool compensation number, the output point corresponding to 
+					type P9 will be used by default.</p>
+					<h3><a name="pgfId=54086"></a>Approach, Retract and Linking 
+					Macros for Ramp Rough Turning</h3>
+					<p><a name="pgfId=1035102"></a>The following
+					<a name="marker=1080035"></a>Approach and
+					<a name="marker=1080036"></a>Retract macro modes are proposed: 
+					Direct, Axial-radial, Radial-axial, and Build by user.
+					<a name="pgfId=1035103"></a>The selected macro type (Approach 
+					or Retract) defines the tool motion before or after machining.
+					</p>
+					<p>Various feedrates are available for the approach and retract 
+					motions (RAPID, lead-in, lift-off, and so on). Local 
+					feedrates can be set to either Angular units (length per revolution) 
+					or Linear units (length per minute).</p>
+					<blockquote>
+							<p>
+							<img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-17.gif" width="267" height="230">&nbsp;&nbsp;
+							</p>
+					</blockquote>
+					<p>Linking macros, which comprise retract and approach motion 
+					can also be used on Ramp Rough Turning operations.<br>
+					Approach and retract motions of Linking macros are interruptible. 
+					It can be useful to interrupt an operation when the foreseeable 
+					lifetime of the insert is not long enough to complete the machining.</p>
+					<p>See
+					<a href="page11368.html" target="_blank">
+					Define Macros on a Turning Operation</a> for more information.</p>
+					</td>
+			</tr>
+	</table>
+
+	</body>
+
+</html>
+

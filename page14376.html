@@ -1,0 +1,158 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Importing Parts from Other Software</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Importing Parts from Other Software</h1>
+ <table cellspacing="0" width="100%" border="0" valign="top" style="border-collapse: collapse" cellpadding="0" height="2058">
+   <tr valign="top" border="0">
+     <td align="center" height="75">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32">
+     <p><a name="ix-parts::create resolved parts using batch"></a></td>
+     <td colspan="2" height="75">This task shows you how to import parts into V5 
+     from third-party software. The process involves exporting part data - 
+     attributes and values - to a prescribed XML format, and applying it to a 
+     template CATpart (or the physical shape of the part) created in V5. <i>
+     <a name="ix-create resolved parts using batch">This process</a> can also be 
+     used to create resolved parts and is especially useful when you have to 
+     create a large number of parts.</i></td>
+   </tr>
+   <font face="Arial, Arial, Helvetica" color="#282187">
+   <tr valign="top" border="0">
+     <td valign="top" align="center" height="251">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32">
+     <a name="ix-V4 to V5 integration::importing parts form software"></a>
+     <p>&nbsp;</td>
+     <td valign="top" height="251"><font color="#1c1557"><strong>1.</strong></font></td>
+     </font>
+     <td height="251">Create a set of template CATParts, corresponding to the 
+     parts that you want to import. You can create the parts by following 
+     instructions given in Building Parts. The parts must have the part type 
+     defined.
+     <ul>
+       <li>They can contain part geometry or they could also be empty, allowing 
+       you to add geometry later.</li>
+       <li>They should have the attributes defined - when you run the command 
+       explained below, only the attribute values from the imported part will be 
+       added or changed in the template CATPart. The attributes should already 
+       exist.</li>
+       <li>Pre-existing attributes will not be erased - they will remain after 
+       the procedure has been executed.</li>
+       <li>If the CATParts have multiple representations then they will have 
+       corresponding CATShape documents.</li>
+       <li>To create the body or physical shape of the part you will have to use 
+       the Part Design product, for which a separate license is required. You 
+       could, however, get by with the set of sample parts provided with this 
+       application if you remove any link to a design table.</li>
+     </ul>
+     <p>Sample template CATPart documents are in the directory: <kbd>...intel_a&#092;startup&#092;EquipmentAndSystems&#092;MigrationDirectory&#092;PartGeneration&#092;TemplateCATParts</kbd></td>
+   </tr>
+   <tr valign="top" border="0">
+     <td align="center" height="678"></td>
+     <td valign="top" width="35" height="678"><font color="#1c1557"><strong>2.</strong></font></td>
+     <td height="678">Define a set of part definition files, or one file 
+     containing all part definitions. A part definition file is in XML format 
+     and must follow the structure as shown in the sample part definition file 
+     which is in: &nbsp;<kbd>...MigrationDirectory&#092;PartGeneration&#092;PartDefinitions</kbd>
+     <p><img border="0" src="b35doc/english/online/ucfug_c2/images/AT0810A_NLS.gif" width="665" height="365"></p>
+     <p>A portion of the sample part definition file is shown above.</p>
+     <ul>
+       <li>You must have separate entries for each size. As you can see, 
+       GateFLHW 6 inches and GateFLHW 4 inches have separate entries.</li>
+       <li>The name you enter in the Part Name field will be used to name the 
+       part in this application (the part number).</li>
+       <li>The Type field refers to the part type as defined in the feature 
+       dictionary.</li>
+       <li>The Template field names the template CATPart document you are using.</li>
+       <li>You can use the same CATPart document for creating different sizes of 
+       that part.</li>
+       <li>You can change the attribute names and values as needed, but make 
+       sure you follow the format shown above.</li>
+       <li>You can also add a line showing a new attribute, again following this 
+       format.</li>
+     </ul>
+     <p>You can use a special program - if you have one or can write one - to 
+     extract data from your parts. Or you can use the sample file mentioned 
+     above and enter the data in that file.</td>
+   </tr>
+   <font face="Arial, Arial, Helvetica" color="#282187">
+   <tr valign="top" border="0">
+     <td align="center" height="292">&nbsp;</td>
+     <td valign="top" width="35" height="292">
+     <font color="#1c1557" face="Arial, Arial, Helvetica"><strong>3.</strong></font></td>
+     </font>
+     <td height="292">Before you run the commands described in Steps 4 &amp; 5, you 
+     must edit the script and enter the location of the Migration Directory (AECMIGR_DIRECTORYPATH) 
+     on your installation. The script is named <kbd>CATAecPartGeneration.bat</kbd> 
+     and is located in ...intel_a&#092;code&#092;command.&nbsp; 
+     Using a text editor like Notepad, change the words&nbsp; &quot;Your Path&quot; in the 
+     DIRECTORYPATH field to define the directory path in your installation. A 
+     portion of the part generation script is shown below.
+     <p><img border="0" src="b35doc/english/online/ucfug_c2/images/AT0810B_NLS.gif" width="441" height="155"></p>
+     <p>If the value of CNEXTOUTPUT equals CONSOLE then a window will inform you 
+     of the progress of the process. If you change the value of CONSOLE to a 
+     file name and location then the results of the process will be saved in 
+     that file.</td>
+   </tr>
+   <font face="Arial, Arial, Helvetica" color="#282187">
+   <tr>
+     <td align="center" height="685"></td>
+     </font><font face="Arial, Arial, Helvetica" color="#1C1557">
+     <td valign="top" width="35" height="685"><strong>4</strong><font color="#1c1557"><strong>.</strong></font></td>
+     </font>
+     <td valign="top" height="685">After you have the part definition file and 
+     the template CATParts set up, you can run the command to add attributes to 
+     the template CATPart and generate resolved parts. The template will not 
+     change. Open a command prompt window and change to the directory: ...intel_a&#092;code&#092;command. 
+     Enter the following and press Enter: <kbd>CATAecPartGeneration.bat&nbsp;&nbsp;&nbsp; 
+     XXX.xml</kbd> where XXX is the name of your part definition file. You can 
+     run this command several times, if you have more than one part definition 
+     file. You will get error messages if there are inconsistencies, such as if 
+     the part type in the template CATPart does not match the part type listed 
+     in the part definition file (this has been left in the sample part 
+     definition file as a test case). A message will inform you when the process 
+     is complete and the generated parts will be placed in the directory <kbd>
+     ...MigrationDirectory&#092;PartGeneration&#092;ResolvedCATParts.</kbd>
+     <p><font face="Arial">For Unix run the command: </font><kbd>
+     CATAecPartGeneration.sh&nbsp;&nbsp;&nbsp; XXX.xml</kbd></p>
+     <p><font face="Arial">The two images below show the template CATPart &quot;</font><font face="Arial">G</font><font face="Arial">ate
+     </font>V<font face="Arial">alve FLHW&quot; and a 4-inch gate valve FLHW after it 
+     was generated using the sample part definition file. You can see that the 
+     attribute values</font> and geometry<font face="Arial"> have changed.</font></p>
+     <p><img border="0" src="b35doc/english/online/ucfug_c2/images/AT0810C_NLS.gif" width="523" height="169"></p>
+     <p><img border="0" src="b35doc/english/online/ucfug_c2/images/AT0810D_NLS.gif" width="517" height="226"></p>
+     <p>&nbsp;</td>
+   </tr>
+   <font face="Arial, Arial, Helvetica" color="#282187">
+   <tr>
+     <td align="center" height="42"></td>
+     </font><font face="Arial, Arial, Helvetica" color="#1C1557">
+     <td valign="top" width="35" height="42"><strong>5</strong><font color="#1c1557"><strong>.</strong></font></td>
+     </font>
+     <td valign="top" height="42">To place the parts you just generated in a 
+     catalog, move them from <kbd>...MigrationDirectory&#092;PartGeneration&#092;ResolvedCATParts</kbd>&nbsp; 
+     to your desired location. Then you can add them to a new or existing 
+     catalog, using the&nbsp; <a href="page14732.html">create/modify catalog</a> 
+     command. </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td colspan="3" align="center" height="35">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

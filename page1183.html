@@ -1,0 +1,752 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="2">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Customizing Your Environment on UNIX</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Customizing Your Environment on UNIX</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" style="border-collapse: collapse" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td colspan="2">This task explains how to customize an existing environment 
+     on UNIX.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">
+     <h2><font color="#282187"><strong><a name="hj-catiaenvUNIX"></a></strong>To 
+     create or customize an environment using the
+     <span style="text-transform: uppercase">catiaenv</span> command</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">There is now an interactive tool available for customizing 
+     values for runtime environment variables: the <kbd>
+     <span style="text-transform: uppercase">catiaenv</span></kbd> command.&nbsp;<p>
+     Run the command as follows:</p>
+     <p><code><strong>UNIXInstallPath</strong>/OS/code/command/<b>catstart -run 
+     CATIAENV</b></code></p>
+     <p>where&nbsp; &quot;OS&quot; is:</p>
+     <ul>
+       <li>&nbsp;aix_a</li>
+		<li><blink>aix_a64</blink></li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">The Environment Editor appears. The user interface and 
+     functions are the same as on Windows. For more information, refer to&nbsp;the 
+     Windows description of the <a href="page1182.html#hj-NewEnvEditor">
+     Environment Editor</a>.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td colspan="2">
+     <h2><font color="#282187">To create or customize an environment using the 
+     setcatenv command</font></h2>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td colspan="2">The <kbd>setcatenv</kbd> command is available for 
+     customizing environments.<p>Run the command as follows:</p>
+     <p><code><strong>UNIXInstallPath</strong>/OS/code/command/<b>catstart -run 
+     setcatenv</b></code></p>
+     <p>where&nbsp; &quot;OS&quot; is:</p>
+     <ul>
+       <li>aix_a</li>
+		<li><blink>aix_a64</blink></li>
+     </ul>
+     <p>The full list of options for the command:</p>
+     <p><a name="ix-setcatenv command"></a><code><b>setcatenv</b></code><a name="ix-commands::setcatenv"></a></p>
+     <p>is as follows:</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">
+     <h3><font color="#282187">Operating Environment Options</font></h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">These options specify the general operating environment:<ul>
+       <li><font size="3"><b><kbd>-cs</kbd></b></font>: specifies the name of 
+       the product line for which the environment is being created.&nbsp;<p>The 
+       value is CATIA (default) for the CATIA product line.</p>
+       <p>
+</p>
+       <p>
+</p>
+       <p>
+</p>
+       <p>
+</li>
+       <li><b><font size="3"><kbd>-e</kbd></font></b>: environment file name ; 
+       the &quot;-e&quot; option is mandatory</li>
+       <li><b><font size="3"><kbd>-d</kbd></font></b>: specifies an existing 
+       directory in which the environment file will be created ($HOME/CATEnv by 
+       default); the directory is not created if it does not exist</li>
+       <li><b><font size="3"><kbd>-p</kbd></font></b>: specifies the 
+       installation directory, and is <strong>mandatory</strong> (by default, 
+       set to the default installation directory: 
+       <strong>UNIXInstallPath</strong>)</li>
+       <li><font size="3" color="#000000"><b><kbd>-server: </kbd></b></font>
+       creates an environment suited for server type environments. The 
+       CATUserSettingPath variable value differs between a server environment 
+       and an interactive environment. The &quot;-e&quot; option is mandatory when 
+       specifying server environments, and always overwrites an existing 
+       environment with the same name. Consequently, system administrator rights 
+       are required for using this option.</li>
+       <li><b><font size="3"><kbd>-cf</kbd></font></b>: specifies the name or 
+       path of an existing environment from which you create a new environment.<br>
+       For example, the command:<br>
+       <code>setcatenv -e MyNewEnv -cf
+       <strong>CATIAEnvironmentName</strong></code><br>
+       creates the new environment MyNewEnv from a copy of 
+       <strong>CATIAEnvironmentName</strong>.<br>
+       This allows you to inherit previous customizations without having to 
+       recreate them in the new environment.<br>
+       For example, the <a name="ix-CATReferenceSettingPath variable">
+       CATReferenceSettingPath</a> variable is frequently used to store settings 
+       locked by the administrator, and may concatenate several different levels 
+       of settings. Copying an existing environment saves you time because you 
+       do not having to customize the new environment.<br>
+       Note that if you do not use the &quot;-cf&quot; option, all the variables are set 
+       with their default values in the new environment. If only the name is 
+       specified in the &quot;-cf &quot; option, the template environment is searched in 
+       the default storage directories (user or global).</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">
+     <h3><font color="#282187">Behavior Options</font></h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top" colspan="2">These options determine a type of behavior 
+     when creating or updating environments:<ul>
+       <li>&nbsp;<font size="3" color="#000000"><b><kbd><font FACE="Helv">-</font>v 
+       yes/no</kbd></b></font><font color="#000000">:</font>
+       <ul>
+         <li><font color="#000000">-v yes (default): verbose mode</font> </li>
+         <li><font color="#000000">-v no: non-verbose mode.</font> </li>
+       </ul>
+       </li>
+       <li>&nbsp;<font color="#000000"><b><font size="3"><kbd>-new yes/no</kbd></font></b>:</font>
+       <ul>
+         <li><font color="#000000">yes (default): an environment with the same 
+         name (if it exists) is overwritten</font> </li>
+         <li>&nbsp;<font color="#000000">no: if an environment has the same name, 
+         this time it is not overwritten (nothing happens)</font></li>
+       </ul>
+       <p><font color="#000000">However, note that if no environment using the 
+       same name is detected, a new environment is created in both cases 
+       (whether you use &quot;yes&quot; or &quot;no&quot;).</font></li>
+       <li><font size="3"><b><kbd>-desktop </kbd></b></font>
+       <font color="#000000"><b><font size="3"><kbd>yes/no</kbd></font></b></font><font size="3"><b><kbd>:</kbd></b></font> 
+       sets up the desktop representation of the environment, if it does not 
+       already exist. The default is &quot;yes&quot;.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">
+     <h3>Action Options</h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top" colspan="2">These options specify a particular creation or 
+     modification action:<ul>
+       <li><font color="#000000"><b><font size="3"><kbd>-a user/global</kbd></font></b>: 
+       specifies whether you are creating a user or global environment. The 
+       default value is &quot;user&quot;. Note that you need administrator rights to 
+       create a global environment.</font> </li>
+       <li><font color="#000000"><b><font size="3"><kbd>-regserver</kbd></font></b>: 
+       registers the application on the workstation by adding or modifying a 
+       certain number of files required to support dragging and dropping of 
+       documents inside the desktop environment, and associates the behavior 
+       when double-clicking Version 5 documents.&nbsp;This needs to be performed for 
+       each product line.</font><br>
+       <br>
+       <font color="#000000">This option creates the following files for the <b>
+       CDE Desktop</b>:<br>
+       </font>
+        
+        
+<ul>
+         <li>$HOME/CATEnv/CATCDE/CATIA/dt/appconfig/types/C/CATIAFiles.dt 
+         (action description file for CATIA document types)</li>
+         <li>$HOME/CATEnv/CATCDE/CATIA/dt/appconfig/icons/C (contains icons for 
+         document types)</li>
+         <li>$HOME/CATEnv/CATCDE/CATIA/dt/appconfig/types/C/CATIA.dt (action 
+         description file for CATIA directory in the CDE desktop)</li>
+       </ul>
+       <p>
+       
+       </p>
+       <p></p>
+       <p> </p>
+       <p></p>
+       <p></p>
+       <p>If a base configuration is already installed, this option serves no 
+       useful purpose since the desktop environment is already present. Only use 
+       the &quot;-regserver&quot; option if no base configuration is already installed. It 
+       should be used after creating a reference environment, and can be used 
+       only by an administrator.</li>
+       <li>&nbsp;<font size="3"><b><kbd>-h</kbd></b></font>: displays help.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" title="akeypt.gif (932 bytes)" width="32" height="32"></td>
+     <td colspan="2">Any environment created by either an administrator or an 
+     end user using the <kbd>setcatenv</kbd> command is a user (not global) 
+     environment.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">
+     <h2><font color="#282187">What Is the Impact On My Workstation?</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td></td>
+     <td colspan="2">Creating a global environment GLOBAL1 and a user 
+     environment USER1 using the setcatenv command creates the following files:</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td colspan="2"><b style="mso-bidi-font-weight:normal">
+     <span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;mso-ansi-language:
+EN-US"><br>
+     $HOME/CATEnv</span></b><p>Default environment:</p>
+     <p><code><strong>CATIAEnvironmentName</strong>.txt<br>
+      <br>
+      <br>
+      <br>
+      </code></p>
+     <p>Global environment:&nbsp;</p>
+     <p><code>GLOBAL1.txt</code>&nbsp;<br>
+     The name of this environment is specified by using the &quot;-e&quot; option</p>
+     <p>User environment:&nbsp;</p>
+     <p><code>USER1.txt&nbsp;</code><br>
+     The name of this environment is specified by using the &quot;-e&quot; option.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">
+     <h3><font color="#282187">
+     <span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US">On AIX systems running the CDE desktop</span></font></h3>
+     <p>The <code>setcatenv</code> command creates in your $HOME directory the 
+     following filetree:</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2"><br>
+     <b>$HOME/CATEnv/CATCDE/MyProductLine/dt/appconfig/appmanager/C/MyProductLine<br>
+     /etc/dt/appconfig/appmanager/C/MyProductLine</b><p>Contains files required 
+     for graphic representation of the default global environment and global 
+     environment in the CDE desktop:</p>
+     <p><code><strong>CATIAEnvironmentName</strong><br>
+       <br>
+      <br>
+      <br>
+      <br>
+     GLOBAL1</code></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">
+     <p class="MsoNormal"><b style="mso-bidi-font-weight:normal">
+     <span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;mso-ansi-language:
+EN-US"><br>
+     $HOME/CATEnv/CATCDE</span></b><b>/MyProductLine</b><b style="mso-bidi-font-weight:normal"><span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;mso-ansi-language:
+EN-US">/dt/appconfig/types/C<br>
+     </span></b><b>/etc/dt/appconfig/types/C</b></p>
+     <p>Action description file for default global environment and global 
+     environment icon:</p>
+     <p><code><strong>CATIAEnvironmentName</strong>.dt<br>
+      <br>
+      <br>
+      <br>
+      <br>
+     GLOBAL1.dt</code></p>
+     <p>Action description file for MyProductLine directory:</p>
+     <p><code>CATIA.dt<br>
+      <br>
+      <br>
+      <br>
+      </code></p>
+     <p>(file created by the option &quot;-regserver&quot;; the file name depends on the 
+     product line).</p>
+     <p>Action description file for MyProductLine document types:</p>
+     <p class="MsoNormal"><code>CATIAFiles.dt</code><br>
+     (file created by the option -regserver; identical for all product lines).</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2"><b style="mso-bidi-font-weight:normal">
+     <span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;mso-ansi-language:
+EN-US"><br>
+     $HOME/CATEnv/CATCDE</span></b><b>/MyProductLine</b><b style="mso-bidi-font-weight:normal"><span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;mso-ansi-language:
+EN-US">/dt/appconfig/icons/C<br>
+     </span></b><b>/etc/dt/appconfig/icons/C</b><p>Icons for MyProductLine 
+     document types.</p>
+     <p>Files created by the option <code>-regserver</code>; file names depend 
+     on the product line. </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2"><b style="mso-bidi-font-weight:normal">
+     <span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;mso-ansi-language:
+EN-US"><br>
+     $HOME/.dt/appmanager/My_</span></b><b>MyProductLine</b><p>File required for 
+     graphic representation of user environment in he CDE desktop:</p>
+     <p>
+     <span style="font-family: Arial; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US">
+     <code>USER1 </code></span></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">
+     <span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;mso-ansi-language:
+EN-US"><b style="mso-bidi-font-weight:normal"><br>
+     $HOME/.dt/types</b></span><p>Action description file for user environment 
+     icon:</p>
+     <p><code>USER1.dt</code></p>
+     <p>Note: the files MyProductLine.dt and CATIAFiles.dt are not present in 
+     this directory because they are already present in: <code>$HOME/CATEnv/CATCDE/MyProductLine/dt/appconfig/types/C<br>
+     /etc/dt/appconfig/types/C</code></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">
+     <p class="MsoNormal"><b style="mso-bidi-font-weight:normal">
+     <span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;mso-ansi-language:
+EN-US"><br>
+     $HOME/.dt/icons</span></b></p>
+     <p>The MyProductLine icons are not present in this directory because they 
+     are already present in:</p>
+     <p><code>$HOME/CATEnv/CATCDE/MyProductLine/dt/appconfig/icons/C<br>
+     /etc/dt/appconfig/icons/C</code></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2"><br>
+     <b>Application Manager Cabinet</b><p>Default global environment and global 
+     environment icon:</p>
+     <p><code>CATIA
+     <strong>VersionNumber</strong><br>
+      <br>
+      <br>
+      <br>
+      </code></p>
+     <p>Global environment icon:</p>
+     <p><code>GLOBAL1</code></p>
+     <p>User environment icon:</p>
+     <p><code>My_MyProductLine : USER1</code></td>
+   </tr>
+   <tr>
+     <td></td>
+     <td colspan="2"><b>Note</b><p>You do not see the icon immediately. To 
+     display the icon, you must click the Application manager icon on the CDE 
+     front panel, go into the Desktop Tools cabinet, then double-click the 
+     Reload Applications icon. You can also log off and log on to display the 
+     icon.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td colspan="2">
+     <h4>Impact of Multiple Brand Installations on the Same Workstation in the 
+     CDE Environment</h4>
+     <p>If you have multiple brand installations on the same workstation, make 
+     sure that all the global environments related to a specfic product line 
+     (CATIA, ENOVIA DMU, DELMIA, etc...) are stored in the same CATEnv 
+     directory. The CDE file related to the environment file is stored in the 
+     CATEnv directory. If a DELMIA global environment is created using CATIAENV 
+     and stored in the CATIA CATEnv directory, the CDE will display the newly 
+     created DELMIA environment in the application manager window, but the icon 
+     created by the DELMIA installation will not be displayed anymore.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">
+     <h2><font color="#282187">To delete an environment using the delcatenv 
+     command</font></h2>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td colspan="2">Run the command as follows:<p><code>
+     <strong>UNIXInstallPath</strong>/OS/code/command/<b>catstart 
+     -run delcatenv</b></code> </p>
+     <p>where&nbsp; &quot;OS&quot; is:</p>
+     <ul>
+       <li>aix_a</li>
+		<li><blink>aix_a64</blink></li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top" colspan="2">The full list of options for the command:<p>
+     <code><b><kbd><a name="ix-delcatenv command"></a></kbd>delcatenv<kbd><a name="ix-commands::delcatenv"></a></kbd></b></code>
+     </p>
+     <p>is as follows:</p>
+     <ul>
+       <li><b><font size="3"><kbd>-e</kbd></font></b>: environment file name ; 
+       the &quot;-e&quot; option is mandatory</li>
+       <li><b><kbd>-d</kbd></b>: specifies the directory containing the 
+       environment file to be deleted ($HOME/CATEnv by default)</li>
+       <li><font color="#000000"><b><kbd>-a user/global</kbd></b>:&nbsp; 
+       specifies whether you are deleting a user or global environment. The 
+       default value is &quot;user&quot;. Note that you need administrator rights to 
+       delete a global environment.</font> </li>
+       <li><b><kbd>-desktop:</kbd><code> </code></b>if it exists, deletes its 
+       graphical representation, in other words, how it is represented to the 
+       user on the user's desktop. The default is &quot;yes&quot;.</li>
+       <li><b><kbd>-cs 
+       [CATIA|ENOVIA_DMU_Navigator|</kbd></b><kbd><strong>ENOVIAV5VPM</strong></kbd><b><kbd>|DELMIA|ENOVIA_3d_com]: </kbd></b>
+       specifie<font color="#000000">s the product line whose desktop tools you 
+       want to delete; the default is CATIA.</font></li>
+       <li><font size="3" color="#000000"><b><kbd><font FACE="Helv">-</font>v 
+       yes/no</kbd></b></font><font color="#000000">:</font>
+       <ul>
+         <li><font color="#000000">-v yes (default): verbose mode</font> </li>
+         <li><font color="#000000">-v no: non-verbose mode.</font> </li>
+       </ul>
+       </li>
+       <li><b><font color="#000000"><kbd>-</kbd><kbd>unregserver</kbd></font></b>:
+       <font color="#000000">unregisters Version 5 in the CDE Desktop, and deletes the appropriate desktop files set 
+       up by the &quot;-regserver&quot; option. The effect is that dragging and dropping 
+       of Version 5 documents inside the desktop environment, and the behavior 
+       associated when double-clicking Version 5 documents, are deactivated. <br>
+       This option must be used on its own like this:<br>
+       </font><code>delcatenv -unregserver -cs MyProductLine</code><font color="#000000"><br>
+       </font>and once only on a given workstation because it unregisters all 
+       Version 5 installations on the same workstation.<font color="#000000"><br>
+       This option is an integral part of the installation process, but must be 
+       used with caution if you have more than one Version 5 installation </font>
+       on the same workstation. <font color="#000000">For example, you may have 
+       two installations, A and B (you first installed A, then B).&nbsp; Then, 
+       you decide to uninstall B. If you run the commands like this and in this 
+       order:<br>
+       </font><code>delcatenv -unregserver</code><font color="#000000"><br>
+       </font><code>delcatenv -e EnvB</code><font color="#000000"><br>
+       then remove the code directory for installation B, installation A will 
+       continue to work, but none of the features available via the desktop 
+       (dragging and dropping, double-clicking Version 5 documents, etc.) will 
+       work: this behavior is common to all Version 5 applications, and was 
+       deactivated when unregistering.<br>
+       <br>
+       If you have only one Version 5 installation, first unregister Version 5 
+       for each product line, then delete the</font> runtime environment and 
+       finally <font color="#000000">remove the code.<br>
+       </font>The &quot;- unregserver&quot; option can be used only by an administrator 
+       (root). <br>
+       For more information, refer to <a href="page1180.html">Enabling User 
+       Access to the Software Over the Network</a>.</li>
+       <li><b><kbd>-server</kbd></b>: deletes an environment suited for server 
+       type environments. The CATUserSettingPath variable value differs between 
+       a server environment and an interactive environment. The &quot;-e&quot; option is 
+       mandatory when specifying server environments. System administrator 
+       rights are required for using this option.</li>
+       <li><kbd>-h</kbd>: displays help.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td colspan="2">
+     <h2><font color="#282187">To list environments using the lscatenv command</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top" colspan="2">Run the <kbd>lscatenv</kbd> command to list 
+     the names of all environments on your computer:
+     <p><code><strong>UNIXInstallPath</strong>/OS/code/command/<b>catstart -run 
+     lscatenv</b></code> </p>
+     <p>where&nbsp; &quot;OS&quot; is:</p>
+     <ul>
+       <li>aix_a</li>
+		<li><blink>aix_a64</blink></li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top" colspan="2">The full list of options for the command:<p>
+     <code><b><kbd><a name="ix-lscatenv command"></a></kbd>lscatenv<kbd><a name="ix-commands::lscatenv"></a></kbd></b></code>
+     </p>
+     <p>is as follows:</p>
+     <ul>
+       <li>&nbsp;<font color="#000000"><b><font size="3"><kbd>-a user/global</kbd></font></b>:&nbsp;&nbsp;lists 
+       user or global environments. You must specify one or the other.</font></li>
+       <li>&nbsp;<font color="#000000"><b><font size="3"><kbd>-d</kbd></font></b>:&nbsp;&nbsp;specifies 
+       the directory containing the environment</font></li>
+       <li>&nbsp;<font color="#000000"><b><font size="3"><kbd>-h</kbd></font></b>:&nbsp;&nbsp;displays 
+       help.</font></li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td colspan="2">
+     <h2><font color="#282187">To read environments using the readcatenv command</font></h2>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td colspan="2">Run the <kbd>readcatenv</kbd> command to read the 
+     environment variables in a specified environment.
+     <p>Run the command as follows:</p>
+     <p><code><strong>UNIXInstallPath</strong>/OS/code/command/<b>catstart -run 
+     readcatenv</b></code> </p>
+     <p>where&nbsp; &quot;OS&quot; is:</p>
+     <ul>
+       <li>aix_a</li>
+		<li><blink>aix_a64</blink></li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td colspan="2">The full list of options for the command:<p><code><b><kbd>
+     <a name="ix-readcatenv command"></a></kbd>readcatenv<kbd><a name="ix-commands::readcatenv"></a></kbd></b></code>
+     </p>
+     <p>is as follows:</p>
+     <ul>
+       <li><b><kbd>-e:</kbd><code> </code></b>environment file name</li>
+       <li><font color="#000000"><b><font size="3"><kbd>-d</kbd></font></b>:&nbsp;specifies 
+       the directory containing the environment</font></li>
+       <li><font color="#000000"><b><font size="3"><kbd>-a user/global</kbd></font></b>:&nbsp;&nbsp;specifies 
+       user or global environment. You must specify one or the other.</font></li>
+       <li><font color="#000000"><b><font size="3"><kbd>-var</kbd></font></b>:&nbsp;specifies 
+       a variable whose value is to be read; if you omit &quot;-var&quot;, all variables 
+       will be displayed</font></li>
+       <li><font color="#000000"><b><font size="3"><kbd>-h</kbd></font></b>:&nbsp;displays 
+       help.</font></li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td colspan="2">
+     <h2><font color="#282187">To modify environments using the chcatenv command</font></h2>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td colspan="2">Run the <kbd>chcatenv</kbd> command to edit one or more 
+     environment variables.
+     <p>Run the command as follows:</p>
+     <p><code><strong>UNIXInstallPath</strong>/OS/code/command/<b>catstart -run 
+     chcatenv</b></code> </p>
+     <p>where&nbsp; &quot;OS&quot; is:</p>
+     <ul>
+       <li>aix_a</li>
+		<li><blink>aix_a64</blink></li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td colspan="2">The full list of options for the command:<p><code><b><kbd>
+     <a name="ix-chcatenv command"></a></kbd>chcatenv<kbd><a name="ix-commands::chcatenv"></a></kbd></b></code></p>
+     <p>is as follows:</p>
+     <ul>
+       <li><b><kbd>-e:</kbd><code> </code></b>environment file name</li>
+       <li><font color="#000000"><b><font size="3"><kbd>-d</kbd></font></b>:&nbsp;&nbsp;specifies 
+       the directory containing the environment</font></li>
+       <li><font color="#000000"><b><font size="3"><kbd>-a user/global</kbd></font></b>:&nbsp;&nbsp;specifies 
+       user or global environment. You must specify one or the other.</font></li>
+       <li><kbd>-var</kbd><font color="#000000"><font face="Courier New" size="2"><kbd><b>:
+       </b></kbd></font>specifies a variable whose value is to be modified</font>. 
+       The following syntax is allowed: </li>
+     </ul>
+     <blockquote>
+       <p><code>CATVariable = new_path<br>
+       CATVariable = $CATVariable: new_path<br>
+       CATVariable = new_path:$CATVariable</code> </p>
+       <p>If the path includes blanks, include the whole string in &quot; &quot;.</p>
+       <p><b>Note:</b> if you are running this command inside a shell, we 
+       recommend that you add a &quot;\&quot; (backslash) before each variable preceded by 
+       the &quot;$&quot; character to avoid the values of referenced variables from being 
+       replaced by their real values.<br>
+       For example:<br>
+       <code>CATVariable = \$CATVariable: new_path</code> </p>
+     </blockquote>
+     <ul>
+       <li><font color="#000000"><b><font size="3"><kbd>-new: </kbd></font></b>
+       </font>creates a new user-defined variable (specified by the &quot;-var&quot; 
+       option) with its corresponding value</li>
+     </ul>
+     <blockquote>
+       <p>Example:<br>
+       <br>
+       <code>chcatenv -e 
+       <strong>CATIAEnvironmentName</strong> -a global -var TOTO=\$TEMP -new</code></p>
+     </blockquote>
+     <ul>
+       <li><font color="#000000"><b><font size="3"><kbd>-del: </kbd></font></b>
+       </font>deletes a user-defined variable</li>
+       <li><font color="#000000"><b><font size="3"><kbd>-comment: </kbd></font>
+       </b></font>adds a comment only to the newly created variables</li>
+       <li><font color="#000000"><b><font size="3"><kbd>-h</kbd></font></b>:&nbsp;displays 
+       help.</font></li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td colspan="2">
+     <h2><font color="#282187">Examples</font></h2>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td align="center"><b>Running this command...</b></td>
+     <td align="center"><b>Displays this:<br>
+     </b>(where &quot;OS&quot; varies for the UNIX platform)</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td align="left"><code><font size="2">./catstart -run &quot;readcatenv -e 
+     </font><strong>CATIAEnvironmentName</strong><font size="2"> -a global&quot;</font></code></td>
+     <td align="left"><code><font size="2">CATInstallPath=<strong>UNIXInstallPath</strong>/OS<br>
+     CATDLLPath=<strong>UNIXInstallPath</strong>/OS/code/bin<br>
+     CATICPath=<strong>UNIXInstallPath</strong>/OS/code/productIC<br>
+     CATCommandPath=<strong>UNIXInstallPath</strong>/OS/code/command<br>
+     CATDictionaryPath=<strong>UNIXInstallPath</strong>/OS/code/dictionary<br>
+     CATDocView=<strong>UNIXInstallPath</strong>/OS/doc<br>
+     CATReffilesPath=<strong>UNIXInstallPath</strong>/OS/reffiles<br>
+     etc....</font></code></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td align="left"><font size="2"><code><br>
+     </code></font></td>
+     <td align="left"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td align="left"><code><font size="2">./catstart -run &quot;readcatenv -e 
+     </font><strong>CATIAEnvironmentName</strong><font size="2"> -a global -var CATInstallPath&quot;</font></code></td>
+     <td align="left"><code><font size="2">CATInstallPath=<strong>UNIXInstallPath</strong>/OS</font></code></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td align="left"><code><font size="2">./catstart -run &quot;readcatenv -e 
+     </font><strong>CATIAEnvironmentName</strong><font size="2"> -d /CATEnv -var CATInstallPath&quot;</font></code></td>
+     <td align="left"><code><font size="2">CATInstallPath=<strong>UNIXInstallPath</strong>/OS</font></code></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td align="left"><font size="2"><code><br>
+     </code></font></td>
+     <td align="left"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td align="left"><code><font size="2">./catstart -run &quot;chcatenv -e 
+     </font><strong>CATIAEnvironmentName</strong><font size="2"> -a user -var CATInstallPath=\\\$CATInstallPath:/tmp&quot;</font></code></td>
+     <td align="left"><code><font size="2">CATInstallPath=<strong>UNIXInstallPath</strong>/OS:/tmp</font></code></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td align="left"><code><font size="2">./catstart -run &quot;chcatenv -e 
+     </font><strong>CATIAEnvironmentName</strong><font size="2"> -a user -var CATInstallPath=/tmp&quot;</font></code></td>
+     <td align="left"><code><font size="2">CATInstallPath=/tmp</font></code></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td align="left"><code><font size="2">./catstart -run &quot;chcatenv -e 
+     </font><strong>CATIAEnvironmentName</strong><font size="2"> -a user -var NewVar=/tmp -new&quot;</font></code></td>
+     <td align="left"><code><font size="2">NewVar=/tmp</font></code></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td align="left"><font size="2"><code><br>
+     </code></font></td>
+     <td align="left"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td align="left"><code><font size="2">./catstart -run &quot;lscatenv -d /CATEnv&quot;</font></code></td>
+     <td align="left"><code><font size="2">CATIA.V5R16.B16.txt<br>
+     </font><strong>CATIAEnvironmentName</strong><font size="2">.txt</font></code></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td colspan="2">Environment creation and manipulation commands are logged 
+     in the file $HOME/CATENV.log.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td colspan="2">The feedback obtained when using all the administration 
+     commands from the command line is now output to the current command prompt 
+     window.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">
+     <h2><font color="#282187">Running&nbsp;a Tool with the Correct Environment 
+     When Multiple Product Lines Are Installed Together</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td colspan="2">In certain cases, you may have installed several products 
+     in the same installation directory:<ul>
+       <li>an <strong>ENOVIAV5VPM</strong> server</li>
+       <li>CATIA</li>
+       <li>3d com.</li>
+     </ul>
+     <p>All of these products can install, by default, a runtime environment in 
+     the same location. If you run a tool using the <i>catstart</i> command 
+     without specifying which environment you want to use, the last environment 
+     installed will be executed.</p>
+     <p>Consequently, make sure you use the &quot;-env&quot; option to specify which 
+     runtime environment you want to run.</p>
+     <p>For example, if you want to run an 
+     <strong>ENOVIAV5VPM</strong> tool:</p>
+     <p><code><b>./catstart -env myenv -run mytool</b></code></p>
+     <p>where &quot;myenv&quot; is the environment for your product, and &quot;mytool&quot; is the 
+     tool you are running.</p>
+     <p>For example, if you want to run the <i>VPMPeopleEdit</i> tool, which is 
+     an <strong>ENOVIAV5VPM</strong> tool, use a command like this:</p>
+     <p><code><b>./catstart -env </b>
+     <strong>ENOVIAV5VPMEnvironmentName</strong><b> -run VPMPeopleEdit</b></code></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" colspan="3">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

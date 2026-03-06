@@ -1,0 +1,269 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Deploying Webtop and Wintop Applications</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Deploying Webtop and Wintop Applications</h1>
+ <p align="center">
+ <nobr><a href="page1233.html" target="">Preparing&nbsp;the&nbsp;ENOVIA&nbsp;V5&nbsp;VPM&nbsp;Server&nbsp;Environment</a></nobr><br> <nobr><a href="page1266.html" target="">Starting&nbsp;and&nbsp;Stopping&nbsp;the&nbsp;HTTP,&nbsp;Websphere&nbsp;Application&nbsp;and&nbsp;LDAP&nbsp;Servers</a></nobr><br> <nobr><a href="page1292.html" target="">Deploying&nbsp;the&nbsp;Web&nbsp;Application&nbsp;in&nbsp;an&nbsp;Application&nbsp;Server</a></nobr><br> <nobr><a href="page1213.html" target="">Using&nbsp;Group&nbsp;Licensing</a></nobr><br> <nobr><a href="page1228.html" target="">Deploying&nbsp;the&nbsp;Java&nbsp;Plugin</a></nobr></p>
+ <p align="center">&nbsp;</p>
+ <table border="0" width="100%" cellspacing="0">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">
+     <h2>Overview</h2>
+     <p>There are two groups of ENOVIA applications:</p>
+     <ul>
+       <li><b>Webtop</b> applications</li>
+       <li><b>Wintop</b> applications.</li>
+     </ul>
+     <p>Some of the steps required to deploy both sets of applications are the 
+     same, and some are different.</p>
+     <h3>What Are Webtop Applications?</h3>
+     <p>The supported Webtop application is:</p>
+     <ul>
+       <li><b><strong>LCA Navigator</strong></b></li>
+     </ul>
+     <p>These applications:</p>
+     <ul>
+       <li>are run in a web browser</li>
+       <li>MUST be deployed in a Websphere Application Server</li>
+       <li>may use the optional Single Signon (SSO) feature provided by the Websphere 
+       Application Server</li>
+       <li>require an LDAP server for authentication purposes when the SSO 
+       feature is deployed</li>
+       <li>require the WebSphere Application Server to be SECURED when for 
+       authentication against an LDAP server</li>
+       <li>may or may not use the license group feature which implies setting up 
+       your LDAP data in a particular way. </li>
+     </ul>
+     <h3>What Are Wintop Applications?</h3>
+     <p>Wintop applications are:</p>
+     <ul>
+       <li><b>the <strong>LCA Classic</strong> client (the ENOVIA VPC product)</b></li>
+       <li><b>3d com Classic</b></li>
+       <li><b>the VPM Navigator client</b>.</li>
+     </ul>
+     <p>The <strong>LCA Classic</strong> client and VPM Navigator involve installing 
+       code on the client, whereas 3d com Classic is started via a URL.</p>
+     <p>These applications:</p>
+     <ul>
+       <li>employ a classic user interface (they are NOT run in a web browser)</li>
+       <li>do NOT need to be deployed in a WebSphere Application Server (this is 
+       optional)</li>
+       <li>if they are deployed in a WebSphere Application Server, may also use 
+       the optional SSO feature</li>
+       <li>and, when the SSO feature is deployed, require an LDAP server for 
+       authentication purposes</li>
+       <li>do not use the license group feature.</li>
+     </ul>
+     <p>The first diagram illustrates the different ENOVIA software components 
+     and how they all fit together, but does not specify on which machine they 
+     are located:</p>
+     <p>
+     <img border="1" src="b35doc/english/online/basil_c2/images/basilENOVIADeployment_NLS.gif" width="960" height="720"></p>
+     <h2>How are These Software Components Deployed?</h2>
+     <p>The following diagrams illustrate a typical deployment principles and 
+     examples for each type of application.</p>
+     <h3>Webtop</h3>
+     <p>Webtop applications can only be deployed in a WAS:</p>
+     <p>
+     <img border="1" src="b35doc/english/online/basil_c2/images/basilENOVIADeploymentWebtop01_NLS.gif" width="960" height="720"></p>
+     <p>and <b>once again the deployment of the SSO component is optional</b>.<h3>Wintop</h3>
+     <p>You can run Wintop applications either <i>WITHOUT</i> an Web Application 
+     Server (WAS) and consequently, without the Single Signon (SSO) capability:</p>
+     <p>
+     <img border="1" src="b35doc/english/online/basil_c2/images/basilENOVIADeploymentWintop01_NLS.gif" width="960" height="720"></p>
+     <p>or <i>WITH</i> a WAS, then again with or without the optional SSO component:</p>
+     <p>
+     <img border="1" src="b35doc/english/online/basil_c2/images/basilENOVIADeploymentWintop02_NLS.gif" width="960" height="720"><br>
+&nbsp;</p>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <h2>Task-by-task Checklist for Deploying ENOVIA Applications</h2>
+     <p>The following table:</p>
+     <ul>
+       <li>lists the tasks involved in deploying Webtop and Wintop applications</li>
+       <li>and specifies whether each task is mandatory or optional for either 
+       Webtop or Wintop applications, or not applicable.</li>
+     </ul>
+     <blockquote>
+       <table border="1" style="border-collapse: collapse" bordercolor="#111111" width="91%" id="table1" height="562" cellpadding="2">
+         <tr>
+           <td width="45%" height="25" align="center" bgcolor="#E0E0E0"><b>
+           <font face="Verdana" size="3">Task/Section in this guide</font></b></td>
+           <td width="16%" height="25" align="center" bgcolor="#E0E0E0"><b>
+           <font size="3">Webtop</font></b></td>
+           <td width="16%" height="25" align="center" bgcolor="#E0E0E0"><b>
+           <font size="3">Wintop</font></b></td>
+         </tr>
+         <tr>
+           <td width="53%" height="25" align="center" bgcolor="#F2F2F2" colspan="3">
+           <p align="left"><b><a href="page1266.html">
+           <font size="3">Starting and Stopping the HTTP, Websphere Application 
+           and LDAP Servers</font></a></b></td>
+         </tr>
+         <tr>
+           <td width="45%" height="25" bgcolor="#F2F2F2"><font size="1">Contains 
+           reference information about starting and stopping the HTTP, WebSphere 
+           Application and LDAP Servers</font></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font face="Verdana" size="1">Information</font></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font face="Verdana" size="1">Information</font></td>
+         </tr>
+         <tr>
+           <td width="53%" height="25" align="center" bgcolor="#F2F2F2" colspan="3">
+           &nbsp;</td>
+         </tr>
+         <tr>
+           <td width="53%" height="25" align="center" bgcolor="#F2F2F2" colspan="3">
+           <p align="left"><b><font size="3"><a href="page1292.html">Deploying the Web Application in an Application Server</a></font></b></td>
+         </tr>
+         <tr>
+           <td width="52%" height="25" bgcolor="#F2F2F2" colspan="3"><b>
+           <font size="2" face="Verdana"><a href="page1242.html">
+           Creating a Database for Settings Persistency</a></font></b></td>
+         </tr>
+         <tr>
+           <td width="45%" height="25" bgcolor="#F2F2F2"><b>
+           <font face="Verdana" size="1">
+           <a href="page1289.html">Creating a DB2 Database for 
+           Settings Persistency</a></font></b></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font size="1">Mandatory</font></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font size="1">Optional<br>
+           (Mandatory if deploying in web application server)</font></td>
+         </tr>
+         <tr>
+           <td width="45%" height="25" bgcolor="#F2F2F2"><b>
+           <font face="Verdana" size="1">
+           <a href="page1291.html">Creating an Oracle 
+           Database for Settings Persistency</a></font></b></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font size="1">Mandatory</font></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font size="1">Optional<br>
+           (Mandatory if deploying in web application server)</font></td>
+         </tr>
+         <tr>
+           <td width="98%" height="26" bgcolor="#F2F2F2" colspan="3">&nbsp;</td>
+         </tr>
+         <tr>
+           <td width="77%" height="26" bgcolor="#F2F2F2" colspan="3">
+           <p align="left"><b><font size="2">
+           <a href="page1232.html">Deploying the Web Application in 
+           the WAS</a></font></b></td>
+         </tr>
+         <tr>
+           <td width="45%" height="25" bgcolor="#F2F2F2"><b>
+           <font face="Verdana" size="1"><a href="page1290.html">
+           Creating the Enterprise Archive File</a></font></b></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font size="1">Mandatory</font></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font size="1">Optional<br>
+           (Mandatory if deploying in web application server)</font></td>
+         </tr>
+         <tr>
+           <td width="45%" height="25" bgcolor="#F2F2F2"><b>
+           <a href="page1272.html"><font size="1">Regenerating the Web 
+           Server Plug-In</font></a></b></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font size="1">Optional</font></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font size="1">Optional</font></td>
+         </tr>
+         <tr>
+           <td width="45%" height="25" bgcolor="#F2F2F2"><b>
+           <font face="Verdana" size="1">
+           <a href="page1293.html">Checking that the Web Application 
+           is Running</a></font></b></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font size="1">Mandatory</font></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font size="1">Not applicable</font></td>
+         </tr>
+         <tr>
+           <td width="98%" height="25" bgcolor="#F2F2F2" colspan="3">&nbsp;</td>
+         </tr>
+         <tr>
+           <td width="77%" height="25" bgcolor="#F2F2F2" colspan="3"><b>
+           <font size="2" face="Verdana"><a href="page1229.html">
+           Configuring Single Sign-On</a></font></b></td>
+         </tr>
+         <tr>
+           <td width="45%" height="24" bgcolor="#F2F2F2"><b>
+           <font face="Verdana" size="1"><a href="page1193.html">
+           Configuring and Customizing the LDAP Repository</a></font></b></td>
+           <td width="16%" height="24" bgcolor="#F2F2F2" align="center">
+           <font size="1">Optional;<br>
+           Mandatory if using SSO (and License Groups)</font></td>
+           <td width="16%" height="24" bgcolor="#F2F2F2" align="center">
+           <font size="1">Optional<br>
+           (Mandatory if using SSO)</font></td>
+         </tr>
+         <tr>
+           <td width="45%" height="25" bgcolor="#F2F2F2"><b>
+           <font face="Verdana" size="1"><a href="page1294.html">
+           Securing the WebSphere Application Server</a></font></b></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font size="1">Optional<br>
+           (Mandatory if using SSO)</font></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font size="1">Optional<br>
+           (Mandatory if using SSO)</font></td>
+         </tr>
+         <tr>
+           <td width="45%" height="25" bgcolor="#F2F2F2"><b>
+           <font face="Verdana" size="1"><a href="page1295.html">
+           Configuring Credential Sets for Single Sign-On</a></font></b></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font size="1">Optional<br>
+           (Mandatory if using SSO)</font></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font size="1">Optional<br>
+           (Mandatory if using SSO)</font></td>
+         </tr>
+         <tr>
+           <td width="45%" height="25" bgcolor="#F2F2F2"><b>
+           <font face="Verdana" size="1"><a href="page1287.html">
+           Activating Single Sign-On</a></font></b></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font size="1">Optional<br>
+           (Mandatory if using SSO)</font></td>
+           <td width="16%" height="25" bgcolor="#F2F2F2" align="center">
+           <font size="1">Optional<br>
+           (Mandatory if using SSO)</font></td>
+         </tr>
+         </table>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" align="center" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

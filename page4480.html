@@ -1,0 +1,806 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>ABB RAPID S4/S4C/S4Cplus Translator</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>ABB RAPID S4/S4C/S4Cplus Translator<a name="ix-ABB RAPID;translators::ABB RAPID;supported translators::ABB RAPID"></a><a name="hj-top"></a></h1>
+ <table border="0" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/amethod.gif" width="32" height="32"></td>
+     <td valign="top" colspan="2">This file contains information specific to ABB RAPID 
+     S4/S4C/S4C-plus.&nbsp;The information provided includes: <br>
+&nbsp;<ul>       
+       <li>An overview of <a href="#hj-Downloading">Downloading or Creating a Robot 
+     Program</a></li>
+     <li>An overview of <a href="#hj-uploading">Uploading or Importing a Robot 
+     Program</a></li>
+       <li><a href="#hj-SupportedActivities">Supported Activities</a></li>
+       <li><a href="#hj-cmdmapping">Command Mapping</a></li>
+       <li><a href="#ix-ABB RAPID:parameter data">Parameter Data</a></li>
+       <li><a href="#ix-Spotweld and ArcWeld Process Data">SpotWeld and 
+       ArcWeld Process Data</a></li>
+		<li><a href="#hj-nrltch">NRL Teach Support</a><br>
+&nbsp;</li>
+     </ul>
+     <h2>Downloading and Uploading Offline Programs</h2>
+     <p>This document describes the OLP support (upload and download) for ABB 
+     RAPID translators.</p></td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h3><a name="hj-Downloading"></a>Downloading or Creating a ABB RAPID Robot 
+     Program</h3>
+     </td>
+     <td>
+     <h2 align="right"><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h2>
+     </td>   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top" colspan="2">
+     <p><a name="ix-ABB RAPID:creating robot program">Downloading</a> generates 
+     a RAPID file (RAPID is the language of ABB S4/S4C/S4Cplus Robot 
+     translators) from the PPR tree. The following steps take place: </p>
+     <ol class="task">
+       <li>
+       <p class="task">An XML file is generated from the activities defined in the PPR tree. This involves a mapping between the activities in the PPR tree 
+       and the elements in the XML file. The XML file generated is independent 
+       of the robot language (RAPID, in this case).&nbsp;</li>
+       <li>
+       <p class="task">A style sheet transformation file (XSLT) is written for 
+       the ABB RAPID translator. This file defines the mapping between the 
+       activities in XML file and RAPID commands.&nbsp;</li>
+       <li>
+       <p class="task">The XSLT runs through the XML file to generate the 
+       required RAPID file.</li>
+     </ol>
+     <p>Below is a pictorial overview of the downloading process:</p>
+		<p><img border="0" src="b35doc/english/online/cfyugolp_c2/images/flABBDnldNLS.gif" width="495" height="253"></td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h3><a name="hj-uploading"></a>Uploading or Importing an ABB RAPID Robot 
+     Program</h3>
+     </td>
+     <td>
+     <h2 align="right"><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top" colspan="2">
+     <p><a name="ix-ABB RAPID:importing robot program">Uploading</a> reads a 
+     RAPID (robot language) file and creates the corresponding activities in the 
+     PPR tree. The following steps take place:&nbsp; </p>
+     <ol class="task">
+       <li>
+       <p class="task">An XML file is generated from the RAPID file. The 
+       commands in the RAPID file are mapped to elements in the XML file. The 
+       XML file generated is independent of the robot language.&nbsp;</li>
+       <li>
+       <p class="task">From the XML file the required activities, 
+       actions, sequences or other items are generated as specified.</li>
+     </ol>
+     <p>Below is a pictorial overview of the uploading process:</p>
+     <p><img border="0" src="b35doc/english/online/cfyugolp_c2/images/flABBUpldNLS.gif" width="575" height="245"></td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h2><a name="hj-SupportedActivities"></a>Supported Activities</h2>
+     </td>
+     <td>
+     <h2 align="right"><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h2>
+     </td>
+     </tr>
+   <tr>
+     <td>
+     <h2 align="right">&nbsp;</h2>
+     </td>
+     <td valign="top" colspan="2">
+     <p>Currently, the <a name="ix-ABB RAPID:activities supported">following</a> 
+     activities are supported in download and upload for the ABB RAPID 
+     translator: <br>
+&nbsp;</p>
+     <ul>
+       <li>Move Activity</li>
+       <li>Delay Activity</li>
+       <li>RAPIDSpotDrop Action</li>
+       <li>RAPIDSpotPick Action</li>
+       <li>RAPIDSpotRetract Action</li>
+       <li>RAPIDSpotWeld Action</li>
+       <li>I/O Activities (Set and Wait Signal)</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h2><a name="hj-cmdmapping"></a>ABB <a name="ix-ABB RAPID:command mapping0">RAPID Command Mapping</a></h2>
+     </td>
+     <td>
+     <h2 align="right"><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h2>
+     </td>
+     </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top" colspan="2">
+     <p>This table displays the mapping between RAPID commands, XML elements, 
+		and V5 functionality:</p>
+     <table border="1" width="100%" cellspacing="3" cellpadding="3" class="code" style="border-collapse: collapse" bordercolor="#111111" id="table1">
+       <tr>
+         <td valign="top"><b>ABB RAPID Command</b></td>
+         <td valign="top"><b>XML Element</b></td>
+         <td valign="top"><b>V5 Functionality</b></td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">WaitTime &lt;number&gt; in seconds</td>
+         <td valign="top" class="code2">Delay</td>
+         <td valign="top" class="code2">RobotDelay &lt;number&gt; in secs</td>
+       </tr>
+       <tr>
+         <td valign="top">MoveL &lt;tagname&gt;, &lt;motion profile name&gt;, &lt;accuracy 
+         profile name&gt;, &lt;tool profile name&gt;\Wobj:=&lt;object profile name&gt; - if 
+         motion type is set to 'cartesian' in Motion Attributes<br>
+         MoveJ replaces MoveL - if motion type is set to 'joint' in Motion 
+         Attributes<br>
+         <br>
+         Also, creates a robtarget definition complete with rapid configuration 
+         values in the declaration section of the RAPID program.</td>
+         <td valign="top">IGRIPMove<br>
+         with the following attributes:<ul>
+           <li>MotionAttributes</li>
+           <li>Target</li>
+         </ul>
+         </td>
+         <td valign="top">DNBRobotMotion&lt;number&gt;<br>
+         with the following attributes:<ul>
+           <li>Motion Type</li>
+           <li>Config</li>
+           <li>ToolProfile</li>
+           <li>MotionProfile</li>
+           <li>AccuracyProfile</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">SetDO &lt;name&gt;, &lt;0 or 1&gt;<br>
+         <br>
+         PulseDO \Plength:=&lt;SignalDuration&gt; will<br>
+         Replace SetDO if SignalDuration&gt;0</td>
+         <td valign="top" class="code2">SetSignalActivity<br>
+         with the following attributes:<ul>
+           <li>SignalName</li>
+           <li>SignalValue</li>
+           <li>SignalDuration</li>
+           <li>PortNumber</li>
+         </ul>
+         </td>
+         <td valign="top" class="code2">Set-&lt;name&gt;= ON/OFF</td>
+       </tr>
+       <tr>
+         <td valign="top">WaitDI &lt;name&gt; = ON/OFF</td>
+         <td valign="top">WaitSignalActivity<br>
+         with the following attributes:<ul>
+           <li>SignalName</li>
+           <li>SignalValue</li>
+           <li>MaxWait time</li>
+           <li>PortNumber</li>
+         </ul>
+         </td>
+         <td valign="top">WaitUntil&lt;name&gt;=ON/OFF</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">Speeddata variable created in data 
+         declaration section if speed does not match one of the default speeds 
+         v5-v7000.</td>
+         <td valign="top" class="code2">MotionProfile<br>
+         with the following attributes:<ul>
+           <li>Name</li>
+           <li>MotionBasis(absolute, percent)</li>
+           <li>SpeedUnits &amp; Value</li>
+           <li>MotionType</li>
+         </ul>
+         </td>
+         <td valign="top" class="code2">MotionProfile(s)<ul>
+           <li>Name</li>
+           <li>MotionBasis(absolute, percent)</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">ZoneData variable created in data declaration section 
+         if accuracy does not match one of the default zones fine-z200</td>
+         <td valign="top">AccuracyProfile<br>
+         with the following attributes:<ul>
+           <li>Name</li>
+           <li>FlyByMode</li>
+           <li>AccuracyType</li>
+           <li>AccuracyValue Units &amp; Value</li>
+         </ul>
+         </td>
+         <td valign="top">AccuracyProfile(s)<ul>
+           <li>Name</li>
+           <li>FlyByMode</li>
+           <li>AccuracyType</li>
+           <li>AccuracyValue</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">&lt;Macro String&gt;</td>
+         <td valign="top" class="code2">Action RAPIDSpotDrop (with 
+         AttributeList)<br>
+         AttributeName Macro<br>
+         AttributeValue &lt;Macro String&gt;</td>
+         <td valign="top" class="code2">RAPIDSpotDrop</td>
+       </tr>
+       <tr>
+         <td valign="top">&lt;Macro String&gt;</td>
+         <td valign="top">Action RAPIDSpotPick (with AttributeList)<br>
+         AttributeName Macro<br>
+         AttributeValue &lt;Macro String&gt;</td>
+         <td valign="top">RAPIDSpotPick</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">SpotL &lt;tag name&gt; &lt;spot1&gt; &lt;gun1&gt; &lt;tool 
+         profile name&gt;</td>
+         <td valign="top" class="code2">Action RAPIDSpotWeld (with 
+         AttributeList)<br>
+         AttributeName SpotData<br>
+         AtrributeValue &lt;spot1&gt;<br>
+         AttributeName GunData<br>
+         AtrributeValue &lt;gun1&gt;</td>
+         <td valign="top" class="code2">RAPIDSpotWeld</td>
+       </tr>
+       <tr>
+         <td valign="top">&lt;Macro String&gt;</td>
+         <td valign="top">Action RAPIDSpotRetract (with AttributeList)<br>
+         AttributeName Macro<br>
+         AtributeValue &lt;Macro String&gt;</td>
+         <td valign="top">RAPIDSpotRetract</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">&lt;Macro String&gt;</td>
+         <td valign="top" class="code2">Any Action/Activity (with AttributeList)<br>
+         AttributeName Macro<br>
+         AttributeValue &lt;Macro String&gt;</td>
+         <td valign="top" class="code2">Any Action/Activity with Attribute Macro</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code">Tooldata variable created in data 
+         declaration section if name is not default tool()</td>
+         <td valign="top" class="code">ToolProfile
+			<br>with the following attributes:
+			<ul>
+           <li>ToolType</li>
+           <li>TCPOffset</li>
+           <li>TCPOrientation</li>
+           <li>Mass</li>
+           <li>Centroid</li>
+           <li>Inertia</li>
+         </ul>
+         </td>
+         <td valign="top" class="code">ToolProfile</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">Wobjdata variable created in data 
+         declaration section if name is not default wobj()</td>
+         <td valign="top" class="code2">ObjectFrameProfile
+			<br>with the following attributes:
+			<ul>
+           <li>ObjectFramePostition</li>
+           <li>ObjectFrameOrientation</li>
+         </ul>
+         </td>
+         <td valign="top" class="code2">ObjectFrameProfile</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code">seamdata created in data declaration 
+         section</td>
+         <td valign="top" class="code">UserProfile type ABBseamdata <br>with the 
+			following attributes:<ul>
+           <li>purgetime</li>
+           <li>preflowtime </li>
+           <li>
+           ignsched</li>
+           <li>
+           ignvoltage</li>
+           <li>
+           ignwirefeed</li>
+           <li>
+           ignvoltadj</li>
+           <li>
+           igncurradj</li>
+           <li>
+           ignmovedelay</li>
+           <li>
+           heatspeed</li>
+           <li>
+           heattime</li>
+           <li>
+           heatdistance</li>
+           <li>
+           heatsched</li>
+           <li>
+           heatvoltage</li>
+           <li>
+           heatwirefeed</li>
+           <li>
+           heatvoltadj</li>
+           <li>
+           heatcurradj</li>
+           <li>
+           cooltime</li>
+           <li>
+           filltime</li>
+           <li>
+           bbacktime</li>
+           <li>
+           rbacktime</li>
+           <li>
+           postflowtime</li>
+           <li>
+           fillsched</li>
+           <li>
+           fillvoltage</li>
+           <li>
+           fillwirefeed</li>
+           <li>
+           fillvoltadj</li>
+           <li>
+           fillcurradj</li>
+         </ul>
+         <p>&nbsp;</td>
+         <td valign="top" class="code">UserProfile type ABBseamdata</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">weavedata created in data declaration</td>
+         <td valign="top" class="code2">UserProfile type ABBweavedata <br>with the 
+			following attributes:<ul>
+           <li>weaveshape</li>
+           <li>weavetype</li>
+           <li>weavelength</li>
+           <li>weavewidth</li>
+           <li>weaveheight</li>
+           <li>dwellleft</li>
+           <li>dwellcenter</li>
+           <li>dwellright</li>
+           <li>weavedir</li>
+           <li>weavetilt</li>
+           <li>weaveori</li>
+           <li>weavebias</li>
+           <li>weavesyncleft</li>
+           <li>weavesyncright</li>
+           <li>wgtrackon </li>
+         </ul>
+         </td>
+         <td valign="top" class="code2">UserProfile type ABBweavedata</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code">welddata created in data declaration 
+         section</td>
+         <td valign="top" class="code">UserProfile type ABBwelddata <br>with the 
+			following attributes:<ul>
+           <li>weldsched </li>
+           <li>weldspeed </li>
+           <li>weldvoltage </li>
+           <li>weldwirefeed </li>
+           <li>delaydistance </li>
+           <li>weldvoltadj </li>
+           <li>weldcurradj</li>
+         </ul>
+         <p>&nbsp;</td>
+         <td valign="top" class="code">UserProfile type ABBwelddata</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code2">gundata created in data declaration 
+         section</td>
+         <td valign="top" class="code2">UserProfile type ABBgundata <br>with the 
+			following attributes:<ul>
+           <li>noftips </li>
+           <li>nofplevels </li>
+           <li>closerequest </li>
+           <li>openrequest </li>
+           <li>tip1counter </li>
+           <li>tip2counter </li>
+           <li>tip1max </li>
+           <li>tip2max </li>
+           <li>closetime1 </li>
+           <li>closetime2 </li>
+           <li>closetime3 </li>
+           <li>closetime4 </li>
+           <li>buildupp1 </li>
+           <li>buildupp2 </li>
+           <li>buildupp3 </li>
+           <li>buildupp4 </li>
+           <li>opentime</li>
+         </ul>
+         <p>&nbsp;</td>
+         <td valign="top" class="code2">UserProfile type ABBgundata</td>
+       </tr>
+       <tr>
+         <td valign="top" class="code">spotdata created in data declaration 
+         section</td>
+         <td valign="top" class="code">UserProfile type ABBspotdata <br>with the 
+			following attributes:<ul>
+           <li>progno </li>
+           <li>tipno </li>
+           <li>gunpressure </li>
+           <li>timerno</li>
+         </ul>
+         <p>&nbsp;</td>
+         <td valign="top" class="code">UserProfile type ABBspotdata</td>
+       </tr>
+     </table>
+     		</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top">
+     <h2>ABB RAPID <a name="ix-ABB RAPID:parameter data">Parameter Data</a></h2>
+     </td>
+     <td>
+     <h2 align="right"><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">    
+     </td>
+     <td valign="top" colspan="2">
+     <p class="task"><blink>Following are parameters which can be associated 
+     with a CATProduct.&nbsp;For information on how to set parameters for a 
+     CATProduct see the <a href="page4468.html">Setting 
+     Parameters</a> section of this manual.</blink></p>
+     <table border="1" cellpadding="3" cellspacing="3" width="100%" class="code" style="border-collapse: collapse" bordercolor="#111111">
+       <tr>
+         <td width="20%"><b>Parameter Name</b></td>
+         <td width="20%"><b>Value Type</b></td>
+         <td width="10%"><b>Usage</b></td>
+         <td width="11%"><b>If Not Specified</b></td>
+         <td width="39%"><b>&nbsp;Description</b></td>
+       </tr>
+       <tr>
+         <td width="20%" valign="top" class="Code2">RailGroup</td>
+         <td width="20%" valign="top" class="Code2">Integer</td>
+         <td width="10%" valign="top" class="Code2">Download</td>
+         <td width="11%" valign="top" class="Code2">1</td>
+         <td width="39%" valign="top" class="Code2">This parameter determines 
+         the group number for the auxiliary rail or gantry axes. </td>
+       </tr>
+       <tr>
+         <td width="20%" class="code" valign="top">ToolGroup</td>
+         <td width="20%" class="code" valign="top">Integer</td>
+         <td width="10%" class="code" valign="top">Download</td>
+         <td width="11%" class="code" valign="top">2</td>
+         <td width="39%" class="code" valign="top">This parameter determines the 
+         group number for the auxiliary end of arm tooling axes.</td>
+       </tr>
+       <tr>
+         <td width="20%" class="code2" valign="top">Digital_IO</td>
+         <td width="20%" class="code2" valign="top">Integer</td>
+         <td width="10%" class="code2" valign="top">Download and Upload</td>
+         <td width="11%" class="code2" valign="top">0</td>
+         <td width="39%" class="code2" valign="top">Used in combination with 
+         Robot_IO to map IO ports to DO/DI, RO/RI or WO/WI signals.
+         <p>Example: </p>
+         <ul>
+           <li>Digital_IO = 100 </li>
+           <li>Set-OPENCLAMP[1] = ON </li>
+           <li>Set-OPENCLAMP_RO[101] = ON </li>
+           <li>Downloaded to: </li>
+           <li>DO[1] = ON </li>
+           <li>RO[1] = ON </li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td width="20%" class="code" valign="top">WorldCoords</td>
+         <td width="20%" class="code" valign="top">Boolean</td>
+         <td width="10%" class="code" valign="top">Download and Upload</td>
+         <td width="11%" class="code" valign="top">&nbsp;</td>
+         <td width="39%" class="code" valign="top">Used to determine if 
+         ObjectFrameProfile and fixed ToolProfile data needs to be relative to 
+         the world rather than relative to the robot base.</td>
+       </tr>
+       <tr>
+         <td width="20%" class="code2" valign="top">OpenHome.&lt;Home Number&gt;</td>
+         <td width="20%" class="code2" valign="top">String</td>
+         <td width="10%" class="code2" valign="top">Upload </td>
+         <td width="11%" class="code2" valign="top">Home_2<p>Used for all backup 
+         positions.</td>
+         <td width="39%" class="code2" valign="top">This parameter is used to 
+         map backup values to home positions in the RAPIDSpotWeld action. 
+         Multiple backup values can be specified for any home number by 
+         separating the values with a semi-colon
+         <p>Example: </p>
+         <ul>
+           <li>OpenHome.2 = 4;5;6 </li>
+           <li>Weldgun Home position 2 is mapped to backup values 4, 5, and 6.
+           </li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td width="20%" valign="top">WeldHome.&lt;Home Number&gt;</td>
+         <td width="20%" valign="top">String</td>
+         <td width="10%" valign="top">Upload</td>
+         <td width="11%" valign="top">Home_1</td>
+         <td width="39%" valign="top">Used for all weld schedules. This 
+         parameter is used to map weld schedule values to home positions in the 
+         RAPIDSpotWeld action. Multiple weld schedule values can be specified 
+         for any home number by separating the values with a semi-colon
+         <p>Example: </p>
+         <ul>
+           <li>WeldHome.1 = 2;4;6 </li>
+           <li>WeldHome.3 = 1;3;5 </li>
+           <li>Weldgun Home position 1 is mapped to schedule values 2, 4, and 6. 
+           Weldgun Home position 3 is mapped to schedule values 1, 3, and 5.
+           </li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td width="20%" class="code2" valign="top">PickHome</td>
+         <td width="20%" class="code2" valign="top">String</td>
+         <td width="10%" class="code2" valign="top">Upload</td>
+         <td width="11%" class="code2" valign="top">Default<p>Pick action 
+         created </td>
+         <td width="39%" class="code2" valign="top">This parameter sets the home 
+         value to be used for the RAPIDSpotPick action.</td>
+       </tr>
+       <tr>
+         <td width="20%" valign="top">DropHome</td>
+         <td width="20%" valign="top">String</td>
+         <td width="10%" valign="top">Upload</td>
+         <td width="11%" valign="top">Default<p>Drop action created </p>
+         <p>&nbsp;</td>
+         <td width="39%" valign="top">This parameter sets the home value to be 
+         used for the RAPIDSpotDrop action.</td>
+       </tr>
+       <tr>
+         <td width="20%" class="code2" valign="top">PartGrabbed</td>
+         <td width="20%" class="code2" valign="top">String</td>
+         <td width="10%" class="code2" valign="top">Upload</td>
+         <td width="11%" class="code2" valign="top">Default<p>Pick/Drop action 
+         created</td>
+         <td width="39%" class="code2" valign="top">This parameter sets the part 
+         name to be used for the RAPIDSpotPick and RAPIDSpotDrop actions.</td>
+       </tr>
+       <tr>
+         <td width="20%" valign="top">GrabPart</td>
+         <td width="20%" valign="top">String</td>
+         <td width="10%" valign="top">Upload</td>
+         <td width="11%" valign="top">Default<p>Pick action created</td>
+         <td width="39%" valign="top">This parameter sets the grab part to be 
+         used for the RAPIDSpotPick action.</td>
+       </tr>
+       <tr>
+         <td width="20%" class="code2" valign="top">Macro.&lt;action name&gt;</td>
+         <td width="20%" class="code2" valign="top">String</td>
+         <td width="10%" class="code2" valign="top">Upload</td>
+         <td width="11%" class="code2" valign="top">No macros uploaded</td>
+         <td width="39%" class="code2" valign="top">This parameter allows a 
+         macro to be mapped to a RAPID action.
+         <p>Example: </p>
+         <p>Macro.RAPIDSpotPick = &quot;PICKUP PART&quot; </p>
+         <p>Macro.RAPIDSpotDrop = &quot;DROP OFF PART&quot; </p>
+         <p>Macros &quot;PICKUP PART&quot; and &quot;DROP OFF PART&quot; would be uploaded to 
+         &quot;RAPIDSpotPick&quot; and &quot;RAPIDSpotDrop&quot; actions. </td>
+       </tr>
+       <tr>
+         <td width="20%" class="code" valign="top">WeldDelay.&lt;delay time in 
+         milliseconds&gt;</td>
+         <td width="20%" class="code" valign="top">String</td>
+         <td width="10%" class="code" valign="top">Upload</td>
+         <td width="11%" class="code" valign="top">500 milliseconds</td>
+         <td width="39%" class="code" valign="top">This parameter is used to map 
+         weld schedule values to delay times in the TPESpotWeld action. Multiple 
+         schedule values can be specified for any delay time by separating the 
+         values with a semi-colon<p>Example:</p>
+         <p>WeldDelay.200 = 5;8;9</p>
+         <p>A delay to 200 milliseconds is mapped to schedule values 5, 8, and 
+         9.</td>
+       </tr>
+     </table>
+     
+     </td>
+   </tr>
+ 	<tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/anew.gif" width="32" height="32"></td>
+     <td valign="top">
+		<h2>
+     <a name="ix-Spotweld and ArcWeld Process Data">SpotWeld and ArcWeld Process 
+     Data</a></h2>
+		</td>
+     <td>
+     <h2 align="right"><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h2>
+     </td>
+     </tr>
+ 	<tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top" colspan="2">
+     <p>The ABB RAPID language and the customizable datatypes it allows are 
+     supported via UserProfile process data.</p>
+     <p class="task">ArcWeld process datatypes supported will be seamdata, 
+     weavedata and welddata.&nbsp;SpotWeld process datatypes supported will be 
+     gundata and spotdata. When an ABB/S4 device is retrieved from 
+     Robotlib all of the above datatypes will be available for use.&nbsp;Refer to the device building section for information on creating new 
+     variables for each datatype.&nbsp;For upload, these datatypes 
+     will be created automatically if they are found in the uploaded module 
+     file.</p>
+     <p class="task">For a listing of the process datatypes and associated 
+     attributes for ABB RAPID, open the file <cite>resources/graphic/ABBRapid.CATfct</cite>.&nbsp;
+     </p>
+     <p style="padding-top: 1.0pt">Below is an example of the XML format that 
+     will be read by <cite>Rapid.xslt</cite> to create a welddata definition and generated by 
+     <cite>Rapid.jar</cite> when parsing a welddata definition.</p>
+     <p style="padding-top: 1.0pt">
+     <img border="0" src="b35doc/english/online/cfyugolp_c2/images/wnprocessdatafrapidNLS.gif" width="416" height="865"></p>
+     <p style="padding-top: 1.0pt">The Corresponding ABB RAPID welddata 
+     definition would be similar to this:</p>
+     <p style="padding-top: 1.0pt">PERS welddata 
+     1,250.0,200.0,10.0,100.0,10.0,10.0;</p>
+     <p style="padding-top: 1.0pt">Similar process data definitions would be 
+     supported for ABB Rapid weavedata and seamdata datatypes.</p>
+		<p style="padding-top: 1.0pt">Welddata UserProfile Type Attributes:<br>
+		<ul>
+		<li>weld_sched</li>
+		<li>weld_speed</li>
+		<li>weld_voltage</li>
+		<li>weld_wirefeed</li>
+		<li>delay_distance</li>
+		<li>weld_volt_adj</li>
+		<li>weld_curr_adj</li>				
+		</ul></p>
+<p style="padding-top: 1.0pt">
+		Weavedata UserProfile Type Attributes:<br>
+		<ul>
+		<li>weave_shape</li>
+		<li>weave_type</li>
+		<li>weave_length</li>
+		<li>weave_width</li>
+		<li>weave_height</li>
+		<li>dwell_left</li>
+		<li>dwell_center</li>
+		<li>dwell_right</li>
+		<li>weave_dir</li>
+		<li>weave_tilt</li>
+		<li>weave_ori</li>
+		<li>weave_bias</li>
+		<li>weave_sync_left</li>
+		<li>weave_sync_right</li>
+		<li>wg_track_on</li>
+		</ul></p>
+<p style="padding-top: 1.0pt">
+		Seamdata UserProfile Type Attributes:<br>
+		<ul>
+		<li>purge_time</li>
+		<li>preflow_time</li>
+		<li>ign_sched</li>
+		<li>ign_voltage</li>
+		<li>ign_wirefeed</li>
+		<li>ign_volt_adj</li>
+		<li>ign_curr_adj</li>
+		<li>ign_move_delay</li>
+		<li>heat_speed</li>
+		<li>heat_time</li>
+		<li>heat_distance</li>
+		<li>heat_sched</li>
+		<li>heat_voltage</li>
+		<li>heat_wirefeed</li>		
+		<li>heat_volt_adj</li>
+		<li>heat_curr_adj</li>
+		<li>cool_time</li>
+		<li>fill_time</li>
+		<li>bback_time</li>
+		<li>rback_time</li>
+		<li>postflow_time</li>
+		<li>fill_sched</li>
+		<li>fill_voltage</li>
+		<li>fill_wirefeed</li>		
+		<li>fill_volt_adj</li>
+		<li>fill_curr_adj</li>
+		</ul>
+     <p>SpotWeld process data definitions are 
+     supported for both, the Rapid.xslt download&nbsp;to a module and the Rapid.jar 
+     upload from a module.&nbsp;The ABB S4 Rapid datatypes supported will be 
+     spotdata and gundata. A user profile similar to the one shown for 
+     arcwelding welddata would be used.</p>
+		<p style="padding-top: 1.0pt">Spotdata UserProfile Type Attributes:<br>
+		<ul>
+		<li>prog_no</li>
+		<li>tip_no</li>
+		<li>gun_pressure</li>
+		<li>timer_no</li>
+		</ul>
+		<p style="padding-top: 1.0pt">Gundata UserProfile Type Attributes:<br>
+		<ul>
+		<li>nof_tips</li>
+		<li>nof_plevels</li>
+		<li>close_request</li>
+		<li>open_request</li>
+		<li>tip1_counter</li>
+		<li>tip2_counter</li>
+		<li>tip1_max</li>
+		<li>tip2_max</li>
+		<li>close_time1</li>
+		<li>close_time2</li>
+		<li>close_time3</li>
+		<li>close_time4</li>
+		<li>build_up_p1</li>
+		<li>build_up_p2</li>
+		<li>build_up_p3</li>
+		<li>build_up_p4</li>
+		<li>open_time</li>
+		</ul>
+     <p style="padding-top: 1.0pt">For download the XSLT translator only 
+     outputs a value if it is found, so multiple configurations of these 
+		datatypes are possible. </p></td>
+   </tr>
+ 	<tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/anew.gif" title="ascenari.gif (1364 bytes)" width="32" height="32"></td>
+     <td valign="top">
+		<h2><a name="hj-nrltch"></a>NRL Teach Support</h2>
+		</td>
+     <td>
+     <h2 align="right"><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></h2>
+     </td>
+     </tr>
+ 	<tr>
+     <td valign="top">
+     &nbsp;</td>
+     <td valign="top" colspan="2">
+		<p>For ABB S4 (and other RAPID controller 
+		types), <a href="page4529.html">Native Robot Language (NRL) Teach </a>displays controller-specific command buttons, and 
+		scripts corresponding statements. </p>
+		<p class="task">
+		<img border="0" src="b35doc/english/online/cfyugolp_c2/images/db_nrlabbNLS.gif" width="533" height="436"></p>
+		<p>
+		Users can use the command buttons to script statements, such as motion 
+		commands to jog a robot and record motion instructions.</p>
+		<p class="task">The download operation will output RAPID 
+		program files. For example:<br>
+		<font color="#800000">MoveJ abbtarget1,v500,fine,tool0\\Wobj:=wobj0;</font></p></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

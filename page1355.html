@@ -1,0 +1,362 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>About Automation</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+ </head>
+
+ <body>
+
+ <h1>About Automation</h1>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/basug_c2/images/KwrDesConfig5.gif" width="205" height="310"></p>
+ <p align="center"><b><i>Configuration 5</i></b><br>
+ &nbsp;of <a href="b35doc/english/online/basug_c2/samples/KwrProfilesDesignTable.xls">KwrProfilesDesignTable.xls</a><br>
+ applied to <a href="b35doc/english/online/basug_c2/samples/KwrBottleProfiles.CATPart">
+ KwrBottleProfiles.CATPart</a></p>
+ <p>A macro is a way to store instructions intended to be repeated many times. 
+ It can also be a good means to store intricate interactions or describe a 
+ document in a clear text file easy to edit and requiring less memory than a 
+ document. Knowledgeware automation provides you with a way to store operations 
+ in the form of a .CATScript file. In this chapter we discuss the macro used to 
+ create the assembly in <a href="page1354.html">About Rule Firing</a>, then we 
+ introduce the knowledgeware automation objects. We will not dwell on the part 
+ which consists in creating an assembly as this guide deals more specifically 
+ with knowledgeware techniques. If you need a brush up on how to create an 
+ assembly, see the <i>Assembly User's Guide</i>.</p>
+ <h2><font color="#282187">Creating an Assembly using a CATScript Macro</font></h2>
+ <p>A CATScript macro is written in a language similar to the Visual Basic 
+ language. You can record a CATScript macro, then replay it later on or write it 
+ from scratch. The recommended method is to start from a record then, depending 
+ on your needs, edit and modify the pre-recorded macro.</p>
+ <h3><font color="#000099">Recording the CATScript Macro</font></h3>
+ <p>To record the macro used in <a href="page1354.html">About Rule Firing</a>:</p>
+ <ol class="task">
+   <li>
+   <p class="task">Close all the documents open in your session.</li>
+   <li>
+   <p class="task">Select the <font face="Courier"><kbd>Tools&nbsp;&gt;&nbsp;Macro&nbsp;&gt;&nbsp;Start 
+   Recording...</kbd></font> command from the standard menu bar then in the
+   <font face="Courier"><kbd>Record Macro</kbd></font> dialog box displayed, 
+   specify the path of an external file. Press the <font face="Courier"><kbd>
+   Start</kbd></font> button to start the macro recording. From now on, all the 
+   interactions are recorded in the CATScript file you have just specified.</p>
+   <h4>Start<b><i> </i></b>of recording</h4>
+   <ol class="task" type="a">
+     <li>
+     <p class="task">Select the <font face="Courier"><kbd>
+     Start&nbsp;&gt;&nbsp;Infrastructure&nbsp;&gt;&nbsp;Product Structure</kbd></font> command from the 
+     standard tool bar. The product1 root product is created.&nbsp;</li>
+     <li>
+     <p class="task">Select the <font face="Courier"><kbd>Components&nbsp;&gt;&nbsp;Existing 
+     Component...</kbd></font> command from the root product contextual menu to 
+     add the <a href="b35doc/english/online/basug_c2/samples/KwrTipCreateAssembly.CATPart">
+     KwrTipCreateAssembly.CATPart</a> component then the
+     <a href="b35doc/english/online/basug_c2/samples/KwrCap1.CATPart">KwrCap1.CATPart</a> component.</li>
+     <li>
+     <p class="task">In the Assembly Design workbench, specify an offset 
+     constraint of 1 mm between the Plane.1 plane of the bottle and the Pad.2 
+     surface. Refer to the figure below to see how to select the elements to be 
+     constrained.<br>
+     <img src="b35doc/english/online/basug_c2/images/KwrTipGenScript3.gif" vspace="8" width="255" height="212"></li>
+     <li>
+     <p class="task">Specify a coincidence constraint to make the cap and the 
+     bottle axes coaxial. For more information, refer to the <i>Assembly User's 
+     Guide</i>.&nbsp;If need be, update the document.</li>
+   </ol>
+   <h4>End of recording</h4>
+   </li>
+   <li>
+   <p class="task">Select the <font face="Courier"><kbd>Tools&nbsp;&gt;&nbsp;Macro&nbsp;&gt;&nbsp;Stop 
+   Recording</kbd></font> command from the standard tool bar. This closes the 
+   file which records all the interactions described above.</li>
+ </ol>
+ <h3><font color="#282187">Taking a Look at the Macro</font></h3>
+ <p>The CATScript macro you have just recorded is similar to the one below. For 
+ the sake of clarity and to make lines shorter:</p>
+ <table border="0" cellpadding="0" cellspacing="0" width="100%">
+   <tr>
+     <td valign="top" width="100%">
+     <ul>
+       <li>Some objects have been declared while others have been renamed&nbsp;</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="100%">
+     <ul>
+       <li>The arguments passed in functions using the <a href="#GenericNaming">
+       generic naming</a> method are written in italics.</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <p>Before replaying this macro, you should replace the path specified as the 
+ argument of the AddComponentsFromFiles method.</p>
+ <div align="center">
+   <center>
+   <table border="0" cellspacing="0" width="45%" bgcolor="#E6E6E6" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+     <tr>
+       <td bgcolor="#EAEAEA">
+       <pre><code>Dim PrDoc0 As Document
+Set PrDoc0 = CATIA.Documents.Add(&quot;Product&quot;)&nbsp;
+
+Dim Prod1 As Product
+Set Prod1 = PrDoc0.Product&nbsp;&nbsp;
+&nbsp;
+Dim  var1 ( 0 )&nbsp;
+<font color="#008000">' Replace the path below before replaying the macro</font>
+var1 ( 0 )  = &quot;E:\...\KwrCap1.CATPart&quot;
+Prod1.Products.AddComponentsFromFiles var1, &quot;*&quot;
+
+Dim  var2 ( 0 )&nbsp;
+<font color="#008000">' Replace the path below before replaying the macro</font>
+var2 ( 0 )  = &quot;E:\...\KwrTipCreateAssembly.CATPart&quot;
+Prod1.Products.AddComponentsFromFiles var2, &quot;*&quot;
+
+Dim CstS1 As Collection
+Set CstS1 = Prod1.Connections(&quot;CATIAConstraints&quot;)&nbsp;
+
+Dim Ref1 As Reference
+Set Ref1 = Prod1.CreateReferenceFromName(<i>Plane.1</i>)&nbsp;
+
+Dim Ref2 As Reference
+Set Ref2 = Prod1.CreateReferenceFromName(<i>Pad.2 face</i>)&nbsp;
+
+Dim Cst2 As Constraint
+Set Cst2 = CstS1.AddBiEltCst(1, Ref1, Ref2)&nbsp;
+Cst2.Dimension.Value = 1.000000
+Cst2.Orientation = 2
+
+Dim Ref3 As Reference
+Set Ref3 = Prod1.CreateReferenceFromName(<i>Bottle axis</i>)&nbsp;
+
+Dim Ref4 As Reference
+Set Ref4 = Prod1.CreateReferenceFromName(<i>Cap axis</i>)&nbsp;
+
+Dim Cst3 As Constraint
+Set Cst3 = CstS1.AddBiEltCst(2, Ref3, Ref4)&nbsp;
+
+Prod1.Update&nbsp;</code></pre>
+       </td>
+     </tr>
+   </table>
+   </center>
+ </div>
+ <p>This macro can be started from a rule (see <a href="page1354.html">About 
+ Rule Firing</a>) or directly by selecting the <font face="Courier"><kbd>
+ Tools&nbsp;&gt;&nbsp;Macro&nbsp;&gt;&nbsp;Run</kbd></font> command from the standard menu bar.&nbsp;</p>
+ <h3><font color="#282187">About CATIA Automation Learning</font></h3>
+ <p>There is a lot to be learned before you can write a complete macro in Visual 
+ Basic, but once you understand the basics of the language, you can be up and 
+ running in no time at all. Visual Basic is based on objects which have their 
+ own methods and properties. To set the value of a property, you follow the 
+ reference to an object with a period, the property name, an equal sign (=), and 
+ the new property value. At first sight, it is simple. The tedious thing when 
+ you have no previous programming skills is that the macro you record is a raw 
+ macro with objects and properties chained in one statement as in the extract 
+ below:</p>
+ <div align="center">
+   <center>
+   <table border="0" cellspacing="0" width="45%" bgcolor="#EAEAEA" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+     <tr>
+       <td>
+       <pre><code>Dim ProductDocument0 As Document
+Set ProductDocument0 = CATIA.Documents.Add ( &quot;Product&quot; )&nbsp;
+Dim var1 ( 0 )&nbsp;
+var1 ( 0 ) = &quot;E:\...\KwrTipCreateAssembly.CATScript&quot;
+ProductDocument0.Product.Products.AddComponentsFromFiles var1, &quot;*&quot;</code></pre>
+       </td>
+     </tr>
+   </table>
+   </center>
+ </div>
+ <p>When you tackle automation, there are two ways to proceed:</p>
+ <table border="0" cellpadding="0" cellspacing="0" width="100%">
+   <tr>
+     <td valign="top" width="100%">
+     <ul>
+       <li>You already have a background in Visual Basic and you can refer to 
+       the list of <i>Programming Interfaces</i> provided with the CATIA 
+       documentation to write a macro or interpret a pre-recorded macro</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="100%">
+     <ul>
+       <li>You are a beginner and just record a scenario. You must replay it to 
+       check whether the scenario has been actually recorded.</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <h3><font color="#282187"><a name="GenericNaming">About Generic Naming</a></font></h3>
+ <p>Generic naming is a CATIA technique which creates a label whenever an 
+ element has been selected interactively. This label is a coded description of 
+ the selected element.&nbsp;</p>
+ <p>This generic naming label appears when you record a .CATScript macro by 
+ using the <nobr><font face="Courier"><kbd>Tools&nbsp;&gt;&nbsp;Options&nbsp;&gt;&nbsp;Macros</kbd></font></nobr> 
+ command.<br>
+ If you perform interactions such as selecting an edge or a face, the value 
+ specified for the arguments of some methods are written using generic naming. 
+ When you take a look at the macro, you can see arguments which are neither 
+ Visual Basic objects nor usual data. These arguments are written in a form 
+ similar to the simple example below:<br>
+ <kbd>Brp:(Pad.1:0(Brp:Sketch.1;1)).</kbd></p>
+ <p>You don't have to worry much about generic naming as the definitions relying 
+ on this technique are automatically inserted in CATIA macros.</p>
+ <h2><font color="#282187">Knowledgeware Automation</font></h2>
+ <p>The objects below can be created and managed in a .CATScript macro:</p>
+ <table border="0" cellpadding="0" cellspacing="0" width="100%">
+   <tr>
+     <td valign="top" width="100%">
+     <ul>
+       <li>Parameters</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="100%">
+     <ul>
+       <li>Formulas</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="100%">
+     <ul>
+       <li>Design tables</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="100%">
+     <ul>
+       <li>Rules and checks</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <h3><font color="#282187">Creating Knowledgeware Objects</font></h3>
+ <p>The knowledgeware features are created from the collection which refers to 
+ their type. For example, to create a relation in a Part type feature, you must 
+ first retrieve the collection object containing the Part relations by using the 
+ Relations method on the Part object. To create a parameter in a Part, you must 
+ retrieve the collection object containing the Part parameters by using the 
+ Parameters method on the Part object.</p>
+ <h3><font color="#282187">Modifying Knowledgeware Objects</font></h3>
+ <p>To manipulate a knowledgeware object, you just have to use the methods and 
+ properties of the relevant object.</p>
+ <h3><font color="#282187">An Example</font></h3>
+ <p>Open the <a href="b35doc/english/online/basug_c2/samples/KwrTipCreateAssembly.CATPart">
+ KwrTipCreateAssembly.CATPart</a> document and run the KwrRelations.CATScript 
+ macro.&nbsp;</p>
+ <div align="center">
+   <center>
+   <table border="0" cellspacing="0" bgcolor="#E6E6E6" width="45%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+     <tr>
+       <td>
+       <pre><code>Sub CATMain()
+
+' <font color="#008000">Retrieve your active document - CATIA is your application 
+' You get the active document by using the ActiveDocument property
+' on your application object</font>
+Dim myDoc As Document 
+Set myDoc = CATIA.ActiveDocument 
+
+<font color="#008000">' Check whether the document is a CATPart
+' Analyse the pathname of the document 
+' If the extension .CATPart is not found, a message is displayed
+' but you exit the procedure
+' InStrRev is a standard VB function</font>
+Dim strPartName, strCATPart, myPos
+strPartName = myDoc.Name 
+if (InStrRev(strPartName,&quot;.CATPart&quot;,-1) = 0)_
+then MsgBox(&quot;Your document should be a .CATPart&quot;) : Exit Sub 
+
+<font color="#008000">' Retrieve the collection object which contains
+' all the document relations
+' Activate all the relations
+' Display the relation names in a message box
+' Note: Statements below could not be applied to a CATProduct 
+</font>Dim strRel0 As String
+Dim strRel1 As String
+strRel1 = &quot;Here is the list of relations&quot; &amp; vbCrLf &amp; strRel0
+Dim myRelCol As Relations
+Set myRelCol = myDoc.Part.Relations
+For Each myRel in myRelCol
+myRel.Activate()
+strRel1 = strRel1 &amp; vbCrLf &amp; myRel.Name
+Next
+Msgbox strRel1 
+
+<font color="#008000">' Make the configuration 4 active</font>
+Dim des1 As Relation
+For Each myRel in myRelCol
+  if myRel.Name  = &quot;DesignTable.1&quot;_
+  then Set des1 = myRelCol.Item(&quot;DesignTable.1&quot;): des1.Configuration = 4 
+Next
+CATIA.ActiveDocument.Part.Update
+End Sub </code></pre>
+       </td>
+     </tr>
+   </table>
+   </center>
+ </div>
+ <p>This macro displays the list of relations within the document, changes the 
+ design table configuration and updates the document.&nbsp;</p>
+ <table border="0" cellpadding=" " cellspacing=" ">
+   <tr>
+     <td valign="top" align="center" bgcolor="#FFFFFF">
+     <h2 align="left"><font color="#282187">Tips</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left" bgcolor="#FFFFFF">
+     <p style="margin-left: 14; margin-top: 20"><font color="#000080" size="2">
+     Operations that Cannot be Recorded</font></p>
+     <blockquote>
+       <p><font size="2">There are some operations that cannot be recorded but 
+       that can be programmed in a macro (the activation or deactivation of a 
+       relation for example). The list of objects, methods and properties you 
+       can actually use when writing a macro is given in the <i>Programming 
+       Interfaces</i>. Access to this documentation is provided on the CATIA 
+       documentation home page.</font></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left" bgcolor="#FFFFFF">
+     <p style="margin-left: 14; margin-top: 20"><font color="#000080" size="2">
+     Retrieving Collections</font></p>
+     <blockquote>
+       <p><font size="2">Collections such as the Relations and Parameters 
+       objects can only be retrieved from a CATPart document. Prior to 
+       retrieving these collections, it is better to check the document type in 
+       your script, otherwise the macro crashes.</font></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="left" bgcolor="#FFFFFF">
+     <p style="margin-left: 14; margin-top: 20"><font color="#000080" size="2">
+     Retrieving a Collection Object</font></p>
+     <blockquote>
+       <p><font size="2">When retrieving a collection object by its name, it is 
+       better to check whether the object exists, otherwise the macro crashes.</font></p>
+     </blockquote>
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

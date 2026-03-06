@@ -1,0 +1,402 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Optimizing V4 Family Migration: Deactivation of the No Show Filter
+ </title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1><a name="ix-deactivate:No Show Filter"></a>Optimizing V4 
+	Family 
+ Migration: Deactivation of the No Show Filter</h1>
+ <div align="center">
+   <center>
+   <table border="0" cellspacing="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" height="4239" Width="0">
+     <tr valign="top" border="0">
+       <td align="center" height="446">
+       <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+       <td height="446"><span style="color:black;mso-bidi-font-weight:
+bold">When copy/pasting V4 space data, duplication of geometries inside a same 
+       family is avoided.</span>
+       <span style="color:black;mso-bidi-font-weight:
+bold">The main reason is that some elements such as Faces require the migration 
+       of underlying entities such as Surfaces, but the Surfaces may also have 
+       been migrated explicitly. The purpose is to analyze the set of objects 
+       migrated and extract the <b>representative entities</b>.</span>
+       <p class="MsoNormal" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+       <span style="LETTER-SPACING: 0pt">Because of filters, the </span>
+       <span style="COLOR: black; mso-fareast-font-family: Times New Roman; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+       following elements are not converted and they are not mentioned in the 
+	   GlobalResults.html:</span></p>
+       <ol class="task">
+         <li>
+         <p class="task" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+         <span style="letter-spacing: 0pt">Border curves of migrated Faces 
+         (since they would duplicate face edges).</span></li>
+         <li>
+         <p class="task" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+         <span style="letter-spacing: 0pt">Surfaces that are support of migrated 
+         faces (since they are already migrated as support of the faces).</span></li>
+         <li>
+         <p class="task" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+         <span style="letter-spacing: 0pt">Faces included in a migrated Skin or 
+         Volume (since they have been migrated through the skin or the volume 
+         and are accessible through those federating elements).</span></li>
+         <li>
+         <p class="task" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+         <span style="letter-spacing: 0pt">Volumes and Skins used in migrated 
+         solids (solids containing Volume or Skin/split primitives for 
+         instances) since they are already migrated through the solid primitive.
+         </span></li>
+         <li>
+         <p class="task" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+         <span style="letter-spacing: 0pt">Elements in Hide, except Solids (SOLIDE 
+         or SOLIDM): The management of Hide/Show should be independent from 
+         families. However some border effects have convinced us the two 
+         behaviors should be associated: for instance if the model contains a 
+         Skin in Hide, whereas its faces are in Show space, migrating the Skin 
+         and not the Faces separately would not provide the required result.</span></li>
+       </ol>
+       <p class="MsoNormal" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+       <span style="letter-spacing: 0pt">This can result in dramatic 
+       improvements in terms of conversion performance, memory consumption and 
+       CATPart size.</span></p>
+	   <p class="MsoNormal" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+       Underlying Geometries are not included in GlobalResults.html.</p>
+       <p class="MsoNormal" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+       <span style="color:black;mso-bidi-font-weight:
+bold">The conversion can be operated on those representative entities only. But
+       </span>these tasks show you that&nbsp;<span style="color:black;mso-bidi-font-weight:
+bold"><b>environment variables allow the user to deactivate these filters</b> 
+       and to migrate all the V4 features:</span> </p>
+       <blockquote>
+         <blockquote>
+           <blockquote>
+             <blockquote>
+               <p class="MsoNormal" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none"><a href="#hj-without variables">
+               CATIA V5 behavior without the environment variables (when the 
+               filter is activated)</a><a href="#hj-with variables"><br>
+               CATIA V5 behavior with the environment variables (when the filter 
+               is deactivated)</a></p>
+             </blockquote>
+           </blockquote>
+         </blockquote>
+       </blockquote>
+       </td>
+     </tr>
+     <tr valign="top" border="0">
+       <td align="center" height="75">
+       <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+       <td height="75">
+       <p class="MsoNormal" style="margin-left:0in">
+       <span style="letter-spacing: 0pt">Note that the element can still be 
+       copy-pasted when selected individually, or if the element it belongs to 
+       is not migrated in the same transaction</span><span style="mso-bidi-font-weight: bold">.</span></p>
+       <p class="MsoNormal" style="margin-left:0in">
+       <span style="color:black;mso-bidi-font-weight:
+bold">This enhancement is automatically used when copy/pasting V4 space data 
+       into a CATPart.</span></td>
+     </tr>
+     <tr valign="top" border="0">
+       <td align="center" height="53">&nbsp;</td>
+       <td height="53">
+       <h2><font color="#282187"><a name="hj-without variables"></a>CATIA V5 
+       behavior without the environment variable (when the filter is activated):</font></h2>
+       </td>
+     </tr>
+     <tr valign="top" border="0">
+       <td align="center" height="32">
+       <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+       <td height="32">Open
+       <a href="b35doc/english/online/intug_c2/samples/SURFACE_ISOLATED_UNDERFACE_INSKIN_NOSHOW.model">
+       SURFACE_ISOLATED_UNDERFACE_INSKIN_NOSHOW.model</a> in CATIA V5:<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1">
+         <tr>
+           <td width="100%"><img border="0" src="b35doc/english/online/intug_c2/images/bt228NLS.gif" width="424" height="367"></td>
+         </tr>
+       </table>
+       </td>
+     </tr>
+     <tr valign="top" border="0">
+       <td align="center" height="118">
+       <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+       <td height="118">
+       <p class="MsoNormal" style="margin-left:0in">
+       <span style="color: black; mso-bidi-font-weight: bold">E</span><span style="color:black;mso-bidi-font-weight:
+bold">nvironment variables are provided to disable this behavior (</span><span style="letter-spacing: 0pt">filters)</span><span style="color:black;mso-bidi-font-weight:
+bold">:</span></p>
+       <ul>
+         <li>
+         <p class="MsoNormal" style="margin-left:0in">
+         <b style="mso-bidi-font-weight:normal">set KEEP_HIDDEN_ELEMENT=1 </b>
+         <span style="mso-bidi-font-weight:bold">: disables point 5. above</span></li>
+         <li>
+         <p class="MsoNormal" style="margin-left:0in">
+         <b style="mso-bidi-font-weight:normal"><a href="page10626.html">set 
+         INACTIVE_QUICK_PASTE=1</a> </b><span style="mso-bidi-font-weight:bold">
+         : disables point 1. to 3.</span></li>
+       </ul>
+       <p class="MsoNormal" style="margin-left:0in">
+       <span style="mso-bidi-font-weight: bold">The following scenarios deal 
+       with the first e</span><span style="color:black;mso-bidi-font-weight:
+bold">nvironment variable (set KEEP_HIDDEN_ELEMENT=1)</span>.
+       <span style="mso-bidi-font-weight: normal">For more information about the 
+       second </span><span style="mso-bidi-font-weight: bold">e</span><span style="color:black;mso-bidi-font-weight:
+bold">nvironment variable, please refer to <a href="page10626.html">Optimize V4 
+       Family Migration: Deactivation of the Solids' Parent Filter</a>.</span></td>
+     </tr>
+     <tr>
+       <td align="center" height="29">&nbsp;</td>
+       <td valign="middle" align="left" height="29">
+       <ol class="task">
+         <li>
+         <p class="task">Click the <font color="#808080"><b>Swap visible space</b></font>
+         <img border="0" src="b35doc/english/online/icons_C2/images/I_SwapHideShowP2.gif" width="24" height="24"> 
+         to visualize the <font color="#808080"><b>No Show space</b></font>:</p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber2">
+           <tr>
+             <td width="100%"><img border="0" src="b35doc/english/online/intug_c2/images/bt230NLS.gif" width="424" height="556"></td>
+           </tr>
+         </table>
+         <p class="task">The elements CRV17 and SUR1 contained in the *MASTER 
+         are in the No Show space.</li>
+         <li>
+         <p class="task">Copy *MASTER and paste it AS SPEC in a CATPart.</li>
+         <li>
+         <p class="task">Update the CATPart.</p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber3">
+           <tr>
+             <td width="100%">
+				<img border="0" src="b35doc/english/online/intug_c2/images/bt229NLS.gif" width="652" height="457"></td>
+           </tr>
+         </table>
+         </li>
+         <li>
+         <p class="task">Click <font color="#666666"><b> Swap visible space</b></font>:</p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber4">
+           <tr>
+             <td width="100%">
+				<img border="0" src="b35doc/english/online/intug_c2/images/bt231NLS.gif" width="652" height="457"></td>
+           </tr>
+         </table>
+         <p class="task">CRV17 and SUR1 which were in the No Show space in the 
+         model have not been migrated in CATIA V5.</p>
+         <p class="task"><br>
+         When you have <b>a Skin containing a Face</b>, only one feature &quot;Skin&quot;
+         <b>without Curve borders and Face</b> is migrated. This is a means to 
+         avoid duplication of similar features.</li>
+       </ol>
+       </td>
+     </tr>
+     <tr>
+       </center>
+     </tr>
+     <center>
+     <tr valign="top" border="0">
+       <td align="center" height="1"></td>
+       <td valign="middle" align="left" height="1">
+       <h3><font color="#282187">Functionality scope:</font></h3>
+       </td>
+     </tr>
+     <tr>
+       <td align="center" height="565">&nbsp;</td>
+       <td valign="middle" align="left" height="565">&nbsp;
+       <div align="center">
+         <table border="0" cellspacing="1" width="655">
+           <tr>
+             <td width="207" align="center"></td>
+             <td width="267" align="center" bgcolor="#EOEOEO"><b>V4 model</b></td>
+             <td width="56" align="center" bgcolor="#EOEOEO"><b>
+             <img border="0" src="b35doc/english/online/intug_c2/images/FlecheHorizontale2.gif" width="40" height="26"></b></td>
+             <td width="321" align="center" bgcolor="#EOEOEO"><b>V5 CATPart </b>
+             </td>
+           </tr>
+           <tr>
+             <td width="207" align="center" bgcolor="#F2F2F2" rowspan="6"><b>
+             With Filter</b></td>
+             <td width="321" align="center" bgcolor="#F2F2F2" colspan="2">1 Skin 
+             in Show<br>
+             + 1 Face in No Show</td>
+             <td width="321" align="center" bgcolor="#F2F2F2">1 Skin in Show<br>
+             no Border Curve<br>
+             no Face</td>
+           </tr>
+           <tr>
+             <td width="321" align="center" bgcolor="#F2F2F2" colspan="2">1 Skin 
+             in No Show<br>
+             + 1 Face in Show</td>
+             <td width="321" align="center" bgcolor="#F2F2F2">Face in Show</td>
+           </tr>
+           <tr>
+             <td width="321" align="center" bgcolor="#F2F2F2" colspan="2">1 Face 
+             + 1 Surface <br>
+             + Border Curves in Show</td>
+             <td width="321" align="center" bgcolor="#F2F2F2">1 Face<br>
+             no Border Curve<br>
+             no Surface</td>
+           </tr>
+           <tr>
+             <td width="321" align="center" bgcolor="#F2F2F2" colspan="2">1 Face 
+             in No Show <br>
+             + Border Curves in Show</td>
+             <td width="321" align="center" bgcolor="#F2F2F2">Border Curves in 
+             Show</td>
+           </tr>
+           <tr>
+             <td width="321" align="center" bgcolor="#F2F2F2" colspan="2">1 
+             Surface in No Show <br>
+             + Curves in No Show</td>
+             <td width="321" align="center" bgcolor="#F2F2F2">no Surface in No 
+             Show<br>
+             no Curves in No Show</td>
+           </tr>
+           <tr>
+             <td width="321" align="center" bgcolor="#F2F2F2" colspan="2">1 
+             Surface in No Show <br>
+             + Curves in Show</td>
+             <td width="321" align="center" bgcolor="#F2F2F2">Curves in Show</td>
+           </tr>
+           <tr>
+             <td width="207" align="center" bgcolor="#EOEOEO" rowspan="6"><b>
+             When the No Show Filter is deactivated</b></td>
+             <td width="321" align="center" bgcolor="#EOEOEO" colspan="2">1 Skin 
+             in Show<br>
+             + 1 Face in No show</td>
+             <td width="321" align="center" bgcolor="#EOEOEO">1 Skin in Show<br>
+             + 1 Face in No show</td>
+           </tr>
+           <tr>
+             <td width="321" align="center" bgcolor="#EOEOEO" colspan="2">1 Skin 
+             in No Show<br>
+             + 1 Face in show</td>
+             <td width="321" align="center" bgcolor="#EOEOEO">Skin in No Show<br>
+             No element in No Show</td>
+           </tr>
+           <tr>
+             <td width="321" align="center" bgcolor="#EOEOEO" colspan="2">1 Face 
+             + 1 Surface + Border Curves in Show</td>
+             <td width="321" align="center" bgcolor="#EOEOEO">1 Face<br>
+             no Border Curve<br>
+             no Surface</td>
+           </tr>
+           <tr>
+             <td width="321" align="center" bgcolor="#EOEOEO" colspan="2">1 Face 
+             in No Show <br>
+             + Border Curves in Show</td>
+             <td width="318" align="center" bgcolor="#EOEOEO">1 Face in No Show
+             <br>
+             + Border Curves in Show</td>
+           </tr>
+           <tr>
+             <td width="321" align="center" bgcolor="#EOEOEO" colspan="2">1 
+             Surface in No Show <br>
+             + Curves in No Show</td>
+             <td width="318" align="center" bgcolor="#EOEOEO">1 Surface in No 
+             Show <br>
+             + Curves in No Show</td>
+           </tr>
+           <tr>
+             <td width="318" align="center" bgcolor="#EOEOEO" colspan="2">1 
+             Surface in No Show <br>
+             + Curves in Show</td>
+             <td width="318" align="center" bgcolor="#EOEOEO">1 Surface in No 
+             Show <br>
+             + Curves in Show</td>
+           </tr>
+         </table>
+       </div>
+       <p>&nbsp;</td>
+     </tr>
+     <tr>
+       <td align="center" height="36"></td>
+       <td valign="middle" align="left" height="36">
+       <h3><font color="#282187"><a name="hj-with variables"></a>CATIA V5 
+       behavior with the environment variables (when the filter is deactivated):</font></h3>
+       </td>
+     </tr>
+     <tr>
+       <td align="center" height="172" valign="top">
+       <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+       <td valign="middle" align="left" height="172">
+       <p class="task">On Windows, you can deactivate the No Show Filter by 
+       entering the following command: </p>
+       <blockquote>
+         <blockquote>
+           <p class="task"><b style="mso-bidi-font-weight:normal">set 
+           KEEP_HIDDEN_ELEMENT=1</b></p>
+         </blockquote>
+       </blockquote>
+       <p class="task">And on UNIX:</p>
+       <blockquote>
+         <blockquote>
+           <p class="task"><b style="mso-bidi-font-weight:normal">export 
+           KEEP_HIDDEN_ELEMENT=1</b></p>
+         </blockquote>
+       </blockquote>
+       </td>
+     </tr>
+     <tr>
+       <td align="center" height="88">&nbsp;</td>
+       <td height="88">
+       <ol class="task">
+         <li>
+         <p class="task">Open
+         <a href="b35doc/english/online/intug_c2/samples/SURFACE_ISOLATED_UNDERFACE_INSKIN_NOSHOW.model">
+         SURFACE_ISOLATED_UNDERFACE_INSKIN_NOSHOW.model</a> in CATIA V5.</li>
+         <li>
+         <p class="task">Copy *MASTER and paste it AS SPEC in a CATPart.</li>
+         <li>
+         <p class="task">Update the CATPart.</p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber5">
+           <tr>
+             <td width="100%"><img border="0" src="b35doc/english/online/intug_c2/images/bt232NLS.gif" width="550" height="407"></td>
+           </tr>
+         </table>
+         </li>
+         <li>
+         <p class="task">Click the Swap visible space icon:</p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber6">
+           <tr>
+             <td width="100%"><img border="0" src="b35doc/english/online/intug_c2/images/bt233NLS.gif" width="550" height="407"></td>
+           </tr>
+         </table>
+         <p class="task">It is now possible to visualize the Curve and Surface 
+         in the No Show space.</li>
+       </ol>
+       </td>
+     </tr>
+     <tr>
+       </center>
+     </tr>
+     <center>
+     <tr>
+       <td colspan="2" valign="top" align="center" height="37">
+       <p align="center">
+       <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+     </tr>
+   </table>
+   </center>
+ </div>
+
+ </body>
+
+</html>
+

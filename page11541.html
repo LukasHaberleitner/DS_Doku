@@ -1,0 +1,150 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>B-Axis and C-Axis Management</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+</head>
+
+<body>
+
+<h1>B-Axis and C-Axis Management</h1>
+<p>B-axis and C-axis management capabilities are available only on a Turning operation 
+belonging to a program assigned to a turret set as a &#39;Mill Turret&#39;. A suitable machine 
+must be referenced by the Part Operation: for example, a &#39;Mill Turret&#39; can be specified 
+on a multi-slide lathe machine.</p>
+<h2><a name="R19LMG01"></a>B-Axis Management</h2>
+<p>A Tool Axis symbol on the Turning operation&#39;s <kbd>Strategy</kbd> tab page
+<img border="1" src="b35doc/english/online/mlgug_c2/images/TabStratG.gif" align="middle" width="36" height="22"> 
+allows the <a href="#R19LMG01">B-axis orientation</a> to be set and eliminates the 
+need for a tool change activity.</p>
+<p><img border="1" src="b35doc/english/online/mlgug_c2/images/BaxisInversion01.gif" width="486" height="342"></p>
+<h3>Tool Axis Definition for Turning Operation</h3>
+<p>Tool axis is defined on turning operations linked to a mill turret (managing 
+a B-axis). Information that B-axis is managed on turret will be defined on the machine<br>
+Turret type will be defined as &#8216;mill turret&#8217; on the NC machine. <br>
+No tool axis need to be defined on operations defined on a rotary turret.<br>
+Tool axis will be defined according to the Spindle axis system.</p>
+<p>Note for multi spindle machine: <br>
+A Spindle axis system is defined on each Spindle.<br>
+Tool axis is defined on the main spindle axis.<br>
+Today, for all machining operations affected to the counter spindle, the tool path 
+computation is always done according to the main spindle axis system.<br>
+If capability to compute coordinates in the counter spindle is provided, the tool 
+axis of operation affected to the counter spindle will be defined in the counter 
+spindle axis system. </p>
+<p>Tool axis is defined by geometry selection or manually (component values or angle 
+value)<br>
+Angle orientation is defined from the Radial axis to the Axial axis of the Spindle 
+axis system.</p>
+<h3>Tool Path Replay</h3>
+<p>For operation defined on a mill turret (on which B axis is defined), the tool 
+is displayed according to the orientation defined by the tool axis.<br>
+The tool axis specified by you will be displayed on the <kbd>Tool Path Replay
+</kbd>dialog box
+and is generated in the APT output.</p>
+<p>For operation defined on another turret (not a mill turret), the tool axis is 
+vector normal to the turning plane.</p>
+<h3>Output File Generation</h3>
+<p>A BAXIS NC command is output at the beginning of an operation defined on a mill 
+turret.</p>
+<blockquote>
+	<p><code>$$ OPERATION NAME : Rough Turning.1<br>
+	$$ Start generation of : Rough Turning.1<br>
+	$$<br>
+	FEDRAT/ 0.3000,IPR<br>
+	SPINDL/ 70.0000,RPM,CCLW<br>
+	<b>BAXIS/1.000000, 0.000000, 0.000000</b><br>
+	GOTO / 58.63072, 0.00000, 136.34210<br>
+	GOTO / 58.63072, 0.00000, 134.34210<br>
+	FEDRAT/ 0.4000,IPR<br>
+	GOTO / 58.63072, 0.00000, 81.85882<br>
+	FEDRAT/ 0.8000,IPR<br>
+	GOTO / 58.84286, 0.00000, 82.07095</code></p>
+</blockquote>
+<p>This syntax contains valuation of I,J,K coordinates of the operation tool axis 
+(defining the B-axis orientation). Coordinates are defined in the machining axis 
+(spindle axis). </p>
+<p>Example: BAXIS/1,0,0</p>
+<p>Turret axis orientation components (I,J,K) are generated in the output file (according 
+to the &#39;Tool motion statement&#39; option defined in NC Output option dialog box).</p>
+<p>Note: TLAXIS syntax (that is output for a machine axis change) is not modified: 
+coordinates of TLAXIS statement are the components of the vector normal to the turning 
+plane.</p>
+<p>For the following statements, the output depends on the &#39;Tool motion statement&#39; 
+option:</p>
+<ul>
+	<li>GOTO statement </li>
+	<li>TLAXIS (output for machine axis change)</li>
+	<li>BAXIS to indicate B axis orientation.</li>
+</ul>
+<h4>Operation defined on a mill turret</h4>
+<p>Tool motion statement = (X,Y,Z): <br>
+X, Y, Z<br>
+BAXIS/I,J,K<br>
+TLAXIS/Inormal, Jnormal, Knormal (components of the normal to the turning plane)
+</p>
+<p>Tool motion statement = (X,Y,Z,I,J,K):<br>
+X, Y, Z, I, J, K</p>
+<h4>Operation defined on another turret</h4>
+<p>Tool motion statement = (X,Y,Z):<br>
+X, Y, Z<br>
+TLAXIS/Inormal, Jnormal, Knormal (components of the normal to the turning plane)
+</p>
+<p>Tool motion statement = (X,Y,Z,I,J,K):<br>
+X,Y, Z,Inormal, Jnormal, Knormal</p>
+<p>Inormal, Jnormal, Knormal are the components of the axis vector normal to the 
+turning plane<br>
+I, J, K are the components of the tool axis orientation vector that define the B 
+axis position.</p>
+<p>Note: TLAXIS will not be output in the APT file for a Turning operation, unless 
+an explicit Machine Axis Change is added by the user. An exception to this is when 
+there is a change from Milling Operation to a Turning Operation. In this case, TLAXIS/ 
+Inormal, Jnormal, Knormal will be output before the Turning Operation.</p>
+<h3>Machine Simulation </h3>
+<p>B axis move is simulated according to the tool axis defined on the turning operation.</p>
+<h3>APT Source Import</h3>
+<p>Import of APT source file on which I,J,K coordinates are defined: tool axis is 
+defined with the I,J,K coordinates.</p>
+<p>Note: At Replay and Simulation, if tool axis is not correct (not in the turning 
+plane) Radial axis is used for tool assembly orientation. </p>
+<p>BAXIS syntax can be correctly interpreted by APT import functionality only when 
+the syntax is defined with a known order of parameters (the required parameters 
+of the syntax must respect the default syntax).<br>
+Tool path can be correctly replayed only when:</p>
+<ul>
+	<li>All the required parameters are set </li>
+	<li>The parameters are set in the specified order.</li>
+</ul>
+<p>Major word and parameters must be set as follows: <br>
+<code>BAXIS,/%MFG_MILL_TURRET_I_AXIS, %MFG_MILL_TURRET_J_AXIS, MFG_MILL_TURRET_K_AXIS</code></p>
+<h3>Change of Turrets</h3>
+<p>User changes the turret assigned to a Machining Program from one turret type 
+to another type (for example, from Rotary to Mill Turret or vice versa). The Machining 
+Operation will be marked as &#8216;not up to date&#8217; in this scenario.</p>
+<h3>Cut/Copy/Paste</h3>
+<p>If you Cut, Copy and Paste a machining operation related to one Turret type to 
+another Turret type (for example, from Rotary Turret to Mill Turret or inversely), 
+the operation will have status <kbd>Not up to date</kbd>. </p>
+<h2><a name="R19LMG002"></a>C-Axis Inversion</h2>
+<a name="ix-Rough Turning parameter:C-axis inversion"></a>
+<p>The <kbd>C-axis inversion</kbd> check box on the Turning operation&#39;s <kbd>Strategy</kbd> 
+tab page
+<img border="1" src="b35doc/english/online/mlgug_c2/images/TabStratG.gif" align="middle" width="36" height="22"> 
+provides a C-axis rotation (0/180 degrees) without requiring a tool change activity.</p>
+<p><img border="1" src="b35doc/english/online/mlgug_c2/images/CaxisInversion01.gif" width="529" height="420"></p>
+<p>This allows machining of different areas (front and back areas of a part, or 
+part on main spindle and part on a counter-spindle) using the same tool assembly. 
+Only the tool orientation (inversion) differs when machining the different areas 
+or parts.</p>
+
+</body>
+
+</html>
+

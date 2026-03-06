@@ -1,0 +1,227 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>FAQs-Fanuc RJ TPE</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>FAQs-Fanuc RJ TPE<a name="ix-faqs:Fanuc"></a></h1>
+ <table border="0" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">
+   <tr>
+     <td valign="top">
+		<ol class="task">
+       <li>
+		<p class="task">The Fanuc parsers (Fanuc.jar) upload tag 
+		targets as non via; All the via tags in the original V5 task are 
+		uploaded as non via tags.</p>
+		<p class="task">The Fanuc robot language (TPE) does not have an 
+		attribute to differentiate between via and non-via target types. This is 
+		a V5 convention.<p class="task">However, if the user uses an XML file for upload 
+		(instead of robot language file), the via/non-via target type 
+		information will be preserved in the uploaded task.<p class="task">&nbsp;</li>
+		<li>
+		<p class="task">I am unable to download WELD action using Fanuc translators.<p class="task">If you are using 
+		Fanuc translator for download, make sure that the Spot Weld action is 
+		defined using <kbd>TPESpotWeld.act </kbd>toolbar. Weld actions defined using other 
+		<kbd>.act</kbd> toolbars are ignored by the Fanuc translator.<p class="task">&nbsp;</li>
+		<li>
+		<p class="task">What happens with unsupported TPE syntax on upload?<p class="task">
+		Unsupported commands, on upload, are mapped to pre and post activity 
+		attributes. Unsupported commands will be mapped to as pre-comment 
+		attributes to the succeeding activity/action. An unsupported command 
+		encountered at the end of the robot program will be mapped to as 
+		post-comment attribute to the preceding activity/action. 
+		<p class="task">
+		&nbsp;</li>
+		<li>
+		<p class="task">Fanuc translator downloads programs as <kbd>Separate 
+		Files</kbd> even though I selected the <kbd>Subroutines</kbd> option in 
+		the <kbd>Downloading</kbd> <kbd>Options</kbd> dialog box.<p class="task">
+		Fanuc robot always downloads programs as separate files. It does not 
+		support the <kbd>Subroutines</kbd> option.<p class="task">&nbsp;</li>
+		<li>
+		<p class="task">Whenever a robot task is downloaded, an XML file (simResult.xml) 
+		is generated behind the scenes. Which XML elements are not used/supported by 
+		TPE?<p class="task">In V5R16 release, the following xml elements (in simResult.xml) 
+		are not used by TPE during download:</p>
+		<p class="task">
+		OLPData &nbsp;&gt;&nbsp; Resource &nbsp;&gt;&nbsp; Controller &nbsp;&gt;&nbsp; ToolProfileList &nbsp;&gt;&nbsp; ToolProfile &nbsp;&gt;&nbsp; 
+		Mass<br>
+		OLPData &nbsp;&gt;&nbsp; Resource &nbsp;&gt;&nbsp; Controller &nbsp;&gt;&nbsp; ToolProfileList &nbsp;&gt;&nbsp; ToolProfile &nbsp;&gt;&nbsp; 
+		Centroid<br>
+		OLPData &nbsp;&gt;&nbsp; Resource &nbsp;&gt;&nbsp; Controller &nbsp;&gt;&nbsp; ToolProfileList &nbsp;&gt;&nbsp; ToolProfile &nbsp;&gt;&nbsp; 
+		Inertia </p>
+		<p class="task">OLPData &nbsp;&gt;&nbsp; Resource &nbsp;&gt;&nbsp; Controller &nbsp;&gt;&nbsp; MotionProfileList &nbsp;&gt;&nbsp; 
+		MotionProfile &nbsp;&gt;&nbsp; Accel<br>
+		OLPData &nbsp;&gt;&nbsp; Resource &nbsp;&gt;&nbsp; Controller &nbsp;&gt;&nbsp; MotionProfileList &nbsp;&gt;&nbsp; MotionProfile 
+		&nbsp;&gt;&nbsp; AngularSpeedValue<br>
+		OLPData &nbsp;&gt;&nbsp; Resource &nbsp;&gt;&nbsp; Controller &nbsp;&gt;&nbsp; MotionProfileList &nbsp;&gt;&nbsp; MotionProfile 
+		&nbsp;&gt;&nbsp; AngularAccelValue</p>
+		<p class="task">&nbsp;</li>
+		<li>
+		<p class="task">How does the Fanuc translator and parser take into 
+		account the <kbd>Object Frame</kbd> profiles during download and upload?<ul class="task">
+			<li>
+			<p class="task">If the <kbd>SysvarOutput</kbd> parameter (see <kbd>Parameter Data</kbd> 
+			worksheet in
+			<a href="b35doc/english/online/cfyugolp_c2/samples/delmia_d5/fanuc_data/TPE_V5_XML_MAP.xls">
+		TPE_V5_XML_MAP.xls</a>) is set to <kbd>true</kbd> then, all object frame 
+			profiles will be output to a <kbd>sysvarsoutput.ls</kbd> file. 
+			<p class="task">If this file is renamed to <kbd>sysvars.ls</kbd>, it 
+			can be parsed during upload to allow the object frame offsets to be 
+			uploaded. 
+			<p class="task">Note that, it is possible to generate a sysvars.ls 
+			file from a sysvars.sv file on some Fanuc controllers by using a
+			<kbd>kconvars</kbd> <kbd>utility package</kbd> (provided by Fanuc). 
+			</li>
+			<li>
+			<p class="task">If the object frame offset is zero and tool is 
+			mobile (mounted on robot), the frame of reference is the robot base 
+			frame. 
+			<p class="task">Fanuc translator will read the target co-ordinate 
+			values from the simResult.xml file and output them into P[] 
+			statements in the /POS section of the program with appropriate units 
+			regardless of whether <kbd>Apply to all targets</kbd> is set to ON 
+			or OFF.</li>
+			<li>
+			<p class="task">If the object frame offset is non-zero and tool is 
+			mobile, the frame of reference is the object frame (with its offset 
+			defined with respect to the world frame). 
+			<p class="task">Fanuc translator will read the target co-ordinate 
+			values from the simResult.xml file and output them into P[] 
+			statements in the /POS section of the program with appropriate 
+			units, regardless of whether <kbd>Apply to all targets</kbd> is set 
+			to ON or OFF. 
+			<p class="task">If the <kbd>WorldCoords</kbd> parameter (see <kbd>
+			Parameter Data</kbd> worksheet in
+			<a href="b35doc/english/online/cfyugolp_c2/samples/delmia_d5/fanuc_data/TPE_V5_XML_MAP.xls">
+			TPE_V5_XML_MAP.xls</a>) is set to <kbd>false</kbd> then, the Fanuc 
+			translator will treat all object frame values as being with respect 
+			to the robot base and will recalculate target coordinates 
+			accordingly.</li>
+			<li>
+			<p class="task">If object frame offset is zero and tool is 
+			stationary (fixed TCP case), the frame of reference is the robot&#8217;s 
+			mount frame. 
+			<p class="task">Fanuc translator will invert the target co-ordinate 
+			values from the simResult.xml file and output them into P[] 
+			statements in the /POS section of the program with appropriate units 
+			regardless of whether <kbd>Apply to all targets</kbd> is set to ON 
+			or OFF. 
+			<p class="task">The targets are inverted because, for Fanuc 
+			RJ/RJ2/RJ3 controllers fixed TCP moves are stored relative to the 
+			stationary tool. 
+			<p class="task">Note that, for fixed TCP you must generate a 
+			sysvars.ls file using the parameter SysvarOutput = <kbd>true</kbd>. 
+			See figure 43 for an example of this system variable file output.<p class="task">
+		<img border="1" src="b35doc/english/online/cfyugolp_c2/images/faqFanobjframeNLS.gif" width="464" height="482"><p class="task">
+		This sysvaroutput.ls file can be renamed to sysvars.ls, in which case it 
+		will be read by the parser during upload. 
+			<p class="task">
+		It is important to point out that, part coordinates must be used during 
+		upload of fixed TCP programs, and there must be two <kbd>UFRAME</kbd> 
+		values in the sysvars.ls file. The first is for non-fixed TCP points and 
+		the second is for fixed TCP points. 
+			<p class="task">
+		No part needs to be selected for non-fixed TCP points. For fixed TCP 
+		points a part that is grabbed by the robot at the time of upload must be 
+		selected. 
+			<p class="task">
+		Example of part selection for fixed TCP upload is shown below:<p class="task">
+		<img border="0" src="b35doc/english/online/cfyugolp_c2/images/faqFanPartSelectNLS.gif" width="592" height="230"></li>
+			<li>
+			<p class="task">If object frame offset is non-zero and tool is 
+			stationary, the frame of reference is the object frame, which is 
+			defined relative to mount frame. <br>
+			Same as the fixed TCP case above.<p class="task">&nbsp;</li>
+		</ul>
+		</li>
+		<li>
+		<p class="task">Can I add comments to robot tasks in V5 and also 
+		download them?</p>
+		<table border="0" width="100%" cellspacing="3" cellpadding="3" style="border-collapse: collapse" id="table3">
+			<tr>
+				<td width="34" valign="top">
+				<img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+				<td valign="top">
+		The following procedure describes how to add or download comments.</td>
+			</tr>
+			<tr>
+				<td width="34" valign="top">
+				<img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+				<td valign="top">
+		<ol class="task">
+       <li>
+       <p class="task">Right-click an <kbd>Operation/Activity/Action </kbd>&nbsp;from 
+		the robot task in the PPR tree and select 
+		<kbd>Properties</kbd>. The properties dialog box opens.
+		</li>
+		<li>
+		<p class="task">Select the <kbd>Specific</kbd> tab.</li>
+		<li>
+		<p class="task">Add the appropriate comments using the <kbd>Attribute</kbd>
+		<kbd>Type</kbd>, <kbd>Attribute</kbd> <kbd>Name</kbd> and <kbd>Attribute</kbd>
+		<kbd>Value</kbd> editors.</li>
+		</ol>
+								</td>
+			</tr>
+			<tr>
+				<td width="34" valign="top">
+				<img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+				<td valign="top">
+		<p class="task">For Attribute Name, always use 
+		either <kbd>PreComment</kbd> or <kbd>PostComment</kbd> depending upon 
+		the location of the operation.<p class="task">The comments will be 
+		downloaded by the Fanuc translator. If the Attribute Name is not defined 
+		as either PostComment/PreComment, then, the the translator will not see the 
+		attributes as being comments.&nbsp;</td>
+			</tr>
+			<tr>
+				<td width="34" valign="top">
+				&nbsp;</td>
+				<td valign="top">
+		<p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+								</td>
+			</tr>
+		</table>
+		<p align="left" class="task">&nbsp;</p>
+		</li>
+		<li>
+		<p align="left" class="task">My robot task has an Activity/Action not yet supported 
+		by V5 OLP, but I still want to download the Activity/Action. 
+		<p align="left" class="task">Please refer to FAQ 12 above. Follow the 
+		same procedure, except that, the Attribute Value will be:<p align="left" class="task">
+		Robot Language: &lt;any robot language command&gt;. 
+		<p align="left" class="task">For example, PAYLOAD[4] command in TPE is 
+		not supported in V5. By specifying, RobotLanguage : PAYLOAD[4] as 
+		Attribute Value, the translator will be able to download the above 
+		statement.<p align="left" class="task">&nbsp;</li>
+		<li>
+		<p align="left" class="task">The I/O activities in XML have an attribute by 
+		the name 
+		<kbd>Port Number</kbd>. What does this correspond to in V5?<p align="left" class="task">
+		In V5, Port Number corresponds to IO Number.</li>
+		</ol></td>
+   </tr>
+     
+ </table>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,172 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Working with User Features (UDFs): Getting Started</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="docCompliance" content="v 0.9; Thu Oct 13 09:35:18 2005">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Working with User Features (UDFs):<a name="hj-top"></a>
+ <a name="ix-methodology::user feature"></a>&nbsp;Getting Started</h1>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32"></p>
+ <p>User Features are used to encapsulate a geometric or technological 
+ construct. In some cases, depending on the selected input, and especially in an 
+ automation context, the User Feature&nbsp; may be in error, with no possibility 
+ to determine what's wrong with it.</p>
+ <p>This section gives information concerning the following topics:</p>
+ <ul>
+   <li><a href="#Designing a robust UDF: Some Hints">Designing a robust User 
+   Feature: Some Hints</a></li>
+   <li><a href="#Conditional geometries">Using Conditional Geometry</a></li>
+   <li><a href="#Error Catching">Catching Errors</a></li>
+   <li><a href="#Providing Explanations For Errors">Providing Explanations For 
+   Errors</a></li>
+ </ul>
+ <h2>Designing a robust User Feature : Some Hints<a name="Designing a robust UDF: Some Hints"></a></h2>
+ <ul>
+   <li>First of all, it is recommended to make a prototype of your User Feature&nbsp; 
+   in a Power Copy. The latter is much more flexible. After defining the Power 
+   Copy, it can be modified, whereas the first definition of the User Feature is 
+   the last one because it cannot be modified. This way your design can be made 
+   in several steps and you don&#039;t 
+   have to start again from scratch. At instantiation, it is also easier to 
+   handle possible troubles (update &#133;.) 
+   thanks to the visibility provided by the Power Copy features.</li>
+   <li>If the User Feature embeds a sketch, this sketch has to be iso-constrained. 
+   Thus, when instantiating the User Feature&nbsp; and making changes in its new 
+   context, you will avoid uncontrolled modifications of the sketch geometry 
+   that you won&#039;t 
+   be able to manage because the User Feature&nbsp; is a &quot;black box&quot;. For the 
+   same reason, make sure that your sketch is &#034;attached&#034;, 
+   and for that, always use the creation of sketch &#034;With 
+   absolute axis definition&#034;. 
+   This way, you are sure that the sketch is at the right position.</li>
+   <li>If the User Feature embeds contextual geometrical items like a draft or a 
+   fillet, it has to be resolved. It means that the base of their constructions 
+   has to be embedded too and must not be considered as an input of the User 
+   Feature. For example a fillet on the edge of a pad depends on the geometry of 
+   the sketch of the pad. If this sketch is in input of the User Feature&nbsp; 
+   and changes from square to round, the fillet inside the User Feature will be 
+   broken and the User Feature will be in error.</li>
+   <li>Don&#039;t 
+   embed datum or geometrical elements with external links to other documents 
+   (Copy\Paste as result with link).<br>
+   Don&#039;t 
+   try to embed a Body into a User Feature, it is impossible. Because a Body is 
+   a package which can be empty or can contain Knowledge features for example. 
+   Whereas a User Feature&nbsp; is a geometrical feature. To make it compliant, 
+   you have to transform the Body into a geometrical feature with a boolean 
+   operation like Assemble, Remove, Intersect &#133;. 
+   After this, you can select the boolean operation when defining the User 
+   Feature&nbsp; and the associated Body is automatically embedded. To know what 
+   can be embedded, see <a href="page12240.html">Getting Familiar With 
+   Templates</a>.</li>
+ </ul>
+ <h2><a href="#hj-top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2>Using Conditional Geometry<a name="Conditional geometries"></a></h2>
+ <p>To evaluate the environment of the User Feature (its inputs) and to make 
+ decisions, Knowledge Advisor provides 3 main functionalities:</p>
+ <div align="left">
+   <table border="0" cellpadding="2" id="AutoNumber1">
+     <tr>
+       <td valign="top">
+       <ul>
+         <li>Some measures (distance, angle, area, length, center of gravity, &#133;) 
+         that can be used to evaluate the inputs. For more information, see
+         <a href="page3200.html">
+         Measures</a>.</li>
+       </ul>
+       </td>
+       <td valign="top"><img border="1" src="b35doc/english/online/pktug_c2/images/pktmethodo1NLS.gif" width="378" height="175"></td>
+     </tr>
+     <tr>
+       <td valign="top" colspan="2">Some geometric parameters that can be 
+       valuated by other geometries. For more information, see
+       <a href="page3204.html">Point 
+       Constructors</a>,
+       <a href="page3199.html">Line 
+       Constructors</a>,
+       <a href="page3197.html">Circle 
+       Constructors</a>,
+       <a href="page3198.html">
+       Direction Constructors</a>,
+       <a href="page3206.html">
+       Wireframe Constructors</a>,
+       <a href="page3203.html">Plane 
+       Constructors</a>, and
+       <a href="page3205.html">Surface 
+       Constructors</a>.</td>
+     </tr>
+     <tr>
+       <td valign="top">
+       <ul>
+         <li>If / then / else keywords allow you to choose how to validate those 
+         geometric parameters depending on the measure results.</li>
+       </ul>
+       </td>
+       <td valign="top">
+       <img border="1" src="b35doc/english/online/pktug_c2/images/pktmethodo2NLS.gif" align="left" width="312" height="67"></td>
+     </tr>
+   </table>
+ </div>
+ <p align="right"><a href="#hj-top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></p>
+ <h2>Catching Errors<a name="Error Catching"></a></h2>
+ <p>Usually, if an update error is raised inside a rule, the rule execution is 
+ stopped and the rule sends an evaluation error message.</p>
+ <div align="left">
+   <table border="0" cellpadding="2" id="AutoNumber2">
+     <tr>
+       <td colspan="2">The <kbd>Do not catch evaluation errors</kbd> option 
+       which is available by right-clicking the relation in the specification 
+       tree and selecting the Properties command enables you:</td>
+     </tr>
+     <tr>
+       <td valign="top">
+       <ul>
+         <li>To create features in error </li>
+         <li>To know (through an error message) if a feature is in error and
+         </li>
+         <li>To make changes (or not) in case of errors. </li>
+       </ul>
+       </td>
+       <td valign="top"><img border="1" src="b35doc/english/online/pktug_c2/images/pktmethodo3NLS.gif" width="418" height="87"></td>
+     </tr>
+     <tr>
+       <td valign="top" colspan="2">This capability can be used to perform a 
+       geometric computation (like intersection) and to decide what to do if 
+       there is no result.</td>
+     </tr>
+   </table>
+ </div>
+ <p>For more information, see <var>Knowledge Advisor User's Guide</var>.</p>
+ <h2><a href="#hj-top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2>Providing Explanations For Errors
+ <a name="Providing Explanations For Errors"></a></h2>
+ <p>It is possible to associate a .CATNls file with a User Feature type to 
+ translate the names of its inputs, published parameters, outputs and multiple 
+ valued parameters in different languages.</p>
+ <p>This file can be used to override the update error message: in this message, 
+ you can provide explanations about how to avoid update errors. For more 
+ information, see
+ <a href="page4584.html">Creating and 
+ Instantiating a NLS User Feature (UDF)</a>. </p>
+ <p align="center">
+ <nobr><a href="page4569.html" target="">Controlling&nbsp;the&nbsp;Orientation&nbsp;of&nbsp;User&nbsp;Feature&nbsp;Inputs</a></nobr><br> <nobr><a href="page4568.html" target="">Defining&nbsp;an&nbsp;Object&nbsp;Type&nbsp;Based&nbsp;on&nbsp;a&nbsp;User-Defined&nbsp;Feature</a></nobr><br> <nobr><a href="page4570.html" target="">Creating&nbsp;a&nbsp;NLS&nbsp;User&nbsp;Feature</a></nobr><br> <nobr><a href="page4567.html" target="">Instantiating&nbsp;a&nbsp;User&nbsp;Feature&nbsp;From&nbsp;a&nbsp;Macro</a></nobr></p>
+
+ </body>
+
+</html>
+

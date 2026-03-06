@@ -1,0 +1,760 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>About Composites Fiber Modeling</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="Microsoft Border" content="none">
+<style type="text/css">
+.style1 {
+				border-style: solid;
+				border-width: 1px;
+}
+.style2 {
+				border-width: 1px;
+}
+</style>
+</head>
+
+<body>
+
+<h1 align="center">
+    About 
+	Composites Fiber Modeling
+</h1>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+  <tr>
+    <td>
+	<p>Composites Fiber Modeling can be used successfully with the same input 
+	parameters as the standard fiber simulation tool in Producibility. </p>
+	<p>However, to make full use of Composites Fiber Modeling capabilities, 
+	additional data can be provided to obtain a more accurate simulation result. 
+	The additional data include: </p>
+	<ul>
+					<li>Definition of a seed curve to constrain the fiber 
+					simulation along a curve. </li>
+					<li>Definition of one or more order of drape regions by 
+					means of contours on the surface of the ply. </li>
+					<li>Selection of advanced propagation types to reflect the 
+					behavior of materials according to the manufacturing 
+					processes. </li>
+					<li>Preview of the flat pattern to provide excellent 
+					feedback on the fiber simulation. &nbsp;</li>
+	</ul>
+	<p>With the enhanced Producibility dialog box, Composites Fiber Modeling 
+	allows you to define specific parameters and store these in <kbd>
+	Producibility params.x</kbd> under each ply. Those parameters may be: </p>
+	<ul>
+					<li><kbd>Simulation: Advanced parameters</kbd>. They affect 
+					the actual fiber simulation, </li>
+					<li>or <kbd>Analysis: Advanced parameters</kbd>. They affect 
+					the display of 
+					the fiber simulation results, are 
+					used for additional display options provided by the solvers, which are added to the 
+					<kbd>Deformation</kbd> list. </li>
+	</ul>
+	<h2><a name="ix-composites fiber modeling:seed point">Seed Point</a></h2>
+	<p>The seed point is defined in same way as for the standard fiber 
+	simulation. However, Composites Fiber Modeling supports seed points located on the boundary of the ply. This reflects 
+	the normal practice 
+	where the application of the ply often begins along the edge of the region 
+	to be covered. </p>
+	<p>In general, the material is unsheared at the seed point and shearing 
+	increases away from that point. The amount of shear in a ply made of a 
+	particular material increases with distance from the ply, and the degree of 
+	Gaussian curvature of the surface (this is a reflection of the double-curved 
+	nature of the surface, when applicable). Therefore, to minimize shear, the seed point should 
+	be located: </p>
+	<ul>
+					<li>To minimize the distance to any part of the ply boundary 
+					- so the middle would reduce shear, at the cost of being 
+					impractical. </li>
+					<li>To minimize the Gaussian curvature near the start point. 
+					In fact, it is a good idea to begin draping on a region of 
+					near-zero Gaussian curvature if this is possible. </li>
+	</ul>
+	<p>As an example, consider half of a pressure vessel which consists of a 
+	spherical cap with a cylindrical body. If the seed point is on the 
+	cylindrical body, which has zero Gaussian curvature and is furthermore 
+	developable, limited shearing only occurs over the spherical section. <br>
+	<img src="b35doc/english/online/cpdug_c2/images/Seedpoint.png"></p>
+	<p>By contrast, if the seed point is on the spherical section, shear builds 
+	up rapidly and the surface cannot even be covered. <br>
+	<img src="b35doc/english/online/cpdug_c2/images/Seedpoint02.png"></p>
+	<h2><a name="ix-composites fiber modeling:seed curve">Seed Curve</a></h2>
+	<p>A seed curve forces the warp, weft or bias directions of the fabric along 
+	a curve. The curve must pass through the seed point, and must extend to the 
+	ply boundaries. In the following example, the bias direction of the fabric 
+	has been forced along a curve through the middle of the spar. This results 
+	in a flat pattern with parallel sides, which is a tape.<br><img src="b35doc/english/online/cpdug_c2/images/SeedCurve.png" width="606" height="434"></p>
+	<p>The choice of whether the warp, weft or bias directions are forced along 
+	the curve depends on the relative alignment of the nominal warp and weft 
+	directions at the seed point, and the seed curve at this point. </p>
+	<p>The woven construction of the fabric is defined by physical 
+	parameters that reflect the structure of the material. <br>
+	<img src="b35doc/english/online/cpdug_c2/images/SeedCurve02NLS.png" width="489" height="263"></p>
+	<p>In Composites Fiber Modeling, the <kbd>Warp/Weft angle</kbd> is defined 
+	under <kbd>Simulation: Advanced parameters</kbd>, and information is found 
+	under <kbd>Material parameters</kbd>, 
+	while the <kbd>Warp</kbd> and <kbd>Weft</kbd> length ratio is set under the
+	<kbd>Mesh parameters</kbd>. For the 
+	purposes of defining the unit cell, it is the ratio of warp and weft lengths 
+	that is important. So, if warp and weft lengths are the same, the bias 
+	directions are at +/- 45 degrees. </p>
+	<p>The axis forced along the seed curve is the closest to the seed curve 
+	at the seed point. For example, if the Warp/Weft angle is 90 degrees and the 
+	warp and weft lengths are identical, and if the seed curve lies 30 degrees 
+	from the nominal warp direction, the bias direction is closest to the seed 
+	curve and this is the direction forced along the seed curve.</p>
+	<p>This snapping to the nearest direction means that the 
+	actual and nominal warp directions at the seed point may be slightly 
+	different - 15 degrees in the case above. This must be accounted for when 
+	using the inspection tool. </p>
+	<p>The seed point must be located on the seed curve, otherwise an error 
+	message is displayed. In practice, a tolerance of 1% of the square root of the 
+	ply area is allowed to permit small separations between seed point and seed 
+	curve resulting from the <kbd>Thickness Update</kbd> capability, for example. </p>
+	<h2><a name="ix-composites fiber modeling:guide curve options">Guide Curve 
+	Options</a></h2>
+	<p>You can select the way the warp angle is calculated 
+	with respect to the guide curve.</p>
+	<h3>Snap to Axes</h3>
+	<p>The initial warp direction at the seed point is calculated 
+	with respect to the guide curve. The closest of the material warp, weft, or 
+	bias directions are created on the guide curve. This results in a robust 
+	solution, but means that the actual warp direction is not necessarily the 
+	same as the theoretical direction.</p>
+	<p>The image below shows the bias points of an initial 
+	producibility mesh being snapped to the guide curve, resulting in a warp 
+	direction differing from the theoretical direction at the seed point.<br>
+	<img height="214" src="b35doc/english/online/cpdug_c2/images/HandLayupSnapToAxes.png" width="400"></p>
+	<h3>Constant Angle</h3>
+	<p>The initial warp direction at the seed point is calculated 
+	with respect to the guide curve. The warp angle is kept constant at this 
+	value along the whole guide curve.</p>
+	<p>If the theoretical warp/weft or bias directions are within 
+	0.1 degrees of the guide curve at the seed point, that axis is snapped onto 
+	the guide curve to promote robustness of the solution.</p>
+	<p>The image below shows the initial producibility mesh at an 
+	angle of approximately 30 degrees to the guide curve, with the actual warp 
+	direction matching the theoretical direction at the seed point.<br>
+	<img height="260" src="b35doc/english/online/cpdug_c2/images/HandLayupConstantAngle.png" width="400"></p>
+	<p>Be aware that the strong constraint provided by these two 
+	options may prevent a stable simulation on highly curved surfaces with a 
+	guide curve.</p>
+	<h3>About Curve</h3>
+	<p>A producibility mesh of one cell width is draped along the 
+	guide curve. As this strip is narrow, little shearing of the material is 
+	introduced.</p>
+	<p>This option models unsheared material being forced along 
+	the guide curve, followed by subsequent lateral laydown to the edge of the 
+	ply. This constraint may lead to the need to insert a split into the 
+	material, in the same way as for an Order of Drape simulation with a concave 
+	edge.<br><img height="265" src="b35doc/english/online/cpdug_c2/images/HandLayupAboutCurve.png" width="400"></p>
+	<h2><a name="ix-composites fiber modeling:order of drape">Order of Drape</a></h2>
+	<p>The order of drape capability allows you to model the exact sequence 
+	used to apply fabric to surfaces on the shop floor. The order of drape 
+	regions define smaller surfaces that are covered in one sequence, and which 
+	provide a stable initial condition for subsequent application of material. 
+	</p>
+	<p>In the example below, we have defined three order of drape regions:</p>
+	<ul>
+					<li>The first order of drape region marked in red (1) must contain the seed 
+	point, otherwise it is ignored. </li>
+					<li>At the end of the first 
+	sequence, the area defined by the second order of drape region marked in 
+	green (2) is covered by fabric using the first order of drape as a starting 
+	point. </li>
+					<li>The third order of drape region (3) is similarly covered next. 
+					</li>
+					<li>Finally, all the remaining area of the ply is covered.
+					<br>
+					<img src="b35doc/english/online/cpdug_c2/images/DrapeOrderNLS.png" width="442" height="254"></li>
+	</ul>
+	<p>We do not recommend to have too 
+	many order of drape regions on a single ply. Usually, between one and two 
+	regions are sufficient. </p>
+	<p>It is a good idea to define order of drape regions 
+	on relatively flat regions of the surface. This means that the position of 
+	the seed point is not significant, and this lack of sensitivity follows 
+	through the simulation, resulting in a robust final result, that will be 
+	easily manufacturable. </p>
+	<p>In general, it is best if the summed boundaries of all the order of drape 
+	regions are straight or convex. If they are concave with respect to a warp 
+	or weft fiber, the fiber in the fabric might be 
+	over-constrained as shown below. <br>
+	<img src="b35doc/english/online/cpdug_c2/images/DrapeOrder02.png" width="441" height="203"></p>
+	<p>Here, the first order of drape region will drape perfectly well with its 
+	shape. But consider the red fiber as the drape extends beyond the first 
+	region. Here, the fiber suddenly becomes over-constrained as the drape 
+	extends across the concave boundary, so that the fibers become kinematically 
+	inadmissible. </p>
+	<p>To handle this situation, Composites Fiber Modeling will, by default, unstick fabric on one branch of the semi-circle (keeping the 
+	branch where the red line is longest) to remove the excessive constraint. 
+	This behavior is followed if the <kbd>Inadmissible Mode</kbd> is set to <kbd>Delete</kbd>, i.e. 
+	the constraint is deleted as necessary. Note that the flat pattern over the 
+	order of drape region can change in subsequent drapes. </p>
+	<p>This situation of kinematic inadmissiblity can be resolved easily by 
+	simply placing a dart in the middle of the semi-circular region using the 
+	limit contour capability as shown below. This dart removes the excessive 
+	constraint and allows draping to proceed.<br>
+	<img src="b35doc/english/online/cpdug_c2/images/DrapeOrder03.png" width="444" height="203"></p>
+	<p>You can force Composites Fiber Modeling to keep the fabric stuck to the 
+	order of drape regions during subsequent extensions if <kbd>Inadmissible Mode</kbd> 
+	is set to <kbd>Cut</kbd>. In this case, kinematically inadmissible fibers are avoided by automatically generating a 
+	rough cut in the middle of a bounded length in an over-constrained fiber, 
+	such as that shown in red in the figure above. This cut will only be created 
+	if the strain required in the fiber to allow it to conform to the surface 
+	exceeds the inadmissible tolerance value set, or the displacement mismatch 
+	at the cut location exceeds half a step length in the appropriate direction. 
+	This approach has the advantage of keeping the flat pattern in an order of 
+	drape region constant during subsequent draping, but forces you to 
+	define a dart to specify the flat pattern shape around the dart accurately. 
+	This methodology is recommended for highest accuracy on components like 
+	curved frames where it is impossible to avoid concave order of drape 
+	boundaries. </p>
+	<p>Seed curve and order of drape can be combined if required, but the seed 
+	curve (and seed point) should lie in the first order of drape region. &nbsp;</p>
+	<p>For CFM FEFlatten propagation types, the <kbd>
+	Edge smoothing distance</kbd> parameter controls to which degree the 
+	material sticks to the surface:</p>
+	<ul>
+		<li>In this method, a given 3D surface geometry is meshed with triangular 
+		finite elements that are as close in size and shape as possible within 
+		the constraints of the geometry and chosen step length. The element 
+		associated with the Seed Point is then set on a 2D flatten plane and 
+		adjacent elements are laid down in a radially-expanding way until the 
+		edge of the ply is reached. Double curvature in the surface means that 
+		both the new element and the already-flattened elements are 
+		geometrically incompatible and have to deform when connected.<br>
+		<img alt="" height="210" src="b35doc/english/online/cpdug_c2/images/CFMFEFlatten01.png" width="450"></li>
+		<li>When a new element is added to the flatten shape, only 
+		already-flattened elements within this distance to the free edge are 
+		allowed to deform, while other elements are fixed. Below, the cross 
+		represents the seed point, the solid line represents the free edge, the<kbd> 
+		Edge smoothing distance</kbd> is the distance between the solid and the 
+		dotted line.<br>
+		<img alt="" height="204" src="b35doc/english/online/cpdug_c2/images/CFMFEFlatten02.png" width="226"><br>
+		The default distance value (20mm) represents the size of a finger or a 
+		tool used to drape material over a surface.</li>
+	</ul>
+	<p>Note that as the <kbd>Edge smoothing distance</kbd> increases, 
+	the material becomes increasingly free to move while being draped and the 
+	solution tends towards the <kbd>CFM FEFlatten 
+	(Frictionless)</kbd> solution, which reflects the limiting case where the 
+	material is completely free to move with respect to the surface.<p>Unlike 
+	direct simulations of material fibers, the FEFlatten solution can 
+	accommodate holes in the underlying ply surface as it can encircle 
+	holes, provided the holes are smaller than <kbd>Edge 
+	smoothing distance</kbd>.</p>
+	<p>Default material properties are isotropic, but orthotropic materials are 
+	supported. For orthotropic properties, if the shear stiffness is much less 
+	than the stiffness along the fibers, the material deforms in a very 
+	similar way to the &quot;pin-jointed net&quot; material model used in other fiber 
+	simulations as long as the deformation is relatively small.</p>
+	<h2><a name="ix-composites fiber modeling:smooth region">Smooth Regions</a></h2>
+	<p > A smooth region is an area where the simulation can 
+	ignore awkward bumps/hollows for an initial global simulation. The 
+	subsequent local draping goes from the smooth region boundary towards the 
+	middle of the bumps/hollows<p >Many composite structures contain "bumps" - a ubiquitous example
+is that of a sandwich panel incorporating cores. When laying plies
+over the bumps, the material necessarily shears to conform
+to the highly-curved surface covering the bumps. This shearing
+deformation is indicated by the red fibers on the J-panel 
+below.<br>
+	<img height="267" src="b35doc/english/online/cpdug_c2/images/SmoothRegion1.png" width="183"></p>
+
+<p >However, it is often necessary to define plies that lie around
+the bumps, but do not cover them. As most fiber simulations cannot
+accept holes in the surface used for simulation, the underlying
+surface that includes the bumps is used for the simulation, so high
+shear is still predicted whereas the surface excluding bumps
+may be rather simple and not need excessive shear.</p><p >Draping result with smooth regions<br>
+	<img height="268" src="b35doc/english/online/cpdug_c2/images/SmoothRegion3.png" width="187"></p>
+<p >The smooth region is defined by an area and a curve. 
+	<ul ><li>The area,
+with or without an order of drape, specifies a developable
+region. </li><li>The smooth region curve defines a bump inside to be filled with a smooth surface using point, tangent or
+curvature.</li></ul><p >In the image below:<ul ><li>1 represents the bump.</li><li>2 represents the manual trimming area.</li><li>3 represents the smooth region boundary.</li><li>4 represents the required dart.</li><li>5 represents the finished inner boundary.</li></ul>
+	<img height="191" src="b35doc/english/online/cpdug_c2/images/SmoothRegion2.png" width="474"><p >The example below has an interior contour. Without a smooth region, draping occurs over the entire surface causing
+strain to be distributed in places where it is undesirable. With a 
+smooth region curve:<ul ><li>The
+smooth region is filled with a surface and combined with the ply
+shell.</li><li>This new smooth surface is simulated to create a low strain surface
+giving good edges.</li><li>Next, the area inside the smooth region curve is added, and any
+strain is propagated into this region. Generally, causing the need
+for darts.</li><li>The blue arrows shows the interior contour, the pink arrow shows the smooth region curve.<br>
+		<img height="206" src="b35doc/english/online/cpdug_c2/images/SmoothRegion4.png" width="586"></li><li>This is the difference of flat patterns.<br>
+		<img height="259" src="b35doc/english/online/cpdug_c2/images/SmoothRegion5.png" width="572"></li></ul>
+	<p >The smooth region boundaries should not cross ply boundaries (possibly modified by darts) nor order of drape region boundaries. If an inner ply boundary lies inside a smooth region boundary, dart the material at the inner boundary. If you do not define darts, the simulation proposes rough darts as the models for the darts to define. The inner darts should extend to the smooth region, but not cross it.</p>
+		<h2><a name="ix-composites fiber modeling:mesh parameters"></a>Mesh Parameters </h2>
+	<p>The <kbd>Mesh parameters</kbd> define the architecture of the fabric, and the step 
+	lengths used for the fiber simulation. </p>
+	<p>Regarding the architecture of the fabric, the ratio between warp and weft 
+	is constant for a particular material and this material property should be 
+	used consistently. This is especially important when using a seed curve. 
+	</p>
+	<p>The fiber simulation in Composites 
+	Fiber Modeling is relatively insensitive to step length. This makes the simulation 
+	accurate for highly curved surfaces, and reduces sensitivity to step length. 
+	</p>
+	<p>Consider the following channel section. For a wide variety of step 
+	lengths (between 1 and 50 mm), the Composites Fiber Modeling result 
+	predicted the same flat pattern. By contrast, the standard fiber simulation 
+	gave very different results depending on the chosen step length, and large 
+	step lengths lead to very poor flat pattern results. <br>
+	<img src="b35doc/english/online/cpdug_c2/images/MeshParameters01NLS.png" width="673" height="419"></p>
+	<p>As a result of the insensitivity to step length, there is no need to have 
+	very small step lengths and this can, in fact, be counter-productive. </p>
+	<p>Fine detail on the edge of the ply is picked up irrespective of the step 
+	length. </p>
+	<p>As can be seen in this screen-shot,<br>
+	<img src="b35doc/english/online/cpdug_c2/images/MeshParameters02NLS.png" width="175" height="183"> <br>
+	the warp and weft lines (blue) at the spacing requested by the user have 
+	crossed the line defining the ply boundary (orange) at the location marked 
+	with circles (green). </p>
+	<p>The line showing the flat pattern (yellow) still contains the fine detail 
+	of the edge, which will reflect the local strain in the ply. </p>
+	<p>There is no need to set a small spacing to pick up details </p>
+	<p>Please note that the fiber VISUALISATION in the Composites Workbench does 
+	not reflect the fact that the underlying simulation in Composites Fiber 
+	Modeling follows the underlying surface exactly. However, this is simply a 
+	property of the Composites Workbench and does not reflect the accuracy of 
+	the results. </p>
+	<h2><a name="ix-composites fiber modeling:propagation type"></a>Propagation Type </h2><p>
+	The propagation type reflects the way in which the fabric covers the 
+	surface. 
+	As a consequence, different propagation types lead to different shapes and 
+	measures for the flattened ply. 
+	<p>
+		Consider fabric placed on a surface beginning at the seed point 
+	with the principal warp and weft fibers defining seed curves being shown in 
+	red below. If the red lines are constrained to the surface, the placement of 
+	the fabric bounded by the green line is then uniquely defined. <br>
+	<img src="b35doc/english/online/cpdug_c2/images/PropagationType.png" width="273" height="199"><p>
+		Extending the material further to the ply boundary is 
+	done one free edge at a time. When extending a free edge, the fabric behaves 
+	as a trellis and so the exact direction of growth is not fully defined. 
+	Therefore, assumptions must be made of the direction of growth based on 
+	the material behavior and manufacturing method. Composites Fiber Modeling provides several 
+	different propagation modes to cover the most important manufacturing 
+	options, that fall into three categories. 
+	<ul>
+					<li><kbd>Optimized Energy</kbd> and <kbd>Optimized 
+					Maxshear</kbd> modes use a biaxial material model and a 
+					circular extension strategy to model the hand layup of 
+					woven fabrics. </li>
+					<li>Second, the <kbd>Tape Steering</kbd> and <kbd>Tape Angle</kbd> modes 
+					use a strip extension strategy to simulate the application 
+					of biaxial or uniaxial tape respectively in a way which 
+					accurately reflects the real-world application of butted 
+					tapes of material onto a surface by manual means. This is 
+					also likely to reflect butted tape laying via automated 
+					means, subject to the fact that the detailed characteristics 
+					of the tape laying machine are not known by Composites Fiber 
+					Modeling. </li>
+					<li>Finally, the <kbd>FEFlatten</kbd> 
+					propagation mode predicts the flattening of plies using 
+					finite element analysis techniques and is applicable to 
+					fabrics without a biaxial or uniaxial microstructure.&nbsp;
+					</li>
+	</ul>
+	<h3><a name="ix-composites fiber modeling:circular propagation"></a>Circular Propagation Modes </h3>
+	<p>In the circular extension modes (<kbd>Optimized Energy</kbd> and <kbd>
+	Optimized Maxshear</kbd>), free edges in the warp and weft directions are 
+	extended alternately so that the ply extends uniformly in all directions 
+	away from the seed point. This models the operator progressively smoothing 
+	the fabric onto the mold away from the seed point. </p>
+	<ul>
+					<li>Propagation with circular strategy: alternate warp and 
+					weft extension:<br>
+					<img src="b35doc/english/online/cpdug_c2/images/PropagationType01NLS.png" width="222" height="120"></li>
+	</ul>
+	<p>The two options reflect different shear load deflection-behavior of the 
+	ply material. The best indicator of behavior is a graph of the shear 
+	stress/strain response of the material. Typical stress-strain curves are 
+	shown below. <br>
+	<img src="b35doc/english/online/cpdug_c2/images/PropagationType02NLS.png" width="297" height="205"></p>
+	<p>Typically, after a small elastic range, the material begins to shear 
+	significantly with little resistance. This continues up until the warp and 
+	weft fibers begin to lock, and stiffness increases rapidly. The range of 
+	behaviors is wide and depends on the weave architecture, presence of binder, 
+	and many other factors. </p>
+	<ul>
+					<li>In general, <kbd>Optimized 
+	Energy</kbd> propagation type that seeks to minimize the shear strain energy on 
+	an extending (propagating) edge gives excellent results for a wide variety 
+	of fabrics. </li>
+					<li>On the other hand, if locking occurs suddenly in the fabric (as 
+	in curve B above), it is better to limit the maximum shear as much as 
+	possible. In this case, the <kbd>Optimized Maxshear</kbd> propagation mode is more 
+	suitable. </li>
+					<li>Whatever propagation mode, excellent 
+	results should be obtained as long as the material is cut to a net shape, 
+	the seed point is accurately located, and the material is applied with due 
+	reference to the ply edge. </li>
+	</ul>
+	<p>A sample drape using a circular propagation mode is shown below. The area of least shear spreads away from the start point along the 
+	principal axes. The amount of shear is minimized by the algorithm actively 
+	working to limit the shear, as a skilled operator would do. <br>
+	<img src="b35doc/english/online/cpdug_c2/images/PropagationType03NLS.png" width="425" height="258"></p>
+	<p ><kbd>Geodesic</kbd>  propagation mode extends principal geodesic lines
+from the <kbd>Seed Point</kbd> to the ply boundary (or the boundary of the
+first order-of-drape region, if smaller) in the initial
+directions of warp and weft yarns. This uniquely constrains the
+fabric bounded by the principal fibers. If draping continues beyond
+this region, geodesic fibers are extended as required in warp and
+weft directions from points closest to the principal fibers until
+the surface is covered.
+<p >This propagation type gives good results on surfaces of low
+curvature, but can lead to excessive shear for regions of high
+curvature.</p>
+<p >In the image below<ul ><li>The green arrows point to the seed points.</li><li>The red arrow points to principal fiber along geodesic path.</li><li>The blue rectangle represents the constrained region, the yellow one the extension nearest principal fiber.</li></ul>	
+	<img height="275" src="b35doc/english/online/cpdug_c2/images/Geodesic.png" width="381"><kbd><br>
+	<span >Energy (Frictionless)</span></kbd><span >: In general, simulations of hand layup assume that the fabric
+sticks to the surface completely as soon as it is smoothed onto the
+surface. This is an appropriate assumption for most hand layup
+materials and processes, but has the effect of locking in excessive
+material deformation.
+</span>
+<p > <kbd>Energy (Frictionless)</kbd> propagation mode models the case of no
+friction between fabric and mold. It allows the fabric to move to minimize the overall shear strain energy in the
+material. This yields a unique solution for a particular <kbd>Seed Point
+</kbd> (which should instead be considered as a Reference Point) and
+initial warp direction and indicates idealized fiber paths that
+minimize overall ply deformation. Also to be used to
+estimate deformation during matched die forming. <kbd>Energy (Frictionless)</kbd> is intended to model forming between two frictionless forms, and uses an iterative solution to minimize the shear strain energy throughout the ply. This means that the material may shear at the indicated point, which is  a Reference Point and not a Seed Point. The solution should not be highly dependent on the location of the Reference Point, but computationally the best location for this point is near the center of the ply - so the <kbd>Geometrical Center </kbd>option is suggested as a starting point.</note></p>
+<p >A comparison between results from the <kbd>Optimized Energy</kbd> (on the left) and
+<kbd>Energy (Frictionless)</kbd> (on the right) propagation modes for a non-symmetrical
+seed/reference point is shown below. As you can see, <kbd>Energy
+(Frictionless)</kbd>  acts to reduce shear despite the reference
+point not being in the middle of the ply.<br>
+<img height="242" src="b35doc/english/online/cpdug_c2/images/EnergyFrictionless.png" width="514"></p>
+
+<p ><kbd>Energy (Frictionless)</kbd> runs an initial <kbd>Optimized Energy</kbd>
+solution and then iterates the results to minimize shear strain
+energy. The solution is therefore an order of magnitude slower and
+can be less stable than standard results.</p>
+	<h3><a name="ix-composites fiber modeling:strip propagation"></a>Strip Propagation Modes </h3>
+	<p>Another propagation mode is the strip propagation.</p>
+	<p>Suitable to simulate the layup for ATL (Automated Tape Laying) and AFP 
+	(Automated Fiber Placement) machines.</p>
+	<p>In general, the first tow is laid down and subsequent tows are laid 
+	parallel until the end of the ply. The principal path passing through the 
+	Seed Point is determined by one of three methods:</p>
+	<ul>
+		<li>Priority Angle, where the principal path follows the 
+		theoretical projected path on the surface. This choice minimizes 
+		Deviation.</li>
+		<li>Priority Steering, where the principal path follows a 
+		geodesic path on the surface. This minimizes Deformation.</li>
+		<li>Guide Curve, which is a manually defined curve to allow 
+		for a custom solution.</li>
+	</ul>
+	<p>From the initial path, subsequent paths are generated parallel to it in 
+	the plane of the surface. </p>
+	<ul>
+		<li>For ATL, the spacing and width of parallel tapes is 
+		specified by the course offset and course width parameters, while the 
+		first course is offset from the Seed Point and the principal path 
+		extending from it by the initial course offset as shown below<br>
+		<img src="b35doc/english/online/cpdug_c2/images/ATL01.png"><br>
+		where
+		<ul>
+			<li>1 is the Seed Point</li>
+			<li>2 is the course width</li>
+			<li>3 is the initial course offset</li>
+			<li>4 is the course offset</li>
+			<li>5 is the offset principal path</li>
+			<li>6 is the principal path.</li>
+		</ul>
+		The gap between each tape is the difference between course offset and 
+		course width.</li>
+		<li>
+		<p>For AFP, each course of tows laid in a single machine pass is 
+		characterized by the number of tows per course, the tow width and the 
+		tow offset. with spacing defined by the tow offset parameter. For a 
+		given tow width, the gap between the tows is given by the difference 
+		between the two tow offset and width. The spacing of courses of multiple 
+		tows laid down together in a single pass can be characterized by a 
+		course offset. The gap between courses is the difference between the 
+		course offset and the product of the tow width offset and the number of 
+		tows per course. The initial course offset is the distance between the 
+		principal path passing through the seed point, and the base middle of 
+		the first course.<br>
+		<img src="b35doc/english/online/cpdug_c2/images/AFP01.png"><br>
+		</p>
+		<ul>
+			<li>1 is the Seed Point</li>
+			<li>2 is the principal path</li>
+			<li>3 is the initial course offset</li>
+			<li>4 is the offset principal path</li>
+			<li>5 is the course offset.</li>
+		</ul>
+		<br>
+		<img src="b35doc/english/online/cpdug_c2/images/AFP02.png"><br>
+		<ul>
+			<li>1 is the tow width</li>
+			<li>2 is the tow offset.</li>
+		</ul>
+		</li>
+	</ul>
+	<p>&nbsp;For <kbd>Tape Steering</kbd>:</p>
+	<ul>
+					<li>The first tape is extended from the seed point in the warp direction all the 
+	way to the ply boundary in both the positive and negative warp directions. 
+					</li>
+					<li>Only once this first tape is laid are additional tapes abutted against the 
+	free weft edges of the preceding tapes. </li>
+					<li>For each new tape, the material 
+	strain is set to zero at the point of first application, which is defined as 
+	the point in the most negative warp direction. This reflects the fact that 
+	the material is unsheared at the point of first application on a surface. 
+	The rate of increase of shear along the tape depends on the width of the 
+	tape and the Gaussian curvature of the surface.
+					<ul>
+									<li>Propagation with strip strategy: initial warp extension, 
+					then lateral weft&nbsp;<br>
+									<img src="b35doc/english/online/cpdug_c2/images/PropagationType04NLS.png" width="367" height="94"></li>
+					</ul>
+					</li>
+					<li>For standard biaxial 
+					material model, it is assumed that warp and weft fibers 
+					pivot about their cross-over points so that an 
+					initially-square piece of material becomes a rhombus after 
+					shearing in a scissor mode as shown below. <br>
+					<img src="b35doc/english/online/cpdug_c2/images/PropagationType05NLS.png" width="466" height="113"><br>Importantly, the lengths of the sides remain constant as 
+					they are sheared. </li>
+					<li>Alternatively, for uniaxial materials modeled by the
+					<kbd>UD Tape</kbd> option, parallel fibers are assumed to 
+					remain parallel and equidistant, with shearing resulting 
+					from the relative sliding of fibers.<br>
+					<img src="b35doc/english/online/cpdug_c2/images/PropagationType06NLS.png" width="452" height="113"><br>
+					</li>
+	</ul>
+	<p>In practice, the results of the two material models converge on the same 
+	solution for small shears. At higher shears, the warp fibers of a biaxial 
+	material close up, which tends to reduce the amount of shear in a ply 
+	covering a surface of positive Gaussian curvature. </p>
+	<p>A sample drape using the <kbd>Tape</kbd> propagation model is shown 
+	below.<br>
+<img src="b35doc/english/online/cpdug_c2/images/PropagationType07NLS.png" width="426" height="261"><br>
+	Note that:</p>
+	<ul>
+					<li>The shear is zero along the principal warp direction as in this 
+	case, this follows a geodesic line on the surface. </li>
+					<li>The shear 
+	is zero by definition at the minimum warp end of each tape. </li>
+					<li>The degree of shear is higher than for the circular algorithm above. </li>
+	</ul>
+	<p>In the strip extension mode <kbd>Tape Angle</kbd>, 
+	the principal fiber follows the theoretical direction (projected Rosette 
+	X-Axis, rotated through the ply angle in the plane of the surface) to the 
+	edge of the ply. This means that the deviation along the principal fiber is 
+	null.</p>
+	<p><kbd>Tape Steering</kbd> and
+	<kbd>Tape Angle</kbd> both propose a deformation 
+	model that can be set to either </p>
+	<ul>
+		<li><kbd>Shear</kbd>: Uses the 
+		pin-jointed net material model. Is appropriate for laying adjacent 
+		strips of material by hand on a surface, or for new machines supporting 
+		Continuous Tow Shearing (CTS). <br>
+		<img src="b35doc/english/online/cpdug_c2/images/ATLShear.png"><br>
+		</li>
+		<li><kbd>Axial</kbd>: Assumes all 
+		deformations occurs along the fibers, resulting in series of parallel 
+		paths that reflect the laydown behavior of most conventional Automated 
+		Tape Laying (ATL) and Automated Fiber Placement (AFP) machines.<br>
+		<img src="b35doc/english/online/cpdug_c2/images/ATLAxial.png"><br>
+		<p>Note: Suitable only for surfaces with a relatively modest curvature.</p>
+		</li>
+	</ul>
+	<h3>&nbsp;</h3>
+	<h3>FEFlatten Propagation Mode </h3>
+	<p>The circular and tape propagation modes mentioned previously are based on 
+	a geometrical fiber simulation and give excellent results for Uniaxial and 
+	Biaxial materials where the material deforms in a highly directional way 
+	with almost no deformation along the fibers and concentrated deformation 
+	between fibers. </p>
+	<p>However, some materials used for Composites parts behave in a 
+	more isotropic manner with the material deforming in a direction imposed 
+	by the applied force and tractions within the ply rather than forced in a 
+	particular direction due to the underlying fiber architecture. </p>
+	<p>These include 
+	the following sheet materials commonly used in the manufacture of laminated 
+	structures: </p>
+	<ul>
+					<li>Quadraxial Non-Crimp Fabrics (NCF) </li>
+					<li>Chopped Strand Mat (CSM) </li>
+					<li>Knitted Fabrics </li>
+					<li>Foam Cores </li>
+					<li>Vinyl and Leather </li>
+	</ul>
+	<p>In order to calculate the flat and draped patterns of these materials, a 
+	purely geometrical approach cannot identify the important load paths in the 
+	fabric as it is forced over a doubly-curved surface and instead a 
+	finite-element based flattening (FEFlatten) solution is required. </p>
+	<p>The finite element flattening approach:</p>
+	<ul>
+					<li>effectively calculates the initial 
+	flat shape of the ply assuming that the material is formed between two 
+	frictionless dies. This allows the calculation of a smoothed minimum 
+	energy solution over the whole ply. The solution is a sophisticated 
+	extension of the approach of McCartney et al (1999, 2005) coupled with the 
+	use of nonlinear finite element analysis techniques. </li>
+					<li>The solution time can 
+	be expected to be of the order of minutes. </li>
+					<li>This technique can be thought of 
+	as lying between a purely geometrical simulation, taking seconds, and a 
+	full-contact multi-ply finite element calculation, taking days. </li>
+					<li>A particular 
+	advantage of the FEFlatten solution is that interior holes can be free 
+	boundaries, so that surfaces containing holes (or bumps/hollows surrounded 
+	by interior contours) can be solved without problems. </li>
+					<li>A comparison between 
+	geometrical fiber simulation and finite element flattening approaches is 
+	given in the table below: </li>
+	</ul>
+	<table style="width: 100%" class="style1">
+					<tr>
+									<td class="style2"><strong>Geometrical Fiber Simulation &nbsp;</strong></td>
+									<td class="style2"><strong>Finite Element Flattening &nbsp;</strong></td>
+					</tr>
+					<tr>
+									<td class="style2">Initial value problem, local energy 
+									minimization &nbsp;</td>
+									<td class="style2">Boundary value problem, global energy 
+									minimization &nbsp;</td>
+					</tr>
+					<tr>
+									<td class="style2">Exact flatten around details &nbsp;</td>
+									<td class="style2">Flatten smeared by finite element 
+									definition &nbsp;</td>
+					</tr>
+					<tr>
+									<td class="style2">Solution in seconds &nbsp;</td>
+									<td class="style2">Solution in minutes &nbsp;</td>
+					</tr>
+					<tr>
+									<td class="style2">Holes cannot be free boundaries &nbsp;</td>
+									<td class="style2">Holes can be free boundaries &nbsp;</td>
+					</tr>
+					<tr>
+									<td class="style2" style="height: 18px">Uniaxial, Biaxial materials &nbsp;</td>
+									<td class="style2" style="height: 18px">Isotropic, general materials &nbsp;</td>
+					</tr>
+	</table>
+	<p>A comparison of simulation results obtained through the standard 
+	Composites Fiber Modeling geometrical solvers, and the Composites Fiber 
+	Modeling flattening solver, for a mesa-like protuberance on a gently curved surface is given below. This clearly shows that by allowing strain along the fibers, the FEFlatten propagation mode reflects the reduction of peak strains in the material.
+
+</p>
+	<table style="width: 100%">
+					<tr>
+									<td><strong>Geometrical Fiber Simulation &nbsp;</strong></td>
+									<td><strong>Finite Element Flattening &nbsp;</strong></td>
+					</tr>
+					<tr>
+									<td>Pin Jointed Net &nbsp;</td>
+									<td>Finite Elements &nbsp;</td>
+					</tr>
+					<tr>
+									<td>Pure Shear Strain &nbsp;</td>
+									<td>Shear + Normal Strain &nbsp;</td>
+					</tr>
+					<tr>
+									<td>Concentrated Deformation &nbsp;</td>
+									<td>Distributed Deformation &nbsp;</td>
+					</tr>
+					<tr>
+									<td>
+									<img src="b35doc/english/online/cpdug_c2/images/PropagationType08NLS.png" width="336" height="301"></td>
+									<td>
+									<img src="b35doc/english/online/cpdug_c2/images/PropagationType10NLS.png" width="361" height="297">&nbsp;</td>
+					</tr>
+					<tr>
+									<td>
+									<img src="b35doc/english/online/cpdug_c2/images/PropagationType09NLS.png" width="183" height="51">&nbsp;</td>
+									<td>
+									<img src="b35doc/english/online/cpdug_c2/images/PropagationType11NLS.png" width="206" height="51">&nbsp;</td>
+					</tr>
+					</table>
+	<h2><a name="ix-composites fiber modeling:display modes"></a>Display Modes</h2>
+	<p>The 3D draped pattern for Composites Fiber Modeling is displayed in the same way as the 
+	standard fiber simulation. This means that the result can be used for 
+	inspection and 2D-3D transfer, and can be stored as curves in the V5 
+	part. </p>
+	<p>Note that the graphics visualization provided by CATIA does NOT reflect 
+	the underlying simulation completely in the following respects: </p>
+	<ul>
+					<li>Composites Fiber Modeling follows the surface EXACTLY, while the visualization only joins 
+	points on the surface</li>
+					<li>Composites Fiber Modeling continues the simulation to the edge of the ply, 
+	whereas the CATIA visualization does not allow the display of partial fibers 
+	and so the &quot;Lonely Points&quot; are removed.</li>
+	</ul>
+	<p>  When using the enhanced 
+	producibility panel in CATIA V5R19 onwards, users can access specialized 
+	display modes relevant to the fiber simulation. These give additional 
+	insight into the deformation of the ply over and above the degree of pure 
+	shear visualized in the standard <kbd>Shearing Angle</kbd> display mode. Composites 
+	Fiber Modeling currently 
+	supports display of the <kbd>Steering Radius (not FEFlatten)</kbd>, and <kbd>
+	Axial 
+	Strain (only FEFlatten solver)</kbd>. </p>
+	<h3>  <a name="ix-composites fiber modeling:steering radius"></a>Steering Radius (not FEFlatten) </h3>
+	<p>  The steering radius is the radius of curvature of the fibers in the plane of the surface. 
+	This information is particularly useful for investigating the viability of 
+	tape laying, where the forming limits of tape are usually characterized by 
+	the minimum manufacturable radius of curvature. </p>
+	<p>  The steering radius is also 
+	an additional measure of the degree of deformation in fabrics and can 
+	complement the standard shearing angle display. </p>
+	<h3>  <a name="ix-composites fiber modeling:axial strain"></a>Axial Strain (only FEFlatten) </h3>
+	<p>  The FEFlatten solver admits the possibility of axial strain along the 
+	nominal warp and weft fibers. It is only valid for the FEFlatten solver as 
+	the value would be zero for other solvers. </p>
+	<h3>  <a name="ix-composites fiber modeling:maximum slope">Maximum Slope</a></h3>
+	<p >  
+		<kbd>Thickness Update</kbd> provides a powerful capability to offset the simulation mesh from the ply definition surface. The  result is a very accurate flat patterns of plies offset from the mold surface (far better than offsetting by a constant thickness). However, for complex layups, there are situations where the resultant updated surface becomes uneven.<p > As an example, consider the case of a two plies that are separated by a small gap  (This may be intended by the designer to promote resin flow). 	<br><img height="203" src="b35doc/english/online/cpdug_c2/images/MaximumSlope.png" width="409"><br>Here, the surface simulation mesh (in yellow at the bottom) is necessarily defined to respect ply boundaries on the surface, but when updated, results in a surface (in red on top).<br>Since   
+	Composites Fiber Modeling produces very accurate flat patterns as it follows the surface absolutely, it is disproportionately affected by surface quality. In fact, the surface roughness described above is seamlessly handled by Composites Fiber Modeling, but the effect of generalized crossing of hundreds of ply boundaries can be unpredictable. To solve this problem while taking advantage of the power of <kbd>Thickness Update</kbd>, smooth the simulation surface by choosing a maximum slope of the offset facets  measured from their baseline position as shown below. 	<br><img height="196" src="b35doc/english/online/cpdug_c2/images/MaximumSlope2.png" width="261"><br></image>This effectively removes simulation surface artifacts and results in stable simulations with better results.</p>
+	<h2>  <a name="ix-composites fiber modeling:flat pattern display"></a>Display Flat Pattern
+	</h2>
+	<p>  Composites Fiber Modeling computes the flat pattern instantaneously as an intrinsic 
+	feature of its simulation, thus ensuring: </p>
+	<ul>
+					<li>Accuracy, as it is an intrinsic part of the simulation 
+					process, </li>
+					<li>Speed, as no separate process is involved, </li>
+					<li>Clarity, as it is possible to visualize the 2D flat pattern at the same 
+	time as the 3D draped pattern. </li>
+	</ul>
+	<p>  To display the flat pattern at the same time as the draped pattern, 
+	simply check the &quot;Display Flat Pattern&quot; box. The flat pattern will then be 
+	displayed in a plane parallel to the surface at the seed point, and with the 
+	correct orientation. </p>
+	<p>  The feedback allowed by this feature gives the user immediate 
+	confidence in the quality of the fiber simulation. &nbsp;<img src="b35doc/english/online/cpdug_c2/images/FlatpatternNLS.png"></p>
+</td>
+  </tr>
+  <tr>
+    <td width="814">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <p align="center">
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

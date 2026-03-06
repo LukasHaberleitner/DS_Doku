@@ -1,0 +1,254 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Customizing the Open Dialog</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Theme" content="none, default">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Customizing the Open Dialog Window</h1>
+ <p>&nbsp;</p>
+ <table border="0" valign="top" width="100%" cellpadding="0" height="171" style="border-collapse: collapse" bordercolor="#111111">
+   <tr>
+     <td valign="top" align="left" width="41" height="40">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td height="40" valign="top" width="818">The SmarTeam System Administrator can customize search grid attributes that appear in the SmarTeam Open Dialog 
+		Window.
+		<p><b>Important:</b>  Customizing the search grid in the Open Dialog involves manual editing of the <kbd>smarteam.std.legacyPreferences.config.xml</kbd> 
+		file. To avoid damaging the original format of the file and rendering 
+		the file useless, it is strongly recommended that you make a backup copy 
+		of this file prior to editing it.</p>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top" width="40">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="775">
+<h2>Customizing the search grid</h2>
+		
+					<p>To customize the search grid:</p>
+ <ul class="task">
+       <li><p class="task">In the <kbd>smarteam.std.legacyPreferences.config.xml</kbd> file at the end of the <kbd>&lt;runTimeKey&gt;</kbd> group, under <kbd>...\SmarTeam\ConfigurationSetting\Data\Domain</kbd> folder, 
+		add the following: </p>
+		<p class="task"><kbd>&lt;Item xmlns="http://www.smarteam.com/dev/ns/config/legacyPreferences/1.0"&gt;
+      </kbd></p>
+		<p class="task"><kbd>&lt;runTimeKey&gt;QUERY_&lt;integration&gt;_&lt;class&gt;.&lt;attribute name&gt;&lt;/runTimeKey&gt;
+      </kbd></p>
+		<p class="task"><kbd>&lt;value&gt;&lt;condition&gt;,&lt;value&gt;[;SHOW]&lt;/value&gt; </kbd></p>
+		<p class="task"><kbd>&lt;/Item&gt;</kbd></p>
+
+</ul>
+		<p class="task">The name should be in the form <kbd>[QUERY_&lt;integration&gt;_&lt;class&gt;]</kbd> where <kbd>&lt;class&gt;</kbd> is one of the classes that the integration supports, as defined in the SmarTeam Integration Tools Setup utility.
+</p>
+		where:<p><kbd>&lt;attribute name&gt;</kbd> is the name of the SmarTeam attribute of the relevant 
+		class</p>
+		<p><kbd>&lt;integration&gt;</kbd> is the name of the current 
+		integration, in this case CATIA</p>
+		<p><kbd>&lt;condition&gt;</kbd> is one of the 
+		following:<ul>
+			<li>Starts with
+<li>Ends with
+<li>Includes
+<li>Equals
+<li>Greater than
+<li>Less than
+<li>Not equal to
+<li>Less than or equal to
+<li>Greater than or equal to
+</ul><br>
+		<kbd>&lt;value&gt;</kbd> is the value. 
+			<p>;SHOW is an optional parameter. If added, the attribute will be 
+			shown in the Open dialog as part of the query. </p>
+		<p>When a [QUERY_&lt;class&gt;] key does not exist for a particular class, primary identifier attributes are displayed in the SmarTeam Open Dialog search grid.
+		</p>
+		<p><b>Note:  </b>The fields in the query, as well as in the query results, will appear in alphabetical order. This default setting cannot be modified.
+ 
+		</p>
+		<p><b>Example</b></p>
+		<p>The following code can be used to define criteria for the Open dialog 
+		window: </p>
+		<p><kbd>&lt;Item xmlns="http://www.smarteam.com/dev/ns/config/legacyPreferences/1.0"&gt;<br>
+&nbsp;&lt;runTimeKey&gt;QUERY_CATIA_Part.0_TDM_ID&lt;/runTimeKey&gt;
+      <br>
+		&lt;value&gt;includes,,;show&lt;/value&gt;
+    <br>
+		&lt;/Item&gt; </kbd>
+
+</p>
+		<p><kbd>&lt;Item xmlns="http://www.smarteam.com/dev/ns/config/legacyPreferences/1.0"&gt;<br>
+&nbsp;&lt;runTimeKey&gt;QUERY_CATIA_Part.1_TDM_DESCRIPTION&lt;/runTimeKey&gt;
+      	<br>
+		&lt;value&gt;includes,,;show&lt;/value&gt;<br>
+&nbsp;&lt;/Item&gt; </kbd>
+
+</p>
+		<p><kbd>&lt;Item xmlns="http://www.smarteam.com/dev/ns/config/legacyPreferences/1.0"&gt;<br>
+&nbsp;&lt;runTimeKey&gt;QUERY_CATIA_Part.2_REVISION&lt;/runTimeKey&gt;
+      <br>
+		&lt;value&gt;;SHOW&lt;/value&gt;
+    <br>
+		&lt;/Item&gt; </kbd>
+
+</p>
+		<p><kbd>&lt;Item xmlns="http://www.smarteam.com/dev/ns/config/legacyPreferences/1.0"&gt;<br>
+&nbsp;&lt;runTimeKey&gt;QUERY_CATIA_Part.3_STATE&lt;/runTimeKey&gt;
+      <br>
+		&lt;value&gt;;SHOW&lt;/value&gt;
+    <br>
+		&lt;/Item&gt; </kbd>
+
+</p>
+		<p><kbd>&lt;Item xmlns="http://www.smarteam.com/dev/ns/config/legacyPreferences/1.0"&gt;<br>
+&nbsp;&lt;runTimeKey&gt;QUERY_CATIA_Part.4_TDMX_RELATED_ITEM_ID&lt;/runTimeKey&gt;<br>
+&nbsp;&lt;value&gt;includes,,;show&lt;/value&gt;
+    <br>
+		&lt;/Item&gt; </kbd>
+
+</p>
+		<p><kbd>&lt;Item xmlns="http://www.smarteam.com/dev/ns/config/legacyPreferences/1.0"&gt;<br>
+&nbsp;&lt;runTimeKey&gt;QUERY_CATIA_Part.5_FILE_TYPE&lt;/runTimeKey&gt;
+      <br>
+		&lt;value&gt;Equals,CATPart,;SHOW&lt;/value&gt;
+    <br>
+		&lt;/Item&gt;
+    </kbd>
+
+</p>
+		<p><kbd>&lt;Item xmlns="http://www.smarteam.com/dev/ns/config/legacyPreferences/1.0"&gt;<br>
+&nbsp;&lt;runTimeKey&gt;QUERY_CATIA_Part.6_CREATION_DATE&lt;/runTimeKey&gt;
+      <br>
+		&lt;value&gt;;SHOW&lt;/value&gt;
+    <br>
+		&lt;/Item&gt;</kbd></p>
+		<p><kbd>&nbsp;&lt;Item xmlns="http://www.smarteam.com/dev/ns/config/legacyPreferences/1.0"&gt;<br>
+&nbsp;&lt;runTimeKey&gt;QUERY_CATIA_Part.7_USER_OBJECT_ID&lt;/runTimeKey&gt;
+      <br>
+		&lt;value&gt;;SHOW&lt;/value&gt;
+    <br>
+		&lt;/Item&gt;
+    </kbd>
+
+</p>
+		<p><kbd>&lt;Item xmlns="http://www.smarteam.com/dev/ns/config/legacyPreferences/1.0"&gt;
+      &lt;runTimeKey&gt;QUERY_CATIA_Part.8_TDMX_DETAILED_DESCRIPTION&lt;/runTimeKey&gt;
+      &lt;value&gt;includes,,;show&lt;/value&gt;
+    <br>
+		&lt;/Item&gt;</kbd>
+
+</p>
+		<p>Two of the resulting screens are shown below:  
+		<img border="0" src="b35doc/english/online/td1ug_c2/images/query-window.gif" width="781" height="485"></p>
+		<p>
+		<img border="0" src="b35doc/english/online/td1ug_c2/images/query-window2.gif" width="772" height="478"></p>
+		<h3>Example 2:</h3>
+		<p>The following is an example of how to customize the order in which attributes will appear in the search grid of the SmarTeam Open Dialog. 
+		</p>
+		<p>In this example, the format 
+<kbd>&lt;runTimeKey&gt;QUERY_&lt;integration&gt;_&lt;class&gt;.&lt;number&gt;_&lt;attribute name&gt;&lt;/runTimeKey&gt; </kbd>
+
+is used, where:
+</p>
+		<p><kbd>&lt;integration&gt;</kbd> refers to the integration</p>
+		<p><kbd>&lt;class&gt;</kbd> refers to a class supported by the integration
+</p>
+		<p><kbd>&lt;number&gt;</kbd> refers to the sequential order of the attribute in the query
+		</p>
+		<p><kbd>&lt;attribute name&gt;</kbd> refers to the name of the SmarTeam attribute for the relevant class
+ 
+		</p>
+		<p><kbd>&lt;Item xmlns="http://www.smarteam.com/dev/ns/config/legacyPreferences/1.0"&gt;
+      &lt;runTimeKey&gt;QUERY_SolidWorks_Drawing.0_TDM_ID&lt;/runTimeKey&gt;
+       </kbd></p>
+		<p><kbd>&lt;value&gt;;SHOW &lt;/value&gt;
+ &lt;/Item&gt; <br>
+		&lt;Item xmlns="http://www.smarteam.com/dev/ns/config/legacyPreferences/1.0"&gt;
+        &lt;runTimeKey&gt;QUERY_SolidWorks_Drawing.1_REVISION&lt;/runTimeKey&gt;
+         &lt;value&gt;Equals,123&lt;/value&gt;
+&lt;/Item&gt;
+           &lt;Item xmlns="http://www.smarteam.com/dev/ns/config/legacyPreferences/1.0"&gt;
+           &lt;runTimeKey&gt;QUERY_SolidWorks_Drawing.2_CN_TITLE&lt;/runTimeKey&gt;
+            &lt;value&gt;;SHOW&lt;/value&gt;
+&lt;/Item&gt;</kbd> </li>
+</td>
+   	</tr>
+   <tr>
+     <td valign="top" width="40">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="775">
+<h2>Customizing the class name list</h2>
+		
+					<p>The administrator may customize the class name list to 
+					define which classes will be displayed in the list. In 
+					addition, the administrator defines which attributes appear 
+					for each class.</p>
+<p>
+<img border="0" src="b35doc/english/online/td1ug_c2/images/admin_save-options_definitions_classes-list.gif" width="601"></p>
+		</td>
+   </tr>
+	<tr>
+     <td valign="top" width="40">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="775">
+<h2>Customizing tree settings</h2>
+		
+					<p>Define the expand levels of the Projects tree and objects 
+					tree for Documents and for Items.</p>
+<p>From the <kbd>Save Options</kbd> dialog, select the <kbd>Desktop</kbd> option and then the <kbd>Tree 
+Setting</kbd> tab. Using the arrows in the spin boxes, select the Expand level for each tree 
+and then click OK to save the setting.</p>
+<p>
+<img border="0" src="b35doc/english/online/td1ug_c2/images/admin_save-options_desktop_tree-setting.gif" width="599" height="459"></p>
+		</td>
+   </tr>
+	<tr>
+     <td valign="top" width="40">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="775">
+<h2>Customizing the Classes List</h2>
+		
+					<p>Select the classes which will appear in the Classes 
+					listbox.</p>
+<p>From the <kbd>Save Options</kbd> dialog, select the <kbd>Definitions</kbd> option and then the <kbd>Classes List</kbd> tab. 
+From the right pane, select a class or classes and then click the <kbd>Add Class
+</kbd>button. The selected classes appear in the left pane under the Classes 
+category.<br>
+<br>
+To remove a class, select it in the left pane and click <kbd>Remove Class</kbd>.</p>
+<p>
+<img border="0" src="b35doc/english/online/td1ug_c2/images/admin_save-options_definitions_classes-list.gif" width="601" height="461"></p>
+		</td>
+   </tr>
+	<tr>
+     <td valign="top" width="40">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="775">
+		<h2>SmarTeam Query Set as Current</h2>
+		<p>If <kbd>SmarTeam Query</kbd> is set as <kbd>Current</kbd> in the 
+     <kbd>Document</kbd> <kbd>Environment</kbd> list, a SmarTeam query user interface is displayed:
+     	</p>
+		<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber10">
+			<tr>
+				<td width="100%">
+				<img border="1" src="b35doc/english/online/td1ug_c2/images/db102NLS.gif" width="216" height="82"></td>
+			</tr>
+		</table>
+		
+     </td>
+   </tr>
+	</table>
+ <p align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

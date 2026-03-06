@@ -1,0 +1,196 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="2">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Distributing a Service Pack From an Archive File on Windows</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Distributing a Service Pack From an Archive File on Windows</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top"><a name="ix-service pack::installing fron archive"></a>
+     This <span lang="en-us">task</span> explains how to install a service pack 
+     from an archive file,<a name="ix-installing code::service pack from archive"></a> 
+     as an alternative to the traditional methods involving installing the 
+     service pack from the media or using the <font size="3" color="#000000">
+     <kbd>StartSPKB<strong> </strong></kbd></font>command.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="33"></td>
+     <td valign="top" width="769">
+     <h2><font color="#282187">What Is an Archive File?<a name="ix-archive file"></a></font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="33"></td>
+     <td valign="top" width="769">An archive file is a file in compressed format 
+     on Windows built by a command provided. The compressed file contains 
+     installation files containing differences with respect to an earlier 
+     installed level of the same release of the same software configuration. A 
+     level can be either a GA or a service pack.<p>For example, you can build an 
+     archive file containing the differences between level V5Rn GA and V5Rn SP2 
+     (even if you installed V5Rn SP1 in between).</td>
+   </tr>
+   <tr>
+     <td valign="top" width="33"></td>
+     <td valign="top" width="769">
+     <h2><font color="#282187">Building and Installing the Archive</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="33"></td>
+     <td valign="top" width="769">You first need to install several software 
+     levels (belonging to the same release) on the source computer. In our 
+     example illustrated below, we installed levels V5Rn GA, V5Rn SP1 and V5Rn 
+     SP2, and committed the service packs.&nbsp;On the target computers, only the 
+     V5Rn GA level is installed.
+     <p>You use the <code>CATDeltaInstall</code> command with the appropriate 
+     arguments to build the archive. The resulting archive file can then be 
+     copied to the target computer and decompressed using platform-specific 
+     tools. For&nbsp; example, you need the Microsoft <code>CabArc.exe</code> 
+     utility which can be downloaded from:</p>
+     <p><code>https://msdn.microsoft.com/en-us/library/bb417343.aspx</code></p>
+     <p>The installation files from the archive file then overwrite the 
+     installation files on the target computer.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="33"></td>
+     <td valign="top" width="769">
+     <p align="center"><img border="0" src="b35doc/english/online/basil_c2/images/CATDeltaInstall_NLS.gif" width="610" height="472"></td>
+   </tr>
+   <tr>
+     <td valign="top" width="33"></td>
+     <td valign="top" width="769">The advantages of this type of installation 
+     are:
+     <ul>
+       <li>an archive file is smaller than a service pack on a media, therefore 
+       the installation is more rapid</li>
+       <li>you can copy an archive file to other computers on your network and 
+       automate the installation of the archive using a method of choice.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="33">
+     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td valign="top" width="769">Note that installing a service pack from an 
+     archive file always commits the service pack automatically. Make sure that 
+     the previously installed service packs on the target computer have been 
+     committed before installing the archive. Furthermore, you can only use this 
+     method if the configurations/products on both the source and target 
+     computers are identical.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="33"></td>
+     <td valign="top" width="769">The traditional methods of service pack 
+     installation and the use of the <code>CATDeltaInstall</code> command are 
+     interchangeable: you can install a service pack from a media, then install 
+     another service pack from an archive file.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="33"></td>
+     <td valign="top" width="769">
+     <h2><font color="#282187">Installation Procedure</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="33">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top" width="769"><b>1.</b> Log on as an administrator onto the 
+     source computer.<p>You must belong to the Administrators group, or have the 
+     privileges assigned to the Administrators group. Otherwise, you will not be 
+     able to install the different levels on the source computer.<p><b>2.</b> &nbsp;Perform, for example, 
+     the following installations:
+     </p>
+     <ul>
+       <li>install V5Rn GA</li>
+       <li>install V5Rn SP1 then commit the service pack</li>
+       <li>install V5Rn SP2 then commit the service pack.</li>
+     </ul>
+     <b>3.</b> &nbsp;On Windows, open a Command Prompt 
+     window and go to the following directory:<p><code>C:\Program Files\Dassault Systemes\B0n\win_b64\code\bin (64-bit code on 
+		Windows, x64 Edition)</code></p>
+     <p>where &quot;B0n&quot; is the level V5Rn.<p><b>4.</b> &nbsp;To build an archive file based on 
+     the differences between the V5Rn GA and V5Rn SP2 levels, for example, run 
+     the <code>CATDeltaInstall</code> command as follows, for example on 
+     Windows:</p>
+     <p><code>CATDeltaInstall -s 0 
+     -d &quot;C:\Program Files\Dassault Systemes\B0n\ -a E:\users\MyUser\MyArchiveFile</code><p>The full command syntax is:
+     </p>
+     <p><b><code><a name="ix-commands::CATDeltaInstall"></a>CATDeltaInstall<a name="ix-CATDeltaInstall command"></a> 
+     -s PreviousServicePackNumber [-d InstallationDirectory]&nbsp;<br>
+     [-l|-a ArchiveFile] [-h]</code></b></p>
+     <ul>
+       <li><b><font color="#000000"><code>-s</code></font></b><font size="3" color="#000000">:&nbsp;</font>previous 
+       level number: the level can be either a service pack or the GA level for 
+       the same release;&nbsp;<br>
+       0 = GA, 1 = service pack 1, 2 = service pack 2, etc.; the default is 0.<br>
+       A service pack must have been correctly installed if you intend to build 
+       an archive based on the differences between this service pack and another 
+       level. For example, if you installed only the V5Rn GA and V5Rn SP2 
+       levels, you cannot specify &quot;-s 1&quot; as an argument (because you did not 
+       install the V5Rn SP1 level).</li>
+       <li><b><font color="#000000"><code>-d</code></font></b><font size="3" color="#000000">:</font>&nbsp;Installation 
+       directory; when the command is run from the installation directory, this 
+       argument is not required</li>
+       <li><b><font color="#000000"><code>-l</code></font></b><font size="3" color="#000000">:</font> 
+       only lists the files which are different between the two installation 
+       levels; this list can be used to build a different type of archive (for 
+       example, WinZip)</li>
+       <li><b><code>-a</code></b>:&nbsp;builds an archive file with the specified 
+       name (requires the <code>CabArc</code> utility)</li>
+       <li><b><code>-h</code></b><font size="3" color="#000000">:</font> help.</li>
+     </ul>
+     <p>Note that there are <i>two</i> distinct operating modes:</p>
+     <ul>
+       <li>build an archive file (using the &quot;<b><code>-a</code></b>&quot; argument)</li>
+       <li>only list the files which are different between the two installation 
+       levels (using the &quot;<b><code>-l</code></b>&quot; argument)</li>
+     </ul>
+     <p>On Windows, the archive file compression is handled automatically thanks 
+     to the <code>cabarc</code> format.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="33">
+     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td valign="top" width="769">The service pack installed your computer, and 
+     used as the basis for comparison with a previous level, must be committed 
+     beforehand. If not, the <code>CATDeltaInstall</code> command will not 
+     operate.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="33"></td>
+     <td valign="top" width="769"><b>5.</b> &nbsp;Copy the archive file to a target 
+     computer on which you want to install the same service pack level.
+     <p>Keep in mind that the target computer must be running the same Version 5 
+     configuration/products as the source computer on which the archive file was 
+     built.<p><b>6.</b> &nbsp;Stop all running Version 5 
+     processes on the target computer before proceeding.</p>
+     <p><b>7.</b> Install the archive using the following command,
+     for example on Windows:</p>
+     <p>
+     <code>cabarc -p -o X E:\users\MyUser\MyArchiveFile &quot;C:\Program Files\Dassault 
+     Systemes\B0n\&quot;</code><p><p><b>8.</b> Start a session to check the service 
+     pack has been correctly installed.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="2" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

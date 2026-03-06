@@ -1,0 +1,513 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Cutting Through a Model (3D Cut)</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style>
+<!--
+div.Section1
+	{page:Section1;}
+-->
+</style>
+
+
+<script type="text/javascript">
+function OpenLocation(link)
+{
+document.location.href = link;
+}
+</script>
+
+
+
+ </head>
+
+ <body>
+
+ <h1><a name="hj-top"></a>Cutting Through a Model (3D Cut)<a name="CATOptimizerHeader.3DCut"></a></h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" height="5874">
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="227">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td height="227">
+     This task deals with the 3D Cut functionality:<br>
+&nbsp;<ul>
+		<li><a href="#hj-about3dcut">Understanding the 3D Cut Capability</a></li>
+		<li><a href="#hj-alternateshape">Alternate Shape Management</a></li>
+		<li><a href="#hj-scenario">Step-by-step Scenario</a></li>
+		<li><a href="#hj-limitations">Limitations</a></li>
+		<li><a href="#hj-moreexamples">Results - Examples</a></li>
+		</ul>
+		<h2><a name="hj-about3dcut"></a>Understanding the 3D Cut Capability<a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" alt="Top" align="right" width="25" height="17"></a></h2>
+     <p>3D Cut functionality cuts through a model computing the intersection (or the difference as 
+     defined by the user) between a CATPart, a CATProduct, a 
+     multi-selection of CATParts and a 3D box. The result is a truncated 
+		polygonal mesh, lighter than the original selection which can be saved 
+		as an independent geometry.</p>
+     <p>Note that the resulting geometry keeps color attributes as well as faces 
+		and edges. The 
+     resulting 3D Cut can be automatically treated as an alternate shape as in any 
+     other DMU Optimizer functionality.</p>
+		<p>		By default, the <kbd>On the Border</kbd> 
+			behavior is set to
+           <img border="0" src="b35doc/english/online/dmoug_c2/images/3dcuttriangles.gif" width="27" height="27"> 
+		(allows you to cut the triangles&nbsp;on the selection border within the 
+			cutting box). The result is a boolean intersection between the 
+		selected model and the section box; the triangles are cut.</p>
+		<table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" id="table3" width="586">
+			<tr>
+				<td bgcolor="#C0C0C0" width="110" align="center">
+				<h5>Initial model</h5>
+				</td>
+				<td bgcolor="#C0C0C0" align="center">
+				<h5>Intersection treated as:</h5>
+				</td>
+				<td bgcolor="#C0C0C0" width="110" align="center">
+				<h5>Section Box</h5>
+				</td>
+				<td bgcolor="#C0C0C0" width="133" align="center">
+				<h5>Result</h5>
+				</td>
+				<td bgcolor="#C0C0C0" width="147" align="center">
+				<h5>3D Cut Preview</h5>
+				</td>
+			</tr>
+			<tr>
+				<td width="110" bgcolor="#F2F2F2">Volume</td>
+				<td bgcolor="#F2F2F2">Volume</td>
+				<td bgcolor="#F2F2F2" width="110">
+				<img border="0" src="b35doc/english/online/dmoug_c2/images/3dcusectionbox01.gif" width="112" height="81"></td>
+				<td bgcolor="#F2F2F2" width="133">Closed volume</td>
+				<td bgcolor="#F2F2F2" width="147">
+				<img border="0" src="b35doc/english/online/dmoug_c2/images/3dcutpreview01NLS.gif" width="145" height="129"><br>
+&nbsp;</td>
+			</tr>
+			<tr>
+				<td width="110" bgcolor="#F2F2F2" rowspan="2">Surface</td>
+				<td bgcolor="#F2F2F2" rowspan="2">Open Surface</td>
+				<td bgcolor="#F2F2F2" width="110">
+				<img border="0" src="b35doc/english/online/dmoug_c2/images/3dcusectionbox03.gif" width="121" height="86"></td>
+				<td bgcolor="#F2F2F2" width="133">Surfaces that are coincident 
+				with the section box are removed. </td>
+				<td bgcolor="#F2F2F2" width="147">
+				<img border="0" src="b35doc/english/online/dmoug_c2/images/3dcutpreview02NLS.gif" width="145" height="118"><br>
+&nbsp;</td>
+			</tr>
+			<tr>
+				<td bgcolor="#F2F2F2" width="110">
+				<img border="0" src="b35doc/english/online/dmoug_c2/images/3dcusectionbox02.gif" width="111" height="84"></td>
+				<td bgcolor="#F2F2F2" width="133">If you want to keep the 
+				surfaces, extend the section box.</td>
+				<td bgcolor="#F2F2F2" width="147">
+				<img border="0" src="b35doc/english/online/dmoug_c2/images/3dcutpreview03NLS.gif" width="147" height="123"></td>
+			</tr>
+			</table>
+		<p>&nbsp;</p>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="5609">
+     <p>
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="5737">
+		<h2><a name="hj-scenario"></a>Step-by-Step Scenario<a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" alt="Top" align="right" width="25" height="17"></a></h2>
+		<p>This task will show you how to create 3D cut
+     </p>
+		Open <a href="b35doc/english/online/dmoug_c2/samples/Mobile_Phone.CATProduct">Mobile_Phone.CATProduct
+		</a>document.<p>Use <kbd>Fit All In</kbd>
+     <img src="b35doc/english/online/icons_C2/images/I_ReframeP2.gif" alt="I_ReframeP2.gif (216 bytes)" width="24" height="24">&nbsp; 
+     to position the model geometry on the screen.</p>
+     <h2><a name="hj-alternateshape"></a>Alternate Shape Management<a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" alt="Top" align="right" width="25" height="17"></a></h2>
+     <ol class="task">
+       <li>
+       <p class="task">(Optional)&nbsp;<br>
+       You can manage automatically your result as alternate shape of the 
+       initial component. For this: </p>
+       <table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+         <tr>
+           <td>
+           <ul>
+             <li>Select <kbd>Tools &gt; Options </kbd>from the menu bar.<br>
+             The <kbd>Options</kbd> dialog box is displayed.</li>
+             <li>Expand the Digital Mockup category from the left-hand tree.</li>
+             <li>Select&nbsp;DMU Optimizer item to display the corresponding 
+             tab. The Alternate Shapes Management is available</li>
+             <li>Select the <kbd>3D Cut </kbd>option: it is automatically 
+             activated as an alternate shape. When activated the 3D cut 
+             representation is the one visualized in session.</li>
+           </ul>
+           </td>
+         </tr>
+         <tr>
+           <td><img border="1" src="b35doc/english/online/dmoug_c2/images/3dcutmanagerep.gif" width="267" height="27"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Right-click Battery(Battery.1) in the specification tree 
+       and select <kbd>Representations &gt; Manage Representations... </kbd>from 
+       the contextual menu displayed</p>
+       <table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber15">
+         <tr>
+           <td><img border="1" src="b35doc/english/online/dmoug_c2/images/mbmanagerepresentations_NLS.gif" width="368" height="286"></td>
+         </tr>
+         <tr>
+           <td>The Manage representations dialog box is displayed</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Select Battery.1_SWEPTVOLUME.cgr and click <kbd>Activate</kbd> 
+       button in the <kbd>Manage Representations </kbd>dialog box displayed.</li>
+       <li>
+       <p class="task">Click <kbd>Close</kbd></li>
+       <li>
+       <p class="task">Click <kbd>3D Cut </kbd>
+       <img border="0" src="b35doc/english/online/dmoug_c2/images/3dcuticon.gif" width="26" height="28"> in the
+		<kbd>DMU Optimizer 
+       </kbd>toolbar.<br>
+       The <kbd>3D Cut </kbd>dialog box is displayed:</p>
+       <table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber14">
+         <tr>
+           <td><img border="0" src="b35doc/english/online/dmoug_c2/images/db3dcutNLS.gif" width="323" height="200"></td>
+         </tr>
+         <tr>
+           <td>This dialog box contains a variety of tools letting you 
+           positioning the section box and selecting the cutting type</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Select Battery.1 either in the specification tree or the 
+       geometry area</p>
+       <table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber17">
+         <tr>
+           <td colspan="2"><img border="0" src="b35doc/english/online/dmoug_c2/images/3dcut01.gif" width="193" height="262"></td>
+         </tr>
+         <tr>
+           <td colspan="2">Product (s) selected are highlighted in the 
+           specification tree and geometry area</td>
+         </tr>
+         <tr>
+           <td colspan="2">The section box is not yet correctly positioned (not 
+           snapped onto the battery)</td>
+         </tr>
+         <tr>
+           <td>
+           <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+           <td><kbd>Note: </kbd>if you select the product(s) of interest for 
+           your selection before entering the 3D Cut command, the section box 
+           will be automatically positioned on the selected product(s).</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Click the <kbd>Positioning</kbd> tab and click the<kbd> 
+       Reset Position </kbd>icon <img border="0" src="b35doc/english/online/dmoug_c2/images/reseticon.gif" width="27" height="25"></p>
+       <table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber16">
+         <tr>
+           <td><img border="0" src="b35doc/english/online/dmoug_c2/images/db3dcut01NLS.gif" width="337" height="200"></td>
+         </tr>
+         <tr>
+           <td>The section box is positioned with respect to the selection:</td>
+         </tr>
+         <tr>
+           <td valign="top"><a name="hj-picture"></a>
+           <img border="0" src="b35doc/english/online/dmoug_c2/images/3dcut02.gif" width="247" height="274"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Select the <kbd>automatic Reset</kbd> check box.</p>
+       <table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber22">
+         <tr>
+           <td><img border="1" src="b35doc/english/online/dmoug_c2/images/3dcutautomaticresetNLS.gif" width="114" height="17"></td>
+         </tr>
+         <tr>
+           <td>This new capability lets you reset the section box on a selected 
+           product with correct dimensions.<p>For example, if you change your 
+           selection:</p>
+           <ul>
+             <li>select Front shell either in the geometry area or in the 
+             specification tree, this is what you obtain:</li>
+           </ul>
+           </td>
+         </tr>
+         <tr>
+           <td><img border="0" src="b35doc/english/online/dmoug_c2/images/3dcut09.gif" width="241" height="237"></td>
+         </tr>
+         <tr>
+           <td>
+           <ul>
+             <li>select again Battery.1, the section box is positioned and 
+             resized accordingly </li>
+           </ul>
+           </td>
+         </tr>
+         <tr>
+           <td>see <a href="#hj-picture">picture in step 7</a></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Adjust the thickness of the section box:
+       <ul class="task">
+         <li>
+         <p class="task">Clicking the <kbd>Edit Position and Dimensions</kbd> 
+         icon <img border="0" src="b35doc/english/online/dmoug_c2/images/editpositionicon.gif" width="28" height="28"> and entering 
+         the desired values in the <kbd>Edit Position and Dimensions</kbd> 
+         dialog box displayed:</li> </p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber25">
+           <tr>
+             <td><img border="0" src="b35doc/english/online/dmoug_c2/images/dbeditpositiondimensionsNLS.gif" width="288" height="252"></td>
+           </tr>
+           <tr>
+             <td><kbd>Notes:</kbd><ul>
+               <li>For more information about the Edit Position and Dimensions 
+               dialog box, read refer to Sectioning section in <i>DMU Space 
+               Analysis User's Guide </i></li>
+               <li>Units are current units set using <kbd>Tools &gt; Options</kbd> 
+               (Units tab under <kbd>General &gt; Parameters and Measure</kbd>).</li>
+             </ul>
+             <p>The Undo and Redo icons in the Edit Position and Dimensions 
+             dialog box let you cancel the last action or recover the last 
+             action undone respectively.<br>
+             Only the section box position is recovered, the dimensions are not.</td>
+           </tr>
+         </table>
+         </li>
+         </li>
+         <li>
+         <p class="task">positioning the cursor over one of the box plane 
+         edges, clicking then dragging to translate the plane in the desired 
+         direction </p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber26">
+           <tr>
+             <td><img border="0" src="b35doc/english/online/dmoug_c2/images/3dcut03.gif" width="279" height="236"></td>
+           </tr>
+           <tr>
+             <td><img border="0" src="b35doc/english/online/dmoug_c2/images/3dcut04.gif" width="193" height="241"></td>
+           </tr>
+         </table>
+         <p class="task">&nbsp;</li>
+       </ul>
+       <table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber18" height="65">
+         <tr>
+           <td height="18" valign="top">
+           <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+           <td height="18"><kbd>Notes: </kbd>
+           <ul>
+             <li>As you move the cursor over box edges, the cursor changes 
+             appearance and arrows identifying the directions along which box 
+             thickness is defined appear.</li>
+             <li>You can also re-size the box by clicking and dragging one of 
+             the box sides. Arrows likewise appear to help you.</li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Click the <kbd>Definition</kbd> tab to select the desired 
+       cutting types. </p>
+       <table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber19" height="1170" width="743">
+         <tr>
+           <td height="200" colspan="2" width="741">
+           <img border="0" src="b35doc/english/online/dmoug_c2/images/db3dcut02NLS.gif" width="337" height="200"><p>
+			By default, the Boolean cutting behavior is selected (<kbd>On 
+			the Border</kbd> area).</td>
+         </tr>
+         <tr>
+           <td height="16" colspan="2" width="741">Select the <a name="hj-cut">
+           </a>cutting type using the arrow:</td>
+         </tr>
+         <tr>
+           <td height="45" colspan="2" width="741">
+           <img border="0" src="b35doc/english/online/dmoug_c2/images/3dcutinnerparts.gif" width="30" height="26">:cuts away the 
+           material from the product, inside the box to expose the cavity within 
+           the product</td>
+         </tr>
+         <tr>
+           <td height="252" width="187">
+           <img border="0" src="b35doc/english/online/dmoug_c2/images/3dcut05.gif" width="184" height="195"></td>
+           <td height="252" width="553">
+           <img border="0" src="b35doc/english/online/dmoug_c2/images/3dcut06_NLS.gif" width="189" height="252"></td>
+         </tr>
+         <tr>
+           <td height="28" colspan="2" width="741">
+           <img border="0" src="b35doc/english/online/dmoug_c2/images/3dcutouterparts.gif" width="29" height="25">: cuts away the 
+           material from the product, outside the box
+           <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber28">
+             <tr>
+               <td><img border="0" src="b35doc/english/online/dmoug_c2/images/3dcut07.gif" width="187" height="196"><img border="0" src="b35doc/english/online/dmoug_c2/images/3dcut08_NLS.gif" width="189" height="252"></td>
+             </tr>
+           </table>
+           </td>
+         </tr>
+         <tr>
+           <td height="48" width="939" colspan="2"><kbd>Note:</kbd> you can swap 
+           from one cutting type to the other directly in the geometry area, all 
+           you need to do is click the section box edges (the arrows are 
+           reversed)<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber29">
+             <tr>
+               <td><img border="0" src="b35doc/english/online/dmoug_c2/images/3dcutreverse01.gif" width="169" height="161"></td>
+               <td><img border="0" src="b35doc/english/online/dmoug_c2/images/3dcutreverse02.gif" width="151" height="146"></td>
+             </tr>
+           </table>
+           </td>
+         </tr>
+         <tr>
+           <td height="16" colspan="2" width="741">Select the <kbd>On the Border</kbd> 
+			behavior using the arrow:<p>
+			<img border="0" src="b35doc/english/online/dmoug_c2/images/db3dcut03NLS.gif" width="337" height="200"></td>
+         </tr>
+         <tr>
+           <td height="125" colspan="2" width="741">
+           <img border="0" src="b35doc/english/online/dmoug_c2/images/3dcuttriangles.gif" width="27" height="27">:
+			cuts the triangles&nbsp;on the selection border within the 
+			cutting box.</p>
+			
+           <img border="0" src="b35doc/english/online/dmoug_c2/images/3dcutkeeptriangles.gif" width="25" height="24">: keeps only the 
+           triangles included within the cutting box.
+           </p>
+           <p><img border="0" src="b35doc/english/online/dmoug_c2/images/3dcutkeeptriangles+.gif" width="26" height="25">: keeps the 
+           triangles included within the box or partially included.</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+		<p class="task">Still in the <kbd>Definition </kbd>tab page, click <kbd>Volume Cut</kbd>
+		<img border="0" src="b35doc/english/online/icons_C2/images/I_SectionCutP2.gif" width="24" height="24"> 
+       in the Visual Feedback area to obtain a section cut.</p>
+		<table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber23" height="383" width="743">
+			<tr>
+				<td width="740" colspan="2">This capability gives you an automatic 
+           visual feedback of what you can get, for instance if you resized the 
+           section box as following:</td>
+			</tr>
+			<tr>
+				<td height="240" width="739" colspan="2">
+				<img border="0" src="b35doc/english/online/dmoug_c2/images/3dcut10.gif" width="206" height="240"><p>
+				<img border="0" src="b35doc/english/online/dmoug_c2/images/3dcut11.gif" width="166" height="191"></td>
+			</tr>
+			<tr>
+				<td width="740" colspan="2">The material is cut away exposing the 
+			cavity of the product. Click <kbd>Volume Cut</kbd>
+				<img border="0" src="b35doc/english/online/icons_C2/images/I_SectionCutP2.gif" width="24" height="24"> 
+           again 
+           to go back to the initial state.</td>
+			</tr>
+			<tr>
+				<td width="33">
+				<img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+				<td width="707"><kbd>Note:</kbd> the volume cut is purely visual and 
+           therefore cannot take into account the <a href="#hj-cut">cutting type</a> (in/out)</td>
+			</tr>
+		</table></li>
+		<li>
+		<p class="task">Click <kbd>Preview </kbd>when satisfied</li>
+		<li>
+		<p class="task">Click <kbd>Save. </kbd>The <kbd>Save As </kbd>dialog box 
+       automatically appears:</p>
+		<table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber20">
+			<tr>
+				<td colspan="2">
+				<ul>
+					<li>Set the Type to<b> .cgr. </b>You can also save your resulting 
+             shape in<a href="page5840.html"> <b>.wrl, .model .stl </b>formats</a></li>
+					<li>Identify the folder in which you want to save the file</li>
+					<li>Enter a file name</li>
+				</ul></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+				<img border="0" src="b35doc/english/online/dmoug_c2/images/dbsaveas3dcut_NLS.gif" width="478" height="305"></td>
+			</tr>
+			<tr>
+				<td>
+				<img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+				<td><kbd>Note:</kbd> clicking <kbd>Save</kbd> keeps the command 
+           active and lets you therefore launch the calculation again if needed. 
+           When satisfied click Save in the <kbd>Save As </kbd>dialog box. Click Close to 
+           exit the dialog box.</td>
+			</tr>
+		</table></li>
+		<li>
+		<p class="task">Click <kbd>Close</kbd></li>
+		<li>
+		<p class="task">In our scenario, we managed the result as an alternate 
+       shape, therefore the 3d cut replaces the original representation:</p>
+		<table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber21">
+			<tr>
+				<td>
+				<img border="0" src="b35doc/english/online/dmoug_c2/images/3dcutalternateshape.gif" width="197" height="221"></td>
+			</tr>
+		</table></li>
+     </ol>
+		<h2><a name="hj-limitations"></a>Limitations<a href="#hj-top"><img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" alt="Top" align="right" width="25" height="17"></a> 
+		</h2>
+		<p>If a surface body intersects the border of the 3D box, then its 
+		edges are lost. Edges are kept only for surface bodies entirely inside 
+		or outside the 3D box.</p>
+		<h3>When the Cuts the triangles option is not selected</h3>
+		<p>The 3D Cut functionality does not relimit the triangles of the initial mesh 
+		intersecting the boundaries of the 3D box. <br>
+		Result: triangles are integrated entirely (or rejected entirely, as 
+		defined by the user.) <br>
+		Note that triangles whose vertices are outside the 3D box are considered totally outside.</p>
+		<table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" id="table1">
+			<tr>
+				<td>
+				<img border="0" src="b35doc/english/online/dmoug_c2/images/3dcutlimitation01.gif" width="322" height="252"></td>
+			</tr>
+			<tr>
+				<td>
+				<img border="0" src="b35doc/english/online/dmoug_c2/images/3dcutlimitation02.gif" width="169" height="210"></td>
+			</tr>
+			<tr>
+				<td>
+				<img border="0" src="b35doc/english/online/dmoug_c2/images/3dcutlimitation03.gif" width="193" height="237"></td>
+			</tr>
+		</table>
+		<h3>When the Cuts the triangles option<img border="0" src="b35doc/english/online/dmoug_c2/images/3dcuttriangles.gif" width="27" height="27"> is selected</h3>
+		<p>Note that the computation time is increased (it can be increased up 
+		to two times that of the previously measured computation time)</p>
+		<h2><a name="hj-moreexamples"></a>Results - Examples</h2>
+		<table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" id="table2">
+			<tr>
+				<td>
+				<img border="0" src="b35doc/english/online/dmoug_c2/images/3dcut12.gif" width="227" height="421"></td>
+				<td>
+				<img border="0" src="b35doc/english/online/dmoug_c2/images/3dcut13.gif" width="209" height="376"></td>
+			</tr>
+			</table>
+		<p>&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="50">
+				<img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td height="50">
+		In the Knowledge Base<br>
+		<br>
+		<a href="#" onClick="OpenLocation(' https://kb.dsxclient.3ds.com/360-mashup-ui/page/document?q=docid:QA00000007042')">
+		A warning message appears when using the 3D Cut command</a></td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2" height="38">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+ <a name="ix-creating::3D Cuts;3D cut, creating;commands::3D Cut"></a>
+
+ </body>
+
+</html>
+

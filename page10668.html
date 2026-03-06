@@ -1,0 +1,187 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Managing AUXVIEW2 Defaults for Migration
+	</title>
+ <style type="text/css">
+ </style>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <script type="text/javascript">
+
+function OpenLocation(link)
+
+{
+
+document.location.href = link;
+
+}
+
+</script>
+
+ </head>
+
+ <body>
+
+ <h1>Managing AUXVIEW2 Defaults for Migration<a name="ix-generative view styles:V4 AUXVIEW2 Defaults to V5;AUXVIEW2 Defaults:manage V5 generative view styles for migration;Drafting::manage generative view styles for migration"></a></h1>
+ <table border="0" cellspacing="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" Width="0">
+   <tr valign="top" border="0">
+     <td valign="top"></td>
+     <td>When migrating AUXVIEW2 views from V4 to V5, there are several things 
+     you need to do to ensure that your migration results will be equivalent to 
+     your AUXVIEW2 defaults.
+     <p>What you need to do depends on whether you want to use generative view 
+     styles or settings (defined via <kbd>Tools &gt; Options</kbd>). </p>
+     <ul>
+       <li>Customize V5 generative view styles XML files: these make it possible 
+       to customize the appearance and behavior of a V5 generative view via a 
+       set of pre-defined parameters and options, and customize V4 to V5 DRAW 
+       settings via <kbd>Tools &gt; Options &gt; Compatibility.</kbd></li>
+     </ul>
+		<p>OR</p>
+     <ul>
+       <li>Customize V5 Drafting settings via <kbd>Tools &gt; Options &gt; 
+       Mechanical Design &gt; Drafting</kbd>.</li>
+     </ul>
+     <p>Generative view styles offer more customization possibilities than 
+     settings.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>This section explains the methodology for managing AUXVIEW2 defaults 
+     for V4 to V5 migration.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+     <td>
+     <h2><font color="#282187">About AUXVIEW2 Defaults Management for V4 to V5 
+     Migration</font></h2>
+     <p>When managing AUXVIEW2 defaults for V4 to V5 migration, you will need to 
+     bear the following information in mind:</p>
+     <ul>
+       <li>It is a CATIA administrator who manages V5 generative view styles 
+       definition.</li>
+       <li>In V5, generative view styles are defined via the Standards Editor:
+       <kbd>Tools &gt; Standards</kbd>, <kbd>generativeparameters </kbd>category.</li>
+       <li>A complete standard definition is stored in a XML file. For example, 
+       DefaultGenerativeStyle.xml defines the default Drafting generative view 
+       styles.</li>
+       <li>In V5, a .CATDrawing uses only one generative view style: when a new 
+       .CATDrawing is created, only one generative view style defined in the 
+       Standards Editor (and stored in a single XML file) can be referenced and 
+       is embedded in the .CATDrawing.</li>
+       <li>Whatever the defaults of the AUXVIEW2 view were prior to being copied 
+       into CATIA Version&nbsp;5, once in V5, they are those defined either in the 
+       selected generative view style or in the settings (<kbd>Tools &gt; Options 
+       &gt; Mechanical Design &gt; Drafting</kbd>).</li>
+     </ul>
+     <p>For more information, refer to the Administration Tasks chapter and to 
+     the Customizing chapter in the <cite>Generative Drafting User's Guide</cite>.</p>
+     <h2><font color="#282187">Referencing the Project File (PRJ)&nbsp;</font></h2>
+     <p>Before starting the migration process, you need to reference in V5 the 
+     project file (PRJ) used to create the V4 2D model. To do this, go to <kbd>
+     Tools &gt; Options &gt; General &gt; Compatibility &gt; V4 Data Reading</kbd> 
+     tab, and fill in the <kbd>PROJECT File Path and DLNAME</kbd> fields.&nbsp;</p>
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1">
+       <tr>
+         <td width="100%">
+         <img border="0" src="b35doc/english/online/intug_c2/images/StandardsForMigration01NLS.gif" width="365" height="66"></td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top"></td>
+     <td>&nbsp;</td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>The PRJ files must be renamed on UNIX before being installed on a 
+     Windows system: all the &quot;&#177;&quot; (plus or minus sign) must be replaced by &quot;_&quot; 
+     (underscore) in PRJ filenames. For example, my&#177;filename.prj on Unix must be 
+     renamed my_filename.prj</td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top" style="height: 109px"></td>
+     <td style="height: 109px">
+     <h2><font color="#282187">Preparing for AUXVIEW2 Migration with Generative 
+     View Styles</font></h2>
+     <p>The procedure below describes what you need to do before migrating 
+     AUXVIEW2 views from V4 to V5 if you use generative view styles:</p>
+     <ol class="task">
+       <li>
+       <p class="task">Start a V5 session. <br>
+       <br>
+       <b>Note:</b> Step 2 must be performed with a session running in 
+       administrator mode, but the following steps can be performed with a 
+       session running in normal mode.<br>
+		</li>
+       <li>
+       <p class="task">Customize the V5 generative view styles XML file that you 
+       want to use&nbsp; when migrating AUXVIEW2 views from V4 to V5. For more 
+       information on customizing generative view styles, refer to the 
+       Administration Tasks chapter in the <cite>Generative Drafting User's 
+       Guide</cite>. </li>
+		<li>
+       <p class="task">Go to <kbd>Tools &gt; Options &gt; Mechanical Design &gt; 
+       Drafting &gt; Administration </kbd>tab and make sure that the <kbd>Prevent 
+       generative view style creation</kbd> setting is not selected.</li>
+		<li>
+       <p class="task">Go to <kbd>Tools &gt; Options &gt; General &gt; Compatibility 
+       &gt; V4/V5 DRAW </kbd>tab, and, from the <kbd>Default generative view style</kbd> 
+       list, select the XML file that you just customized to specify that this 
+       generative view style should be used when migrating AUXVIEW2 views from 
+       V4 to V5. </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>
+     <h2><font color="#282187">Preparing for AUXVIEW2 Migration with Settings</font></h2>
+     <p>The procedure below describes what you need to do before migrating 
+     AUXVIEW2 views from V4 to V5 if you use settings:</p>
+     <ol class="task">
+       <li>
+       <p class="task">Start a V5 session (you do not necessarily need to be 
+       running the session in administrator mode). </li>
+       <li>
+       <p class="task">Go to <kbd>Tools &gt; Options &gt; Mechanical Design &gt; 
+       Drafting</kbd> and on the various tabs, define the settings that you want 
+       to be applied when migrating AUXVIEW2 views from V4 to V5. </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"><br>
+		</td>
+     <td>
+     <span class="blink"><kbd>In the Knowledge Base<br>
+		</kbd><br>
+     For detailed information regarding the parameters that you need to modify 
+		in the generative view styles XML files, refer 
+		<a href="#" onClick="OpenLocation('https://kb.dsxclient.3ds.com/360-mashup-ui/page/document?q=docid:QA00000045167e')">About Managing AUXVIEW2 
+		defaults migration from V4 to higher versions</a></span>.</td>
+   </tr>
+   <tr>
+     <td colspan="2" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p align="center"></p>
+
+ </body>
+
+</html>
+

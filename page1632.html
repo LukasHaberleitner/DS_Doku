@@ -1,0 +1,182 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+<head>
+<meta http-equiv="Content-Language" content="fr">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Current Standard</title>
+
+<script language="VBScript"> 
+<!--
+
+Dim CATIAapp
+Dim BehaviorObj
+Dim IndirectVisionProduct
+Dim ParmNorm  
+
+Dim Driver
+Dim Mirror 
+Dim IndirectVision 
+
+InitializeEnvironment
+
+Sub InitializeEnvironment
+	'On Error Resume Next
+	
+	set CATIAapp= GetObject("", "CATIA.Application")
+	if CATIAapp Is Nothing then 	  
+     Set CATIAapp = CreateObject ("CATIA.Application")
+	end if
+	
+	' recuperation du document 	
+	set CurDocument=CATIAapp.ActiveDocument
+	' recuperation de la selection ( attention on peut la consulter une fois et une fois seulement 
+	set CurSelection=CurDocument.Selection
+	
+	name_doc =CurDocument.Name
+
+	'recuperation du behavior 
+	set BehaviorObj=CurSelection.FindObject("CATIABehavior")  
+	'recuperation de l'objet etendu 
+	set Extension = BehaviorObj.Parent 
+	
+	Set IndirectVisionProduct = Extension.Parent
+	name_product= IndirectVisionProduct.Name 
+
+
+
+	has_a_indirectvision = BehaviorObj.TestInput("IndirectVision")
+	if( has_a_indirectvision ) then 
+		Set Indirectvision = BehaviorObj.GetInput("IndirectVision") 
+	else 
+		msgbox " No IndirectVision retrieved"  
+	end if 
+
+
+	' recuperation du Driver 
+	has_a_driver = BehaviorObj.TestInput("Driver")
+	if( has_a_driver) then 
+		Set Driver = BehaviorObj.GetInput("Driver") 
+	else 
+		msgbox " No Driver retrieved"  
+	end if 
+	' recuperation du External Mirror
+	has_a_mirror = BehaviorObj.TestInput("Mirror") 
+	if( has_a_mirror ) then
+		Set Mirror = BehaviorObj.GetInput("Mirror")
+	else 
+	 	msgbox "No Mirror retrieved " 
+	end if 
+		
+End Sub
+</script>
+</head> 
+<body leftmargin="5" bgcolor="#99CCFF">
+<script language="VBScript"> 
+Sub B1_OnClick 
+
+	'On Error Resume Next
+
+	if( IndirectVision Is Nothing ) then 
+	else
+		Set Parameters0 = IndirectVision.Parameters
+		set NormParm = Parameters0.GetItem("Vision\Legislation")
+		T0.value = NormParm.Value 
+	end if 
+
+	if( Driver Is Nothing ) then 
+	else 
+			Set Parameters1 = Driver.Parameters
+			Set FootAngle  = Parameters1.GetItem("Driver\FootAngle")
+			T2.value = FootAngle.Value 
+			Set L40 = Parameters1.GetItem("Driver\L40")
+			T3.value = L40.Value 
+			Set Driver_XPos = Parameters1.GetItem("Driver\XPosition")
+			T4.value = Driver_Xpos.Value 
+			set Driver_YPos = Parameters1.GetItem("Driver\YPosition")
+			T5.value = Driver_YPos.Value
+			set Driver_ZPos = Parameters1.GetItem("Driver\ZPosition")
+			T6.value = Driver_ZPos.Value 
+	end if  
+	if (Mirror Is Nothing ) then 
+	else 
+			Set Parameters2 	= Mirror.Parameters 
+			Set Radius = Parameters2.GetItem("ExternalMirror\Radius")
+			T8.value = Radius.Value
+			Set Width = Parameters2.GetItem("ExternalMirror\Width") 
+			T9.value = Width.Value 
+			Set MirrorLength = Parameters2.GetItem("ExternalMirror\Length") 
+			T10.value = MirrorLength.Value 
+			Set XPosition = Parameters2.GetItem("ExternalMirror\XPosition") 
+			T11.value = XPosition.Value 
+			Set ZPosition = Parameters2.GetItem("ExternalMirror\ZPosition") 
+			T12.value = ZPosition.Value 
+			Set VerticalAngle = Parameters2.GetItem("ExternalMirror\VerticalAngle") 
+			T13.value = VerticalAngle.Value 
+			Set HorizontalAngle = Parameters2.GetItem("ExternalMirror\HorizontalAngle")  
+			T14.value = HorizontalAngle.Value
+	end if 
+
+	'T0.value = ParmNorm.Value 
+	
+End Sub
+</script>
+<p><b><font size="4">Indirect Vision : Report&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></b><input type="submit" value="Submit" name="B1"><b><font size="4">&nbsp;</font></b><b><font size="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></b></p>
+<hr>
+<p><b>Current Standard</b>&nbsp;&nbsp;&nbsp; <input type="text" name="T0" size="20"></p>
+<hr>
+<p align="left"><u><b><font size="4">Driver </font></b></u></p>
+<ul>
+  <li>
+    <p align="left"><b>L40&nbsp;&nbsp;&nbsp;</b>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+    <input type="text" name="T2" size="20"></li>
+  <li>
+    <p align="left"><b>FootAngle </b><input type="text" name="T3" size="20"></li>
+</ul>
+<blockquote>
+  <p align="left"><b>Position </b></p>
+</blockquote>
+<ul>
+  <li>
+    <p align="left"><b>X&nbsp;&nbsp;&nbsp;&nbsp;</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp; <input type="text" name="T4" size="20"></li>
+  <li>
+    <p align="left"><b>Y&nbsp;&nbsp;</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="text" name="T5" size="20"></li>
+  <li>
+    <p align="left"><b>Z&nbsp;&nbsp;&nbsp;</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp; <input type="text" name="T6" size="20"></li>
+</ul>
+<hr>
+<p align="left"><u><b><font size="4">External Mirror</font></b></u></p>
+<ul>
+  <li>
+    <p align="left">Radius&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" name="T8" size="20"></li>
+  <li>
+    <p align="left">Length&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" name="T9" size="20"></li>
+  <li>
+    <p align="left">Width&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" name="T10" size="20"></li>
+</ul>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>&nbsp;&nbsp; </b> <b>Position</b></p>
+<ul>
+  <li>
+    <p align="left">X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="T11" size="20"></li>
+  <li>
+    <p align="left">Z&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="text" name="T12" size="20"></li>
+</ul>
+<p align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Orientation</b></p>
+<ul>
+  <li>Vertical&nbsp;&nbsp;&nbsp; <input type="text" name="T13" size="20"></li>
+  <li>Horizontal<input type="text" name="T14" size="20"></li>
+</ul>
+<hr>
+<p>&nbsp;</p>
+  <p>
+&nbsp;</p>
+</body>
+</html>
+
+

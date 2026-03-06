@@ -1,0 +1,284 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="2">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Enabling User Access to the Software Over the Network</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style type="text/css">
+.style1 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+ </head>
+
+ <body>
+
+ <h1>Enabling User Access to the Software Over the Network</h1>
+ <table Border="0" CELLSPACING="0" valign="top">
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>
+     <a name="ix-distributing code on UNIX::accessing code over the network">
+     </a>This task explains how to allow end users access to Version 5 over the 
+     network without installing the software on the client. You have two 
+     possibilities. You can:<ul>
+       <li>set up just a runtime environment on each client: each time the 
+       server software is upgraded, all you have to do is recreate a new 
+       environment on each client</li>
+       <li>or, to avoid having to set up a runtime environment on each client, 
+       you can simply mount the server software and runtime environment 
+       directories from the client and run Version 5 using the environment on 
+       the server.</li>
+     </ul>
+     <p>We have chosen the AIX platform for the purposes of this scenario.</p>
+     <p align="center">
+		<img title="" src="b35doc/english/online/basil_c2/images/DistributeUNIX_03_NLS.gif" width="592" height="389" class="style1">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td>When setting up the server you can:
+     <ul>
+       <li>copy all the software into the same folder (as illustrated above)</li>
+       <li>or, given that the software is distributed on several media ( 1, 2 
+       ...), copy the contents of each media into a separate folder for each 
+	   media, 
+       making sure that the name of each folder corresponds to the media number ( 
+       1, 2 ...) etc.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td>
+     <h2><font size="3" color="#282187">Setting Up an Environment on 
+     the Client</font></h2>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td><b>1.</b> Log on as <strong>root </strong>onto the server.<p>The name 
+     of the server, in our example above, is &quot;ravel&quot;. </p>
+     <p>You already installed the software in:</p>
+     <p><code><strong>UNIXInstallPath</strong>/aix_a </code></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td rowspan="1"><b>2.</b> From the server, export the installation 
+     directory (<strong>UNIXInstallPath</strong>) to the client.<p>The directory must 
+     be accessible from the client.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td rowspan="1"><b>3.</b> Log on as <strong>root </strong>onto the client.<p>
+     The name of the client, in our example above, is &quot;chopin&quot;.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td rowspan="1"><b>4.</b> From the client, mount the exported installation 
+     directory (<code><strong>UNIXInstallPath</strong></code>) via NFS.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td rowspan="1"><b>5.</b> Go to the following mounted directory:<p><code>
+     <strong>UNIXInstallPath</strong>/aix_a/code/bin</code>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td rowspan="1"><b>6.</b> Set the path of the installation directory on the 
+     server using the command:<p><code>export PATH=<strong>UNIXInstallPath</strong>/aix_a/code/bin:<strong>UNIXInstallPath</strong>/aix_a/code/command:$PATH
+     </code></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td>The following list contains the variables to modify on each UNIX 
+     system:
+     <p><code>export LIBPATH=<strong>UNIXInstallPath</strong>/aix_a/code/bin (AIX)</code></p>
+     <p>&nbsp;</p>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td>Exporting library paths is required by the <kbd>setcatenv</kbd> command 
+     which creates the environment as explained below.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td rowspan="1"><b>7.</b> Create the following global environment (still as 
+     &quot;root&quot;) using the following command with exactly the syntax indicated, 
+     depending on whether you are running CATIA, ENOVIA DMU Navigator or DELMIA:<p>
+     <a name="ix-setcatenv command"><code></code></a><code>./setcatenv<a name="ix-commands::setcatenv"></a> 
+     -e MyEnvironment -p 
+     <strong>UNIXInstallPath</strong> -d MyEnvDirectory -desktop 
+     yes -new yes -a global -cs MyProductLine</code></p>
+     <p>where &quot;MyEnvironment&quot; is the name of the environment, &quot;MyEnvDirectory&quot; 
+     is the name of the folder containing the environment and &quot;MyProductLine&quot; is 
+     the name of the product line.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td rowspan="1">Running the <kbd>setcatenv</kbd> command as a normal end 
+     user runs successfully, but does <strong>not</strong> create a global 
+     environment.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td><b>8.</b> To register document types on the client desktop, go to the 
+     directory:<p><code>
+     <strong>UNIXInstallPath</strong>/aix_a/code/command </code></p>
+     <p>and run this command:</p>
+     <p><code>./catstart -run &quot;setcatenv -p 
+     <strong>UNIXInstallPath</strong> -e MyEnvironment -d MyEnvDirectory -regserver -cs MyProductLine&quot; -env 
+     MyEnvironment -direnv MyEnvDirectory</code></p>
+     <p>For a description of the <kbd>setcatenv</kbd> and <kbd>delcatenv</kbd> 
+     command syntax for UNIX, refer to <a href="page1183.html">Customizing 
+     Your Environment on UNIX</a>.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td><b>9.</b> If you need access to the communications backbone and 
+     peripheral device broker, the associated port numbers must be set up on the 
+     client.<p>Used to support process interoperability (for example, between 
+     CATIA and DMU), the backbone needs to be set up on each computer running 
+     applications which need to communicate.</p>
+     <p>To set up the ports using the default values:</p>
+     <ol>
+       <li>Go to the following installation directory:<br>
+       <br>
+       <code><strong>UNIXInstallPath</strong>/OS/code/command</code></li>
+       <li>Enter the command:<p><code>./catstart -env MyEnvironment -direnv 
+       MyEnvDirectory -run setV5Ports</code></p>
+       <p>where&nbsp; &quot;OS&quot; is:<ul>
+         <li>aix_a</li>
+			<li><blink>aix_a64</blink></li>
+       </ul>
+       </li>
+     </ol>
+     <p>For more information, refer to <a href="page1215.html#hj-Backbone2">
+     Communications Backbone Files</a>.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td><b>10.</b> Log off the root userid.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td rowspan="1"><b>11.</b> Log on using a normal userid and run a Version 5 
+     session to check your environment has been correctly set up.
+     <p>You can run Version 5 as follows:</p>
+     <ul>
+       <li>double-click the environment icon using the desktop, </li>
+       <li>or, go to the following mounted directory:</li>
+     </ul>
+     <blockquote>
+       <p><code><strong>UNIXInstallPath</strong>/aix_a/code/command </code></p>
+       <p>and enter the command:</p>
+       <p>
+       <span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><code>./catstart </code></span><code>-run CNEXT</code><span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><code> -env MyEnvironment -direnv </code></span><code>
+       MyEnvDirectory </code></p>
+       <p>
+       <span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><code>./catstart -run DMU -env </code></span>
+       <span style="font-family: Arial; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US">
+       <code>MyEnvironment </code></span>
+       <span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><code>&nbsp;-direnv </code></span><code>MyEnvDirectory
+       </code></p>
+       <p>
+       <span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><code>./catstart -run DELMIA -env </code></span>
+       <span style="font-family: Arial; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US">
+       <code>MyEnvironment </code></span>
+       <span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><code>-direnv </code></span><code>MyEnvDirectory </code>
+       </p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle"></td>
+     <td><b>12. </b>To delete this environment, run the command from the same 
+     directory:<p><code>./catstart -run &quot;delcatenv -d MyEnvDirectory
+     <a name="ix-unregserver"></a>-unregserver -cs MyProductLine&quot; -env </code>
+     <span style="font-family: Arial; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US">
+     <code>MyEnvironment </code></span><code>-direnv MyEnvDirectory</code></p>
+     <p><code>./catstart -run &quot;<a name="ix-delcatenv command"></a>delcatenv<a name="ix-commands::delcatenv"></a> 
+     -e </code>
+     <span style="font-family: Arial; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US">
+     <code>MyEnvironment</code></span><code> -d MyEnvDirectory -desktop yes -a 
+     global -cs MyProductLine&quot; -env </code>
+     <span style="font-family: Arial; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US">
+     <code>MyEnvironment </code></span><code>-direnv MyEnvDirectory</code></p>
+     <p>For a description of the setcatenv and delcatenv command syntax for 
+     UNIX, refer to <a href="page1183.html">Customizing Your Environment on 
+     UNIX</a>.</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>
+     <h2><font size="3" color="#282187">Accessing the Software Without 
+     an Environment on the Client</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td><b>1.</b> Log on as <strong>root </strong>onto the server.
+     <p>You already installed the software in:</p>
+     <p><code><strong>UNIXInstallPath</strong>/aix_a</code><p><b>2.</b> From the server, export the following directories 
+     to the client:
+     </p>
+     <ul>
+       <li><code><strong>UNIXInstallPath</strong>/aix_a (installation directory)</code></li>
+       <li><code>/CATEnv (runtime environment directory)</code></li>
+     </ul>
+     <p>Both the installation and runtime environment directories must be 
+     accessible from the client.<p><b>3.</b> Log onto the client as root.</p>
+     <b>4.</b> From the client, mount both exported directories 
+     via NFS.<p><b>5.</b> Go to the following mounted directory:
+     </p>
+     <p><code><strong>UNIXInstallPath</strong>/aix_a/code/command </code>
+     <p><b>6.</b> Log off the root userid.</p>
+     <b>7.</b> Log on using a normal userid and run a Version 5 session.
+     <p>In this case, go to the following mounted directory:</p>
+     <p><code><strong>UNIXInstallPath</strong>/aix_a/code/command </code></p>
+     <p>and enter the command:</p>
+     <p>
+     <span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><code>./catstart -run CNEXT</code></span></p>
+     <p>
+     <span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><code>./catstart -run DMU</code></span></p>
+     <p>
+     <span style="font-family:Arial;mso-bidi-font-family:&quot;Times New Roman&quot;;
+mso-ansi-language:EN-US"><code>./catstart -run DELMIA</code></span></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td>Note that you cannot run Version 5 on the client using the environment 
+     icon using the desktop: no environment exists on the client, therefore 
+     there is no desktop icon.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="2" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

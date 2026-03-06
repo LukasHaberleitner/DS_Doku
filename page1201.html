@@ -1,0 +1,391 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="2">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Setting Up DLNames in Administrator Mode</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Setting Up DLNames in Administrator Mode</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" cellpadding="0">
+   <tr>
+     <td valign="top" height="42" width="34">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td height="42" valign="top" width="740">
+     <a name="ix-DLNames::setting up in administrator mode"></a>This task 
+     explains how to set up and lock DLNames in administrator mode.
+     <p>This allows you to implement a tightly controlled data storage strategy 
+     whereby end users will be able to store data in only those directories 
+     referenced by DLNames.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h2><font color="#282187"><a name="ix-DLNames::overview"></a>A Reminder 
+     about DLNames</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">The Document tab, accessed via the <kbd>Tools &nbsp;&gt;&nbsp; 
+     Options... </kbd>command, lets end users choose the way in which they 
+     access their documents. They set up &quot;document environments&quot; which can be:
+     <ul>
+       <li><b>Folder</b>: using this environment, end users explore the file 
+       tree to read and save their documents anywhere they like and without 
+       restriction</li>
+       <li><b>DLName</b>: using this environment, end users can determine that 
+       their documents will be read from or saved in specific directories only; 
+       they then assign a logical name, referred to as a &quot;DLName&quot;,&nbsp; to each 
+       directory. In this mode, the different file opening and saving commands 
+       only allow end users to access documents in directories referenced by 
+       DLNames. Furthermore, the list of DLNames created can be exported to a 
+       text file for further use, for example the list can be imported by 
+       another end user to save time setting up directories.<br>
+       The advantage for end users is that it provides rapid and convenient 
+       access to document directories, which avoids having to explore the whole 
+       filetree.<br>
+       This is very convenient in organizations where there is only a small 
+       number of end users. But from the point of view of the administrator of a 
+       large site, allowing users to store their documents anywhere can lead to 
+       anarchy.</li>
+     </ul>
+     <p>For a full description of how DLNames are created from an end user point 
+     of view during an interactive session, refer to the description of how 
+     document environments are set in the section &quot;Customizing Settings - 
+     General - Document&quot; in your <i>Infrastructure Users Guide</i>.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h2><font color="#282187"><a name="ix-DLNames::setting up for end users">
+     </a>Phase One: How To Set Up DLNames for Your End Users</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="34">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="832" valign="top"><b>1.</b> Log on as an administrator.<p>You 
+     must belong to the Administrators group, or have the privileges assigned to 
+     the Administrators group.</p>
+     <p>For the purposes of this particular scenario only, you need to log on as 
+     administrator because you are going to modify the default global 
+     environment (<strong>VersionNumber</strong>).</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34">&nbsp;</td>
+     <td rowspan="1" width="832" valign="top"><b>2.</b> Select the <code>
+     Start&nbsp;&gt;&nbsp;Programs&nbsp;&gt;&nbsp;CATIA &nbsp;&gt;&nbsp;Tools&nbsp;&gt;&nbsp;Environment 
+     Editor <strong>VersionNumber</strong></code> command to display the Environment Editor.<p>You will 
+     see an environment with the following name:</p>
+     <p><kbd></kbd><code><strong>CATIAEnvironmentName</strong></code><kbd></kbd></td>
+   </tr>
+   <tr>
+     <td valign="top" width="34">&nbsp;</td>
+     <td width="832" valign="top"><b>3.</b> Double-click the <strong>CATIAEnvironmentName</strong> 
+     environment to display the corresponding environment variables.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34">&nbsp;</td>
+     <td rowspan="1" width="832" valign="top"><b>4.</b> Locate the following 
+     environment variable: <code>CATReferenceSettingPath</code><p>Note that the 
+     default setting for this variable is empty.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34">&nbsp;</td>
+     <td rowspan="1" width="832" valign="top"><b>5.</b> Reset the variable so 
+     that it points to an existing folder, for example:<p><code>
+     <a name="ix-CATReferenceSettingPath variable"></a>CATReferenceSettingPath<a name="ix-environment variables::CATReferenceSettingPath"></a>&nbsp;&nbsp;&nbsp; 
+     E:\users\administrator\LockSettings</code></p>
+     <p>then save your modification, and exit the environment editor. This 
+     folder will contain the setting locks you will create later. The folder 
+     access rights must be set up for read access only for end users, and 
+     read/write for the person creating the setting locks.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34">&nbsp;</td>
+     <td rowspan="1" width="832" valign="top"><b>6.</b> Run a session using the 
+     following command:<p><code><font size="2"><a name="ix-cnext command"></a>
+     <a name="ix-cnext -admin command"></a>cnext -env</font></code>&nbsp; <code><strong>CATIAEnvironmentName</strong></code>     <code>-admin</code><a name="ix-commands::cnext"><code><font size="2"></font></code></a>
+     <font size="2"><code><a name="ix-commands::cnext -admin"></a></code></font>
+     </p>
+     <p>or:</p>
+     <p><font size="3"><code><a name="ix-cnext command"></a></code></font><code>
+     <font size="3"><a name="ix-cnext command"></a></font></code><font size="3">
+     <code><a name="ix-cnext -admin command"></a></code></font><code>cnext 
+     -admin</code><font size="3"><code><a name="ix-commands::cnext"></a>
+     <a name="ix-cnext -admin command"></a></code></font></p>
+     <p>A session is started using the default global environment, and a message 
+     informs you that you are running in administration mode.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34">&nbsp;</td>
+     <td rowspan="1" width="832" valign="top"><b>7.</b> Click OK in the message 
+     box, then select the <kbd>Tools&nbsp;&gt;&nbsp;Options... </kbd>command.<p>The &quot;Options&quot; 
+     dialog box is displayed.&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="41" width="34">&nbsp;</td>
+     <td height="41" valign="top" width="740"><b>8.</b> In the <kbd>General</kbd> 
+     category, click the <kbd>Document</kbd> tab.<p>Note that a lock symbol like 
+     this <img src="b35doc/english/online/basil_c2/images/AdminSettings03.gif" width="20" height="20"> appears opposite each option:</p>
+     <p><img border="0" src="b35doc/english/online/basil_c2/images/dbToolsOptionsDocumentNLS.gif" width="492" height="424"></td>
+   </tr>
+   <tr>
+     <td valign="top" height="41" width="34">&nbsp;</td>
+     <td height="41" width="740" valign="top">
+     <h3><font color="#282187">
+     <a name="ix-DLNames::setting DLName environment as current"></a>Setting the 
+     DLName Environment As Current</font></h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="41" width="34">&nbsp;</td>
+     <td height="41" width="740" valign="top"><b>9.</b> To make the DLName 
+     environment the current document environment, select &quot;DLName&quot; in the 
+     Document Environments column, then select successively the <kbd>Allowed</kbd> 
+     and <kbd>Current</kbd> buttons.
+     <p>DLName is now defined as your current document environment as indicated 
+     by the &quot;Current&quot; value in the State column:</p>
+     <p><img border="0" src="b35doc/english/online/basil_c2/images/dbToolsOptionsDocument04NLS.gif" width="390" height="140"></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h3><font color="#282187"><a name="ix-DLNames::creating"></a>Creating 
+     DLNames</font></h3>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">Now that you have set the DLName environment as your 
+     current environment, you have to create the DLNames you will use.&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><b>10.</b> Click the <kbd>Configure...</kbd> button to 
+     open the Configure dialog box which lets you add or remove DLNames:<p>
+     <img border="0" src="b35doc/english/online/basil_c2/images/dbToolsOptionsDocument01NLS.gif" width="508" height="527"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td valign="top"><b>11.</b> <blink><a name="hj-DLNamesR13"></a></blink>
+     Click the <img border="0" src="b35doc/english/online/basil_c2/images/icon_add.gif" width="18" height="18"> button or right-click 
+     then select the <kbd>New</kbd> command once for each new DLName you want to 
+     create.<p>A default name and a default folder are assigned to each new 
+     DLName as shown below:</p>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/dbToolsOptionsDocument05NLS.gif" width="504" height="92"><br>
+&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td valign="top"><b>12.</b> To customize the DLName, click &quot;DLName1&quot;, then 
+     click again to activate the editor field, type the new name and press the 
+     ENTER key.
+     <p>For example, change the name to &quot;CATParts&quot;:</p>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/dbToolsOptionsDocument10NLS.gif" width="505" height="133"><br>
+&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="top">When creating DLNames, you can also organize them into a 
+     logical tree using Root DLNames. For more details, refer to the section 
+     &quot;Customizing Settings - General - Document&quot; in your <i>Infrastructure Users 
+     Guide</i>.<br>
+&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td valign="top"><b>13.</b> To customize the folders, click C: (Windows) or 
+     /tmp (UNIX) in the appropriate column, then click again to activate the 
+     editor field, type the path of the folder and press the ENTER key.&nbsp;
+     <p>Instead of typing in the editor field, you can also choose a folder by 
+     clicking in the field, and selecting the New contextual command and 
+     selecting the folder using the explorer which is displayed.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32"></td>
+     <td valign="top">Note that you can include system or user-defined variables 
+     in DLNames using the syntax <var>$ {VARIABLE}</var>:<p><u>Example 1</u></p>
+     <p><kbd>C:\users\</kbd><var><kbd>${MODEL}</kbd></var><kbd>\publish </kbd>
+     where&nbsp; <kbd><var>${MODEL} </var></kbd>is a user-defined variable.</p>
+     <p><u>Example 2</u></p>
+     <p><kbd>DLNAME2=</kbd><var><kbd>${</kbd></var><kbd><var>HOME} </var></kbd>
+     where&nbsp; <kbd><var>${HOME} </var></kbd>is equivalent to&nbsp;&nbsp; <kbd>
+     c:\</kbd>&nbsp; on Windows.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><b>14.</b> To lock the DLName for end users, select the 
+     DLName and click the Lock icon.<p>Locking a DLName changes its state from 
+     &quot;Green&quot; to &quot;Orange&quot; (and inversely when you unlock the DLName):</p>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/dbToolsOptionsDocument06NLS.gif" width="504" height="97"><br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">The reason why you would want to lock DLNames is to 
+     restrict end user access to only those folders referenced by DLNames. End 
+     users running Version 5 using the same environment will inherit the locks 
+     you set on DLNames, and will not be able to either modify or remove them.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><b>15.</b> Add another DLName and name it &quot;CATProducts&quot;, 
+     lock it using the same procedure as above, then rename the folders:<p>
+     <img border="1" src="b35doc/english/online/basil_c2/images/dbToolsOptionsDocument07NLS.gif" width="505" height="119"><br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td valign="top">End users will not be able to modify or remove DLNames, 
+     but will still be allowed to add DLNames. If you do not want this to 
+     happen, lock the list by clicking the green lock symbol
+     <img src="b35doc/english/online/basil_c2/images/AdminSettings03.gif" width="20" height="20"> to change it to the orange lock 
+     symbol <img src="b35doc/english/online/basil_c2/images/AdminSettings04.gif" width="21" height="21">. End users will then see the 
+     red lock symbol <img src="b35doc/english/online/basil_c2/images/AdminSettings06.gif" width="17" height="18"> and will not be able 
+     to add DLNames to the list.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><b>16.</b> When finished adding DLNames to your list, you 
+     can then click the <kbd>Export...</kbd>&nbsp; button
+     <img border="0" src="b35doc/english/online/basil_c2/images/icon_export.gif" width="19" height="18"> to save your list of DLNames 
+     as an ASCII .txt file.<p>This is particularly useful when you have a large 
+     number of machines. You can then import the .txt file containing the 
+     DLNames onto all the machines so that end users also inherit the same 
+     DLNames, as described in <a href="page1202.html">Importing 
+     DLName Settings in Batch Mode</a>.</p>
+     <p>You can make as many lists as you like. Whenever you want to use one of 
+     them, just click the <kbd>Import...</kbd> button
+     <img border="0" src="b35doc/english/online/basil_c2/images/icon_import.gif" width="18" height="18"> before selecting a list from 
+     the Import dialog box.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><b>17.</b> Click <kbd>OK</kbd> to close the Configure 
+     dialog box&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top"></td>
+     <td valign="top"><b>18.</b> To force end users to use the DLName strategy 
+     only, make sure that &quot;DLName&quot; is still &quot;Current&quot;, set Folder to &quot;Not 
+     Allowed&quot;, click the lock for the Document Environments, then click <kbd>OK</kbd> 
+     to exit the Document tab.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top">DLNames settings are stored in the settings file: 
+     DLNames.CATSettings.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" colspan="2">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+ <table Border="0" CELLSPACING="1" valign="top" width="100%">
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h2><font color="#282187"><a name="ix-DLNames::perceived by end users"></a>
+     Phase Two: What Your End Users See</font></h2>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">This task describes the effect of setting up and locking 
+     DLNames on the end user environment.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top"><b>1.</b> Log on as an end user, and start a Version 5 
+     session using the normal startup commands, that is, without using the &quot;- 
+     admin&quot; option.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><b>2. </b>Click the Open icon
+     <img border="0" src="b35doc/english/online/icons_C2/images/I_OpenP2.gif" width="24" height="24"> 
+     or select the <kbd>File&nbsp;&gt;&nbsp;Open... </kbd>command.<p>Because your 
+     administrator earlier locked the access to document environment selection, 
+     and forced the DLName document environment, instead of the usual File 
+     Selection dialog box, the following panel opens:</p>
+     <p><img border="0" src="b35doc/english/online/basil_c2/images/dbToolsOptionsDocument08NLS.gif" width="425" height="341"></td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">The &quot;Look in&quot; pulldown list only contains the DLNames you 
+     defined in the previous steps:
+     <ul>
+       <li>CATParts</li>
+       <li>CATProducts.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><b>3.</b> Select the desired File name and type from the 
+     list.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="top"><b>4.</b> Click <kbd>OK</kbd> to open the document.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top">&nbsp;</td>
+     <td valign="top">DLNames are also integrated in the following commands:
+     <ul>
+       <li>File&nbsp;&gt;&nbsp;Save (included Save As, Save All and Save Management)</li>
+       <li>File&nbsp;&gt;&nbsp;Desk</li>
+       <li>File&nbsp;&gt;&nbsp;New from...</li>
+       <li>File&nbsp;&gt;&nbsp;Send To</li>
+       <li>Edit&nbsp;&gt;&nbsp;Links</li>
+       <li>Catalogs</li>
+       <li>Search order (&quot;Other folders&quot; option), etc.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="34">&nbsp;</td>
+     <td width="832" valign="top"><b>5.</b> Select the <kbd>Tools&nbsp;&gt;&nbsp;Options...
+     </kbd>command, then the Document tab in the <kbd>General</kbd> category.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34">&nbsp;</td>
+     <td width="832" valign="top"><b>6.</b> Select the DLName option in the 
+     Document Environment list, then click the Configure... button to display 
+     the Configure dialog box:<p>
+     <img border="1" src="b35doc/english/online/basil_c2/images/dbToolsOptionsDocument09NLS.gif" width="505" height="136"><br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34">&nbsp;</td>
+     <td width="832" valign="top">Note that you cannot delete, modify or rename 
+     any of the DLNames in the list.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="2" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+
+ </body>
+
+</html>
+

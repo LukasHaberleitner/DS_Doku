@@ -1,0 +1,925 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml">
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Running the CATPDMReconcileEV5Batch Batch Process</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none">
+ <style type="text/css">
+.style1 {
+	display: normal;
+	padding-bottom: 0;
+}
+.style2 {
+	color: #000000;
+}
+.style3 {
+	font-weight: normal;
+}
+.style4 {
+	border-style: solid;
+	border-width: 1px;
+}
+.style6 {
+	color: #353A90;
+}
+.style7 {
+	text-decoration: underline;
+	color: teal;
+}
+</style>
+ </head>
+
+ <body>
+
+ <h1>Running the CATPDMReconcileEV5Batch Batch Process
+ <a name="ix-batch processes::CATPDMReconcileEV5Batch"></a></h1>
+ <p></p>
+ <table Border="0" CELLSPACING="3" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="3" height="488" width="961">
+   <tr>
+     <td valign="top" height="60" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top" height="60" style="width: 837px">The reconciliation can be 
+		automated by running the CATPDMReconcileEV5Batch batch process. This 
+		batch is driven via a command line giving as input the root of the 
+		assembly on which the reconciliation will be done. <blink>You can now 
+		execute multiple reconciliations in a single batch.</blink></td>
+   </tr>
+   <tr>
+     <td valign="top" height="60" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" height="60" style="width: 837px">When applying the 
+		reconciliation rules, an attempt will be made to obtain locks for all 
+		objects (instances, parts, documents) that will be modified. If any 
+		locks cannot be obtained (for example, a part may be locked by another 
+		user) a detailed error message will be given. Note that if the Apply 
+		does not succeed, all objects whose locks were obtained by the 
+		reconciliator will be released.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32" style="height: 379px">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top" style="width: 837px; height: 379px;">
+     <ol class="task">
+       <li>
+       <p class="task">To retrieve the help information: <kbd><br>
+       <br>
+       </kbd><code>CATPDMReconcileEV5Batch -help</code></li>
+       <li>
+       <p class="task">To run the reconciliation: <br>
+       <br>
+       CATPDMReconcileEV5Batch -file filename [-structure] [-simul (Execute|Rule|NoRule]] 
+		[-checkDoc numberOfDocs]<br>
+       [-reload docname] [-keepExternal docname] [-publication docname] [-outputFileList] 
+		[-inxml fileName [-completeWithDefaultMapping] [-epexml fileName] [-queryName 
+		queryname] [-xml filename] <br> [-newVersion object] [-newRevision 
+		object] [-forceNewVersion][-forceKeepExternal]<br>
+		[-pvs ExpandCaptureName][-configHandler cfgHandlerName]<br>
+		[-zoneClearance clearanceInMm] [-zoneMode filteringMode] [-zoneFilter 
+		zoneName] <br>
+		[-attributeFilter attAlias attOperator attValue]<br>
+		[-action actionAlias]<br>
+		[-GR globalSetName [globalSetInput] [/filter [filterInput] [/otherFilters]]]<br>
+		[-importInAssembly PRC_Name]<br>
+		[-allByDeltaMode] [-overwriteByDelta PartVersionName] [-newVersionByDelta 
+		PartVersionName]<br>
+		[-lockMgt ReleaseAtSave] [-lockMgt NotToAcquire] [-lockMgt Acquire]<br>
+		[-noDraftingUpdate] [-unlockViews] <br>
+		[-noPartUpdate]<br>
+		<blink>[-batchInput fileName]</blink><br>
+		<blink>[-batchReport fileName]</blink><br>
+		[-server xxx] [-role xxx] [-user xxx] [-pwd xxx] [-spwd xxx]</li>
+     </ol>
+     <p class="task"><br>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="162" width="32"></td>
+     <td valign="top" height="162" style="width: 837px">
+     <h3>Arguments</h3>
+		<h4><font size="2">Connection Information</font></h4>
+		<p>-<strong>server</strong> <kbd>xxx</kbd> : Provide a connection string 
+		describing how to establish a connection to VPDM repository.<br>-<b>role</b> <kbd>
+		xxx</kbd> : Role used for ENOVIA V5 VPM connection.<br>-<b>user</b>
+		<kbd>xxx</kbd> : User for ENOVIA V5 VPM connection.<br>-<b>pwd</b> <kbd>
+		xxx</kbd> : User password for database connection.<br>
+		<strong>-spwd</strong> <kbd>xxx</kbd> : Secure password for database 
+		connection. </p>
+		<h4><font size="2">General Information</font></h4>
+		<p>-<b>help</b> Help<br>
+		-<b>file</b> <kbd>filename</kbd> : Name of the CATIA file to be loaded 
+		and reconciled. Several file statements are possible.<br>
+		<b><a name="new_r16"></a>
+		-checkDoc</b> 
+     	Provide number of documents in the Reconcile session for validation.<br>
+		-<b>xml</b>
+		<kbd>filename</kbd> : Stream Reconciliation session in an XML file.<b><br>
+		-inxml </b>Enables to specify an input EpeXML file to restart the batch 
+		from a previous reconcilation session; this option should be used with -completeWithDefaultMapping 
+		if the XML file does not specify the mapping for all objects.<br>
+		<b>-epexml</b> Enables to generate an EpeXML file that will be used with 
+		option -inxml.<br>
+		-<b>simul</b> <kbd>Execute</kbd>|<kbd>Rule</kbd> : Enable not to execute 
+		Save or Apply in VPDM. <br>
+ <kbd>Execute</kbd> means that reconciliation is applied, but the save is not 
+		done. <br>
+ <kbd>Rule</kbd> means that the mapping and rules are set but neither the 
+		reconciliation is applied nor the save is done. <br>
+ <kbd>NoRule</kbd> means that only reconciliation session creation is done. 
+		<br>
+		-<b>queryName</b> <kbd>queryname</kbd> : Name of the criterion to be 
+		searched (Default is <kbd>Query by object Id</kbd>).<br>
+		<blink><strong>-statistics</strong>: Display execution statistics.<br>
+		<strong>-batchInput</strong>: Enable to provide one or more 
+		reconciliation commands in an XML. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		All these commands will be run in a single batch execution.<br>
+		<strong>-batchReport</strong>: Provide an XML report of execution of all 
+		the reconciliation commands.</blink></p>
+		<p>
+		<font size="2"><span class="style6">Save Options</span></font><p>
+		<strong>-lockMgt</strong> <kbd>ReleaseAtSave</kbd>: Acquires missing 
+		locks on Document Revision, Part Version and Item Instance if not 
+		allocated to another user and released them after Save.<br>
+		<strong>Note: </strong>The
+		<strong>-lockMgt</strong> <kbd>ReleaseAtSave </kbd>argument is 
+		applicable only for those entities that are not yet locked during 
+		reconciliation.<br>
+		<strong>-lockMgt</strong> <kbd>NotToAcquire</kbd>: Forbids lock 
+		acquisition on Document Revision, Part Version and Item Instance. It 
+		could drive to case where save after reconciliation will fail due to 
+		missing locks.<br>
+		<strong>-lockMgt</strong> <kbd>Acquire</kbd>: Acquires missing locks on 
+		Document Revision, Part Version and Item Instance if not allocated to 
+		another user. (Default is Acquire lock management mode).<br>
+		<strong>-noDraftingUpdate </strong>: Prevents the automatic update of 
+		CATDrawings associated to modified parts and modified assemblies (note 
+		that when using this option on modified assemblies, it is strongly 
+		recommended that it only be used on publication exposed CATProducts). 
+		This option can be used when no local updates have been made to the 
+		drawings.<br>
+		<strong><span style="background-position: 0 0">-unlockViews</span></strong><span style="background-position: 0 0">: 
+		Enables unlocking of the drafting views to update on drawings. It is 
+		highly recommended to use this option otherwise locked drafting views 
+		dimension could become isolated and also ghost links are generated.</span><br>
+		<strong>-noPartUpdate: </strong>Enables saving of the Product or Part in 
+		the database before updating it. <br>
+		<br>
+</td>
+   </tr>
+   <tr>
+     <td valign="top" height="129" width="32">
+     </td>
+     <td valign="top" height="129" style="width: 837px"><span class="style6">
+		<font size="2">Configuration and Filtering</font></span><p>-<strong>action 
+		</strong><kbd>actionAlias</kbd>: specifies the identifier of the action 
+		to be used when saving the modifications in ENOVIA V5 VPM.<br>
+		-<strong>configHandler </strong><kbd>CfgHandlerName</kbd>: used to 
+		specify the ID of a configuration handler (already defined in ENOVIA V5 
+		VPM) to be used to filter the structure from ENOVIA V5 VPM. <kbd>
+		CfgHandlerName 
+		</kbd>is the identifier of the configuration handler. This option may be 
+		specified at most one time in one command. <br>
+		-<strong>pvs </strong><kbd>FilterCaptureName</kbd>: used to specify the 
+		ID of of the expand Capture (PVS) to filter assembly structure. This 
+		option is mutually exclusive with other product structure filtering 
+		options.<br>
+		-<strong>zoneClearance 
+		</strong><kbd>clearanceInMm</kbd>: sets the clearance (in millimeters) 
+		to be used in a volume filter on the ENOVIA V5 VPM product structure. 
+		This option may be specified at most one time in one command.<br>
+		-<strong>zoneMode </strong><kbd>filteringMode</kbd>: sets the volume 
+		filter mode to be used in a zone filter on the ENOVIA V5 VPM product 
+		structure. Values can be <kbd>FullyIn</kbd>,<kbd> FullyOut</kbd>,<kbd> 
+		PartlyIn and PartlyOut</kbd>. <kbd>PartlyIn </kbd>is the default value. 
+		This option may be specified at most one time in one command.<br>
+		-<strong>zoneFilter 
+		</strong><kbd>zoneName</kbd>: <kbd>zoneName </kbd>is<kbd>
+		</kbd>the identifier of a single zone (already defined in ENOVIA V5 VPM) 
+		to be used in a zone filter on the ENOVIA V5 VPM product structure. This 
+		option may be specified more than once in one command.<br>
+		-<strong>attributeFilter
+		</strong><kbd>attName</kbd>,<kbd> attOperator</kbd>,<kbd> 
+		attValue</kbd> : used to specify the criteria to be used in an attribute 
+		filter applied to the ENOVIA V5 VPM product structure.<kbd> 
+		attName </kbd>is the identifier of an attribute of an instance or part 
+		reference. <kbd>attOperator </kbd>is the operator to be used in the 
+		filter predicate. <kbd>attValue </kbd>is the attribute value to be used. 
+		This option may be specified more than once in one command. attOperator 
+		can have the following values: LIKE, EQ (=), NOTLIKE, NOTEQ (!=), GT ( 
+		&gt;), GTEQ (&gt;=), LT (&lt;), LTEQ (&lt;=).</p></td>
+   </tr>
+   <tr>
+     <td valign="top" height="162" width="32"></td>
+     <td valign="top" height="162" style="width: 837px">
+		<h4><font size="2">Rule Management</font></h4>
+		<p>-<b>reload</b> <kbd>docname</kbd> : Enable to set rule to Reload 
+		instead of Overwrite for an object with a specified name. Several reload 
+		statements are possible.<br>
+		<strong>-reload</strong> <kbd>PartName</kbd> : Enable to set <kbd>
+		Reload from VPDM</kbd> rule instead of <kbd>Overwrite</kbd> rule for an 
+		object with a specified name. <br>
+		Several reload statements are possible.<br>
+		-<b>keepExternal</b> <kbd>docname</kbd> : Enable to set rule to Keep as 
+		External reference for an unloaded document. Several keepExternal 
+		statements are possible. <br>
+		-<b>structure</b> : Enable to switch from a full document Publication 
+		Exposed to a mode where CATProducts are save in Structure Exposed. <br>
+     	-<b>publication</b> <kbd>docname</kbd> : Enable to set an included 
+		CATProduct document to be Publication Exposed when the main CATProduct 
+		document is in Structure Exposed mode. (only possible when -structure 
+		parameter is used). <br>
+		-<b>newVersion </b><kbd>object </kbd>: <kbd>object </kbd>can either be 
+		the name of a document or a part version. When a document is specified 
+		(for example PartA.CATPart) the New Version rule will be set on the 
+		publication exposed CATPart. When a part version is specified, the New 
+		Version rule will be set on all eligible mapped objects under the 
+		specified part version. Several new version statements can be issued in 
+		one command.<br>
+		-<b>newRevision </b>
+		<kbd>docName </kbd>: sets the new revision rule on the specified 
+		document. Several new revision statements can be issued in one command.<br>
+		-<b>forceNewVersion</b>: results in all documents (for example, 
+		CATDrawings) being saved as new revisions and all publication exposed 
+		CATProducts and CATParts being saved as new versions.<br>
+		-<b>forceKeepExternal</b>: force usage of Keep as External rule for 
+		broken link (document not found) where query return no document.<strong><br>
+		-allByDeltaMode</strong>: Enables to set rule to Overwrite by Delta for 
+		all mapped Part or Product in structure exposed instead of Overwrite. 
+		The <strong>-allByDeltaMode </strong>can also be applied to both 
+		Overwrite as well as New Version rule. <br>
+		<strong>-overwriteByDelta </strong><kbd>PartVersionNumber</kbd>: Enables 
+		to set rule to Overwrite by Delta instead of Overwrite for a part or a 
+		product in structure exposed. Several -overwriteByDelta statements are 
+		possible.<br>
+		<strong>-newVersionByDelta </strong><kbd>PartVersionNumber</kbd>: 
+		Enables to set rule to New Version By Delta for a part or product. in 
+		structure exposed.<br>
+		Several -newVersionByDelta statements are possible.<br>
+		-<strong>GR </strong><kbd>globalSet [globalSetInput] [/filter [filterInput] 
+		[/otherFilters]]</kbd>: used to run a global set with a filter.
+		<kbd>globalSet </kbd>is the name of the global set, <kbd>
+		globalSetInput </kbd>is any input parameters that are used with the 
+		global set, <kbd>/filter </kbd>allows you to apply a filter (SearchNode 
+		or custom) to select objects for the global set, <kbd>filterInput </kbd>
+		is any input parameters that are used with the filter and <kbd>/otherFilters</kbd>
+		<ul>
+				<li>The mapping may not be complete when using global sets, so 
+				the -completeWithDefaultMapping option should be used to 
+				complete the mapping. To reinforce this, when using global sets 
+				if -completeWithDefaultMapping is not used the following command 
+				line options will be ignored: -queryName QueryName, -structure, 
+				-publication docName, -reload docName, -keepExternal docName, -forceKeepExternal, 
+				-newVersion object, -newRevision docName, -forceNewVersion.</li>
+				<li>If the global rule encounters an error, the batch will 
+				continue if the error is not a fatal error. For all default 
+				global rules, the errors are not fatal and if encountered a 
+				messeage will be given and the global rule will continue on to 
+				the next object.<br>
+</li>
+		</ul>
+		<table border="1" id="table3" cellspacing="0" cellpadding="0" bordercolor="#FFFFFF">
+				<tr>
+						<td class="code"><b>Global Set</b></td>
+						<td class="code" style="width: 176px"><b>Parameter</b></td>
+						<td class="code"><b>Meaning</b></td>
+						<td class="code"><b>Values</b></td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2" width="0" height="0"><b>New</b></td>
+						<td bgcolor="#F2F2F2" height="0" style="width: 176px">
+						forceNew</td>
+						<td bgcolor="#F2F2F2" width="0" height="0">force even on 
+						mapped objects</td>
+						<td bgcolor="#F2F2F2" width="0" height="0">YES (or TRUE)<br>
+						NO (or FALSE)<p>NO is the default.</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>Query</b></td>
+						<td bgcolor="#F2F2F2" style="width: 176px">queryName</td>
+						<td bgcolor="#F2F2F2">query name</td>
+						<td bgcolor="#F2F2F2">Name of query (as displayed in the 
+						reconciliater panel)</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"></td>
+						<td bgcolor="#F2F2F2" style="width: 176px">
+						skipWhenMapped</td>
+						<td bgcolor="#F2F2F2">skip or not already mapped objects</td>
+						<td bgcolor="#F2F2F2">YES (or TRUE)<br>
+						NO (or FALSE)<p>NO is the default.</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"></td>
+						<td bgcolor="#F2F2F2" style="width: 176px">implicitRule</td>
+						<td bgcolor="#F2F2F2">the rule of all objects that are 
+						mapped is set to Overwrite and all objects that are not 
+						mapped is set to New.</td>
+						<td bgcolor="#F2F2F2">YES (or TRUE)<br>
+						NO (or FALSE)<p>YES is the default.</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>StructureExposed</b></td>
+						<td bgcolor="#F2F2F2" style="width: 176px">No parameters</td>
+						<td bgcolor="#F2F2F2"></td>
+						<td bgcolor="#F2F2F2"></td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>PublicationExposed</b></td>
+						<td bgcolor="#F2F2F2" style="width: 176px">No parameters</td>
+						<td bgcolor="#F2F2F2"></td>
+						<td bgcolor="#F2F2F2"></td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>Overwrite</b></td>
+						<td bgcolor="#F2F2F2" style="width: 176px">
+						forceOverwrite</td>
+						<td bgcolor="#F2F2F2">force overwrite even on mapped 
+						objects</td>
+						<td bgcolor="#F2F2F2">YES (or TRUE)<br>
+						NO (or FALSE)<p>NO is the default.</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>NewVersion</b></td>
+						<td bgcolor="#F2F2F2" style="width: 176px">
+						forceNewVersion</td>
+						<td bgcolor="#F2F2F2">all objects, even those with rules 
+						already defined on them, will be set to New Version, if 
+						possible.</td>
+						<td bgcolor="#F2F2F2">YES (or TRUE)<br>
+						NO (or FALSE)<p>NO is the default.</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"></td>
+						<td bgcolor="#F2F2F2" style="width: 176px">
+						onlyOnDocuments</td>
+						<td bgcolor="#F2F2F2">version only part version of the 
+						CATPart documents</td>
+						<td bgcolor="#F2F2F2">YES (or TRUE)<br>
+						NO (or FALSE)<p>NO is the default.</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>Reload</b></td>
+						<td bgcolor="#F2F2F2" style="width: 176px">forceReload</td>
+						<td bgcolor="#F2F2F2">force reload even on mapped 
+						objects</td>
+						<td bgcolor="#F2F2F2">YES (or TRUE)<br>
+						NO (or FALSE)<p>NO is the default.</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>NewRevision</b></td>
+						<td bgcolor="#F2F2F2" style="width: 176px">
+						forceNewRevision</td>
+						<td bgcolor="#F2F2F2">force new revision even on mapped 
+						objects</td>
+						<td bgcolor="#F2F2F2">YES (or TRUE)<br>
+						NO (or FALSE)<p>NO is the default.</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>KeepExternal</b></td>
+						<td bgcolor="#F2F2F2" style="width: 176px">
+						forceKeepExternal</td>
+						<td bgcolor="#F2F2F2">force keep external even on mapped 
+						objects</td>
+						<td bgcolor="#F2F2F2">YES (or TRUE)<br>
+						NO (or FALSE)<p>NO is the default.</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2" rowspan="3"><strong>MagicRecon</strong></td>
+						<td bgcolor="#F2F2F2" style="width: 176px">
+						forcePersistency&nbsp; [boolean]</td>
+						<td bgcolor="#F2F2F2">force the persistency even if 
+						already applied on object. (false means we will keep 
+						existing mapping, if any.) If forcePersistency is TRUE 
+						then ForceMapping will be consider as a TRUE as change 
+						in persistency will lead to unmapping the object. </td>
+						<td bgcolor="#F2F2F2">YES (or TRUE)<br>
+						NO (or FALSE)<p>YES is the default.</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2" style="width: 176px">forceMapping&nbsp; 
+						[boolean]</td>
+						<td bgcolor="#F2F2F2">force the automatic mapping even 
+						if already applied on object. (false means we will keep 
+						existing mapping, if any.) </td>
+						<td bgcolor="#F2F2F2">YES (or TRUE)<br>
+						NO (or FALSE<p>YES is the default.</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2" style="width: 176px">forceRule [boolean] </td>
+						<td bgcolor="#F2F2F2">force the automatic application of 
+						rule if already applied on object (false means we will 
+						keep selected rule, if any.) </td>
+						<td bgcolor="#F2F2F2">YES (or TRUE)<br>
+						NO (or FALSE)<p>YES is the default.</td>
+				</tr>
+		</table>
+		<p>&nbsp;</p>
+		<table border="1" id="table2" cellspacing="0" cellpadding="0" bordercolor="#FFFFFF">
+				<tr>
+						<td class="code"><b>SearchNode Filter Inputs</b></td>
+						<td class="code"><b>Availability</b></td>
+						<td class="code"><b>Signification</b></td>
+						<td class="code"><b>Values</b></td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>Type</b></td>
+						<td bgcolor="#F2F2F2">&nbsp;</td>
+						<td bgcolor="#F2F2F2">The Scm object type</td>
+						<td bgcolor="#F2F2F2">ANY, PART, ANYDOC, DOC, PROXYDOC</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>DOCTYPE</b></td>
+						<td bgcolor="#F2F2F2">Only available if TYPE is ANYDOC, 
+						DOC or PROXYDOC</td>
+						<td bgcolor="#F2F2F2">The extension of document</td>
+						<td bgcolor="#F2F2F2">Any string (reg exp)</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>SUBTREE</b></td>
+						<td bgcolor="#F2F2F2"></td>
+						<td bgcolor="#F2F2F2">Name of the Scm object considered 
+						as root of the tree</td>
+						<td bgcolor="#F2F2F2">Any string</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>NAME</b></td>
+						<td bgcolor="#F2F2F2"></td>
+						<td bgcolor="#F2F2F2">Name of Scm object</td>
+						<td bgcolor="#F2F2F2">Any string (reg exp)</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>FILENAME</b></td>
+						<td bgcolor="#F2F2F2">Only available if TYPE is ANYDOC, 
+						DOC or PROXYDOC</td>
+						<td bgcolor="#F2F2F2">Name of document file </td>
+						<td bgcolor="#F2F2F2">Any string (reg exp)</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>STATE</b></td>
+						<td bgcolor="#F2F2F2">&nbsp;</td>
+						<td bgcolor="#F2F2F2">Status (Mapped/Not mapped)</td>
+						<td bgcolor="#F2F2F2">ANY, MAPPED, NOTMAPPED</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>MODE</b></td>
+						<td bgcolor="#F2F2F2">&nbsp;</td>
+						<td bgcolor="#F2F2F2">Exposition mode</td>
+						<td bgcolor="#F2F2F2">ANY, PUBEXP, STRUCTEXP</td>
+				</tr>
+				<tr>
+						<td bgcolor="#F2F2F2"><b>%ATTRNAME%</b></td>
+						<td bgcolor="#F2F2F2">&nbsp;</td>
+						<td bgcolor="#F2F2F2">Attr Name and Value. Based on 
+						RegExp.<br>
+						%ATTRNAME% token to be replaced by real display name 
+						(NLS) of the attribute (for instance &#8220;Part Version&#8221;)</td>
+						<td bgcolor="#F2F2F2">Any string (reg exp)</td>
+				</tr>
+				</table>
+		<p><kbd>-outputFileList : </kbd>Enables to define the file path of the 
+		output file containing the files that will be reconciled.<p>Filter 
+		algorithm locates all the objects of the Reconcile Session that 
+		corresponds to the criteria given in the list below:<ul>
+			<li><kbd>Type</kbd><span class="style1">&nbsp;Criterion: Corresponds to 
+			the type of the object to locate. The value is <kbd>ANY</kbd></span><span class="style1">, 
+			if the criterion is not set. Similarly, for Part Version the value 
+			is <kbd>PART</kbd></span><span class="style1">, for documents <kbd>
+			ANYDOC</kbd></span><span class="style1">, for document loaded in 
+			memory <kbd>DOC</kbd></span><span class="style1"> 
+			and for document pointed through broken links the value is <kbd>
+			PROXYDOC</kbd></span>.</li>
+			
+			<li><kbd>DOCTYPE</kbd> Criterion: For filtering of document 
+			extension, the values set are <kbd>ANYDOC</kbd>, <kbd>DOC</kbd> or
+			<kbd>PROXYDOC</kbd>. If the value is ANY, all the document 
+			extensions are accepted. </li>
+			
+			<li><kbd>MODE</kbd>Criterion: Corresponds to the exposition of the 
+			object to locate. The value is either <kbd>STRUCTEXP</kbd> or <kbd>
+			PUBEXP</kbd> and 
+			<kbd>ANY</kbd>, if the criterion is not set.</li>
+			
+			<li><kbd>State</kbd> Criterion: Corresponds to the status of the 
+			object to locate. The value is <kbd>ANY</kbd>, if the criterion is 
+			not set. Similarly, for objects only mapped to a PDM object, the 
+			value is <kbd>MAPPED</kbd> and for only unmapped objects the value 
+			is <kbd>NOTMAPPED</kbd>.</li>
+			
+			<li><kbd>Name</kbd> Criterion: Corresponds to the name of the object 
+			as it appears in CATIA view.</li>
+			
+			<li><kbd>Attribute</kbd>Condition: Corresponds to the condition on 
+			attributes of the ScmObject.&nbsp; Attribute refers to CV5 attributes and 
+			for mapped objects PLM attributes.</li>
+			</ul>
+		<p style="width: 860px">
+		<strong>-importInAssembly</strong> 
+		: Enable to define the name of the product to be&nbsp;used to import 
+		sub-assembly.<br>
+		This command enables you to reroute the assembly drawing on Product Root 
+		Class. Following reconciliation, the drawing is linked to the assembly 
+		in context of the PRC apart from being linked to assembly reference. 
+		Therefore, if any modification is performed on the assembly instance or 
+		if the assembly instance is deleted with regards to PRC, there will be 
+		an impact on the drawings associated with it. <br>
+		The diagram below illustrates the impact on imported drawings: <br>
+		<br>
+		<img title="" src="b35doc/english/online/wpeug_c2/images/importdrawingsNLS.gif" width="559" height="423" class="style4"><br>
+		<br>
+		</p>
+</td>
+   </tr>
+   <tr>
+     <td valign="top" height="20" width="32">
+     </td>
+     <td valign="top" height="20" style="width: 837px">Building the 
+		reconciliation session from information given in an input XML file 
+		enables the user to explicitly indicate which rule and mapping will be 
+		applied to each object to be reconciled.<p>The basic scenario is as 
+		follows:</p>
+     <blockquote>
+       <ul>
+         <li>First the batch user runs a reconciliation in simulation mode 
+			(simulation mode is specified using the <br>
+         option <kbd>-simul</kbd> on the batch command line) and using the 
+			command line parameter <kbd>-epexml</kbd> so that the batch will 
+			generate an XML file (called EpeXML file) of the reconciliation 
+			session state. This XML file will be used as a pre-valuated template 
+			in the ensuing steps.</li>
+         <li>The user will eventually have to complete the generated EpeXML file 
+			to resolve those ambiguities that were not resolved by the 
+			simulation (e.g. if the query returned several results, the mapping 
+			must be completed by hand). The user can also modify the EpeXML file 
+			to explicitly indicate the rule and mapping to be applied to a given 
+			object.</li>
+         <li>Then using the completed EpeXML file, the user reruns the 
+			reconciliation batch with the command line parameter <kbd>-inxml</kbd>.</li>
+         <li>The batch can be rerun multiple times using the same EpeXML file 
+			with <kbd>-inxml</kbd> command line parameter.</li>
+       </ul>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="20" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" height="20" style="width: 837px"><blink>
+     The new XML file provided by <kbd>&#8211;batchInput</kbd> keyword manages the specifications 
+		on reconciled data without replacing the <span lang="EN-GB">connection parameters</span>.
+		
+		<span lang="EN-IN" style="mso-ansi-language:EN-IN;mso-bidi-font-weight:
+bold">These XMLs are validated against the XML schema (XSD) provided in </span><span lang="EN-IN">
+		<span style="mso-spacerun:yes">&nbsp;</span></span><span lang="EN-GB" style="mso-bidi-font-weight: normal"><code>..\</code></span><span lang="EN-IN" style="mso-ansi-language:EN-IN"><code>reffiles\SuppChain</code></span><span lang="EN-IN" style="mso-ansi-language:EN-IN;mso-bidi-font-weight:bold">.<br>
+		As the batch keywords varies from one PDM to another PDM, the XML 
+		provided after <kbd>batchInput</kbd> &nbsp;is PDM dependant and must refer to 
+		the corresponding XSD For EV5, means input XML must be compliant with
+		<kbd>CATPDMReconcileEV5Batch.xsd</kbd> (contains following tag <kbd>
+		xsi:SchemaLocation=&quot;CATPDMReconcileEV5Batch.xsd&quot;</kbd>).<br>
+&nbsp;<br>
+		The output XML
+		file contains all the input 
+		arguments in addition to the attributes like RC= &quot;S_OK|E_FAIL&quot;. This 
+		XML file either adds some new tag to report the return code of the 
+		execution for each reconciliation session or lists the error messages 
+		raised during execution.</span><b><i><span lang="EN-IN" style="color:red;mso-ansi-language:EN-IN"><span style="text-underline: single;" class="style7"></span></span></i></b><br>
+		<br>
+		Here, 
+		is an example <span lang="EN-IN">the XML file for ENOVIA V5:
+		<a href="b35doc/english/online/wpeug_c2/samples/CATPDMReconcileBatchEV5.xml">CATPDMReconcileEV5Batch.xml</a></span></blink><br>
+		<br>
+		<blink>You can customize the above generated output xml file to use it 
+		as input xml file just like you use it in old keyword manner. To do this, you have to 
+		remove the extra information tags present in output xml file like Return code and Error Messages 
+		(and possibly batchReport file Name) raised during 
+		execution (if any). Now, this xml file can be reused as input xml file.</blink></td>
+   </tr>
+   <tr>
+     <td valign="top" height="20" width="32"></td>
+     <td valign="top" height="20" style="width: 837px">
+     <h3>Examples</h3>
+     <p>When running batches, you must always:</p>
+     <ul>
+       <li>use the command <kbd>catstart</kbd> </li>
+       <li>the catstart environment (option <kbd>-env</kbd>) to be used is the 
+       same as the environment used with VPM Navigator.</li>
+     </ul>
+     <p>For more details, see the <i>Infrastructure Guide, Basic Tasks, Starting 
+     a Session on Windows.</i></p>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p><code>set CNEXTOUTPUT=E:\tmp\trace.txt<br>
+           catstart -run &quot;CATPDMReconcileEV5Batch -file \&quot;E:\DataREC\RECV5_TEST1rootprc.CATProduct\&quot; 
+           -structure -queryName \&quot;Query by object Id\&quot; -user odtitp -pwd xxxxx 
+           -role VPMADMIN.ADMIN.DEFAULT -server \&quot;servername:portnumber\&quot;&quot;</code></p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p></p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <ol class="task">
+		<li>
+		<p class="task">Reconciliation of an assembly</p>
+		<p class="task">Here is an example of the command line to use to reconcile an 
+           assembly RECV5_TEST1rootprc.CATProduct:</p>
+		<p class="task"><code>set CNEXTOUTPUT=E:\tmp\trace.txt<br>CATPDMReconcileEV5Batch -file E:\DataREC\RECV5_TEST1rootprc.CATProduct 
+           -structure queryName &quot;Query by object Id&quot; -user odtitp <span style="background-position: 0 0"><font face="Courier New">-spwd xxxxx</font></span> 
+           -role VPMADMIN.ADMIN.DEFAULT -server &quot;xxxxxxxxx:nnnn&quot;
+		</code>
+		</p></li>
+		<li>
+		<p class="task">Reconciliation with reload of CATParts</p>
+		<p class="task">Here is an example of the command line to use to reconcile an 
+           assembly RECV5_TEST1rootprc.CATProduct containing two CATParts 
+           RECV5_TESTPART1.CATPart and RECV5_TESTPART2.CATPart: </p>
+		<p class="task"><code>CATPDMReconcileEV5Batch -file E:\DataREC\RECV5_TEST1rootprc.CATProduct 
+           -queryName &quot;Query by object Id&quot; -reload RECV5_TESTPART1.CATPart 
+           -reload RECV5_TESTPART2.CATPart </code></p></li>
+		<li>
+		<p class="task">Reconciliation with sub-products as publication exposed</p>
+		<p class="task">Here is an example of the command line to use to reconcile an 
+           assembly RECV5_TEST1rootprc.CATProduct containing two sub-product 
+           RECV5_TEST1prd1.CATProduct and RECV5_TEST1prd2.CATProduct: </p>
+		<p class="task"><code>CATPDMReconcileEV5Batch -file E:\DataREC\RECV5_TEST1rootprc.CATProduct 
+           -queryName &quot;Query by object Id&quot; -publication 
+           RECV5_TEST1prd1.CATProduct -publication RECV5_TEST1prd1.CATProduct
+		</code></p></li>
+		<li>
+		<p class="task">Reconciliation with CATParts as KeepExternal</p>
+		<p class="task">Here is an example of the command line to use to reconcile an 
+           assembly RECV5_TEST1rootprc.CATProduct containing two CATParts 
+           RECV5_TESTPART1.CATPart and RECV5_TESTPART2.CATPart that are missing 
+           (broken link): </p>
+		<p class="task"><code>CATPDMReconcileEV5Batch -file E:\DataREC\RECV5_TEST1rootprc.CATProduct 
+           -queryName &quot;Query by object Id&quot; -keepExternal RECV5_TESTPART1.CATPart 
+           -keepExternal RECV5_TESTPART2.CATPart </code></p></li>
+		<li>
+		<p class="task">Reconciliation with CATParts when the Part Number is different from 
+       the file name</p>
+		<p class="task">Here is an example of the command line to use to reconcile an 
+           assembly RECV5_TEST1rootprc.CATProduct containing two CATParts 
+           RECV5_TESTPART1.CATPart and RECV5_TESTPART2.CATPart when the part 
+           number is not equal to the file name. The queries <i>Query by Object 
+           Id</i> and <i>Easy Query</i> will failed in this case, the correct 
+           query to use is <i>Query Document by Part Id</i>. </p>
+		<p class="task"><code>CATPDMReconcileEV5Batch -file E:\DataREC\RECV5_TEST1rootprc.CATProduct 
+           -queryName &quot;Query Document by Part Id&quot;</code></p></li>
+       <li><p class="task">Generating an EpeXML file with a reconciliator batch 
+       simulation<p class="task">To generate an EpeXML based on a workpackage 
+       composed of e:\DataREC\RECV5_drawing.CATDrawing and e:\DataREC\RECV5rootprc.CATProduct, 
+       the command line is: </p>
+       <p><code>CATPDMReconcileEV5Batch -file &quot;e:\DataREC\RECV5_drawing.CATDrawing&quot;
+       <br>
+       -file &quot;e:\DataREC\RECV5rootprc.CATProduct&quot; <br>
+       -structure -queryName &quot;Query by object Id&quot; -simul Rule <br>
+       -epexml &quot;e:\tmp\XMLSessionEpe.xml&quot;</code></p></li>
+       <li><p class="task">Rerunning a session using an EpeXML file<p class="task">The 
+       previously generated and modified EpeXML file can be used to rerun the 
+       session:</p>
+       <p><code>CATPDMReconcileEV5Batch -file &quot;e:\DataREC\RECV5_drawing.CATDrawing&quot;
+       <br>
+       -file &quot;e:\DataREC\RECV5rootprc.CATProduct&quot; <br>
+       -inxml &quot;e:\tmp\XMLSessionEpe.xml&quot;</code></p></li>
+     	<li>
+		<p class="task">Reconciliation of an assembly with two leaf CATParts, one to 
+		be saved to ENOVA V5 VPM as new version and the other as new revision 
+		(Note that saving as new version will version the part and revision the 
+		corresponding geometry document)</p>
+		<p class="task">Here is an example of the command line to use to reconcile an 
+           assembly RECV5_TEST1rootprc.CATProduct containing two CATParts 
+           RECV5_TESTPART1.CATPart and RECV5_TESTPART2.CATPart. : 
+		</p>
+		<p class="task"><code>CATPDMReconcileEV5Batch -file E:\DataREC\RECV5_TEST1rootprc.CATProduct 
+           -queryName &quot;Query by object Id&quot; -newVersion RECV5_TESTPART1.CATPart
+		<br>-newRevision RECV5_TESTPART2.CATPart </code></p>
+     	</li>
+     	<li><p class="task">
+		Reconciliation of an assembly with two leaf CATParts and a CATDrawing 
+		document<br>
+		This example uses the -forceNewVersion to create new versions of the 
+		leaf parts (which also created new revisions of their corresponding 
+		CATPart documents) and a new revision of the CATDrawing.<br>
+		<br>
+		<code>CATPDMReconcileEV5Batch -file E:\DataREC\RECV5_TEST1rootprc.CATProduct 
+           -queryName &quot;Query by object Id&quot; -forceNewVersion</code></li>
+		<li><p class="task">
+		Reconciliation when configured data with a filter set was sent to 
+		supplier.<br>
+		This example will filter the ENOVIA V5 VPM structure with the 
+		configuration filter contained in the configuration handler, cfgHdlr1. 
+		The modifications by the supplier will be recorded using the action, 
+		SupplierChgAction.<kbd><br>
+		</kbd>When you are saving configured parts, the <kbd>Create configured 
+		part references </kbd>portal setting in VPM Product Editor Products may need to be set to 
+		true if you need any new parts to be created as configured. <kbd><br>
+		</kbd><code>CATPDMReconcileEV5Batch -file E:\DataREC\RECV5_TEST1rootprc.CATProduct 
+		-structure queryName &quot;Query by object Id&quot; <br>
+		-configHandler cfgHdlr1 -action SupplierChgAction -user odtitp -pwd 
+		xxxxx -role VPMADMIN.ADMIN.DEFAULT -server &quot;xxxxxxxxx:nnnn&quot;
+		</code></li>
+		<li><p class="task">
+		Reconciliation when expand capture (PVS) data with filter set is sent to 
+		supplier. The example is given below:<br>
+		<code>CATPDMReconcileEV5Batch -file C:\Documents and Settings\xhq\Desktop\Supplier1\PVSProd1.CATProduct 
+		-structure -pvs PVSProd1_PVS -queryName Easy Query -user xhq -pwd xhq 
+		-role VPMADMIN.ADMIN.DEFAULT -server aix51plp:9566 </code></li>
+		<li>
+		<p class="task">
+		Reconciliation when data with a volume filter set was sent to 
+		supplier. Zone clearance of 1mm is set, zone mode is fully in, and 2 
+		zones are set.<br>
+		This example will filter the ENOVIA V5 VPM structure with the volume 
+		filter used to filter the supplier data. <kbd><br>
+		</kbd> <code>CATPDMReconcileEV5Batch -file E:\DataREC\RECV5_TEST1rootprc.CATProduct 
+		-structure queryName &quot;Query by object Id&quot; <br>
+		-zoneClearance 1 -zoneMode FullyIn -zoneFilter zoneX 
+		-zoneFilter zoneY -user odtitp 
+		<span style="background-position: 0 0"><font face="Courier New">-spwd xxxxx</font></span> -role 
+		VPMADMIN.ADMIN.DEFAULT -server &quot;xxxxxxxxx:nnnn&quot;</code></li>
+		<li><p class="task">
+		Reconciliation when data with an attribute filter set was sent to 
+		supplier.<kbd><br>
+		</kbd>This example will filter the ENOVIA V5 VPM structure with the 
+		attribute filter used to filter the supplier data. <kbd><br>
+		</kbd> <code>CATPDMReconcileEV5Batch -file E:\DataREC\RECV5_TEST1rootprc.CATProduct 
+		-structure queryName &quot;Query by object Id&quot; <br>
+		-attributeFilter Status EQ Approved -user odtitp -pwd 
+		xxxxx -role VPMADMIN.ADMIN.DEFAULT -server &quot;xxxxxxxxx:nnnn&quot;
+		</code>
+		</li>
+		<li><p class="task">This example 
+		imports a CATProduct under a newly created PRC:<kbd><br></kbd><code>CATPDMReconcileEV5Batch -file E:\DataREC\RECV5_TEST1rootprc.CATProduct 
+		-GR StructureExposed -GR Query -GR New</code></li>
+		<li><p class="task">Reconciliation using a global set.<kbd><br></kbd>This example 
+		will overwrite a CATProduct already existing in the database and sets 
+		the reload rule on a specific doc (RECV5_TEST1_PART3.CATPart):<kbd><br></kbd>
+		<code>CATPDMReconcileEV5Batch -file E:\DataREC\RECV5_TEST1rootprc.CATProduct 
+		-GR StructureExposed -GR Query &quot;queryName=Easy Query&quot; -GR
+		Overwrite -GR Reload &quot;forceReload=TRUE&quot; / SearchNode &quot;scmType=DOC&quot; &quot;FileName=RECV5_TEST1_PART3.CATPart&quot;</code></li>
+		<li><p class="task">Reconciliation using Magic Reconciliation 
+		global set by using:<br>
+		<code>CATPDMReconcileEV5Batch -file 
+		c:\temp\RECV5_TEST1rootprc.CATProduct -Structure -GR MagicRecon &quot;queryName=Query 
+		by object Id&quot; &quot;forcePersistency=FALSE&quot;&nbsp;</code></li>
+		<li>
+		<p class="task">Reconciliation preventing the automatic update of 
+		drawings<kbd>.<br></kbd>In this example, a CATPart and its 
+		drawing are saved to ENOVIA V5 VPM. The CATPart is modified by the 
+		supplier and the OEM launches the batch file on the drawing to update 
+		only the CATPart:<br><code>CATPDMReconcileEV5Batch -file &quot;C:\tmpRedrw.CATDrawing&quot; 
+		-noDraftingUpdate</code></li>
+		<li><p class="task">Reconciliation inhibits the update of Product or Part
+		by using:<br>
+		
+		
+		
+		<code>CATPDMReconcileEV5Batch 
+		&#8211;file PRC.CATProduct &#8211;noPartUpdate 
+		&#8211;server ServerName &#8211;user MyId &#8211;role VPMADMIN-pwd 
+		MyPwd</code></li>
+		<li>
+		<p class="task"><span style="background-position: 0 0">
+		Reconciliation of acquiring missing locks on Document Revision, Part 
+		Version and Item Instance if not allocated to another user can be done 
+		by using:<br>
+		</span><code><span style="background-position: 0 0">
+		CATPDMReconcileEV5Batch -file C:\Documents and Settings\xhq\My 
+		Documents\R20_HLTEST\ImprveReconusblty\R20_Prod.CATProduct -structure -lockMgt 
+		Acquire -queryName Easy Query -user odtitp -pwd xxxx -role 
+		VPMADMIN.ADMIN.DEFAULT </span></code></li>
+		<li>
+		<p class="task">Reconciliation will fail if the locks are missing 
+		on <span style="background-position: 0 0">
+		Document Revision, Part Version and Item Instance by using:</span><br>
+		<code>CATPDMReconcileEV5Batch -file C:\Documents and Settings\xhq\My 
+		Documents\R20_HLTEST\ImprveReconusblty\R20_Prod.CATProduct -structure -lockMgt 
+		NotToAcquire -queryName Easy Query -user odtitp -pwd xxxx -role 
+		VPMADMIN.ADMIN.DEFAULT </code></li>
+		<li>
+		<p class="task">Reconciliation of acquiring missing locks on 
+		Document Revision, Part Version and Item Instance if not allocated to 
+		another user and released them after Save can be done by using:<br>
+		<code>CATPDMReconcileEV5Batch -file C:\Documents and Settings\xhq\My 
+		Documents\R20_HLTEST\ImprveReconusblty\R20_Prod.CATProduct -structure -lockMgt 
+		ReleaseAtSave -queryName Easy Query -user odtitp -pwd xxxx -role 
+		VPMADMIN.ADMIN.DEFAULT </code>
+		</li>
+		<li>
+		<p class="task">Reconciliation of importing a sub-assembly with assembly 
+		drawing by using:<br>
+		<code>CATPDMReconcileEV5Batch -file C:\Documents and 
+		Settings\xhq\My Documents\R21_HLTEST\ImprveReconusblty\Rec_DrwMig1_Ass01.CATProduct 
+		-file C:\Documents and Settings\xhq\My Documents\R21_HLTEST\ImprveReconusblty\Rec_DrwMig1_Ass01Drw.CATDrawing 
+		-structure -importInAssembly Rec_DrwMig1_PRC -user odtitp -pwd xxxx 
+		-role VPMADMIN.ADMIN.DEFAULT</code>
+		
+		</li>
+		<li>
+		<p class="task"><blink>Reconciliation of multiple files for batch execution by 
+		using:<br>
+		<code>CATPDMReconcileEV5Batch -batchInput 
+		&quot;C:\Users\p2v\Desktop\MultiRecV5Batch.xml&quot; -batchReport 
+		&quot;C:\Users\p2v\Desktop\reports\OutputReport.xml&quot; -user </code>
+		<code>odtitp</code><code> -pwd </code>
+		<code>xxxx</code><code> 
+		-role VPMADMIN.ADMIN.DEFAULT -server &quot;enoaix16plp:2370&quot;</code></blink></li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="20" width="32"></td>
+     <td valign="top" height="20" style="width: 837px">
+     <h3>Limitations</h3>
+     <ol class="task">
+		<li>
+		<p class="task">Only one assembly structure (one PRC):<br><br>The -file option can be used to reconcile several CATProducts, but the 
+       reconciliation will succeed <br>only if all the listed CATProducts compose the same assembly structure 
+       because only one assembly <br>root per reconciliation is accepted.<br>
+		</li>
+		<li>
+		<p class="task">Getting traces:<br><br>The batch is based on CATIA V5 ApplicationFrame infrastructure, therefore 
+       a CATIA V5 window may appear when running the batch.<br>The batch therefore needs a running window manager.<br>The batch runs as a background task and its traces are not displayed in 
+       the window from which it was started. Traces can be retrieved using 
+       CNEXTOUTPUT environment variable.</li>
+		<li>
+		<p class="task"><span style="background-position: 0 0"><strong>-spwd
+		</strong>option:</span><blockquote>
+         <blockquote>
+           <blockquote>
+             <ul>
+               <li>
+               <p class="style2">
+				This information cannot be hidden if running processes are listed 
+				using ps -ef | grep pwd command. </li>
+               <li>
+				<p class="style2">
+				&#8211;11;spwd 
+				and <strong class="style3">&#8211;</strong>pwd options are incompatible options.</p>
+				</li>
+             </ul>
+           </blockquote>
+         </blockquote>
+       </blockquote>
+       	</li>
+		</ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="20" width="32"></td>
+     <td valign="top" height="20" style="width: 837px">
+     <h3>Diagnostics</h3>
+     <p>Possible exit status values are:</p>
+     <blockquote>
+       <ul>
+         <li>0: Successful completion.</li>
+         <li>4: Failure due to one or more of the standalone documents (-adddoc 
+         documents).</li>
+         <li>8: Failure due to any of the following:</li>
+       </ul>
+       <blockquote>
+         <blockquote>
+           <blockquote>
+             <ul>
+               <li>Query failed</li>
+               <li>Load of PDM data failed</li>
+               <li>Save of loaded data failed</li>
+				<li>Locks could not be obtained</li>
+             </ul>
+           </blockquote>
+         </blockquote>
+       </blockquote>
+       <ul>
+         <li>202: Connection failed.</li>
+       </ul>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="20" width="32"></td>
+     <td valign="top" height="20" style="width: 837px"></td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2" height="35">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"><br>
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+
+

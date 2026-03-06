@@ -1,0 +1,276 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Optimizing V4 Migration: Deactivation of the V4 Elements' Parents Filter 
+	
+	</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Optimizing V4 Migration: Deactivation of the V4 Elements' 
+ Parents Filter <a name="ix-deactivation:V4 elements parents filter"></a></h1>
+ <div align="center">
+   <center>
+   <table border="0" cellspacing="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" Width="0">
+     <tr valign="top" border="0">
+       <td align="center" height="390">
+       <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+       <td height="390"><span style="color:black;mso-bidi-font-weight:
+bold">When copy/pasting V4 space data, duplication of geometries inside a same 
+       family is avoided.</span>
+       <span style="color:black;mso-bidi-font-weight:
+bold">The main reason is that some elements such as Faces require the migration 
+       of underlying entities such as Surfaces, but the Surfaces may also have 
+       been migrated explicitly. The purpose is to analyze the set of objects 
+       migrated and extract the <b>representative entities</b>.</span>
+       <p class="MsoNormal" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+       <span style="LETTER-SPACING: 0pt">Thanks to filters, the </span>
+       <span style="COLOR: black; mso-fareast-font-family: Times New Roman; mso-bidi-font-family: Times New Roman; mso-ansi-language: EN-US; mso-fareast-language: EN-US; mso-bidi-language: AR-SA">
+       following elements will no longer be converted:</span></p>
+       <ol>
+         <li>
+         <p class="MsoNormal" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+         <span style="letter-spacing: 0pt">Border curves of migrated Faces 
+         (since they would duplicate face edges).</span></li>
+         <li>
+         <p class="MsoNormal" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+         <span style="letter-spacing: 0pt">Surfaces that are support of migrated 
+         faces ( since they are already migrated as support of the faces).</span></li>
+         <li>
+         <p class="MsoNormal" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+         <span style="letter-spacing: 0pt">Faces included in a migrated Skin or 
+         Volume ( since they have been migrated through the skin or the volume 
+         and are accessible through those federating elements).</span></li>
+         <li>
+         <p class="MsoNormal" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+         <span style="letter-spacing: 0pt">Volumes and Skins used in migrated 
+         solids (solids containing Volume or Skin/split primitives for 
+         instances) since they are already migrated through the solid primitive. 
+         The deactivation of the No Show filter upon Volumes and Skins is 
+         automatic during the copy/paste AS SPEC (no environment variable is 
+         needed).</span></li>
+         <li>
+         <p class="MsoNormal" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+         <span style="letter-spacing: 0pt">Elements in Hide, except Solids (SOLIDE 
+         or SOLIDM): The management of Hide/Show should be independent from 
+         families. However some border effects have convinced us the two 
+         behaviors should be associated: for instance if the model contains a 
+         Skin in Hide, whereas its faces are in Show space, migrating the Skin 
+         and not the Faces separately would not provide the required result.</span></li>
+       </ol>
+       <p class="MsoNormal" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+       <span style="letter-spacing: 0pt">This can result in dramatic 
+       improvements in terms of conversion performance, memory consumption and 
+       CATPart size.</span></p>
+       <p class="MsoNormal" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none">
+       <span style="color:black;mso-bidi-font-weight:
+bold">The conversion can be operated on those representative entities only. But
+       </span>these tasks show you that&nbsp;<span style="color:black;mso-bidi-font-weight:
+bold"><b>environment variables allow the user to deactivate these filters</b> 
+       and to migrate all the V4 features:</span> </p>
+       <blockquote>
+         <p class="MsoNormal" style="margin-left:0in;text-align:justify;line-height:12.0pt;
+mso-layout-grid-align:none;text-autospace:none"><a href="#hj-without variables">
+         CATIA V5 behavior without the environment variables (when the filter is 
+         activated)</a><a href="#hj-with variables"><br>
+         CATIA V5 behavior with the environment variables (when the filter is 
+         deactivated)</a> </p>
+       </blockquote>
+       </td>
+     </tr>
+     <tr valign="top" border="0">
+       <td align="center" height="75">
+       <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+       <td height="75">
+       <p class="MsoNormal" style="margin-left:0in">
+       <span style="letter-spacing: 0pt">Note that the element can still be 
+       copy-pasted when selected individually, or if the element it belongs to 
+       is not migrated in the same transaction</span><span style="mso-bidi-font-weight: bold">.</span></p>
+       <p class="MsoNormal" style="margin-left:0in">
+       <span style="color:black;mso-bidi-font-weight:
+bold">This enhancement is automatically used when copy/pasting V4 space data 
+       into a CATPart.</span></td>
+     </tr>
+     <tr valign="top" border="0">
+       <td align="center" height="91">
+       <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+       <td height="91">
+       <p class="MsoNormal" style="margin-left:0in">
+       <span style="color: black; mso-bidi-font-weight: bold">E</span><span style="color:black;mso-bidi-font-weight:
+bold">nvironment variables are provided to disable this behavior (</span><span style="letter-spacing: 0pt">filters)</span><span style="color:black;mso-bidi-font-weight:
+bold">:</span></p>
+       <ul>
+         <li>
+         <p class="MsoNormal" style="margin-left:0in">
+         <b style="mso-bidi-font-weight:normal"><a href="page10625.html">set 
+         KEEP_HIDDEN_ELEMENT=1</a> </b><span style="mso-bidi-font-weight:bold">: 
+         disables point 5. above</span></li>
+         <li>
+         <p class="MsoNormal" style="margin-left:0in">
+         <b style="mso-bidi-font-weight:normal">set INACTIVE_QUICK_PASTE=1 </b>
+         <span style="mso-bidi-font-weight:bold">: disables point 1. to 3.</span></li>
+       </ul>
+       <p class="MsoNormal" style="margin-left:0in">
+       <span style="mso-bidi-font-weight: bold">The following scenarios deal 
+       with the second e</span><span style="color:black;mso-bidi-font-weight:
+bold">nvironment variable (set INACTIVE_QUICK_PASTE=1</span><span style="mso-bidi-font-weight: normal">). 
+       For more information about the first </span>
+       <span style="mso-bidi-font-weight: bold">e</span><span style="color:black;mso-bidi-font-weight:
+bold">nvironment variable, please refer to <a href="page10625.html">Optimize V4 
+       Family Migration: Deactivation of the No Show Filter</a>.</span></td>
+     </tr>
+     <tr>
+       <td align="center" valign="top" height="51">&nbsp;</td>
+       <td valign="middle" align="left" height="51">
+       <h3><font color="#282187"><a name="hj-without variables"></a>CATIA V5 
+       behavior without the environment variables (when the filter is 
+       activated):</font></h3>
+       </td>
+     </tr>
+     <tr>
+       <td align="center" valign="top" height="20">&nbsp;</td>
+       <td valign="middle" align="left" height="20">Open
+       <a href="b35doc/english/online/intug_c2/samples/SOLIDS_PARENTS.model">SOLID_PARENTS.model</a> in CATIA 
+       V5:<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1">
+         <tr>
+           <td width="100%"><img border="0" src="b35doc/english/online/intug_c2/images/bt255NLS.gif" width="325" height="352"></td>
+         </tr>
+       </table>
+       <p>Click the Swap visible space icon
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_SwapHideShowP2.gif" width="24" height="24"> 
+       to visualize the No Show space:</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber2">
+         <tr>
+           <td width="100%"><img border="0" src="b35doc/english/online/intug_c2/images/bt257NLS.gif" width="325" height="352"></td>
+         </tr>
+       </table>
+       <p>The Exact Solid, *SOL7, belongs to a Volume, *VOL1. A Volume is the 
+       parent of a Solid. As a consequence there are 
+       fewer features and there is more geometry.</p>
+       <p>Volumes, Faces and Solids are in the Show space. Volumes, Faces and 
+       Border Curves are not migrated because they are filtered, but it is 
+       possible to select equivalent features such as Edges, Boundary Curves.</td>
+     </tr>
+     <tr>
+       <td align="center" height="20">&nbsp;</td>
+       <td valign="middle" align="left" height="20">&nbsp;</td>
+     </tr>
+     <tr>
+       <td align="center" height="56">&nbsp;</td>
+       <td valign="middle" align="left" height="56">
+       <ol class="task">
+         <li>
+         <p class="task">Copy *MASTER and paste it AS SPEC in a CATPart (in this 
+         mode the BREP of the Solid is migrated).</li>
+         <li>
+         <p class="task">Update the CATPart.</p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber3">
+           <tr>
+             <td width="100%"><img border="0" src="b35doc/english/online/intug_c2/images/bt258NLS.gif" width="391" height="417"></td>
+           </tr>
+         </table>
+         </li>
+         <li>
+         <p class="task">Click the Swap visible space icon:</p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber4">
+           <tr>
+             <td width="100%"><img border="0" src="b35doc/english/online/intug_c2/images/bt256NLS.gif" width="395" height="389"></td>
+           </tr>
+         </table>
+         </li>
+       </ol>
+       <p class="task">The copy of the Solid, Solid.1 (*VOL1 -wsp *MASTER-) 
+       (VOLM1) is not duplicated but the Solid is still referencing the VOL1.</td>
+     </tr>
+     <tr>
+       </center>
+     </tr>
+     <center>
+     <tr valign="top" border="0">
+       <td align="center" height="18"></td>
+       <td valign="middle" align="left" height="18"></td>
+     </tr>
+     <tr>
+       <td align="center" height="18"></td>
+       <td valign="middle" align="left" height="18">
+       <h3><font color="#282187"><a name="hj-with variables"></a>CATIA V5 
+       behavior with the environment variables (when the filter is deactivated):</font></h3>
+       </td>
+     </tr>
+     <tr>
+       <td align="center" height="172">&nbsp;</td>
+       <td valign="middle" align="left" height="172">
+       <p class="task">On Windows, you can deactivate the No Show Filter by 
+       entering the following command: </p>
+       <blockquote>
+         <blockquote>
+           <p class="task"><b style="mso-bidi-font-weight:normal">set 
+           INACTIVE_QUICK_PASTE=1 </b></p>
+         </blockquote>
+       </blockquote>
+       <p class="task">And on UNIX:</p>
+       <blockquote>
+         <blockquote>
+           <p class="task"><b style="mso-bidi-font-weight:normal">export 
+           INACTIVE_QUICK_PASTE=1</b></p>
+         </blockquote>
+       </blockquote>
+       </td>
+     </tr>
+     <tr>
+       <td align="center" height="31">&nbsp;</td>
+       <td height="31">
+       <ol class="task">
+         <li>
+         <p class="task">Open <a href="b35doc/english/online/intug_c2/samples/SOLIDS_PARENTS.model">
+         SOLID_PARENTS.model</a> in CATIA V5.</li>
+         <li>
+         <p class="task">Copy *MASTER and paste it AS SPEC in a CATPart.</li>
+         <li>
+         <p class="task">Update the CATPart.</p>
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber5">
+           <tr>
+             <td width="100%"><img border="0" src="b35doc/english/online/intug_c2/images/bt259NLS.gif" width="465" height="492"></td>
+           </tr>
+         </table>
+         <p class="task">The Faces allowing the creation of the Volume are 
+         migrated into CATIA V5. They are independent features and they are the 
+         copies of the ones contained in the PartBody's BREP. As a consequence, 
+         this Part is bigger than the first one above.</li>
+       </ol>
+       </td>
+     </tr>
+     <tr>
+       </center>
+     </tr>
+     <center>
+     <tr>
+       <td colspan="2" valign="top" align="center" height="37">
+       <p align="center">
+       <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+     </tr>
+   </table>
+   </center>
+ </div>
+
+ </body>
+
+</html>
+

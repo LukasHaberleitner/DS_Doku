@@ -1,0 +1,138 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Assigning Manufacturing Assemblies and Manufacturing Kits to 
+	Manufacturing Context</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+.shape {behavior:url(#default#VML);}
+.style2 {
+	text-align: center;
+}
+.style3 {
+	margin-left: 40px;
+}
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>
+	<img border="0" src="b35doc/english/online/icons_C2/common/anew.gif" width="32" height="32"> 
+	Inclusion of hierarchy, Manufacturing Assemblies and Manufacturing Kits in Manufacturing Context</h1>
+ <table border="0" cellspacing="3" cellpadding="3">
+   <tr>
+     <td valign="top" style="width: 12px">
+		<img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">
+     <p style="margin-bottom: 1em">Manufacturing Assemblies and Manufacturing 
+		Kits are included in the computed manufacturing context. The
+		<a href="page4460.html">Context Solver batch</a> utility also 
+		includes the children hierarchy of the linked products, resources, MA&#8217;s 
+		and MK&#8217;s in the computed manufacturing context. <br>
+		You can compute the Manufacturing Context and Planning Context through
+		<a href="page4460.html">DLMMfgContextSolver</a> program.</td>
+   </tr>
+   <tr>
+     <td valign="top" style="width: 12px; height: 6642px;"></td>
+     <td valign="top" style="height: 6642px">
+		<h2>Context Solver batch Utility </h2>
+		<h3>Relations Supported by Context Solver batch Utility for Ma's/MK's</h3>
+		<p>The children of MA&#8217;s and MK&#8217;s should be products and resources linked 
+		using the following relations: </p>
+		<ol>
+			<li>Kit contains Kit </li>
+			<li>Kit contains Product </li>
+			<li>&nbsp;Kit contains Resource&nbsp; </li>
+			<li>Assembly references Product </li>
+		</ol>
+		<h2>Rules to Include/Exclude Child Products and Resources in the 
+		Manufacturing Context</h2>
+		<p>The rules for evaluating the assembly status on the children products 
+		and resources for inclusion/exclusion in the Manufacturing context are 
+		specified below:<br>
+		<img title="" src="b35doc/english/online/cfyugmfghub_c2/images/MARuleNLS.gif" width="264" height="166"></p>
+		<ol>
+			<li>If the child product/resource is not directly linked to any 
+			predecessor processes (untouched assembly status) and only its 
+			parent is linked, then it inherits its immediate parent's 
+			(product/resource) computed assembly status (integrated, removed, or 
+			undefined).<br>
+			For Example: SA is integrated<ul>
+				<li>&nbsp;P1, P2, P3 and SA 2 are also integrated - inherit the 
+				state from SA.</li>
+				<li>P8 and P9 are also integrated - inherit the state from SA 2.
+				</li>
+			</ul>
+			</li>
+		</ol>
+		<ol>
+			<li value="2">If the child product/resource is directly linked to 
+			any predecessor processes, then it retains its computed assembly 
+			status (integrated, removed, or undefined).<br>
+			For Example: SA is integrated, P2 and P9 are removed<ul>
+				<li>P2 and P9 are removed - retain their computed assembly 
+				state.</li>
+				<li>P1, P3, and SA 2 are integrated - inherit the state from SA.
+				</li>
+				<li>P8 is integrated &#8211; inherits the state from SA 2.</li>
+			</ul>
+			</li>
+			<li>&nbsp;For MA's and MK's, any child product/resource which is not 
+			within the root product/root resource scope is also considered in 
+			the manufacturing context computation.</li>
+			<li>For MA's and MK's, any child product/resource which is not 
+			within the root product/root resource scope and is also not directly 
+			linked to any predecessor processes (untouched assembly status), 
+			inherit its parent MA's or parent MK's computed assembly status 
+			(integrated, removed, or undefined).</li>
+			<li>&nbsp;For MA's and MK's, any child product/resource which is 
+			within the root product/root resource scope and is also not directly 
+			linked to any predecessor processes (untouched assembly status), 
+			inherit its immediate parent's (product/resource) computed assembly 
+			status (integrated, removed, or undefined).</li>
+			<li>For MA's and MK's, any child product/resource directly linked to 
+			any predecessor processes, retains its computed assembly status 
+			(integrated, removed, or undefined).<br>
+			For Example: MA is integrated, P2, and MA 2 are removed.<br>
+			<ul>
+				<li>
+				<p class="style3">P4 and P5 (which are not within the root 
+				product scope) are also integrated - inherit the state from MA.
+				</p>
+				</li>
+				<li>
+				<p class="style3">P2 is removed &#8211; retain its computed assembly 
+				state. </p>
+				</li>
+			</ul>
+			</li>
+		</ol>
+		<h2><a name="_Toc247964466"></a><a name="_Toc217120189"></a>
+		<a name="_Toc179025496"></a><a name="_Toc178998280"></a>Limitation</h2>
+		<p>Computation with hierarchy is applicable only to Manufacturing 
+		Context and not for Volumetric Context.</p>
+		<p>&nbsp;</p>
+			   
+ 
+ 
+ </td>
+   </table>
+
+<p class="style2"><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+ 
+ </body>
+
+</html>
+

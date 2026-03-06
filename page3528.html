@@ -1,0 +1,481 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Working with CGRs in DMU</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Working with CGRs in DMU</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td height="71" width="32">
+     <img src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32">
+     </td>
+     <td>This section provides information on working 
+     with CGRs in a DMU context. This is the default document format used for 
+     DMU sessions when working in Visualization mode and with the cache system. 
+     This format is not suitable for design.
+     <p>CGR stands for CATIA Graphical Representation. CGR files always have a 
+     .cgr extension.<br>
+     All MULTICAx Plug-in products convert native part data into CGR format.</p>
+     <p>When using CGRs, a representation of the geometry only is available; the 
+     geometry is not available. </p>
+     <h4>Advantages:<br>
+&nbsp;</h4>
+     <ul>
+       <li>Requires less memory</li>
+       <li>Documents are lighter</li>
+       <li>Considerably reduces the time required to load your data</li>
+     </ul>
+     <blockquote>
+       <ul>
+         <table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2" width="419">
+           <tr>
+             <td colspan="2" width="417">For example, with the following 
+             CATProduct document, you can easily check the difference between 
+             the .Model document and the corresponding CGR file:&nbsp; </td>
+           </tr>
+           <tr>
+             <td width="256" rowspan="2">
+             <p align="center">
+             <img border="0" src="b35doc/english/online/cfyugdmu_c2/images/gardenacgr01.gif" align="left" width="245" height="280"></td>
+             <td width="160">With .Model: 6,708 MB</td>
+           </tr>
+           <tr>
+             <td width="160">With CGR: 670KB</td>
+           </tr>
+         </table>
+       </ul>
+     </blockquote>
+     <p align="justify">This may be useful when dealing with complex products or 
+     assemblies involving large amounts of data.</p>
+     <h4>Drawbacks:</h4>
+		<ul>
+       <li>No design possible</li>
+       <li>Relations between objects cannot be established because they are 
+       based on design features. For example, in DMU Kinematics, you cannot 
+       create joints because joints are built on design constraints.</li>
+     </ul>
+     <h4>In DMU:</h4>
+     <ul>
+       <li>CGR documents can be inserted directly into DMU sessions</li>
+       <li>They are generated automatically from exact geometry ( V4 Models, 
+       CATParts...) when working with the cache system</li>
+       <li>You can also generate CGR representations in certain DMU applications 
+       and save them as CGR files, for example DMU Optimizer</li>
+     </ul>
+     <h4>Definitions:</h4>
+     <p><kbd>Cache system concept:</kbd> Two different modes are available when a 
+     component (V4 model, V5 CATPart, V5 CATProduct, etc.) is inserted into a 
+     DMU Navigator CATProduct document;<br>
+&nbsp;</p>
+     <ul>
+       <li><a href="#hj-designmode">Design mode</a></li>
+       <li><a href="#hj-visumode">Visualization mode</a></li>
+     </ul>
+     <p>Using a cache system considerably reduces the time required to load your 
+     data. The cache system is organized into two parts:</p>
+     <ul>
+		<li><kbd>Local cache: </kbd>a read/write directory located locally on your 
+     machine and used to store cgr files. The first time a component is 
+     inserted, it is tesselated. This means that the corresponding cgr file is 
+     computed and saved in the local cache as well as displayed in the document 
+     window. The next time this component is required, the cgr file which 
+     already exists (and not the original document) is automatically loaded from 
+     the local cache. The user is normally responsible for the local cache. 
+		</li>
+		<li><kbd>Released cache:</kbd> a read-only cache that can be located anywhere on 
+     your network.<br>Several directories can be defined for the released cache. If a cgr file 
+     cannot be found in the local cache, the software browses the released cache 
+     directories in their listed order to see if the cgr file is located in one 
+     of them. If the cgr file is still not found, the component is tesselated 
+     and the resulting cgr file is saved in the local cache. The site 
+     administrator is normally responsible for the released cache.&nbsp; </li>
+		</ul>
+     <p>A timestamp enables the verification that no modifications have been 
+     made to a document since the generation of the corresponding cgr file found 
+     in either of the above caches:</p>
+     <p><kbd>Timestamp: </kbd>the date and hour at which the origin document was last 
+     modified. If you activate the <kbd>Check timestamp</kbd> button, then 
+     before a cgr file is loaded into a viewer, its timestamp will be checked to 
+     verify that no modifications have been made to the document since the 
+     generation of the cgr file. If you do not activate the&nbsp;<kbd>Check 
+     timestamp</kbd> button, then a cgr file of a document will be loaded 
+     without any verification of its time-wise coherence with the document.&nbsp;
+     </p>
+     <p>The process used for loading data using the caches is as follows:</p>
+     <table border="0" cellpadding="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+       <tr>
+         <td>
+			<img border="2" src="b35doc/english/online/cfyugdmu_c2/images/cacheconfig6NLS_s.gif" title="Click to enlarge this image" width="314" height="236"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script></td>
+       </tr>
+     </table>
+     <p>Please refer to <cite>Customizing Cache Settings</cite> in <cite>Customizing</cite> for DMU 
+     Navigator section (<i>DMU Navigator User's Guide</i>)</p>
+     <dl>
+		<dd><a name="hj-designmode"></a><kbd>Design mode:</kbd> A working mode in which 
+     the exact geometry is available and documents (V4 models, V5 CATParts, V5 
+     CATProducts, etc.) are inserted as is.</dd>
+		<dt>&nbsp;</dt>
+		<dd><kbd>Tessellation</kbd>: The generation of a triangular mesh representation 
+     of an object from a solid or surface.</dd>
+		<dt>&nbsp;</dt>
+		<dd><a name="hj-visumode"></a><kbd>Visualization mode: </kbd>A working mode in 
+     which a representation of the geometry only is available and the 
+     corresponding cgr file, if it exists, is inserted from the data cache.</dd>
+		<dd>&nbsp;</dd>
+		<dd><kbd>Cache System &amp; multi-processors:</kbd><br>You can choose the creation of cache files in multi-process for this, 
+     select the <kbd>Multi-Process Visualization Mode with local cache</kbd> 
+     checkbox in <kbd>Tools &gt; Options &gt; Infrastructure &gt; Product Structure &gt; Product 
+     visualization.<br></kbd>You also need to customize multi-process settings.</dd>
+		</dl>
+     <p>For more detailed information please read Customizing Product 
+     Visualization Settings and Customizing Multi-Process settings.</p>
+     <h4>DMU Applications</h4>
+     <p>The following table lets you see at a glance what you can do with CGRs 
+     in the various DMU applications, and lists in particular any restrictions 
+     to working with CGRs in a DMU context.</p>
+     <p>Note: in DMU kinematics context, you cannot work on cgrs.</p>
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse">
+       <tr>
+         <td width="100%" colspan="3" height="34">
+         <h5 align="center">DMU Space Analysis</h5>
+         </td>
+       </tr>
+       <tr>
+         <td width="184"  align="center" height="16" class="code"><b>
+         Commands</b></td>
+         <td width="241"  align="center" height="16" class="code"><b>Insert 
+         CGRs and Run...</b></td>
+         <td width="170" height="16" class="code" align="center"><b>&nbsp;Save 
+         Results as CGR...</b></td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">Clash<br>
+&nbsp;</td>
+         <td width="241" height="16" align="center" class="code2">Yes</td>
+         <td width="170" height="16" align="center" class="code2">No</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Sectioning<br>
+&nbsp;</td>
+         <td width="241" height="16" align="center" class="code">Yes</td>
+         <td width="170" height="16" align="center" class="code">No</td>
+       </tr>
+       <tr>
+         <td width="184" height="32" class="code2">Distance and band analysis<br>
+&nbsp;</td>
+         <td width="241" height="32" align="center" class="code2">Yes</td>
+         <td width="170" height="32" align="center" class="code2">
+         <p align="center">Band Analysis Results only</td>
+       </tr>
+       <tr>
+         <td width="184" height="32" class="code">Compare Products<br>
+&nbsp;</td>
+         <td width="241" height="32" align="center" class="code">Yes</td>
+         <td width="170" height="32" align="center" class="code">No</td>
+       </tr>
+       <tr>
+         <td width="184" height="33" class="code2">2D Measure<br>
+&nbsp;</td>
+         <td width="241" height="33" align="center" class="code2">No</td>
+         <td width="170" height="33" align="center" class="code2">No</td>
+       </tr>
+       <tr>
+         <td width="184" height="32" class="code">Arc through 3 points<br>
+&nbsp;</td>
+         <td width="241" height="32" align="center" class="code">Yes</td>
+         <td width="170" height="32" align="center" class="code">No</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">Measure Between</td>
+         <td width="241" height="16" align="center" class="code2">Yes, except for measure 
+         between points (1) (2)<br>
+&nbsp;</td>
+         <td width="170" height="16" align="center" class="code2">No</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Measure Item<br>
+&nbsp;</td>
+         <td width="241" height="16" align="center" class="code">Yes, except for measure 
+         properties of points (1) (2)</td>
+         <td width="170" height="16" align="center" class="code">No</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">Measure Thickness<br>
+&nbsp;</td>
+         <td width="241" height="16" align="center" class="code2">Yes</td>
+         <td width="170" height="16" align="center" class="code2">No</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Measure Inertia<br>
+&nbsp;</td>
+         <td width="241" height="16" align="center" class="code">Yes</td>
+         <td width="170" height="16" align="center" class="code">No</td>
+       </tr>
+       <tr>
+         <td width="595" colspan="3" height="21">(1) Points 
+         in edge limits, arc center and picking point selection modes are taken 
+         into account<p>(2) Exact / approximate measures on CGRs: exact 
+         measures can only be obtained on canonical elements in Measure Between 
+         and Measure Item commands; all other measures are approximate.</td>
+       </tr>
+       <tr>
+         <td width="595" colspan="3" height="21">
+         <h5 align="center">DMU Optimizer </h5>
+         </td>
+       </tr>
+       <tr>
+         <td width="184"  align="center" height="16" class="code"><b>
+         Commands</b></td>
+         <td width="241"  align="center" height="16" class="code"><b>Insert 
+         CGRs and Run...</b></td>
+         <td width="170" height="16" class="code" align="center"><b>&nbsp;Save 
+         Results as CGR...</b></td>
+       </tr>
+       
+       <tr>
+         <td width="184" height="16" class="code2">Silhouette<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes</td>
+         <td width="170" height="16" class="code2" align="center">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Wrapping<br>
+&nbsp;</td>
+         <td width="241" height="16" align="center" class="code">Yes</td>
+         <td width="170" height="16" align="center" class="code">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">Thickness<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes</td>
+         <td width="170" height="16" class="code2" align="center">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Offset<br>
+&nbsp;</td>
+         <td width="241" height="16" align="center" class="code">Yes</td>
+         <td width="170" height="16" align="center" class="code">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">Swept Volume<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes</td>
+         <td width="170" height="16" class="code2" align="center">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Free Space<br>
+&nbsp;</td>
+         <td width="241" height="16" align="center" class="code">Yes</td>
+         <td width="170" height="16" align="center" class="code">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">Simplification<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes</td>
+         <td width="170" height="16" class="code2" align="center">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Result of a merging operation<br>
+&nbsp;</td>
+         <td width="241" height="16" align="center" class="code">Yes</td>
+         <td width="170" height="16" align="center" class="code">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2"><br>
+         3D Cut<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes</td>
+         <td width="170" height="16" class="code2" align="center">Yes</td>
+       </tr>
+       <tr>
+         <td width="595" colspan="3" height="21">
+         <h5 align="center">DMU Navigator </h5>
+         </td>
+       </tr>
+       <tr>
+         <td width="184"  align="center" height="16" class="code"><b>
+         Commands</b></td>
+         <td width="241"  align="center" height="16" class="code"><b>Insert 
+         CGRs and Run...</b></td>
+         <td width="170"  align="center" height="16" class="code"><b>&nbsp;Save 
+         Results as CGR...</b></td>
+       </tr>
+       
+       <tr>
+         <td width="184" height="16" class="code2">Annotated View<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes</td>
+         <td width="170" height="16" class="code2" align="center">No</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Camera<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code" align="center">Yes</td>
+         <td width="170" height="16" class="code" align="center">Not Applicable</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">3D Annotation<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes</td>
+         <td width="170" height="16" class="code2" align="center">No</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Hyperlink<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code" align="center">Yes</td>
+         <td width="170" height="16" class="code" align="center">Not Applicable</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">Group<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes</td>
+         <td width="170" height="16" class="code2" align="center">Not Applicable</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Scene<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code" align="center">Yes</td>
+         <td width="170" height="16" class="code" align="center">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">Symmetry<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes</td>
+         <td width="170" height="16" class="code2" align="center">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Translation or Rotation<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code" align="center">Yes</td>
+         <td width="170" height="16" class="code" align="center">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">Axis System Creation<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes, except selecting a 
+         sub-element</td>
+         <td width="170" height="16" class="code2" align="center">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code"><br>
+         Point Creation<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code" align="center">Yes, except selecting a 
+         sub-element</td>
+         <td width="170" height="16" class="code" align="center">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">Line Creation<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes, except selecting a 
+         sub-element</td>
+         <td width="170" height="16" class="code2" align="center">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Plane Creation<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code" align="center">Yes, except selecting a 
+         sub-element</td>
+         <td width="170" height="16" class="code" align="center">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">Cumulative Snap<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes</td>
+         <td width="170" height="16" class="code2" align="center">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Modify Sag<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code" align="center">No, requires the part 
+         document</td>
+         <td width="170" height="16" class="code" align="center">No</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">Spatial Query<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes</td>
+         <td width="170" height="16" class="code2" align="center">Not Applicable</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Current Selection<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code" align="center">Yes</td>
+         <td width="170" height="16" class="code" align="center">Not Applicable</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">Publish<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes</td>
+         <td width="170" height="16" class="code2" align="center">Not Applicable</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Reset Position<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code" align="center">Yes</td>
+         <td width="170" height="16" class="code" align="center">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">Init Position<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes</td>
+         <td width="170" height="16" class="code2" align="center">Yes</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Track<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code" align="center">Yes</td>
+         <td width="170" height="16" class="code" align="center">No</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">Color Action<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes</td>
+         <td width="170" height="16" class="code2" align="center">No</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Visibility Action<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code" align="center">Yes</td>
+         <td width="170" height="16" class="code" align="center">No</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2">Sequence<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code2" align="center">Yes</td>
+         <td width="170" height="16" class="code2" align="center">No</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code">Clash Detection<br>
+&nbsp;</td>
+         <td width="241" height="16" class="code" align="center">Yes</td>
+         <td width="170" height="16" class="code" align="center">Not Applicable</td>
+       </tr>
+       <tr>
+         <td width="184" height="16" class="code2"><br>
+         Record Viewpoint Animation</td>
+         <td width="241" height="16" class="code2" align="center">Yes</td>
+         <td width="170" height="16" class="code2" align="center">Not Applicable</td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   
+ </table>
+
+ <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

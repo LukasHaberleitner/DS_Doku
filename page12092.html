@@ -1,0 +1,165 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Exporting V4 Catalog Parts</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="Microsoft Theme" content="none">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1>Exporting V4 Catalog Parts</h1>
+<table cellspacing="0" width="100%" border="0" valign="top" height="1787">
+  <tr valign="top" border="0">
+    <td align="center" height="41" width="39"><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td valign="center" colspan="2" height="41" width="574"><a name="998400">This
+      task shows how to </a>export your V4
+      catalog parts to V5.</td>
+  </tr>
+  <tr>
+    <td align="center" valign="top" height="74" width="39"><img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td valign="center" colspan="2" height="74" width="574">This process will
+      migrate the parts geometry and parts attributes from your V4 library to
+      V5. Before you perform this procedure you should export project
+      registration and standards data, which is explained elsewhere in this
+      section.
+      <p>The process described here is the preferred method of exporting parts.
+      However, if for some reason you do not want to export the V4 library, or
+      you do not have access to it, you can export parts directly from a V4
+      model. The procedure is described in <a href="page14375.html">Exporting
+      Parts from a V4 Model</a>.</td>
+  </tr>
+  <font face="Arial, Arial, Helvetica" color="#282187">
+  <tr valign="top" border="0">
+    <td valign="top" width="39" align="center" height="112"><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32">
+      <p><a name="ix-parts::exporting V4 to V5"></a></p>
+      <p><a name="ix-V4 to V5 integration::exporting catalog parts"></a></td>
+    <td valign="top" width="29" height="112"><font color="#1c1557"><strong>1.</strong></font></td>
+    <td height="112" width="541">Parts in
+      compressed form cannot be migrated. If your catalog is in compressed form
+      then you must re-create it in uncompressed form using standard V4
+      procedures. </font>This
+    requires adding to your DCLS file following&nbsp; declarative:
+    CATAEC.SETUP.PRO.CATALOG_COMPRESSION=FALSE; You may also need to set the
+    MAXTIM variable appropriately, such as: catia.MAXTIM_CPU=150000;.
+    <p>The uncompressed parts geometry will
+    be placed inside &quot;timestamp&quot; details (*.library files) in the
+    following directory: <kbd>...setup&#092;PRO&#092;APD&#092;lib</kbd>. The catalog file will
+    be placed in the following directory: <kbd>...setup&#092;PRO&#092;catlg</kbd>.</p>
+  </td>
+  </tr>
+  <tr>
+    <td align="center" height="816" width="39"></td>
+    <td valign="top" width="29" height="816"><font color="#1c1557"><strong>2.</strong></font></td>
+    <td valign="top" height="816">In the same ...<kbd>&#092;catlg</kbd> directory,
+      create an index type file and name it PRTMGXXX, where XXX is your catalog
+      number. The V4 sample catalog number is frequently 005 and that is the
+      number that will be used in this document. You need to create a special
+      file - you can name it migrateXXX - which will be used to create the index
+      file. You can create this input file by copying an existing file (<kbd>convert1_catalog_parts</kbd>,
+      which is in the same directory) and editing it. Enter the following in the
+      file:<font face="Courier New" size="2">
+      <p>/* */</p>
+      <p>*TYPE</p>
+      <p>create_CCAPS_index</p>
+      <p>*INPUT</p>
+      <p>/aecsite424/setup/PRO/catlg/PRTDA005</p>
+      <p>*OUTPUT</p>
+      <p>/aecsite424/setup/PRO/catlg/PRTMG005</p>
+      <p>*KEYS</p>
+      <p>PARTDEF CATEGORY 8</p>
+      <p>PARTDEF PARTTYPE 8</p>
+      <p>PARTNUM PARTNO 40</p>
+      <p>PIPESIZE SIZE 40</p>
+      <p>ELCATLOG ELTIME 16</p>
+      <p>STANDATA STANDARD 8</p>
+      <p>VNDRCODE VNDRCOD 40</p>
+      <p>PARTNAME PARTNAME 40</p>
+      <p>PIPESPEC ENDS 40</p>
+      <p>ENDSPEC ENDS 40</p>
+      <p>ENDSPEC RATG 40</font></p>
+      <p><font face="Arial" size="3">See</font><font face="Courier New" size="2">
+      ...MigrationDirectory&#092;Piping Systems&#092;V4_CatalogMainFile&#092;migrate999 </font><kbd><font face="Arial" size="3">for
+      an example</font></kbd><font face="Courier New" size="2">.</font></td>
+  </tr>
+  <tr>
+    <td align="center" height="111" width="39"></td>
+    <td valign="top" width="29" height="111"><font color="#1c1557"><strong>3.</strong></font></td>
+    <td valign="top" height="111">Also in the ...<kbd>&#092;catlg</kbd> directory
+      enter at a prompt: <kbd>run catutil -l RF0CPT -i migrate005 -o
+      migrationindex.out</kbd>
+      <p>This will create the file PRTMG005 in the ...<kbd>&#092;catlg</kbd>
+      directory. Ignore error messages &quot;Undefined Attribute Group
+      Name&quot;. This only indicates that pipes do not have part end
+      styles&nbsp; and parts do not have pipe end styles.</td>
+  </tr>
+  <tr>
+    <td align="center" height="55" width="39"></td>
+    <td valign="top" width="29" height="55"><font color="#1c1557"><strong>4.</strong></font></td>
+    <td valign="top" height="55">Move the the PRTMG005 file to its V5 location,
+      in the directory: ...<kbd>intel_a&#092;startup&#092;EquipmentAndSystems&#092;MigrationDirectory&#092;PipingSystems&#092;</kbd>
+      <kbd>V4_CatalogMainFile</kbd></td>
+  </tr>
+  <tr>
+    <td align="center" height="269" width="39"></td>
+    <td valign="top" width="29" height="269"><font color="#1c1557"><strong>5.</strong></font></td>
+    <td valign="top" height="269">Move all the &lt;timestamp&gt; files that were
+      created when you uncompressed your V4 catalog to their V5 location:&nbsp;
+      ...<kbd>intel_a&#092;startup&#092;EquipmentAndSystems&#092;MigrationDirectory&#092;PipingSystems&#092;</kbd>
+      <kbd>V4_Catalog_Details. </kbd>They are called timestamp files because
+      each file will have a date and time stamp for a file name as shown below:<font face="Courier New" size="2">
+      <p>2001248204613737.library</p>
+      <p>2001248204623132.library</p>
+      <p>2001248204625529.library</p>
+      <p>2001248204627914.library</p>
+      <p>2001248204630318.library</font></td>
+  </tr>
+  <tr>
+    <td align="center" height="103" width="39"></td>
+    <td valign="top" width="29" height="103"><font color="#1c1557"><strong>6.</strong></font></td>
+    <td valign="top" height="103"><font face="Arial" size="3">You must migrate
+      the standard encode/decode tables from V4 using <kbd>CATAecV4ToV5PipingTables</kbd>
+      before you start the migration of piping parts. The migrated tables must
+      reside in </font><font face="Courier New" size="2">...MigrationDirectory&#092;Piping
+      Systems&#092;V5_Migrated_Tables&#092;ASTL </font><font face="Arial" size="3">(or
+      another directory with your standard's name)</font><font face="Courier New" size="2">.</font></td>
+  </tr>
+  <tr>
+    <td align="center" height="112" width="39"></td>
+    <td valign="top" width="29" height="112"><font color="#1c1557"><strong>7.</strong></font></td>
+    <td valign="top" height="112">In V5, open a command prompt window and change
+      directories to ...intel_a&#092;code&#092;command. Type in the following and hit
+      Enter: CATAecV4ToV5PipingCatalog.bat 005 (replace the numerals 005 with
+      your catalog number). This will create your V4 parts in V5, placing them
+      in ...<kbd>intel_a&#092;startup&#092;EquipmentAndSystems&#092;MigrationDirectory&#092;PipingSystems&#092;</kbd>
+      <kbd>V5_Generated_CATParts </kbd>(unless you set the AECMIGR_DIRECTORYPATH
+      variable to a different location). Each part will have a unique, generic
+      part name.
+      <p>For Unix execute the script <kbd>CATAecV4ToV5PipingCatalog.sh 005</kbd>
+      (replace 005 with your catalog number).</td>
+  </tr>
+  <tr>
+    <td align="center" height="38" width="39"></td>
+    <td valign="top" width="29" height="38"><font color="#1c1557"><strong>8.</strong></font></td>
+    <td valign="top" height="38">Create a parts catalog, a suggested name being
+      PipingParts005.catalog, and place the parts in it. See ...MigrationDirectory&#092;Piping&#092;Piping
+      Design&#092;ComponentCatalogs for an example.</td>
+  </tr>
+  <tr valign="top" border="0">
+    <td colspan="3" align="center" height="34">
+      <p align="center"><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+&nbsp;
+
+</body>
+
+</html>
+
+
+

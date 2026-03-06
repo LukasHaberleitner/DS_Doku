@@ -1,0 +1,291 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>About Draping Direction and Reference Surface Consistency</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style type="text/css">
+.auto-style2 {
+	border-collapse: collapse;
+}
+.auto-style4 {
+	margin-left: 0px;
+}
+.auto-style5 {
+	border: 1px solid #000000;
+}
+</style>
+</head>
+
+<body>
+
+<h1 align="center">
+      About Draping Direction and Reference Surface Consistency</h1>
+  <table border="0" id="AutoNumber1" class="auto-style2">
+    <tr>
+      <td valign="top">
+      &nbsp;</td>
+      <td>
+      <p>A check informs the user of any inconsistency among the plies of a 
+	  plies group (Plies have different reference surfaces or their draping 
+	  direction is not that of the plies group):</p>
+	  <ul>
+		  <li>A check is performed when updating or editing a plies group.</li>
+		  <li>A check is performed on input plies, sequences, plies groups or 
+		  stacking in commands that generate results or instantiate objects in 
+		  stacking.</li>
+		  <li>Information is given via messages, diagnostic lists in commands or 
+		  masks in the specification tree.</li>
+	  </ul>
+	  <h2>Global Rules</h2>
+	  <p>A ply is consistent with its reference surface and draping direction 
+	  when:</p>
+	  <ul>
+		  <li>The ply is an engineering ply (no skin swapping), and the 
+		  reference surface of its contour and the draping direction of the ply 
+		  are the same as those of the plies group.</li>
+		  <li class="auto-style4">The ply is a manufacturing ply (hence with skin swapping), and 
+		  follows the skin swapping rules below:<ul>
+			  <li>All plies of a given plies group are swapped on the same 
+			  manufacturing surface.</li>
+			  <li>The draping direction is consistent on all plies after 
+			  swapping: All draping directions are along the normal to the manufacturing surface, or 
+			  the inverted normal.</li>
+			  <li>Draping direction changes for the manufacturing surface do not 
+			  impact the initial draping direction of plies groups and plies on 
+			  the engineering reference surface.</li>
+		  </ul>
+		  </li>
+	  </ul>
+	  <h2>Diagnoses</h2>
+	  <h3>Reference Surface of Plies and Cut-Pieces</h3>
+	  <p>An information message is displayed in the 
+	  following cases:	  <ul>
+		  <li>The reference surface of a ply is not that of the plies group.</li>
+		  <li>All the plies of the plies group have the same reference surface, 
+		  but not that of the plies group.</li>
+		  <li>The reference surface of the ply is the manufacturing surface, but 
+		  some plies in the plies group are not manufacturing plies.</li>
+		  <li>The reference surface of the ply is a manufacturing surface, but 
+		  not the same as that of the other plies of the plies group.</li>
+	  </ul>
+	  <h3>Draping Direction</h3>
+	  <p>At its creation, the draping direction of a plies group applies to all 
+	  the plies of the plies group. This direction is generally considered as 
+	  the engineering draping direction. <br>However, individual plies can be given 
+	  a different draping direction, for example by manual edition.</p>
+	  <p>Manufacturing plies can be created by skin swapping the engineering 
+	  plies onto the manufacturing reference surface. <br>You can invert the draping 
+	  direction during skin swapping, which may result in inconsistency among 
+	  the plies of a given plies group.</p>
+	  <p>An information message is displayed in the 
+	  following cases:	  <ul>
+		  <li>Inconsistency in the draping direction of plies or cut-pieces 
+		  without skin swapping: The draping direction of a ply is not that of 
+		  the plies group.</li>
+		  <li>Inconsistency in the draping direction of plies or cut-pieces with 
+		  skin swapping: The draping direction of a ply has been inverted during 
+		  skin swapping, but that of all the other plies has not been inverted.</li>
+	  </ul>
+	  <h3>Input of Commands</h3>
+	  <p>A check is done on the stacking, plies group, sequence, plies or 
+	  cut-pieces used by commands as input.<br></p>
+	  <ul>
+		  <li>A panel lists the results of the check. </li>
+		  <li>The contextual menu of each line lets you perform a visual check 
+		  of the elements. </li>
+		  <li>A visual feedback (highlight of contour and diagnosis text) helps 
+		  you solve the problem.</li>
+		  <li>You are asked whether you want to continue or not.</li>
+	  </ul>
+	  <p>See&nbsp;
+	  <a href="page0721.html#ix-composites design:plies group consistency check">
+	  Enable draping direction and reference surface consistency checks on plies 
+	  group</a> option for more information.</p>
+	  <p>Warnings are displayed when:</p>
+	  <ul>
+		  <li>All the plies in the plies group have different reference 
+		  surfaces.</li>
+		  <li>All the plies in the plies group have the same reference surface, 
+		  but not that of the plies group.</li>
+		  <li>Some plies of the plies group have skin swapping, some have not.</li>
+		  <li>All the plies in the plies group are manufacturing plies, but with 
+		  different reference surfaces.</li>
+		  <li>The plies in the plies group have different draping directions.</li>
+		  <li>All the plies in the plies group have been swapped, but with 
+		  different draping directions.</li>
+	  </ul>
+	  <h4>For the Plies Group Update or Edition</h4>
+	  <p>Access to the Stacking Management is proposed to solve the problems.
+	  <br>Use <kbd>Multiple Rows Edition</kbd> to edit the draping direction.</p>
+	  <p>When editing a plies group with skin swapping already performed, both 
+	  the engineering and the manufacturing draping directions are displayed on 
+	  their respective reference surface. <br>When inconsistency is detected, the 
+	  arrow of the manufacturing draping direction is replaced with a feedback.</p>
+	  <h4>Commands</h4>
+	  <p>A check is done in the following commands. <br>An error is displayed when 
+	  the inconsistency prevents the computation of the results. <br>A warning is 
+	  displayed when the inconsistency does not affect the command output.</p>
+	  <table cellspacing="5">
+		  <tr>
+			  <th style="width: 219px" valign="top" class="auto-style5">Command</th>
+			  <th valign="top" class="auto-style5">Message</th>
+			  <th valign="top" class="auto-style5">Comment</th>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" valign="top" class="auto-style5">Iso-thickness Area</td>
+			  <td valign="top" class="auto-style5">Error</td>
+			  <td valign="top" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" valign="top" class="auto-style5">Material Addition Wizard
+			  </td>
+			  <td valign="top" class="auto-style5">Error</td>
+			  <td valign="top" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" valign="top" class="auto-style5">Multiple Core Samples</td>
+			  <td valign="top" class="auto-style5">Error</td>
+			  <td valign="top" class="auto-style5">A check is done at the selection of a plies 
+			  group. If an inconsistency is detected, the plies group is not 
+			  accepted as input.</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" valign="top" class="auto-style5">Solid from Plies</td>
+			  <td valign="top" class="auto-style5">Error</td>
+			  <td valign="top" class="auto-style5">A check is done at the selection of a complete 
+			  stacking or of individual plies.</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" valign="top" class="auto-style5">Stagger Origin Points</td>
+			  <td valign="top" class="auto-style5">Error</td>
+			  <td valign="top" class="auto-style5">A check is done on the selected plies group when 
+			  starting the computation.</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" valign="top" class="auto-style5">Butt Splice Zone</td>
+			  <td valign="top" class="auto-style5">Warning</td>
+			  <td valign="top" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" valign="top" class="auto-style5">Check Contours</td>
+			  <td valign="top" class="auto-style5">Warning</td>
+			  <td valign="top" class="auto-style5">A warning column is added to display 
+			  inconsistency diagnoses.<br>When selecting a line in the dialog 
+			  box, the corresponding contour is highlighted.</td>
+		  </tr>
+		  <tr>
+			  <td style="height: 34px; width: 219px" valign="top" class="auto-style5">Elevate Solid 
+			  or Top Surface</td>
+			  <td style="height: 34px" valign="top" class="auto-style5">Warning</td>
+			  <td style="height: 34" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" class="auto-style5">Flattening</td>
+			  <td class="auto-style5">Warning</td>
+			  <td valign="top" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" class="auto-style5">Gap Offset</td>
+			  <td class="auto-style5">Warning</td>
+			  <td valign="top" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" class="auto-style5">Limit Contour</td>
+			  <td class="auto-style5">Warning</td>
+			  <td valign="top" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" class="auto-style5">Material Excess</td>
+			  <td class="auto-style5">Warning</td>
+			  <td valign="top" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" class="auto-style5">No Drop Off Area</td>
+			  <td class="auto-style5">Warning</td>
+			  <td valign="top" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="height: 17px; width: 219px" class="auto-style5">No Splice Zone</td>
+			  <td style="height: 17px" class="auto-style5">Warning</td>
+			  <td style="height: 17px" valign="top" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px; height: 23px;" class="auto-style5">Numerical Analysis</td>
+			  <td style="height: 23px" class="auto-style5">Warning</td>
+			  <td valign="top" style="height: 23" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="height: 35px; width: 219px" class="auto-style5">Plies Section</td>
+			  <td style="height: 35px" class="auto-style5">Warning</td>
+			  <td style="height: 35px" class="auto-style5">The plies group consistency is checked 
+			  with respect to the draping direction and the reference surface.</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" class="auto-style5">Ply Exploder</td>
+			  <td class="auto-style5">Warning</td>
+			  <td valign="top" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" class="auto-style5">Ply Table</td>
+			  <td class="auto-style5">Warning</td>
+			  <td valign="top" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" class="auto-style5">Producibility for Hand Layup</td>
+			  <td class="auto-style5">Warning</td>
+			  <td valign="top" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="height: 18px; width: 219px" class="auto-style5">Producibility Inspection</td>
+			  <td style="height: 18px" class="auto-style5">Warning</td>
+			  <td style="height: 18" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" class="auto-style5">Skin Swapping</td>
+			  <td class="auto-style5">Warning</td>
+			  <td valign="top" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" class="auto-style5">Splice Plies</td>
+			  <td class="auto-style5">Warning</td>
+			  <td valign="top" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" class="auto-style5">Symmetric Plies</td>
+			  <td class="auto-style5">Warning</td>
+			  <td valign="top" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" class="auto-style5">Symmetric Plies Stacking</td>
+			  <td class="auto-style5">Warning</td>
+			  <td valign="top" class="auto-style5">-</td>
+		  </tr>
+		  <tr>
+			  <td style="width: 219px" class="auto-style5">Unfold</td>
+			  <td class="auto-style5">Warning</td>
+			  <td valign="top" class="auto-style5">-</td>
+		  </tr>
+	  </table>
+	  <h4><br></h4>
+	  
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <p align="center">
+      <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+    </tr>
+  </table>
+  
+
+</body>
+
+</html>
+

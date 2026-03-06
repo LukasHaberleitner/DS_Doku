@@ -1,0 +1,166 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Running the CATDMUV4CacheForV5 Batch Process</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+ </head>
+
+ <body>
+
+ <a name="ix-running::CATDMUV4CacheForV5 batch process;batch processes::CATDMUV4CacheForV5;utility::CATDMUV4CacheForV5 batch process">
+ </a>
+ <h1><a name="shuttle">Running the CATDMUV4CacheForV5 </a><br>
+ <a name="shuttle">Batch Process</a></h1>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32"></p>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="74" width="33">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">The objective is to allow the reading of the V4 Cache from 
+     a V5 session in order to avoid unnecessary duplication of cache data and 
+     thereby support a smooth transition from V4 4D Navigator to V5 DMU 
+     Navigator / 3d com. The operation is done in three steps:<ul>
+       <li>Run the <kbd>CATDMUV4CacheForV5</kbd> to export a V4 Cache Content 
+       file into a text file&nbsp;&nbsp;</li>
+       <li>Run the <kbd>CATSys4DcacheMigr</kbd> , using the previously generated 
+       text file as input, to create symbolic links from the V5 cache to the 
+       tessellated documents in the V4 cache directory</li>
+       <li>Whenever new DLNames are added to the V4 Cache, run <kbd>
+       CATSysDLExport</kbd> to update these DLNames for the V5 Cache&nbsp;</li>
+     </ul>
+     <p>&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="38" width="33">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top">This batch process is only available on Unix.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="20" width="33"></td>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/dmnug_c2/images/batchcacheV4forV5.gif" width="509" height="271"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="34" width="33">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">Run <kbd>CATDMUV4CacheForV5</kbd>&nbsp;each time the V4 cache 
+       is modified.</li>
+     </ol>
+     <blockquote>
+       <p><b>Usage</b>:&nbsp;</p>
+       <p><kbd>CATDMUV4CacheForV5 DataCacheContent MappingFile.txt</kbd></p>
+       <p><b>Arguments</b>:</p>
+       <p><kbd>DataCacheContent</kbd>: Complete path of the V4 Cache file to be 
+       mapped</p>
+       <p><kbd>MappingFile<b>.</b>txt</kbd>: Output text file containing 
+       information that will be passed to the following command in the process,
+       <kbd>CATSys4DCacheMigr</kbd></p>
+       <p><b>Results</b>:</p>
+       <p>It reads the DataCacheContent, retrieves the list of files, their 
+       location and location of reference files, and stores this information in 
+       the output file <kbd>MappingFile.txt</kbd> given as an argument.<br>
+       </p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="36" width="33"></td>
+     <td valign="top">
+     <ol class="task" start="2">
+       <li>
+       <p class="task">Each time V4 cache is modified, run&nbsp; <kbd>
+       CATSys4DCacheMigr </kbd>using the output from <kbd>CATDMUV4CacheForV5</kbd> 
+       .</li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="36" width="33">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top">
+     <blockquote>
+       <p>For a more accurate management of timestamps, you should define read 
+       access on all filename models before running <kbd>CATSys4DCacheMigr </kbd>
+       .</p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="36" width="33"></td>
+     <td valign="top">
+     <blockquote>
+       <p><b>Usage</b>:</p>
+       <p><kbd>CATSys4DCacheMigr</kbd> <kbd>MappingFile.txt V4_Cache_Path 
+       V5_Cache_Path&nbsp; ReportFile.txt [DLNames.txt]</kbd></p>
+     </blockquote>
+     <blockquote>
+       <p><b>Arguments</b>:</p>
+       <p><kbd>MappingFile.txt</kbd>: Output of <kbd>CATDMUV4CacheForV5</kbd></p>
+       <p><kbd>V4_Cache_Path</kbd>: Path of 4D Navigator Cache</p>
+       <p><kbd>V5_Cache_Path</kbd>: Can be either an already filled cache path 
+       or a new one</p>
+       <p><kbd>ReportFile</kbd>.<kbd>txt</kbd>: Output log file</p>
+       <p><kbd>DLNames.txt</kbd>: Optional output, pre-formatted template file 
+       for V5 DLName definition.&nbsp;</p>
+       <p><b>Results</b>:</p>
+       <p>It creates symbolic links in the V5 cache and a template file (<kbd>DLNames.txt)</kbd> 
+       for <kbd>CATSysDLExport</kbd> (step 3 below).</p>
+     </blockquote>
+     <p>&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="20" width="33">
+     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td valign="top">Do not forget to reference the V5 Cache path in the V5
+     <kbd>Tools &nbsp;&gt;&nbsp; Options &nbsp;&gt;&nbsp; Infrastructure &nbsp;&gt;&nbsp; Cache Management</kbd> tab.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="31" width="33"></td>
+     <td valign="top"><ol class="task" start="3">
+       <li>
+       <p class="task">Each time there are new DLNames added in the V4 Cache</li>
+     </ol>
+     <blockquote>
+       <ul>
+         <li>edit the <kbd>DLNames.txt</kbd> template to instantiate the 
+         location of the DLNames</li>
+         <li>run <kbd>CATSysDLExport</kbd> to update the DLNames</li>
+       </ul>
+     </blockquote>
+     <blockquote>
+       <p><b>Usage</b>:</p>
+       <p><kbd>CATSysDLExport -admin -i DLNames.txt -r ReportFile.txt</kbd></p>
+       <p><b>Arguments</b>:</p>
+       <p><kbd>DLNames.txt</kbd>: Output of <kbd>CATSys4DCacheMigr</kbd></p>
+       <p><kbd>ReportFile.txt</kbd>: Output log file</p>
+       <p><b>Behavior</b>:</p>
+       <p>It creates or updates V5 DLNames to be compliant with V4 DLNames. </p>
+     </blockquote>
+     <p>For more information concerning DLNames, see the <i>DMU Navigator 
+     Installation and Administration User's Guide,
+     <a href="page1200.html">
+     Administrating Data Using the DLName Mechanism</a>.</i> </p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2" width="688" height="34">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="aendtask.gif (1477 bytes)" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

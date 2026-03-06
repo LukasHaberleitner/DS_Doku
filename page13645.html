@@ -1,0 +1,273 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Exporting SDNF</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>
+     Exporting 
+	SDNF<a name="CATStructurePlateShapeHeader.CATSDNFExportHdr"></a></h1>
+ <table cellspacing="0" width="100%" border="0" valign="top" height="1202">
+   <tr>
+     <td valign="middle" width="38" height="40">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="middle" width="872" colspan="2" height="40"><span lang="en-us">
+     This task explains the procedure for exporting SDNF.</span></td>
+   </tr>
+   <tr>
+     <td valign="top" width="38" height="74"><font face="Arial">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></font></td>
+     <td valign="top" width="872" colspan="2" height="74">SDNF stands for Steel 
+		Detailing Neutral File.<p>This command provides the capability to export 
+		the data from the neutral file format called as SDNF. SDNF supports the 
+		exchange of a steel structure data between two applications. 
+		</td>
+   </tr>
+   <tr>
+     <td valign="top" width="38" height="106">&nbsp;</td>
+     <td valign="top" width="872" colspan="2" height="106"> 
+		<p>All information in the file is ASCII format and is structured into 
+		&#8220;packets&#8221; of information. Each packet of information in the file 
+		contains a specific type of information:<ul>
+		<li>Packet 00, Title Packet</li>
+		<li>Packet 10, Linear Members</li>
+		<li>Packet 20, Plates</li>
+		</ul>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top" width="38" height="52">&nbsp;</td>
+     <td valign="top" width="872" colspan="2" height="52">Packet 00 contains information necessary to identify the neutral 
+		file. The name of the engineering firm, the client name, structure name, 
+		project name, date and time of file creation, issue code and design code 
+		are identified within this packet.<p>Packet 10 contains the description of the structural framing in the 
+		structure. All information required to locate, orientate and describe a 
+		particular framing member is contained within this packet. This packet 
+		also identifies member end connections as released or fixed. For 
+		purposes of revision tracking, each member is also assigned an 
+		individual revision level.</p>
+		<p>Packet 20 contains plate information. Plates are located spatially by 
+		identifying the number of plate vertices and the co-ordinates of each 
+		vertex.</p>
+		<p>Exported SDNF file will be an ASCII (text) file of sequential 
+		organization. Maximum record length will be 132 characters. All records 
+		(except the fixed-format Packet identification records) are free 
+		formatted, with fields delimited by white space (blanks). Co-ordinate 
+		values are in the global Cartesian (X, Y, Z) system.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="38" height="114">&nbsp;</td>
+     <td valign="top" width="872" colspan="2" height="114">
+		<h2>Format Specifiers:</h2>
+		<p>FP - ASCII Floating value, e.g. &#8220;12.15&#8221; or &#8220;1&#8221; (decimal optional)</p>
+		<p>I - ASCII Integer value, e.g. &#8220;5&#8221; (range of value: +/- 2 billion)</p>
+		<p>Cnn - ASCII character value of 'nn' characters maximum<br>
+		e.g., C10 - up to 10 ASCII characters including blanks character strings 
+		must be enclosed in double quotes (&#8220;example string&#8221;)</p>
+		<p>fixed - record must have exact content</p>
+		<p>With the exception of the fixed format records, the data may start in 
+		any column of the record. An example record follows each record format 
+		description, and is shown in italics.</p>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top" width="38" height="114">&nbsp;</td>
+     <td valign="top" width="872" colspan="2" height="114">
+		<h2>Comment Cards:</h2>
+		<p>Comment cards may be inserted anywhere in the input file, provided 
+		that the record begin with the &#8220;#&#8221; character in the first field.<br>
+		Format: #comment<br>
+		This is a comment record</p>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top" width="38" height="114">&nbsp;</td>
+     <td valign="top" width="872" colspan="2" height="114">
+		<h2>Packet Details:</h2>
+		<h3>Title Packet:</h3>
+		<p>This packet must be the first in the file.<br>
+		Record 1: Packet Header<br>
+		Format: fixed<br>
+		Packet 00</p>
+		<p>Record 2: Engineering Firm Identification<br>
+		Format: C80<br>
+		&#8220;Name of Engineering Firm&#8221;</p>
+		<p>Record 3: Client Identification<br>
+		Format: C80<br>
+		&#8220;Name of Client&#8221;</p>
+		<p>Record 4: Structure ID<br>
+		Format: C80<br>
+		&#8220;Name of Structure&#8221;</p>
+		<p>Record 5: Project ID<br>
+		Format: C80<br>
+		&#8220;Name of Project&#8221;</p>
+		<p>Record 6: Date, Time of file creation<br>
+		Format: C30; C30<br>
+		&#8220;11/19/91&#8221; &#8220;13:12&#8221;</p>
+		<p>Record 7: Revision Number, Issue Code<br>
+		Format: I; C64<br>
+		18 &#8220;issue Code&#8221;</p>
+		<p>Record 8: Design Code<br>
+		Format: C80<br>
+		&#8220;Design Code Name&#8221;</p>
+		<p>Record 9: Number of Loading Records<br>
+		Format: I<br>
+		2</p>
+		<p>Record 10 on: 'n' Load Combination record, where 'n' is from Record 9<br>
+		Loading #, Loading type (0 = load case, 1 = load combination), 
+		Description<br>
+		Format: I; I; C64<br>
+		1 1 &#8220;Live and Wind loads&#8221;</p>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top" width="38" height="114">&nbsp;</td>
+     <td valign="top" width="872" colspan="2" height="114">
+		<h3>Linear Member Packet:</h3>
+		<p>Record 1: Packet Header<br>
+		Format: fixed<br>
+		Packet 10</p>
+		<p>Record 2: Linear units, number of linear members<br>
+		Format: C24; 1<br>
+		&#8220;feet&#8221; 376</p>
+		<p>Record 3 on:<br>
+		Each linear member is represented by 6 records which follow:<br>
+		(total of 6*n records, where 'n' is number of members from Record 2 
+		above)</p>
+		<p>Linear Member Record 1:<br>
+		Member number, Cardinal Point, Status, Class, Type, Piece Mark, Revision 
+		Number<br>
+		Format: I; I; I; I; C24; C24; I<br>
+		22 8 0 1 &#8220;Beam&#8221; &#8220;B_101_FL1&#8221; 14</p>
+		<p>Linear Member Record 2:<br>
+		Section Size, Grade, Rotation, Mirror X axis, Mirror Y axis<br>
+		Format: C32; C24: FP, I, I<br>
+		&#8220;W12x50&#8221; &#8220;A36&#8221; 90.0 0 0</p>
+		<p>Linear Member Record 3:<br>
+		Orientation Vector; Start, End Co-ordinates; Start, End Cutbacks<br>
+		Format: 3 FP; 3 FP; 3 FP; 2 FP<br>
+		0 0 1.0 10 0 72.75 10 12.5 72.75 0 0</p>
+		<p>Linear Member Record 4.<br>
+		X, Y Cross-section offsets<br>
+		Format: 2FP<br>
+		0 -.25</p>
+		<p>Linear Member Record 5:<br>
+		X, Y, Z Offsets Start; X, Y, Z Offsets End<br>
+		Format: 6 FP<br>
+		0 0 0 0 0 -1.0</p>
+		<p>Linear member Record 6:<br>
+		Releases - End 1 Tx, Ty, Tz, Rx, Ry, Rz; End 2 Tx, Ty, Tz, Rx, Ry, Rz<br>
+		Format: 12 I<br>
+		0 0 0 0 1 1 0 0 0 0 1 1</p>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top" width="38" height="114">&nbsp;</td>
+     <td valign="top" width="872" colspan="2" height="114">
+		<h3>Plate Element Packet:</h3>
+		<p>Record 1: Packet Header<br>
+		Format: fixed<br>
+		Packet 20</p>
+		<p>Record 2: linear units, thickness units, number of plates<br>
+		Format: C24; C24: I<br>
+		&#8220;feet&#8221; &#8220;inches&#8221; 121</p>
+		<p>Record 3 on:<br>
+		Each plate is represented by a variable number of records which follow:</p>
+		<p>Plate Record 1: Plate number, Connect Point, Status, Class, Type<br>
+		Format: I; I; I; I; C24<br>
+		213 1 0 1 &#8220;Gusset</p>
+		<p>Note: Connect point refers to plate position relative to the plane 
+		defined by plate co-ordinates.</p>
+		<p>Connect point:<br>
+		0 = by centre<br>
+		1 = positive face<br>
+		-1 = negative face</p>
+		<p>Plate Record 2: Piece Mark, Grade, thickness, number of vertices<br>
+		Format: C24; C24; FP; I<br>
+		&#8220;Plate GP_78&#8221; &#8220;A36&#8221; 1.125 6</p>
+		<p>The plate geometry is represented on 'n' records, where 'n' is the 
+		number of vertices from Plate Record 2 above. Each record contains the 
+		X, Y, Z co-ordinates of a vertex.</p>
+		<p>Plate Geometry Record: X, Y, Z co-ordinates<br>
+		Format: 3FP<br>
+		22.763 8.475 10</td>
+   </tr>
+   <tr>
+     <td valign="top" width="38">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top" width="14" height="1013"><strong>1.</strong></td>
+     <td valign="top" width="755" height="1013"><span lang="en-us">With your 
+     document open, click the <kbd>SDNF Export<img border="0" src="b35doc/english/online/icons_C2/images/I_CATSDNFExportP2.gif" width="22" height="22"></kbd> button. The <kbd>SDNF 
+		Export</kbd> dialog box displays.</span><p>
+     <img border="0" src="b35doc/english/online/sr1ug_c2/images/dbSDNFExport01_NLS.gif" width="314" height="405"><p>
+     Fill in data as explained below.<p>
+     <b>File</b><p>
+     <kbd>Name</kbd>: SDNF file saving location is specified here. You may type 
+		or click on browse to specify the location. If pointed to an existing 
+		SDNF file, it will be overridden with current SDNF export information 
+		otherwise give file name to create a new SDNF file.<p>
+     <kbd>Units</kbd>: Unit of the exported data is selected here.<p>
+     <b>Project</b><p>
+     This part of the dialog box, you can specify the project details. Here you 
+		can specify <kbd>Company Name</kbd>, <kbd>Project Model</kbd>, <kbd>
+		Project Name</kbd>, <kbd>Project Designation</kbd>.<p>
+     <b>Rotation</b><p>
+     <kbd>Export Vector: </kbd>If you select <kbd>Export Vector</kbd>, member 
+		orientation data is stored in 
+		vector format<kbd>. </kbd><p>
+     <kbd>Export Angle: </kbd>If you select <kbd>Export Angle</kbd>, member 
+		orientation data is stored in 
+		angle format.<p>
+     <kbd>Reference for Columns:</kbd> If <kbd>Export Angle</kbd> is selected then this 
+		option gets highlighted. You can select either <kbd>Y Axis</kbd> or <kbd>X Axis</kbd> as the 
+		<kbd>Reference for Column</kbd>. Angle values are stored depending upon the 
+		<kbd>Reference for Column</kbd> selected.<p>
+     <b>Orientation</b><p>
+     You can select<kbd> Orientation </kbd>either<kbd> Start Point to End Point </kbd>
+		or<kbd> End Point to Start Point </kbd>to meet your design requirements.<p>
+     <b>Anchor Points</b><p>
+     If you select option<kbd> Swap Left and Right Slides</kbd>, you can 
+		swap the <kbd>Anchor Point</kbd> of the shape to be exported.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="38" height="25">&nbsp;</td>
+     <td valign="top" width="14" height="25"><strong><span lang="en-us">2</span>.</strong></td>
+     <td valign="top" width="755" height="25">Click <kbd>OK</kbd> after specifying all 
+		necessary details from <span lang="en-us"><kbd>SDNF Export</kbd> dialog 
+		box.</span></td>
+   </tr>
+   <tr>
+     <td valign="top" width="38" height="37">&nbsp;</td>
+     <td valign="top" width="14" height="37"><strong>3.</strong></td>
+     <td valign="top" width="755" height="37">
+		In case, the SDNF Import data is inaccurate or insufficient, a warning 
+		message is displayed specifying the path to the stored log file. You can 
+		refer the error log created to get details.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="38" height="37">&nbsp;</td>
+     <td valign="top" width="14" height="37"><strong>4.</strong></td>
+     <td valign="top" width="755" height="37">
+		<p class="MsoNormal">File similar to this will be created at the path 
+		specified in the SDNF Export dialog box<img border="0" src="b35doc/english/online/sr1ug_c2/images/wnsdnfexporting01_NLS.gif" width="402" height="527"></p>
+		</td>
+   </tr>
+   </table>
+ <p align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" border="0" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

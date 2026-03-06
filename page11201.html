@@ -1,0 +1,387 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Groove Turning Operations</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style type="text/css">
+.style1 {
+	border-style: solid;
+	border-width: 1px;
+}
+.style2 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+</head>
+
+<body>
+
+<h1><a name="Grooving"></a>Groove Turning Operations</h1>
+<p><a name="ix-Groove Turning operation"></a>
+<a name="ix-Groove Turning parameter:Attack Distance"></a>
+<a name="ix-Groove Turning parameter:Axial part offset"></a>
+<a name="ix-Groove Turning parameter:Chip Break"></a>
+<a name="ix-Groove Turning parameter:Stock offset"></a>
+<a name="ix-Groove Turning parameter:First Plunge Position"></a>
+<a name="ix-Groove Turning parameter:Gouging Safety Angle"></a>
+<a name="ix-Groove Turning parameter:Grooving by Level"></a>
+<a name="ix-Groove Turning parameter:Lead-in"></a>
+<a name="ix-Groove Turning parameter:Lift-off"></a>
+<a name="ix-Groove Turning parameter:Machining Tolerance"></a>
+<a name="ix-Groove Turning parameter:Maximum Depth of Cut"></a>
+<a name="ix-Groove Turning parameter:Maximum Depth of Level"></a>
+<a name="ix-Groove Turning parameter:Maximum Approach Distance"></a>
+<a name="ix-Groove Turning parameter:Next Plunges Position"></a>
+<a name="ix-Groove Turning parameter:Part Contouring"></a>
+<a name="ix-Groove Turning parameter:Radial part offset"></a>
+<a name="ix-Groove Turning parameter:Part offset"></a>
+<a name="ix-Groove Turning parameter:Under Spindle Axis Machining"></a></p>
+<p>The information in this section will help you create and edit <kbd>Groove Turning</kbd> 
+operations in your manufacturing program. </p>
+<p><a name="pgfId=1072494"></a>The Groove Turning operation allows you to machine 
+a groove by a series of plunging cuts. You can specify: </p>
+<ul>
+	<li>external, internal, frontal, or inclined machining according to the type 
+	of area to machine</li>
+	<li>various approach and retract path types</li>
+	<li>various lead-in and lift-off options with specific feedrates</li>
+	<li>various plunge locations</li>
+	<li>tool output point change.</li>
+</ul>
+<p>The following topics are dealt with in the paragraphs below:</p>
+<ul>
+	<li><a href="#tools">Tooling</a></li>
+	<li><a href="#pgfId=54443">Geometry</a></li>
+	<li><a href="#pgfId=54559">Machining Strategy Parameters</a></li>
+	<li><a href="#FandSGrooving">Feeds and Speeds</a></li>
+	<li><a href="#pgfId=1063512">Tool Compensation</a></li>
+	<li><a href="#pgfId=1094394">Macros</a>.</li>
+</ul>
+<h3><a name="tools"></a>Tooling for Groove Turning</h3>
+<p>The following tooling may be used: </p>
+<ul>
+	<li>Internal, External and Frontal Groove insert-holders with groove and trigon 
+	inserts.<br>
+	Refer to <a target="_blank" href="page11208.html">Trigon Insert Used on a Groove 
+	Insert-holder</a> for more information about this tooling configuration.</li>
+	<li>External and Internal insert-holders with round inserts.</li>
+</ul>
+<p>Note that the following attributes may influence machining (they are located 
+on the Insert-holder&#39;s Technology tab):</p>
+<ul>
+	<li>Gouging angle</li>
+	<li>Trailing angle</li>
+	<li>Leading angle</li>
+	<li>Max Recessing Depth</li>
+	<li>Max Cutting Depth</li>
+	<li>Max Boring Depth.</li>
+</ul>
+<p>These attributes take tooling accessibility into account and may reduce the machined 
+area.<br>
+However, you can use the <b>Insert-Holder Constraints</b> option on the operation 
+editor to either ignore or apply these tooling attributes. You can replay the operation 
+to verify the influence of these attributes on the generated tool path. </p>
+<p><b>Notes</b>:</p>
+<ul>
+	<li>Insert-Holder Constraints are applied if the sum of tool setup angle and 
+	angle of groove incline (if defined) is less than 45 degrees.</li>
+	<li>The Insert-Holder Constraints setting does not influence the
+	<a href="#GougingSafAng">Gouging Safety Angle</a> or <a href="#MaxDofCut">Max 
+	Depth of Cut</a> defined in the operation editor.</li>
+</ul>
+<h3><a name="pgfId=54443"></a>Geometry for Groove Turning</h3>
+<p>Part and Stock profiles are required. They can be specified as follows:</p>
+<a name="ix-contextual command::By Curve;By Curve contextual command"></a>
+<a name="ix-contextual command::Sectioning;Sectioning contextual command"></a>
+<ul>
+	<li>select edges either directly or after selecting the <b>By Curve</b> contextual 
+	command. In this case the
+	<a href="page11480.html#EdgeSelToolbar" target="ds_doc2">
+	Edge Selection toolbar</a> appears to help you specify the guiding contour.</li>
+	<li>select the <b>Sectioning</b> contextual command. Please refer to
+	<a href="page4937.html" target="ds_doc2">
+	Sectioning</a> for details of how to use this capability.<br>
+	Please note that the sectioning selection method is not associative.</li>
+</ul>
+<h4><a name="pgfId=1045083"></a><a name="30956"></a>Orientation for Groove Turning
+</h4>
+<p><a name="pgfId=54449"></a><a name="ix-Groove Turning parameter:Orientation">
+</a><a name="ix-Internal Groove Turning"></a>
+<a name="ix-External Groove Turning"></a><a name="ix-Frontal Groove Turning">
+</a><a name="ix-Inclined Groove Turning"></a>The following
+<a name="marker=1108103"></a>Orientations are proposed: internal, external, frontal 
+and inclined. <a name="pgfId=54451"></a>The selected Orientation defines the type 
+of geometric relimitation to be done between the stock and part geometry in order 
+to determine the area to machine. <a name="pgfId=1052507"></a>For an inclined orientation 
+you must specify the <a name="marker=1108104"></a>
+<a name="ix-Groove Turning parameter:Angle of Incline"></a><b>Angle of Incline</b>.</p>
+<h4><a name="pgfId=54523"></a><a name="49771"></a>Part and Stock Offsets for Groove 
+Turning</h4>
+<ul>
+	<li><b>Stock offset</b>, which is defined perpendicular to the stock profile</li>
+	<li><b>Part offset</b>, which is defined perpendicular to the part profile.</li>
+	<li><b>Axial part offset</b> </li>
+	<li><b>Radial part offset</b>.</li>
+</ul>
+<p><a name="pgfId=54555"></a>Offsets can be positive or negative with any absolute 
+value. <a name="pgfId=54557"></a>The global offset applied to the part profile is 
+the resulting value of the normal, axial and radial offsets. </p>
+<h4>
+<img border="0" src="b35doc/english/online/icons_C2/common/anew.gif" width="32" height="32"><a name="R20EndLimit"></a> 
+End Limit for Groove Turning</h4>
+<p>In grooving, the part profile usually needs to have flanks at the both ends of 
+the profile. But in some cases you can define geometry with single flank. Such a 
+geometric selection is referred as an open-ended groove.</p>
+<p>In case of a Groove Turning operation for an open-ended groove, one end is limited 
+by flank and the second end limit of the profile geometry is considered till the 
+selected geometric end element. If you need to restrict the end to a different location, 
+then the selected geometry for this purpose is referred to as End Relimiting Elements. 
+The option that is used to select this element is called as End Limit.</p>
+<p><a name="ix-Groove Turning parameter:End Limit"></a>
+<a name="ix-Groove Turning parameter:End Limit Offset"></a><b>End Limit </b>option 
+allows you to specify a point, line, curve or face to relimit or extrapolate the 
+selected part profile. If a face is specified, the end element is the intersection 
+of the face and the working plane. The position of the end of machining is defined 
+with respect to this element by one of the following settings: <kbd>None / In / 
+On / Out</kbd>.</p>
+<p><b>End limit offset</b>: distance with respect to the end element (only if end 
+element is a line or a curve, and when In or Out&nbsp; is set for end element positioning).</p>
+<p>If you want to limit the path at the open end, the <kbd>End Limit Offset</kbd> 
+option helps in defining end limit element. When you select the End Limit, a 
+message comes <kbd>Click to select an End Re-limiting Element</kbd>. </p>
+<p>
+<img src="b35doc/english/online/lmgug_c2/images/dbRelimitElementNLS.gif" width="374" height="441" class="style1"></p>
+<p>Once End Relimiting element is selected it is highlighted and the tool path 
+is computed till the end limit element. The new tool path will be as shown 
+below.</p>
+<p>
+<img src="b35doc/english/online/lmgug_c2/images/GrooveTurningEndElement01.gif" width="327" height="310" class="style1"></p>
+<p>The End Limit has an influence on the specified Strategy tab settings.</p>
+<p><b>Case 1</b>: With reference to the above geometry,&nbsp;if the selected strategy 
+options are:</p>
+<ul>
+	<li>Orientation: External</li>
+	<li>First plunge position: Center <blink>or Right</blink></li>
+	<li>Next plunges position: To head stock.</li>
+</ul>
+<p>Then, the tool path is not defined as the resulting part to be machined due 
+to End Limit application is just a straight horizontal element without a flank. An 
+error message is displayed notifying that groove machined must have a flank for 
+the above plunge positions. The end limit is supported in the presence of a 
+flank or in an open ended groove, where there is atleast a flank. </p>
+<p><b>Case 2</b>: With reference to the above geometry, if the selected strategy 
+options are:</p>
+<ul>
+	<li>Orientation: External</li>
+	<li>First plunge position: Center</li>
+	<li>Next plunges position: From head stock.</li>
+</ul>
+<p>In this case the tool path will be defined from flank to centre, then from end 
+element to centre.</p>
+<h3><a name="pgfId=54559"></a>Machining Strategy Parameters for Groove Turning</h3>
+<h4><a name="pgfId=1069850"></a><a name="23562"></a>Path Definition for Groove Turning</h4>
+<ul>
+	<li><b><a name="MaxDofCut"></a>Max Depth of Cut</b><br>
+	This option is used to specify the maximum distance between plunges.</li>
+	<li><b>First Plunge Position</b> <br>
+	Depending on the groove orientation, you must specify a first plunge position 
+	by means of the following choice: <b>Left/Down</b> - <b>Center</b> - <b>Right/Up</b> 
+	- <b>Automatic</b>. <br>
+	Automatic is only available for frontal machining. In this case, the position 
+	of the first plunge is deduced from the tool&#39;s minimum and maximum cut diameters. 
+	The position is at a distance:<br>
+	(Minimum cut radius + Maximum cut radius)/2.</li>
+</ul>
+<ul>
+	<li><b>Next Plunges Position</b> (if First Plunge Position is set to Center).<br>
+	You can specify the position of the plunges that follow the first plunge with 
+	respect to:
+	<ul>
+		<li>the spindle axis by means of <b>To/From Spindle</b> for frontal machining</li>
+		<li>the head stock by means of <b>To/From Head Stock</b> for internal or 
+		external machining</li>
+		<li>the groove by means of <b>Left/Right of Groove</b> for inclined machining.</li>
+	</ul>
+	<p><a name="R18SinglePlunge"></a>If First Plunge Position is set to Center, 
+	the <b>Single plunge</b> option is available. This is suitable for machining 
+	a narrow groove, possibly using the Grooving by level and Chip break options. 
+	Note that in this case Part Contouring is not available.</p>
+	</li>
+	<li><b>Part Contouring</b><br>
+	You can specify if contouring is required by means of the proposed check box.<br>
+	The part profile is followed at the end of grooving. This is done by machining 
+	down the sides of the groove in order to clear the profile.<br>
+	<br>
+	Part Contouring is done based on collision checking between the tool insert 
+	and stock/part profiles. <br>
+	This means the contouring path which is collision free, may lead to incomplete 
+	part contouring based on the geometry of the stock and part profile selected 
+	during Geometry definition. <br>
+	<br>
+	To get complete Part Contouring, geometry of the stock and part profile selected 
+	during Geometry definition must account for any collisions between tool insert 
+	and geometry.</li>
+	<li><b>Grooving by Level </b>mode<br>
+	This option allows you to machine the groove in one or more levels. <br>
+	Multiple-levels mode is particularly useful when the groove is too deep to machine 
+	in one level. In this case <b>Max depth of level</b> defines the maximum depth 
+	of each level. If it is greater than the <b>Maximum depth of cut</b> defined 
+	on the tool, the value on the tool is taken into account.<br>
+	<br>
+	<a name="R16OptimizeFeed"></a>During return motion at the end of a level, the 
+	tool returns at Rapid or Air-cutting feedrate to the first pass of a new grooving 
+	level up to a <b>Max approach distance</b>. The feedrate then reduces to lead-in 
+	feedrate for this approach distance. <br>
+	<br>
+	See also <a href="#R18ByLevelInterrupt">Behavior of Linking Macro when Grooving 
+	by Level</a>.</li>
+	<li><b>Under Spindle Axis Machining</b><br>
+	When Groove Turning in frontal mode, this option allows you to request machining 
+	under the spindle axis.</li>
+	<li><b>Chip Break</b><br>
+	You can specify if chip clearing is to be done during machining by setting the 
+	check box. In this case you must specify Plunge, Retract and Clear distances.</li>
+	<li><b><a name="GougingSafAng"></a>Gouging Safety Angle</b><br>
+	Angle attributes on the grooving insert are taken into account to avoid collision 
+	by reducing the maximum slope on which the tool can machine. The Gouging Safety 
+	Angle allows you to further reduce this slope. <br>
+	<br>
+	Note that a gouging angle can also be defined on the insert-holder to define 
+	the maximum slope on which the tool can machine. In this case and if the<b> 
+	Insert-Holder Constraints </b>setting is applied (<a href="#tools">see above</a>), 
+	the angle that reduces the slope the most will be taken into account.</li>
+	<li><b>Machining Tolerance</b>.</li>
+</ul>
+<h4><a name="pgfId=1069690"></a><a name="24485"></a>Lead-in, Lift-off and Attack 
+for Groove Turning</h4>
+<ul>
+	<li><b>Lead-in Distance</b><br>
+	Defined with respect to the cutting direction. It takes the stock profile and 
+	stock clearance into account. The tool is in RAPID mode before this distance.</li>
+	<li><b>Attack Distance</b><br>
+	Defined with respect to the cutting direction and the stock profile with a stock 
+	clearance.</li>
+</ul>
+<blockquote>
+	<p><a name="pgfId=1069693"></a>These options allow penetration into the workpiece 
+	at a reduced feedrate in order to prevent tool damage. Once the attack distance 
+	has been run through, the tool moves at machining feedrate.</p>
+	<p><a name="pgfId=1069694"></a>When tool motion between two passes is in contact 
+	with the part profile, in order to avoid collisions the corresponding feed is 
+	the lift-off feedrate and not RAPID. </p>
+</blockquote>
+<ul>
+	<li><b>Lift-off Distance</b> and <b>Lift-off Angle</b><br>
+	These parameters define the lift-off vector at the end of each pass with respect 
+	to the cutting direction. The figure below shows the effect of a positive lift-off 
+	angle (external machining is assumed).</li>
+</ul>
+<blockquote>
+	<p><img border="1" src="b35doc/english/online/lmgug_c2/images/LatheTasks-35.gif" width="263" height="249"></p>
+</blockquote>
+<h3><a name="ix-Groove Turning parameter:Feeds and Speeds"></a>
+<a name="FandSGrooving"></a>Feeds and Speeds for Groove Turning</h3>
+<p><a name="pgfId=1034563"></a><a name="marker=1080025"></a>Speed unit can be set 
+to: </p>
+<ul>
+	<li>Angular: spindle speed in revolutions per minute</li>
+	<li>Linear: constant cutting speed in units per minute</li>
+</ul>
+<p><a name="pgfId=1043029"></a>then you can give a Machining Speed value. </p>
+<p>You can also set a Maximum spindle speed value for the operation (by default, 
+this value is the same as the Maximum spindle speed set on the Part Operation).</p>
+<p align="left">The following feedrates can be set to either Angular units (length 
+per revolution) or Linear units (length per minute):</p>
+<ul>
+	<li>Contouring feedrate</li>
+	<li>Lead-in feedrate, which is applied during lead-in and attack distances</li>
+	<li>Lift-off feedrate</li>
+	<li>First Plunge feedrate and Next Plunges feedrate. <br>
+	Different feedrates can be assigned to the first plunge and the following plunges</li>
+	<li>Air cutting feedrate.</li>
+</ul>
+<p>Feedrates are also available for air cutting trajectories such as macro motions 
+and path transitions. <br>
+Note that RAPID feedrate can be replaced by Air cutting feedrate in tool trajectories 
+(except in macros) by selecting the check box in the <kbd>Feed and Speeds </kbd>tab page
+<img border="1" src="b35doc/english/online/lmgug_c2/images/TabFeedG.gif" align="middle" width="36" height="22">.</p>
+		<p>
+		<img src="b35doc/english/online/lmgug_c2/images/AirCutting01.gif" width="363" height="76" class="style2"></p>
+		<p>You can select <kbd>Air Cutting feed-rate</kbd> as Linear (feed per 
+		minute) or Angular (feed per revolution). When you select it as Angular the 
+		unit is set to mm_turn, the unit is set to mm_mn for Linear.</p>
+		<p>The changes in unit of <kbd>Air cutting feed-rate</kbd>, are also reflected in APT 
+		file output. Calculated cycle time in Properties dialog box of MO also 
+		get changed. There are changes in total time and machining time on tool 
+		path replay dialog box.</p>
+<p><a name="pgfId=1078668"></a><a name="marker=1108129"></a>Dwell setting indicates 
+whether the tool dwell at the end of a path or a plunge is to be set in seconds 
+or a number of spindle revolutions.</p>
+<p>Please note that decimal values can be used for the number of revolutions. For 
+example, when machining big parts that have a large volume, it can be useful to 
+specify a dwell using a value of less than one revolution (0.25, for example).</p>
+<h3><a name="pgfId=1063512"></a><a name="94504"></a>
+<a name="ix-Groove Turning parameter:Tool Compensation"></a>Tool Compensation for 
+Groove Turning </h3>
+<p><a name="pgfId=1063513"></a>You can select a <b>tool compensation number</b> 
+corresponding to the desired tool output point. Note that the usable compensation 
+numbers are defined on the tool assembly linked to the machining operation.
+<a name="pgfId=1063514"></a>If you do not select a tool compensation number, the 
+output point corresponding to type P9 will be used by default. </p>
+<p><a name="pgfId=1063515"></a>
+<a name="ix-Groove Turning parameter:Change Output Point"></a>Note that the change 
+of output point is managed automatically if you set the <a name="marker=1108130">
+</a><b>Change Output Point</b> option. <a name="pgfId=1069907"></a><br>
+If the output point is consistent with the flank of the groove to be machined, the 
+output point is changed when the other flank of the groove is machined.<br>
+At the end of the operation, the output point is the same as it was at the start 
+of the operation. <a name="pgfId=1069911"></a>See <a href="page11196.html">Changing 
+the Output Point</a> for more information.</p>
+<h3><a name="pgfId=1094394"></a>Approach, Retract and Linking Macros for Groove 
+Turning</h3>
+<p><a name="pgfId=1096799"></a>The following <a name="marker=1096797"></a>Approach 
+and <a name="marker=1096798"></a>Retract macro modes are proposed: Direct, Axial-radial, 
+Radial-axial, and Build by user.<br>
+<a name="pgfId=1096800"></a>The selected macro type (Approach or Retract) defines 
+the tool motion before or after machining. </p>
+<p>Various feedrates are available for the approach and retract motions (RAPID, 
+lead-in, lift-off, and so on). Local feedrates can be set to either Angular units 
+(length per revolution) or Linear units (length per minute).</p>
+<p>See
+<a href="page11368.html" target="_blank">Define 
+Macros on a Turning Operation</a> for more information.</p>
+<h4>Linking Macros</h4>
+<p>Linking macros, which comprise retract and approach motion can also be used on 
+Groove Turning operations.<br>
+Approach and retract motions of linking macros are interruptible.
+<a name="R18InterruptAfterSpecifiedLevels"></a>For Groove Turning only, you can 
+interrupt the macro at the end of the number of specified levels. See
+<a target="_blank" href="page11368.html#WNR11InterruptMacro">
+Interruptible Macros</a> for more information.</p>
+<p>It can be useful to interrupt an operation when the foreseeable lifetime of the 
+insert is not long enough to complete the machining. </p>
+<h4><a name="R18ByLevelInterrupt"></a>&nbsp;Behavior of Linking Macro when Grooving 
+by Level</h4>
+<p>Groove turning can be done in one or more levels using the <b>Grooving by Level
+</b>mode. Also, you can define Linking macros and define interrupt modes of these 
+macros. </p>
+<p>Prior to Release 18, if the Linking macro is interrupted at the end of a level, 
+the macro returns to the previous tool path and not to the next cutting motion.</p>
+<p>As from Release 18, the macro returns to the next cutting position in the tool path 
+after retract from interruption at the end of a level. </p>
+<p>A Linking macro returning to previous tool position and then moving to the next 
+cutting position is considered a redundant move. As from Release 18, such redundant 
+moves are avoided.</p>
+
+</body>
+
+</html>
+

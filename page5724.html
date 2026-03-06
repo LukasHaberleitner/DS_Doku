@@ -1,0 +1,150 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>About Spatial Query</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+ </head>
+
+ <body>
+
+ <a name="ix-spatial query"></a>
+ <h1><a name="CATNavigation4DHeader.Query3dmapN"></a>About 
+ Spatial Query</h1>
+ <table Border="0" CELLSPACING="0" valign="top">
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" title="ainfo.gif (980 bytes)" width="32" height="32"></td>
+     <td valign="top">Large assemblies can be complex, consisting of many 
+     products and sub-products. You can simplify a complex assembly by 
+     displaying only those products you want to work with. Spatial Query lets 
+     you do just that.<br>
+     <br>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" title="ainfo.gif (980 bytes)" width="32" height="32"></td>
+     <td valign="top"><font face="Verdana"><b>How it works</b></font><p>The 
+     proximity query calculation is not based on the representation visualized 
+     in your session. Rather, it is based on a cubic representation of each 
+     part, the size of the cubes of which is designated by the accuracy 
+     parameter. Because of the way in which the detection algorithm is designed, 
+     the real distance between two parts in the visual representation could be 
+     greater than the clearance parameter you specify, yet the two parts could 
+     be sufficiently close as to be considered neighbors. An increase of the 
+     clearance value can be due to:</p>
+     <div align="center">
+       <center>
+       <table border="0" cellspacing="0" cellpadding="0" height="62" width="95%">
+         <tr>
+           <td height="21" width="466"><font face="arial, arial, helvetica"><b>
+           the cubic representation of the parts:</b> &nbsp;</font></td>
+           <td height="21" width="462"><font face="arial, arial, helvetica">
+           maximum increase=2*accuracy*sqrt(3)</font></td>
+         </tr>
+         <tr>
+           <td height="20" width="466"><font face="arial, arial, helvetica"><b>
+           the positioning error:</b></font></td>
+           <td height="20" width="462"><font face="arial, arial, helvetica">
+           maximum increase=0.5*accuracy*sqrt(3)</font></td>
+         </tr>
+         <tr>
+           <td height="21" width="466"><font face="arial, arial, helvetica"><b>
+           the clearance value transformed into cubes:</b></font></td>
+           <td height="21" width="462"><font face="arial, arial, helvetica">
+           maximum increase= accuracy*sqrt(3)</font></td>
+         </tr>
+       </table>
+       </center>
+     </div>
+     <p>The sum of above three deltas gives a maximum increase= 3.5*accuracy*<font face="arial, arial, helvetica">sqrt(3).</font></p>
+     <p><font face="Verdana">In the example below, the proximity query was made 
+     using an accuracy parameter=30mm and a clearance parameter=0 mm, yet two 
+     parts separated by a distance of ~46 mm were considered to be touching, 
+     therefore neighbors.</font></p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/dmnug_c2/images/proximityquery042.gif" width="553" height="569"></td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" title="ainfo.gif (980 bytes)" width="32" height="32"></td>
+     <td valign="top"><b>Cache Management and </b><strong>Accuracy</strong>:<br>
+     Setting an accuracy determines the size of the cubes used to represent the 
+     products in the calculation. For larger products, a lower setting will 
+     result in a slower computation time but a more precise result.
+     <p>Clicking
+     <img border="0" src="b35doc/english/online/dmnug_c2/images/morebutton.gif" width="23" height="19"> 
+     opposite Accuracy gives you access to the Cache Management and Accuracy 
+     dialog box which tells you how much cache is used, lets you free the cache, 
+     and if you have a DMU Navigator license only, will calculate the cache 
+     required for an accuracy setting you enter. </p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" title="ainfo.gif (980 bytes)" width="32" height="32"></td>
+     <td valign="top"><font face="Verdana"><strong>Clearance</strong>:<br>
+     Setting a clearance defines an area around the reference selection within 
+     which all nearby products or outside of which all far away products are 
+     returned by the query depending on the Products to Select option chosen.</font><font face="arial, arial, helvetica"><br>
+     </font></td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top"><font face="Verdana"><b>What About Released Accuracy?<br>
+     <br>
+     </b>The default value for released accuracy is 20mm.<br>
+     This value can also be defined by the administrator.<br>
+     <br>
+     <b>How does the administrator define the release accuracy value?</b></font><ul>
+       <li><font face="Verdana">he<b> sets</b> a precise and required value in 
+       the release Accuracy field.&nbsp;<br>
+       (see&nbsp; </font><font face="arial, arial, helvetica"><kbd>
+       <font face="Verdana">Tools&nbsp;&gt;&nbsp;Options&nbsp;&gt;&nbsp;Digital 
+		Mockup &gt;&nbsp;DMU Navigator &gt;&nbsp;Spatial Query</font></kbd></font><font face="Verdana">)<font face="arial, arial, helvetica"><kbd><br>
+       </kbd></font></font></li>
+       <li><font face="Verdana">then <b>runs</b> CATDMUUtility batch process 
+       without defining </font><font face="arial, arial, helvetica">
+       <a href="page5647.html#hj-voxeloption"><font face="Verdana">- vox&nbsp; 
+       option</font></a></font><font face="Verdana">, the release accuracy value 
+       is taken into account. The data is pre-tessellated.&nbsp;<br>
+       </font></li>
+       <li><font face="Verdana">you as <b>user </b>can select this value 
+       checking the Release accuracy option when performing proximity query</font></li>
+     </ul>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top"><em>
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></em></td>
+     <td valign="top">You can combine the <span style="letter-spacing: 0">
+		<font color="#000000"><span style="font-weight: 400"><kbd>Spatial Query</kbd></span></font></span> command with other DMU 
+     commands, for example Comparing Products (in the DMU Space Analysis 
+     toolbar).<br>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="2" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+ <p><br>
+ </p>
+
+ </body>
+
+</html>
+

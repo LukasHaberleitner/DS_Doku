@@ -1,0 +1,354 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Useful Tips</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>&nbsp;Useful Tips<a name="ix-useful tips::relations"></a> <a name="top"></a>
+ </h1>
+ <div align="left">
+   <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber13" Width="0">
+     <tr>
+       <td width="5%" valign="top">
+       <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+       <td width="95%" valign="top">Useful tips and restrictions concerning 
+       parameters, formulas, and design tables are available in the <var>CATIA 
+       Infrastructure User's Guide</var>.</td>
+     </tr>
+   </table>
+ </div>
+ <h2>Relations <a name="ix-relations::useful tips"></a></h2>
+ <font FACE="Helv" SIZE="2">
+ <p>When using some objects, you need to indicate the destination of the 
+ formulas and the rules that valuate the parameters of these objects. If you 
+ valuate a time parameter in a kinematic simulation for example, the relation 
+ will not be located below the Relations set but in the mechanisms and commands 
+ tree of the simulation.</p>
+ <h4>Hiding relations</h4>
+ <p>You can hide a knowledge relation (formula, rule, check, ..) by 
+ right-clicking this relation in the specification tree and by selecting the
+ <kbd>Hide</kbd> command. </p>
+ <table border="0" cellpadding="4" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber10">
+   <tr>
+     <td width="73%" valign="top">
+     <ul>
+       <li>A visual indicator located at the Relations set level indicates that 
+       the set contains hidden relations. <br>
+       Note that this indicator is not recursive.</li>
+       <li>If you try to delete a relations set containing hidden relations, a 
+       message is displayed asking you if you want to delete the relations set 
+       that contains hidden relations. <br>
+       Note that if you try to delete a relations set containing another 
+       relations set with hidden relations, the message will be displayed.</li>
+     </ul>
+     </td>
+     <td width="27%" valign="top">
+     <p align="right"><img border="1" src="b35doc/english/online/kwrug_c2/images/kwrrelations1NLS.gif" width="231" height="71"></td>
+   </tr>
+ </table>
+ <h4>Relations Updates</h4>
+ <p>The evaluation of relations containing measures can be integrated to the 
+ Part update only. In a .CATProduct or in a .CATProcess file, to create a 
+ parameter </p>
+ <ul>
+   <li>which value is the result of a relation containing measures </li>
+   <li>updated when modifying the measure inputs:</li>
+ </ul>
+ <ol class="task">
+   <li>
+   <p class="task">Create the relation containing the measure at the Part level.</li>
+   <li>
+   <p class="task">Integrate the relation evaluation to the Part update.</li>
+   <li>
+   <p class="task">At the Product or the Process level, create a relation that 
+   valuates the parameter by using the result parameter of the relation created 
+   at the Part level. To get an example, see
+   <a href="b35doc/english/online/kwrug_c2/samples/KwrUpdate.CATProduct">KwrUpdate.CATProduct</a>.</li>
+   <li>
+   <p class="task">Perform a local update at the Relations level.</li>
+ </ol>
+ <h4><a name="ix-syntax error message">Syntax errors</a> in relations message</h4>
+ <p>When loading a document, the message can appear asking you to load the 
+	necessary libraries. It means that during the load, some relations appeared 
+	as broken.<p>These relations 
+       use functions that are not recognized by the dictionary because the 
+       library containing the definition of the function is not still loaded. 
+       That's why you are asked if you want to load all the libraries containing 
+       functions definition. But loading all libraries may have an impact on 
+       performance. So, we recommend you to load only the libraries you are 
+       interested by. To do so, select the required libraries in the <kbd>
+       Knowledge Environment</kbd> tab (<kbd>Tools&gt;Options&gt;General&gt;Knowledge&gt;Knowledge 
+       Environment</kbd>.)<p class="task">&nbsp;</p>
+ <h4>More on Parameter Modification</h4>
+	<p>A parameter is modified only when valuating it with a value that differs 
+	from the previous one.<br>
+	<br>
+	For example, if we have the following language in a relation, each time the 
+	relation is evaluated, the parameter Real.1 is modified:<br>
+	<br>
+	<code>{ Real.1 = 0<br>
+	Real.1 = 2 }</code><br>
+	<br>
+	If a relation tries to valuate a parameter with the same value, then there 
+	is no impact at all.<br>
+	<br>
+	For example, Real.1 = 0 is valuated only when Real.1 is not equal to Zero. 
+	When the value of Real.1 after evaluation of rule is same as it was before 
+	evaluation, then it does not impact the CATProduct or CATPart.</p>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2><font color="#282187">Rules <a name="ix-useful tips:rules"></a>&nbsp;<a name="ix-rules::useful tips"></a></font></h2>
+ <ul>
+	<li>
+	<p align="left">In a rule using features that need the geometry to return the 
+ type (such as extrudes), when the feature is deactivated, the type cannot be 
+ returned. To solve the problem, use the Set command to indicate the type in the 
+ rule. For more information, see <a href="b35doc/english/online/kwrug_c2/samples/KwrSetType.CATPart">KwrSetType.CATPart</a>.</p>
+	</li>
+	<li>
+	<p align="left">When working in Drafting workbenches, do not create rules 
+	applying to features to access the attributes of these features. </p></li>
+	</ul>
+ <font FACE="Helv" SIZE="2"></font>
+ <h4><font color="#282187"><font color="#282187">Rules and Update Cycle</font></font></h4>
+ <div align="left">
+   <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1">
+     <tr>
+       <td width="39%" valign="top">
+       <img border="0" src="b35doc/english/online/kwrug_c2/images/kwrusefuletips1NLS.gif" width="261" height="211"></td>
+       <td width="61%" valign="top">
+       <p align="left">This configuration is allowed because a modification of 
+       the parameter activity does not impact the formula update. But: </p>
+       <ul>
+         <li>
+         <p align="left">In such a case, it is highly recommended to use the 
+         reaction feature.</li>
+         <li>
+         <p align="left">If you want to use a rule, do not deactivate and 
+         reactivate the activity parameter.</li>
+         <li>
+         <p align="left">When working with a UDF feature, make sure that you 
+         have inserted the relation set when defining the UDF.</li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+ </div>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2>Loops <a name="ix-useful tips:loops"></a>&nbsp;<a name="ix-loops::useful tips"></a></h2>
+ <table border="0" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber2">
+   <tr>
+     <td width="100%">
+     <ul>
+       <li>Generic Naming: Generic naming is a CATIA technique which creates a 
+       label whenever an element has been selected interactively. This label is 
+       a coded description of the selected element. When you specify a fillet to 
+       be applied to a face, you must select interactively the face definition 
+       but prior&nbsp; to doing this you must of course have generated the face 
+       to be filleted. This is why scripts requiring face, point or edge 
+       definitions cannot be generated in one shot. You don't have to mind about 
+       the generic naming itself as it is automatically captured from the 
+       geometry area. The thing you have to mind about is the order your 
+       instructions are to be written and executed in the script.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="100%">
+     <ul>
+       <li>Message &quot;<i>property</i> does not exist...&quot;: Check in the browser 
+       that the attribute name is correct. For attributes of list type (Fillets 
+       and Chamfers), check the indexes. The indexes specified must be 
+       consecutive&nbsp; from 1 to n without any gaps.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="100%">
+     <ul>
+		<li>&nbsp;It is strongly recommended that you use Knowledge patterns instead 
+		of using Loops.</li>
+		</ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="100%">
+     <ul>
+       <li>
+       <p align="left">Specifying a File Path (2 methods)</li>
+     </ul>
+     <p><b><font color="#282187">Syntax</font></b></p>
+     <b>
+     <p>There are 2 ways to specify the file path:</p>
+     </b>
+     <ul>
+       <li><b>import &quot;File path&quot;; </b>: Indicate the path of the file to be 
+       imported:<b><br>
+       </b><code>import &quot;E:&#092;users&#092;kwecx&#092;Models&#092;PartImport.CATPart&quot; 
+       ;. </code>Note that you must enclose the path within quotation marks and 
+       end the import statement with a semicolon (;). </li>
+       <li><b>import &quot;File Name&quot;;</b> : Indicate only the name of the file to be 
+       imported if this file is located in the same directory as the document 
+       containing the loop: <code>import &quot;PartImport.CATPart&quot;;</code>. Note 
+       that:<div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber3">
+           <tr>
+             <td width="100%">
+             <ul>
+               <li>You must enclose the document name within quotation marks and 
+               end the import statement with a semicolon (;). </font></li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td width="100%">
+             <ul>
+               <li>The file to be imported must be located in the same directory 
+               as the document containing the loop.</li>
+             </ul>
+             </td>
+           </tr>
+           <tr>
+             <td width="100%">
+             <ul>
+               <li>The document containing the loop must be saved.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ul>
+     <div align="left">
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber4">
+         <tr>
+           <td width="4%" valign="top" bgcolor="#F2F2F2">
+           <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+           <td width="96%" valign="top" bgcolor="#F2F2F2">To specify a file to 
+           be imported, you can use <kbd>Insert File Path</kbd> from the 
+           contextual menu. Selecting this command displays a file selection 
+           window. Quotation marks are automatically included but not the 
+           semicolon </td>
+         </tr>
+       </table>
+     </div>
+     </td>
+   </tr>
+   <tr>
+     <td width="100%">
+     <ul>
+       <li>
+       <p align="left">Importing Sketches: Recommendation</li>
+     </ul>
+     <p>When designing a document to be generated by a script, it is better to 
+     group all the required sketches in a single file. That way:</p>
+     <table border="0" cellpadding="0" cellspacing="0" width="100%">
+       <tr>
+         <td valign="top" width="100%">
+         <ul>
+           <li>you minimize the overall size of your sketch-related data</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top" width="100%">
+         <ul>
+           <li>no matter the method used to specify the input file, specify the 
+           path once</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top" width="100%">
+         <ul>
+           <li>the design of the final document is made easier. You get a global 
+           view of the sketches on which the other features rely.</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr>
+     <td width="100%">
+     <ul>
+       <li>
+       <p align="left">Specifying Strings: Recommendation: Double quotation 
+       marks as well as single quotation marks of <b>apostrophe</b> type (<b>`</b>) 
+       can be used to delimit strings. Single quotations marks (`) must be used 
+       to enclose character strings which contain other strings.</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2>Reactions <a name="ix-useful tips:reactions"></a>&nbsp;<a name="ix-reactions::useful tips"></a></h2>
+ <ul>
+   <li>There are 2 ways to react to parameter changes using the reaction 
+   feature:<div align="left">
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber14">
+       <tr>
+         <td>
+         <ul>
+           <li>Select the parameter and react to its Value Changed event </li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td>
+         <ul>
+           <li>Select the feature (that owns the attribute corresponding to your 
+           parameter) and react to the Attribute Modification event. Note that 
+           this method does not work in all cases.</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+   </div>
+   </li>
+   <li>If you create a User Feature embedding a reaction that will be launched 
+   when the User Feature is instantiated, select Owner in the Reaction dialog 
+   box and make sure that the reaction is one of the internal components of the 
+   User Feature. If not, the reaction will not be launched when instantiating 
+   the User Feature. </li>
+	<li>When creating reactions that react to updates, do not delete or add 
+	features which impact the update therefore it may lead to an update error.</li>
+ </ul>
+ <h2>V6 to V5 Compatibility<a name="hj-V6toV5compatibility"></a></h2>
+	<p>The Knowledge features Viz. <kbd>Parameters</kbd>, <kbd>Formulas</kbd>,
+	<kbd>Equivalent dimensions</kbd>, <kbd>Laws</kbd>, <kbd>Rules</kbd>, <kbd>
+	Checks</kbd>, <kbd>Set of equations</kbd>, <kbd>Reactions</kbd>, <kbd>
+	Relation</kbd> <kbd>sets</kbd>, <kbd>Parameter sets</kbd>, <kbd>Actions</kbd>,
+	<kbd>VB Actions</kbd>, <kbd>Optimizations</kbd>, and rulesets embedded in 
+	the V6 representation can be fully retrieved in V5. </p>
+	<p>In case of Design Table, the source file is stored in the database and 
+	thus the file would lose the link after the import. To retain the data 
+	stored in the source file, you can select the option <kbd>Duplicate data in 
+	CATIA model</kbd> in Design Table properties dialog box. By using this 
+	option, the content of the source file of the Design Table is imported and 
+	is embedded in the CATIA Model.</p>
+	<p>You can modify the configuration on the imported data and apply the 
+	changes to your designs. You can also use the data in V6 if the data is 
+	re-imported to V6. </p>
+	<p><img border="0" src="b35doc/english/online/kwrug_c2/images/kwrV6V5NLS.gif" width="780" height="303"></p>
+	<p>&nbsp;</p>
+ <p><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></p>
+ 
+
+ </body>
+
+</html>
+

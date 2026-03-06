@@ -1,0 +1,203 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2E2L2O2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Smoothing Meshes</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="docCompliance" content="v0.5; Thu Jul  7 11:32:00 2005">
+</head>
+
+<body>
+
+<h1><a name="CATCloudEditorHeaderCmd.CloudSmoothing"></a>Smoothing Meshes<a name="CATCloudStlHeaderCmd.CATStlSmoothingHdr"></a></h1>
+<table Border="0" CELLSPACING="0" valign="top" bordercolor="#111111" cellpadding="0" style="border-collapse: collapse">
+  <tr valign="top" BORDER="0">
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td>This task shows you how to smooth a mesh.
+    <p>The cloud of points you import in Digitized Shape Editor may be noisy, 
+    for various reasons, <br>
+    mainly because of a poor digitalization accuracy on the edges of parts. <br>
+    This noise is found again on the meshes computed from these clouds of points 
+    or imported <br>
+    in STL format.</p>
+    <p>The consequences are:</p>
+    <ul>
+      <li>Very noisy scans produced with the <kbd>Planar Sections</kbd> or 
+      Segmentations actions or</li>
+      <li>The reconstruction of wavy curves or surfaces and/or of very high 
+      order.&nbsp;</li>
+    </ul>
+    <p>This can be partly avoided by smoothing the mesh.</p>
+    <ul>
+      <li>This action cannot be used on meshes with non-manifold edges.</li>
+      <li>Since the volume of the part is reduced, some small facets may be 
+      inverted by the meshing. <br>
+      Therefore we recommend you alternate <kbd>Mesh Smoothing </kbd>and <kbd>
+      Flip Edges</kbd> actions.</li>
+      <li>Use the Activate function to process only a portion of a cloud.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top"></td>
+    <td></td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td>Open the
+    <a href="b35doc/english/online/cfysm_C2/samples/SmoothMesh01.CATPart">
+    SmoothMesh01.CATPart </a>from the samples directory</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32">
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</td>
+    <td valign="top">
+    <ol class="task">
+      <li>
+      <p class="task">Click <kbd>Mesh Smoothing&nbsp; </kbd>
+      <img border="0" src="b35doc/english/online/icons_C2/images/I_CloudSmoothingP2.gif" width="24" height="24"> 
+      and select a mesh.</li>
+      <li>
+      <p class="task">The <kbd>Mesh Smoothing</kbd> dialog box is displayed.</p>
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+        <tr>
+          <td><a name="ix-commands::Mesh Smoothing">
+          <img border="0" src="b35doc/english/online/cfyugrvs_c2/images/smoothpolygon03NLS.gif" width="303" height="232"></a></td>
+        </tr>
+      </table>
+      </li>
+    </ol>
+    <ol class="task" start="3">
+      <li>
+      <p class="task">Select the type of smoothing:</li>
+    </ol>
+    <blockquote>
+      <blockquote>
+        <blockquote>
+          <ul>
+            <li><kbd>Single effect</kbd> if there is no sharp edge on the mesh 
+            to process.<ul>
+              <li>Small radii will be erased.</li>
+              <li>The volume of the part will be reduced (contraction towards 
+              the center of gravity of the part).</li>
+            </ul>
+            </li>
+            <li><kbd>Dual effect</kbd> to reduce the distance between outliers 
+            and the surface, <br>
+            and reduce the erasing of small radii.&nbsp;<ul>
+              <li>The reduction of the volume of the part is smaller.</li>
+              <li>A large displacement of one vertex inwards may cause the 
+              neighboring vertices to move outwards.&nbsp;</li>
+            </ul>
+            </li>
+          </ul>
+        </blockquote>
+      </blockquote>
+    </blockquote>
+    <ol class="task" start="4">
+      <li>
+      <p class="task">Two other controls are available:</li>
+    </ol>
+    <blockquote>
+      <blockquote>
+        <blockquote>
+          <ul>
+            <li><kbd>Coefficient</kbd>: It balances the effect of the new 
+            theoretical position in comparison <br>
+            with the original position. <br>
+            It varies from 0 (the vertex is not moved) to 1 (the vertex is moved 
+            to the computed position).&nbsp;</li>
+            <li><kbd><a name="ix-mesh smoothing: max deviation"></a>Max 
+            Deviation</kbd>: Select this check box to control the maximum 
+            deviation allowed <br>
+            (the displacement will remain under the value set.)<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+              <tr>
+                <td>
+                <ul>
+                  <li>The deviation is the distance between a vertex and its 
+                  initial position <br>
+                  (not between its current position and that of the previous 
+                  iteration).</li>
+                  <li>Therefore, if you want to control the maximum deviation, 
+                  you have to check the <kbd><br>
+                  Max Deviation</kbd> option <kbd>before</kbd> the first <kbd>
+                  Apply </kbd>(it is no longer available after the first Apply).</li>
+                </ul>
+                <ul>
+                  <li>For a better appreciation of the quality of the 
+                  intermediate meshes, the meshes are <br>
+                  displayed in Flat Shading within the action.&nbsp;</li>
+                </ul>
+                <ul>
+                  <li>In addition, for each step the maximum and the mean 
+                  deviations <br>
+                  (distances between a vertex and its initial position) are 
+                  displayed in the dialog box.
+                  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+                    <tr>
+                      <td><img border="0" src="b35doc/english/online/cfyugrvs_c2/images/smoothpolygon04NLS.gif" width="303" height="232"></td>
+                    </tr>
+                  </table>
+                  </li>
+                </ul>
+                </td>
+              </tr>
+            </table>
+            </li>
+          </ul>
+        </blockquote>
+      </blockquote>
+    </blockquote>
+    <ol class="task" start="5">
+      <li>
+      <p class="task">Click <kbd>Apply</kbd>: A new mesh is computed. <br>
+      This action is an iterative one: click <kbd>Apply</kbd> again to smooth 
+      the proposed mesh.&nbsp;</li>
+      <li>
+      <p class="task">Click <kbd>OK</kbd> once you are satisfied. <br>
+      A <kbd>Smoothing.x</kbd> element is created in the specification tree, <br>
+      the original mesh is sent to the No Show.&nbsp;</li>
+    </ol>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top">&nbsp;</td>
+    <td>
+    <h3>Examples:</h3>
+        <p>Original part, before entering the action, i.e. in Smooth Shading:<br>
+    <img border="0" src="b35doc/english/online/cfyugrvs_c2/images/SmoothOrignalSmooth.gif" width="251" height="122">
+    <br>Original part as you enter the action, i.e. in Flat Shading:<br>
+    <img border="0" src="b35doc/english/online/cfyugrvs_c2/images/SmoothOrignalFlat.gif" width="250" height="120"></p>
+    <kbd>Single effect</kbd>, in Flat Shading<br>
+    <img border="0" src="b35doc/english/online/cfyugrvs_c2/images/SmoothSingleFlatNLS.gif" width="249" height="81"><br>
+    <kbd>Single effect</kbd>, in Smooth Shading (after exiting the action)<br>
+    <img border="0" src="b35doc/english/online/cfyugrvs_c2/images/SmoothSingleSmooth.gif" width="251" height="82"><p><kbd>Dual effect</kbd>, in Flat Shading<br>
+       <img border="0" src="b35doc/english/online/cfyugrvs_c2/images/SmoothingDualFlatNLS.gif" width="252" height="81"><br><kbd>Dual effect</kbd>, in Smooth Shading (after exiting the action)<br>
+    <img border="0" src="b35doc/english/online/cfyugrvs_c2/images/SmoothingDualSmooth.gif" width="251" height="82"></p>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td colspan="2" valign="top">
+    <p align="center">
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+    </td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

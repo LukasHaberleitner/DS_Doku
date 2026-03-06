@@ -1,0 +1,205 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Video Mode for Material Removal Simulation Using NC Code</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Video Mode for Material Removal Simulation Using NC Code<br>
+ <img src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32">
+ </h1>
+ <table border="0">
+   <tr>
+     <td width="34" valign="top" style="padding-bottom: 20">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" title="task target" width="32" height="32"></td>
+     <td width="914" valign="top" colspan="2" style="padding-bottom: 20">This 
+     task shows you how to simulate the material removed by machining operations 
+     in Video mode using NC code.
+     <p><b>Note</b>: It is also possible to simulate material removal in Video 
+     mode using tool path data. Please refer to
+     <a target="_blank" href="page11401.html">Video Mode for Material Removal 
+     Simulation Using Tool Path Data</a> for specific information about that 
+     operating mode and general information about Video material removal 
+     simulation.</td>
+   </tr>
+   <tr>
+     <td width="34" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" title="scenario" width="32" height="32"></td>
+     <td width="35" valign="top"><font color="#1C1557"><b>1.</b></font></td>
+     <td width="875" valign="top">Open the
+     <a href="b35doc/english/online/mfgug_c2/samples/Processfinal.CATProcess">Processfinal.CATProcess</a> 
+     document. The <kbd>Setup Editor</kbd> window appears showing the PPR tree with the 
+     <kbd>Manufacturing Program</kbd>.<p><img border="1" src="b35doc/english/online/mfgug_c2/images/VideoInitialNLS.gif" width="275" height="319"></p>
+     <p>Please note that the machine referenced in the <kbd>Part Operation</kbd> uses a 
+     default 3-axis machine. This type of machine is not suitable for simulating 
+     material removal in Video mode using NC code and so must be changed. It 
+     must be a CATProduct representation built using the NC Tool Machine Builder 
+     application, for example.</td>
+   </tr>
+   <tr>
+     <td width="34" valign="top">&nbsp;</td>
+     <td width="910" valign="top" colspan="2">
+     <h3>Select a Suitable Machine Tool and Set NC Parameters</h3>
+     </td>
+   </tr>
+   <tr>
+     <td width="34" valign="top">&nbsp;</td>
+     <td width="35" valign="top"><font color="#1C1557"><b>2.</b></font></td>
+     <td width="875" valign="top">Double-click <kbd>Part Operation.</kbd>1 in the tree, 
+     then click <kbd>Machine</kbd>
+     <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgMachine.gif" align="middle" width="22" height="22"> in the 
+		<kbd>Part 
+     Operation</kbd> dialog box. <br>
+     In the Machine Editor:<ol type="a">
+       <li>Click <kbd>Assign a Machine by File Selection</kbd> <b>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgMachineSelectFile.gif" align="middle" width="22" height="22"></b> 
+       then select the Mill_5axis.CATProduct machine in the <code>
+       ..\startup\Manufacturing\Samples\NCMachineToollib\DEVICES</code> folder.
+       </li>
+       <li>Select a suitable <kbd>Controller Emulator</kbd> and <kbd>Post Processor</kbd>: Note that a 
+       Controller Emulator/Post Processor vendor must be set in the
+       <a href="page1017.html" target="ds_doc2">
+       Tools &gt; Options &gt; Machining &gt; Output</a> tab.</li>
+       <li>Select a suitable Post Processor words table: Sample PP word tables 
+       are delivered with the product in the ..\startup\manufacturing\PPTables 
+       folder.</li>
+       <li>Select ISO (that is, NC code) as NC data type.<img border="1" src="b35doc/english/online/mfgug_c2/images/VideoNCCode01NLS.gif" width="524" height="276"></li>
+       <li>Click <kbd>OK</kbd> to assign the machine to the <kbd>Part Operation</kbd>.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td width="34" valign="top">&nbsp;</td>
+     <td width="910" valign="top" colspan="2">
+     <h3>Position the Workpiece on the Machine</h3>
+     </td>
+   </tr>
+   <tr>
+     <td width="34" valign="top"></td>
+     <td width="35" valign="top"><font color="#1C1557"><b>3.</b></font></td>
+     <td width="879">Position the part on the machine table using <kbd>Workpiece 
+     Automatic Mount</kbd>
+     <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgWorkpieceAutoMountHdr.gif" align="middle" width="28" height="28"> 
+     of the <a href="page11483.html">Machine Management toolbar</a>.<p>
+     <img border="1" src="b35doc/english/online/mfgug_c2/images/VideoNCCode03.gif" width="514" height="423"></p>
+     <p><b>Note</b>: You may also need to re-position the Machining axis system. 
+     To do this, double-click the green machining axis in the 3D view, and 
+     re-position the axis using the dedicated dialog box.</td>
+   </tr>
+   <tr>
+     <td width="34" valign="top">&nbsp;</td>
+     <td width="910" valign="top" colspan="2">
+     <h3>Generate Program Tool Path Data and Generate NC Code</h3>
+     </td>
+   </tr>
+   <tr>
+     <td width="34" valign="top">&nbsp;</td>
+     <td width="35" valign="top"><font color="#1C1557"><b>4.</b></font></td>
+     <td width="879" valign="top">Right-click <kbd>Manufacturing Program.1</kbd> in the 
+     tree and select <kbd>Compute Tool Path</kbd>. Select the <kbd>Force 
+     computation</kbd> option in the pop-up that appears.<p>Right-click 
+     <kbd>Manufacturing Program.1</kbd> in the tree and select <kbd>Generate NC Code 
+     Interactively</kbd>. Set the following options in the dialog box that 
+     appears.</p>
+     <p><img border="1" src="b35doc/english/online/mfgug_c2/images/VideoNCCode02NLS.gif" width="361" height="404"></td>
+   </tr>
+   <tr>
+     <td width="34" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" title="note" width="32" height="32"></td>
+     <td width="35" valign="top">&nbsp;</td>
+     <td width="879" valign="top">If you generate ISO code and you want to use 
+     that code for simulation in another session, then you must save the 
+     CATProcess after ISO generation. It is not mandatory to save the CATProcess 
+     if the generated ISO code is not to be used for simulation in other 
+     sessions.</td>
+   </tr>
+   <tr>
+     <td width="34" valign="top">&nbsp;</td>
+     <td width="910" valign="top" colspan="2">
+     <h3>Simulate the Program Using NC Code</h3>
+     </td>
+   </tr>
+   <tr>
+     <td width="34" valign="top">&nbsp;</td>
+     <td width="35" valign="top"><font color="#1C1557"><b>5.</b></font></td>
+     <td width="879" valign="top">Double-click <kbd>Manufacturing Program.1</kbd> in the 
+     tree. In the <kbd>Manufacturing Program</kbd> dialog box, select the <kbd>NC Code 
+     Based Simulation</kbd> check box and select the NC code file that you 
+     generated in the previous step.<p>
+     <img border="1" src="b35doc/english/online/mfgug_c2/images/VideoNCCode04NLS.gif" width="446" height="269"></p>
+     <p>See <a target="_blank" href="page11410.html">Manufacturing Program</a> 
+     for more information about this dialog box.</td>
+   </tr>
+   <tr>
+     <td width="34" valign="top"></td>
+     <td width="35" valign="top"><font color="#1C1557"><b>6.</b></font></td>
+     <td width="879" valign="top">Select <kbd>Video</kbd>
+     <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgMovie.gif" align="middle" width="22" height="22">. The 
+		<kbd>Setup 
+     Editor</kbd> window switches to a window entitled <kbd>Video</kbd>.
+     <p>Two dialog boxes appear for running the simulation: </p>
+     <ul>
+       <li><kbd>Replay</kbd> dialog box containing tool animation control buttons and other 
+       command icons.<br>
+       The capabilities are described in&nbsp;
+       <a target="_blank" href="page11401.html">Video Mode for Material Removal 
+       Simulation Using Tool Path Data</a> and
+       <a target="_blank" href="page11390.html">Replay a Tool Path</a>.</li>
+       <li>ISO dialog box containing information about the NC code.</li>
+     </ul>
+     <p>Click the
+     <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgNextContinu.gif" align="middle" width="22" height="22"> 
+     control button to run the material removal simulation of the first 
+     machining operation (Facing.1). </p>
+     <p><img border="1" src="b35doc/english/online/mfgug_c2/images/VideoNCCode05NLS.gif" width="589" height="375"></td>
+   </tr>
+   <tr>
+     <td width="34" valign="top">&nbsp;</td>
+     <td width="35" valign="top">&nbsp;</td>
+     <td width="879" valign="top">As the ISO dialog box highlights each line of the 
+     data while the video simulation represents the code graphically, the 
+     Machine Operation field shows the operation associated with the line of 
+     code. Conversely, you can select a single line of code, and the geometric 
+     data shows the simulation at that point in the code.
+     <p><img border="1" src="b35doc/english/online/mfgug_c2/images/VideoNCCode06NLS.gif" width="500" height="289"></td>
+   </tr>
+   <tr>
+     <td width="34" valign="top">&nbsp;</td>
+     <td width="35" valign="top"><font color="#1C1557"><b>7.</b></font></td>
+     <td width="879" valign="top">Continue the Video simulation for the 
+     remainder of the program using the control buttons.</td>
+   </tr>
+   <tr>
+     <td width="34" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td width="35" valign="top">&nbsp;</td>
+     <td width="879">The ISO dialog box is displayed, It has two parts:<ul>
+       <li>ISO code area, which contains the line number, a collision icon (if 
+       collision is detected), and the ISO data. This part also has a search 
+       function and lists the machining operation associated with each ISO line 
+       number. </li>
+       <li>Collision Information area, which gives information about any 
+       detected collisions. </li>
+     </ul>
+     <p>Please refer to <i>NC Machine Tool Simulation User's Guide</i> for more 
+     information about this dialog box.</td>
+   </tr>
+   <tr>
+     <td colspan="3" width="917" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="end of task" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

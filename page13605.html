@@ -1,0 +1,235 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Reading XML Clash Files</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+ <style>
+<!--
+div.Section1
+	{page:Section1;}
+-->
+</style>
+ </head>
+
+ <body>
+
+ <h1>Reading XML Clash Files</h1>
+ <table Border="0" CELLSPACING="0" valign="top">
+   <tr valign="top" BORDER="0">
+     <td></td>
+     <td></td>
+     <td></td>
+     <td></td>
+     <td></td>
+     <td></td>
+     <td></td>
+     <td></td>
+     <td></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td>
+     <img border="0" src="b35doc/english/online/icons_C2/common/abasic.gif" width="32" height="32"></td>
+     <td colspan="8" rowspan="1" style="padding-bottom: 10">
+     <p class="task">XML has its own vocabulary. The following explains XML 
+		grammar as used in XML clash files.</p>
+     <p>Elements and attributes required to be able to import clash results back 
+     into DMU session are identified in red. <br>
+     Values that can be modified are identified in green.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td>
+     <p class="task"></td>
+     <td colspan="8">
+     <p class="task"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;<font color="#008000">UTF-8</font>&quot;?&gt;</code><br>
+     <code>&lt;!ELEMENT <font color="#FF0000">Comment</font> EMPTY&gt;<b> </b></code>
+     &nbsp;&gt;&nbsp; a Comment node does not contain any children<code><br>
+     &lt;!ELEMENT Picture EMPTY&gt; </code>&nbsp;&gt;&nbsp; a Picture node does not contain any 
+     children<code><br>
+     &lt;!ELEMENT Vector EMPTY&gt;<b> </b></code>&nbsp;&gt;&nbsp; a Vector node does not contain any 
+     children<code><br>
+     &lt;!ELEMENT Point EMPTY&gt;<b> </b></code>&nbsp;&gt;&nbsp; a Point node does not contain any 
+     children<code><br>
+     &lt;!ELEMENT Date EMPTY&gt;<b> </b></code>&nbsp;&gt;&nbsp; a Date node does not contain any 
+     children<code><br>
+     &lt;!ELEMENT ViolatedRule EMPTY&gt;<b> </b>-</code>&gt; a &quot;ViolatedRule&quot; node does not 
+     contain any children<code><br>
+     &lt;!ELEMENT Viewpoint (Vector+)&gt;<b> </b></code>&nbsp;&gt;&nbsp; a Viewpoint node contains 1 
+     or n Vector nodes<code><br>
+     &lt;!ELEMENT <font color="#FF0000">Matrix</font> (Vector+ , Point)&gt;<b> </b>
+     </code>&nbsp;&gt;&nbsp; a Matrix node contains 1 or n Vector nodes and a Point node<code><br>
+     &lt;!ELEMENT <font color="#FF0000">Product</font> (Matrix*)&gt;<b> </b></code>&nbsp;&gt;&nbsp; 
+     a Product node contains 0 or n Matrix nodes<code><br>
+     &lt;!ELEMENT Specification (Product+)&gt; </code>&nbsp;&gt;&nbsp; a Specification node contains 
+     1 or n Product nodes<code><br>
+     &lt;!ELEMENT <font color="#FF0000">GeometricAspect</font> (Point*, 
+     Viewpoint*)&gt; </code>&nbsp;&gt;&nbsp; a GeometricAspect node contains 0 or n Point nodes 
+     and 0 or n Viewpoint nodes<code><br>
+     &lt;!ELEMENT <font color="#FF0000">Interference</font> (Product+, ViolatedRule*, 
+     GeometricAspect, Comment, Picture*)&gt; </code>&nbsp;&gt;&nbsp; an Interference node 
+     contains 1 or n Product nodes, 0 or n ViolatedRule nodes, a GeometricAspect 
+     node, a Comment node and 0 or n Picture nodes<code><br>
+     &lt;!ELEMENT <font color="#FF0000">ClashResult</font> (Interference*)&gt; </code>
+     &nbsp;&gt;&nbsp; a ClashResult node contains 0 or n Interference nodes<code><br>
+     &lt;!ELEMENT ClashSpec (Specification*)&gt;</code><b> </b>&nbsp;&gt;&nbsp; a ClashSpec node 
+     contains 0 or n Specification nodes<code><br>
+     &lt;!ELEMENT ClashElement (Date, ClashSpec, ClashResult)&gt; </code>&nbsp;&gt;&nbsp; a 
+     ClashElement node contains a Date node, a ClashSpec node and a ClashResult 
+     node</p>
+     <p class="task"><code>&lt;!ATTLIST ClashElement <br>
+     Responsible CDATA #REQUIRED </code>&nbsp;&gt;&nbsp; name of the person who owns the clash
+     <code><br>
+     CATDocument CDATA #REQUIRED </code>&nbsp;&gt;&nbsp; useful in file mode; URL path 
+     to the CATProduct<code><br>
+     <font color="#FF0000">Version</font>(1.0|1.1|1.2) &quot;1.2&quot;&gt;</code><code>
+     </code>&nbsp;&gt;&nbsp; the XML version; 1.2 refers to the current version</p>
+     <p class="task"><code>&lt;!ATTLIST ClashSpec </code>&nbsp;&gt;&nbsp; describes the clash 
+     specification<code><br>
+     Name CDATA #REQUIRED </code>&nbsp;&gt;&nbsp; name of the clash node in the DMU tree<code><br>
+     DistanceClearance CDATA #REQUIRED </code>&nbsp;&gt;&nbsp; distance clearance distance 
+     specified in the clash specification<code><br>
+     TabTitle CDATA #REQUIRED </code>&nbsp;&gt;&nbsp; useful for the XSL style sheet; only the 
+     name of a title<code><br>
+     TabListTitle CDATA #REQUIRED </code>&nbsp;&gt;&nbsp; useful for the XSL style sheet; only 
+     the name of a title<code><br>
+     SelectMode (INSIDE|OUTSIDE|ALL|TWO_LIST) &quot;ALL&quot; </code>&nbsp;&gt;&nbsp; corresponds to the 
+     second Type drop-down list box in interactive mode<code><br>
+     CaseOfCalc (INTERFERE_CONT|INTERFERE_CLEAR|INTERFERE_PENETR_CLASH|INTERFERE_RULE) 
+     &quot;INTERFERE_CONT&quot;&gt; </code>&nbsp;&gt;&nbsp; corresponds to the first Type drop-down list 
+     box (interference type) in interactive mode</p>
+     <p class="task"><code>&lt;!ATTLIST ClashResult</code> &nbsp;&gt;&nbsp; describes the clash 
+     resul<font color="#000099">t</font><br>
+     <code><font color="#FF0000">Name</font> CDATA #REQUIRED </code>&nbsp;&gt;&nbsp; the name 
+     of the clash result in the DMU tree<br>
+     <code>TabTitle CDATA #REQUIRED</code> &nbsp;&gt;&nbsp; just here for the XSL style sheet; 
+     name of the title<br>
+     <code><font color="#FF0000">NbInterf</font> CDATA #REQUIRED</code> &nbsp;&gt;&nbsp; number of 
+     interferences contained in the clash result<br>
+     <code><font color="#FF0000">ComputationCase</font></code> <code>(INTERFERE_CONT|INTERFERE_CLEAR|INTERFERE_PENETR_CLASH|INTERFERE_RULE)</code>
+     <code>&quot;INTERFERE_CONT&quot;&gt;</code> &nbsp;&gt;&nbsp; the interference type used to check for 
+     interferences</p>
+     <p class="task"><code>&lt;!ATTLIST Date</code> &nbsp;&gt;&nbsp; attributes corresponding to 
+     the date of the export<b><br>
+     </b><code>Year CDATA #REQUIRED<br>
+     Month CDATA #REQUIRED<br>
+     Day CDATA #REQUIRED<br>
+     Hour CDATA #REQUIRED<br>
+     Minute CDATA #REQUIRED<br>
+     Second CDATA #REQUIRED&gt; </code></p>
+     <p class="task"><code>&lt;!ATTLIST Product <br>
+     <font color="#FF0000">Alias</font> CDATA #REQUIRED <font color="#000099">-</font>&gt; 
+     the name of the clashing product <br>
+     <font color="#FF0000">ProcessMode</font> (ENOVIAV5|ENOVIAVPM|STANDALONE) 
+     &quot;ENOVIAV5&quot;</code> &nbsp;&gt;&nbsp; describes the type of connection we need to retrieve 
+     the product<code><br>
+     <font color="#FF0000">DescriptionID</font> CDATA #IMPLIED </code>
+     <font color="#000099"><code>&nbsp;&gt;&nbsp; depending on the type of connection, the descriptionID will contain: </code></font></p>
+     <ul>
+       <li>
+       <p class="task">ENOVIAVPM: coID compID caEnv catab Clinkable</li>
+       <li>
+       <p class="task">ENOVIA LCA: UUID/DocumentVersion</li>
+       <li>
+       <p class="task">STANDALONE (also referred to as FILE MODE ):	the path 
+		in the tree from the terminal node to the root product, excluding the 
+		root product itself.</p>
+		<div class="Section1">
+			</div>
+		</li>
+     </ul>
+     <p class="task"><code>ShapeSource CDATA #IMPLIED </code>&nbsp;&gt;&nbsp; the path to the 
+		shape when working in file mode <br>
+     <font color="#FF0000"><code>ShapeName</code></font><code> CDATA #REQUIRED</code> 
+     &nbsp;&gt;&nbsp; the name of the shape<br>
+     <code>Alien (YES|NO) &quot;YES&quot;&gt;</code> &nbsp;&gt;&nbsp; useful only in a Space Engineering 
+     Assistant context (SPE product) </p>
+     <p class="task"><code>&lt;!ATTLIST Point <br>
+     <font color="#FF0000">Ux</font> CDATA #REQUIRED</code> &nbsp;&gt;&nbsp; the X-coordinate 
+     of the point<code><br>
+     <font color="#FF0000">Uy</font> CDATA #REQUIRED </code>&nbsp;&gt;&nbsp; the Y-coordinate 
+     of the point<code><br>
+     <font color="#FF0000">Uz</font> CDATA #REQUIRED&gt; </code>&nbsp;&gt;&nbsp; the Z-coordinate 
+     of the point</p>
+     <p class="task"><code>&lt;!ATTLIST Vector </code><br>
+     <font color="#FF0000"><code>CorrespondingData</code></font><code> (Rx|Ry|Rz) 
+     &quot;Rx&quot;</code> &nbsp;&gt;&nbsp; the corresponding rotation vector in the matrix<br>
+     <font color="#FF0000"><code>Vx</code></font><code> CDATA #REQUIRED &nbsp;&gt;&nbsp;</code> 
+     the X-coordinate of the vector<br>
+     <font color="#FF0000"><code>Vy</code></font><code> CDATA #REQUIRED &nbsp;&gt;&nbsp;</code> 
+     the Y-coordinate of the vector<br>
+     <font color="#FF0000"><code>Vz</code></font><code> CDATA #REQUIRED&gt; &nbsp;&gt;&nbsp;
+     </code>the Z-coordinate of the vector</p>
+     <p class="task"><code>&lt;!ATTLIST Viewpoint </code>&nbsp;&gt;&nbsp; the focus, angle and 
+     projection for the corresponding viewpoint <code><br>
+     Focus CDATA #REQUIRED<br>
+     Angle CDATA #REQUIRED<br>
+     Projection (CYLINDRIC|CONIC) &quot;CYLINDRIC&quot;&gt; </code></p>
+     <p class="task"><code>&lt;!ATTLIST Picture <br>
+     HRef CDATA #REQUIRED<br>
+     Preview CDATA #IMPLIED&gt; </code>&nbsp;&gt;&nbsp; the URL corresponding to the picture and 
+     its preview (relative path)</p>
+     <p class="task"><code>&lt;!ATTLIST Comment <br>
+     <font color="#FF0000">Value</font> CDATA #REQUIRED&gt; </code>&nbsp;&gt;&nbsp; if a comment 
+     has been defined on the corresponding interference, the value will contain 
+     it</p>
+     <p class="task"><code>&lt;!ATTLIST GeometricAspect <br>
+     <font color="#FF0000">IntersectCurveLength</font> CDATA #REQUIRED </code>&nbsp;&gt;&nbsp; 
+     contains the length of the curve describing the clash<code><br>
+     <font color="#FF0000">ExtractOrDistValue</font> CDATA #REQUIRED&gt; </code>&nbsp;&gt;&nbsp; 
+     contains the length of the vector corresponding to:</p>
+     <ul>
+       <li>
+       <p class="task">If the result is a clearance, it contains the minimum 
+       distance between the two products</li>
+       <li>
+       <p class="task">If the result is a clash, it contains the length of the 
+       extraction vector </li>
+     </ul>
+     <p class="task"><code>&lt;!ATTLIST Interference <br>
+     <font color="#FF0000">NumInterf </font>CDATA #REQUIRED</code>
+     &nbsp;&gt;&nbsp; the position of the interference in the clash feature<code><br>
+     <font color="#FF0000">ResultType</font> (Clash|Contact|Clearance) &quot;Clash&quot;
+     </code>&nbsp;&gt;&nbsp; the interference type, either clash, contact or clearance <code>
+     <br>
+     DistanceClearance CDATA #IMPLIED </code>&nbsp;&gt;&nbsp; just in case of clearance 
+     computation; contains the clearance value defined in the dialog box<code><br>
+     <font color="#FF0000">Status</font> (NotInspected|Relevant|Irrelevant|Solved) 
+     &quot;NotInspected&quot; </code>&nbsp;&gt;&nbsp; the status of the interference<br>
+     <code><font color="#FF0000">RetrieveInf</font></code> (Old|New|Modified) &quot;New&quot; &nbsp;&gt;&nbsp; the 
+     information about clash history</p>
+     <p class="task">The following node is needed only in case of clash 
+     computation with knowledge rules:</p>
+     <p class="task"><code>&lt;!ATTLIST ViolatedRule <br>
+     Name CDATA #REQUIRED </code>&nbsp;&gt;&nbsp; the name of the rule<code><br>
+     TypeCalc CDATA #REQUIRED </code>&nbsp;&gt;&nbsp; the type of computation defined by the 
+     rule<code><br>
+     Clearance CDATA #REQUIRED </code>&nbsp;&gt;&nbsp; the clearance value defined in the rule<code><br>
+     Priority CDATA #REQUIRED </code>&nbsp;&gt;&nbsp; the priority of the rule<code><br>
+     PenetrationCandidate CDATA #IMPLIED </code>&nbsp;&gt;&nbsp; Yes if it is candidate for 
+     penetration, No if not<code><br>
+     Severity CDATA #IMPLIED&gt; </code>&nbsp;&gt;&nbsp; the severity of the rule</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" colspan="9">
+     <p align="center" class="task">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle"></td>
+     <td colspan="8"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+ <p><br>
+ </p>
+
+ </body>
+
+</html>
+

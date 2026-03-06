@@ -1,0 +1,490 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Aligning Clouds with Constraints</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="docCompliance" content="v0.5; Wed Jul  6 15:38:50 2005">
+</head>
+
+<body>
+
+<h1><a name="ix-commands::Align with Constraints"></a>
+Aligning Clouds with 
+Constraints<a name="CATCloudEditorHeaderCmd.CloudRepositCtr"></a></h1>
+<table border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+    <img src="b35doc/english/online/icons_C2/common/atarget.gif" title="task target" width="32" height="32"><br>
+&nbsp;</td>
+    <td>This task shows you how to align a cloud of points with a reference by 
+    defining constraints 
+    (made of pairs of constraint elements) based on canonic shapes 
+    (points, lines, planes, spheres, cylinders, circles and their inverted 
+    elements) 
+    and applying a priority order on those constraints.&nbsp; 
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td valign="top">See the <a href="page6159.html">glossary</a> for the 
+    definition of Cloud to Align, reference, constraint and constraint element.</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">This operation is useful with mechanical shapes, where 
+    canonic shapes can be defined. <br>
+    When such shapes can be used, this kind of alignment is quicker than the 
+    other types <br>
+    proposed by V5.<p>
+    You need to recognize canonic shapes&nbsp;</p>
+    <ul>
+      <li>On the <kbd>Cloud to Align</kbd> (Quick Surface Reconstruction offers a Basic 
+      Surface Recognition command), </li>
+      <li>Then on the <kbd>References</kbd> (by extracting faces or creating points, lines 
+      and planes representing fixed constraints).&nbsp; </li>
+    </ul>
+    <p>These canonic shapes are not necessarily the same (any association of 
+    points/lines/planes is possible).<br>
+    Then match the canonic shapes by pair, one on the <kbd>Cloud to Align</kbd>, the 
+    other on the <kbd>References</kbd>.&nbsp;<br>
+    It is possible to match one constraint element of the <kbd>Cloud to Align</kbd> with 
+    several constraint elements <br>
+    (whatever their type) of the<kbd> References</kbd>, or vice versa <br>
+    (a plane can be matched with three different points in three different 
+    constraints, for example).</p>
+    <p>Be careful to have consistent constraints, regarding the geometry. For 
+    example:</p>
+    <ul>
+      <li>Do not match three points with two different planes.</li>
+      <li>If you match two normals to planes, be careful that they have the same 
+		orientation.</li>
+      <li>When you select a cylinder or a circle, the constraint element taken 
+      into account is their center axis, i.e. a line.</li>
+      <li>When you select a sphere, the constraint element taken into account is 
+      its center point.</li>
+      <li>Even if overconstraints are accepted, in some cases it might be 
+      necessary that the constraints form an isostatic system: <br>
+      A 3D object has 6 degrees of freedom, i.e. 3 translations and 3 rotations.
+      <br>
+      Creating an isostatic system means that the 3 translations and the 3 
+      rotations are locked. <br>
+      Here are the degrees of freedom locked by each pair of constraints:<table border="0" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber11">
+        <tr>
+          <td class="code">&nbsp;</td>
+          <td class="code">point<p>&nbsp;</td>
+          <td class="code">line<p>&nbsp;</td>
+          <td class="code">plane<p>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="code">point</td>
+          <td class="code2">3 translations</td>
+          <td class="code2">2 translations</td>
+          <td class="code2">1 translation</td>
+        </tr>
+        <tr>
+          <td class="code">line</td>
+          <td class="code2">2 translations</td>
+          <td class="code2">2 translations and 2 rotations</td>
+          <td class="code2">1 translation and 1 rotation<p>&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="code">plane</td>
+          <td class="code2">1 translation</td>
+          <td class="code2">1 translation and 1 rotation</td>
+          <td class="code2">1 translation and 2 rotations</td>
+        </tr>
+      </table>
+      </li>
+    </ul>
+    <blockquote>
+      <p>In a general case, you should combine the constraints to lock all the 
+      degrees of freedom.</p>
+    </blockquote>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/aprereq.gif" title="aprereq.gif (1231 bytes)" width="32" height="32"></td>
+    <td valign="top">Open the <a href="b35doc/english/online/dseug_c2/samples/AlignConstraint1.CATPart">
+    AlignConstraint1.CATPart</a> model from the samples directory:<ul>
+      <li>In the <kbd>Geometrical Set Input</kbd>, you will find a <kbd>Cloud to 
+      Align </kbd>(<kbd>CloudToAlign</kbd>) and a set of constraint elements 
+		computed on it.</li>
+      <li>In the <kbd>Geometrical Set Reference</kbd>, you will find
+    a set of constraint elements computed on <kbd>Reference</kbd>.</li>
+      <li>You can use the <kbd>Geometrical Set New</kbd> as the <kbd>Define In 
+      Work Object</kbd>.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/ascenari.gif" title="scenario" align="top" width="32" height="32">
+    <p>&nbsp;</td>
+    <td valign="top">
+    <ol class="task">
+      <li>
+      <p class="task">Select the Geometrical Set where you want to create the 
+      output cloud, if any, and select <kbd>Define In Work Object</kbd>.</li>
+      <li>
+      <p class="task">Click <kbd>Align with Constraints</kbd>
+      <img border="0" src="b35doc/english/online/icons_C2/images/I_CloudRepositCtrP2.png" width="24" height="24"> 
+      in the <kbd>Reposit</kbd> toolbar.&nbsp; <br>
+      The <kbd>Align with Constraints</kbd> dialog box 
+      appears.<br>
+      <img border="0" src="b35doc/english/online/dseug_c2/images/dbalignctr01NLS.gif" hspace="0" width="279" height="315"></li>
+      <li>
+      <p class="task">Select a <kbd>
+      <a name="ix-align with constraints:cloud to align">Cloud to Align</a></kbd> (we have selected <kbd>CloudToAlign</kbd>).<br>
+      <a name="ix-align with constraints:hide or show"></a>
+          <img border="0" src="b35doc/english/online/icons_C2/images/I_SwapHideShowP2.gif" width="24" height="24"> 
+          is available to hide or show the <kbd>Cloud to Align.</kbd><br>Once the 
+      Cloud to Align is selected, the button 
+      <kbd>Add</kbd> becomes 
+      available.</li>
+      <li>
+      <p class="task"><a name="ix-align with constraints:add"></a>Click <kbd>Add</kbd>.
+      <br>Select the large cylinder recognized on the <kbd>Cloud to Align</kbd>, then the large 
+      cylinder on <kbd>Reference</kbd>.&nbsp;</li>
+      <li>
+      <p class="task">Repeat step 4. with the small cylinder, and once again 
+      with the sphere.<br>The colors of the constraint elements picked change:</p>
+      <table border="0" cellpadding="0" style="border-collapse: collapse" id="table1">
+        <tr>
+          <td>
+      <ul>
+        <li>
+        A color is associated to each couple of constraint 
+            elements that define a constraint. </li>
+        <li>
+        The constraint element selected on the <kbd>Cloud to Align</kbd> is 
+		displayed in a solid color.</li>
+        <li>
+        The constraint element selected on the <kbd>Reference</kbd> is displayed 
+		in a transparent color. </li>
+        <li>
+        Another color is associated to the next couple of 
+            constraint elements, etc</li>
+      </ul><img border="0" src="b35doc/english/online/dseug_c2/images/alignctr05.gif" width="335" height="229"></td>
+        </tr>
+      </table>
+      </li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td valign="top">
+    <ul>
+      <li>The orientation of lines or axes selected on the <kbd>Cloud to Align</kbd> can be 
+      set automatically or
+      <br>
+		manually using the <kbd><a name="ix-align with constraints:orientation">Orientation</a></kbd> options <kbd>Automatic</kbd> or
+      <kbd>Manual</kbd>.<br>
+      <img border="1" src="b35doc/english/online/dseug_c2/images/dbalignctr04NLS.gif" hspace="0" width="234" height="40"><table border="0" cellpadding="0" style="border-collapse: collapse" id="table2">
+        <tr>
+          <td>
+          <ul>
+            <li>when <kbd>Automatic</kbd> is selected, <br>the orientation of the constraint element is not displayed and is 
+        automatically optimized.</li>
+            <li>when <kbd>Manual</kbd> is selected, <br>the orientation of the constraint element is represented by a red arrow.
+            <br>It can be inverted by clicking the arrow.</li>
+            <li>The <kbd>Automatic</kbd> option may be more time consuming.</li>
+            <li>This functionality is not available for constraint elements on the 
+        reference. <br>If you need to invert the orientation of constraint elements on the 
+        reference, <br>you can use the Invert Orientation command.</li>
+          </ul></td>
+        </tr>
+      </table>
+      </li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="bottom" align="center">&nbsp;</td>
+    <td valign="top">
+    <ol class="task" start="6">
+      <li>
+      <p class="task">The constraints created are listed in the dialog box. </p>
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber13">
+        <tr>
+          <td><img border="1" src="b35doc/english/online/dseug_c2/images/dbalignctr02NLS.gif" hspace="0" width="254" height="149"></td>
+        </tr>
+        <tr>
+          <td>
+          <ul>
+            <li><kbd><a name="ix-align with constraints:clear all">Clear All</a></kbd> 
+            deletes all the constraints.</li>
+            <li><kbd><a name="ix-align with constraints:delete">Delete</a></kbd> 
+            deletes the constraint selected.</li>
+            <li><kbd>Add</kbd> adds new constraints.</li>
+            <li>In the <kbd>In Cloud to Align</kbd> column, you see which 
+            element has been picked on the <kbd>Cloud to Align</kbd>.</li>
+            <li>In the <kbd>In Reference</kbd> column, you see which element has 
+            been picked on the reference.</li>
+          </ul>
+          <ul>
+            <li>In the <kbd>Priority</kbd> column, you see which kind of 
+            priority is applied to this constraint. </li>
+          </ul>
+          </td>
+        </tr>
+      </table>
+      </li>
+   <li>
+      <p class="task"><a name="ix-align with constraints:priority"></a>Right-click the line with <kbd>CylinderA1.2</kbd> and 
+      select <kbd>Strict</kbd>.<br>
+      This contextual menu displays the priorities that can be applied on each 
+      constraint, <br>
+      from the highest priority (<kbd>Strict</kbd>) to the lowest (<kbd>Low</kbd>).</p>
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber14">
+        <tr>
+          <td><img border="0" src="b35doc/english/online/dseug_c2/images/alignctrmenuNLS.gif" width="148" height="150"></td>
+        </tr>
+        <tr>
+          <td>The dialog box is updated accordingly.</td>
+        </tr>
+        <tr>
+          <td><img border="1" src="b35doc/english/online/dseug_c2/images/dbalignctr03NLS.gif" width="254" height="149"></td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p class="task">By default, the 
+      <a name="ix-align with constraints:keep initial"> <kbd>Keep Initial</kbd> 
+      </a>check box is 
+      selected:<table border="0" cellpadding="0" style="border-collapse: collapse" id="table4" width="438">
+        <tr>
+          <td colspan="2">
+          <ul>
+            <li>The initial <kbd>Cloud to Align</kbd> is kept as such.</li>
+            <li>A copy of this initial <kbd>Cloud to Align</kbd> is made and 
+			appears in the specification tree.</li>
+            <li>This copy is aligned with the <kbd>References</kbd>.
+            </li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+      <p class="task"> 
+      Clear this check box if you do not want to create a copy of the initial 
+      <kbd>Cloud 
+      to Align</kbd>, e.g. because of its size. The initial <kbd>Cloud to Align</kbd> 
+      itself will be aligned with the <kbd>References</kbd>.</td>
+        </tr>
+        <tr>
+          <td valign="top">
+          <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+          <td>
+          To avoid inconsistencies, you cannot clear the <kbd>Keep 
+          Initial</kbd> check box in the following two cases:<ul>
+            <li>When the geometry of the Cloud to Align is shared by 
+            other cloud elements, e.g. when the <kbd>Cloud to Align</kbd> shares 
+            points or vertices with another cloud without any parent/child 
+            relationship between them. Clearing the <kbd>Keep Initial </kbd>
+            check box would move the other cloud together with the <kbd>Cloud to 
+            Align</kbd>, which you do not want to.</li>
+            <li>When the <kbd>Cloud to Align</kbd> is a feature, e.g. a 
+            GSD transformation feature.</li>
+          </ul>
+          </td>
+        </tr>
+      </table>
+      </li>
+      <li>
+      <p class="task">Click <kbd>Apply</kbd>, then <kbd>More</kbd>.</p>
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber15">
+        <tr>
+          <td>
+          <ul>
+            <li>The <a name="ix-align with constraints:statistics"> <kbd>Statistics</kbd> 
+            </a>windows appears.<br><kbd>Alignment #1</kbd> indicates this is the first computation you 
+            have launched since you have opened the dialog box,<br>For each constraint (e.g. 
+            <kbd>Constraint #1</kbd>) is given:<ul>
+              <li>The type of the constraint and the constraint element selected&nbsp;
+              <kbd>type: line (CylinderA1.2) / line (CylinderR1.1)</kbd>.</li>
+              <li>The priority applied to this constraint (<kbd>Strict</kbd>),</li>
+              <li>The distance (<kbd>dist.=0</kbd>) and the angle (<kbd>angl.=0</kbd>) 
+              between the constraint element on the Cloud to Align <br>and the constraint element on the reference.</li>
+            </ul></li>
+            <li>You can see that the constraint with a strict priority is fully 
+            respected.</li>
+          </ul></td>
+        </tr>
+        <tr>
+          <td>
+          <img border="1" src="b35doc/english/online/dseug_c2/images/alignctrstatNLS.gif" hspace="0" width="385" height="153"></td>
+        </tr>
+      </table></li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td valign="top">
+    <ul>
+      <li>
+      You can easily retrieve the history of the computations 
+      and revert to a given combination of constraints <br>
+      before creating the aligned model.</li>
+      <li>
+     You will find the distance gaps for constraints of the 
+      types point/point, point/line, point/plane, line/line, <br>
+      line/plane and plane/plane, as well as the angular gaps for constraints of 
+      the types line/line, line/plane and plane/plane.<br>
+      Since those gaps are computed from the infinite support of lines and 
+      planes that make the constraints, <br>
+      the distance between two non parallel planes (or a line and a plane) will 
+      be null. <br>
+      Only significant gaps between a line and a plane or between two planes 
+      will be displayed <br>
+      (i.e. only when the two constraint elements are parallel).</li>
+      <li>
+      The <kbd>Statistics</kbd> are given for the constraint elements, they 
+      do not refer to the real gaps between <br>
+      the Cloud to Align and the reference. Those gaps are given by the 
+      <a target="ds_doc2" href="page3951.html">
+      Distance Analysis</a>.</li>
+      <li>
+     A constraint with a <kbd>Strict</kbd> priority is not fully respected 
+      when the distance is greater than 0.001 or 
+      the angle is greater than 0.5. <br>
+            This may happen when a constraint with a 
+      <kbd>Strict</kbd> priority is applied simultaneously 
+      to other constraints. <br>
+      A message warns you that the constraint could not be 
+      fully respected.</li>
+      <li>
+      If the constraints are not consistent, an information 
+      message is displayed.  <br>
+      You can then decide whether the result is satisfactory or not.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top" align="center">&nbsp;</td>
+    <td valign="top">
+    <ol class="task" start="10">
+      <li>
+      <p class="task"><a name="ix-align with constraints:output"></a>Once you 
+      are satisfied with the alignment computed, click <kbd>OK</kbd> to validate 
+      and exit the action.</p>
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber16">
+        <tr>
+          <td>
+          <p class="task">If <kbd>Keep Initial</kbd> is selected:
+      </p>
+          <ul>
+            <li>
+            A new cloud, in fact the copy of the initial <kbd>Cloud to 
+            Align</kbd> (<kbd>CloudToAlign</kbd>.1 in
+            <kbd>New </kbd>in our example), is created in the specification 
+          tree, and aligned with the <kbd>
+            Reference</kbd>, </li>
+            <li>
+            The new cloud has the same graphic properties than the 
+            initial <kbd>Cloud to Align</kbd>, </li>
+            <li>
+            The initial <kbd>Cloud to Align</kbd> is 
+            hidden.&nbsp;</li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/dseug_c2/images/treemovedcloudNLS.gif" width="162" height="529"><p>
+          If  <kbd>Keep Initial</kbd> is not selected:</p>
+          <ul>
+            <li>The <kbd>Cloud to Align</kbd> is aligned with the <kbd>
+            Reference</kbd> and no new cloud is created 
+            in the specification tree.<br>
+            
+            <img border="0" src="b35doc/english/online/dseug_c2/images/treemovedcloud02NLS.gif" width="146" height="501"></li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>In both cases, an  <kbd>Axis Systems</kbd> is created with:<ul>
+            <li><kbd>AxisTrs.x</kbd> (system axis computed on the Cloud to Align) and&nbsp; 
+			<kbd><br>
+			AxisRef.x</kbd> (axis system created on the output cloud).&nbsp;
+            </li>
+          </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/dseug_c2/images/alignctraxisNLS.gif" width="122" height="75"></td>
+        </tr>
+        <tr>
+          <td>Those Axis Systems can be used with the
+            <a href="page3151.html">Axis 
+          to Axis</a> action on other elements to align.<br>
+          <a href="page6123.html">Align with previous transformation</a> is 
+          also available. </td>
+        </tr>
+      </table>
+      </li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/amethod.gif" width="32" height="32"></td>
+    <td valign="top">When the alignment cannot be computed, an information 
+    message is displayed (Update error). You can:
+    <ul>
+      <li>Delete constraints </li>
+      <li>Delete and add other constraints </li>
+      <li>Check the consistency of the constraints </li>
+      <li>Eventually, re-compute the basic shapes used. </li>
+    </ul>
+    <p>The method we suggest is:</p>
+    <ol class="task">
+      <li>
+      <p class="task">Exit the action,</li>
+      <li>
+      <p class="task">Restart the alignment with one single constraint,</li>
+      <li>
+      <p class="task">Click Apply. </li>
+      <li>
+      <p class="task">If the computation is still impossible, restart the 
+      alignment with another constraint.</li>
+      <li>
+      <p class="task">If the computation is possible, add another constraint and 
+      repeat the process from step 3 in loops 
+      until the result is satisfactory.</li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td valign="top">
+    <p class="task">If constraints are deleted, the intermediate computation is 
+    erased. </td>
+  </tr>
+  <tr>
+    <td valign="top" colspan="2" align="center">
+    <p align="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

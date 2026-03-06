@@ -1,0 +1,887 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Activating Single Sign-On</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Activating Single Sign-On</h1>
+ <table style="BORDER-COLLAPSE: collapse" cellSpacing="0" cellPadding="0" width="100%" border="0">
+   <tr>
+     <td vAlign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td vAlign="top">Once the credential sets have been created for your end 
+     users, you now have to activate the Single Sign-On component. Activating 
+     single sign-on involves editing properties files, setting variables, etc.
+     <p>Depending on the type of application you are deploying, the steps to be 
+     performed are different.</p>
+     <p>There are two groups of applications:</p>
+     <ul>
+       <li>Webtop application: 
+       <strong>LCA Navigator</strong></li>
+       <li>Wintop applications: the 
+       <strong>LCA Classic</strong> (the ENOVIA VPC product), 
+       3d com Classic and the VPM Navigator client.</li>
+     </ul>
+     <p>The following table sums up the relevant SSO activation tasks, depending 
+     on whether you are deploying SSO for Webtop or Wintop applications:</p>
+     <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="364" id="AutoNumber1">
+       <tr>
+         <td width="289" align="center" valign="top"><b>Task</b></td>
+         <td width="73" align="center" valign="top"><b>Wintop</b></td>
+         <td width="150" align="center" valign="top"><b>Webtop</b></td>
+       </tr>
+       <tr>
+         <td width="289" valign="top">Activate SSO in the install path deployed 
+         in the Web Application Server</td>
+         <td width="73" valign="top" align="center"><b><font color="#008000">Yes</font></b></td>
+         <td width="150" valign="top" align="center"><b><font color="#008000">Yes</font></b></td>
+       </tr>
+       <tr>
+         <td width="289" valign="top">Activate SSO on the ENOVIA server side</td>
+         <td width="73" valign="top" align="center"><b><font color="#008000">Yes</font></b></td>
+         <td width="150" valign="top" align="center"><b><font color="#008000">Yes</font></b></td>
+       </tr>
+       <tr>
+         <td width="289" valign="top">Activate SSO on the ENOVIA client side</td>
+         <td width="73" valign="top" align="center"><b><font color="#008000">Yes</font></b></td>
+         <td width="150" valign="top" align="center"><b><font color="#FF0000">No</font></b></td>
+       </tr>
+     </table>
+     <p><b>Warning:</b> Wintop and Webtop applications (for example, 
+     <strong>LCA Navigator</strong> and the 
+     <strong>LCA Classic</strong>, the VPC 
+     product) cannot by default share access to the same ENOVIA server in SSO mode. For a detailed 
+     explanation of how to enable this function, refer to
+     <a href="#hj-WintopWebtopShareServer">Enabling Wintop and Webtop 
+     Applications to Share the Same ENOVIA V5 Server</a>.</td>
+   </tr>
+   <tr>
+     <td vAlign="top">&nbsp;</td>
+     <td vAlign="top">
+     <h2>Deployment Possibilities</h2>
+     <p>The deployment diagrams in <a href="page1268.html">Deploying Wintop and Webtop Applications</a> identify the software 
+     components involved but do not specify on which machine they are located.</p>
+     <p>Important: we recommend that the V5 code installation path deployed in 
+     the WAS resides on the same machine as the WAS. </p>
+     <h3>Test Configuration: All Code on the Same Machine</h3>
+     <p>It is quite possible, for example in the case of Webtop applications, to 
+     install all the ENOVIA server code (including for example Webtop 
+     applications) on the same machine as the WAS, in which case there is only 
+     one V5 installation path, like this:</p>
+     <blockquote>
+       <p>
+		<img border="1" src="b35doc/english/online/basil_c2/images/basilENOVIADeploymentWebtop02_NLS.gif" width="960" height="720"></p>
+     </blockquote>
+     <p>The only use for this type of deployment is, for example, to test the 
+     software before deciding to deploy it on different machines.</p>
+     <p><font color="#FF0000"><b>Please note, however, that this is not a recommended deployment 
+     scenario.</b></font></p>
+     <h3>Recommended Industrial Production Scenario: Server Code On One Machine, 
+     and WAS and V5 Code on Another Machine</h3>
+     <p>We recommend that you deploy 
+     <strong>ENOVIAV5VPM</strong> server code on one machine, and 
+     deploy the V5 code in the WAS together on a different machine. In this 
+     illustration, we illustrate how to deploy Webtop applications in the WAS on 
+     the same machine:</p>
+     <blockquote>
+       <p>
+		<img border="1" src="b35doc/english/online/basil_c2/images/basilENOVIADeploymentWebtop03_NLS.gif" width="960" height="720"></p>
+       <p><b>Keep in mind that with this kind of setup, you have two different 
+       installation paths. You need to understand fully in which install path 
+       you need to perform the different activation steps.</b></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td vAlign="top">&nbsp;</td>
+     <td vAlign="top">
+     <h2><a name="hj-WASSSOConfig"></a>Activating SSO in the Installation Path 
+     Deployed in the Web Application Server (Wintop or Webtop)</h2>
+     <p>To activate SSO for either Webtop or Wintop applications, the following 
+     steps are required to activate the SSO component in the Web Application 
+     Server, and must be performed in the installation path for the V5 
+     application deployed in the Web Application Server.</p>
+     <p>When you have the WAS and V5 code on one machine, and the 
+     <strong>ENOVIAV5VPM</strong> 
+     server on another, you must edit two files <b>in the installation path of 
+     the V5 code deployed on the same machine as the WAS</b>.</p>
+     <h3>Activating SSO in the Install Path Deployed in the WAS</h3>
+     <ol>
+       <li>Go to the directory:<p><code>install_path/$os/resources/sso (UNIX)<br>
+       install_path\$os\resources\sso (Windows)</code></p>
+       <p>then edit the file:</p>
+       <p><code>SSOServer.properties</code></p>
+       <p>and check that the SSO Administrator username has been correctly 
+       defined. It contains the following lines:</p>
+       <p><code>SSORepositoryClassname=com.dassault_systemes.plmsecssoserver.plmsecssosrvimpl.SSORepository
+       </code></p>
+       <p><code>#You should change wpsadmin to the right Single Sign On 
+       administrator name <br>
+       SSOAdministrator=<b>wpsadmin</b> </code></p>
+       <p>The SSO Administrator username is set by default to: <kbd>wpsadmin</kbd>. 
+       As mentioned in <a href="page1193.html">Configuring and 
+       Customizing the LDAP Repository</a>, this is a recommended user, but you 
+       can replace it with another user. If so, set it to the correct name.<br>
+       Note: the <code>SSORepositoryClassname</code> referenced in R16 is the same as in 
+       <strong>ShortReleaseNumber</strong>.</li>
+       <li>Edit the file:<p><code>install_path/$os/resources/sso/SSOClient.properties&nbsp; 
+       (UNIX)<br>
+       install_path\$os\resources\sso\SSOClient.properties (Windows)</code></p>
+       <p><span style="font-weight: 400"><font color="#000000">and set the 
+       following properties to &quot;yes&quot; (the default is &quot;no&quot;):</font></span></p>
+       <p><span style="font-weight: 400"><code>SSOActivated=<b>yes</b><br>
+       SSOSecuredEnvironment=<b>yes</b></code></span></p>
+       <p><font color="#000000">The role of the property <code>SSOActivated</code> 
+       is to activate the SSO mode.</font></p>
+       <p><font color="#000000">The role of the property <code>
+       SSOSecuredEnvironment</code> is to specify that you have secured the 
+       application server hosting the SSO Server.</font></li>
+     </ol>
+     <p>The result is now this:</p>
+     <p>
+		<img border="1" src="b35doc/english/online/basil_c2/images/basilENOVIADeploymentWebtopSSO04_NLS.gif" width="960" height="720"></td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td vAlign="top">
+     <h2>Activating SSO on the ENOVIA Server (Wintop or Webtop) and ENOVIA 
+     Client Side (Wintop only)</h2>
+     <p>You also have to:</p>
+     <ul>
+       <li>activate SSO on the ENOVIA server side (both Wintop and Webtop)</li>
+       <li>activate SSO on the Wintop client (whenever a Wintop client is 
+       necessary).</li>
+     </ul>
+     <p>in addition to the steps you already performed in
+     <a href="#hj-WASSSOConfig">Activating SSO in the Web Application Server for 
+     Webtop and Wintop Applications</a>.</p>
+     <h3><a name="hj-SSOENOVServer"></a>Activating SSO on the ENOVIA Server</h3>
+     <p>The following operations are required to activate the SSO component for 
+     the ENOVIA server and must be performed in the V5 installation path of the 
+     ENOVIA server:</p>
+     <ol>
+       <li>Copy the CATSSO.dic dictionary file from:<p><code>install_path/$os/startup/sso 
+       (UNIX)<br>
+       install_path\$os\startup\sso (Windows)</code></p>
+       <p>to:</p>
+       <p><code>install_path/$os/code/dictionary (UNIX)<br>
+       install_path\$os\code\dictionary (Windows)</code></li>
+       <li>Define the following variables in the shell launching the server 
+       manager, after the comments and before the line defining the 
+       operating system, #OS, and make sure they are included before the command 
+       starting the server manager.<p>The variables are:<ul>
+         <li>CATJWSServiceDirectory</li>
+         <li>CATLoginServletHost</li>
+         <li>CATSMWebMode.</li>
+       </ul>
+       <h4>UNIX</h4>
+       <p>On UNIX, edit the file:</p>
+       <p><code>install_path/$os/code/command/runServerManager</code></p>
+       <p>and export them like this:</p>
+       <p><code>export CATJWSServiceDirectory=http://host.domain:port/RootURI
+       <br>
+       export CATLoginServletHost=&lt;wasservername&gt; <br>
+       export CATSMWebMode=true (only when deploying Webtop applications)</code></p>
+       <p>Example for deploying <b>Wintop</b> applications:</p>
+       <p><code>export CATJWSServiceDirectory=<b>http://loug3dsy.dsy.ds:9080/</b><strong>EnvNameSuffix</strong><br>
+       export CATLoginServletHost=<b>loug3dsy.dsy.ds</b></code></p>
+       <p>Example for deploying <b>Webtop</b> applications:</p>
+       <p><code>export CATJWSServiceDirectory=<b>http://loug3dsy.dsy.ds:9080/</b><strong>EnvNameSuffix</strong><br>
+       export CATLoginServletHost=<b>loug3dsy.dsy.ds<br>
+       </b>export CATSMWebMode=<b>true</b></code></p>
+       <h4>Windows</h4>
+       <p>On Windows, edit the file:</p>
+       <p><code>install_path\$os\code\command\runOrbix.bat</code></p>
+       <p>and set them like this:</p>
+       <p><code>set CATJWSServiceDirectory=http://host.domain:port/RootURI <br>
+       set CATLoginServletHost=&lt;wasservername&gt; <br>
+       set CATSMWebMode=true (only when deploying Webtop applications)</code><br>
+		
+		<p class="blink">Running the Orbix as Service:</p>
+		<ul class="blink">
+			<li>In CATEnv: <br>
+			Update the file with <code>CATJWSServiceDirectory , 
+			CATLoginServletHost </code>variables. </li>
+		<li>In CATIAServerManager.IMP (D:\DassaultSystemes\B27\win_b64\startup\orbix\config\Repositories\ImpRep):<br>
+		Replace the string <code>&#8220;* $bin_path\GW0SRVMG.exe -env $ENV_NAME -direnv 
+		&quot;$DIR_NAME&quot; -timeOut 3600000&#8221;</code> with <code>&#8220;* $bin_path\CATSTART.exe -run 
+		GW0SRVMG.exe -env $ENV_NAME -direnv &quot;$DIR_NAME&quot; -timeOut 3600000&#8221;.</code></li>
+		</ul>
+       <p>Example for deploying <b>Wintop</b> applications:</p>
+       <p><code>set CATJWSServiceDirectory=<b>http://loug3dsy.dsy.ds:9080/</b><strong>EnvNameSuffix</strong><br>
+       set CATLoginServletHost=<b>loug3dsy.dsy.ds</b></code></p>
+       <p>Example for deploying <b>Webtop</b> applications:</p>
+       <p><code>set CATJWSServiceDirectory=<b>http://loug3dsy.dsy.ds:9080/</b><strong>EnvNameSuffix</strong><br>
+       set CATLoginServletHost=<b>loug3dsy.dsy.ds<br>
+       </b>set CATSMWebMode=<b>true </b></code></p>
+       <p>Then, on Windows, restart Orbix using the following command:</p>
+       <p><code>install_path\$os\code\bin\catstart -direnv envdirectory -env 
+       environment_file -run runOrbix.bat </code></p>
+       <p>where <code>envdirectory </code>is the name of the directory 
+       containing the environment and <code>environment_file </code>is the name 
+       of your runtime environment file.</p>
+       <p><b>Warning</b>: After applying or rolling back a service pack, the 
+       running processes will be stopped at the beginning of the procedure, but 
+       re-started at the end, at least for the orbix daemon. After deploying 
+       SSO, the <code>runorbix.exe</code> will be-relaunched while <code>runorbix.bat</code> was expected. 
+       So you should manually kill and restart your orbix daemon.</p>
+       <p>For a detailed explanation of why exporting these three variables is 
+       necessary, refer to <a href="#hj-ExportVariablesServerSide">Importance of 
+       Exporting the CATJWSServiceDirectory, CATLoginServletHost and 
+       CATSMWebMode Variables for Webtop Applications</a>.</li>
+       <li><font face="Verdana">If you do NOT want to add a specific user <kbd>
+       ServerManager</kbd> in your corporate LDAP repository (and you did not 
+       import this user earlier via an LDIF file), you have to specify an 
+       existing user by creating a file named:</font><p><code>
+       ServerManagerUser</code></p>
+       <p><font face="Verdana">in:</font></p>
+       <p><code>install_path/$os/startup/sso (UNIX)<br>
+       install_path\$os\startup\sso (Windows) </code></p>
+       <p><font face="Verdana">and storing the LDAP username to be used instead of 
+       the user ServerManager.</font></p>
+       <p><font face="Verdana">And in the file:</font></p>
+       <p><code>ServerManagerPwd</code></p>
+       <p><font face="Verdana">store the password for the same LDAP username.</font></li>
+       <li><font face="Verdana">If you DID import the specific user <kbd>
+       ServerManager</kbd>, you must store in the file named:</font><p><code>ServerManagerPwd</code></p>
+       <p><font face="Verdana">in:</font></p>
+       <p><code>install_path/$os/startup/sso (UNIX)<br>install_path\$os\startup\sso (Windows)</code></p>
+       <p><font face="Verdana">the password of the user <kbd>ServerManager</kbd> 
+       (that you created earlier in the LDAP directory), then save and 
+       exit the file.</font><p>Due to security concerns, when filling in the 
+		file: 
+		<p><code>install_path/$os/startup/sso/</code><code>ServerManagerPwd</code><code> (UNIX)<br>install_path\$os\startup\sso\</code><code>ServerManagerPwd</code><code> (Windows)</code><p>
+		you should give read access rights only for the user who starts the 
+		Orbix process.</li>
+     </ol>
+     <p>The result is now this:</p>
+     <p>
+		<img border="1" src="b35doc/english/online/basil_c2/images/basilENOVIADeploymentWebtopSSO05_NLS.gif" width="960" height="720"></p>
+     <h3>Activating SSO on the Wintop Client</h3>
+     <p>If you installed a Wintop client (for example, the 
+     <strong>LCA Classic</strong>), you must activate the SSO component by editing the following files 
+     in the V5 installation path of each client.</p>
+     <ol>
+       <li>Edit the file:<p><code>install_path/$os/docs/java/startup.properties 
+       (UNIX)<br>
+       install_path\$os\docs\java\startup.properties (Windows)</code></p>
+       <p>and add at the end of the line of the <code>applet.0.dsar</code> 
+       property (do not insert a carriage return): </p>
+       <p><code><b>PLBssoClientSide.jar</b><b> <br>
+       </b></code></li>
+       <li>Edit the file:<p><code>install_path/$os/docs/java/logon.properties 
+       (UNIX)<br>
+       install_path\$os\docs\java\logon.properties (Windows)</code></p>
+       <p>then uncomment and customize the file as follows:</p>
+       <p><code>###<br>
+       # Custom properties for single sign-on solution<br>
+       ###<br>
+       #AuthenticationImpl=&lt;full class name of the AuthenticationInterface 
+       implementation&gt;<br>
+       #CryptImpl=&lt;full class name of the CryptInterface implementation&gt;<br>
+       #CATLoginServletHost=&lt;host name the web server is running on&gt;<br>
+       #CATLoginServletPort=&lt;port number the web server is listening to&gt;<br>
+       #CATLoginServletURI=&lt;path to the login servlet the web server will 
+       follow&gt;<br>
+       ### <br>
+       <br>
+       </code>Example:<code><br>
+       ###<br>
+       # Custom properties for single sign-on solution<br>
+       ###<br>
+       AuthenticationImpl=<b>com.dassault_systemes.catweb.base.security.AuthenticationImpl</b><br>
+       CryptImpl=<b>com.dassault_systemes.catweb.base.security.CryptBase64Impl</b><br>
+       CATLoginServletHost=<b>loug3dsy.dsy.ds</b><br>
+       CATLoginServletPort=<b>9080</b><br>
+       CATLoginServletURI=<b>/</b><strong>EnvNameSuffix</strong><b>/sso</b><br>
+       ### </code></p>
+       <p><b>Warning</b>: the path for the <code>CATLoginServletURI </code>
+       property must comprise the <kbd>Application Root URI</kbd> value you 
+       entered when generating the enterprise archive file (.ear), and the 
+       suffix <kbd>/sso</kbd>. For example:</p>
+       <p><kbd>/<strong>EnvNameSuffix</strong>/sso</kbd></li>
+       <li>Edit the file:<p><code>install_path/$os/docs/java/VPMlogon.properties 
+       (UNIX)<br>
+       install_path\$os\docs\java\VPMlogon.properties (Windows)</code></p>
+       <p>which looks like this:</p>
+       <p><font color="#000000"><code>Nb_Languages=6<br>
+       Language.0=en<br>
+       Language.1=fr<br>
+       Language.2=de<br>
+       Language.3=ja<br>
+       Language.4=zh<br>
+       Language.5=ko</code></font></p>
+       <p><font color="#000000"><code>roleModelClassname=com.dassault_systemes.vpm.security.catlet.model.CATVpmRoleModel
+       </code></font></p>
+       <p>then add and customize the following declaration (as in the 
+       logon.properties file) as follows:</p>
+       <p><font color="#000000"><code>###<br>
+       # Custom properties for single sign-on solution<br>
+       ###<br>
+       AuthenticationImpl=<b>com.dassault_systemes.catweb.base.security.AuthenticationImpl</b><br>
+       CryptImpl=<b>com.dassault_systemes.catweb.base.security.CryptBase64Impl</b><br>
+       CATLoginServletHost=<b>loug3dsy.dsy.ds</b><br>
+       CATLoginServletPort=<b>9080</b><br>
+       CATLoginServletURI=<b>/</b></code></font><code><strong>EnvNameSuffix</strong></code><font color="#000000"><code><b>/sso/</b><br>
+       ###</code></font></p>
+       <p><font color="#000000"><b>Warning</b>: the path for the <code>
+       CATLoginServletURI</code> property must comprise the <kbd>Application 
+       Root URI</kbd> value you entered when generating the enterprise archive 
+       file (.ear), and the suffix /sso/. For example:</font></p>
+       <p><kbd>/<strong>EnvNameSuffix</strong></kbd><font color="#000000"><kbd>/sso/</kbd></font></li>
+     	<li>For VPM Navigator, edit the file:<p><code>install_path/$os/resources/sso/SSOClient.properties&nbsp; 
+       (UNIX)<br>
+       install_path\$os\resources\sso\SSOClient.properties (Windows)</code></p>
+       <p><span style="font-weight: 400"><font color="#000000">and set the 
+       following properties to &quot;yes&quot; (the default is &quot;no&quot;):</font></span></p>
+       <p><span style="font-weight: 400"><code>SSOActivated=<b>yes</b><br>
+       SSOSecuredEnvironment=<b>yes</b></code></span></p></li>
+		<li>For VPM Navigator, export the <code>CATJWSServiceDirectory</code> 
+		variable, for example:<p><code>export CATJWSServiceDirectory=<b>http://loug3dsy.dsy.ds:9080/</b><strong>EnvNameSuffix</strong></code></p>
+       	</li>
+     </ol>
+     <p>The result is now this:</p>
+     <p>
+		<img border="1" src="b35doc/english/online/basil_c2/images/basilENOVIADeploymentWebtopSSO06_NLS.gif" width="960" height="720"></td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td vAlign="top">
+     <h2><a name="hj-ExportVariablesServerSide"></a>Importance of Exporting the 
+     CATJWSServiceDirectory, CATLoginServletHost and CATSMWebMode Variables for 
+     Webtop Applications</h2>
+     <p>If you are deploying SSO mode for Webtop applications, you can only 
+     truly consider that the SSO mode has been successfully activated once you 
+     have exported the <code>CATJWSServiceDirectory</code>, <code>
+     CATLoginServletHost</code> and <code>CATSMWebMode</code> variables on the 
+     ENOVIA server side, that is, if you have performed the steps explained in
+     <a href="#hj-SSOENOVServer">Activating SSO on the ENOVIA Server</a>.</p>
+     <p>The temptation is to take shortcuts. It is actually possible to deploy 
+     the <strong>LCA Navigator</strong>, for example, in the WAS, activate SSO <i>partially</i> in 
+     the installation path deployed in the WAS (that is, by editing only the 
+     SSOServer.properties and SSOClient.properties files, but without exporting 
+     the three above-mentioned variables on the ENOVIA server side), and log 
+     onto an <strong>LCA Navigator</strong> session using an LDAP identity. This gives the 
+     impression that the SSO mode is <i>fully</i> activated. The fact that you 
+     can then create and save ENOVIA V5 lifecycle objects reinforces this 
+     impression that you are working in SSO mode, whereas in reality this is not 
+     the case.</p>
+     <p><b>THIS IS A PITFALL.</b></p>
+     <p>This pitfall occurs irrespective of whether the WAS, the Webtop code and 
+     the ENOVIA server are on the same machine, or the WAS and Webtop code are 
+     on one machine, and the ENOVIA server on another.</p>
+     <p>To illustrate this pitfall, and for the sake of simplicity, in the 
+     following scenarios the different software components are installed on the 
+     same machine.</p>
+     <h3>Scenario 1</h3>
+     <p>In this scenario:</p>
+     <ol>
+       <li>Server side activation has not been performed: SSO has been activated 
+       by editing ONLY the <code>SSOServer.properties</code> and <code>SSOClient.properties</code> files.</li>
+       <li>The LDAP user is SMQ.</li>
+       <li>The P&amp;O user is also SMQ.</li>
+       <li>The generic OS user who starts the 
+       <strong>ENOVIAV5VPM</strong> server manager is SES.</li>
+     </ol>
+     <p>Here is the credential set:</p>
+     <p>
+		<img border="1" src="b35doc/english/online/basil_c2/images/basilENOVIADeploymentWebtopSSO07_NLS.gif" width="659" height="226"></p>
+     <p>You will be able to log on without realizing that the SSO mode has not 
+     been fully activated: <b>the SSO token has not been propagated</b>:</p>
+     <p>
+     <img border="1" src="b35doc/english/online/basil_c2/images/basilENOVIADeploymentWebtopSSO01_NLS.gif" width="960" height="720"></p>
+     <p>What does that mean? The SSO token is an internal mechanism which 
+     transfers the correct credentials to the application process. If the 
+     variables are not exported, the application process started by the server 
+     manager will be owned by the OS user who started the server manager 
+     process, and not the P&amp;O user.</p>
+     <p>This is the process ownership hierarchy (using the process explorer tool 
+     on Windows):</p>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/basilENOVIADeploymentWebtopSSO08_NLS.gif" width="583" height="112"></p>
+     <p>demonstrating that the owner of the server manager process is SES.</p>
+     <p>This is the properties tab of an action created with the same 
+     credentials:</p>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/basilENOVIADeploymentWebtopSSO09_NLS.gif" width="734" height="306"></p>
+     <p>demonstrating that the owner/creator of the action is SES.</p>
+     <p>In concrete terms, this means that when creating objects using lifecycle 
+     functions, for example, <b><font color="#FF0000">the creator of ENOVIA V5 
+     objects will be the OS user who started the server manager process, and not 
+     the P&amp;O user. Consequently, the owner of all the objects you create will be 
+     identical: the OS user. This is not desired.</font></b></p>
+     <h3>Scenario 2</h3>
+     <p>In this scenario:</p>
+     <ol>
+       <li>Server side activation has been fully performed with all the 
+       variables exported.</li>
+       <li>The LDAP user is SMQ.</li>
+       <li>The P&amp;O user is also SMQ.</li>
+       <li>The generic OS user who starts the 
+       <strong>ENOVIAV5VPM</strong> server manager is SES.</li>
+     </ol>
+     <p>So the credential set is identical:</p>
+     <p>
+     <img border="1" src="b35doc/english/online/basil_c2/images/basilENOVIADeploymentWebtopSSO03_NLS.gif" width="960" height="720"></p>
+     <p>This is the process ownership hierarchy:</p>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/basilENOVIADeploymentWebtopSSO08_NLS.gif" width="583" height="112"></p>
+     <p>demonstrating that the owner of the server manager process is still SES.</p>
+     <p>This is the properties tab of an action created with the same 
+     credentials:</p>
+     <p><img border="1" src="b35doc/english/online/basil_c2/images/basilENOVIADeploymentWebtopSSO10_NLS.gif" width="731" height="278"></p>
+     <p>demonstrating that the owner/creator of the action is this time the P&amp;O 
+     user: SMQ.</p>
+     <p>Note: the OS userid does NOT have to be declared in the P&amp;O database.</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td vAlign="top">
+     <h2><a name="hj-WintopWebtopShareServer"></a>Enabling Wintop and Webtop 
+     Applications to Share the Same ENOVIA V5 Server</h2>
+     <p>There are two groups of applications:</p>
+     <ul>
+       <li>Wintop applications: the 
+       <strong>ENOVIAV5VPM</strong> client (the ENOVIA VPC product), 
+       3d com Classic&nbsp; and the VPM Navigator client</li>
+       <li>Webtop application: 
+       <strong>LCA Navigator</strong>.</li>
+     </ul>
+     <p>By default, Webtop applications and Wintop applications cannot share 
+     access to the same ENOVIA V5 server in SSO mode.</p>
+		<p><b>Warning: </b>the same installation path must NOT contain both the 
+		code for the Wintop client (with SSO enabled) and the code for the 
+		Webtop application (with SSO enabled) required by the WebSphere 
+		Application Server. You can have the following configurations:</p>
+		<h5>Configuration 1</h5>
+		<p>In one installation path:</p>
+		<ul>
+			<li>the <strong>ENOVIAV5VPM</strong> server code (with SSO enabled)</li>
+			<li>the Webtop code (with SSO enabled) required by the WAS </li>
+		</ul>
+		<p>and in another installation path:</p>
+		<ul>
+			<li>the Wintop client code (with SSO enabled)</li>
+		</ul>
+		<h5>Configuration 2</h5>
+		<p>In one installation path:</p>
+		<ul>
+			<li>the <strong>ENOVIAV5VPM</strong> server code (with SSO enabled)</li>
+			<li>the Wintop client code (with SSO enabled)</li>
+		</ul>
+		<p>and in another installation path:</p>
+		<ul>
+			<li>the Webtop code (with SSO enabled) required by the WAS.</li>
+		</ul>
+		<p>However, you can enable Webtop applications and Wintop applications to 
+     effectively share access to the same server by following this scenario 
+     which involves duplicating the Orbix entry point, with one Orbix 
+     environment for Webtop applications and one for Wintop applications, then 
+     exporting a variable in the resulting Webtop environment:</p>
+     <ol>
+       <li>Create a new Orbix directory, <code>orbix2</code> (for the Webtop 
+       environment), for example by copying the Orbix directory in the 
+       <strong>ENOVIAV5VPM</strong> 
+       server installation path from:<br>
+       <br>
+       <code>$install_path/startup/orbix</code><br>
+       <br>
+       to:<br>
+       <br>
+       <code>$install_path/startup/orbix2 </code></li>
+       <li>Modify the file:<br>
+       <br>
+       <code>$install_path/startup/orbix2/iona.cfg</code><br>
+       <br>
+       by replacing:<br>
+       <br>
+       <code>cfg_dir = &quot;$install_path/startup/orbix/config/&quot;; </code><br>
+       <br>
+       with:<br>
+       <br>
+       <code>cfg_dir = &quot;$install_path/startup/orbix2/config/&quot;; </code><br>
+       </li>
+       <li>Set the orbix2 ports. In:<br>
+       <br>
+       <code>$install_path/startup/orbix2/config/common.cfg<br>
+       </code><br>
+       set:<br>
+       <br>
+       <code>IT_DAEMON_PORT = &quot;xxxx&quot;, where xxxx is the number of an available 
+       listen port<br>
+       IT_DAEMON_SERVER_BASE = &quot;yyyy&quot;, where yyyy is a number of an available 
+       port<br>
+       IT_DAEMON_SERVER_RANGE=&quot;zzz&quot;, where zzz is a range interval</code><br>
+       </li>
+       <li>Copy the file:<br>
+       <br>
+       <code>$install_path/code/command/runServerManager</code><br>
+       <br>
+       to:<br>
+       <br>
+       <code>$install_path/code/command/runServerManager2<br>
+       </code></li>
+       <li>Modify the file <code>CATIAServerManager.IMP</code> file found in:<br>
+       <br>
+       <code>$install_path/startup/orbix2/config/Repositories/ImpRep</code><br>
+       <br>
+       by replacing:<br>
+       <br>
+       <code>runServerManager</code><br>
+       <br>
+       with:<br>
+       <br>
+       <code>runServerManager2<br>
+       </code></li>
+       <li>Activate the SSO mode in the file <code>runServerManager2</code>.</li>
+       <li>Edit the file <code>runServerManager2</code> and set the following 
+       variable:<br>
+       <br>
+       <code>export CATSMWebMode=true</code><br>
+       </li>
+       <li>Create a shell starter for orbix2 by copying the shell:<br>
+       <br>
+       <code>$install_path/code/command/runOrbix</code><br>
+       <br>
+       to:<br>
+       <br>
+       <code>$install_path/code/command/runOrbix2<br>
+       </code></li>
+       <li>Modify IT_CONFIG_PATH in the <code>runOrbix2</code> shell as follows:<br>
+       <br>
+       IT_CONFIG_PATH=$install_path/startup/orbix2<br>
+       IT_DAEMON_PORT=xxxx (as defined in step 2 above)<br>
+       </li>
+       <li>Start the orbix2 daemon as follows:<br>
+       <br>
+       <code>$install_path/code/command/runOrbix2</code></li>
+     </ol>
+     <p>This means that:</p>
+     <ul>
+       <li>in the <code>runServerManager</code> file for the Wintop 
+       applications, the <code>CATSMWebMode </code>variable is not set</li>
+       <li>but the <code>runServerManager2 </code>file for the Webtop 
+       applications contains the line:<br>
+       <br>
+       <code>export CATSMWebMode=true</code></li>
+     </ul>
+     <p>Note: This methodology can be easily implemented on the Windows OS. The 
+     purpose of the <kbd>CATSMWebMode</kbd> environment parameter is to 
+     differentiate two behaviors of the Server Manager, which are not 
+     compatible.</p>
+     <p><b>Note: </b>The<b> </b><code><b>CATSMWebMode </b></code>variable can 
+     only be exported for the Webtop applications.<p style="tab-stops:.5in 1.0in 1.5in 1.75in 135.0pt 3.0in">
+ <b>Note about Orbix On AIX</b></p>
+	<p style="tab-stops:.5in 1.0in 1.5in 1.75in 135.0pt 3.0in">
+ The Orbix connection from an ENOVIA App Server launched by an Orbix Daemon A to 
+	a Vault Server fails if the Vault Server is running on the same machine and 
+	has not been launched by the same Orbix Daemon A.<br>
+	<br>
+	The recommended by-pass is to deploy the Vault Server on a dedicated machine 
+	which is not shared with the ENOVIA App Servers. If it is not possible to 
+	have a dedicated machine, then the same Orbix daemon has to be used for 
+	ENOVIA App Server and the Vault Server.</p>
+ 	</td>
+   </tr>
+   <tr>
+     <td vAlign="top">&nbsp;</td>
+     <td vAlign="top">
+     <h2>Deactivating Single Sign-On and Deleting Credential Sets</h2>
+     <p>To deactivate the Single Sign-On capability, you must undo the steps 
+     that were performed on the ENOVIA server and the client.</p>
+     <p>Note: If you are using the default SSO Repository, to delete all 
+     credential sets that you created on the machine on which the server was 
+     installed, delete the file:</p>
+     <p><code>$install_path/$os/resources/credentials/SSOServer.credentials</code></p>
+     <p><b>WARNING</b>: We do not recommend that you use the default SSO 
+     Repository. To create your own SSO Repository, see the task
+     <a href="page1295.html#hj-SSORepo">Implementing Your Own SSO 
+     Repository</a>. However, if you do use your own SSO Repository, you must 
+     manage the deactivation yourself.</td>
+   </tr>
+   <tr>
+     <td vAlign="top">&nbsp;</td>
+     <td vAlign="top">
+     <h2>V5 SSO Authentication User Exit</h2>
+		<p>In V5 PLM solutions, the Single Sign-On Infrastructure relies on IBM 
+		WebSphere for authentication, and only supports basic authentication 
+		mode. </p>
+		<p>This limitation prevents the use of the V5 SSO solution with an IBM 
+		WebSphere secured with other schemes, such as Kerberos or Digest 
+		authentication. This feature aims at providing a simple way to enable 
+		support by the V5 SSO infrastructure of authentication schemes other 
+		than basic authentication.</p>
+		<h3>A Few Definitions</h3>
+		<p><b>LTPA</b>: Acronym for Lightweight Third-Party Authentication. LTPA 
+		is an authentication technology used in IBM WebSphere and Lotus Domino 
+		products. When accessing web servers that use the LTPA technology it is 
+		possible for a web user to re-use his login across physical servers. </p>
+		<p><b>SSO</b>: Acronym for Single Sign-On: SSO is a method of access 
+		control that enables a user to log in once and gain access to the 
+		resources of multiple software systems without being prompted to log in 
+		again.</p>
+		<h3>Previous SSO Behavior</h3>
+		<p>Prior to the V5 SSO authentication user exit, SSO behavior can be 
+		summed up by the following illustration:</p>
+		<p>
+		<img border="1" src="b35doc/english/online/basil_c2/images/SSOAuthExit01_NLS.gif" width="960" height="720"></p>
+		<h3>New SSO Behavior</h3>
+		<p>The V5 SSO authentication user exit enables customers to use an 
+		alternative authentication scheme, in particular Kerberos, as shown in 
+		the following illustration:</p>
+		<p>
+		<img border="1" src="b35doc/english/online/basil_c2/images/SSOAuthExit02_NLS.gif" width="960" height="720"></p>
+		<p>This authentication user exit provides a way for V5 applications 
+		using the SSO infrastructure to authenticate to the SSO Server using any 
+		authentication method, provided that the following conditions are met: </p>
+		<ul>
+			<li>The IBM WebSphere server must be secured in such way that LTPA 
+			mode is active</li>
+			<li>The application must be provided a valid LTPA token 
+			corresponding to the SSO user for whom credentials need to be 
+			retrieved from the SSO server.</li>
+		</ul>
+		<h3>Authentication for V5 applications Based on the C++ SSO Client </h3>
+		<p>To enable integration of authentication schemes from V5 applications 
+		to SSO Server other than basic authentication, this feature provides a 
+		way for a customer-provided application to start V5 applications in SSO 
+		mode so as to skip the basic authentication step performed by the SSO 
+		client to the SSO server, and use instead an SSO Token value (consisting 
+		in an LTPA token string) for this authentication. </p>
+		<p>To be more precise, the feature will be activated only if the 
+		following environment variable is set: </p>
+		<p><code>CATSSOTokenExitValue</code></p>
+		<p>There are two ways to take advantage of this feature: </p>
+		<ul>
+			<li>either the <code>CATSSOTokenExitValue</code> variable directly 
+			contains the SSO Token value</li>
+			<li>or it contains the absolute path of an executable command which 
+			outputs the SSO Token value.</li>
+		</ul>
+		<h3>SSO Token Set via an Environment Variable </h3>
+		<p>One simple way to take advantage of direct LTPA-based authentication 
+		consists in setting the <code>CATSSOTokenExitValue </code>variable with 
+		a value based on the following template: </p>
+		<p><code>LtpaToken2=&lt;value&gt;;Path=/ </code></p>
+		<p>For example:</p>
+		<p><code>LtpaToken2=QAWeWznUcsj9AUfHYFwmMkG/uNfdGq1p/vUObxNsHYH0J8R0aZO7E+<br>
+		scMun+DvKQzF6f8iJZTj8hTxgouZqkxuEupGdUsM5mb/teH4KXREw0a94X+TC+WOP<br>
+		/6XNpdDDKhabNsnG4mhznp/dNSLYlee1529p05nGNZUYZCWGFB4h/Vt1ooreZUHllM<br>
+		qFPDFGVRP9SECpwmNRVAwkzETCdRh4Tp61XAljQae0AjGeBNr2d1hNrd3Iti+Xm06L<br>
+		NbLU33Wetjz3DffSL9JO8xCMHJqTER6WyfyFRvplSCWqczCxzp5x8CP53VHeqSdbKQ74c7Qntauax50w=;Path=/
+		</code></p>
+		<p>To enable a specific authentication scheme for CATIA V5 with VPM 
+		Navigator, you will have to create an executable which will deal with 
+		the authentication authority (which can be a Kerberos server with 
+		WebSphere SPNEGO integration), and make sure this executable can output 
+		the value need for the <code>CATSSOTokenExitValue</code> variable. </p>
+		<p>Then, for example on UNIX, CATIA could be launched using a wrapper 
+		shell containing:</p>
+		<p><code>export CATSSOTokenExitValue=`customercode.exe` catstart </code>
+		</p>
+		<p>If it needs the URL of the SSO Server, your executable can be started 
+		using <code>catstart &#8211;run</code> and get the value of the <code>
+		CATJWSServiceDirectory</code> variable.</p>
+		<h3>SSO Token Set via a Customer-Defined Executable </h3>
+		<p>The other way to to take advantage of direct LTPA-based 
+		authentication consists in setting the <code>CATSSOTokenExitValue</code> 
+		variable with the absolute path of an executable program which prints to 
+		its standard output a value based on the following template:</p>
+		<p><code>LtpaToken2=&lt;value&gt;;Path=/</code></p>
+		<p>Given that this executable is called by the V5 application relying on 
+		the SSO infrastructure, it inherits the V5 environment variables, so it 
+		can use the <code>CATJWSServiceDirectory</code> variable to get the URL 
+		of the SSO Server if needed. </p>
+		<h3>Authentication for V5 applications not based on the C++ SSO Client
+		</h3>
+		<p>The authentication solution provides the <code>PLMSecSSOPing</code> 
+		command, which can be used to benefit from the <code>
+		CATSSOTokenExitValue</code> solution for a non-basic authentication 
+		based SSO Server. </p>
+		<p>The <code>PLMSecSSOPing</code> command is used as follows:</p>
+		<p><code>PLMSecSSOPing.EXE [-user &lt;username&gt; -password &lt;pwd&gt;] | [-ssocred 
+		&lt;value&gt;] [-app &lt;name&gt;] [-instance &lt;name&gt;] -action &lt;type&gt; | -h</code></p>
+		<p>where:</p>
+		<ul>
+			<li><code>-user &lt;username&gt;</code>: SSO user name </li>
+			<li><code>-password &lt;pwd&gt;</code>: SSO password </li>
+			<li><code>-ssocred &lt;value&gt;</code>: SSO credential, can be used 
+			instead of SSO user name &amp; password </li>
+			<li><code>-app &lt;name&gt;</code>: application name </li>
+			<li><code>-instance &lt;name&gt;</code>: instance name, use &#8216;.&#8217; as the 
+			instance name if the instance is an empty string </li>
+			<li><code>-action &lt;type&gt;</code>: Type of action, must be one of:<ul>
+				<li>&nbsp;listapps : list all applications having al least one 
+				SSO credential </li>
+				<li>&nbsp;listinst : list all instances of a given application 
+				</li>
+				<li>&nbsp;listcreds : list all credentials for a given 
+				application &amp; instance </li>
+				<li>&nbsp;showssocred : show the value of the SSO credential 
+				</li>
+				<li>&nbsp;showuser : show the SSO user name </li>
+				<li>&nbsp;isauth : check whether or not SSO authentication is 
+				valid (TRUE or FALSE) </li>
+			</ul>
+			</li>
+			<li><code>-h</code>: shows this help message</li>
+		</ul>
+		<h3>Limitations</h3>
+		<p>This featrue provides a direct solution for V5 applications based on 
+		the C++ SSO Infrastructure, such as VPM Navigator. On the other hand, it 
+		only indirectly provides a solution for an application like ENOVIA VPM 
+		Product Editor which is based on a deprecated SSO Java API. For VPM 
+		Product Editor, to support an authentication scheme other than basic for 
+		SSO server connection, keep in mind the following facts related to the
+		<code>PLMSecSSOPing</code> command: </p>
+		<ul>
+			<li>the <code>PLMSecSSOPing</code> command relies on the C++ SSO 
+			Infrastructure, which means that it can use the SSO Token provided 
+			by your code in order to authenticate to the SSO Server. </li>
+			<li>Using&nbsp; the <code>-action listcreds</code> option allows you 
+			to get the credentials for ENOVIA V5 server login. Then, VPM Product 
+			Editor can be started using these credentials retrieved later. Note: 
+			to benefit from this solution, VPM Product Editor must be set up in 
+			non-SSO mode.</li>
+		</ul>
+		<p>This feature will only work for authentication schemes compatible 
+		with the IBM WebSphere LTPA token mechanism. To be more precise, if an 
+		authentication scheme does not allow for a client application to login 
+		to IBM WebSphere using a valid LTPA token set in request cookie headers, 
+		then the V5 SSO solution will not work.</p></td>
+   </tr>
+   <tr>
+     <td vAlign="top">&nbsp;</td>
+     <td vAlign="top">
+     <h2>Customizing User Exits for VPM V4</h2>
+     <p>The repository database of VPM V4 must be configured to support server 
+     authentication for SSO to be enabled in VPM V4 (and therefore 
+     <strong>ENOVIAV5VPM</strong>).</p>
+     <p>In addition to the 
+     <strong>ENOVIAV5VPM</strong> setup itself, other tasks must be performed in 
+     the environment of VPM V4 in order to complete the SSO setup when using 
+     <strong>ENOVIAV5VPM</strong>. 
+     To do so:</p>
+     <ul>
+       <li>run the following command to activate the single sign-on plug-in in 
+       VPM V4:<br>
+       <br>
+       <code>VPMSettings -a -n VPM_EXTERNAL_LOGIN -v YES</code> </li>
+     </ul>
+     <ul>
+       <li>set the following environment variables:<br>
+       <br>
+       CATLoginServletHost<br>
+       CATLoginServletPort<br>
+       CATLoginServletURI</li>
+     </ul>
+     <blockquote>
+       <p>They reference the server host name, the port to be used for HTTP 
+       connections, and the servlet to be run on it, respectively.</p>
+     </blockquote>
+     <p>If data encryption is enabled on the server, the following variables 
+     must also be set in order to reference the correct library and 
+     encryption/decryption methods:</p>
+     <p><code>CATLoginCryptLibrary<br>
+     CATLoginCryptFunction<br>
+     CATLoginUncryptFunction</code></p>
+     <p>The default values should be:</p>
+     <p><code>CATLoginCryptLibrary=VX0SCEXT<br>
+     CATLoginCryptFunction=encodeBase64Password<br>
+     CATLoginUncryptFunction=decodeBase64Password</code></p>
+     <p>which make VPM V4 use its built-in 64-bit encoding.</p>
+     <p>All these variables should be set in the run-time environment of VPM V4. 
+     This could be done automatically by adding the adequate variable export 
+     commands to an initialization file, such as VPMWsUser.env. </p>
+     <p>Note: the previous six environment variables are the same as those set 
+     in initialization file ssoinit.sh of ServerManager. The values always be 
+     the same for the first three servlet variables. The values of the other 
+     three may differ depending on the legacy encryption implementation.</td>
+   </tr>
+   <tr>
+     <td vAlign="top">&nbsp;</td>
+     <td vAlign="top">
+     <h2>Servers Checkpoint</h2>
+     <h3>Troubleshooting Session Management</h3>
+     <p>Some database or WAS configuration mistakes can break Single Sign-On in 
+     a way which leads to an exception page whenever users try to open the 
+     Single Sign-On administration page. The following lines appear in the 
+     exception page: </p>
+     <p><code>Original Exception: Error Message: Server caught unhandled 
+     exception from servlet [CATServletManager]: null Error Code: 500 Target 
+     Servlet: CATServletManager Error Stack: java.lang.NullPointerException at 
+     com.dassault_systemes.catjsystem.catjsyj2ee.CATJ2EEServlet 
+     Manager.getSession(CATJ2EEServletManager.java:111) at 
+     com.dassault_systemes.catjsystem.catjsyj2ee.CATJ2EEServlet 
+     Manager.service(CATJ2EEServletManager.java:168) at 
+     javax.servlet.http.HttpServlet.service (HttpServlet.java:853) </code></p>
+     <p>Possible causes leading to this error are: </p>
+     <blockquote>
+       <ul>
+         <li>Single Sign-On not being able to connect to the Settings database.
+         </li>
+         <li>Wrong session parameters at server or web application scope. </li>
+       </ul>
+     </blockquote>
+     <p>The following subsections will cover determining the problem's cause and 
+     fixing it. </p>
+     <h3>Fixing Single Sign-On not being able to connect to the Settings 
+     database </h3>
+     <p>The error page quoted above shows up when Single Sign-On application is 
+     not able to connect to the Settings databases. The usual causes of this 
+     failure are: </p>
+     <blockquote>
+       <ul>
+         <li>Database not started: check this by issuing a start database 
+         command. </li>
+         <li>Database alias not properly defined (DB2) or wrong TNSNAME 
+         (ORACLE): check this using command-line SQL client (sqllib for DB2, 
+         sqlplus for ORACLE) in order to check database connection. </li>
+         <li>Mistake in the Data Source definition: use the 'Test Connection' 
+         button in WAS admin console to check the Data Source ; and make sure 
+         that its JNDI name is 'jdbc/JSystem'. </li>
+         <li>Database server being corrupted for other reasons: restart the 
+         database server, or even the database server machine. </li>
+       </ul>
+     </blockquote>
+     <p>If any changes to database or data source definition where made during 
+     these verification steps, stop and restart WAS to make sure all changes 
+     were taken into account. In case of a WAS ND-based deployment, also restart 
+     the node agents. </p>
+     <h3>Fixing Wrong session parameters at server or web application scope </h3>
+     <p>Another cause leading to the exception page can be a mistake in WAS 
+     session configuration. You can check session parameters with the following 
+     steps: </p>
+     <ol>
+       <li>Launch the Administrative Console and select Servers &nbsp;&gt;&nbsp; 
+       Application Servers. </li>
+       <li>Click the name of the server on which the Single Sign-On&nbsp;EAR file was deployed. In this example, this is server1.
+       </li>
+       <li>Scroll down and click Web Container. </li>
+       <li>On the Web Container page, click Session Management. </li>
+       <li>On the Session Management page, check that Enable Cookies 
+       property is checked in the 'Session tracking mechanism' line, and click 
+       on the Enable Cookies link. </li>
+       <li>On the Cookies page, make sure that in the Cookie maximum 
+       age line, the 'No timeout' radio button is checked. If Set timeout radio 
+       button is checked, change this so that No timeout is checked. </li>
+       <li>Save all changes and restart all servers before 
+       re-testing. </li>
+       </ol>
+         </td>
+   </tr>
+   </table>
+
+ </body>
+
+</html>
+

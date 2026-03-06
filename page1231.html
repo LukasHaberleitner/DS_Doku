@@ -1,0 +1,442 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Setting Up Databases for the ENOVIA Version 5 Server on Windows</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Setting Up Databases for the ENOVIA Version 5 Server on Windows</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td valign="top" width="32">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td rowspan="1" valign="top">This section explains how to 
+     create a database for the ENOVIA V5 server using the IBM DB2 Universal Database 
+     and Oracle products.<p>For DB2 and Oracle databases, you must have at 
+     least&nbsp;<b>150 Megabytes</b> of free disk space to successfully install the 
+     ENOVIA V5 tablespaces and data files. Whatever additional disk space 
+     you will need depends on the size of your database.
+		<p><strong>Note</strong>: You must install Oracle 32-bit client in such a way that the installation of the 
+		ENOVIA V5 code communicates with 32-bit Oracle client and not directly with 64-bit Oracle, if you are using an Oracle 64-bit database server.</p> </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td rowspan="1" valign="top">
+     <h2><font color="#282187">Setting Up a Database Using IBM DB2 Universal 
+     Database</font></h2>
+     <p>Your computer needs to be a DB2 server. </p>
+     <p>To find out whether the DB2 software on your computer is configured as a 
+     client or a server:</p>
+     <ol>
+       <li>Select <code>Start&nbsp;&gt;&nbsp;All Programs&nbsp;&gt;&nbsp;IBM DB2&nbsp;&gt;&nbsp;Command Line Processor</code>.</li>
+       <li>Run the command:<br>
+       <code>get dbm cfg</code></li>
+       <li>If a line like this appears at the top of the screen output:<br>
+       <br>
+       <code>Node type = Enterprise Server Edition with local and remote clients</code><br>
+       <br>
+       your computer is already set up as a DB2 server. If not, install the DB2 
+       server before proceeding.</li>
+     </ol>
+     <h3>Modifying the Stack Reserve Using the db2hdr Utility</h3>
+     <p>Before proceeding, make sure the DB2 server is not running. To 
+     check if it is already running, select <code>Start&nbsp;&gt;&nbsp;Control 
+     Panel&nbsp;&gt;&nbsp;Administrative Tools&nbsp;&gt;&nbsp;Services </code>and check that the following 
+     DB2 services are up and running:</p>
+     <p><code>DB2 - DB2 - 0<br>
+     DB2 Governor<br>
+     DB2 - JDBC Applet Server</code></p>
+     <p>If the DB2 server is running, stop it, then make sure that there is no
+     <i>db2sysc</i> process running. Then, increase the default stack size for 
+     the <i>db2syscs.exe</i> using the <kbd>db2hdr</kbd> utility as follows by, 
+     for example, selecting <code>Start&nbsp;&gt;&nbsp;All Programs&nbsp;&gt;&nbsp;IBM DB2&nbsp;&gt;&nbsp;Command Line 
+     Tools&nbsp;&gt;&nbsp;Command Window</code>, then running the following command to modify 
+     the stack reserve:</p>
+     <p><code>%DB2InstallationPath%\misc\db2hdr 
+     %DB2InstallationPath%\bin\db2syscs.exe /s:512</code></p>
+     <p>You must then restart the DB2 server and create at least one database 
+     before starting the installation.</p>
+     <p>To get help for <kbd>db2hdr</kbd>, run the utility without arguments:</p>
+     <p><code>%DB2InstallationPath%\misc\db2hdr</code></p>
+     <p>To check the current values of the db2 stacks, run the utility with one 
+     argument (full path for <i>db2syscs.exe)</i>:</p>
+     <p><code>%DB2InstallationPath%\misc\db2hdr 
+     %DB2InstallationPath%\bin\db2syscs.exe</code></p>
+     <p>Once you have modified the stack reserve, start the above-mentioned DB2 
+     services before proceeding. You can also configure the services to make 
+     sure that they are always running. To do so, select a service then 
+     right-click and choose &quot;Properties&quot; on the contextual menu, then set the 
+     &quot;Startup type&quot; to &quot;Automatic&quot;.<br>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+       <ol>
+       <li>Connect the machine using DB2 administrator user.<br>
+		<br>
+		</li>
+		<li>Create a directory <strong>ENOVIAV5</strong> at <code>&lt;DB2_installation_directory&gt;</code> location.<br>
+		<br>
+		</li>
+		<li>In the DOS window, go to the <code>&lt;db2_installaiton_path&gt;/BIN</code> 
+		folder.<br>
+		<br>
+		</li>
+		<li>Type <code>db2cmd.</code> <br>
+		A new DOS window opens with <code>db2</code> environment set.<br>
+		<br>
+		</li>
+		<li>In the new DOS window, run following commands:<br>
+		<br>
+		<code># Add new database on server for PLMDBSetup step<br></code>
+		<code>db2 create database ENOVIAV5<br></code>
+		<br>
+		<br>
+		<code># Add new bufferpools for new tbs<br></code>
+		<code>db2 connect to ENOVIAV5<br></code>
+		<br>
+		<code>db2 create bufferpool BP8K size 3000 pagesize 8192<br></code>
+		<code>db2 create bufferpool BP32K size 3000 pagesize 32768<br></code>
+		<br>
+		<code># Add new tbs on previously created bufferpool<br></code>
+		<code>db2 create tablespace ENOTBS pagesize 8K managed by system USING ('&lt;DB2_installation_directory&gt;\ENOVIAV5\ENOTBS.dbf') bufferpool BP8K<br></code>
+		<code>db2 create tablespace ENOTBS32 pagesize 32K managed by system USING ('&lt;DB2_installation_directory&gt;\ENOVIAV5\ENOTBS32.dbf') bufferpool BP32K<br></code>
+		<br>
+		<code># Set up properly database parameters for new instance<br>
+		UPDATE db cfg FOR ENOVIAV5 USING APPLHEAPSZ 4096 STMTHEAP 12000 DBHEAP 
+		4200 LOGFILSIZ 16000 LOGSECOND 12 UTIL_HEAP_SZ 10000 CATALOGCACHE_SZ 96 
+		LOCKLIST 1000 APP_CTL_HEAP_SZ 512 STAT_HEAP_SZ 5022 NUM_IOCLEANERS 2 
+		MAXAPPLS 200 LOGPRIMARY 8<br></code>
+		<br>
+		<code>#These values are the minimum recommended values which will allow normal 
+		use of ENOVIAV5VPM at installation. For example, STMTHEAP is set to 
+		16000.<br>
+		</code><br>
+		<code>db2 terminate</code><br>
+		</li></ol>
+       </td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">
+     &nbsp;</td>
+     <td valign="top">
+       <h3>About LOGFILSIZ Parameter</h3>
+       <p>If you use the database configuration parameters documented above, 
+     during an <strong>ENOVIAV5VPM</strong> installation, the ENOVIA database will be set up correctly, 
+     and the default security mask will be imported. However, if you neglect to 
+     set the LOGFILESIZ parameter correctly, the default security mask import 
+     step may fail.</p>
+       <p>If a problem with the default mask is detected, the following error 
+     message:</p>
+       <p><code>Although commit succeeded, mask was not created - Check Database 
+     configuration</code></p>
+       <p>means that the mask was not created, but no error occurred during the 
+     commit phase. It may be because the database was not created using the 
+     LOGFILSIZ parameter. In this case, update the database configuration using 
+     the correct LOGFILSIZ parameter value and reimport the mask using the&nbsp; 
+     command <kbd>VPMPeopleUpdate -m</kbd> as explained in &quot;People, Organization 
+     and Security Tools&quot; in your <i>Enterprise Architecture Administration Guide</i>.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="32">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">
+     <h2><font color="#282187">DB2 Performance Considerations</font></h2>
+     <p><strong>ENOVIAV5VPM</strong> has been developed to work optimally with DB2. However to 
+     take full advantage of the hardware available, a minimum amount of 
+     configuration may be necessary.&nbsp;</p>
+     <p>The most important considerations consist in allocating enough 
+     BUFFERPOOL space, and in updating the database statistics by running the
+     <kbd>db2 RUNSTATS</kbd> command.&nbsp;</p>
+     <p>Note: each <strong>ENOVIAV5VPM</strong> installation may be unique due to a specific 
+     hardware configuration and system load (and there is no universal 
+     configuration that will be optimal). However, it is recommended to start 
+     with a simple configuration and tune it over time, using the input provided 
+     by the System Monitor tool.&nbsp;</p>
+     <p>Refer to the DB2 System Monitor Guide and Reference for information on 
+     monitoring the performance of a DB2 database.</p>
+     <ol>
+       <li>Bufferpool sizing</li>
+     </ol>
+     <blockquote>
+       <p>This parameter is often the single most important factor affecting 
+       performance. A bufferpool is a cache used for reading/writing database 
+       pages during SQL operations. In the ideal situation, the bufferpools will 
+       be large enough so that all the data read by 
+       <strong>ENOVIAV5VPM</strong> stays resident 
+       in memory, therefore eliminating most I/O. To determine if your bufferpool(s) is/are performing well, you can use the following monitor 
+       commands:</p>
+       <p><code>db2 update monitor switches using bufferpool on # ask DB2 to # 
+       monitor bufferpool activity<br>
+       ... run <strong>ENOVIAV5VPM</strong> for a while, under high load ...<br>
+       db2 get snapshot for bufferpools on VPMDB</code></p>
+       <p>If the ratio between the number of data and index LOGICAL reads, and 
+       the number of data and index PHYSICAL read is very large, then a 
+       bufferpool is performing well and is large enough.</p>
+       <p>A logical read is a request for reading a page, a physical read is 
+       reading this page from disk. Once all required pages have been read in 
+       the bufferpool, no more physical reads are required. You should allocate 
+       as much space as necessary or, if possible, to the bufferpool(s). You may 
+       want to allocate as much as half the available memory to the bufferpool(s).</p>
+       <p>To change the size of a bufferpool:</p>
+       <p><code>db2 connect to VPMDB<br>
+       db2 alter bufferpool IBMDEFAULTBP size 10000 # 40 Megabytes<br>
+       db2 alter bufferpool VPM_BP1 size 125000 # 1 Gygabyte (8K pages)</code></p>
+     </blockquote>
+     <ol start="2">
+       <li>Update the database statistics</li>
+     </ol>
+     <blockquote>
+       <p><strong>ENOVIAV5VPM</strong> issues dynamic SQL to the DB2 server. This type of SQL 
+       is compiled at run-time by the DBMS. The DB2 SQL optimizer will choose 
+       what it considers to be the optimal Access Plan based on the statistics 
+       existing on the database. It is very important for these statistics to be 
+       updated after the database has grown, because an access plan that is 
+       optimal with a table that contains for example 100 rows, may become 
+       catastrophic from a performance point-of-view for a table that contains 
+       100000 rows.</p>
+       <p>You should update the statistics every time the 
+       <strong>ENOVIAV5VPM</strong> data 
+       have been considerably modified, such as after importing data into the 
+       database.</p>
+       <p><code>db2 reorgchk update statistics on table all</code></p>
+     </blockquote>
+     <ol start="3">
+       <li>Other configuration parameters improving performance</li>
+     </ol>
+     <blockquote>
+       <p>The following parameters are recommended as they may contribute to 
+       improve the performance of an 
+       <strong>ENOVIAV5VPM</strong> installation:</p>
+       <p>Database registry</p>
+       <blockquote>
+         <p><kbd>db2set DB2_HASH_JOIN=ON<br>
+         db2stop;<br>
+         db2start;</kbd></p>
+       </blockquote>
+     </blockquote>
+     <p>Note: to avoid errors occurring when saving parts, we recommend that you 
+     increase DB2 database APP_CTL_HEAP_SZ. The default is 128. Increase it to 
+     256 to avoid the problem.</td>
+   </tr>
+   <tr>
+     <td colspan="2" valign="top" width="849">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr valign="top" BORDER="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td rowspan="1" valign="top">
+     <h2><font color="#282187"><a name="ix-database::setting up Oracle"></a>
+     Setting Up a Database Using Oracle<a name="hj-SetupOracle"></a></font></h2>
+     <p>This section explains how to create a database for 
+     <strong>ENOVIAV5VPM</strong> using 
+     Oracle.</p>
+     <p>An Oracle server needs to be active, and you need to create at least one 
+     database before starting the installation.</p>
+     <p>For Oracle databases, you must have at least&nbsp;<b>150 Megabytes</b> of 
+     free disk space to successfully install the 
+     <strong>ENOVIAV5VPM</strong> tablespaces 
+     and data files. Whatever additional disk space you will need depends on the 
+     size of your database.</p>
+     <p>For more information about Oracle administration, see the <i>Oracle 
+     Server Administrator's Guide</i>.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td valign="top">Your computer needs to be an Oracle server, and the Oracle 
+     server must be running.<p>One way of finding out whether the Oracle server 
+     is running on your computer (if you have already created a database) is to:</p>
+     <ol>
+       <li>Select <kbd><b>Start&nbsp;&gt;&nbsp;All Programs&nbsp;&gt;&nbsp;Oracle-OracleServer&nbsp;&gt;&nbsp;Enterprise 
+       Manager Console </b></kbd>to open the Enterprise Manager Console Login 
+       window.</li>
+       <li>Select the <kbd><b>Launch Standalone</b></kbd> option (in our 
+       example, the server is on the local computer), then click OK.<br>
+       The Console window opens.</li>
+       <li>In the list on the left, click the &quot;+&quot; next to Network, then &quot;+&quot; next 
+       to the Databases, then double-click the name of an existing database.<br>
+       The Database Connect Information window appears.</li>
+       <li>Enter the username and password, for example:<br>
+       <code>Username: SYSTEM<br>
+       Password: MANAGER<br>
+       </code>where &quot;SYSTEM&quot; and &quot;MANAGER&quot; were initialized when creating the 
+       database, then click OK. A list of items now appears under the database 
+       name in the tree.</li>
+       <li>Click the &quot;+&quot; next to Instance, then click Configuration.<br>
+       In the Instance State area to the right, the &quot;Open&quot; option is checked and 
+       the light is green indicating that the database is running.</li>
+     </ol>
+     <p>Alternatively, select <code>Start&nbsp;&gt;&nbsp;Control 
+     Panel&nbsp;&gt;&nbsp;Administrative Tools&nbsp;&gt;&nbsp;Services </code>and check that the required 
+     Oracle service is up and running:</p>
+     <p><code>OracleoracleServerTNSListener</code></p>
+     <p>If not, start them before proceeding.</p>
+     <p>You can also configure the services to make sure that they are always 
+     running. To do so, a service then right-click and choose &quot;Properties&quot; on 
+     the contextual menu, then set the &quot;Startup type&quot; to &quot;Automatic&quot;.</p>
+     <p>Note: because the installation on a remote database does not allow the 
+     creation of a new ENOTBS tablespace for storing 
+     <strong>ENOVIAV5VPM</strong> tables, create it 
+     beforehand using the following procedure:</p>
+     <ol>
+       <li>Select <kbd>Start&nbsp;&gt;&nbsp;All Programs&nbsp;&gt;&nbsp;Oracle-OracleServer&nbsp;&gt;&nbsp;Application 
+       Development&nbsp;&gt;&nbsp;SQL Plus</kbd>.</li>
+       <li>Log onto the database using the system user name and associated 
+       password, and specify the database name.</li>
+       <li>Click OK.</li>
+       <li>After the SQL prompt, type:<br>
+       <br>
+       <code>SQL &gt; create tablespace ENOTBS datafile 'MyPathTablespace\ENOTBS.dbf' 
+       SIZE 70M AUTOEXTEND ON ;<br>
+       SQL &gt; quit;</code></li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <ol>
+       <li>Once your computer has been set up as an Oracle server, log onto your 
+       Windows computer as Oracle database administrator.<p>The default 
+       installation of Oracle on your computer sets up the Oracle database 
+       administrator with the following userid and password, for example:</p>
+       <p><code>system<br>
+       manager</code></li>
+       <li>Select <kbd>Start&nbsp;&gt;&nbsp;All Programs&nbsp;&gt;&nbsp;Oracle-OracleServer&nbsp;&gt;&nbsp;Configuration 
+       and Migration Tools&nbsp;&gt;&nbsp;Database Configuration Assistant</kbd><code>
+       </code>to start the Oracle Database Configuration Assistant.</li>
+       <li>Select <kbd>Create a database</kbd> and click <kbd>Next</kbd>.<p>
+		<img title="" src="b35doc/english/online/basil_c2/images/CreateDatabaseOracle_02NLS.gif" width="742" height="537"></p>
+		</li>
+		<li>In <kbd>Select Database Creation Mode</kbd>, select <kbd>Advanced configuration</kbd> and 
+		click <kbd>Next</kbd>.</li>
+		<li>In <kbd>Select Database Deployment type</kbd>, select<kbd> Oracle 
+		Single Instance database</kbd> as the <kbd>Database type </kbd>and 
+		select <kbd>General 
+       Purpose or Transaction Processing</kbd> from the template name list.<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/CreateDatabaseOracle_03NLS.gif" width="754" height="533"><br>
+		</li>
+		<li>Click <kbd>Next</kbd>.</li>
+		<li>In the <kbd>Specify Database Identification Details</kbd>, enter the <kbd>Global Database Name</kbd> and the <kbd>SID</kbd>.<p>In our example, this is 
+       &quot;R280RA2&quot;:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/CreateDatabaseOracle_04NLS.gif" width="754" height="533"><br>
+		&nbsp;</p>
+		</li>
+		<li>Click <kbd>Next.</kbd></li>
+		<li>In the <kbd>Select Database Storage Option</kbd>, select the <kbd>
+		Use template file for database storage attributes</kbd> and click Next.</li>
+		<li>Click <kbd>Next</kbd> and step through the different database setup 
+		dialog boxes and click <kbd>Next</kbd> 
+       button each time. You eventually reach the 
+           <kbd>Creation Options </kbd>dialog box.<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/CreateDatabaseOracle_13NLS.gif" width="754" height="533"><br>
+&nbsp;</p>
+		</li>
+		<li>Click <kbd>Finish </kbd>to dispaly the <kbd>Summary.</kbd><p>
+		<img title="" src="b35doc/english/online/basil_c2/images/CreateDatabaseOracle_14NLS.gif" width="717" height="516"><br>
+&nbsp;</li>
+		<li>Click <kbd>Finish</kbd> to start creating the database.<p>
+		<img title="" src="b35doc/english/online/basil_c2/images/CreateDatabaseOracle_15NLS.gif" width="675" height="488"></p>
+		<p>Once the database is created, a dialog box appears confirming that 
+		the database creation is completed.</p>
+		<p>
+		<img title="" src="b35doc/english/online/basil_c2/images/CreateDatabaseOracle_16NLS.gif" width="697" height="509"></li>
+		<li>Enter the passwords and click Exit to finish.</li>
+     </ol>
+     <p>If you select <code>Start&nbsp;&gt;&nbsp;Control Panel&nbsp;&gt;&nbsp;Administrative 
+     Tools&nbsp;&gt;&nbsp;Services</code>, you will see that the following Oracle service is 
+     running:</p>
+           <p><code>OracleServiceXXX</code></p>
+           <p>where <code>xxx</code> is the name of the database you created, 
+           for example:</p>
+         <p><code>OracleServiceMYDBASE</code></p>
+     <p>You are now ready to install the 
+     <strong>ENOVIAV5VPM</strong> server software.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="33">&nbsp;</td>
+     <td valign="top" width="769">
+     <h3>Problems with Fetched Query Function in
+     <strong>ENOVIAV5VPM</strong></h3>
+     <p>The way DB2 and Oracle databases are configured may cause problems with 
+     some <strong>ENOVIAV5VPM</strong> functionalities (for example, fetched query).</p>
+     <p>This is due to the fact that the databases are configured to sort data 
+     according to the locale. The problem is that the result obtained after a 
+     sort from DB2 is different from a sort with Oracle which is different from 
+     a sort in the server. The only combination that actually works is to have 
+     everybody do a binary sort.</p>
+     <p>Therefore we strongly recommend configuring the database as explained 
+     below.</p>
+     <p>NOTE: There is no absolute emergency to do it. The only impact is weird 
+     behavior of the fetch-query when using characters out of the &quot;a-z 0-9&quot; 
+     range.</p>
+     <h4>DB2</h4>
+		<p>When creating the database, if you have chosen to use a specific codeset 
+		instead of the default Unicode, add the <code>COLLATE USING IDENTITY</code> 
+		option to your <code>CREATE DATABASE</code> statement. </p>
+		<p>Example:</p>
+		<p><code>CREATE DB mydb ON mypath USING CODESET IBM-1129 TERRITORY VN 
+		COLLATE USING IDENTITY</code></p>
+		<p>With DB2, it is not possible to modify this parameter once the database 
+     has been created. This means that the only way to change it afterward is to 
+     do a full export, drop the DB, recreate it with the proper parameters and 
+     do a full import.</p>
+     <p>Note : A backup/restore won't work as the old parameters will be 
+     restored as well.</p>
+     <p>With your own database, you need to go through the export/import 
+     process. We recommend the following:</p>
+     
+       <li>Get a backup of your database.</li>
+       <li>Get an exact image of the data structures using the command:<br>
+       <br>
+       <code>db2look -d db2name -e -o db2output.clp -a -l -xp -f -P -i userid -w 
+       password </code><br>
+&nbsp;</li>
+       <li>Export all data from the database using the command: <br>
+       <br>
+       <code>db2move db2name EXPORT</code><br>
+&nbsp;</li>
+       <li>Drop your database.</li>
+       <li>Recreate it with the proper parameters </li>
+       <li>Recreate the data structures using the db2output.clp file generated 
+       during the step 1.</li>
+       <li>Import everything using the command:<br>
+       <br>
+       <code>db2move db2name IMPORT (or LOAD)</code>
+     <h4>Oracle</h4>
+     <p>Add the two following parameters to the initSID.ora configuration file 
+     (SID stands for the Oracle instance name):</p>
+     <p><code>NLS_SORT=BINARY<br>
+     NLS_COMP=BINARY</code></td>
+   </tr>
+   <tr>
+     <td colspan="2" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

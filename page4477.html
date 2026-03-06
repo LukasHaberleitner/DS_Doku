@@ -1,0 +1,141 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Calibrating a Workpiece</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body bgcolor="#FFFFFF" text="#000000" link="#3366FF" vlink="#0080FF" alink="#990000">
+
+ <h1 align="center">Calibrating a
+ <a name="DNBIgpOlpUIWkbHeader.DNBIgpOlpCalibLSqCmd">Workpiece</a></h1>
+ <table border="0" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">Use this command to adjust the position of a resource 
+     based on the measurement of multiple points. The points are input as tag 
+     points on two tag groups.&nbsp; One tag group represents the pristine CAD 
+     data locations, and the other tag group represents the uploaded 
+     experimental robot tool locations.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td valign="top">You must have a .CATProcess document open that contains:&nbsp;
+     <ul>
+       <li>A resource with an attached tag group containing tag points to 
+       represent the simulation points that need to be adjusted</li>
+       <li>A tag group containing tag points to represent the calibrated points 
+       that are uploaded from the measurements in the actual robotic setup.</li>
+     </ul>
+     <p>For more information on the algorithm used for calibration, see
+     <a href="page4478.html">About Least Squares Calibration</a>.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">Click <a name="ix-command::Calibrate Workpiece">
+       <kbd>Calibrate Workpiece</kbd></a> <img border="0" src="b35doc/english/online/icons_C2/images/I_DNBIgpOlpCalibLSqCmdP2.gif" align="texttop" width="24" height="24">.</li>
+       <li>
+       <p class="task">Select the resource whose position you wish to adjust.</li>
+       <li>
+       <p class="task">Select the tag group attached to the selected resource 
+       that represents the simulation points that needs to be adjusted.</li>
+       <li>
+       <p class="task">Select the calibration tag group corresponding to the 
+       uploaded information from the measurements in the actual robotic setup.</p>
+       <p class="task">The following dialog box appears:</p>
+       <p class="task"><img border="0" src="b35doc/english/online/cfyugolp_c2/images/dbClWrkParmNLS.gif" width="306" height="215"></li>
+       <li>
+       <p class="task">Alter the <a name="ix-parameters:least squares">
+       parameters</a> as desired:<ul class="task">
+         <li>
+         <p class="task">Translate X, Y, Z (i.e., set as Free/Fixed): specifies 
+         the directions in which the resource may be translated during 
+         adjustment.</li>
+         <li>
+         <p class="task">Rotate X, Y, Z (i.e., set as Free/Fixed): specifies the 
+         directions in which the resource may be rotated during adjustment.</li>
+         <li>
+         <p class="task">Estimated noise measurement: an estimate of the 
+         uncertainty of the positional measurements during the calibration 
+         experiment. The measurement noise need only be an order of magnitude 
+         estimate, for example 0.1 mm or 1.0 mm.</li>
+       </ul>
+       <p class="task">Unless the resource is known to be aligned with an axis 
+       or on a plane, the [X, Y, Z] parameters should all be set &quot;Free&quot; during 
+       calibration.<br>
+&nbsp;</li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd>.</p>
+       <p class="task">The <a name="ix-least squares:calibration results">least 
+       squares calibration results</a> for the workpiece appear.</p>
+       <p class="task"><img border="0" src="b35doc/english/online/cfyugolp_c2/images/dbWrkpCalResNLS.gif" width="407" height="182"><br>
+&nbsp;</p>
+       <p class="task">The table below describes the values provided:</p>
+       <table border="1" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111">
+         <tr>
+           <td valign="top" class="code"><b>Value</b></td>
+           <td valign="top" class="code"><b>Explanation</b></td>
+         </tr>
+         <tr>
+           <td class="code2" valign="top">Maximum uncertainties</td>
+           <td class="code2" valign="top">This value represents the maximum of 
+           the uncertainties for the fit on the parameters to be identified. 
+           Large uncertainty values are an indication that the experimental 
+           observation strategy was flawed, even if the RMS fitting error was 
+           small.</td>
+         </tr>
+         <tr>
+           <td valign="top" class="code">Number of iterations to convergence</td>
+           <td valign="top" class="code">The number of iterations required by 
+           the numerical identification method.</td>
+         </tr>
+         <tr>
+           <td class="code2" valign="top">Number of fitting tag points</td>
+           <td class="code2" valign="top">The number of points used for the 
+           least squares fitting procedure.</td>
+         </tr>
+         <tr>
+           <td valign="top" class="code">Root mean square fitting error</td>
+           <td valign="top" class="code">The root mean square fitting error on 
+           the points after adjusting the tool profile to the best fit possible.
+           </td>
+         </tr>
+       </table>
+       </li>
+       <p class="task">Based on the selections, the resource is moved in an 
+       attempt to get the first set of points to match up with the second set. 
+       The algorithm works by minimizing the mean square positional error 
+       between the corresponding points while maintaining the constraints of the 
+       Translate X, Y, Z and Rotate X, Y, Z selections.</li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd>.</li>
+     </ol>
+     </td>
+   </tr>
+ </table>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

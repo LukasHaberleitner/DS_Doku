@@ -1,0 +1,283 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating a DB2 Database for Settings Persistency</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style>
+<!--
+ol           { text-align: Left; list-style-type: decimal; font-family: Arial }
+-->
+ </style>
+ </head>
+
+ <body>
+
+ <h1><a name="hj-LCADatabaseChanges"></a>Creating a DB2 Database 
+ for Settings Persistency</h1>
+ <table border="0" width="100%" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>Settings for the ENOVIA Web Application must be stored in a database. 
+     You will now create an empty database for Settings Persistency which will 
+     be populated by the <kbd>WASSetupUI</kbd> command in
+     <a href="page1290.html">Creating the Enterprise Archive File.</a><p>
+     Note: This means that you must create the database BEFORE running the <kbd>
+     WASSetupUI</kbd> command.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top">If you wish to use a database that is not on the same 
+     machine as your installation WebSphere, then you must<font color="#FF0000">
+     </font>copy the DB2 Universal JDBC Driver files from the database machine 
+     to the machine where WebSphere is installed. This process is documented as 
+     an optional step in this section.</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td vAlign="top">For this task, you will need the following inputs:<p>&nbsp;&nbsp;
+     </p>
+     <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="90%" id="AutoNumber2">
+       <tr>
+         <td width="30%">
+         <p align="center"><b>Input placeholder&nbsp; used in this Doc task</b></td>
+         <td width="30%">
+         <p align="center"><b>Signification</b></td>
+         <td width="30%">
+         <p align="center"><b>Source</b></td>
+       </tr>
+       <tr>
+         <td width="33%"><i>&lt;db2admin_username&gt;</i></td>
+         <td width="33%">user name of the DB2 administrator account</td>
+         <td width="34%">DB2 administrator</td>
+       </tr>
+       <tr>
+         <td width="33%"><i>&lt;db2admin_password&gt;</i></td>
+         <td width="33%">password of the DB2 administrator account</td>
+         <td width="34%">DB2 administrator</td>
+       </tr>
+       <tr>
+         <td width="33%"><i>&lt;database_hostname&gt;</i></td>
+         <td width="33%">name of the database server </td>
+         <td width="34%">DB2 administrator </td>
+       </tr>
+       <tr>
+         <td width="30%"><i>&lt;database_name&gt;</i></td>
+         <td width="30%">name of the database for Settings persistency</td>
+         <td width="30%">Suggested value: JSYSD<strong>EnvNameSuffix</strong> (not more than 8 characters)</td>
+       </tr>
+       <tr>
+         <td width="33%" height="48"><i>&lt;server_name&gt;</i></td>
+         <td width="34%" height="48">machine name of <font face="Verdana">the 
+         WebSphere Application Server</font></td>
+         <td width="34%" height="48">WebSphere administrator</td>
+       </tr>
+     </table>
+     <p>&nbsp;</p>
+     <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="90%" id="AutoNumber3">
+       <tr>
+         <td width="30%">
+         <p align="center"><b>Output placeholder used in later Doc task</b></td>
+         <td width="30%">
+         <p align="center"><b>Signification</b></td>
+         <td width="30%">
+         <p align="center"><b>Task used in</b></td>
+       </tr>
+       <tr>
+         <td width="30%"><i>&lt;database_name&gt;</i></td>
+         <td width="30%">name of the database for Settings persistency</td>
+         <td width="30%">Creating the Enterprise Archive File</td>
+       </tr>
+       <tr>
+         <td width="30%"><i>&lt;database_hostname&gt;</i></td>
+         <td width="30%">name of the machine hosting the database</td>
+         <td width="30%">Creating the Enterprise Archive File</td>
+       </tr>
+       <tr>
+         <td width="30%"><i>&lt;database_port&gt;</i></td>
+         <td width="30%">port number used by the database instance</td>
+         <td width="30%">Creating the Enterprise Archive File</td>
+       </tr>
+       <tr>
+         <td width="30%"><i>&lt;db2_jdbc_driver_path&gt;</i></td>
+         <td width="30%">path of the directory containing DB2 Universal JDBC 
+         driver files</td>
+         <td width="30%">Creating the Enterprise Archive File</td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top">&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td valign="top">The &lt;<i>database_name</i>&gt; variable is limited to 8 
+     characters.<br>
+&nbsp;</td>
+   </tr>
+   <tr>
+     <td vAlign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td vAlign="top">
+     <h2>Creating DB2 Database for Settings Persistency</h2>
+     <p>The following steps must be done on the machine <code>&lt;database_hostname&gt;</code> 
+     where the DB2 database server is installed. You must:</p>
+     <ul>
+       <li>create a database</li>
+       <li>determine the value of the DB2 instance port</li>
+       <li>determine the path of the directory containing the DB2 Universal JDBC 
+       driver files.</li>
+     </ul>
+     <p>These steps are required as input when running the <kbd>WASSetupUI</kbd> 
+     command.</p>
+     <p>Note: The DB2 database for settings (and favorites) persistency must be 
+     configured to use &quot;server authentication&quot; mode. Other modes, like &quot;client 
+     authentication&quot; mode for DB2, are not supported and will fail. The DB2 
+     server installation, or instance, used to create the DB must have 
+     (AUTHENTICATION) = SERVER specified in the DBM configuration parameters as 
+     follows:</p>
+     <p><code>$ db2 get dbm cfg |grep -i auth<br>
+     Database manager authentication (AUTHENTICATION) = SERVER<br>
+     Cataloging allowed without authority (CATALOG_NOAUTH) = NO<br>
+     Trusted client authentication (TRUST_CLNTAUTH) = CLIENT<br>
+     Bypass federated authentication (FED_NOAUTH) = NO </code></p>
+     <p>If it is currently (AUTHENTICATION) = CLIENT, then it would need to be 
+     changed by issuing:</p>
+     <p><code>db2 update dbm cfg using AUTHENTICATION SERVER<br>
+     db2stop<br>
+     db2start</code></p>
+     <p>Furthermore, unlike for the ENOVIA database, the database for settings 
+     (and favorites) must not be created with the <code>COLLATE USING IDENTITY</code> 
+     option. If the database is created with this option, the deployed 
+     application will randomly fail.</p>
+     <h3>On Windows</h3>
+     <h4>Creating the database</h4>
+     <ol>
+       <li><font face="Verdana">Logon as the database administrator, using user 
+       <code>&lt;db2admin_username&gt; </code>and password <code>&lt;db2admin_password&gt;</code>. </font>
+       </li>
+       <li><font face="Verdana">On the Windows Taskbar, select <kbd>Start &nbsp;&gt;&nbsp;All Programs &nbsp;&gt;&nbsp; 
+       IBM DB2 &nbsp;&gt;&nbsp; General Administration Tools &nbsp;&gt;&nbsp;Control Center</kbd>. </font>
+       </li>
+       <li><font face="Verdana">Select <kbd>All Cataloged 
+       Systems&nbsp;&gt;&nbsp;&lt;db2servername&gt;&nbsp;&gt;&nbsp;Instance&nbsp;&gt;&nbsp;DB2 &nbsp;&gt;&nbsp; Databases</kbd>.</font></li>
+       <li><font face="Verdana">Right-click <kbd>Databases</kbd> and in the contextual 
+       menu select <kbd>Create&nbsp;Database&gt;&nbsp;Standard...</kbd></font></li>
+       <li><font face="Verdana">Enter the database name <code>&lt;database_name&gt;</code>.</font></li>
+       <li><font face="Verdana">Click <kbd>Next</kbd> for each display until you reach 
+       the final display.</font></li>
+       <li><font face="Verdana">Click <kbd>Finish</kbd>.</font></li>
+       </ol>
+     <h4>Determining the value of the DB2 instance port</h4>
+       <ol>
+         <li><font face="Verdana">On Windows Taskbar, select <kbd>Start&nbsp;&gt;&nbsp;All Programs&nbsp;&gt;&nbsp;IBM 
+       DB2&nbsp;&gt;&nbsp;Command Line Tools&nbsp;&gt;&nbsp;Command Window</kbd>.</font></li>
+         <li><font face="Verdana">Run the command: </font><br><br><code>db2 get dbm cfg | %SYSTEMROOT%\system32\find &quot;SVCENAME&quot;</code><br>&nbsp;<br>
+         <font face="Verdana">this command gives the name of the DB2 service, for example the 
+       output will be:</font><br>&nbsp;<br><code>TCP/IP Service name (SVCENAME) = db2c_DB2</code><br>
+         <br><font face="Verdana">where <code>db2c_DB2</code> is the name of the DB2 service, which is referred to as 
+         <code>&lt;svcename&gt;</code> 
+       in the next step.</font></li>
+         <li><font face="Verdana">Run the command: <br><br><code>%SYSTEMROOT%\system32\find &quot;&lt;svcename&gt;&quot; %SYSTEMROOT%\system32\drivers\etc\services</code><br>
+         <br>Example:<br><br><code>%SYSTEMROOT%\system32\find &quot;db2c_DB2&quot; %SYSTEMROOT%\system32\drivers\etc\services<br>
+         </code><br>This command gives the port of the current DB2 instance. For 
+       example, the output will be:<br><br><code>---------- C:\WINDOWS\SYSTEM32\DRIVERS\ETC\SERVICES<br>db2c_DB2 50000/tcp</code><br>&nbsp;<br>The value of 
+         <code>&lt;db2_instance_port&gt;</code> is 50000 in this case.</font></li>
+         <li><font face="Verdana">To exit the DB2 command window, type: <br><br>
+         <code>exit</code></font></li>
+         </ol>
+     <h4>Determining the path of the directory containing the DB2 Universal JDBC 
+     driver files</h4>
+         <ol>
+           <li><font face="Verdana">On the Windows Taskbar, select <kbd>Start&nbsp;&gt;&nbsp;Programs&nbsp;&gt;&nbsp;IBM 
+       DB2&nbsp;&gt;&nbsp;Command Line Tools&nbsp;&gt;&nbsp;Command Window</kbd>.</font></li>
+           <li><font face="Verdana">Run the command: <br><br><code>echo %CD%</code><br>
+           <br>This command gives the path of DB2 commands, in the form of <code>&lt;db2 install path&gt;</code>\bin.<br>
+           <br>Example:<br><br><code>c:\SQLLIB\BIN</code><br><br>To find where the DB2 Universal JDBC driver files are installed on the 
+       DB2 server machine, replace trailing '\BIN' by '\JAVA'.<br><br>Example: the path of the directory containing the DB2 Universal driver 
+       files is:<br><br><code>c:\SQLLIB\JAVA</code><br>&nbsp;</font></li>
+           <li><font face="Verdana">Depending on the installation architecture:<br>
+           <br>If the DB2 server and the WebSphere Application Server 
+         are installed on the same machine:<br>&nbsp;<br>The value of <code>&lt;db2_jdbc_driver_path&gt;</code> is the path of the directory found 
+         in step 2.<br><br>If the DB2 server machine and the WebSphere Application 
+         Server machine are different, copy the following files:</font><br>&nbsp;<br>
+           <code>db2jcc.jar<br>db2jcc_license_cu.jar<br>db2jcc_license_cisuz.jar</code><br>&nbsp; 
+             <br><font face="Verdana">from the directory found in step 2. to 
+           <code>&lt;db2_jdbc_driver_path&gt;</code>, to a 
+         directory on the machine <code>&lt;server_name&gt;</code>. Choose the 
+           <code>&lt;db2_jdbc_driver_path&gt;</code> carefully, as this directory will be permanently 
+         used by WebSphere in order to connect to the DB2 server (do not use a 
+         temporary directory which could get accidentally cleaned up).<br>&nbsp;</font></li>
+           <li><font face="Verdana">To exit the DB2 command window, type:<br>
+           <br><code>exit</code></font></li>
+           </ol>
+     <h3>On UNIX</h3>
+     <h4>Creating the database</h4>
+     <ol>
+       <li><font face="Verdana">Logon as the database administrator, using user &lt;db2admin_username&gt; and password 
+       &lt;db2admin_password&gt;. </font></li>
+       <li><font face="Verdana">Run the command: <br><br><code>db2 create database &lt;database_name&gt;</code><br>&nbsp;<br>Example: 
+       <br><br><code>db2 create database JSYSD</code></font><code><strong>EnvNameSuffix</strong></code></li>
+       </ol>
+     <h4>Determining the value of the database instance port</h4>
+     <ol>
+       <li><font face="Verdana">Run the command: <br><br><code>db2 get dbm cfg | grep SVCENAME</code><br>&nbsp;<br>This command gives the name of the DB2 service, for example the 
+       output will be:<br>&nbsp;<br><code>TCP/IP Service name (SVCENAME) = db2admdevc</code><br>
+       <br>where db2admdevc is the name of the DB2 service, which is 
+       referred to as <code>&lt;svcename&gt;</code> in the next step.</font></li>
+       <li><font face="Verdana">Run the command: <br><br><code>grep &lt;svcename&gt; /etc/services</code><br>
+       <br>Example: <br><br><code>grep db2admdevc /etc/services<br></code><br>This command gives the port of the current DB2 instance. For 
+       example, the output will be:<br><br><code>db2admdevc 3704/tcp</code><br>&nbsp;<br>The value of 
+       <code>&lt;database_port&gt;</code> is 3704 in this case.</font></li>
+       </ol>
+     <h4>Determining the path of the directory containing the DB2 Universal JDBC 
+     driver files</h4>
+       <ol>
+         <li><font face="Verdana">Run the command: <br><br><code>echo $PWD</code><br>
+         <br>This command specifies the path of DB2 commands, in the form of
+         <code>&lt;db2 instance path&gt;</code>.<br><br>Example: <br><br><code>/home/data/db2adm8/sqllib/bin</code></font></li>
+         <li><font face="Verdana">To find where the DB2 Universal JDBC driver files are 
+       installed on the DB2 server machine, replace trailing <code>\bin</code> by 
+         <code>\java</code>.<br>
+         <br>Example: the path of the directory containing the DB2 Universal driver 
+       files is:<br><br><code>/home/data/db2adm8/sqllib/java</code></font></li>
+         <li><font face="Verdana">Depending on the installation architecture:</font><p>
+         <font face="Verdana">If the DB2 server and the WebSphere Application Server 
+         are installed on the same machine:<br>&nbsp;<br>The value of <code>&lt;db2_jdbc_driver_path&gt;</code> is the path of the directory found 
+         in step 2.</font></p>
+         <p><font face="Verdana">If the DB2 server machine and the WebSphere Application 
+         Server machine are different, copy the following files:<br>&nbsp;<br>
+         <code>db2jcc.jar<br>db2jcc_license_cu.jar<br>db2jcc_license_cisuz.jar</code><br>&nbsp; 
+           <br>from the directory found in step 2. to <code>&lt;db2_jdbc_driver_path&gt;</code>, to a 
+         directory on the machine <code>&lt;server_name&gt;</code>. Choose the 
+           <code>&lt;db2_jdbc_driver_path&gt;</code> carefully, as this directory will be permanently 
+         used by WebSphere in order to connect to the DB2 server (do not use a 
+         temporary directory which could get accidentally cleaned up).</font></li>
+         </ol>
+     <p><b>You will be prompted for the the path of the directory containing the 
+     DB2 Universal JDBC driver files later as explained in </b>
+		<a href="page1290.html">Creating the Enterprise Archive File</a><b>.</b></td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p align="center">&nbsp;</p>
+
+ </body>
+
+</html>
+

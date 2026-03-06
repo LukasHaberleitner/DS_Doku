@@ -1,0 +1,174 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en_us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Collision Checking</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+</head>
+
+<body>
+
+<h1>Collision Checking</h1>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+  <tr>
+    <td valign="bottom">&nbsp;</td>
+    <td valign="top">This section shows how collision checking is managed in 
+    Multi-Axis Curve Machining, Sweeping, Contour Driven <br>
+    and Isoparametric Machining.
+    <p>The Collision Checking parameters are accessed in the Geometry tab page 
+    of the operation dialog box.&nbsp; </p>
+    <p>You will find below information on:</p>
+    <ul>
+      <li><a href="#hj-Collisions with Drive Elements">Collisions with Part 
+      Elements </a>for all Multi-Axis operations,</li>
+      <li><a href="#hj-Collisions with Check Elements">Collisions with Check 
+      Elements</a> for all Multi-Axis operations,</li>
+      <li><a href="#hj-Collisions with Drive Elements">Collisions with Drive 
+      Elements </a>for Multi-Axis Curve Machining only,</li>
+      <li><a href="#hj-Guide Elements">Checking for Collisions between Tool and 
+      Guide Elements during Macro Motions</a>, for Multi-Axis Curve Machining 
+      only</li>
+    </ul>
+    <p>Collision checking can be performed on check and 
+    part elements with the tool assembly <br>
+    (that is, the complete shape of the cutter plus its holder) or the cutting 
+    part of the tool (red part of following tools).<br>
+    The cutting part of the tool&nbsp; is the lower component of the tool (see 
+    picture below) <br>
+    but not the part of the tool defined by the cutting length (Lc). <br>
+    For a ball nose tool, the cutting part is the lower half sphere; <br>
+    for a bull-nose tool, the lower half torus; <br>
+    for a cylindrical tool, the lower cylinder.<br>
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/mmgcollchecktools.gif" width="280" height="177"></p>
+    <p>To save computation time, use tool assembly 
+    only if the geometry to be checked can interfere <br>
+    with the upper part of the cutter.&nbsp; </p>
+    <h2><a name="hj-Collisions with Part Elements">Collisions with Part Elements</a></h2>
+    <p><img border="1" src="b35doc/english/online/mmgug_c2/images/dbMACollPart01NLS.gif" width="321" height="167"><br>
+    <a name="ix-collision checking on part elements"></a>To activate 
+    collision checking on part elements, you must select the <kbd>Active</kbd> 
+    checkbox.&nbsp;</p>
+    <p><kbd>Part accuracy <br>
+    </kbd>Defines the maximum error to be accepted with respect to the part with 
+    its offset. <br>
+    This parameter is set to the machining tolerance value. <br>
+    It can be only be changed by modifying the machining tolerance. </p>
+    <p><kbd>Allowed gouging</kbd> <br>
+    Defines the maximum cutter interference with the part during &quot;linking 
+    passes&quot; <br>
+    (including approach and retract motion). </p>
+    <p>Collision checking with part elements is useful in the following cases:</p>
+    <ul>
+      <li>Concave part machined with Fixed tool axis mode.<br>
+      <img border="0" src="b35doc/english/online/mmgug_c2/images/mmgcollcheckpart04.gif" width="256" height="170"></li>
+    <a name="ix-allowed gouging, part"></a>
+      <li>Concave and non smooth part milled with 0 degree Lead angle. <br>Note that 
+      <kbd>Allowed gouging</kbd> must be set to a non zero value, <br>otherwise a &quot;Nothing to Mill&quot; message may be issued.<br>
+      <img border="0" src="b35doc/english/online/mmgug_c2/images/mmgcollcheckpart05.gif" width="327" height="172"></li>
+    </ul>
+    <p>Collision checking on part elements is <kbd>not useful</kbd> in the 
+    following cases:</p>
+    <ul>
+      <li>Convex part machined with ball, flat or filleted ended tool or with 
+      Fixed or Variable tool axis mode.<br>
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/mmgcollcheckpart01.gif" width="283" height="118"></li>
+      <li>Concave part milled with 0 degree Lead angle. <br>A &quot;Nothing to Mill&quot; message may be issued.<br>
+      <img border="0" src="b35doc/english/online/mmgug_c2/images/mmgcollcheckpart02.gif" width="215" height="152"></li>
+    </ul>
+    Ruled and smooth part with Optimized Lead tool axis mode.
+    <kbd><br>
+    Minimum heel distance</kbd> will keep the back of the cutter clear.<br>
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/mmgcollcheckpart03.gif" width="275" height="118"><h2><a name="hj-Collisions with Check Elements">Collisions with Check 
+    Elements&nbsp;</a></h2>
+    <p>For Multi-axis Sweeping, Contour Driven, Isoparametric Machining:<br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMACollCheck01NLS.gif" width="321" height="167"></p>
+    <p>For Multi-axis Curve Machining:<br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMACollCheckMultiCurveNLS.gif" width="321" height="167"></p>
+    <p>The parameters involved for check elements (such as fixtures) are 
+    described below:</p>
+    <a name="ix-collision checking on check elements;fixture accuracy"></a>
+    <p><kbd>Check (or Fixture) accuracy</kbd></p>
+    <p>Defines the maximum error to be accepted with respect to the fixture with 
+    its offset. <br>
+    Setting this parameter to a correct value avoids spending too much 
+    computation time <br>
+    to achieve unnecessary precision.<br>
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/mmgcollcheckfixt01.gif" width="236" height="226"></p>
+    <a name="ix-offset on check"></a>
+    <p><kbd>Offset on check<br>
+    </kbd>Defines the<span lang="en-us"> </span>minimum distance between the cutter and the fixture, used to 
+    limit the tool path.&nbsp;<br>
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/mmgcollcheckfixt02.gif" width="226" height="169"></p>
+    <a name="ix-allowed gouging, check"></a>
+    <p><kbd>Allowed gouging<br>
+    </kbd>Defines the maximum cutter interference with the fixture during &quot;linking 
+    passes&quot;
+    (including approach and retract motion).<br>
+    The illustration below shows return motion with no macro or jump.</p>
+    <p><img border="0" src="b35doc/english/online/mmgug_c2/images/mmgcollcheckfixt03.gif" width="213" height="212"><br>
+    The illustration
+    below shows return 
+    motion with macro between path and fixture.<br>
+    <img border="0" src="b35doc/english/online/mmgug_c2/images/mmgcollcheckfixt04.gif" width="257" height="221"></p>
+    <p><kbd><a name="ix-isoparametric machining:covering mode">Covering mode</a></kbd><br>
+    Available for Multi-axis Sweeping, Contour Driven, Isoparametric Machining<span lang="en-us">.<br>
+    </span>Select this option to optimize air cuts due to collision with the check.</p>
+    <p>In the example below, a Return in Level macro has been defined.</p>
+    <p>The <kbd>Covering mode</kbd> is not selected:<br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/CoveringModeNo.gif" width="288" height="292"></p>
+    <p>The <kbd>Covering mode</kbd> is selected, the air cut is reduced:<br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/CoveringModeYes.gif" width="288" height="330"></p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>
+    <ul>
+      <li>You can apply a positive or negative offset on the check,</li>
+      <li>The <kbd>Covering mode</kbd> applies to the tool path (in green), not 
+      to the macro motions (in red),</li>
+      <li>The <kbd>Covering mode</kbd> applies to the whole set of check 
+      surfaces defined in the machining operation</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="top">&nbsp;<h2><a name="hj-Collisions with Drive Elements">
+    Collisions with Drive Elements</a></h2>
+    <p><img border="1" src="b35doc/english/online/mmgug_c2/images/dbMACollCheckMultiCurveDriveNLS.gif" width="321" height="167"></p>
+    <p><a name="ix-Collision checking on part elements"></a>To activate 
+    collision checking on<span lang="en-us"> </span>Drive elements, you must select the <kbd>Active</kbd> 
+    checkbox.&nbsp;</p>
+    <p><kbd>Drive Accuracy <br>
+    </kbd>Defines the maximum error to be accepted with respect to the drive with 
+    its<span lang="en-us"> </span>thickness. </p>
+    <p><kbd>Allowed gouging</kbd> <br>
+    Defines the maximum cutter interference with the drive<span lang="en-us">
+    </span>during &quot;linking 
+    passes&quot; <br>
+    (including approach and retract motion). </p>
+    <h2>Checking for Collisions between Tool and <br>
+    Guide Elements during Macro Motions</h2>
+    <a name="hj-Guide Elements"></a>
+    <p>For Multi-Axis Curve Machining.<br>
+    <img border="1" src="b35doc/english/online/mmgug_c2/images/dbMACurveCollisionGuideNLS.gif" width="321" height="167"></p>
+    <p>By default, the macro tool paths are not checked for collisions with 
+    guiding elements.<br>
+    If you select <kbd>Active</kbd>, all macro tool paths of the operation 
+    will be checked for collision with guiding elements.</p></td>
+  </tr>
+  </table>
+<a name="ix-Minimum heel distance, collision check"></a>
+
+</body>
+
+</html>
+

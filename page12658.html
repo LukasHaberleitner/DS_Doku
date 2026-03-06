@@ -1,0 +1,360 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2E2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating Global Illumination</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none">
+</head>
+
+ <body>
+
+ <h1>Creating Global Illumination&nbsp;<br>
+ <a name="ix-global illumination"></a>&nbsp;<a name="CATEditProperties.CATRdgLightPhotonsPropertyEditor"></a><a name="CATRdgShootingDialog.CATRdgShootingPhotonsFramePSO"></a></h1>
+ <table Border="0" CELLSPACING="0" valign="top" height="597" width="100%" style="border-collapse: collapse" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="91" width="35">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32">
+     </td>
+     <td height="91" width="660" align="right" valign="top">
+     <p align="left">This task shows how to tune your lighting parameters and 
+     shooting quality when using <cite>global illumination</cite>.&nbsp;Global 
+     illumination simulates indirect illumination of objects by diffuse 
+     interreflection of light coming from diffuse surfaces.&nbsp;This functionality 
+     allows indirect lighting effects among which caustics (detailed in another 
+     task) and color bleeding.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="35" width="35">&nbsp;</td>
+     <td height="35" width="660" align="right" valign="top">
+     <p align="left">Below is an example of global illumination. Just click the 
+     thumbnail to see the full-size picture:</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="81" width="35">&nbsp;</td>
+     <td height="81" width="660" align="right" valign="top">
+     <p align="left">
+     <img border="2" src="b35doc/english/online/psoug_c2/images/global_illumination_small.gif" title="Click to enlarge this image" style="border-style: solid; border-color: #FFFF99; padding-left: 4; padding-right: 4; padding-top: 1; padding-bottom: 1" width="100" height="56"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="44" width="35">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td height="44" width="660" align="right" valign="middle">
+     <p align="left">Open the <a href="b35doc/english/online/psoug_c2/samples/CornellBox.CATProduct">
+     CornellBox.CATProduct</a> document.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="68" width="35"></td>
+     <td height="68" width="660" align="left" valign="top"><font face="Verdana">
+     Before starting to define indirect illumination parameters, make sure that
+     </font><a href="page11960.html">
+     <font face="Verdana">direct lighting</font></a><font face="Verdana"> 
+     parameters (intensity, attenuation, etc.) have been correctly set by 
+     generating quick renders to check the result.</font></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td height="67" width="35">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32">
+     </td>
+     <td height="67" width="660" align="left" valign="middle">
+     <ol class="task">
+       <li>
+       <p align="left" class="task">
+       <a name="ix-Properties command;commands::Properties"></a>
+       <a name="ix-lighting:properties"></a>Access the light properties (by 
+       right-clicking the light item in the specification tree then selecting
+       <kbd>Properties</kbd>) then access the <kbd>Indirect Illumination</kbd> 
+       tab:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1" height="509">
+           <tr>
+             <td height="251">
+             <img border="1" src="b35doc/english/online/psoug_c2/images/dblightproperties02NLS.gif" width="518" height="237"></td>
+           </tr>
+           <tr>
+             <td height="32"><kbd>Emit Photons</kbd> is already selected for the 
+             current sample document but note that it is cleared by default.</td>
+           </tr>
+           <tr>
+             <td height="32">
+             <h3><i><a name="hj-photons"></a></i>What are photons? </h3>
+             </td>
+           </tr>
+           <tr>
+             <td height="32">Photons are energy particles emitted into the scene 
+             by a light source. Once emitted, these energy particles take 
+             different paths as they bounce from one object to another. A photon 
+             path can evolve in two ways: photons are either absorbed by an 
+             object they hit (through reflection or transmission) and in that 
+             case the path ends, or photons get lost in space without hitting 
+             another object and the path is infinite.<br>
+             Photon emission can be compared to ray casting, the differences 
+             being that photons are emitted by a light source and not a camera 
+             as for rays and that photons have energies but rays have colors.&nbsp;&nbsp;</td>
+           </tr>
+           <tr>
+             <td height="32">
+             <h3>How are photons stored?<i>&nbsp;</i></h3>
+             </td>
+           </tr>
+           <tr>
+             <td height="32">As a photon bounces from one object to another, 
+             each rebound on a
+             <a target="ds_doc2" href="page11973.html#hj-diffuse">
+             diffuse</a> surface (and on a diffuse surface only) is stored in a 
+             three-dimensional data structure called a <i>photon map</i>. <br>
+             Thus the photon map contains the position and the light energy of 
+             each photon hitting a diffuse surface, these data being used later 
+             to compute indirect illumination.<br>
+             The only exception in the storing phase is the first reflection or 
+             transmission point which is never taken into account because it is 
+             handled by direct illumination.</td>
+           </tr>
+           <tr>
+             <td height="43">Let`s detail the figure below explaining how 
+             photons are emitted, absorbed and stored through two photon paths:</td>
+           </tr>
+           <tr>
+             <td height="32"><img border="0" src="b35doc/english/online/psoug_c2/images/photonpathsNLS.gif" width="364" height="376"></td>
+           </tr>
+           <tr>
+             <td height="32"><font size="2"><cite style="font-style: normal">
+             Photon paths</cite></font></td>
+           </tr>
+           <tr>
+             <td height="116">The first photon is emitted at the light source, 
+             hits a diffuse wall and is reflected at point A but not stored (it 
+             is the first reflection), and finally hits point B where it is 
+             stored and absorbed. <br>
+             The second photon is reflected at the diffuse floor (C) then 
+             reflected and stored at the wall (D), transmitted but not stored at 
+             the specular (non-diffuse) sphere surface points E and F, and 
+             finally stored and absorbed on the floor (G).</td>
+           </tr>
+           <tr>
+             <td height="89">A photon is said to be absorbed on a surface when 
+             it is <u>neither</u> reflected <u>nor</u> transmitted. The photon 
+             path ends where it is absorbed.<br>
+             Absorption can be forced when the trace depth limit is reached. 
+             This limit is defined in the
+             <a target="ds_doc2" href="page11963.html">
+             Shooting Definition</a> dialog box where you indicate the maximum 
+             number of reflections, refractions and rebounds.</td>
+           </tr>
+           <tr>
+             <td height="79">Photon emission stops as soon as a specified number 
+             has been reached or as soon as a maximum number has been emitted.<br>
+             However, the photon map does not affect the rendering phase since 
+             it is almost entirely independent from the scene complexity.</td>
+           </tr>
+           <tr>
+             <td height="53">The last phase is the rendering phase during which 
+             direct local illumination is computed as usual but, in that case, 
+             indirect global illumination is added by collecting neighbouring 
+             photons from the photon map and adding their contribution.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p align="left" class="task">In the <kbd>Intensity Factor</kbd> box, 
+       indicate the multiplication factor of the light intensity associated to 
+       each photon, using either the slider or the spin box.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber10">
+           <tr>
+             <td>By default, direct and indirect lighting have the same 
+             intensity so the factor is equal to 1. A good value for Intensity 
+             Factor should be close to 1, except for a particular purpose (style 
+             effect or especially dark scenes, for instance).</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p align="left" class="task">In the <kbd>Global Illumination Photons</kbd> 
+       box, define the maximum number of photons to be stored in the photon map. 
+       This value controls the rendering quality of global illumination.<br>
+       You can enter a value comprised between 10 000 and 10 000 000.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber11" height="106">
+           <tr>
+             <td height="59">Be careful when setting this parameter since the 
+             higher the value, the longer the rendering phase and the higher the 
+             quality. On the other hand, too small values may create fuzzy light 
+             &quot;puddles&quot;.</td>
+           </tr>
+           <tr>
+             <td height="41"><font face="Verdana">When Final 
+             Gathering is activated, setting lower number of photons is 
+             sufficient to get a satisfactory result.</font></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p align="left" class="task">
+       <a name="ix-Create Shooting command;commands::Create Shooting"></a>Click
+       <kbd>OK</kbd> to validate your lighting parameters then click <kbd>Create 
+       Shooting</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_RdgShootingP2.gif" width="24" height="24"> 
+       to define the shooting parameters in the <kbd>Indirect Illumination</kbd> 
+       tab:</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber12" height="506">
+           <tr>
+             <td height="460"><img border="1" src="b35doc/english/online/psoug_c2/images/dbshooting01NLS.gif" width="407" height="445"></td>
+           </tr>
+           <tr>
+             <td height="40">This tab lets you define global illumination 
+             parameters in order to create color bleeding, i.e. have the colors 
+             reflected from diffuse surfaces.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p align="left" class="task">In the <kbd>Global Illumination</kbd> area, 
+       click <kbd>Active</kbd> to activate global illumination and activate the 
+       two other boxes.</li>
+       <li>
+       <p align="left" class="task">In the <kbd>Photons</kbd> box, indicate for 
+       each pixel the number of photons to be searched in a specified area 
+       (defined in the <kbd>Maximum radius</kbd> box) in order to compute the 
+       local intensity of global illumination.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber13" height="44">
+           <tr>
+             <td height="41">The default value is 500. The higher the value, the 
+             smoother the illumination but the longer the rendering phase. A 
+             large radius gives less noise but a blurrier result.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p align="left" class="task">Enter the <kbd>Maximum radius</kbd> (in 
+       millimeters) to set the limits of the area in which the photons will be 
+       searched to compute globall illumination.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber14" height="23">
+           <tr>
+             <td height="20">A null value means that the radius is computed from 
+             the scene extent.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p align="left" class="task"><a name="ix:material ambient"></a>
+       <a name="hj-material ambient"></a>Click <kbd>Do not use ambient</kbd><b>
+       </b>in the <kbd>Material</kbd> area if you do not want the material 
+       ambient coefficient to be taken into account when computing indirect 
+       illumination.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber15" height="93">
+           <tr>
+             <td height="90">Ambient coefficient corresponds to the light 
+             intensity diffused in any direction by the object, even if not lit 
+             by any light source. This parameter affects the whole object, 
+             including the shadowed area.<br>
+             Note that this option can be selected only when at least one of the 
+             indirect illumination parameters is activated.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p align="left" class="task">
+       <a name="ix-Render Shooting command;commands::Render Shooting"></a>Click
+       <kbd>OK</kbd> to validate your parameters then render the shooting using
+       <kbd>Render Shooting</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_RdgRenderP2.gif" width="24" height="24"> 
+       (you can also right-click the Shooting item in the specification tree 
+       then select <kbd>Render Single Frame</kbd>) to check the result.</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber16" height="49">
+           <tr>
+             <td height="46"><font face="Verdana">In case the 
+             rendered image shows artefacts, you can increase the number of 
+             photons.<br>
+             Note also that increasing the radius value may also help to 
+             increase the color attenuation.</font></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="27" width="35"></td>
+     <td height="27" width="660" align="left" valign="middle">
+     <blockquote>
+       <p>The examples below illustrate the various results you can obtain 
+       according to the values you defined (we have kept a null maximum radius 
+       and a realistic falloff for each of the four examples):</p>
+       <div align="left">
+         <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber9" height="607" width="545">
+           <tr>
+             <td height="237" width="265">
+             <img border="1" src="b35doc/english/online/psoug_c2/images/global_illumination01.gif" width="234" height="234"></td>
+             <td height="237" width="273">
+             <img border="1" src="b35doc/english/online/psoug_c2/images/global_illumination02.gif" width="234" height="235"></td>
+           </tr>
+           <tr>
+             <td height="60" width="265"><cite style="font-style: normal">
+             Intensity Factor = 10<br>
+             Global Illumination Photons = 100 000<br>
+             Photons = 2000</cite></td>
+             <td height="60" width="273"><cite style="font-style: normal">
+             Intensity Factor = 3<br>
+             Global Illumination Photons = 100 000<br>
+             Photons = 2000</cite></td>
+           </tr>
+           <tr>
+             <td height="237" width="265">
+             <img border="1" src="b35doc/english/online/psoug_c2/images/global_illumination03.gif" width="234" height="235"></td>
+             <td height="237" width="273">
+             <img border="1" src="b35doc/english/online/psoug_c2/images/global_illumination04.gif" width="233" height="235"></td>
+           </tr>
+           <tr>
+             <td height="61" width="265"><cite style="font-style: normal">
+             Intensity Factor = 1<br>
+             Global Illumination Photons = 450 000<br>
+             Photons = 2000</cite></td>
+             <td height="61" width="273"><cite style="font-style: normal">
+             Intensity Factor = 0.20<br>
+             Global Illumination Photons = 450 000<br>
+             Photons = 8000</cite></td>
+           </tr>
+         </table>
+       </div>
+     </blockquote>
+     </td>
+   </tr>
+ </table>
+ <div align="center">
+   <center>
+   <table Border="0" CELLSPACING="0" valign="top" width="100%">
+     <tr valign="top" BORDER="0">
+       <td width="100%">
+       <p align="center">
+       <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+       </td>
+     </tr>
+   </table>
+   </center>
+ </div>
+ <p>&nbsp;</p>
+
+ </body>
+
+</html>
+

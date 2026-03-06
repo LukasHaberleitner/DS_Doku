@@ -1,0 +1,250 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta><link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css"><title>An Example of Using the Abaqus for CATIA V5 Automation Interface</title></head>
+
+<body onload="newPage('ap06s02.html');" ondblclick="newSelection();" bgcolor="#FFFFFF" text="#000000" vlink="#FF5113" alink="#004D48" link="#004D48" class="TEXT">
+
+      <div class="sect1" id="afc-app-automation-example"><a name="afc-app-automation-example"></a><div class="titlepage"><h3 class="title"><br><div class="title">An Example of Using the Abaqus for CATIA V5 Automation Interface<br></div><span class="endtitle"></span></h3></div><p>The script that appears at the end of this section is an example that uses the Abaqus for CATIA V5 automation interface. The script attempts to load a part and an analysis document from the default location of the Abaqus for CATIA V5 documentation. The example script links the analysis to the part and creates a load, a boundary condition, a step, and an analysis job. Output from the analysis is written to the <tt class="filename">CATTemp</tt> directory, which is determined by reading the CATIA V5 environment variable. You may need to change the path of the computation and scratch directories to match your installation. </p><p>This task shows you how to create and run the example script:</p><p><div class="procedure" id="d0"><p><ol class="type1"><li><p>Select <b><span class="guitext"><b class="guimenu">Tools</b></span>&gt;<span class="guitext"><b class="guisubmenu">Macro</b></span>&gt;<span class="guitext"><b class="guimenuitem">Macros...</b></span></b> to open the <span class="guitext"><b class="guilabel">Macros</b></span> dialog box.</p></li><li><p>Click <span class="guitext"><b class="guibutton">Macro Libraries</b></span>, select <span class="guitext"><b class="guibutton">VBA projects</b></span> as the library type, and select <span class="guitext"><b class="guibutton">Create new library</b></span> from the dialog box that appears.</p></li><li><p>Accept the default project name or enter a new name, and click <span class="guitext"><b class="guibutton">OK</b></span>.</p></li><li><p>Click <span class="guitext"><b class="guibutton">Close</b></span> in the <span class="guitext"><b class="guilabel">Macro libraries</b></span> dialog box.</p><p>The Macros dialog box displays the new library name.</p></li><li><p>Click <span class="guitext"><b class="guibutton">Create</b></span> in the <span class="guitext"><b class="guilabel">Macros</b></span> dialog box to open the <span class="guitext"><b class="guilabel">Create a new macro</b></span> dialog box.</p></li><li><p>Click <span class="guitext"><b class="guibutton">OK</b></span> to accept the default macro language (MS VBA) and macro name (Module1).</p></li><li><p>Click <span class="guitext"><b class="guibutton">Edit</b></span> in the <span class="guitext"><b class="guilabel">Macros</b></span> dialog box to open the Module1 document in the Microsoft Visual Basic editor.</p></li><li><p>Copy the complete text of the example script from the end of this section and paste it into the Module1 document, replacing the existing <tt class="filename">Sub CATMain()</tt> and <tt class="filename">End Sub</tt>.</p></li><li><p>Select <b><span class="guitext"><b class="guimenu">Run</b></span>&gt;<span class="guitext"><b class="guimenuitem">Run Sub/UserForm</b></span></b> in Visual Basic to run the script.</p></li></ol></p></div></p><p>If the script fails to load the part and the analysis document, do the following before proceeding:</p><p><div class="procedure" id="d0"><p><ol class="type1"><li><p>Open the <tt class="filename">.CATPart</tt> file by clicking on the following link: <a href="b35doc/english/online/afcug_c2/samples/sample01a.CATPart">sample01a.CATPart</a>. (If a dialog box appears in your browser, toggle on the option that opens the file.)</p></li><li><p>Create a Nonlinear Structural Analysis Case, and save it in a file named <tt class="filename">sample01a.CATAnalysis</tt>.</p></li></ol></p></div></p><p>Use the following script to complete this example:<pre class="screen">Sub CATMain()
+
+    ' An example of using the automation interface.
+
+    ' Create a new CATIA document.
+    '
+    Dim mainDoc As Documents
+    Set mainDoc = CATIA.Documents
+    
+    ' Name of .CATPart and .CATAnalysis
+    '
+    Dim partName As String, abqAnalysisName As String
+    partName = "sample01a.CATPart"
+    abqAnalysisName = "sample01a.CATAnalysis"
+    
+    ' Check if the correct models are in the session and issue appropriate
+    ' warnings if they are not.
+    '
+    On Error GoTo EmptyFile
+    Dim i As Integer
+    i = 0
+    For Each doc In mainDoc
+        If doc.Name = partName Or doc.Name = abqAnalysisName Then
+            i = i + 1
+        End If
+    Next doc
+    Dim a As Integer
+    If i &lt;&gt; 2 Then
+        a = MsgBox(partName + " and " + abqAnalysisName + _
+                   " will be loaded into session from default " + _
+                   "documentation location. Press OK to continue or " + _
+                   "Cancel to cancel macro.", vbOKCancel)
+        If (a = 1) Then
+            GoTo EmptyFile
+        Else
+            Exit Sub
+        End If
+    Else
+        GoTo DocumentLoaded
+    End If
+
+    ' No file in session.  Load file from the default location.
+    '
+EmptyFile:
+
+    On Error GoTo UnableToOpenFile
+
+    Dim pathToFile As String, pathToPFile As String, pathToAFile As String
+    pathToFile = CATIA.SystemService.Environ("CATDocView")
+    If InStr(pathToFile, "\doc") &lt;&gt; 0 Then
+        pathToPFile = Left$(pathToFile, InStr(pathToFile, "\doc")) + _
+                      "doc\online\samples\" + partName
+        pathToAFile = Left$(pathToFile, InStr(pathToFile, "\doc")) + _
+                      "doc\online\samples\" + abqAnalysisName
+    Else
+        GoTo UnableToOpenFile
+    End If
+    
+    Dim sample01PartDoc As PartDocument, sample01AnaDoc As AnalysisDocument
+    Set sample01PartDoc = mainDoc.Open(pathToPFile)
+    Set sample01AnaDoc = mainDoc.Open(pathToAFile)
+    
+    GoTo DocumentLoaded
+    
+    ' File not found.  Issue warning and end the macro.
+    '
+UnableToOpenFile:
+    MsgBox "File " + partName + " or " + abqAnalysisName + " not found. " + _
+           "Please load model into session and run macro again", vbOKOnly
+    Exit Sub
+    
+    ' File loaded correctly.
+    '
+DocumentLoaded:
+    
+    On Error GoTo generalError
+      
+    ' Navigate to the Analysis Model.
+    '
+    Dim activeDoc As Document
+    Set activeDoc = CATIA.Documents.Item(abqAnalysisName)
+    
+    activeDoc.Activate
+    
+    Dim analysisManager1 As AnalysisManager
+    Set analysisManager1 = activeDoc.ANALYSIS
+    
+    ' Import .CATPart into analysis.
+    '
+    Dim arrayOfVariantOfShort1(0)
+    arrayOfVariantOfShort1(0) = 0
+    Set analysisManager1Variant = analysisManager1
+    analysisManager1Variant.ImportDefineFile partName, _
+    "CATAnalysisImport", arrayOfVariantOfShort1
+
+    Dim specsAndGeomWindow1 As SpecsAndGeomWindow
+    Set specsAndGeomWindow1 = CATIA.ActiveWindow
+    
+    Dim viewer3D1 As Viewer3D
+    Set viewer3D1 = specsAndGeomWindow1.ActiveViewer
+    viewer3D1.Reframe
+    
+    ' Get the analysis model.
+    '
+    Dim analysisModels1 As AnalysisModels
+    Set analysisModels1 = analysisManager1.AnalysisModels
+    
+    Dim analysisModel1 As AnalysisModel
+    Set analysisModel1 = analysisModels1.Item(1)
+        
+    Dim abqModel As ABQAnalysisModel
+    Set abqModel = analysisModel1.GetItem("ABQVBAnalysisModel")
+    
+    ' Set up the publications.
+    '
+    Set analysisLinkedDocuments1 = analysisManager1.LinkedDocuments
+    Set analysisLinkedDocument1 = analysisLinkedDocuments1.Item(1)
+    Set sample01Product = analysisLinkedDocument1.Product
+    
+    ' Create an Abaqus analysis case.
+    '
+    Dim abqCases As ABQAnalysisCases
+    Set abqCases = abqModel.Cases
+
+    Dim abqCase As ABQAnalysisCase
+    Set abqCase = abqCases.Add("STRUCTURAL")
+    abqCase.Name = "Nonlinear-Structural-Case-1"
+
+    ' Create an Abaqus step.
+    '
+    Dim abqStepList As ABQSteps
+    Set abqStepList = abqCase.Steps
+    
+    Dim stepType As String
+    stepType = "ABQGeneralStaticStep"
+    
+    Dim generalstaticstep As ABQGeneralStaticStep
+    Set generalstaticstep = abqStepList.Add(stepType)
+
+    generalstaticstep.Name = "Static Step-1"
+    generalstaticstep.NLGeom = True
+    
+    ' Define the boundary conditions.
+    '
+    Dim abqBCs As ABQBoundaryConditions
+    Set abqBCs = generalstaticstep.BoundaryConditions
+   
+    Dim clamp1 As ABQClampBC
+    Set clamp1 = abqBCs.Add("ABQClamp")
+    clamp1.Name = "clamp-1"
+ 
+    Dim clamp2 As ABQClampBC
+    Set clamp2 = abqBCs.Add("ABQClamp")
+    clamp2.Name = "clamp-2"
+ 
+    Dim dispBC As ABQDisplacementBC
+    Set dispBC = abqBCs.Add("ABQDisplacementBC")
+    dispBC.Name = "displacement-1"
+    dispBC.U3 = -0.00254
+
+    ' Get the part objects and the part.
+    '
+    Dim sample01Part As Part
+    Set sample01Part = sample01Product.Parent.Part
+        
+    Dim bodies1 As Bodies
+    Set bodies1 = sample01Part.Bodies
+
+    Dim body1 As Body
+    Set body1 = bodies1.Item("PartBody")
+
+    Dim shapes1 As Shapes
+    Set shapes1 = body1.Shapes
+
+    Dim pad1 As Pad
+    Set pad1 = shapes1.Item("Pad.1")
+    
+    Dim mirror1 As Mirror
+    Set mirror1 = shapes1.Item("Mirror.1")
+   
+    ' Set the region to which the clamp boundary condition is applied.
+    '
+    Dim refString As String
+    refString = "Selection_RSur:" + _
+                    "(Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;6)));None:();" + _
+                    "Cf11:());Chamfer.2_ResultOUT;Last;Z0;G1751)"
+    Dim reference1 As Reference
+    Set reference1 = sample01Part.CreateReferenceFromName(refString)
+    
+    refString = "Selection_RSur:" + _
+                    "(Face:(Brp:(Pad.1;0:(Brp:(Sketch.1;23)));None:();" + _
+                    "Cf11:());Chamfer.3_ResultOUT;Last;Z0;G1751)"
+    Dim reference2 As Reference
+    Set reference2 = sample01Part.CreateReferenceFromName(refString)
+      
+    refString = "Selection_RSur:" + _
+                    "(Face:(Brp:(Mirror.1;(Brp:(Pocket.3;0:" + _
+                    "(Brp:(Sketch.4;8)))));None:();Cf11:());" + _
+                    "Chamfer.6_ResultOUT;Z0;G1751)"
+    Dim reference3 As Reference
+    Set reference3 = sample01Part.CreateReferenceFromName(refString)
+    
+    ' Set the region to which the pressure load is applied.
+    '
+    clamp1.AddSupportFromProduct sample01Product, reference1
+    clamp2.AddSupportFromProduct sample01Product, reference2
+    dispBC.AddSupportFromProduct sample01Product, reference3
+      
+    ' Create a Job called "Job-1". The temp directory
+    ' is taken from variable CATTemp.  This location is used for
+    ' both the computation and temp directories.
+    '
+    Dim abqJobs As abqJobs
+    Set abqJobs = abqCase.Jobs
+
+    Dim job1 As ABQJob
+    Set job1 = abqJobs.Add
+    job1.Name = "Job-1"
+    job1.Type = ANALYSIS
+    job1.Description = "AutomatedJob"
+    pathToTemp = CATIA.SystemService.Environ("CATTemp")
+    job1.ComputationDir = pathToTemp
+    job1.Scratch = pathToTemp
+    job1.ModelConsistencyCheck = False
+    job1.EchoPrint = True
+    job1.ContactPrint = False
+    job1.ModelPrint = False
+    job1.HistoryPrint = True
+    job1.NumCpus = 2
+    job1.PreMemory = 200
+    job1.StandardMemory = 500
+    job1.StandardMemoryPolicy = MINIMUM
+    job1.ParallelizationMethodStandard = SUPER_NODE
+           
+    Exit Sub
+    
+generalError:
+    MsgBox "A general error has occurred. " + _
+           "Please contact support for more information."
+    
+End Sub</pre></p><span id="afc-app-automation-example"></span></div>
+      </body>
+</html>
+

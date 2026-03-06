@@ -1,0 +1,516 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2E2O2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>3D IGES: Export</title>
+<script language="JavaScript">
+ </script>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style>
+<!--
+ table.MsoNormalTable
+	{mso-style-parent:"";
+	font-size:10.0pt;
+	font-family:"Times New Roman"}
+-->
+  </style>
+<meta name="docCompliance" content="v0.5; Tue Jul  5 15:29:06 2005">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1><a name="ix-3D IGES:export"></a>IGES: Export</h1>
+<table Border="0" CELLSPACING="0" valign="top">
+  <tr valign="top" BORDER="0">
+    <td>
+    <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"><p>&nbsp;</td>
+    <td rowspan="1" valign="middle" align="left">This task shows you how to save 
+    in IGES format the data contained in a CATPart, CATProduct or a
+    <a name="ix-3D IGES:catshape"></a>CATShape document.<p>However, if you 
+    re-import an IGES file made from a CATShape, you will create a CATPart.</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td valign="top">
+    <ul>
+      <li>IGES 5.3 (year 2000-compliant) is the standard supported. </li>
+      <li>Only ASCII 1-byte characters are supported.</li>
+		<li>When the data size to export exceeds the limit allowed by IGES 
+		standard, export fails and an error message is displayed. Reduce the 
+		data size before starting export again.</li>
+    </ul>
+    <p>The table entitled <a href="#IGESexporttable">What about the Elements You 
+    Export?</a> provides information on the entities you can export.</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>You can find further information in the Advanced Tasks:
+    <ul>
+      <li><a href="page10729.html#hj-export">Trouble Shooting</a></li>
+      <li><a href="page10730.html#hj-export">Best Practices</a></li>
+      <li><a href="page10731.html#hj-export">FAQ</a></li>
+      <li><a href="page10732.html#ix-3D IGES:export VBScript macros">VBScript 
+      Macros</a></li>
+    </ul>
+    <p>and in the Customizing
+    <a href="page0981.html#hj-export">3D 
+    IGES Settings</a> chapter.</p>
+    <p>Statistics about each export operation can be found in the
+    <a href="#ix-3D IGES:report file">report file</a> created.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td>
+    <ol class="task">
+      <li>
+      <p class="task">Open the CATPart or CATProduct document to be saved in 
+      IGES format.<br>
+		For a CATProduct, there is one conversion operation for each CATPart 
+		document referenced by the product.</li>
+      <li>
+      <p class="task">Select the <kbd>File &gt; Save As...</kbd> command.<br>
+      The <kbd>Save As</kbd> dialog box is displayed.</li>
+   <li>
+      <p class="task">Specify the name of the document in the <kbd>File name:</kbd>&nbsp; 
+      field.</li>
+    <li>
+      <p class="task">Set the .igs extension in the <kbd>Save as type</kbd> 
+      field.</li>
+      <li>
+      <p class="task">Click the <kbd>Save</kbd> button to confirm the operation.</p>
+      <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber1">
+        <tr>
+          <td>A progress bar is displayed for each conversion operation.</td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/InterruptTransferIGSNLS.gif" width="396" height="142"></td>
+        </tr>
+        <tr>
+          <td>You can use the Cancel button to interrupt the transfer at any 
+          time.<br>
+			The current conversion operation is then interrupted (after the 
+			processing of the current independent entity) and the partial 
+			conversion already performed is saved in the IGES file.</td>
+        </tr>
+      </table>
+      </li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"><p>&nbsp;</td>
+    <td valign="top" align="left">
+    <ul>
+      <li>
+Whereas the path of an IGES file to export may contain non-ASCII characters, the 
+name of the file itself must contain only ASCII characters.</li>
+      <li>In V5, documents can be exported to files with the extension 
+      &quot;igs&quot;.</li>
+      <li>The part number of the CATProduct is exported as the<a name="ix-3D IGES:product indentification">
+      </a>Product identification for Receiver.<table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber2">
+        <tr>
+          <td><img border="1" src="b35doc/english/online/itfug_c2/images/3DIGESExportproductNameNLS.gif" width="285" height="228"></td>
+        </tr>
+      </table>
+      </li>
+      <li>The name of the
+      <a href="page0981.html#ix-3D IGES:author name and organization">
+      author and of the organization</a> can be exported to the Global Section 
+      of the IGES file.</li>
+      <li>Layer <kbd>None</kbd> is translated into layer <kbd>10000</kbd> 
+      in the IGES file.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td valign="top">Several 3D IGES export options can be customized:
+    <ul>
+      <li>
+      <a href="page0981.html#ix-3D IGES:save only shown entities">
+      Save only shown entities</a></li>
+      <li>
+      <a href="page0981.html#ix-3D IGES:curve and surface type">
+      Curve and surface type</a></li>
+      <li>
+      <a href="page0981.html#ix-3D IGES:representation mode">
+      Representation mode</a></li>
+      <li>
+      <a href="page0981.html#ix-3D IGES:author name and organization">
+      Name of author and Organization</a></li>
+      <li>
+      <a href="page0981.html#ix-3D IGES:export units as">
+      Export unit as</a></li>
+      <li>
+      <a href="page0981.html#ix-3D IGES:show/noshow completion dialog box">
+      Display of the Completion Dialog Box</a></li>
+    </ul>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td colspan="2">
+    <p align="center">
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+<h2>Report File<a name="ix-3D IGES:report file"></a></h2>
+<table Border="0" CELLSPACING="0" valign="top" cellpadding="2">
+  <tr>
+    <td valign="top"></td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"></td>
+    <td valign="top">
+    <p class="task">After the exporting data to 3D IGES files, V5 generates:</p>
+    <ul>
+      <li>A report file (<kbd>name_of_file.rpt</kbd>) where you can 
+      find references about the quality of the transfer&nbsp;</li>
+      <li>And an error file (<kbd>name_of_file.err</kbd>) .</li>
+    </ul>
+    <p class="task">These files are created in a location referenced by&nbsp;
+    </p>
+    <ul>
+      <li>The <kbd>USERPROFILE</kbd> variable on NT. Its default 
+      value is<br>
+      <img border="0" src="b35doc/english/online/itfug_c2/images/stepreportNLS.gif" width="539" height="15">&nbsp;<br>
+      on NT&nbsp;(<kbd>user</kbd> being you logon id)</li>
+      <li>The <kbd>HOME</kbd> variable on UNIX. Its default value is
+      <kbd>$HOME/CATReport</kbd> on UNIX. </li>
+    </ul>
+    </td>
+  </tr>
+</table>
+<h2>What About the Elements You Export?
+<a name="IGESexporttable"></a></h2>
+<table Border="0" CELLSPACING="0" valign="top">
+  <tr>
+    <td valign="top" align="left">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"><br>
+    &nbsp;</td>
+    <td valign="top" align="left">
+    <ul>
+      <li>If the representation mode is &quot;<a href="page0981.html#ix-3D IGES:representation mode">Surface</a>&quot;, 
+      the topology of solids and shells is lost during the export. <br>
+      As a consequence, you have a group of surfaces called an Geometrical set.
+      <br>
+      If you make an Import with Join, you can get a Close Body.</li>
+      <li>When a CATProduct is exported, its possible .igs components are 
+      not stored in the .igs file.<br>
+      If a CATProduct references V4 models, they are exported to the .igs file as
+      IGES entities 
+      (product references).<br>Each component of a CATProduct document is translated by a subfigure 
+      definition / singular <br>subfigure instance in the .igs file.</li>
+      <li>Only V4 models referenced in a V5 CATProduct are exported to an 
+      .igs file.</li>
+      <li>You can choose the
+      <a href="page0981.html#ix-3D IGES:export units as">
+      export unit.</a></li>
+      <li>Alternative representations that can be selected using <kbd>Manage 
+      Representations</kbd> are not taken into <br>
+      account during IGES exports. The main representation is always exported.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">&nbsp;</td>
+    <td valign="top" align="left">
+    <ul>
+      <li>The name of the elements to export must be in ASCII format.</li>
+      <li>Surfaces exported from a V5 volume receive the name of the body that 
+      contains this volume. As a rule, objects of surface, curve or point type 
+      receive the name of the feature that aggregates them. </li>
+      <li>Overridden <a name="hj-overridden colors">faces colors </a>are 
+      supported.</li>
+         <li>You export the final construction object, i.e. the whole specification 
+      tree and its history up to the feature at 
+      the bottom of the specification tree and not the current feature: for 
+      example, you wish to export <br>
+      the specification tree up to Pocket.1 only.<table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" id="AutoNumber3">
+        <tr>
+          <td>In this case, although Pocket.1 is the current feature, you will 
+          export all elements of <br>
+          the specification tree including Copy of Pad.1.</td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/feature1NLS.gif" width="250" height="787"></td>
+        </tr>
+        <tr>
+          <td>If you want to limit your export to Pocket.1, you have to make 
+          sure that it is the feature at the <br>
+          bottom of the specification tree, like this:</td>
+        </tr>
+        <tr>
+          <td><img border="0" src="b35doc/english/online/itfug_c2/images/feature2NLS.gif" width="250" height="787"></td>
+        </tr>
+      </table>
+      </li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    </td>
+  </tr>
+</table>
+<table Border="0" CELLSPACING="0" valign="top">
+  <tr valign="top" BORDER="0">
+    <td></td>
+    <td>The list below shows the IGES element numbers corresponding to the 
+    element types in Part Design.</td>
+  </tr>
+</table>
+<table border="1" cellpadding="4">
+  <tr>
+    <td align="center">&nbsp;</td>
+    <td align="center"><kbd>V5 Element</kbd></td>
+    <td colspan="2" align="center">
+    <p align="center"><kbd>IGES Element</kbd></td>
+    <td align="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconhlfblck.gif" width="15" height="1"></td>
+    <td align="right">null</td>
+    <td>0</td>
+    <td>
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>circle</td>
+    <td align="right">circular arc</td>
+    <td>100</td>
+    <td>However, in B-Spline mode (see
+    <a href="page0981.html#ix-3D IGES:curve and surface type">
+    options</a>), all planes and surfaces are exported to rational B-Spline 
+    surfaces (128) and all curves, circles and lines are exported to B-Spline 
+    curves (126)</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>curve, line, circle</td>
+    <td align="right">composite curve</td>
+    <td>102</td>
+    <td>
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>curve</td>
+    <td align="right">conic arc - ellipse</td>
+    <td>104 form 1</td>
+    <td>However, in B-Spline mode (see
+    <a href="page0981.html#ix-3D IGES:curve and surface type">
+    options</a>), all planes and surfaces are exported to rational B-Spline 
+    surfaces (128) and all curves, circles and lines are exported to B-Spline 
+    curves (126)</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>point, curve</td>
+    <td align="right">copious data</td>
+    <td>106 form 2</td>
+    <td>
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>plane</td>
+    <td align="right">unbounded plane</td>
+    <td>108 form 0</td>
+    <td rowspan="2">Construction unbounded planes (supporting faces) are 
+    exported as type 108, forme 0.<br>
+    Independant unbounded planes are not exported.<p>However, in B-Spline mode 
+    (see
+    <a href="page0981.html#ix-3D IGES:curve and surface type">
+    options</a>), planes and surfaces are exported to rational B-Spline surfaces 
+    (128) and all curves, circles and lines are exported to B-Spline curves 
+    (126)</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>line</td>
+    <td align="right">line</td>
+    <td>110 form 0</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Semi-bounded lines</td>
+    <td align="right">line</td>
+    <td>110 form 1</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Unbounded lines</td>
+    <td align="right">line</td>
+    <td>110 form 2</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>point</td>
+    <td align="right">point</td>
+    <td>116</td>
+    <td>
+    <p align="left">A point belonging to a sketch is exported only if the sketch 
+    contains only points. </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>surface</td>
+    <td align="right">ruled surface</td>
+    <td>118</td>
+    <td rowspan="4">However, in B-Spline mode (see
+    <a href="page0981.html#ix-3D IGES:curve and surface type">
+    options</a>), all planes and surfaces are exported to rational B-Spline 
+    surfaces (128) and all curves, circles and lines are exported to B-Spline 
+    curves (126)</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>surface</td>
+    <td align="right">surface of revolution</td>
+    <td>120</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>surface</td>
+    <td align="right">tabulated cylinder</td>
+    <td>122</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>matrix</td>
+    <td align="right">transformation matrix</td>
+    <td>124</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>curve</td>
+    <td align="right">rational B-spline curve</td>
+    <td>126</td>
+    <td>
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>surface</td>
+    <td align="right">rational B-spline surface</td>
+    <td>128</td>
+    <td>
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><a name="hj-142"></a>surface boundary</td>
+    <td align="right">curve on parametric surface</td>
+    <td>142</td>
+    <td>In standard export mode:
+    <p>If the surface support is of B-Spline type and C2 continuous, both 
+    representation of boundaries are defined (2D parametric and 3D model 
+    space).&nbsp;Otherwise, only the 3D representation is defined.</p>
+    <p>In B-Spline mode all surfaces are exported as B-Spline surfaces (with 2D 
+    and 3D boundary representations). Those boundaries are ordered and oriented.</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>surface</td>
+    <td align="right">trimmed (parametric) surface</td>
+    <td>144</td>
+    <td>
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Solid<p>&nbsp;</td>
+    <td align="right">Manifold Solid B-Rep Object Entity </td>
+    <td>186 form 0</td>
+    <td rowspan="7">To export those entities, the
+    <a href="page0981.html#ix-3D IGES:representation mode">
+    Representation mode: Solid - Shell </a>option must be active.
+    <a href="page0981.html#ix-3D IGES:representation mode">
+    It requires IGES 5.3 or higher.</a><p>All those new IGES entities have not 
+    been &quot;tested&quot; (IGES Norm 5.3) and the IGES/PDES Organization recommends that 
+    special consideration be given when implementing certain untested entities. 
+    Therefore if you do not know whether the receiver system will recognize 
+    those entities, we recommend that you do not use this option.</p>
+    <p>For Loops, only the 3D Representation is exported</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Plane Surface (support of Face)</td>
+    <td align="right">Plane Surface Entity</td>
+    <td>190 form 0</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Solid (Closed) Shell<p>&nbsp;</td>
+    <td align="right">Closed Shell Entity </td>
+    <td>514 form 1</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Independent Shell<p>&nbsp;</td>
+    <td align="right">Open Shell Entity</td>
+    <td>514, Form 2</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Face in a Shell<p>&nbsp;</td>
+    <td align="right">Face Entity</td>
+    <td>510 form 1</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Face Loop<p>&nbsp;</td>
+    <td align="right">Loop Entity</td>
+    <td>508 form 1</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>List of Loop Edges</td>
+    <td align="right">Edge Entity</td>
+    <td>504 form 1</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>List of Start/End Loop Edges Vertices</td>
+    <td align="right">Vertex Entity </td>
+    <td>502 form 1</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Long names (more than 8 characters)</td>
+    <td align="right">Name Property Entity</td>
+    <td>406 form 15</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Color</td>
+    <td align="right">color definition</td>
+    <td>314</td>
+    <td>
+    <img border="0" src="b35doc/english/online/icons_C2/common/iconblck.gif" width="30" height="1"></td>
+  </tr>
+</table>
+<p style="text-align: justify">&nbsp;</p>
+
+</body>
+
+</html>
+

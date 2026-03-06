@@ -1,0 +1,143 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-gb">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Defining the Material Excess</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="Microsoft Border" content="none">
+</head>
+
+<body>
+
+<h1 align="center"><a name="CATCoDefaultCmdHeader.CATCoMaterialExcessId"></a>
+    About the Material Excess<a name="ix-commands::Material Excess"></a></h1>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+  <tr>
+    <td>Below is some information on how material excess is created depending on 
+	the input.<h2>Without Staggering Plies</h2>
+	<p>Material Excess extends plies that are coinciding with EEOP to the MEOP.
+	<br>All the edges of plies coinciding with edges of EEOP<br>
+	<img height="236" src="b35doc/english/online/cpdug_c2/images/MaterialExcessInput.png" width="242"><br>are 
+	mapped with the corresponding edges of MEOP.<br>
+	<img height="236" src="b35doc/english/online/cpdug_c2/images/MaterialExcessOutput.png" width="242"><br>
+	There is only one MEOP for all selected plies.</p>
+	<h3>EEOP and MEOP with a Different Number of Contours</h3>
+	<p>Below is an example where the EEOP contains an outer and an inner 
+	contour, whereas the MEOP contains only the outer contour.<ul><li>Engineering 
+		definition of ply.1:<br><img border="0" src="b35doc/english/online/cpdug_c2/images/EEOPtwocontours.gif" width="328" height="348"></li>
+		<li>Manufacturing definition of ply.1<br>
+		<img border="0" src="b35doc/english/online/cpdug_c2/images/MEOPonecontour.gif" width="334" height="348"></li>
+	</ul>
+	<p>The operating mode remains that of
+	<a href="page5349.html#ix-defining the material excess:with different numbers of contours">
+	Defining the Material Excess</a>.<br>In the tree, the element (identified as 
+	Material excess.xxx) is displayed under each ply and contains only one 
+	contour.</p>
+	<p>This scenario corresponds to the process in which the cutouts (inner 
+	contours) are removed from the manufacturing definition of the plies. <br>
+	The manufacturing plies are nested, cut, and put on the mold without the 
+	cutouts.</p>
+	<p>In some cases, the MEOP can contain more contours than the EEOP, for 
+	example when tooling tabs are added to the manufacturing geometry of the 
+	plies.</p>
+	<h2>Staggered Plies</h2>
+	<p>The material excess is created with a staggering to create a ramp.</p>
+	<p>The staggering is specified by:<ul><li>The clearance. It is an offset 
+		from the MEOP, that defines the distance between the smallest ply and 
+		the MEOP.</li>
+		<li>The step. It is the distance between two plies to create the ramp.</li>
+		<li>The drop-off pattern. It ensures the plies arrangement in a specific 
+		manner.</li>
+		<li>The number of plies per drop. It is the number of plies on similar 
+		extended MEOP.</li>
+		<li>The minimum clearance from the surface edge. It is the distance 
+		between the largest ply and the support surface.</li>
+	</ul>
+	<p>Each selected ply is extended to the corresponding extended MEOP.<br>
+	<img height="266" src="b35doc/english/online/cpdug_c2/images/MaterialExcessStaggeringOutput.png" width="270"></p>
+	<p>One MEOP is created for each ply of set of plies. Each MEOP corresponds to 
+	one drop.</p>
+	<p>If you increase the number of plies per drop, some plies share the same 
+	drop, thus reducing the number of created MEOP.<br>The number of created 
+	MEOP=Number of plies on a surface/Plies per drop.</p>
+	<h3>Cases of Cutouts or Holes</h3>
+	<ul><li>Plies, EEOP, and MEOP have adjacent cutouts. The plies and the EEOP 
+		share the same outer and inner boundary.<ul>
+			<li>In this example, the plies and the EEOP share the same outer and 
+			the same inner boundary.<br>
+			<img height="243" src="b35doc/english/online/cpdug_c2/images/MaterialExcessStaggeringCase1A.png" width="400"></li>
+			<li>Result: Plies are staggered on the outer as well as on the inner 
+			boundary.<br>
+			<img height="238" src="b35doc/english/online/cpdug_c2/images/MaterialExcessStaggeringCase1B.png" width="400"></li>
+		</ul>
+		</li>
+		<li>Plies and EEOP have cutouts, but there is no corresponding MEOP 
+		cutout. Plies and the EEOP share the same outer and inner boundary.<ul>
+			<li>In this example, the plies and the EEOP have one outer and one 
+			inner boundary. MEOP has only an outer boundary.<br>
+			<img height="236" src="b35doc/english/online/cpdug_c2/images/MaterialExcessStaggeringCase2A.png" width="400"></li>
+			<li>Result: Plies are staggered on the outer boundary and there is 
+			no cutout inside these plies.<br>
+			<img height="241" src="b35doc/english/online/cpdug_c2/images/MaterialExcessStaggeringCase2B.png" width="400"></li>
+			<li>Plies have cutout, but EEOP and MEOP do not. Plies and EEOP 
+			share the same outer boundary, but the EEOP has no inner boundary.<ul>
+				<li>In this example, plies have one outer and one inner 
+				boundary. EEOP and MEOP have only one outer boundary.<br>
+				<img height="233" src="b35doc/english/online/cpdug_c2/images/MaterialExcessStaggeringCase3A.png" width="400"></li>
+				<li>Result: The plies are staggered on the outer boundary and 
+				there is a cutout inside the plies. <br>There is no staggering 
+				on the inner boundary.<br>
+				<img height="229" src="b35doc/english/online/cpdug_c2/images/MaterialExcessStaggeringCase3B.png" width="400"></li>
+			</ul>
+			</li>
+			<li>Plies and EEOP have no cutout, but MEOP has a cutout. Plies and 
+			the EEOP share the same boundary.<ul>
+				<li>In this example, plies have one outer and one inner 
+				boundary. EEOP and MEOP have only an outer boundary.<br>
+				<img height="241" src="b35doc/english/online/cpdug_c2/images/MaterialExcessStaggeringCase4A.png" width="400"></li>
+				<li>Result: The plies are staggered on the outer boundary and 
+				there is a cutout inside the plies.<br>There is no staggering on 
+				the inner boundary.<br>
+				<img height="241" src="b35doc/english/online/cpdug_c2/images/MaterialExcessStaggeringCase4B.png" width="400"></li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+	</ul>
+	<h3>Case of Cylindrical Surfaces</h3>
+	<p>There are two ways to create plies on cylindrical surfaces:<ul><li>
+		Flatten plies. The plies are mono-domain<br>
+		<img height="326" src="b35doc/english/online/cpdug_c2/images/MaterialExcessStaggeringCase5A.png" width="400"><br>
+		The result is as shown below<br>
+		<img height="325" src="b35doc/english/online/cpdug_c2/images/MaterialExcessStaggeringCase5B.png" width="400"></li>
+		<li>Cylindrical plies<br><img height="325" src="b35doc/english/online/cpdug_c2/images/MaterialExcessStaggeringCase6A.png" width="400"><br>
+		The result is as shown below<br><img height="325" src="b35doc/english/online/cpdug_c2/images/MaterialExcessStaggeringCase6B.png" width="400"></li>
+	</ul>
+	<h3>Material Excess on Different Surfaces</h3>
+	<p>If the selected plies are on different surfaces, the staggered plies are 
+	dropped on respective surface, with respect to the corresponding MEOP.<br>
+	<img height="394" src="b35doc/english/online/cpdug_c2/images/MaterialExcessStaggeringCase7A.png" width="400"></p>
+	<h3>Creation of Cut-Pieces</h3>
+	<p>The creation of cut-pieces is the same as that of plies.<br>
+	<img height="285" src="b35doc/english/online/cpdug_c2/images/MaterialExcessStaggeringCase8A.png" width="292"><br>
+	</p>
+	  </td>
+  </tr>
+  <tr>
+    <td>
+    <p align="center">
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+
+</body>
+
+</html>
+

@@ -1,0 +1,165 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+ <title>Singularity Computation</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <script language="Javascript" src="b35doc/english/online/icons_C2/Faq.js">
+ </script>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Singularity Computation<a name="ix-singularity::computation"></a><a name="hj-top"></a></h1>
+ <p>This section gives you information about the singularity computation step.</p>
+ <p align="center"><a href="#hj-tune">How to tune the singularity detection?</a><br>
+ <a href="#hj-connection">How does the singularity computation step work in the 
+ case of connection properties?</a><br>
+&nbsp;</p>
+ <table border="0" cellspacing="1" style="border-collapse: collapse" id="AutoNumber2">
+   <tr>
+     <td><hr>
+     <p><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" title="Top" align="right" width="25" height="17"></a></p>
+     <h2><a name="hj-tune"></a>How to tune the singularity detection?</h2>
+     <p class="task">A tolerance value is used to detect singularities. 
+     Modifying this tolerance value lets you improve the singularity detection.</p>
+     <p class="task">You can detect singularities using several environment 
+     variables:</p>
+     <table border="1" id="AutoNumber3" cellpadding="2" class="code2">
+       <tr>
+         <td class="code2">
+         <h5>Variable name</h5>
+         </td>
+         <td class="code2">
+         <h5>Description</h5>
+         </td>
+         <td class="code2">
+         <h5>Value</h5>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <p class="task"><code>ELF_Singularity_check</code></td>
+         <td valign="top">
+         <p class="task">This variable lets you decide to detect or not local 
+         singularities.</p>
+         <ul>
+           <li>
+           <p class="task"><code>Yes</code>: lets you detect singularities.</li>
+           <li>
+           <p class="task"><code>No</code>: lets you ignore singularities.</li>
+         </ul>
+         </td>
+         <td valign="top">
+         <p class="task">
+         <img border="0" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" title="Top" width="13" height="13"> 
+         By default this value is equal to <code>Yes</code>.</td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <p class="task"><code>ELF_Singularity_constraint_type</code></td>
+         <td valign="top">
+         <p class="task">This variable lets you set the constraint type you want 
+         to use to correct the detected local singularities.</p>
+         <p class="task">The possible values are:</p>
+         <ul>
+           <li>
+           <p class="task"><code>mpc</code> (multiple point constraint): in the 
+           singular direction, the displacements are interpolated from the 
+           displacements of the neighboring nodes that are not singular.</li>
+           <li>
+           <p class="task"><code>spc</code> (single point constraint): the 
+           detected singularities are fixed in the singular direction.</li>
+         </ul>
+         </td>
+         <td valign="top">
+         <p class="task">
+         <img border="0" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" title="Top" width="13" height="13"> 
+         By default this value is equal to <code>mpc</code>.</td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <p class="task"><code>ELF_TranslationPivotTol</code></td>
+         <td valign="top">
+         <p class="task">This variable lets you fix a tolerance value (ratio 
+         between the local translational stiffness matrix pivot and the global 
+         translational stiffness matrix trace) under which the detected 
+         direction is considered as singular.</td>
+         <td valign="top">
+         <p class="task">
+         <img border="0" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" title="Top" width="13" height="13"> 
+         By default this value is equal to <code>10<sup>-7</sup></code>.</td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <p class="task"><code>ELF_RotationPivotTol</code></td>
+         <td valign="top">
+         <p class="task">This variable lets you fix a tolerance value (ratio 
+         between the local rotational stiffness matrix pivot and the global 
+         rotational stiffness matrix trace) under which the detected direction 
+         is considered as singular.</td>
+         <td valign="top">
+         <p class="task">
+         <img border="0" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" title="Top" width="13" height="13"> 
+         By default this value is equal to <code>10<sup>-8</sup></code>.</td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <code>ELF_Shell_Normal_Tol</code></td>
+         <td valign="top">
+         <p class="task">This variable lets you control the value of the shell 
+			normal tolerance that 
+			is used in the shell element computation (from 0 to 45).</p>
+			<p class="task">See <a href="page7222.html#hj-shell">How are shell 
+			elements computed</a>.</td>
+         <td valign="top">
+         <img border="0" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" title="Top" width="13" height="13"> 
+         By default this value is equal to <code>20</code>.</td>
+       </tr>
+       <tr>
+         <td valign="top">
+         <p class="task"><code>ELF_TraceMatrixTol</code></td>
+         <td valign="top">
+         <p class="task">If the direction already satisfies the singularity 
+         condition in translation or in rotation, this variable lets you fix a 
+         tolerance value (ratio between full local stiffness matrix pivot and 
+         the full global stiffness matrix trace) under which the detected 
+         direction is considered as singular.</td>
+         <td valign="top">
+         <p class="task">
+         <img border="0" src="b35doc/english/online/icons_C2/common/sm_bullet.gif" title="Top" width="13" height="13"> 
+         By default this value is equal to <code>10<sup>-8</sup></code>.</td>
+       </tr>
+     </table>
+     <p class="task">&nbsp;</td>
+   </tr>
+   <tr>
+     <td><hr>
+     <p><a href="#hj-top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" title="Top" align="right" width="25" height="17"></a></p>
+     <h2><a name="hj-connection"></a>How does the singularity computation step 
+     work in the case of connection properties?</h2>
+     <p class="task">The singularity detection is done on the stiffness 
+     matrix.<p class="task">If local singularities are detected 
+     on nodes impacted by kinematics relations, the local singularities are 
+     re-analyzed on the modified stiffness matrix (that is to say the stiffness 
+     matrix impacted by the kinematics relations).<p class="task">
+     In this case, additional computation steps are necessary and then:<ul>
+       <li>new steps appear in the ELFINI Solver Log file</li>
+       <li>the performance may decrease.</li>
+       </ul>
+       </td>
+   </tr>
+   </table>
+
+ </body>
+
+</html>
+

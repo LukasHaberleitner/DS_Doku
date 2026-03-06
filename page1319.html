@@ -1,0 +1,605 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Customizing Print Driver Plug-Ins</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1><font color="#282187" face="Verdana">Customizing Print 
+ Driver Plug-Ins</font></h1>
+ <p align="center"><a name="ix-print driver setup:customizing"></a>&nbsp;</p>
+ <div align="center">
+   <center>
+   <table Border="0" CELLSPACING="0" valign="top" width="100%" height="285" style="border-collapse: collapse" cellpadding="0">
+     <tr valign="top" BORDER="0">
+       <td valign="top" height="167">
+       <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+       <td rowspan="1" valign="top" height="167">You can use print drivers other 
+       than those provided with Version 5. This task provides a step-by-step 
+       scenario describing how to plug-in your own print drivers in your Version 
+       5 environment without CAA context using CATPrtDrvPlugins.<p>A 
+       CATPrtDrvPlugin is made of one group of 10 functions and one shared data 
+       structure:</p>
+       <ul>
+         <li><b>Plug-in methods</b> are functions you implement in the plug-in. 
+         These functions will then be called by Version 5. Their names all begin 
+         with &quot;CATPDP_&quot;, for instance CATPDP_Begin.</li>
+         <li><b>Data structures</b> are plug-in-specific types defined for use 
+         in the plug-in API. Their names begin with &quot;CATPDP&quot;, for instance 
+         CATPDPParameters. All plug-in API structures and definitions are found 
+         in CATPDPluginAPI.h located in <code>$CATStartupPath&#092;startup&#092;PrintServices&#092;PrintDriverPlugIn</code>.<br>
+         <br>
+         Click the thumbnail below to find a description of the structure of 
+			CATPDPParameters:</li>
+       </ul>
+       </td>
+     </tr>
+     <tr valign="top" BORDER="0">
+       <td valign="top" height="121">&nbsp;</td>
+       <td valign="top" height="121">
+       <blockquote>
+         <p>
+         <img border="2" src="b35doc/english/online/basug_c2/images/print10_small.gif" title="Click to enlarge this image" width="100" height="98"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script></p>
+       </blockquote>
+       </td>
+     </tr>
+     <tr valign="top" BORDER="0">
+       <td valign="top" height="211">&nbsp;</td>
+       <td valign="top" height="211">A plug-in is a native code library whose 
+       source conforms to standard C syntax.<p>The plug-in file type depends on 
+       the platform you are working on:</p>
+       <ul>
+         <li>Windows: .DLL (Dynamic Link Library) files</li>
+         <li>UNIX: .SO or .DSO (Shared Objects) files.</li>
+       </ul>
+       <p>You can use the template file (CATPluginTemplate.cpp) located in <code>
+       $CATStartupPath&#092;startup&#092;PrintServices&#092;PrintDriverPlugIn
+       </code>and adapt it to your needs by implementing the plug-in methods 
+       provided by Version 5.</p>
+       <p>When the code has been written, you will have to compile and build the 
+       module then declare the resulting module to the Print Driver Manager 
+       File. The file CATPDPlugin.mak provided in <code>$CATStartupPath&#092;startup&#092;PrintServices&#092;PrintDriverPlugIn&#092;BUILD&#092;WINDOWS
+       </code>can help you build your library module.</p>
+       </td>
+     </tr>
+     <tr valign="top" BORDER="0">
+       <td valign="top" height="6074">
+       <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+       <td rowspan="1" valign="top" height="6074">
+       <ol class="task">
+         <li>
+         <p class="task">Access the file CATPluginTemplate.cpp located in:</p>
+         <div align="left">
+           <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+             <tr>
+               <td>
+               <p class="task"><code>$CATStartupPath&#092;startup&#092;PrintServices&#092;PrintDriverPlugIn</code></td>
+             </tr>
+           </table>
+         </div>
+         </li>
+         <li value="2">
+         <p class="task">Write the code corresponding to the interfaces to 
+         implement the plug-in methods that will be called by Version 5.</p>
+         <div align="left">
+           <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3" height="311">
+             <tr>
+               <td height="22">For information about the syntax and use of C or 
+               C++ language, refer to your language documentation.</td>
+             </tr>
+             <tr>
+               <td height="45">
+               <p class="task">The methods provided are listed in the table 
+               below. Click the desired method to access the corresponding 
+               description:<a name="hj-method summary"></a></td>
+             </tr>
+             <tr>
+               <td height="283">
+               <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" width="87%" id="AutoNumber1" height="104">
+                 <tr>
+                   <td width="29%" bgcolor="#C0C0C0" height="28"><b>
+                   <font size="2">Method Name</font></b></td>
+                   <td width="71%" bgcolor="#C0C0C0" height="28"><b>
+                   <font size="2">Description</font></b></td>
+                 </tr>
+                 <tr>
+                   <td width="29%" height="28" bgcolor="#E1E1E1"><font size="2">
+                   <a href="#hj-CATPDP_Begin">CATPDPP_Begin</a></font></td>
+                   <td width="71%" height="28" bgcolor="#E1E1E1"><font size="2">
+                   Driver initialization with parameters provided by user 
+                   interface</font></td>
+                 </tr>
+                 <tr>
+                   <td width="29%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   <a href="#hj-CATPDP_End">CATPDP_End</a></font></td>
+                   <td width="71%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   Indicates if the plug-in driver is about to be closed or 
+                   removed</font></td>
+                 </tr>
+                 <tr>
+                   <td width="29%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   <a href="#hj-CATPDP_DefineColor">CATPDP_DefineColor</a></font></td>
+                   <td width="71%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   Defines a RGB color in the palette</font></td>
+                 </tr>
+                 <tr>
+                   <td width="29%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   <a href="#hj-CATPDP_SelectDrawColor">CATPDP_SelectDrawColor</a></font></td>
+                   <td width="71%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   Selects the drawing color</font></td>
+                 </tr>
+                 <tr>
+                   <td width="29%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   <a href="#hj-CATPDP_SetDrawWidth">CATPDP_SetDrawWidth</a></font></td>
+                   <td width="71%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   Selects the drawing path</font></td>
+                 </tr>
+                 <tr>
+                   <td width="29%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   <a href="#hj-CATPDP_MoveTo">CATPDP_MoveTo</a></font></td>
+                   <td width="71%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   Moves the pen without drawing</font></td>
+                 </tr>
+                 <tr>
+                   <td width="29%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   <a href="#hj-CATPDP_LineTo">CATPDP_LineTo</a></font></td>
+                   <td width="71%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   Draws a line</font></td>
+                 </tr>
+                 <tr>
+                   <td width="29%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   <a href="#hj-CATPDP_SelectFillColor">CATPDP_SelectFillColor</a></font></td>
+                   <td width="71%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   Selects the filling color for polygon primitives</font></td>
+                 </tr>
+                 <tr>
+                   <td width="29%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   <a href="#hj-CATPDP_FillArea">CATPDP_FillArea</a></font></td>
+                   <td width="71%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   Fills a polygon</font></td>
+                 </tr>
+                 <tr>
+                   <td width="29%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   <a href="#hj-CATPDP_DrawBitmap">CATPDP_DrawBitmap</a></font></td>
+                   <td width="71%" height="24" bgcolor="#E1E1E1"><font size="2">
+                   Draws a bitmap</font></td>
+                 </tr>
+               </table>
+               </td>
+             </tr>
+             <tr>
+               <td height="45">
+               --------------------------------------------------------------------------------------------------------------------<p>
+               <b><font color="#000080"><a name="hj-CATPDP_Begin"></a>
+               <font size="2">CATPDP_Begin</font></font></b><font size="2"><br>
+               Provide global initialization for the plug-in driver. </font></p>
+               <p><font color="#000080"><b><font size="2">Syntax</font></b></font><font size="2"><br>
+               #include &lt; <b>CATPDPluginAPI.h</b> &gt; <br>
+               CATPDPError <b>CATPDP_Begin</b>(const CATPDPParameters&amp; iParam);
+               </font></p>
+               <p><font color="#000080"><b><font size="2">Parameters</font></b></font><font size="2"><br>
+               iParams&nbsp;&nbsp;&nbsp;&nbsp; Global structure data parameters.
+               <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+               Various user printing options</font></p>
+               <p><font color="#000080"><b><font size="2">Returns</font></b></font></p>
+               <ul>
+                 <li><font size="2">If successful, the function returns 
+                 CATPDP_NO_ERROR</font></li>
+                 <li><font size="2">If unsuccessful, the plug-in the function 
+                 returns an error code.</font></li>
+               </ul>
+               <p><font color="#000080"><b><font size="2">Description</font></b></font><font size="2"><br>
+               This is the first call used from the V5 Printer Manager to inform 
+               the driver plug-in the the printing is started. The Printer 
+               Manager fills the CATPDPParameters according to the user choices. 
+               This structure is then passed to the plug-in by calling the 
+               CATPDP_Begin function.</font></p>
+               <p><font size="2"><a href="#hj-method summary"><u>Back to Method 
+               summary</u></a></font></p>
+               <p>
+               --------------------------------------------------------------------------------------------------------------------</td>
+             </tr>
+             <tr>
+               <td height="45"><b><font color="#000080"><a name="hj-CATPDP_End">
+               </a><font size="2">CATPDP_End</font></font></b><font size="2"><br>
+               Provide global deinitialization for the plug-in driver. </font>
+               <p><b><font size="2" color="#000080">Syntax</font></b><font size="2"><br>
+               #include &lt; CATPDPluginAPI.h &gt;<br>
+               CATPDPError CATPDP_End(void); </font></p>
+               <p><b><font size="2" color="#000080">Parameters</font></b><font size="2"><br>
+               No parameters</font></p>
+               <p><b><font size="2" color="#000080">Returns</font></b></p>
+               <ul>
+                 <li><font size="2">If successful, the function returns 
+                 CATPDP_NO_ERROR</font></li>
+                 <li><font size="2">If unsuccessful, the plug-in the function 
+                 returns an error code.</font></li>
+               </ul>
+               <p><b><font size="2" color="#000080">Description</font></b><font size="2"><br>
+               The V5 Printer manager calls this function once the printing is 
+               done. Be sure to release allocations , instances or file I/O 
+               flushing in this function. After this call the plug-in driver is 
+               unloaded and the printing stopped.</font></p>
+               <p><font size="2"><a href="#hj-method summary"><u>Back to Method 
+               summary</u></a></font></p>
+               <p>
+               --------------------------------------------------------------------------------------------------------------------</td>
+             </tr>
+             <tr>
+               <td height="45"><b><font color="#000080">
+               <a name="hj-CATPDP_DefineColor"></a><font size="2">
+               CATPDP_DefineColor</font></font></b><font size="2"><br>
+               Defines a color in the palette.</font><p><b><font size="2" color="#000080">Syntax</font></b><font size="2"><br>
+               #include &lt; CATPDPluginAPI.h &gt;<br>
+               CATPDPError CATPDP_DefineColor(int iIndex , float iRed, float 
+               iGreen, float iBlue); </font></p>
+               <p><b><font size="2" color="#000080">Parameters</font></b><font size="2"><br>
+               iIndex&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Index in the color table 
+               (between 0 and 255)<br>
+               iRed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Red color in RGB 
+               coordinates (between 0 and 1)<br>
+               iGreen&nbsp;&nbsp;&nbsp;&nbsp; Green color in RGB coordinates 
+               (between 0 and 1)<br>
+               iRed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Blue color in RGB 
+               coordinates (between 0 and 1)</font></p>
+               <p><b><font size="2" color="#000080">Returns</font></b></p>
+               <ul>
+                 <li><font size="2">If successful, the function returns 
+                 CATPDP_NO_ERROR</font></li>
+                 <li><font size="2">If unsuccessful, the plug-in the function 
+                 returns an error code. </font></li>
+               </ul>
+               <p><b><font size="2" color="#000080">Description</font></b><font size="2"><br>
+               Defines a color in rgb coordinates. This index is used for 
+               function <a href="#hj-CATPDP_SelectDrawColor">
+               CATPDP_SelectDrawColor</a> or
+               <a href="#hj-CATPDP_SelectFillColor">CATPDP_SelectFillColor</a>.</font></p>
+               <p><font size="2"><a href="#hj-method summary"><u>Back to Method 
+               summary</u></a></font></p>
+               <p>
+               --------------------------------------------------------------------------------------------------------------------</td>
+             </tr>
+             <tr>
+               <td height="45"><b><font color="#000080">
+               <a name="hj-CATPDP_SelectDrawColor"></a><font size="2">
+               CATPDP_SelectDrawColor</font></font></b><font size="2"><br>
+               Selects the drawing color.</font><p><b><font size="2" color="#000080">Syntax</font></b><font size="2"><br>
+               #include &lt; CATPDPluginAPI.h &gt;<br>
+               CATPDPError CATPDP_SelectDrawColor(int index); </font></p>
+               <p><b><font size="2" color="#000080">Parameters</font></b><font size="2"><br>
+               iIndex&nbsp;&nbsp;&nbsp; Index of the current drawing color 
+               (between 0 and 255) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; used for next 
+               drawing primitive</font></p>
+               <p><b><font size="2" color="#000080">Returns</font></b></p>
+               <ul>
+                 <li><font size="2">If successful, the function returns 
+                 CATPDP_NO_ERROR</font></li>
+                 <li><font size="2">If unsuccessful, the plug-in the function 
+                 returns an error code.</font></li>
+               </ul>
+               <p><b><font size="2" color="#000080">Description</font></b><font size="2"><br>
+               Selects the current drawing color related to the index defined by 
+               the CATPDP_DefineColor.</font></p>
+               <p><font size="2"><a href="#hj-method summary"><u>Back to Method 
+               summary</u></a></font></p>
+               <p>
+               --------------------------------------------------------------------------------------------------------------------</td>
+             </tr>
+             <tr>
+               <td height="45"><b><font color="#000080">
+               <a name="hj-CATPDP_SetDrawWidth"></a><font size="2">
+               CATPDP_SetDrawWidth</font></font></b><font size="2"><br>
+               Selects the current draw width. </font>
+               <p><b><font size="2" color="#000080">Syntax</font></b><font size="2"><br>
+               #include &lt; CATPDPluginAPI.h &gt;<br>
+               CATPDPError CATPDP_ SetDrawWidth (float iWidth); </font></p>
+               <p><b><font size="2" color="#000080">Parameters</font></b><font size="2"><br>
+               IWith&nbsp;&nbsp;&nbsp; Thickness in mm of the current drawing 
+               with<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; used for next 
+               drawing primitives</font></p>
+               <p><b><font size="2" color="#000080">Returns</font></b></p>
+               <ul>
+                 <li><font size="2">If successful, the function returns 
+                 CATPDP_NO_ERROR</font></li>
+                 <li><font size="2">If unsuccessful, the plug-in the function 
+                 returns an error code.</font></li>
+               </ul>
+               <p><b><font size="2" color="#000080">Description</font></b><font size="2"><br>
+               Selects the current draw width. The width is in mm. </font></p>
+               <p><font size="2"><a href="#hj-method summary"><u>Back to Method 
+               summary</u></a></font></p>
+               <p>
+               --------------------------------------------------------------------------------------------------------------------</td>
+             </tr>
+             <tr>
+               <td height="45"><b><font color="#000080">
+               <a name="hj-CATPDP_MoveTo"></a><font size="2">CATPDP_MoveTo</font></font></b><font size="2"><br>
+               Moves the pen without drawing.</font><p><b><font size="2" color="#000080">Syntax</font></b><font size="2"><br>
+               #include &lt; CATPDPluginAPI.h &gt;<br>
+               CATPDPError CATPDP_MoveTo(float iX, float iY); </font></p>
+               <p><b><font size="2" color="#000080">Parameters</font></b><font size="2"><br>
+               iX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; X coordinate to move <br>
+               iY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Y coordinate to move</font></p>
+               <p><b><font size="2" color="#000080">Returns</font></b></p>
+               <ul>
+                 <li><font size="2">If successful, the function returns 
+                 CATPDP_NO_ERROR</font></li>
+                 <li><font size="2">If unsuccessful, the plug-in the function 
+                 returns an error code.</font></li>
+               </ul>
+               <p><b><font size="2" color="#000080">Description</font></b><font size="2"><br>
+               Moves the pen to (x, y) in device coordinates without drawing. 
+               Coordinates are in mm.</font></p>
+               <p><font size="2"><a href="#hj-method summary"><u>Back to Method 
+               summary</u></a></font></p>
+               <p>
+               --------------------------------------------------------------------------------------------------------------------</td>
+             </tr>
+             <tr>
+               <td height="45"><b><font color="#000080">
+               <a name="hj-CATPDP_LineTo"></a><font size="2">CATPDP_LineTo</font></font></b><font size="2"><br>
+               Draws a line. </font>
+               <p><b><font size="2" color="#000080">Syntax</font></b><font size="2"><br>
+               #include &lt; CATPDPluginAPI.h &gt;<br>
+               CATPDPError CATPDP_LineTo(float iX, float iY) </font></p>
+               <p><b><font size="2" color="#000080">Parameters</font></b><font size="2"><br>
+               iX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; X coordinate to draw<br>
+               iY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Y coordinate to draw</font></p>
+               <p><b><font size="2" color="#000080">Returns</font></b></p>
+               <ul>
+                 <li><font size="2">If successful, the function returns 
+                 CATPDP_NO_ERROR</font></li>
+                 <li><font size="2">If unsuccessful, the plug-in the function 
+                 returns an error code.</font></li>
+               </ul>
+               <p><b><font size="2" color="#000080">Description</font></b><font size="2"><br>
+               Draws a line from the current pen position to (x, y) in device 
+               coordinates with current draw color, line type and draw width.</font></p>
+               <p><font size="2"><a href="#hj-method summary"><u>Back to Method 
+               summary</u></a></font></p>
+               <p>
+               --------------------------------------------------------------------------------------------------------------------</td>
+             </tr>
+             <tr>
+               <td height="45"><b><font color="#000080">
+               <a name="hj-CATPDP_SelectFillColor"></a><font size="2">
+               CATPDP_SelectFillColor</font></font></b><font size="2"><br>
+               Selects the fill color.</font><p><b><font size="2" color="#000080">Syntax</font></b><font size="2"><br>
+               #include &lt; CATPDPluginAPI.h &gt;<br>
+               CATPDPError CATPDP_SelectFillColor (int iIndex ) </font></p>
+               <p><b><font size="2" color="#000080">Parameters</font></b><font size="2"><br>
+               iIndex&nbsp;&nbsp;&nbsp;&nbsp; Index of the current Fill color 
+               (between 0 and 255) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; used 
+               for next Fill primitive </font></p>
+               <p><b><font size="2" color="#000080">Returns</font></b></p>
+               <ul>
+                 <li><font size="2">If successful, the function returns 
+                 CATPDP_NO_ERROR</font></li>
+                 <li><font size="2">If unsuccessful, the plug-in the function 
+                 returns an error code.</font></li>
+               </ul>
+               <p><b><font size="2" color="#000080">Description</font></b><font size="2"><br>
+               Selects the current filling color related to the index defined by 
+               the CATPDP_DefineColor.</font></p>
+               <p><font size="2"><a href="#hj-method summary"><u>Back to Method 
+               summary</u></a></font></p>
+               <p>
+               --------------------------------------------------------------------------------------------------------------------</td>
+             </tr>
+             <tr>
+               <td height="45"><b><font color="#000080">
+               <a name="hj-CATPDP_FillArea"></a><font size="2">CATPDP_FillArea</font></font></b><font size="2"><br>
+               Fills a polypolygon. </font>
+               <p><b><font size="2" color="#000080">Syntax </font></b>
+               <font size="2"><br>
+               #include &lt; CATPDPluginAPI.h &gt;<br>
+               CATPDPError CATPDP_FillArea(int iOutlines, const int* iCorners, 
+               const float* iCoord) </font></p>
+               <p><b><font size="2" color="#000080">Parameters</font></b><font size="2"><br>
+               IOutlines&nbsp;&nbsp;&nbsp;&nbsp; number of polygons in the 
+               polypolygon.<br>
+               iCorners&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; array of outlines integers 
+               giving the number of corners in each polygon.<br>
+               iCoord&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; array of floats 
+               giving the coordinates of alls corners of each polygon</font></p>
+               <p><b><font size="2" color="#000080">Returns</font></b></p>
+               <ul>
+                 <li><font size="2">If successful, the function returns 
+                 CATPDP_NO_ERROR</font></li>
+                 <li><font size="2">If unsuccessful, the plug-in the function 
+                 returns an error code.</font></li>
+               </ul>
+               <p><b><font size="2" color="#000080">Description</font></b><font size="2"><br>
+               Fills a polypolygon in device coordinates with current fill 
+               color.</font></p>
+               <p><font size="2"><a href="#hj-method summary"><u>Back to Method 
+               summary</u></a></font></p>
+               <p>
+               --------------------------------------------------------------------------------------------------------------------</td>
+             </tr>
+             <tr>
+               <td height="45"><b><font color="#000080">
+               <a name="hj-CATPDP_DrawBitmap"></a><font size="2">
+               CATPDP_DrawBitmap</font></font></b><font size="2"><br>
+               Draws a bitmap. </font>
+               <p><b><font size="2" color="#000080">Syntax </font></b>
+               <font size="2"><br>
+               #include &lt; CATPDPluginAPI.h &gt;<br>
+               CATPDPError CATPDP_DrawBitmap(float iX, float iY, const int 
+               iTypeOfBitmap, const unsigned char* iPixels, const int iSize);
+               </font></p>
+               <p><b><font size="2" color="#000080">Parameters</font></b><font size="2"><br>
+               iX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+               X coordinate of the bitmaps to draw<br>
+               iY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+               Y coordinate of the bitmaps to draw<br>
+               iTypeOfBitmap&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+               color mode of bitmap: 0 = RGB , 1 = Black and White bitmap<br>
+               iPixels&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+               array of pixels<br>
+               iSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+               size in bytes of the pixel array</font></p>
+               <p><b><font size="2" color="#000080">Returns</font></b></p>
+               <ul>
+                 <li><font size="2">If successful, the function returns 
+                 CATPDP_NO_ERROR</font></li>
+                 <li><font size="2">If unsuccessful, the plug-in the function 
+                 returns an error code.</font></li>
+               </ul>
+               <p><b><font size="2" color="#000080">Description</font></b><font size="2"><br>
+               Draws a bitmap in device coordinates at the given (x, y) 
+               position. </font></p>
+               <p><font size="2"><a href="#hj-method summary"><u>Back to Method 
+               summary</u></a></font></p>
+               <p>
+               --------------------------------------------------------------------------------------------------------------------</td>
+             </tr>
+           </table>
+         </div>
+         </li>
+         <li value="3">
+         <p class="task">Compile and build the module.</p>
+         <div align="left">
+           <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4" width="711" height="38">
+             <tr>
+               <td width="6" bgcolor="#E0E0E0" height="35">
+               <p class="task">
+               <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+               <td width="698" bgcolor="#E0E0E0" height="35">You can use the 
+               file CATPDPlugin.mak provided in <code>$CATStartupPath&#092;startup&#092;PrintServices&#092;PrintDriverPlugIn&#092;BUILD&#092;WINDOWS</code>.</td>
+             </tr>
+           </table>
+         </div>
+         </li>
+         <li value="4">
+         <p class="task"><a name="ix-Printer Setup... command"></a>
+         <a name="ix-commands::Printer Setup..."></a>In your Version 5 session, 
+         select <kbd>File &gt; Printer Setup</kbd> to open the <kbd>Printers</kbd> 
+         dialog box:</p>
+         <div align="left">
+           <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5" height="319">
+             <tr>
+               <td height="316"><img border="0" src="b35doc/english/online/basug_c2/images/print08NLS.gif" width="525" height="309"></td>
+             </tr>
+           </table>
+         </div>
+         </li>
+         <li value="5">
+         <p class="task">Double-click <kbd>Add Printer</kbd>.</p>
+         <div align="left">
+           <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber6" height="335" width="1296">
+             <tr>
+               <td height="19">
+               <ul>
+                 <li>If you are working on Windows, an additional dialog box 
+                 named <kbd>Add Printer Wizard</kbd> opens:</li>
+               </ul>
+               </td>
+             </tr>
+             <tr>
+               <td height="172">
+               <img border="0" src="b35doc/english/online/basug_c2/images/print_unix02NLS.gif" width="255" height="164"></td>
+             </tr>
+             <tr>
+               <td height="23" width="100%">This dialog box enables you to choose between:<ul>
+                 <li><kbd>Windows Printer</kbd>: in that case, selecting this 
+                 option then <kbd>OK</kbd> opens the <kbd>Connect to Printer</kbd> dialog box in which you will 
+                 select the Windows printer you
+                 wish to add.</li>
+                 <li><kbd>3D PLM Printer</kbd>:&nbsp;this option lets you add 
+                 printers provided by Dassault Syst&#232;mes.
+                 When clicking <kbd>OK</kbd>, the <kbd>Printer Properties</kbd> 
+                 dialog box is displayed to let you define
+                 the parameters for your new printer.</li>
+               </ul>
+               <p>Click <kbd>OK</kbd> to access the <kbd>Printer Properties</kbd> 
+               dialog box.</td>
+             </tr>
+             <tr>
+               <td height="23">
+               <ul>
+                 <li>If you are working on UNIX, the <kbd>Printer Properties</kbd> 
+                 dialog box opens directly:</li>
+               </ul>
+               </td>
+             </tr>
+             <tr>
+               <td height="310">
+               <img border="0" src="b35doc/english/online/basug_c2/images/print_unix03NLS.gif" width="521" height="300"></td>
+             </tr>
+           </table>
+         </div>
+         </li>
+         <li value="6">
+         <p class="task">Select <kbd>V5 Print Plugin Driver</kbd> from the <kbd>
+         Driver</kbd> list.</li>
+         <li value="7">
+         <p class="task">Click <kbd>Advanced Configuration...</kbd> to access 
+         the following dialog box:</p>
+         <div align="left">
+           <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber7">
+             <tr>
+               <td><img border="0" src="b35doc/english/online/basug_c2/images/print09NLS.gif" width="401" height="108"></td>
+             </tr>
+           </table>
+         </div>
+         </li>
+         <li value="8">
+         <p class="task">In the <kbd>Plugin Driver selection</kbd> box, enter 
+         the path of the library module you built in step 3 or click <kbd>
+         Plugin...</kbd> which enables you to browse your file tree.</li>
+         <li value="9">
+         <p class="task"><a name="ix-commands::Print..."></a>
+         <a name="ix-Print... command"></a>Select <kbd>File &gt; Print</kbd> to 
+         open the <kbd>Print</kbd> dialog box:</p>
+         <div align="left">
+           <table border="0" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber8" height="382">
+             <tr>
+               <td height="379">
+               <img border="0" src="b35doc/english/online/basug_c2/images/PrintDialogBox_NLS.gif" width="592" height="372"></td>
+             </tr>
+           </table>
+         </div>
+         </li>
+         <li value="10">
+         <p class="task">Indicate the name of the new customized printer in the <kbd>
+         Printer Name</kbd> box.</li>
+         <li>
+         <p class="task">Modify the desired print settings (refer to
+         <a target="ds_doc2" href="page1450.html">Customizing Print Settings 
+         Before Printing Your Documents</a> for detailed information) then click
+         <kbd>OK</kbd> to confirm and print your document.</li>
+       </ol>
+       </td>
+     </tr>
+     <tr valign="top" BORDER="0">
+       <td valign="middle" height="1"></td>
+       <td valign="middle" height="1"></td>
+     </tr>
+     <tr valign="top" BORDER="0">
+       <td colspan="2" rowspan="1" valign="top" height="36">
+       <p align="center">
+       <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+     </tr>
+   </table>
+   </center>
+ </div>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,210 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Initializing a Conference on UNIX using the Backbone Driver</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  </head>
+
+ <body>
+
+ <a name="ix-initializing::conference on UNIX;conference::initializing on UNIX">
+ </a>
+ <h1 align="center">Initializing a Conference on UNIX using the Backbone Driver</h1>
+ <table Border="0" CELLSPACING="0" valign="top" style="border-collapse: collapse" cellpadding="0">
+   <tr>
+     <td valign="top" height="219" width="32">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" alt="atarget.gif (1372 bytes)" width="32" height="32"></td>
+     <td valign="top" height="219">This scenario describes how to initialize a 
+     conference on UNIX using the Backbone driver.5<p class="MsoNormal" style="mso-outline-level: 1">
+     Conferencing enables people who are geographically separated to dialog and 
+     work together as if they were virtually in the same room. Audio, video or 
+     chat tools enable the conference members to dialog while whiteboard or any 
+     other application sharing capabilities enable them to share documents or 
+     even applications. Usually, one member has a leading role, he is named the 
+     host or the primary member.</p>
+     <p>The conferencing functionality is available on both the Windows and UNIX 
+     platforms.</p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="107" width="33">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" height="107">Backbone is a Dassault Syst&#232;mes component 
+     which enables the creation of information channels between various 
+     applications running on various machines.
+     <p>Backbone must be implemented on each computer that will be used by 
+     eventual conference members and on a reference server.</p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="94" width="33">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top" height="94">Applications do not communicate directly but 
+     through local servers (CATSysDemon servers), which communicate among 
+     themselves via a Domain Manager (which is itself CATSysDemon server)<p>As 
+     Backbone Manager, you must define the Domain that will enable the&nbsp; 
+     CATSysDemon servers<b> </b>to communicate with one another.</p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="75" width="33"></td>
+     <td valign="top" height="75">
+     <ol class="task">
+       <li>
+       <p class="task">Select a machine which will be the Domain Manager 
+       (Backbone Manager), e.g. <kbd>node1</kbd>.</li>
+       <li>
+       <p class="task">Create a file containing the list of machines that will 
+       be allowed to connect to the Domain, e.g. <kbd>domain.lst</kbd> 
+       containing the following lines:</li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <p><kbd>node2<br>
+         node3<br>
+         node4<br>
+         node5</kbd></p>
+       </blockquote>
+     </blockquote>
+     <ol class="task" start="3">
+       <li>
+       <p class="task"><font face="Arial">Launch the CATSysDemon command with 
+       the above list of machines as parameter:</font></li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <p class="task"><kbd>CATSysDemon -dm domain.lst </kbd></p>
+       </blockquote>
+     </blockquote>
+     <ol class="task" start="4">
+       <li>
+       <p class="task">Export the Domain Manager host name:</li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <p><kbd>export CATBBDomainManager=node1</kbd></p>
+       </blockquote>
+     </blockquote>
+     <ol class="task" start="5">
+       <li>
+       <p class="task">All members of a conference must select the same 
+       conference driver, i.e. all members must select Backbone. To select the 
+       conference driver:</li>
+     </ol>
+     <blockquote>
+       <ul>
+         <li>In the menu bar, select <kbd>Tools-&gt;Options</kbd>.</li>
+         <li>Click&nbsp; the <kbd>General</kbd> category in the left-hand tree.</li>
+         <li>Click the <kbd>General</kbd> tab.</li>
+         <li>In the <kbd>Conferencing</kbd> area, check the <kbd>Backbone</kbd> 
+         option.</li>
+         <li>Click <kbd>OK</kbd> to confirm.</li>
+       </ul>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" width="33" height="1"></td>
+     <td valign="top" height="1"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="296" width="33"></td>
+     <td valign="top" height="296">
+     <h3><font color="#282187">On UNIX</font></h3>
+     <p><font color="#1C1557">On UNIX it is possible to modify the default 
+     communication ports. </font>The communication technology used for 
+     conferencing is socket-based. Your administrator must define the 
+     communication ports that will be used. <font color="#1C1557">On UNIX</font>, 
+     the default ports are 6666 and 6667.</p>
+     <p>If these default ports are not available, you can modify their values
+     <font color="#1C1557">i</font>n the file <kbd>/etc/services</kbd> by 
+     replacing 6666 and 6667 by the available ports in the following lines:</p>
+     <blockquote>
+       <blockquote>
+         <p><kbd>catiav5bb 55555/tcp<br>
+         catiav5run 55556/tcp</kbd></p>
+       </blockquote>
+     </blockquote>
+     <p><font color="#1C1557">On UNIX it is possible to automatically launch the 
+     CATSysDemon server by adding the following line in the file&nbsp; </font>
+     <kbd>/etc/inetd.conf</kbd><font color="#1C1557">:</font></p>
+     <blockquote>
+       <p><kbd>catiav5run stream tcp nowait nobody runCATSysDemon CATSysDemon</kbd></p>
+     </blockquote>
+     <p>where <kbd>runCATSysDemon</kbd> is a shell which will launch CATSysDemon 
+     as a Domain Manager, for which you also have the following options:</p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="1" width="33"></td>
+     <td valign="top" height="1">
+     <h3><font color="#282187">CATSysDemon server options</font></h3>
+     <p>The <b>-opendm</b> option can also be added to enable ANY other machine 
+     to be connected.&nbsp;</p>
+     <blockquote>
+       <p>Ex: <kbd>CATSysDemon -opendm -dm domain.lst</kbd></p>
+     </blockquote>
+     <p>You can use <b>-dmhost &lt;hostname&gt;</b> option&nbsp; instead, if the 
+     CATBBDomainManager<b> </b>environment variable is not set.</p>
+     <blockquote>
+       <p>&nbsp;Ex: <kbd>CATSysDemon -dmhost nodehost</kbd></p>
+     </blockquote>
+     <p>The &quot;-h&quot; option gives you a list of the available options.&nbsp;For instance:</p>
+     <p><b>-DebugL&lt;n&gt;</b>, with n=1,2,3,4,10 provides information to follow 
+     communications between CATSysDemon servers. (Use it only if you encounter 
+     difficulties.)</p>
+     <p><b>-timeout &lt;time in seconds&gt; </b>enables to leave the server running 
+     more than the default 300s when no client application is connected.</p>
+     <blockquote>
+       <p>Ex: <kbd>CATSysDemon -DebugL4 -timeout 3000</kbd></p>
+       <p><br>
+       </p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="338" width="33"></td>
+     <td valign="top" height="338">
+     <h3><font color="#282187">The Meta-Domain, How domains are linked together</font></h3>
+     <p>A Domain Lister must be launched to enable a machine from domain A to 
+     communicate with a machine from domain B.</p>
+     <p>The domain Lister aims at providing a list of the domain managers. This 
+     consists in creating a meta-domain where the Domain Lister is Domain 
+     Manager, and where the Domain Managers are clients.</p>
+     <ul>
+       <li>On the lister machine (let's call it node1), the CATSysDemon server 
+       must be launched using the <b>&quot;-dl &lt;filepath&gt;&quot;</b> option,<b> &lt;filepath&gt;</b> 
+       being a file containing the list of every (other) machine belonging to 
+       the meta-domain&nbsp;</li>
+     </ul>
+     <blockquote>
+       <p>&nbsp; Ex: <kbd>CATSysDemon -dl domains.lst</kbd></p>
+     </blockquote>
+     <ul>
+       <li>Before running the other servers in the meta-domain, the Domain 
+       Lister host name must be specified via the <kbd>CATBBDomainLister</kbd> 
+       variable:</li>
+     </ul>
+     <blockquote>
+       <p>Ex: <kbd>export CATBBDomainLister=nodelist</kbd></p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2" height="35" width="847">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" alt="aendtask.gif (1477 bytes)" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+
+
+

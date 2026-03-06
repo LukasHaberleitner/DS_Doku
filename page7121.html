@@ -1,0 +1,251 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating Smooth Connection Properties</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Creating Smooth Connection Properties<a name="ix-commands::Smooth Connection Property;connection properties:smooth"></a></h1>
+ <table Border="0" CELLSPACING="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr>
+     <td align="center" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32">
+     </td>
+     <td rowspan="1">
+     <p class="task"><a name="CATGPSCommandHeader.CATGPSSmoothConnectionHdr">
+     </a>This task shows how to create a Smooth Connection between two parts.
+     </td>
+   </tr>
+   <tr>
+     <td align="center" valign="top">
+     <img border="0" src="b35doc/english/online/estug_c2/images/icon_GAS.gif" width="32" height="32"></td>
+     <td align="left">
+     <p class="task">Only available with the <b>Generative Assembly Structural 
+     Analysis (GAS)</b> product.</td>
+   </tr>
+   <tr>
+     <td align="center" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+     <td>
+     <p class="task">A Smooth Connection is the link between two bodies which 
+     are fastened together at their common boundary, and will behave 
+     approximately as if their interface was soft. Since bodies can be meshed 
+     independently, the Smooth Connection is designed to handle incompatible 
+     meshes.&nbsp;</p>
+     <p class="task">The Smooth Connection relations take approximately into 
+     account the elastic deformability of the interfaces. The approximation is 
+     based on a least squares fit of a secondary node degree of freedom rigidly 
+     linked to the main nodes (element shape functions are ignored).</p>
+     <p class="task">The program proceeds as follows:</p>
+     <ul>
+       <li>
+       <p class="task">a null-length rigid bar is created at the midpoint 
+       between the centroids of the two systems of points represented by the 
+       nodes of the two meshes (or at handler point, if specified).</p>
+       <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber5">
+         <tr>
+           <td>
+           <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+           <td>
+           <p class="task">In case of a <kbd>Point/Point</kbd> connection, the 
+           length of the rigid bar is non null.</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">each extremity of the null-length rigid bar is connected 
+       by two smooth spider elements to all nodes of the first and of the second 
+       meshes.</li>
+       <li>
+       <p class="task">a set of mean (constr-n) relations is generated between 
+       the central node degree of freedom and the connected nodes degree of 
+       freedom. </li>
+     </ul>
+     <p class="task">Thus, the Smooth Connection generates two spider 
+     kinematical elements.</p>
+     <p class="task">
+     <img border="0" src="b35doc/english/online/estug_c2/images/smoothspiderNLS.gif" width="165" height="108"></p>
+     <p class="task">To know more about the generated element, refer to
+     <a href="page7591.html" target="ds_doc2">
+     Smooth Spider</a> in the <i>Finite Element Reference Guide</i>.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td align="center">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td rowspan="1">
+     <p class="task">Open the <a href="b35doc/english/online/estug_c2/samples/sample16.CATAnalysis">
+     sample16.CATAnalysis</a> document from the samples directory.</p>
+     <ul>
+       <li>
+       <p class="task">Make sure you created a Finite Element Model containing a 
+       Static Analysis Case from this assembly.</li>
+       <li>
+       <p class="task">Make sure you know all you need about
+       <a href="page7130.html#hj-PropertyType">what type of property you will 
+       use for what type of connection</a>.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol class="task">
+       <li>
+       <p class="task">Click <kbd>Smooth Connection Property</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_SmoothConnectionP2.gif" width="24" height="24"> 
+       in the <kbd>Connection Properties</kbd> toolbar.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+         <tr>
+           <td>
+           <p class="task">The Smooth Connection Property dialog box appears.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/dbsmoothprop01NLS.gif" width="232" height="139"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Select an analysis connection.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+         <tr>
+           <td>
+           <p class="task">In this particular example, select the <kbd>General 
+           Analysis Connection.1</kbd> in the specification tree (under the <kbd>
+           Analysis Connection Manager.1</kbd> set).</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/stgeneralconnect02NLS.gif" width="227" height="80"></p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/dbsmoothprop02NLS.gif" width="232" height="139"></p>
+           <p class="task">A symbol representing the Smooth Connection Property 
+           is visualized on the corresponding faces.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/SmoothConnection01.gif" width="381" height="161"></p>
+           <p class="task">By default, if you deactivate the <kbd>Transmitted 
+           degrees of freedom</kbd> option, all the degrees of freedom are 
+           transmitted.</p>
+           <p class="task">You can also release some degree of freedom to the 
+           distant connection, if needed.<br>
+           The degrees of freedom are released at the null-length element.</p>
+           <p class="task"><kbd>Translation 1</kbd> = Translation in <kbd>x</kbd><br>
+           <kbd>Translation 2</kbd> = Translation in <kbd>y</kbd><br>
+           <kbd>Translation 3</kbd> = Translation in <kbd>z</kbd></p>
+           <p class="task"><kbd>Rotation 1</kbd> = Rotation in <code><kbd>x</kbd></code><br>
+           <kbd>Rotation 2</kbd> = Rotation in <kbd>y</kbd><br>
+           <kbd>Rotation 3</kbd> = Rotation in <kbd>z</kbd> </p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/dbsmoothprop03NLS.gif" width="228" height="367"></p>
+           <p class="task">The Axis System Type combo box allows you to choose 
+           between <kbd>Global</kbd> or <kbd>User-defined</kbd> Axis systems for 
+           defining the degrees of freedom directions. </p>
+           <ul>
+             <li>
+             <p class="task"><kbd>Global</kbd>: if you select the Global Axis 
+             system, the degree of freedom directions will be interpreted as 
+             relative to the fixed global rectangular coordinate system.</li>
+             <li>
+             <p class="task"><kbd>User</kbd>:&nbsp; if you select a User Axis 
+             system, the degree of freedom directions will be relative to the 
+             specified Axis system. Their interpretation will further depend on 
+             your Axis System Type choice.</p>
+             <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3">
+               <tr>
+                 <td align="center" valign="top">
+                 <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" hspace="3" width="32" height="32"></td>
+                 <td>
+                 <p class="task">The degrees of freedom are released only for 
+                 the null-length element, so the <kbd>User Axis System</kbd> is 
+                 defined only for the null-length element.</td>
+               </tr>
+               <tr>
+                 <td colspan="2">
+                 <p class="task">To select a User-defined Axis system, you must 
+                 activate an existing Axis by clicking it in the features tree. 
+                 Its name will then be automatically displayed in the <kbd>
+                 Current Axis</kbd> field.&nbsp;</p>
+                 <p class="task">If you select the User-defined Axis system, the 
+                 Local orientation list further allows you to choose between
+                 <kbd>Cartesian</kbd> and <kbd>Cylindrical</kbd> Local Axis 
+                 Orientations. </p>
+                 <ul>
+                   <li>
+                   <p class="task"><kbd>Cartesian</kbd>: the degrees of freedom 
+                   directions are relative to a fixed rectangular coordinate 
+                   system aligned with the cartesian coordinate directions of 
+                   the User-defined Axis.</li>
+                   <li>
+                   <p class="task"><kbd>Cylindrical</kbd>: the degrees of 
+                   freedom directions are relative to a local variable 
+                   rectangular&nbsp; coordinate system aligned with the 
+                   cylindrical coordinate directions of each point relative to 
+                   the User-defined Axis.</li>
+                 </ul>
+                 </td>
+               </tr>
+             </table>
+             </li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">If needed, set the Axis system.</li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd> in the Smooth Connection Property 
+       dialog box.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4">
+         <tr>
+           <td>
+           <p class="task">Note that two elements appear in the specification 
+           tree: </p>
+           <ul>
+             <li>
+             <p class="task">A <kbd>Smooth Connection Mesh.1</kbd> connection 
+             mesh part under the <kbd>Nodes and Elements</kbd> set</li>
+             <li>
+             <p class="task">A <kbd>Smooth Connection Property.1</kbd> 
+             connection property under the <kbd>Properties.1</kbd> set.</li>
+           </ul>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/stsmoothpropNLS.gif" width="257" height="182"></td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td>
+     <ul>
+       <li>
+       <p class="task">The Finite Element Model contains two Mesh objects, one 
+       for each part of the assembly.</li>
+       <li>
+       <p class="task">The sizes of the two meshes are different as can be seen 
+       by comparing the Mesh Size symbols.&nbsp;</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,422 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>About Assembly Constraints</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+	<style>
+<!--
+div.Section1
+	{page:Section1;}
+ p.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+-->
+</style>
+</head>
+
+ <body>
+
+ <h1>About Assembly Constraints<a name="ix-constraints::about"></a>&nbsp;</h1>
+ <table border="0" cellpadding="5" cellspacing="0" width="100%" style="border-collapse: collapse" height="5157">
+   <tr>
+     <td width="33" valign="top" align="left" height="166">
+     <img border="0" src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+     <td valign="top" align="left" height="166">This reference describes what 
+     you should know to create assembly constraints:<ul>
+       <li><a href="#hj-Rules">Rules</a></li>
+       <li><a href="#hj-Symbols">Symbols</a></li>
+       <li><a href="#hj-Tip">Tip</a></li>
+       <li><a href="#hj-Geometry">Geometry</a></li>
+       <li><a href="#hj-Customizing Constraints">Customizing Constraints</a></li>
+       <li><a href="#hj-Selection">Selection</a></li>
+       <li><a href="#hj-V4 Interoperability">V4 Interoperability</a><br>
+&nbsp;</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="41">&nbsp;</td>
+     <td valign="top" align="left" height="41">
+     <h2>Rules<a name="hj-Rules"></a></h2>
+     </td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="1911">
+     <img border="0" src="b35doc/english/online/icons_C2/common/abasic.gif" width="32" height="32"></td>
+     <td valign="top" align="left" height="1911">Setting constraints is rather 
+     an easy task. However, you should keep in mind the following::<ul>
+       <li>You can apply constraints only between the child components of the 
+       active component.<br>
+       Do not mistake the active component for the selected component:<ul>
+         <li>The active component is blue framed (default color) and underlined. 
+         It is activated by double-clicking<b>.<br>
+         </b><img border="0" src="b35doc/english/online/cfyugasm_c2/images/st001NLS.gif" hspace="0" width="272" height="173"></li>
+         <li>The selected component is orange framed (default color). It is 
+         selected by clicking.<br>
+         <img border="0" src="b35doc/english/online/cfyugasm_c2/images/st002NLS.gif" hspace="0" width="262" height="164"></li>
+       </ul>
+       </li>
+       <li>You cannot define constraints between two geometrical elements 
+       belonging to the same component.</li>
+       <li>You cannot apply a constraint between two components belonging to the 
+       same subassembly if this subassembly is not the active component.</li>
+       <li>If you modified any geometrical elements of a constraint, take care 
+       if it already exists to solve the constraint, example, the axis of the 
+       spot facing in a counterbored hole disappears when the hole type is 
+       changed.<ul>
+         <li>There are two offset constraints:<ul>
+           <li>Offset.1 between the Part2 and the axis of the hole (sky blue) in 
+           Part1.</li>
+           <li>Offset.2 between the Part2 and the axis of the spot facing of the 
+           hole (orange) in Part1.<br>
+           <img border="1" src="b35doc/english/online/cfyugasm_c2/images/st007NLS.gif" hspace="0" vspace="5" width="172" height="57"><br>
+           <img border="1" src="b35doc/english/online/cfyugasm_c2/images/gw014.gif" hspace="0" width="450" height="300"></li>
+         </ul>
+         </li>
+         <li>When changing the hole type from Counterbored to Simple, the spot 
+         facing is deleted as its axis.<ul>
+           <li>The Offset.2 constraint is disconnected:<br>
+           <img border="1" src="b35doc/english/online/cfyugasm_c2/images/st008NLS.gif" hspace="0" vspace="5" width="172" height="58"><br>
+           <img border="1" src="b35doc/english/online/cfyugasm_c2/images/gw015.gif" hspace="0" width="450" height="300"></li>
+         </ul>
+         </li>
+       </ul>
+       </li>
+       <li>The following example illustrates what you are allowed to do:<br>
+       <img border="1" src="b35doc/english/online/cfyugasm_c2/images/st003NLS.gif" vspace="5" width="496" height="322"><ul>
+         <li><font color="#FF0000"><b>(1) </b></font>The constraint cannot be 
+         applied because <kbd>Product K</kbd> does not belong to the active 
+         component <kbd>Product B</kbd>. To define this constraint, <kbd>Product 
+         A</kbd> must be made active.</li>
+         <li><font color="#FF0000"><b>(2) </b></font>The constraint cannot be 
+         applied because <kbd>Product E</kbd> and <kbd>Product F</kbd> both 
+         belong to a component other than the active component <kbd>Product B</kbd>. 
+         To define this constraint, <kbd>Product D</kbd> must be made active.</li>
+         <li><font color="#008000"><b>(3) </b></font>The constraint can be 
+         applied since <kbd>Product C</kbd> belongs to the active component <kbd>
+         Product B</kbd> and also <kbd>Product E</kbd> is contained within <kbd>
+         Product D</kbd> which is contained within the active component <kbd>
+         Product B</kbd>.</li>
+       </ul>
+       </li>
+       <li>When you set a constraint, there are no rules to define the fixed and 
+       the movable component during the selection. If you want to fix a 
+       component, use the <kbd>Fix</kbd> command. See
+       <a href="page3338.html">Fixing a Component</a>.</li>
+		<li>
+		<div class="Section1">
+			While creating a constraint on a flexible assembly, if you create a 
+			formula for the constraint, it will be created in 
+			the part reference. In this case, the formula even if seen in the 
+			CATProduct, will not govern the constraints in the flexible 
+			assembly. However, it will govern the constraint in the reference 
+			CATPart (Original CATPart). The name of constraint in formula 
+			definition will be the name of constraint as seen in the referenced 
+			CATPart.<br>
+			A formula created on an existing constraint of flexible assembly, 
+			will govern the constraint in the CATProduct. In this case, the 
+			formula even if seen in the CATPart, will not govern the constraint 
+			in the reference CATPart. The name of constraint in formula 
+			definition will be the name of constraint as seen in the CATProduct 
+			reference.<br>
+			<img border="0" src="b35doc/english/online/cfyugasm_c2/images/assemblyconstraints01NLS.gif" width="590" height="296"><p>
+			<img border="0" src="b35doc/english/online/cfyugasm_c2/images/assemblyconstraints02NLS.gif" width="569" height="274"><br>
+			The constraints which are made on rigid assemblies are created in 
+			both CATPart and CATProduct which means that they can be governed by 
+			a formula created in CATPart or CATProduct.</div>
+		</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="41">&nbsp;</td>
+     <td valign="top" align="left" height="41">
+     <h2>Symbols<a name="hj-Symbols"></a></h2>
+     </td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="22">&nbsp;</td>
+     <td valign="top" align="left" height="22">The following table lists the 
+     symbols used to represent the constraints you can set between your 
+     components:<a name="ix-constraints::symbols"></a></td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="785">&nbsp;</td>
+     <td valign="top" align="left" height="785">
+     <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#C0C0C0" width="80%" id="AutoNumber1" height="787">
+       <tr>
+         <td bgcolor="#E0E0E0" align="center" height="34"><b>Constraints</b></td>
+         <td bgcolor="#E0E0E0" align="center" height="34"><b>Symbol used in the 
+         geometry area</b></td>
+         <td bgcolor="#E0E0E0" align="center" height="34"><b>Symbol displayed in 
+         the specification tree<a name="ix-specification tree"></a></b></td>
+       </tr>
+       <tr>
+         <td align="center" height="52">Coincidence</td>
+         <td valign="middle" align="center" height="52">
+         <table border="1" width="100" cellpadding="10" id="table1">
+			<tr>
+				<td>
+				&nbsp;</td>
+				<td>
+				<img border="0" src="b35doc/english/online/icons_C2/images/S_ConstraintCoincidence_OK.gif" width="11" height="11"></td>
+			</tr>
+			<tr>
+				<td>
+				<img border="0" src="b35doc/english/online/icons_C2/images/S_ConstraintCoincidence_OK.gif" width="11" height="11"></td>
+				<td>&nbsp;</td>
+			</tr>
+			</table>
+			</td>
+         <td valign="middle" align="center" height="52">
+         <img src="b35doc/english/online/cfyugasm_c2/images/I_StCoincidence.gif" width="24" height="24"></td>
+       </tr>
+       <tr>
+         <td align="center" height="46">Contact<br>
+         (point)</td>
+         <td valign="middle" align="center" height="46">
+         <table border="1" width="100" cellpadding="10" id="table6">
+			<tr>
+				<td>
+				&nbsp;</td>
+				<td>
+				<img border="0" src="b35doc/english/online/icons_C2/images/S_ConstraintPointContact_OK.gif" width="11" height="11"></td>
+			</tr>
+			<tr>
+				<td>
+				<img border="0" src="b35doc/english/online/icons_C2/images/S_ConstraintPointContact_OK.gif" width="11" height="11"></td>
+				<td>&nbsp;</td>
+			</tr>
+			</table>
+			</td>
+         <td valign="middle" align="center" height="46">
+         <img src="b35doc/english/online/cfyugasm_c2/images/I_StPunctualContact.gif" width="24" height="24"></td>
+       </tr>
+		<tr>
+         <td align="center" height="46">Contact<br>
+         (line)</td>
+         <td valign="middle" align="center" height="46">
+         <table border="1" width="100" cellpadding="10" id="table7">
+			<tr>
+				<td>
+				&nbsp;</td>
+				<td>
+				<img border="0" src="b35doc/english/online/icons_C2/images/S_ConstraintLineContact_OK.gif" width="11" height="11"></td>
+			</tr>
+			<tr>
+				<td>
+				<img border="0" src="b35doc/english/online/icons_C2/images/S_ConstraintLineContact_OK.gif" width="11" height="11"></td>
+				<td>&nbsp;</td>
+			</tr>
+			</table>
+			</td>
+         <td valign="middle" align="center" height="46">
+         <img src="b35doc/english/online/cfyugasm_c2/images/I_StLineicContact.gif" width="24" height="24"></td>
+       </tr>
+		<tr>
+         <td align="center" height="24">Contact(annular)</td>
+         <td valign="middle" align="center" height="24">
+         <table border="1" width="100" cellpadding="10" id="table8">
+			<tr>
+				<td>
+				&nbsp;</td>
+				<td>
+				<img border="0" src="b35doc/english/online/icons_C2/images/S_ConstraintAnnularContact_OK.gif" width="11" height="11"></td>
+			</tr>
+			<tr>
+				<td>
+				<img border="0" src="b35doc/english/online/icons_C2/images/S_ConstraintAnnularContact_OK.gif" width="11" height="11"></td>
+				<td>&nbsp;</td>
+			</tr>
+			</table>
+			</td>
+         <td valign="middle" align="center" height="24">
+         <img border="0" src="b35doc/english/online/cfyugasm_c2/images/I_StLineicContact.gif" width="24" height="24"></td>
+       </tr>
+       <tr>
+         <td align="center" height="46">Contact(surface)</td>
+         <td valign="middle" align="center" height="46">
+         <table border="1" width="100" cellpadding="10" id="table4">
+			<tr>
+				<td>
+				&nbsp;</td>
+				<td>
+				<img border="0" src="b35doc/english/online/icons_C2/images/S_ConstraintSurfaceContact_OK.gif" width="11" height="11"></td>
+			</tr>
+			<tr>
+				<td>
+				<img border="0" src="b35doc/english/online/icons_C2/images/S_ConstraintSurfaceContact_OK.gif" width="11" height="11"></td>
+				<td>&nbsp;</td>
+			</tr>
+			</table>
+			</td>
+         <td valign="middle" align="center" height="46">
+         <img src="b35doc/english/online/cfyugasm_c2/images/I_StContact.gif" width="24" height="24"></td>
+       </tr>
+       <tr>
+         <td align="center" height="106">Offset</td>
+         <td valign="middle" align="center" height="106">
+         <img src="b35doc/english/online/cfyugasm_c2/images/gw003.gif" width="62" height="106"></td>
+         <td valign="middle" align="center" height="106">
+         <img src="b35doc/english/online/cfyugasm_c2/images/I_StOffset.gif" width="24" height="24"></td>
+       </tr>
+       <tr>
+         <td align="center" height="129">Angle<br>
+         Planar Angle</td>
+         <td valign="middle" align="center" height="129">
+         <img src="b35doc/english/online/cfyugasm_c2/images/gw004.gif" width="115" height="129"></td>
+         <td valign="middle" align="center" height="129">
+         <img src="b35doc/english/online/cfyugasm_c2/images/I_StAngle.gif" width="24" height="24"></td>
+       </tr>
+       <tr>
+         <td align="center" height="88">Parallelism</td>
+         <td valign="middle" align="center" height="88">
+         <img src="b35doc/english/online/cfyugasm_c2/images/gw005.gif" width="101" height="88"></td>
+         <td valign="middle" align="center" height="88">
+         <img src="b35doc/english/online/cfyugasm_c2/images/I_StParallelism.gif" width="24" height="24"></td>
+       </tr>
+       <tr>
+         <td align="center" height="107">Perpendicularity</td>
+         <td valign="middle" align="center" height="107">
+         <img src="b35doc/english/online/cfyugasm_c2/images/gw006.gif" width="95" height="105"></td>
+         <td valign="middle" align="center" height="107">
+         <img src="b35doc/english/online/cfyugasm_c2/images/I_StPerpendicularity.gif" width="24" height="24"></td>
+       </tr>
+       <tr>
+         <td align="center" height="24">Fix</td>
+         <td valign="middle" align="center" height="24">
+         <img src="b35doc/english/online/cfyugasm_c2/images/gw007.gif" width="20" height="21"></td>
+         <td valign="middle" align="center" height="24">
+         <img src="b35doc/english/online/cfyugasm_c2/images/I_StFixed.gif" width="24" height="24"></td>
+       </tr>
+       </table>
+     </td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="22">&nbsp;</td>
+     <td valign="top" align="left" height="22">Note also that deactivated 
+     constraints are preceded by the symbol <big><big><font color="#DB5166">
+     <strong>( )</strong></font></big></big> in the specification tree.</td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="41">&nbsp;</td>
+     <td valign="top" align="left" height="41">
+     <h2><font color="#282187">Tip<a name="hj-Tip"></a></font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="22">&nbsp;</td>
+     <td valign="top" align="left" height="22">The name<a name="ix-constraints:name"></a> 
+     of a constraint displays when passing the mouse over that constraint. </td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="228">&nbsp;</td>
+     <td valign="top" align="left" height="228">
+     <img border="0" src="b35doc/english/online/cfyugasm_c2/images/gw008NLS.gif" hspace="40" width="238" height="228"></td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="41">&nbsp;</td>
+     <td valign="top" align="left" height="41">
+     <h2>Geometry<a name="hj-Geometry"></a></h2>
+     </td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="48">&nbsp;</td>
+     <td valign="top" align="left" height="48">To set constraints it is possible 
+     to select the geometry (plane, line or point) resulting from intersections, 
+     projections or offsets from the specification tree. For more about these 
+     operations, please refer to <i>Generative Shape Design User's Guide</i>.</td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="41">&nbsp;</td>
+     <td valign="top" align="left" height="41">
+     <h2>Customizing Constraints<a name="hj-Customizing Constraints"></a></h2>
+     </td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="34">&nbsp;</td>
+     <td valign="top" align="left" height="34">The application lets you 
+     customize<a name="ix-constraints:customizing"></a> the creation and the 
+     display of constraints. For more information, please refer to <kbd>
+     Customizing Assembly Constraint</kbd> and <kbd>Customizing Constraint 
+     Appearance</kbd>.</td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="41">&nbsp;</td>
+     <td valign="top" align="left" height="41">
+     <h2>Selection<a name="hj-Selection"></a></h2>
+     </td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="32">&nbsp;</td>
+     <td valign="top" align="left" height="32">To facilitate alternative 
+     selections when the geometry to be constrained is not directly accessible, 
+     the <kbd>Other Selection...</kbd> contextual command allows to you select 
+     the desired geometry.</td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="22">&nbsp;</td>
+     <td valign="top" align="left" height="22">In a cone example, its face is 
+     selected when you select the <kbd>Other Selection...</kbd> contextual 
+     command.</td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="302">&nbsp;</td>
+     <td valign="top" align="left" height="302">
+     <img border="1" src="b35doc/english/online/cfyugasm_c2/images/gw009.gif" hspace="0" width="450" height="300"></td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="22">&nbsp;</td>
+     <td valign="top" align="left" height="22">The <kbd>Other Selections</kbd> 
+     dialog box appears, the <kbd>Face</kbd> geometry element is selected.</td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="313">&nbsp;</td>
+     <td valign="top" align="left" height="313">
+     <img border="0" src="b35doc/english/online/cfyugasm_c2/images/db001NLS.gif" hspace="0" width="224" height="313"></td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="32">&nbsp;</td>
+     <td valign="top" align="left" height="32">In the the dialog box you can 
+     directly select the <kbd>Extremity</kbd> or the <kbd>Axis</kbd> geometry 
+     elements of the cone and show this selection in the geometry window as in 
+     the following images:</td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="302">&nbsp;</td>
+     <td valign="top" align="left" height="302">
+     <img border="1" src="b35doc/english/online/cfyugasm_c2/images/gw010.gif" hspace="0" width="450" height="300"></td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="302">&nbsp;</td>
+     <td valign="top" align="left" height="302">
+     <img border="1" src="b35doc/english/online/cfyugasm_c2/images/gw011.gif" hspace="0" width="450" height="300"></td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="42">&nbsp;</td>
+     <td valign="top" align="left" height="42">
+     <h2>V4 Interoperability<a name="hj-V4 Interoperability"></a></h2>
+     </td>
+   </tr>
+   <tr>
+     <td width="33" valign="top" align="left" height="22">&nbsp;</td>
+     <td valign="top" align="left" height="22">You can set a constraint on a 
+     SOLIDE (solid exact) CATIA V4 feature, but you cannot set set a constraint 
+     on a SOLIDM (solid mockup) CATIA V4.</td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

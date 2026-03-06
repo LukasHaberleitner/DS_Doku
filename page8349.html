@@ -1,0 +1,244 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating an Population File</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+  <base target="_self">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none">
+ </head>
+
+ <body bgcolor="#FFFFFF" text="#000000" link="#0000FF" vlink="#0080FF" alink="#990000">
+
+ <h1 align="center">
+ <a name="ix-anthropometric::variables in formulas, using;formulas, using anthropometric variables in">
+ Creating an Population File</a></h1>
+ <div align="left">
+   <table border="0" width="100%" cellspacing="3" cellpadding="3">
+     <tr>
+       <td valign="top">
+       <img src="b35doc/english/online/icons_C2/common/atarget.gif" alt="ascenari.gif (1364 bytes)" width="32" height="32"></td>
+       <td valign="top">This page briefly explains the format that must be 
+       followed when creating a new population file to use with the <kbd>Human 
+       Measurements Editor</kbd> product. Any file extension will do, but the 
+       extension <b><kbd>.sws</kbd></b><kbd> </kbd>(for <b><kbd>S</kbd></b>afe<b><kbd>w</kbd></b>ork <b>
+		<kbd>S</kbd></b>tatistic) is 
+       usually reserved for these types of files. Once the file is created, it 
+       possible to load it into V5 using the steps described in Basic Task
+       <a href="page8364.html">User-defined Population Databases</a>.
+       <p>A population file is organized into sections of data; each section 
+       must begin with a keyword and end with a keyword. The ending keyword of 
+       one section is the beginning keyword of the next section, except for the 
+       last section where the ending keyword must be 'END'. All blank lines are 
+       discarded, and all lines beginning with the '!' (exclamation point) 
+       character are considered as comments, and are also discarded.</p>
+       <p>A population file may contain at most four sections, with the 
+       following keywords:</p>
+       <ul>
+         <li>MEAN_STDEV M</li>
+         <li>MEAN_STDEV F</li>
+         <li>CORR M</li>
+         <li>CORR F</li>
+       </ul>
+       <p>All sections are optional; the MEAN_STDEV sections must appear before 
+       the CORR sections. Furthermore, a given keyword may not appear twice in 
+       the same population file.</p>
+       <p>In the MEAN_STDEV sections, the user may provide values (mean and 
+       standard deviation) of every measurement reflecting the population of the 
+       study. There must be one line per entry, and each entry must describe, at 
+       most, one variable in the following fashion:</p>
+       <p><font face="Courier New">&lt;variable&gt; &lt;mean&gt; &lt;stddev&gt;</font></p>
+       <p>where <font face="Courier New">&lt;variable&gt; is the variable reference 
+       number, </font><font face="Courier New">&lt;mean&gt; is the mean value of the 
+       variable and </font><font face="Courier New">&lt;stddev&gt; is the standard 
+       deviation value defining that variable.</font></p>
+       <p>A population file may be as simple as the following:</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="3" bgcolor="#CCCCCC">
+           <tr>
+             <td colspan="3" valign="top">
+             <p style="margin-bottom: 1em"><font face="Courier New">! This is a 
+             sample population file</font></td>
+           </tr>
+           <tr>
+             <td colspan="3" valign="top"><font face="Courier New">MEAN_STDEV M</font></td>
+           </tr>
+           <tr>
+             <td width="78" valign="top"><font face="Courier New">us100</font></td>
+             <td width="91" valign="top"><font face="Courier New">177.0</font></td>
+             <td valign="top">
+             <p style="margin-bottom: 1em"><font face="Courier New">6.0</font></td>
+           </tr>
+           <tr>
+             <td colspan="3" valign="top"><font face="Courier New">MEAN_STDEV F</font></td>
+           </tr>
+           <tr>
+             <td width="78" valign="top"><font face="Courier New">US100</font></td>
+             <td width="91" valign="top"><font face="Courier New">164.0</font></td>
+             <td valign="top">
+             <p style="margin-bottom: 1em"><font face="Courier New">6.0</font></td>
+           </tr>
+           <tr>
+             <td width="78" valign="top"><font face="Courier New">END</font></td>
+             <td valign="top">&nbsp;</td>
+             <td valign="top">&nbsp;</td>
+           </tr>
+         </table>
+       </div>
+       <p>In the population file above, the mean value of the stature (variable 
+       us100) of a male manikin is defined as 177 centimeters (70 inches), with 
+       a standard deviation of 6.0. Likewise, the mean stature value of a female 
+       manikin is 164 centimeters (64.5 inches).</p>
+       <p>In the CORR sections, the user may provide correlation values between 
+       any pair of variables. The correlation between two variables can be 
+       defined as a real number in the range [-1.0 ; 1.0], expressing the 
+       relative dependency between the two variables. The higher the correlation 
+       absolute value, the more dependant the variables are on each other.</p>
+       <p>When defining correlations, there must be one line per entry, and each 
+       entry must describe one correlation between one pair of variables, in the 
+       following fashion:</p>
+       <p><font face="Courier New">&lt;variable1&gt; &lt;variable2&gt; &lt;correlation&gt;</font></p>
+       <p>where <font face="Courier New">&lt;variable1&gt; is the reference number of 
+       the first variable, </font><font face="Courier New">&lt;variable2&gt; is the 
+       reference number of the second variable, and </font>
+       <font face="Courier New">&lt;correlation&gt; is the correlation value linking 
+       the two variables together. Please note that </font>
+       <font face="Courier New">&lt;variable1&gt; must be different from </font>
+       <font face="Courier New">&lt;variable2&gt;, because by definition, the 
+       correlation between a variable and itself is always 1.0. Furthermore, the 
+       reference number of </font><font face="Courier New">&lt;variable1&gt; must be 
+       lower than the reference number of </font><font face="Courier New">
+       &lt;variable2&gt;</font></p>
+       <p>If the correlation value given is not within the range [-1.0; 1.0], 
+       then an error is raised.</p>
+       <p>The following file gives an example of correlation specifications:</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="3" bgcolor="#CCCCCC" width="355">
+           <tr>
+             <td width="349" colspan="3" valign="top">
+             <p style="margin-bottom: 1em"><font face="Courier New">! This is a 
+             sample population file</font></td>
+           </tr>
+           <tr>
+             <td width="349" colspan="3" valign="top"><font face="Courier New">
+             MEAN_STDEV M</font></td>
+           </tr>
+           <tr>
+             <td width="122" valign="top"><font face="Courier New">us100</font></td>
+             <td width="119" valign="top"><font face="Courier New">177.0</font></td>
+             <td valign="top" width="99">
+             <p style="margin-bottom: 1em"><font face="Courier New">6.0</font></td>
+           </tr>
+           <tr>
+             <td width="349" colspan="3" valign="top"><font face="Courier New">
+             MEAN_STDEV F</font></td>
+           </tr>
+           <tr>
+             <td width="122" valign="top" height="32"><font face="Courier New">US100</font></td>
+             <td width="119" valign="top" height="32"><font face="Courier New">164.0</font></td>
+             <td valign="top" width="99" height="32">
+             <p style="margin-bottom: 1em"><font face="Courier New">6.0</font></td>
+           </tr>
+           <tr>
+             <td width="122" valign="top"><font face="Courier New">CORR M</font></td>
+             <td width="119" valign="top">&nbsp;</td>
+             <td valign="top" width="99">&nbsp;</td>
+           </tr>
+           <tr>
+             <td width="122" valign="top">
+             <p style="margin-bottom: 1em"><font face="Courier New">us2<br>
+             us2<br>
+             us63<br>
+             us63<br>
+             us63</font></td>
+             <td width="119" valign="top"><font face="Courier New">us125<br>
+             us127<br>
+             us77<br>
+             us81<br>
+             us82</font></td>
+             <td valign="top" width="99"><font face="Courier New">0.772<br>
+             0.470<br>
+             0.288<br>
+             0.309<br>
+             0.288</font></td>
+           </tr>
+           <tr>
+             <td width="122" valign="top"><font face="Courier New">CORR F</font></td>
+             <td width="119" valign="top">&nbsp;</td>
+             <td valign="top" width="99">&nbsp;</td>
+           </tr>
+           <tr>
+             <td width="122" valign="top">
+             <p style="margin-bottom: 1em"><font face="Courier New">us2</font><br>
+             us2<br>
+             us63<br>
+             us63<br>
+             us63</td>
+             <td width="119" valign="top"><font face="Courier New">us125</font><br>
+             us127<br>
+             us77<br>
+             us81<br>
+             us82</td>
+             <td valign="top" width="99"><font face="Courier New">0.744</font><br>
+             0.386<br>
+             0.231<br>
+             0.320<br>
+             0.313</td>
+           </tr>
+           <tr>
+             <td width="122" valign="top"><font face="Courier New">END</font></td>
+             <td width="119" valign="top">&nbsp;</td>
+             <td valign="top" width="99">&nbsp;</td>
+           </tr>
+         </table>
+       </div>
+       <p style="margin-bottom: 1em">Please note that all length values 
+       appearing in a population file must be provided in <b>centimeters</b>, 
+       and all weight values must be provided in <b>kilograms</b>. Also note 
+       that the keywords in a population file are <b>case sensitive</b>. As 
+       such, the keyword&nbsp; <font face="Courier New">mean_stdev </font>f&nbsp; 
+       would be considered a syntax error.</td>
+     </tr>
+     <tr>
+       <td valign="top">
+       <img border="0" src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+       <td valign="top">
+       <p style="margin-bottom: 1em">An example of a population file,
+       <a href="b35doc/english/online/hmeug_c2/samples/my_population.sws">my_population.sws</a>, is provided in 
+       the samples directory. </p>
+       <p style="margin-bottom: 1em">Also appearing in the samples directory are 
+       the five default populations available at manikin creation: </p>
+       <ul>
+         <li><a href="b35doc/english/online/hmeug_c2/samples/us_army_natick_88.sws">American</a></li>
+         <li><a href="b35doc/english/online/hmeug_c2/samples/canadian_land_army_1997.sws">Canadian</a></li>
+         <li><a href="b35doc/english/online/hmeug_c2/samples/french_army_1991.sws">French</a></li>
+         <li><a href="b35doc/english/online/hmeug_c2/samples/japanese_air_self_defense_force_1988.sws">Japanese</a></li>
+         <li><a href="b35doc/english/online/hmeug_c2/samples/korean_civilian_1997.sws">Korean</a></li>
+		 <li><a href="b35doc/english/online/hmeug_c2/samples/german_DIN_33402_2_2005.sws">German</a></li>
+		<li><a href="b35doc/english/online/hmeug_c2/samples/chinese_taiwan_2002.sws">Chinese (Taiwan)</a> </li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td valign="top">
+       <img border="0" src="b35doc/english/online/icons_C2/common/areference.gif" width="32" height="32"></td>
+       <td valign="top">Please refer to <a href="page8350.html">Anthropometric 
+       Variables</a> for more information. This table contains all information 
+       about each variable used in Human Measurements Editor including the 
+       reference number, the acronym, the full name, and the definition of each 
+       variable.</td>
+     </tr>
+   </table>
+ </div>
+ <p align="center">&nbsp;<img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+
+
+

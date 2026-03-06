@@ -1,0 +1,245 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="2">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Locking Settings</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Locking Settings</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr valign="top" BORDER="0">
+     <td valign="top" width="34">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td rowspan="1" width="832"><a name="ix-settings::locking"></a>This task 
+     explains how to run a session in administrator mode for the purpose of 
+     locking settings so that other users running a session with the same 
+     environment inherit those settings <strong>and cannot change them</strong>.&nbsp;<a name="ix-locking settings in administrator mode"></a>
+     <a name="ix-administrator mode"></a>
+     <p>An administrator can also take advantage of this mechanism to set 
+     default settings which, although not locked, are proposed to users as a 
+     starting point.</p>
+     <p>By default, there is &quot;zero administration&quot; of settings: user settings 
+     are stored in the CATSettings environment as explained in
+     <a href="page1168.html">About Settings</a>.</p>
+     <p>The following scenario walks you through a procedure useful for locking 
+     settings for users of the default environment created at installation. This 
+     is a useful procedure if you are interested in locking settings, but do not 
+     want to multiply environments on the same computer.</p>
+     <p><b><i>The scenario described reflects the Windows platform only, but the 
+     feature is also supported on UNIX.</i></b></td>
+   </tr>
+   <tr>
+     <td valign="top" width="34">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td rowspan="1" width="832">Do not confuse running a session in 
+     administrator mode (a Version 5 concept) with logging on as administrator 
+     (a system concept).</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34"></td>
+     <td width="832">
+     <h2>Scenario 1: Locking Settings for the Default Global Environment<a name="ix-locking settings::for default global environment"></a></h2>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" width="34">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="832"><b>1. </b>Log on as an administrator.<p>You must belong to 
+     the Administrators group, or have the privileges assigned to the 
+     Administrators group.</p>
+     <p>For the purposes of this particular scenario only, you need to log on as 
+     administrator because you are going to modify the default global 
+     environment (<strong>VersionNumber</strong>).</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" width="34"></td>
+     <td rowspan="1" width="832"><b>2. </b>Select the <code>Start&nbsp;&gt;&nbsp;Programs&nbsp;&gt;&nbsp;</code><code>CATIA</code><code>&nbsp;&gt;&nbsp;Tools&nbsp;&gt;&nbsp;<a name="ix-Environment Editor command"></a>Environment 
+     Editor<a name="ix-commands::Environment Editor"></a> 
+     <strong>VersionNumber</strong></code><kbd>
+     </kbd>command to display the Environment Editor.<p>You will see an 
+     environment with the following name:</p>
+     <p><kbd></kbd><code>CATIA</code><kbd><br>
+     </kbd></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" width="34"></td>
+     <td width="832"><b>3.</b> Click the <strong>CATIAEnvironmentName</strong> 
+     environment to display the corresponding environment variables.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34"></td>
+     <td rowspan="1" width="832"><b>4.</b> Locate the following environment 
+     variable: <code><a name="ix-CATReferenceSettingPath variable"></a>
+     CATReferenceSettingPath<a name="ix-environment variables::CATReferenceSettingPath"></a></code><p>
+     Note that the default setting for this variable is empty.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34"></td>
+     <td rowspan="1" width="832"><b>5.</b> Reset the variable so that it points 
+     to an existing folder, for example:<p><code>CATReferenceSettingPath&nbsp;&nbsp;&nbsp; 
+     E:\users\administrator\LockSettings</code></p>
+     <p>then click Set, then OK to save and exit the environment editor. This 
+     folder will contain the setting locks you will create later. The folder 
+     access rights must be set up for read access only for end users, and 
+     read/write for the person creating the setting locks.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34"></td>
+     <td rowspan="1" width="832"><b>6.</b> Run a session in administrator mode<a name="ix-administrator mode"></a> 
+     using the following command:<p><font size="3"><code>
+     <a name="ix-cnext command"></a><a name="ix-cnext -admin command"></a>cnext 
+     -env&nbsp;</code></font><kbd></kbd><code><strong>CATIAEnvironmentName</strong></code><kbd></kbd><font size="3"><code> 
+     -admin<a name="ix-commands::cnext"></a> <a name="ix-commands::cnext -admin">
+     </a></code></font></p>
+     <p>or:</p>
+     <p><font size="3"><code><a name="ix-cnext command"></a></code></font><code>
+     <font size="3"><a name="ix-cnext command"></a></font></code><font size="3">
+     <code><a name="ix-cnext -admin command"></a></code></font><code>cnext 
+     -admin</code><font size="3"><code><a name="ix-commands::cnext"></a>
+     <a name="ix-cnext -admin command"></a></code></font></p>
+     <p>The session is started using the default global environment, and a 
+     message informs you that you are running in administration mode. Click OK 
+     in the message box to proceed. If prompted by the License Manager, reserve 
+     at least one configuration license then restart a session in administrator 
+     mode.&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34"></td>
+     <td rowspan="1" width="832"><b>7.</b>&nbsp; Select the <kbd>
+     Tools&nbsp;&gt;&nbsp;Options... </kbd>command.<p>The &quot;Options&quot; dialog box is displayed. 
+     Note that a lock symbol like this <img src="b35doc/english/online/basil_c2/images/AdminSettings03.gif" width="20" height="20"> 
+     appears opposite each option in the General tab:</p>
+     <p>
+     <img border="0" src="b35doc/english/online/basil_c2/images/AdminSettings01_NLS.gif" width="706" height="525"></td>
+   </tr>
+   <tr>
+     <td valign="top" width="34" bgcolor="#FFFFFF">&nbsp;</td>
+     <td width="832">Pointing the cursor to a lock symbol&nbsp;displays a message 
+     indicating the name of the folder/directory containing the lock settings. 
+     This is particularly useful for administrators who need to identify which 
+     lock settings are active when there are multiple levels of concatenated 
+     locks.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34"></td>
+     <td width="832"><b>8. </b>To set the locks, click on one of the appropriate 
+     lock symbols.<p>For example, click the lock symbol for the User Interface 
+     Style option:</p>
+     <p><img border="0" src="b35doc/english/online/basil_c2/images/AdminSettings02_NLS.gif" width="706" height="526"></td>
+   </tr>
+   <tr>
+     <td valign="top" width="34"></td>
+     <td width="832">The lock symbol now looks like this:
+     <img src="b35doc/english/online/basil_c2/images/AdminSettings04.gif" width="21" height="21">.
+     <p>Because the user interface style was set to CATIA - P2, end users 
+     running this environment will not be able to change this setting.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="top" width="34"></td>
+     <td rowspan="1" width="832"><b>9.</b> Click OK to confirm.<p>The lock 
+     settings are stored in the folder referenced by the <code>
+     CATReferenceSettingPath </code>environment variable you reset earlier.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34"></td>
+     <td rowspan="1" width="832"><b>10.</b> Exit the session.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34"></td>
+     <td rowspan="1" width="832">An end user who starts a session with the 
+     normal startup commands (but <strong>not</strong> the <code>cnext -env
+     </code><kbd></kbd><code><strong>CATIAEnvironmentName</strong></code><kbd></kbd><code> 
+     -admin</code> command) and using the same environment, will see this after 
+     selecting the <kbd>Tools&nbsp;&gt;&nbsp;Options... </kbd>command:<p>
+     <img border="0" src="b35doc/english/online/basil_c2/images/AdminSettings05_NLS.gif" width="706" height="525"></td>
+   </tr>
+   <tr>
+     <td valign="top" width="34"></td>
+     <td width="832">The lock symbol now looks like this:
+     <img src="b35doc/english/online/basil_c2/images/AdminSettings06.gif" width="17" height="18">.
+     <p>Because the user interface style was set to &quot;CATIA - P2&quot;, end users 
+     running this environment will not be able to change this setting to &quot;CATIA 
+     - P1&quot;.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34"></td>
+     <td width="832">
+     <h2>Scenario 2: Locking Settings for User Environments<a name="ix-locking settings::for user environments"></a></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="34"></td>
+     <td width="832">You do not necessarily have to log on as administrator to 
+     customize an environment and set locks on settings: the lock mechanism is 
+     not limited to the global environment only.&nbsp;
+     <p>End users can customize their own <strong>user</strong> environments to 
+     store their own settings in a location referenced by the <code>
+     CATReferenceSettingPath</code> environment variable, start a session using 
+     the command:</p>
+     <p><font size="3"><code><a name="ix-cnext command"></a></code></font><code>
+     <font size="3"><a name="ix-cnext command"></a></font></code><font size="3">
+     <code><a name="ix-cnext -admin command"></a></code></font><code>cnext -env 
+     myenv -admin</code><font size="3"><code><a name="ix-commands::cnext"></a>
+     <a name="ix-cnext -admin command"></a></code></font></p>
+     <p>where &quot;myenv&quot; is the name of the user environment, then lock settings in 
+     the same way as described in their first scenario. Then, other end users 
+     starting a session on the same computer, with the normal startup commands 
+     and using the same environment, will inherit the locked settings.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34"></td>
+     <td width="832">
+     <h2>Scenario 3: Concatenating Settings Locks<a name="ix-locking settings::concatenating locks"></a></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" width="34"></td>
+     <td width="832">Different users may want to set different types of locks at 
+     different levels for a variety of reasons.<p>If several users set locks in 
+     different folders using the same environment, end users of the same 
+     environment will inherit all the locks set by those administrators.</p>
+     <p>To implement this solution, you must concatenate several 
+     CATReferenceSettingPath values as illustrated below:</td>
+   </tr>
+   <tr>
+     <td valign="top" width="34"></td>
+     <td width="832"><img src="b35doc/english/online/basil_c2/images/AdminSettings07_NLS.gif" vspace="10" width="596" height="483"></td>
+   </tr>
+   <tr>
+     <td valign="top" width="34"></td>
+     <td width="832">In this example:
+     <ul>
+       <li>one administrator (starting in administration mode) locks settings in 
+       &quot;<em>Environment 1</em>&quot; at the site level</li>
+       <li>on the same site, two administrators (also starting in administration 
+       mode) in two different workshops lock settings in &quot;<em>Environment 2</em>&quot; 
+       and &quot;<em>Environment 3</em>&quot; respectively</li>
+       <li>users 1 and 2 run a Version 5 session with &quot;<em>Environment 2</em>&quot; 
+       and inherit the setting locks in &quot;<em>Environment 1</em>&quot; and &quot;<em>Environment 
+       2</em>&quot; respectively</li>
+       <li>users 3 and 4 run a Version 5 session with &quot;<em>Environment 3</em>&quot; 
+       and inherit the setting locks in &quot;<em>Environment 1</em>&quot; and &quot;<em>Environment 
+       3</em>&quot; respectively.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="2" valign="top" width="868">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p>&nbsp;</p>
+
+ </body>
+
+</html>
+

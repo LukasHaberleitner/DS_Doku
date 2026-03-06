@@ -1,0 +1,458 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Specifying the Algorithm to Be Run</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="docCompliance" content="v 0.9; Tue Sep 13 14:44:41 2005">
+ <meta name="Microsoft Border" content="none">
+</head>
+
+ <body>
+
+ <h1>Specifying the Algorithm to Be Run&nbsp;<a name="top"></a></h1>
+ <ul>
+   <li><a href="#Types of Algorithms">Types of Algorithms</a></li>
+   <li><a href="#Algorithms Configurations">Algorithms Configuration</a></li>
+   <li><a href="#Termination Criteria">Termination Criteria</a></li>
+   <li><a href="#Algorithms Summary">Algorithms Summary</a></li>
+   <li><font color="#282187"><a href="#Algorithms Versions">Algorithms Versions</a></font></li>
+ </ul>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2><font color="#282187">Types of Algorithms
+ <a name="ix-algorithm::types of algorithm"></a>&nbsp;<a name="Types of Algorithms"></a></font></h2>
+ <p>To perform an optimization, you can use one of the following algorithms:</p>
+ <div align="left">
+   <table border="0" cellpadding="4" id="AutoNumber4">
+     <tr>
+       <td>
+       <ul>
+         <li><a href="#User algorithm defined in CAAOptimizationInterfaces">User 
+         Algorithm defined in CAAOptimizationInterfaces.edu</a></li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td>
+       <ul>
+         <li><a href="#Local Algorithm for Constraints and Priorities">Local 
+         Algorithm for Constraints and Priorities</a>:<br>
+         A Gradient based search using a modified feasible direction. </li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td>
+       <ul>
+         <li><a href="#Simulated Annealing Algorithm">Simulated Annealing 
+         Algorithm</a></li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td>
+       <ul>
+         <li><a href="#Algorithm for Constraints and Derivatives Providers">
+         Algorithm for Constraints &amp; Derivatives Providers</a>: <br>
+         A gradient based search for features that provide their own derivatives 
+         such as some analysis sensors.</li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td>
+       <ul>
+         <li><a href="#Gradient algorithm">Gradient Algorithm without 
+         Constraints</a>: <br>
+         3 different types of gradient algorithms: 
+         <div align="left">
+           <table border="0" cellpadding="0" style="border-collapse: collapse" width="100%" id="table1">
+             <tr>
+               <td>
+               <ul>
+                 <li>Fast: A successive quadratic interpolation that allows fast 
+                 but less accurate optimization.</li>
+                 <li>Medium: A randomly restarted conjugate gradient.</li>
+                 <li>Slow: A steepest descent algorithm (slow but more accurate 
+                 than the Fast category).</li>
+               </ul>
+               </td>
+             </tr>
+           </table>
+         </div>
+         </li>
+       </ul>
+       </td>
+     </tr>
+     <tr>
+       <td>
+       <ul>
+         <li><a href="#Gradient algorithm">Gradient Algorithm with Constraints</a>:
+         <br>
+         A gradient based feasible direction algorithm.</li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+ </div>
+ <h2>&nbsp;</h2>
+ <h3><font color="#282187">User algorithm defined in 
+ CAAOptimizationInterfaces.edu
+ <a name="ix-algorithm::caaoptimizationinterfaces.edu"></a>&nbsp;<a name="User algorithm defined in CAAOptimizationInterfaces"></a></font></h3>
+ <p>You can define your own algorithms. To get an example, See the 
+ CAAOptimization interfaces.</p>
+ <h3>&nbsp;</h3>
+ <h3>Local Algorithm for Constraints &amp; Priorities<a name="Local Algorithm for Constraints and Priorities"></a></h3>
+ <p>This algorithm takes constraints priorities into account. </p>
+ <p align="right">&nbsp;</p>
+ <h3>Simulated Annealing Algorithm<font color="#282187"><a name="ix-algorithm::simulated annealing"></a>
+ <a name="ix-global search"></a>&nbsp;<a name="Simulated Annealing Algorithm"></a>
+ <a name="link"></a></font></h3>
+ <ul>
+   <li>This algorithm is a global stochastic search algorithm hence two 
+   successive runs of this method might not lead to the same result. It performs 
+   a global search that evolves towards local searches as the time goes on.&nbsp;</li>
+   <li>It is usually used to explore non-linear, multimodal functions. These 
+   functions can also be discontinuous.</li>
+   <li>If the shape of the objective function is unknown, it is recommended to 
+   start with a Simulated Annealing then refine the results with a gradient 
+   descent. This approach is slow but works for a larger amount of functions.&nbsp;<br>
+   </li>
+ </ul>
+ <table border="0" cellpadding="4">
+   <tr>
+     <td valign="top" bgcolor="#F0F0F0">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" bgcolor="#F0F0F0">A good way to quickly reach a solution 
+     when using the Simulated Annealing consists in specifying a low number of 
+     consecutive updates without improvements (15 or 20). <br>
+     On the contrary, to foster search, the number of consecutive updates 
+     without improvements can be increased as well as the time and the number of 
+     total updates.</td>
+   </tr>
+ </table>
+ <h3>&nbsp;</h3>
+ <h3>Algorithm for Constraints &amp; Derivatives Providers<a name="Algorithm for Constraints and Derivatives Providers"></a></h3>
+ <div align="left">
+   <table border="0" cellpadding="2" id="AutoNumber3">
+     <tr>
+       <td valign="top" colspan="2">
+       This algorithm can handle objectives providing 
+       derivatives (like analysis global sensors) in conjunction with 
+       constraints providing multiple values and derivatives (like analysis 
+       local sensors). With this algorithm additional termination criteria can 
+       be specified:</td>
+     </tr>
+     <tr>
+       <td valign="top">
+       <img border="1" src="b35doc/english/online/kwoug_c2/images/kwoalgoforconstraintsandderivatives1NLS.gif" width="381" height="165"><ul>
+       </ul>
+       </td>
+       <td valign="top"><ul>
+         <li><kbd>Criteria Window</kbd>: Number of updates (Nstop) with respect 
+         to which the termination criteria will be evaluated. </li>
+         <li><kbd>Relative Constraints</kbd>: Relative constraints variation 
+         under which the algorithm must stop. All constraints must fulfill this 
+         criteria for the stop to occur. </li>
+         <li><kbd>Absolute Constraints</kbd>: Absolute constraints variation 
+         under which the algorithm must stop. All constraints must fulfill this 
+         criteria for the stop to occur.&nbsp; </li>
+         <li><kbd>Absolute Variables</kbd>: Absolute variables variation under 
+         which the algorithm must stop. All variables must fulfill this criteria 
+         for the stop to occur. </li>
+         </li>
+       </ul>
+       </td>
+     </tr>
+   </table>
+ </div>
+ <table border="0" cellpadding="4" id="AutoNumber5">
+   <tr>
+     <td valign="top"><kbd>Absolute Objective</kbd>: Absolute objective 
+     variation under which the algorithm must stop. (See formula opposite)</td>
+     <td valign="top" colspan="2"><code>Obj.<sub>Max.</sub>-Obj.<sub>Min</sub> &lt; 
+     User Termination Criteria</code></td>
+   </tr>
+   <tr>
+     <td valign="top"><kbd>Relative Objective</kbd>: Relative objective 
+     variation under which the algorithm must stop (See formula opposite)</td>
+     <td valign="top"><code>Obj.<sub>Max</sub>-Obj.<sub>Min</sub><br>
+     _______________<br>
+&nbsp;&nbsp;&nbsp;&nbsp; Obj.<sub>max</sub>+Obj.<sub>min</sub><br>
+&nbsp;&nbsp;&nbsp;&nbsp; ________<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2</code></td>
+     <td valign="top">
+     <ul>
+       <li>Where:<br>
+       Obj. Max is the maximum objective value obtained during the &quot;criteria 
+       window&quot;.</li>
+       <li>Obj. Min is the minimum objective value obtained during the &quot;criteria 
+       window&quot;.</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <h3><font color="#282187">Gradient algorithm<a name="ix-algorithm::conjugate gradient (cg)"></a>
+ <a name="ix-local search"></a>&nbsp;<a name="Gradient algorithm"></a></font></h3>
+ <p>This algorithm must be used first to perform a local search. Based on the 
+ calculation of a local slope of the objective function, this algorithm will use 
+ a parabolic approximation and jump to its minimum, or use an iterated 
+ exponential step descent in the direction of the minimum.<br>
+ If the properties of the objective function are known (continuous, 
+ differentiable at all point), the gradient can be used straight on. It is 
+ usually faster than the Simulated Annealing algorithm.<br>
+ </p>
+ <div align="left">
+   <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber2">
+     <tr>
+       <td bgcolor="#F0F0F0" valign="top">
+       <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+       <td valign="top" bgcolor="#F0F0F0">You can choose to run the Gradient 
+       algorithm with constraints or without constraints.</td>
+     </tr>
+   </table>
+ </div>
+ <h4><font color="#282187">Global Search vs. Local Search </font></h4>
+ <table border="0" cellpadding="5" cellspacing="5">
+   <tr>
+     <td bgcolor="#DBDBDB" align="center" valign="top"><font color="#000080">
+     Simulated Annealing (Global Algorithm)</font></td>
+     <td bgcolor="#DBDBDB" align="center" valign="top"><font color="#000080">
+     Gradient (Local Algorithm)<br>
+     Local Algorithm For Constraints &amp; Priorities, Algorithm for Constraints and 
+     Derivatives Providers, Gradient Algorithm Without Constraint, Gradient 
+     Algorithm With Constraint(s) </font></td>
+   </tr>
+   <tr>
+     <td bgcolor="#F2F2F2" valign="top">Equality constraints allowed&nbsp;<br>
+     Precision is managed as a termination criteria.&nbsp;<br>
+     x == A is fulfilled when <nobr>abs(x - A) &lt; <i>precision</i></nobr></td>
+     <td valign="top" bgcolor="#F2F2F2">Equality constraints not allowed&nbsp;except 
+     for the Algorithm for Constraints and Derivatives Providers.</td>
+   </tr>
+   <tr>
+     <td bgcolor="#F2F2F2" valign="top">Can be&nbsp;run with constraints and no 
+     objective function</td>
+     <td valign="top" bgcolor="#F2F2F2">Must be run with an objective function.</td>
+   </tr>
+ </table>
+ <p align="right"><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></p>
+ <h2>Algorithms Configurations<a name="Algorithms Configurations"></a></h2>
+ <p>The Gradient algorithms, the Simulated Annealing algorithm, and the 
+ Algorithm for Constraints &amp; Derivatives Providers can be run in 3/4 different 
+ configurations.</p>
+ <p>&nbsp;</p>
+ <table border="1" cellpadding="4" cellspacing="0" bordercolor="#FFFFFF">
+   <tr>
+     <td bgcolor="#F0F0F0" valign="top"><font color="#000080"><kbd>Options</kbd></font></td>
+     <td bgcolor="#F0F0F0" valign="top">
+     <p align="center"><font color="#000080"><kbd>Gradient Algorithm</kbd></font></td>
+     <td bgcolor="#F0F0F0" valign="top">
+     <p align="center"><font color="#000080"><kbd>Simulated Annealing Algorithm</kbd></font></td>
+     <td bgcolor="#F0F0F0" valign="top">
+     <p align="center"><font color="#000080"><kbd>Algorithm for Constraints &amp; 
+     Derivatives Providers </kbd></font></td>
+   </tr>
+   <tr>
+     <td bgcolor="#F0F0F0" valign="top"><font color="#000080">Slow</font></td>
+     <td bgcolor="#F0F0F0" valign="top">Slow evolution based on the steepest 
+     descent algorithm and on steps. Good precision (to be used to find 
+     convergence.)</td>
+     <td bgcolor="#F0F0F0" valign="top" rowspan="4">These 4 configurations 
+     define the level of acceptance of bad solutions.<br>
+     If the problem has many local optima, use <i>Slow</i>.<br>
+     If the problem has no local optima, use <i>Infinite (Hill climbing)</i>.</td>
+     <td bgcolor="#F0F0F0" valign="top">&nbsp;</td>
+   </tr>
+   <tr>
+     <td bgcolor="#F0F0F0" valign="top"><font color="#000080">Medium</font></td>
+     <td bgcolor="#F0F0F0" valign="top">A randomly restarted conjugate gradient.</td>
+     <td bgcolor="#F0F0F0" valign="top">&nbsp;</td>
+   </tr>
+   <tr>
+     <td bgcolor="#F0F0F0" valign="top"><font color="#000080">Fast</font></td>
+     <td bgcolor="#F0F0F0" valign="top">Search jumps from Minimum to Minimum 
+     using quadratic interpolation.<br>
+     Fast evolution, less precision.</td>
+     <td bgcolor="#F0F0F0" valign="top">&nbsp;</td>
+   </tr>
+   <tr>
+     <td bgcolor="#F0F0F0" valign="top"><font color="#000080">Infinite (Hill 
+     climbing)</font></td>
+     <td bgcolor="#F0F0F0" valign="middle">
+     <p align="center">-</td>
+     <td bgcolor="#F0F0F0" valign="top">&nbsp;</td>
+   </tr>
+ </table>
+ <h2><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" align="right" width="25" height="17"></a></h2>
+ <h2>Termination Criteria<a name="Termination Criteria"></a></h2>
+ <p>Termination criteria are used to stop the optimizer. When an optimization is 
+ running, a message box displays the data of each update. You can stop the 
+ computation by clicking Stop.&nbsp; If you don't intervene in the computation 
+ process, the computation will stop:</p>
+ <table border="0" cellpadding="0" cellspacing="0">
+   <tr>
+     <td valign="baseline">&nbsp;</td>
+     <td valign="top">
+     <ul>
+       <li>When a value (minimum, maximum or target value) has been found and 
+       the algorithm is unable to progress anymore (Gradient.) or</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="baseline">&nbsp;</td>
+     <td valign="top">
+     <ul>
+       <li>When one of the specified termination criteria has been met.</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <p>Here are the termination criteria to be specified:</p>
+ <table border="0" cellpadding="0" cellspacing="0">
+   <tr>
+     <td valign="baseline">&nbsp;</td>
+     <td valign="top">
+     <ul>
+       <li>Maximum number of updates i.e. the number of times the objective 
+       function will be calculated at most (number of updates.)</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="baseline">&nbsp;</td>
+     <td valign="top">
+     <ul>
+       <li>Number of updates without improvement i.e. the number of updates 
+       allowed without achieving a better result.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="baseline">&nbsp;</td>
+     <td valign="top">
+     <ul>
+       <li>Maximum duration of computation</li>
+     </ul>
+     </td>
+   </tr>
+ </table>
+ <table border="0" cellpadding="4" cellspacing="1">
+   <tr>
+     <td bgcolor="#F0F0F0">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td bgcolor="#F0F0F0">Simulated Annealing always runs until one of the 
+     termination criteria is reached. The Gradient can stop before if a local 
+     optimum is reached.</td>
+   </tr>
+ </table>
+ <p align="right">&nbsp; </p>
+ <h2>Algorithms Summary<a name="Algorithms Summary"></a></h2>
+ <p align="left">Please find below a table listing the available algorithms 
+ along with the functions they support.</p>
+ <div align="left">
+   <table border="1" cellpadding="4" bordercolor="#FFFFFF" id="AutoNumber6" bgcolor="#F0F0F0">
+     <tr>
+       <td valign="top">&nbsp;</td>
+       <td valign="top"><kbd><font color="#282187">Local Algorithm for 
+       constraints and priorities</font></kbd></td>
+       <td valign="top"><kbd><font color="#282187">Simulated Annealing Algorithm</font></kbd></td>
+       <td valign="top"><kbd><font color="#282187">Algorithm for Constraints and 
+       derivatives&nbsp; providers</font></kbd></td>
+       <td valign="top"><kbd><font color="#282187">Gradient without constraints</font></kbd></td>
+       <td valign="top"><kbd><font color="#282187">Gradient with constraints</font></kbd></td>
+     </tr>
+     <tr>
+       <td valign="top"><font color="#282187">Inequality Constraints</font></td>
+       <td valign="top" align="center">Yes</td>
+       <td valign="top" align="center">Yes</td>
+       <td valign="top" align="center">Yes</td>
+       <td valign="top" align="center">No</td>
+       <td valign="top" align="center">Yes</td>
+     </tr>
+     <tr>
+       <td valign="top"><font color="#282187">Equality Constraints</font></td>
+       <td valign="top" align="center">No</td>
+       <td valign="top" align="center">Yes</td>
+       <td valign="top" align="center">Yes</td>
+       <td valign="top" align="center">No</td>
+       <td valign="top" align="center">No</td>
+     </tr>
+     <tr>
+       <td valign="top"><font color="#282187">Priorities on constraints</font></td>
+       <td valign="top" align="center">Yes</td>
+       <td valign="top" align="center">No</td>
+       <td valign="top" align="center">No</td>
+       <td valign="top" align="center">No</td>
+       <td valign="top" align="center">No</td>
+     </tr>
+     <tr>
+       <td valign="top"><font color="#282187">Derivatives providers</font></td>
+       <td valign="top" align="center">No</td>
+       <td valign="top" align="center">No</td>
+       <td valign="top" align="center">Yes</td>
+       <td valign="top" align="center">No</td>
+       <td valign="top" align="center">No</td>
+     </tr>
+     <tr>
+       <td valign="top"><font color="#282187">Non Differentiable objectives&nbsp; 
+       or Constraints</font></td>
+       <td valign="top" align="center">No</td>
+       <td valign="top" align="center">Yes</td>
+       <td valign="top" align="center">No</td>
+       <td valign="top" align="center">No</td>
+       <td valign="top" align="center">No</td>
+     </tr>
+   </table>
+ </div>
+ <p align="right"><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></p>
+ <h2><font color="#282187">Algorithms Versions<a name="Algorithms Versions"></a></font></h2>
+ <p>From time to time, the PEO algorithms are updated to enhance their 
+ performance. The side effect of these modifications is a change of behavior of 
+ the optimization process. It is however possible to come back to the previous 
+ versions of the algorithms by using environment variables (see table below.)</p>
+ <div align="center">
+   <center>
+   <table border="1" cellpadding="4" cellspacing="1">
+     <tr>
+       <td bgcolor="#F0F0F0" align="center"><font color="#000080"><kbd>Var Name</kbd></font></td>
+       <td bgcolor="#F0F0F0" align="center"><font color="#000080"><kbd>Var Value</kbd></font></td>
+     </tr>
+     <tr>
+       <td valign="top">GradientVersion</td>
+       <td valign="top">r8Sp3, r9sp4, r10sp1, r11ga</td>
+     </tr>
+     <tr>
+       <td valign="top">SAVersion</td>
+       <td valign="top">r8sp3, r13ga, r14ga, r14sp1</td>
+     </tr>
+     <tr>
+       <td valign="top">GradientWithCstVersion</td>
+       <td valign="top">r8sp4, r11ga, r13ga, r14ga, r14sp1, r14sp2, r15ga, 
+       r16ga*</td>
+     </tr>
+     <tr>
+       <td valign="top" colspan="2"><sup>*</sup>A pop-up is displayed at the end 
+       of the optimization run when the bound of at least one free parameter is 
+       reached.</td>
+     </tr>
+   </table>
+   </center>
+ </div>
+ <p align="right"><a href="#top">
+ <img border="0" src="b35doc/english/online/icons_C2/common/butix_top.gif" width="25" height="17"></a></p>
+
+ </body>
+
+</html>
+

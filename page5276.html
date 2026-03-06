@@ -1,0 +1,782 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Creating a Producibility for Braiding</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<style type="text/css">
+.auto-style1 {
+	border-style: solid;
+	border-width: 1px;
+}
+.auto-style2 {
+	font-family: Verdana, Helvetica, sans-serif;
+}
+.auto-style3 {
+	border-collapse: collapse;
+	font-size: 10.0pt;
+	font-family: "Times New Roman", serif;
+	border-style: none;
+	border-color: inherit;
+	border-width: medium;
+}
+</style>
+</head>
+
+<body>
+
+<h1><a name="CATCoDefaultCmdHeader.CreateNewProducibilityBraidingId"></a>
+    Creating a Producibility for Braiding<a name="CATBrdDefaultCmdHeader.CreateNewProducibilityBraidingId"></a></h1>
+<table border="0" style="border-collapse: collapse" id="AutoNumber1">
+  <tr>
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"><br>
+      </td>
+    <td>This task shows you how to create a producibility for braiding.<ul><li>
+		The braiding head follows the centerline of the mandrel.&nbsp; </li>
+		<li>
+		The 
+		centerline defines the path of the guide along the mandrel. A temporary 
+		centerline is computed to speed up calculations, avoiding some 
+		recalculations. To avoid failures due to slanted ends of the mandrel or 
+		sudden jumps in the mandrel surface, points are added between existing 
+		points until a smooth line is created without changing the shape, within 
+		tolerance. The automatic extension of the centerline goes far enough 
+		beyond the end of the mandrel to allow the tows to get to the end of the 
+		mandrel and achieve the target angle. </li>
+		<li>Make sure the X-axis of the rosette of the ply is approximately 
+		aligned with the mandrel.<br> </li>
+		<li>The simulation 
+	normally runs along the x-axis of the rosette referenced by the ply, but can 
+	be reversed in direction as braiding machines often make multiple passes to 
+	build up the material thickness. </li>
+		<li>You can select any single curve as the guide path for the mandrel head, 
+		provided it complies with the following rules:<ul>
+			<li>The path extends beyond both ends of the tube.</li>
+			<li>The curve is inside the tube, and does not penetrate the tube 
+			sides.</li>
+			<li>The curve is smooth.<ul>
+				<li>If you select a segmented curve, use V5 tools to smooth it.</li>
+				<li>Use a value of at least 2mm.<br></li>
+			</ul>
+			</li>
+		</ul>
+		</li>
+		<li><kbd>Starting Length</kbd> and <kbd>Finishing Length</kbd> allow you to 
+	modify the beginning and end of the guide compared with the ply boundaries. 
+	Positive values create an extension. </li>
+		<li>The <kbd>Guide Diameter</kbd> 
+	must be sufficiently large to clear the ply surface. <br> </li>
+		<li>The <kbd>Carrier 
+	Rotation Speed</kbd> is typically fixed for a typical braiding machine, 
+	while the angle of the braided fibers depends on the <kbd>Mandrel 
+	Speed</kbd>. <br>Usually, the mandrel has varying cross-sections while the 
+	braiding angle remains approximately constant, so that a varying 
+	mandrel speed is usually required (See <kbd>Edit 
+	Mandrel Speed</kbd>). </li></ul></td>
+  </tr>
+    <tr>
+      <td style="width: 34px">
+      <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+      <td>Available in <cite>Composites Braiding (CPB)</cite>.</td>
+    </tr>
+  <tr>
+    <td>
+    <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td>Open the <a href="b35doc/english/online/cpbug_c2/samples/CATCompositesBraiding01.CATPart">
+	CATCompositesBraiding01.CATPart</a> document.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td valign="top" rowspan="2">
+    <ol class="task">
+      <li>
+      <p class="task"><a name="ix-commands::Producibility for Braiding"></a>Click <kbd>Producibility for Braiding</kbd>
+	  <img height="24" src="b35doc/english/online/icons_C2/images/I_CompositesProducibilityBraidingFeatP2.png" width="24"> 
+	  and select a ply with 2 loops.<br>See <a href="page5281.html">Creating 
+	  Plies for Braiding</a> for more information.<br>
+	  <a name="ix-creating a producibility for braiding:input ply"></a>Composites Braiding checks that the ply is tubular 
+	  and has one start and one end contour.<br>If the ply is valid, its name is 
+	  displayed in the dialog box.<br>
+	  <img height="412" src="b35doc/english/online/cpbug_c2/images/dbProducibilityNLS.png" width="455" class="auto-style1"></li>
+      <li>
+      <p class="task">
+	  <a name="ix-creating a producibility for braiding:propagation type"></a>Select a <kbd>Propagation Type</kbd><br>By default, <kbd>
+	  Braiding (Geometrical)</kbd> is proposed.</li>
+		<li>
+        <p class="task">
+		<a name="ix-creating a producibility for braiding:braid path"></a>Still in the <kbd>Home</kbd> tab, select the <kbd>Braid 
+		Path</kbd> i.e. the travel path of the braiding head.<br>It is usually 
+		the centerline of the components, and must be a single curve.<table>
+			<tr>
+				<td colspan="2" style="height: 131px">It must cover the entire surface, and even more to define a 
+				starting and finishing length.<ul><li>Either select an 
+					existing braid path. Its name is displayed in the dialog 
+					box.</li><li>Or click <kbd>Generate</kbd>. <br>The 
+					braid path is created as <kbd>Centerline</kbd> under a body 
+					named after the ply, after the <kbd>Stacking</kbd> node.<br>
+					The curve representing the braid path is smoothed to avoid 
+					sharp bumps that reduce the quality of the resulting 
+					braid.<br>The name of the braid path is 
+					displayed in the dialog box.<br>
+					<a name="ix-creating a producibility for braiding:machining parameters">
+					</a>The default values of the
+					<kbd>Machining Parameters</kbd> are updated.<li>Select the 
+					Show <kbd>Path</kbd> check box at the bottom of the dialog 
+					box to display the braid head path as a pair of helices.<br>You can thus check 
+					the consistency of the guide diameter and speed values.<br>
+					Anticlockwise and clockwise tows are displayed in different 
+					colors.<br>
+					<img height="169" src="b35doc/english/online/cpbug_c2/images/BraidPath.png" width="424"></td>
+			</tr>
+			<tr>
+				<td style="width: 5px">
+				<img height="32" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32"></td>
+				<td>It is very important to avoid sharp corners on the guide path.</td>
+			</tr>
+		</table>
+		<br></li>
+      <li>
+      <p class="task">
+	  <a name="ix-creating a producibility for braiding:orientation curve"></a>
+	  Specify an orientation curve that allows the rotation of the braiding tool 
+	  relatively to the component.<br>Selecting an orientation curve adds a head 
+	  angle in the speed table.<br>If you do not specify an 
+	  orientation curve, the Z-Axis is taken as the starting position of the 
+	  mandrel.<br>Optional: Select the <kbd>Reverse direction</kbd> check 
+		box.</p>
+      </li>
+		<li>
+        <p class="task">Enter the values of the <kbd>Machining Parameters</kbd>.<table style="width: 100%">
+			<tr>
+				<td><ul><li><kbd>
+					<a name="ix-creating a producibility for braiding:starting length">
+					</a>Starting Length</kbd>: Distance before the 
+					start of the ply, where the simulation starts.<br>Its 
+					default value is 50 mm.</li>
+					<li><kbd>
+					<a name="ix-creating a producibility for braiding:finishing length">
+					</a>Finishing Length</kbd>: Distance after the end of 
+					the ply, where the simulation ends.<br>Its default value is 
+					50 mm.</li>
+					<li><kbd>
+					<a name="ix-creating a producibility for braiding:guide diameter">
+					</a>Guide Diameter</kbd>: Internal diameter of the 
+					guide.<br>Its default value is 1.5 times the <kbd>Maximum 
+					Diameter</kbd>.<br>However, try to follow the practice of 
+					manufacturing and use a guide ring that is a close fit to 
+					the component. Using an overly large ring can cause 
+					convergence issues with the solution on parts with 
+					curvature.</li>
+					<li><kbd>
+					<a name="ix-creating a producibility for braiding:carrier rotation speed">
+					</a>Carrier Rotation Speed</kbd>: Rotation speed of the 
+					braiding machine.</li>
+					<li><kbd>
+					<a name="ix-creating a producibility for braiding:mandrel speed">
+					</a>Mandrel Speed</kbd>: Average speed of the mandrel. 
+					Either<ul>
+						<li>Enter a fixed value.</li>
+						<li>Or click <kbd>...</kbd> to specify variable mandrel 
+						speeds.</li>
+					</ul>
+					</li>
+				</ul></td>
+			</tr>
+		</table>
+		</p>
+      </li>
+      <li>
+      <p class="task">In the <kbd>Edit Mandrel Speed</kbd> dialog box<table style="width: 100%">
+		  <tr>
+			  <td>
+			  <a name="ix-creating a producibility for braiding:target angle">
+			  </a>Editing the mandrel speed splits the braid axially into multiple segments, with a constant speed over each segment. 
+			  <br>You can edit the position between each segment, defining the theoretical contact position on the surface. <ul>
+				  <li>
+				  Enter a <kbd>Target Angle</kbd>. By default it is the 
+				  ply angle, usually 45�. </li>
+				  <li>
+				  <a name="ix-creating a producibility for braiding:segment spacing">
+				  </a>Enter a <kbd>Segment Spacing</kbd>, i.e. the distance 
+				  between two consecutive segments.</li>
+				  <li>
+				  <a name="ix-creating a producibility for braiding:variable speeds">
+				  </a>Click <kbd>Create</kbd> to create the variable speeds.<br>
+				  Based on a calculation of the braiding simulation that 
+				  includes the effect of the lead of the carrier over the 
+				  contact point, a nominal speed is calculated analytically. 
+				  <br>After a simulation is run, the average angle at each position 
+				  is calculated and the difference to the <kbd>Target Angle</kbd> 
+				  stored as an <kbd>Angle Correction</kbd>.<br><br>They are displayed in the 3D viewer and in the dialog box.<br>
+				  <img height="302" src="b35doc/english/online/cpbug_c2/images/Producibility03NLS.png" width="450"><br>You can update the 
+				  <kbd>Angle Correction</kbd> column with the 
+				  results from the <kbd>Results</kbd> tab:<br>The difference 
+				  between the average simulated angle and the target angle is 
+				  used to estimate the correction angle.</li>
+				  <li>Click <kbd>Import</kbd> to import them from a xml or a csv file.</li>
+				  <li>Click <kbd>Clear</kbd> to erase existing values.</li>
+				  <li>Right-click anywhere in the table to add or delete rows.</li>
+				  <li>Once the speeds are created, click <kbd>Optimize Speed</kbd>.
+				  <kbd><br>Optimize Speed</kbd> recomputes the speed by adding the
+				  <kbd>Angle Correction</kbd> to the <kbd>Target Angle</kbd>. 
+				  <br>Using this &quot;reverse engineering&quot; process, you can determine an 
+				  optimized speed profile to achieve an angle profile.</li>
+			  </ul>
+			  <p>
+			  Checks are done to inform of possible problems and propose 
+			  actions.</p>
+			  </td>
+		  </tr>
+	  </table>
+		</li>
+		<li>
+        <p class="task">Go to the <kbd>Material</kbd> tab to update material 
+		parameters and click <kbd>Estimate Thickness</kbd>.<table style="width: 100%">
+			<tr>
+				<td style="height: 588px">
+				<img class="auto-style1" src="b35doc/english/online/cpbug_c2/images/dbProducibilityMaterialNLS.png"><br>
+				The complete braiding material consists of braid tows wound in a 
+				clockwise and anticlockwise directions around the mandrel, and 
+				optional axial tows. <br>By default, the braid tow material is 
+				set to the material referenced by the ply, with the original 
+				width and thickness appended to the material label. <br>The material 
+				parameters of tow width and thickness can be overridden to 
+				investigate the sensitivity of results to material parameters. 
+				<br>The number of braiding tows, typically between 18 and 36, is 
+				half the number of carriers. <br>If the <kbd>Axial Tow Ratio</kbd> 
+				is set to 1, the number of axial tows is equal to the number of 
+				clockwise tows and equal to the number of anti-clockwise tows.<br><br><ul><li>
+					<kbd>
+					<a name="ix-creating a producibility for braiding:braid tow material">
+					</a>Braid Tow Material</kbd>: Taken from the materials 
+					defined in the <kbd>Composites Parameters</kbd>.</li>
+					<li><kbd>
+					<a name="ix-creating a producibility for braiding:num braiding tows">
+					</a>Num Braiding Tows</kbd>: Number of braiding tows in 
+					each direction, defined by the braiding machine, and equal 
+					to half the carriers of the machine. By default, it is set 
+					to 18.</li>
+					<li><kbd>
+					<a name="ix-creating a producibility for braiding:braiding tow width">
+					</a>Braiding Tow Width</kbd>: Nominal cured width at 
+					the expected fiber volume fraction.<br>By default, it is the 
+					width of the selected material, but it is editable.</li>
+					<li><kbd>
+					<a name="ix-creating a producibility for braiding:braiding tow thickness">
+					</a>Braiding Tow Thickness</kbd>: Nominal cured 
+					thickness at the expected fiber volume fraction.<br>By 
+					default, it is the thickness of the selected material, but 
+					it is editable.</li>
+					<li><kbd>
+					<a name="ix-creating a producibility for braiding:axial tow ratio">
+					</a>Axial Tow Ratio</kbd>: Ratio of axial tows/braid 
+					tows. Possible value are:<ul>
+						<li><kbd>1</kbd> for tri-axial braid</li>
+						<li><kbd>0</kbd> for bi-axial braid (<kbd>Axial Tow Material</kbd>, 
+						<kbd>Axial Tow Width</kbd>, <kbd>Axial Tow Thickness</kbd> are disabled).</li>
+					</ul>
+					</li>
+					<li><kbd>
+					<a name="ix-creating a producibility for braiding:axial tow material">
+					</a>Axial Tow Material</kbd>: Taken from the materials 
+					defined in the <kbd>Composites Parameters</kbd>.</li>
+					<li><kbd>
+					<a name="ix-creating a producibility for braiding:axial tow width">
+					</a>Axial Tow Width</kbd>: Nominal cured width at the 
+					expected fiber volume fraction.<br>By default, it is the 
+					width of the selected material, but it is editable.</li>
+					<li><kbd>&nbsp;Axial Tow Thickness</kbd>: Nominal cured 
+					thickness at the expected fiber volume fraction.<br>By 
+					default, it is the thickness of the selected material, but 
+					it is editable.</li>
+					<li><kbd>
+					<a name="ix-creating a producibility for braiding:fiber volume fraction">
+					</a>Fiber Volume Fraction</kbd>: Fiber volume 
+					fraction to use to compute the thickness.</li>
+					<li><kbd>
+					<a name="ix-creating a producibility for braiding:estimate thickness">
+					</a>Estimate Dimensions</kbd>: 
+					Thickness information for cross-sections along the mandrel 
+					is computed (minimum, maximum and mean values). <br>The 
+					computation is based on the target braid angle, tow 
+					dimension, number of tows and local perimeter of the 
+					mandrel.<br>The range of perimeters is displayed, for an 
+					early indication of the suitability of the design for use as 
+					a mandrel in braiding.</span></li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+        <br>
+      </li>
+      <li>
+      <p class="task">
+	  <a name="ix-creating a producibility for braiding:thickness update"></a>In the <kbd>Thickness Update</kbd> tab, select the <kbd>
+	  Thickness update</kbd> check box to activate it.<br>It adjusts the height 
+	  of the surface to take underlying braid layers into account <br>(using the thickness defined for the material, not the effective one).<br>This is a quick method. For a 
+	  greater accuracy, use the mandrel generation tool. <br>It uses a thickness derived from braid simulations of the underlying layers.<table style="width: 100%">
+		  <tr>
+			  <td>
+			  <img class="auto-style1" height="272" src="b35doc/english/online/cpbug_c2/images/dbProducibilityThicknessNLS.png" width="399"><br>Press the required icon to define the type of computation:<ul><li>
+				  <kbd>Constant Thickness</kbd>
+				  <img height="24" src="b35doc/english/online/icons_C2/images/I_CPD_Const_offset1P2.png" width="24"></li>
+				  <li><kbd>Core Sampling</kbd>
+				  <img height="24" src="b35doc/english/online/icons_C2/images/I_CompositesCoreSampleP2.gif" width="24"></li>
+				  <li><kbd>User or Automatic Constant Offset</kbd>
+				  <img height="24" src="b35doc/english/online/icons_C2/images/I_CPD_COffSet_UserP2.png" width="24"></li>
+			  </ul>
+			  <p>Select the elements to process: <kbd>Full Stacking</kbd> or
+			  <kbd>Ply group only</kbd>.</p>
+			  </td>
+		  </tr>
+	  </table>
+	  </p>
+      </li>
+    
+		<li><p class="task">In the <kbd>Advanced Parameters</kbd> tab:<br>
+		<img height="394" src="b35doc/english/online/cpbug_c2/images/dbProducibilityAdvancedNLS.png" width="467" class="auto-style1"><br>
+		The braid calculation is done on a facetted mesh extracted from the 
+		geometry.<br>The <kbd>Tessellation Sag</kbd> and <kbd>Step</kbd> control the 
+		tessellation on which the simulation is run. <br>The <kbd>Sag</kbd> 
+		represents the maximum distance from the surface to an element, while 
+		the <kbd>Step</kbd> limits the maximum size of an element.<kbd><br>Fiber 
+		Interaction</kbd> invokes algorithms to account for the interaction 
+		between fibers in an empirical way, stabilizing the simulation.<br>The
+		<kbd>Centerline Orientation</kbd> options force the guide to follow the 
+		centerline, or to keep a constant alignment with the tangent at the 
+		midpoint.</li>
+		<li>
+		<p class="task">Enter the required values:<table style="width: 100%">
+			<tr>
+				<td>
+				<ul>
+					<li>
+					<ul>
+						<li><kbd>
+						<a name="ix-creating a producibility for braiding:axial step">
+						</a>Axial Step</kbd>: Defines the maximum length of steps 
+					when exporting the piecewise linear mandrel path curve. </li>
+						<li><kbd>
+						<a name="ix-creating a producibility for braiding:tessellation sag">
+						</a>Tessellation Sag</kbd>: Distance between the mesh 
+					and the surface used to generate the tessellation used in 
+					the simulation and exported in the layup file.</li>
+						<li>
+						<a name="ix-creating a producibility for braiding:tessellation step">
+						</a><kbd>Tessellation Step</kbd>: 
+					Maximum allowed length of an element used to generate the 
+					tessellation used in the simulation and exported in the 
+					layup file. <br>Setting a smaller value gives a better 
+					approximation to the component shape, at the expense of 
+					slower simulation.</li>
+					</ul>
+					</li>
+					<li>
+					<a name="ix-creating a producibility for braiding:fiber interactions">
+					</a>Select the <kbd>Fiber interaction</kbd>s check box to 
+				check the interactions between fibers at each crossing point, 
+				and reposition the fiber. <br>However, it is more time 
+				consuming. Using this means that where fibers cross over other 
+				fibers, they are pulled towards the surface.</li>
+					<li>Select the <kbd>Pertub Helix</kbd> check box to compute perturbation 
+				effects.<br>The braiding simulation assumes the fibre between the guide ring 
+				and the mandrel is straight. However, the tow does not follow a 
+				straight line from guide ring to mandrel, but a curved 
+				(segmented) path due to the contact with the fibres going in the 
+				opposite direction. 
+					<ul>
+						<li>With a cylindrical mandrel, this curvature 
+				is the same at all points around the mandrel. </li>
+						<li>With non-cylindrical mandrels the curvature varies, related in some way 
+				to the distance between the mandrel and the guide ring. </a>
+						</li>
+					</ul>
+					</li>
+					A quick solution to the problem is to 
+				calculate the amount by which the tow angles need to be adjusted 
+				to account for the varying frictional affects when the mandrel 
+				is not cylindrical based on the variation in number of fibres 
+				crossed and use this to correct the fibre angles. A scaling 
+				factor is added to tune the magnitude of the effect as it 
+				depends on surface finish of the fibres, which is not accounted 
+				for in the calculations. <ul><li span>If the check box is not selected or 
+				if the value is 0, perturbation effects are not calculated.</i>
+						<li span>A 
+				value of 1 uses the values as calculated. </span></li>
+					</ul>
+					<li>
+					<a name="ix-creating a producibility for braiding:centerline orientation">
+					</a>Select the <kbd>Centerline orientation</kbd>, i.e. how the 
+				brading machine is set up to work:<ul>
+						<li><kbd>Follow braid path tangent</kbd> (default option). 
+					Use this option if there is a large curvature on the mandrel 
+					as a whole.</li>
+						<li><kbd>Follow braid path midpoint</kbd>: With this option, 
+					the mandrel is translated without being rotated. <br>To be used 
+					when there are sharp direction changes in the component, 
+					causing the tow threads to overlap.<br>However, the total 
+					change of direction of the centerline must remain small.</li>
+					</ul>
+					</li>
+				</td>
+			</tr>
+		</table>
+		</li><li><p class="task">
+		<a name="ix-creating a producibility for braiding:results"></a>Click
+		<kbd>Preview.</kbd><br>
+		<img src="b35doc/english/online/cpbug_c2/images/BraidResults.png"><br>then go 
+		to the <kbd>Results</kbd> tab to manage the 
+		results.<br>
+		Results are updated dynamically when input variables are 
+		modified.<br>
+		<table style="width: 100%">
+			<tr>
+				<td>
+				<img class="auto-style1" height="272" src="b35doc/english/online/cpbug_c2/images/dbProducibilityResultsNLS.png" width="399"><ul><li>
+					From the list, select the <kbd>Result</kbd> to check:<ul>
+						<li><kbd>
+						<a name="ix-creating a producibility for braiding:deviation">
+						</a>Axial Deviation</kbd></li>
+						<li><kbd>Clockwise Deviation</kbd>					</li>
+						<li><kbd>Anticlockwise Deviation</kbd>					</li>
+											<li><kbd>
+						<a name="ix-creating a producibility for braiding:angle">
+						</a>Clockwise Angle</kbd></li>
+						<li><kbd>Anticlockwise Angle</kbd></li>
+						<li><kbd>
+						<a name="ix-creating a producibility for braiding:coverage">
+						</a>Coverage</kbd></li>
+						<li><kbd>
+						<a name="ix-creating a producibility for braiding:separation">
+						</a>Separation</kbd></li>
+						<li><kbd>
+						<a name="ix-creating a producibility for braiding:thickness">
+						</a>Thickness</kbd></li>
+						<li><kbd>
+						<a name="ix-creating a producibility for braiding:concavity">
+						</a>Concavity</kbd></li>
+						<li><kbd>Pertub Ratio</kbd> allows 
+						to adjust the scaling factor to get the desired effect 
+						on large aspect ratio mandrels.</li>
+						<li><kbd>Perimeter</kbd> (Requires
+						<kbd>Ruled surface Display</kbd>).</li>
+						<li><kbd>No Result</kbd></li>
+					</ul>
+					<li>
+					<a name="ix-creating a producibility for braiding:warning value">
+					</a>Define the <kbd>Warning </kbd>and<a name="ix-creating a producibility for braiding:limit value"><span class="auto-style2">
+					</span></a><kbd>Limit
+					</kbd>values.<ul>
+						<li><kbd>Warning</kbd> defines the value for the yellow 
+						band.</li>
+						<li><kbd>Limit</kbd> defines the value for the red band.
+						</li>
+					</ul>
+					</li>
+					<li>Select the elements where the results are displayed (multi-selection is 
+					allowed).<ul>
+						<li><kbd>Clockwise tow</kbd></li>
+						<li><kbd>Anticlockwise tow</kbd></li>
+						<li><kbd>Axial tow</kbd></li>
+						<li><kbd>Surface</kbd></li>
+						<li><kbd>Labels</kbd></li>
+						<li><kbd>Ruled surface</kbd></li>
+					</ul>
+					</li>
+				</ul>
+				</td>
+			</tr>
+		</table>
+		</li><li><p class="task">Click <kbd>
+						Producibility Inspection.</kbd><table style="width: 100%">
+			<tr>
+				<td><ul><li>Create points where you want to retrieve braided 
+					fiber results.<br>Multi-selection is available.</li>
+					<li>Click <kbd>Apply</kbd>.<br>Braided fiber results are displayed 
+					in the <kbd>Inspection Analysis</kbd> dialog box. <br>
+					<img height="282" src="b35doc/english/online/cpbug_c2/images/InspectionAnalysisNLS.png" width="513"><br>They 
+						can be considered as core samples for producibility 
+						results. <br>For each point, you can retrieve the material, 
+						total thickness, expected and actual direction and the 
+						delta between them, as well as the local rosette.<br>The 
+						results can be exported.</li></ul></td>
+			</tr>
+		</table>
+		</li>
+					<li><p class="task">Select an additional action:<table style="width: 100%">
+						<tr>
+							<td>
+		<ul>
+						<li><kbd>
+						Export guide path</kbd>: Data from the centreline 
+						and speed table are written to an XML file to drive 
+						braid machines </li>
+						<li><kbd>
+						<a name="ix-creating a producibility for braiding:export to layup">
+						</a>Export to Layup</kbd>: Writes out the standard 
+						layup file that can be used to transfer Composites 
+						definitions to other packages.<br>It creates a balanced 
+						ply by writing 5 layers &#8211; � clockwise, � anti, axial, � 
+						anti, � clockwise.<br>Fiber directions are taken from 
+						the simulated ones.</li>
+						<li><kbd>
+						<a name="ix-creating a producibility for braiding:export results">
+						</a>Export results </kbd>as a .csv file for locations 
+						along the guide path. The values are the average for a 
+						ring of points at each location along the guide path.</li>
+						<li><kbd>Inspect Angles</kbd> 
+						exports the variation in angle around the perimeter at a 
+						chosen location on the mandrel to allow comparison of 
+						simulation with experimental results. 
+						<ul>
+							<li>Select a point. It is projected onto the closest 
+							point on the centerline.
+							<ul>
+								<li>A plane normal to the centerline is created 
+								at this point. </li>
+								<li>A line is created at the intersection of the 
+								plane with the mandrel surface. </li>
+								<li>100 points are created on this line. </li>
+							</ul>
+							</li>
+							<li>Or a line. 100 equally spaced points are created 
+							on this line, then projected on the mandrel surface. 
+							<br>A set of 100 closest points is created on the 
+							surface.</li>
+							<li>Enter the storage path to export the result .csv 
+							file. </li>
+							<li>It looks like this. <br>Note: <kbd>Point</kbd> 
+							gives the position of 100 evenly spaced points 
+							around the perimeter.<br>
+							<table border="1" cellpadding="0" cellspacing="0" class="auto-style3" style="mso-border-alt: solid #A3A3A3 1.0pt; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in">
+								<tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes">
+									<td valign="top" width="175">
+									<p align="center" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">Coordinate<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="47">
+									<p align="center" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">Point<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="57">
+									<p align="center" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">Ratio<o:p></o:p></span></p>
+									<p align="center" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">CW<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="57">
+									<p align="center" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">Ratio<o:p></o:p></span></p>
+									<p align="center" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">ACW<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="66">
+									<p align="center" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">Clock-wise<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="57">
+									<p align="center" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">
+									Anti-Clock-wise<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="76">
+									<p align="center" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">Perturbed 
+									Clock-wise<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="73">
+									<p align="center" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">Perturbed 
+									Anti-Clock-wise<o:p></o:p></span></p>
+									</td>
+								</tr>
+								<tr style="mso-yfti-irow:1">
+									<td valign="top" width="175">
+									<p class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">(376.843 
+									19.910 -13.811)<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="47">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">1<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="57">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">0.779<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="57">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">0.779<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="66">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">-48.002<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="57">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">45.82<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="76">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">0<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="73">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">0<o:p></o:p></span></p>
+									</td>
+								</tr>
+								<tr style="mso-yfti-irow:2">
+									<td valign="top" width="175">
+									<p class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">(376.843 
+									19.518 -15.228)<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="47">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">2<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="57">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">0.853<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="57">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">0.853<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="66">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">-46.544<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="57">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">45.975<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="76">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">0<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="73">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">0<o:p></o:p></span></p>
+									</td>
+								</tr>
+								<tr style="mso-yfti-irow:3;mso-yfti-lastrow:yes">
+									<td valign="top" width="175">
+									<p class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">(376.843 
+									18.864 -16.544)<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="47">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">3<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="57">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">0.855<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="57">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">0.855<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="66">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">-45.38<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="57">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">46.107<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="76">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">0<o:p></o:p></span></p>
+									</td>
+									<td valign="top" width="73">
+									<p align="right" class="MsoNormal">
+									<span lang="EN-GB" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+  color:black;mso-ansi-language:EN-GB;mso-fareast-language:EN-GB">0<o:p></o:p></span></p>
+									</td>
+								</tr>
+							</table>
+							</li>
+						</ul>
+						</li>
+					</ul>
+							</td>
+						</tr>
+					</table>
+					<br>
+					<li>
+					<p class="task">Enter a name of a geometrical set, and press <kbd>Keep 
+					all visible fibers </kbd>to do so.<table style="width: 100%">
+						<tr>
+							<td>The graphic lines used for the preview are 
+							stored as geometrical lines, in three sets:<ul><li>
+								<kbd>Braiding fibers Clockwise tow</kbd></li>
+								<li><kbd>Braiding fibers Anticlockwise tow</kbd></li>
+								<li><kbd>Braiding fibers Axial tow</kbd></li>
+								<li>Each set contains the lines, one for each 
+								head.</li></ul></td>
+						</tr>
+					</table>
+					<br></li>
+		<li>
+		<p class="task">When you are done, click <kbd>OK</kbd> to validate and 
+		exit the command.</li>
+	</ol>
+    </td>
+  </tr>
+  <tr>
+    <td style="height: 879px"></td>
+  </tr>
+  <tr>
+    <td colspan="2">
+    <p align="center">
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

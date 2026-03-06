@@ -1,0 +1,133 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating Points, Lines... as Parameters</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Creating Points, Lines... as Parameters&nbsp;<a name="ix-parameter::creating points and lines as parameters"></a>
+ <a name="ix-creating points and lines as parameters"></a></h1>
+ <table border="0" valign="top" cellpadding="4" style="border-collapse: collapse">
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">The scenario below explains how to determine the position 
+     of the inertia axis of a pad. To do so, start from a pad, then:<ol>
+       <li>Create a line by using either method ('datum' or
+       <img src="b35doc/english/online/icons_C2/images/I_FormulaP2.gif" width="24" height="24">)</li>
+       <li>Use the inertiaAxis line constructor to specify that this line is to 
+       be the inertia axis of the pad.</li>
+       <li>Retrieve the coordinate of the point located at the intersection of 
+       the inertia axis and the pad extrusion plane.&nbsp;</li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/amethod.gif" width="32" height="32"></td>
+     <td valign="top">To create elements such as&nbsp; Points, Lines, Curves, 
+     Surfaces, Planes or Circles and use them in knowledgeware relations, you 
+     can:
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+       <tr>
+         <td valign="top" width="100%">
+         <ul>
+           <li>
+           <p class="task">Create these elements as 'Isolate' elements in the 
+           Generative Shape Design workbench. 'Isolate' elements also called <i>
+           Datum </i>are elements that have no link to the other entities that 
+           were used to create them. &nbsp;For information on 'Datum' type elements, 
+           see the <i>Generative Shape Design User's Guide</i>.</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td valign="top" width="100%">
+         <ul>
+           <li>
+           <p class="task">Create these elements by using the <i>f(x)</i> 
+           capabilities and select the right type of element from the New 
+           parameter of type list.&nbsp;&nbsp;</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <p class="task">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">Access the Part Design workbench, create any sketch in 
+       the yz plane, then extrude this sketch to create a pad. If need be, refer 
+       to the <i>Part Design User's Guide</i>.</li>
+       <li>
+       <p class="task">Create a line intended to be used as an inertia axis 
+       afterwards.&nbsp;</li>
+       <li>
+       <p class="task">To do so, click the Formulas icon , select the Line item 
+       in New Parameter of type, then click New Parameter of type.</li>
+       <li>
+       <p class="task">Click the Formulas icon. From the parameter list, select 
+       the line you have created (Geometrical Set.1&#092;Line.1).</li>
+       <li>
+       <p class="task">Click Add Formula and add the formula below in the 
+       editor:<br>
+       <code>Geometrical Set.1&#092;Line.1 
+       = inertiaAxis(3,PartBody)<br>
+       </code>The inertiaAxis function is accessible through the Line 
+       constructors. The axis number 3 is the one which is in the extrusion 
+       direction (normal to yz). Click OK in the Formulas dialog box. The 
+       inertia axis is displayed in the geometry area.</li>
+       <li>
+       <p class="task">Back to
+       <img src="b35doc/english/online/icons_C2/images/I_FormulaP2.gif" width="24" height="24">. 
+       Create three length type parameters: X, Y and Z.</li>
+       <li>
+       <p class="task">Retrieve the coordinates of the point located at the 
+       intersection of the inertia axis and the 'yz plane'. To do so, create the 
+       formulas below:</p>
+       <div align="left">
+         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="80%" id="AutoNumber2" bgcolor="#F0F0F0">
+           <tr>
+             <td width="100%"><code>X=intersect(Geometrical Set.1&#092;Line.1, 
+             'yz plane').coord(1)<br>
+             Y=intersect(Geometrical Set.1&#092;Line.1, 
+             'yz plane').coord(2)<br>
+             Z=intersect(Geometrical Set.1&#092;Line.1, 
+             'yz plane').coord(3)</code></td>
+           </tr>
+         </table>
+       </div>
+       <p class="task">You get the intersect&nbsp; function from the Wireframe 
+       constructors and the <i>point</i>.coord method from the Measures item of 
+       the dictionary.&nbsp;</li>
+       <li>
+       <p class="task">Check the value displayed in the specification tree as 
+       well as in the Formulas dialog box.</li>
+     </ol>
+     <p class="task">The KwoGettingStarted.CATPart document used as a sample for 
+     the Product <i>Engineering Optimizer User's Guide</i> illustrates this 
+     scenario.&nbsp;</td>
+   </tr>
+ </table>
+ <p align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"> 
+ &nbsp;</p>
+
+ </body>
+
+</html>
+

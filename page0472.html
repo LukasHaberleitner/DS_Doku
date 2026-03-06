@@ -1,0 +1,1211 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head><meta name="MonocodingType" content="0"></meta>
+	  <meta name="MonocodingFlag" content="C2"></meta>
+	  <meta http-equiv="Content-Language" content="en-us"></meta>
+	  <meta name="GENERATOR" content="Microsoft FrontPage 6.0"></meta>
+	  <meta name="ProgId" content="FrontPage.Editor.Document"></meta>
+  	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	  <title>Getting Started with the Thermal Analysis
+  Workbench</title>
+          <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+          
+	 </head><body onload="newPage('pt01ch03s02.html');" ondblclick="newSelection();" bgcolor="#FFFFFF" text="#000000" vlink="#FF5113" alink="#004D48" link="#004D48" class="TEXT"><div class="sect1" id="ath-gen-gst-heattransfer">
+    <a name="ath-gen-gst-heattransfer"></a>
+
+    <div class="titlepage">
+      
+
+      <div class="title">
+        <h3>Getting Started with the
+        Thermal Analysis Workbench</h3>
+      </div>
+    </div>
+
+    <p><span class="abstract">This tutorial introduces you to the
+    Thermal Analysis workbench. You will consider the thermal
+    history of a pipe that is initially uniformly at room
+    temperature. The pipe is then subjected to the sudden
+    introduction of a hot fluid, while continuing to sit in an
+    environment exposed to air at room temperature. The hot
+    internal fluid will drive the pipe toward higher temperatures,
+    while the convection of heat to the outside air will result in
+    a thermal gradient through the pipe. You will then continue the
+    analysis and consider the transient stress distribution
+    resulting from this thermal history and other mechanical
+    loading, such as the pressure of the introduced fluid. The
+    following tasks are discussed:</span></p>
+
+    <ul type="disc"><li>
+        <p><span class="abstract"><a href="page0472.html#ath-gen-gst-applytempdepmaterial">
+        Assigning Temperature-Dependent Material
+        Properties to a Part</a></span></p>
+      </li>
+
+      <li>
+        <p><a href="page0472.html#ath-gen-gst-filminitconditions">
+        Defining Film Conditions and Initial
+        Conditions in a Heat Transfer Step</a></p>
+      </li>
+
+      <li>
+        <p><a href="page0472.html#ath-gen-gst-computeandview">Computing and Viewing Nodal
+        Temperatures</a></p>
+      </li>
+
+      <li>
+        <p><a href="page0472.html#ath-gen-gst-addanalysiscase">Adding an Analysis
+        Case</a></p>
+      </li>
+
+      <li>
+        <p><a href="page0472.html#ath-gen-gst-cutplane">Postprocessing and Cut Plane
+        Analysis</a></p>
+      </li>
+    </ul><p>These tasks should take about 60 minutes to complete. You
+    must have a Thermal Analysis session running before you
+    start.</p>
+
+    <div style="margin-left: 0.5in; margin-right: 0.5in;" class="note">
+      <p><b class="title"><a name="d0e1664">Note:&nbsp;</a></b>
+      The parameters in this tutorial are specified in the
+      meter/kilogram/second units system. You can specify the units
+      system for all analysis parameters by selecting
+      <b><span class="guitext"><b class="guimenu">Tools</b></span>&gt;<span class="guitext"><b class="guimenuitem">Options</b></span></b> from the menu bar,
+      clicking the <span class="guitext"><b class="guilabel">Units</b></span> tab on the <span class="guitext"><b class="guilabel">Parameters and
+      Measure</b></span> page, and selecting the units for each
+      relevant magnitude.</p>
+    </div>
+
+    <div class="sect2" id="ath-gen-gst-applytempdepmaterial">
+      <a name="ath-gen-gst-applytempdepmaterial"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Assigning
+          Temperature-Dependent Material Properties to a Part</h3>
+        </div>
+      </div>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to load the <tt class="filename">.CATPart</tt> document that contains the model
+      geometry for this tutorial and how to add
+      temperature-dependent material properties to the material
+      definition.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Open the <tt class="filename">.CATPart</tt> file for
+            this tutorial.</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Select <b><span class="guitext"><b class="guimenu">File</b></span>&gt;<span class="guitext"><b class="guimenuitem">Open</b></span></b>
+                  from the menu bar.</p>
+
+                  <p>The <span class="guitext"><b class="guititle">File Selection</b></span> dialog box
+                  appears.</p>
+                </li>
+
+                <li>
+                  <p>In the <span class="guitext"><b class="guilabel">File name</b></span> field at the
+                  bottom of the <span class="guitext"><b class="guititle">File Selection</b></span> dialog box,
+                  type <tt class="filename"><i class="replaceable">install_dir</i>\intel_a\resources\graphic\ANLDoc\sample02.CATPart</tt>,
+                  where <i class="replaceable">install_dir</i> is
+                  the name of the directory in which the Thermal
+                  Analysis product is installed. Alternatively, you
+                  can browse to this location using the arrow next
+                  to the <span class="guitext"><b class="guilabel">Look in:</b></span> field and select
+                  the file from the list in the center of the
+                  dialog box.</p>
+                </li>
+
+                <li>
+                  <p>Click <span class="guitext"><b class="guibutton">Open</b></span> in the <span class="guitext"><b class="guibutton">File
+                  Selection</b></span> dialog box.</p>
+                </li>
+              </ol></div>
+
+            <p>The part design document is opened in the
+            <span class="guitext"><b class="guilabel">Part
+            Design</b></span> workbench, and the selected part
+            appears in the window, as shown in <a href="page0472.html#afc-thm-samplepart">Figure 3&#8211;6</a>.</p>
+
+            <div class="figure">
+              <p><a name="afc-thm-samplepart"></a><b><span class="gentxt_dkgry">Figure 3&#8211;6</span></b> The
+              <tt class="filename">sample02.CATPart</tt> model.</p>
+
+              <div class="graphic" id="d0">
+                <p><img src="b35doc/english/online/anlug_c2/images/afc-thm-samplepart.png"></img></p>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <p>Modify the material properties.</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Click on the Aluminium object under the
+                  PartBody feature in the specification tree, and
+                  select <b><span class="guitext"><b class="guimenu">Edit</b></span>&gt;<span class="guitext"><b class="guimenuitem">Properties</b></span></b>
+                  from the menu bar to edit the material
+                  properties.</p>
+
+                  <p>The <span class="guitext"><b class="guilabel">Properties</b></span> dialog box
+                  appears.</p>
+                </li>
+
+                <li>
+                  <p>Use the arrows near the top of the dialog box
+                  to scroll and reveal additional tabs; click the
+                  <span class="guitext"><b class="guilabel">Nonlinear and Thermal
+                  Properties</b></span> tab when it appears.</p>
+
+                  <p>A warning dialog box will appear the first
+                  time that nonlinear and thermal properties are
+                  loaded in a Thermal Analysis session. Click
+                  <span class="guitext"><b class="guibutton">OK</b></span> to dismiss the
+                  warning.</p>
+                </li>
+
+                <li>
+                  <p>In the list of <span class="guitext"><b class="guilabel">Available Options</b></span>, toggle
+                  on <span class="guitext"><b class="guilabel">Elasticity</b></span>; enter a value
+                  of 6.9E10 N/m<sup>2</sup> for <span class="guitext"><b class="guilabel">Young&#8217;s
+                  Modulus</b></span> and a value of 0.33 for
+                  <span class="guitext"><b class="guilabel">Poisson&#8217;s Ratio</b></span>.</p>
+                </li>
+
+                <li>
+                  <p>Toggle on <span class="guitext"><b class="guilabel">Plasticity</b></span>. Under the
+                  <span class="guitext"><b class="guilabel">Plasticity</b></span> field, toggle on
+                  <span class="guitext"><b class="guilabel">Use
+                  temperature-dependent data</b></span>. Click the
+                  <span class="guitext"><b class="guilabel">Import
+                  data from file</b></span> icon <img src="b35doc/english/online/anlug_c2/images/afc-folder.png"></img> at the bottom of the
+                  <span class="guitext"><b class="guilabel">Properties</b></span> dialog box. In
+                  the <span class="guitext"><b class="guilabel">File name</b></span> field at the
+                  bottom of the <span class="guitext"><b class="guilabel">Open File</b></span> dialog box that
+                  appears, type <tt class="filename"><i class="replaceable">install_dir</i>\intel_a\resources\graphic\ANLDoc\plasticProps.txt</tt>,
+                  where <i class="replaceable">install_dir</i> is
+                  the name of the directory in which Thermal
+                  Analysis is installed, and click <span class="guitext"><b class="guibutton">Open</b></span>.</p>
+
+                  <p>The stress/strain data are imported into the
+                  <span class="guitext"><b class="guilabel">Plasticity</b></span> table.</p>
+                </li>
+
+                <li>
+                  <p>Toggle on <span class="guitext"><b class="guilabel">Density</b></span>, and enter a value
+                  of 2700 kg/m<sup>3</sup>.</p>
+                </li>
+
+                <li>
+                  <p>Toggle on <span class="guitext"><b class="guilabel">Thermal Conductivity</b></span>. Under
+                  the <span class="guitext"><b class="guilabel">Thermal Conductivity</b></span> field,
+                  toggle on <span class="guitext"><b class="guilabel">Use temperature-dependent
+                  data</b></span>. Enter a value of 204 W/mK for a
+                  temperature of 273 K. Click <span class="guitext"><b class="guibutton">Add</b></span> to
+                  add a row to the table, and enter a value of 225
+                  W/mK for a temperature of 573 K.</p>
+                </li>
+
+                <li>
+                  <p>Toggle on <span class="guitext"><b class="guilabel">Specific Heat</b></span>, and enter a
+                  value of 0.88 KJ/kgK.</p>
+                </li>
+
+                <li>
+                  <p>Toggle on <span class="guitext"><b class="guilabel">Coefficient of Thermal
+                  Expansion</b></span>, and enter a value of
+                  8.42E&#8211;5/K.</p>
+                </li>
+
+                <li>
+                  <p>Click <span class="guitext"><b class="guibutton">OK</b></span> in the <span class="guitext"><b class="guilabel">Properties</b></span> dialog box to
+                  update the material properties.</p>
+                </li>
+              </ol></div>
+          </li>
+
+          <li>
+            <p>Since you have made changes to the original
+            <tt class="filename">.CATPart</tt> file, you should
+            save it to a location where you have write permissions.
+            Select <b><span class="guitext"><b class="guimenu">File</b></span>&gt;<span class="guitext"><b class="guimenuitem">Save</b></span></b> from the menu bar,
+            and select a directory in which you can save the
+            file.</p>
+          </li>
+        </ol></div>
+
+      <p>For information on related topics, click the following
+      item:</p><br></br><ul type="disc"><li>
+          <p><a href="page0459.html">Material
+          Properties</a></p>
+        </li>
+      </ul><span id="ath-gen-gst-applytempdepmaterial"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div>
+
+    <div class="sect2" id="ath-gen-gst-filminitconditions">
+      <a name="ath-gen-gst-filminitconditions"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Defining Film Conditions
+          and Initial Conditions in a Heat Transfer Step</h3>
+        </div>
+      </div>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>This task shows you how to enter the Thermal Analysis
+      workbench, edit a heat transfer step, define film conditions,
+      and define an initial temperature field. You will define film
+      conditions for the inner and outer surfaces of a pipe
+      intersection model, and you will apply an initial temperature
+      to the entire pipe.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Select <b><span class="guitext"><b class="guimenu">Start</b></span>&gt;<span class="guitext"><b class="guisubmenu">Analysis &amp;
+            Simulation</b></span>&gt;<span class="guitext"><b class="guimenuitem">Thermal
+            Analysis</b></span></b> from the main menu bar.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">New
+            Analysis Case</b></span> dialog box appears with the
+            default <span class="guitext"><b class="guilabel">Thermal Analysis</b></span> type
+            selected.</p>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guilabel">OK</b></span> in the <span class="guitext"><b class="guilabel">New Analysis
+            Case</b></span> dialog box to enter the Thermal
+            Analysis workbench.</p>
+
+            <div style="margin-left: 0.5in; margin-right: 0.5in;" class="warning">
+              <p><img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32" style="vertical-align: middle"></img><b class="title"><a name="d0e1962">Warning:&nbsp;</a></b> Do not select
+              <span class="guitext"><b class="guilabel">Keep as
+              default starting analysis case</b></span> in the
+              <span class="guitext"><b class="guilabel">New
+              Analysis Case</b></span> dialog box.</p>
+            </div>
+
+            <p>A <tt class="filename">.CATAnalysis</tt> document
+            named <tt class="filename">Analysis1</tt> opens. A link
+            exists between the <tt class="filename">.CATPart</tt>
+            and the <tt class="filename">.CATAnalysis</tt>
+            document. In addition, the standard structure of the
+            Analysis Manager specification tree is displayed.</p>
+
+            <p>The Thermal Case objects set contains a Simulation
+            History objects set with an Initialization step and a
+            Heat Transfer Step objects set, a Jobs objects set
+            containing a default job, and empty Display Groups and
+            Analysis Case Solution objects sets. The Simulation
+            History will contain a description of the environmental
+            influences on the model, which generally vary as a
+            function of time over a period defined by the user.
+            (See <a href="page0520.html">Specification
+            Tree</a> for more details on the specification
+            tree.)</p>
+          </li>
+
+          <li>
+            <p>To edit the heat transfer step created with the
+            analysis case, double-click on the <span class="guitext"><b class="guilabel">Heat Transfer
+            Step&#8211;1</b></span> objects set in the
+            specification tree under the Simulation History objects
+            set for the current analysis case. (The current
+            analysis case is the one most recently created or
+            edited; it is underlined in the specification
+            tree.)</p>
+
+            <p>The Thermal Analysis workbench opens the
+            <span class="guitext"><b class="guilabel">Heat Transfer
+            Step</b></span> dialog box.</p>
+
+            <div style="margin-left: 0.5in; margin-right: 0.5in;" class="note">
+              <p><b class="title"><a name="d0e2014">Note:&nbsp;</a></b> To create a new heat
+              transfer step, you can click the Heat Transfer Step
+              icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_HeatTransferStep.gif"></img>.</p>
+            </div>
+          </li>
+
+          <li>
+            <p>You can change the step identifier by editing the
+            <span class="guitext"><b class="guilabel">Step
+            name</b></span> field. This name will be used in the
+            specification tree.</p>
+          </li>
+
+          <li>
+            <p>Enter <tt class="userinput">Computation of
+            temperature distribution</tt> as the <span class="guitext"><b class="guilabel">Step
+            description</b></span>. This description will appear in
+            the input file that is written for this analysis.</p>
+          </li>
+
+          <li>
+            <p>Modify the <span class="guitext"><b class="guilabel">Basic Step Data</b></span>:</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Enter a value of 200 seconds for the
+                  <span class="guitext"><b class="guilabel">Step
+                  time</b></span>.</p>
+                </li>
+
+                <li>
+                  <p>Enter a value of 1 second for the <span class="guitext"><b class="guilabel">Initial increment
+                  size</b></span>.</p>
+                </li>
+
+                <li>
+                  <p>Enter a value of 10 seconds for the
+                  <span class="guitext"><b class="guilabel">Maximum
+                  increment size</b></span>.</p>
+                </li>
+              </ol></div>
+          </li>
+
+          <li>
+            <p>Modify the <span class="guitext"><b class="guilabel">Heat Transfer Data</b></span>:</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Toggle on <span class="guitext"><b class="guilabel">Transient</b></span> as the
+                  <span class="guitext"><b class="guilabel">Thermal
+                  response</b></span>.</p>
+                </li>
+
+                <li>
+                  <p>Toggle on <span class="guitext"><b class="guilabel">End step when temperature change rate
+                  is less than</b></span>, and enter a value of
+                  0.5&nbsp;Kdeg for this option.</p>
+                </li>
+
+                <li>
+                  <p>Enter a value of 10 Kdeg for the <span class="guitext"><b class="guilabel">Maximum temperature
+                  change allowed per increment</b></span>.</p>
+                </li>
+              </ol></div>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">OK</b></span> when you have finished
+            editing the step.</p>
+
+            <p>The Heat Transfer Step objects set contains a
+            default Field Output Request object in a Field Output
+            Request objects set and empty History Output Requests,
+            Loads, and Boundary Conditions objects sets.</p>
+          </li>
+
+          <li>
+            <p>When defining a film condition, you must select all
+            of the faces on the model to which the film condition
+            applies. Defining surface groups simplifies the process
+            of defining a film condition. A group is a preselected
+            set of geometric entities that can be used as a support
+            for model property definitions. Groups are saved in the
+            specification tree and can be reused in multiple
+            property definitions.</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Click the Surface Group icon <img src="b35doc/english/online/anlug_c2/images/I_GroupSurfaceSp.gif"></img>.</p>
+
+                  <p>The <span class="guitext"><b class="guititle">Surface Group</b></span> dialog box
+                  appears, and a Surface Group object appears in
+                  the specification tree under the Groups objects
+                  set.</p>
+                </li>
+
+                <li>
+                  <p>Enter <tt class="userinput">OuterSurface</tt>
+                  in the <span class="guitext"><b class="guilabel">Name</b></span> field. This name
+                  appears in the specification tree as the
+                  identifier for the group.</p>
+                </li>
+
+                <li>
+                  <p>Select the 25 faces constituting the outer
+                  surface of the pipe, as shown in <a href="page0472.html#afc-gst-selectouterfilm">Figure 3&#8211;7</a>.</p>
+
+                  <div class="figure">
+                    <p><a name="afc-gst-selectouterfilm"></a><b><span class="gentxt_dkgry">Figure 3&#8211;7</span></b>
+                    Select the highlighted faces to define the
+                    <span class="guitext"><b class="guilabel">OuterSurface</b></span> group.</p>
+
+                    <div class="graphic" id="d0">
+                      <p><img src="b35doc/english/online/anlug_c2/images/afc-gst-selectouterfilm.png"></img></p>
+                    </div>
+                  </div>
+
+                  <div style="margin-left: 0.5in; margin-right: 0.5in;" class="tip">
+                    <p><img border="0" src="b35doc/english/online/icons_C2/common/tips.gif" width="32" height="32" style="vertical-align: middle"></img><b>Tip:</b> It is easier to
+                    manipulate the model if the render style is set
+                    to <span class="guitext"><b class="guilabel">Shading with Edges</b></span>. From
+                    the main menu bar, select <b><span class="guitext"><b class="guimenu">View</b></span>&gt;<span class="guitext"><b class="guisubmenu">Render
+                    Style</b></span>&gt;<span class="guitext"><b class="guimenuitem">Shading with
+                    Edges</b></span></b>. Reselect a face to
+                    deselect it if necessary. There should be 7
+                    faces on each of the left and right flanges, 5
+                    faces on the top flange, and 6 faces on the
+                    main T-shaped cylinder.</p>
+                  </div>
+                </li>
+
+                <li>
+                  <p>Click <span class="guitext"><b class="guibutton">OK</b></span> when you have finished
+                  selecting the faces.</p>
+                </li>
+
+                <li>
+                  <p>Repeat the above steps to create another group
+                  called <tt class="userinput">InnerSurface</tt>
+                  that consists of the inner faces of the pipe. The
+                  inner surface is shown in <a href="page0472.html#afc-gst-selectinnerfilm">Figure 3&#8211;8</a>; it is composed of 6
+                  faces.</p>
+
+                  <div class="figure">
+                    <p><a name="afc-gst-selectinnerfilm"></a><b><span class="gentxt_dkgry">Figure 3&#8211;8</span></b>
+                    Select the highlighted faces to define the
+                    <span class="guitext"><b class="guilabel">InnerSurface</b></span> group.</p>
+
+                    <div class="graphic" id="d0">
+                      <p><img src="b35doc/english/online/anlug_c2/images/afc-gst-selectinnerfilm.png"></img></p>
+                    </div>
+                  </div>
+                </li>
+              </ol></div>
+          </li>
+
+          <li>
+            <p>Define the film conditions.</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Click the Film Condition icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_FilmCondition.gif"></img>.</p>
+
+                  <p>The <span class="guitext"><b class="guititle">Film Condition</b></span> dialog box
+                  appears.</p>
+                </li>
+
+                <li>
+                  <p>You can change the identifier of the load by
+                  editing the <span class="guitext"><b class="guilabel">Name</b></span> field.</p>
+                </li>
+
+                <li>
+                  <p>Select the OuterSurface group in the
+                  specification tree as the support for the
+                  load.</p>
+
+                  <p><span class="guitext"><b class="guilabel">1
+                  Face</b></span> appears in the <span class="guitext"><b class="guilabel">Support</b></span>
+                  field to reflect your selection; however, the
+                  load will be applied to all 25 faces that are
+                  part of the OuterSurface group definition.</p>
+                </li>
+
+                <li>
+                  <p>By default, the film coefficient is assumed to
+                  be a function of surface temperature. In this
+                  example the film coefficient is constant;
+                  therefore, toggle off <span class="guitext"><b class="guilabel">Use
+                  temperature-dependent data</b></span>, and enter
+                  a value of 50 W/m<sup>2</sup>K for the film
+                  coefficient.</p>
+                </li>
+
+                <li>
+                  <p>Enter a value of 293 Kdeg for the <span class="guitext"><b class="guilabel">Reference sink
+                  temperature</b></span>.</p>
+                </li>
+
+                <li>
+                  <p>Click <span class="guitext"><b class="guibutton">OK</b></span> in the <span class="guitext"><b class="guititle">Film
+                  Condition</b></span> dialog box.</p>
+
+                  <p>A Film Condition object appears in the
+                  specification tree under the Loads objects set
+                  for the current step, and symbols indicating the
+                  applied film condition are displayed on the
+                  selected faces.</p>
+                </li>
+
+                <li>
+                  <p>Repeat the above steps to define the film
+                  condition for the inner surface of the pipe,
+                  using the InnerSurface group as the support, a
+                  film coefficient of 1200 W/m<sup>2</sup>K, and a
+                  reference sink temperature of 673 Kdeg.</p>
+                </li>
+              </ol></div>
+          </li>
+
+          <li>
+            <p>Define the initial conditions.</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Click the Initial Temperature icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_InitTemp.gif"></img>.</p>
+
+                  <p>The <span class="guitext"><b class="guititle">Initial Temperature</b></span> dialog
+                  box appears.</p>
+                </li>
+
+                <li>
+                  <p>You can change the identifier of the field by
+                  editing the <span class="guitext"><b class="guilabel">Name</b></span> field.</p>
+                </li>
+
+                <li>
+                  <p>Select the PartBody feature in the
+                  specification tree to apply the initial
+                  temperature to the entire model.</p>
+
+                  <p>The entire part is highlighted, and the
+                  <span class="guitext"><b class="guilabel">Supports</b></span> field is updated
+                  to reflect your selection.</p>
+                </li>
+
+                <li>
+                  <p>Use the default <span class="guitext"><b class="guilabel">Uniform</b></span>
+                  distribution type, and enter a value of 293 Kdeg
+                  for the <span class="guitext"><b class="guilabel">Magnitude</b></span> of the initial
+                  temperature.</p>
+                </li>
+
+                <li>
+                  <p>Click <span class="guitext"><b class="guibutton">OK</b></span> in the <span class="guitext"><b class="guititle">Initial
+                  Temperature</b></span> dialog box.</p>
+
+                  <p>An Initial Temperature object appears in the
+                  specification tree under the Fields objects set
+                  in the Initialization step, and symbols
+                  indicating the applied temperature are displayed
+                  on the entire model.</p>
+                </li>
+              </ol></div>
+          </li>
+        </ol></div>
+
+      <p>For information on related topics, click any of the
+      following items:</p><br></br><ul type="disc"><li>
+          <p><a href="page0445.html#ath-gen-env-gen-anl-insertthermalstep-thm">
+          Inserting a New
+          Heat Transfer Step</a></p>
+        </li>
+
+        <li>
+          <p><a href="page0442.html#ath-gen-env-gen-load-createfilmcondition-thm">
+          Creating Film
+          Conditions</a></p>
+        </li>
+
+        <li>
+          <p><a href="page0440.html#ath-gen-env-gen-field-createinittemp-thm">
+          Creating
+          Initial Temperatures</a></p>
+        </li>
+      </ul><span id="ath-gen-gst-filminitconditions"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div>
+
+    <div class="sect2" id="ath-gen-gst-computeandview">
+      <a name="ath-gen-gst-computeandview"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Computing and Viewing Nodal
+          Temperatures</h3>
+        </div>
+      </div>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>In this task you will mesh the part, perform a thermal
+      analysis, and create a plot of the nodal temperatures in the
+      pipe intersection model.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Expand the Nodes and Elements feature in the
+            specification tree, and double-click the OCTREE
+            Tetrahedron Mesh.1 feature to edit the global
+            characteristics of the mesh.</p>
+
+            <p>The <span class="guitext"><b class="guititle">OCTREE
+            Tetrahedron Mesh</b></span> dialog box appears.</p>
+          </li>
+
+          <li>
+            <p>In the <span class="guitext"><b class="guititle">OCTREE Tetrahedron Mesh</b></span> dialog
+            box, specify a global element <span class="guitext"><b class="guilabel">Size</b></span> of 0.05 m
+            and a global element <span class="guitext"><b class="guilabel">Absolute sag</b></span> of 0.015 m. Accept
+            the default choice of a linear element type, and click
+            <span class="guitext"><b class="guibutton">OK</b></span>.</p>
+          </li>
+
+          <li>
+            <p>Right-click on the Nodes and Elements object in the
+            specification tree, and select <span class="guitext"><b class="guilabel">Mesh
+            Visualization</b></span> from the menu that
+            appears.</p>
+
+            <p>A warning message dialog box appears, informing you
+            that the mesh needs to be updated; click <span class="guitext"><b class="guibutton">OK</b></span> to close
+            the dialog box and to continue with the mesh
+            generation. When the mesh generation is complete, the
+            mesh is displayed on the part (see <a href="page0472.html#afc-gst-thermmesh">Figure 3&#8211;9</a>) and a Mesh object appears
+            under Nodes and Elements in the specification tree.</p>
+
+            <div class="figure">
+              <p><a name="afc-gst-thermmesh"></a><b><span class="gentxt_dkgry">Figure 3&#8211;9</span></b> The
+              meshed pipe model.</p>
+
+              <div class="graphic" id="d0">
+                <p><img src="b35doc/english/online/anlug_c2/images/afc-gst-thermmesh.png"></img></p>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <p>Expand the Jobs object set in the specification
+            tree, and double-click the Job&#8211;1 feature to edit
+            the analysis job.</p>
+
+            <p>The <span class="guitext"><b class="guititle">Edit
+            Job</b></span> dialog box appears.</p>
+
+            <div style="margin-left: 0.5in; margin-right: 0.5in;" class="note">
+              <p><b class="title"><a name="d0e2359">Note:&nbsp;</a></b> To create a new job
+              for the current analysis case, click the Create Job
+              icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_CreateJob.gif"></img>.</p>
+            </div>
+          </li>
+
+          <li>
+            <p>You can change the job identifier by editing the
+            <span class="guitext"><b class="guilabel">Name</b></span> field. This name will be
+            used in the specification tree and in the <span class="guitext"><b class="guilabel">Job
+            Manager</b></span>.</p>
+          </li>
+
+          <li>
+            <p>Enter a description for the job in the <span class="guitext"><b class="guilabel">Description</b></span>
+            field.</p>
+          </li>
+
+          <li>
+            <p>Accept the default values for the job data, and
+            click <span class="guitext"><b class="guibutton">OK</b></span>.</p>
+          </li>
+
+          <li>
+            <p>Click the Job Manager icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_JobManager.gif"></img>.</p>
+
+            <p>The <span class="guitext"><b class="guilabel">Job
+            Manager</b></span> dialog box appears with a list of
+            the jobs that you have created. By default, jobs for
+            all Nonlinear and Thermal Analysis Cases are shown.</p>
+          </li>
+
+          <li>
+            <p>Select the job you created from the list in the
+            <span class="guitext"><b class="guilabel">Job
+            Manager</b></span>, and click <span class="guitext"><b class="guilabel">Submit</b></span>.</p>
+
+            <p>By default, consistency checks are run when you
+            submit a job. A <span class="guitext"><b class="guititle">Job Submission</b></span> dialog box appears
+            with the results of the consistency checks:</p>
+
+            <div class="informaltable" id="xd0e2409">
+              <a name="d0e2409"></a><br></br><table border="1"><thead><tr><th valign="top" align="left">Feature Name</th>
+
+                    <th valign="top" align="left">Feature Type</th>
+
+                    <th valign="top" align="left">Message</th>
+
+                    <th valign="top" align="left">Severity</th>
+                  </tr></thead><tbody><tr><td>Boundary Conditions/Heat Transfer
+                    Step-1</td>
+
+                    <td>Boundary Condition Set</td>
+
+                    <td>Boundary condition set is empty</td>
+
+                    <td>Warning</td>
+                  </tr></tbody></table><br></br></div>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">Continue</b></span>.</p>
+
+            <p>Thermal Analysis submits the job for analysis using
+            the job settings defined in the job editor. The
+            information in the <span class="guitext"><b class="guilabel">Status</b></span> column of the <span class="guitext"><b class="guilabel">Job Manager</b></span>
+            updates to indicate the job's status. The <span class="guitext"><b class="guilabel">Status</b></span> column
+            for this tutorial shows one of the following:</p>
+
+            <ul type="disc"><li>
+                <p><span class="guitext"><b class="guilabel">Submitted</b></span> while the analysis
+                input file is being generated.</p>
+              </li>
+
+              <li>
+                <p><span class="guitext"><b class="guilabel">Running</b></span> while the solver
+                analyzes the model.</p>
+              </li>
+
+              <li>
+                <p><span class="guitext"><b class="guilabel">Completed</b></span> when the analysis
+                is complete, and the output has been written to the
+                output database file.</p>
+              </li>
+
+              <li>
+                <p><span class="guitext"><b class="guilabel">Aborted</b></span> if the solver finds a
+                problem with the input file or the analysis and
+                aborts the analysis.</p>
+              </li>
+            </ul></li>
+
+          <li>
+            <p>While the job is running, click <span class="guitext"><b class="guibutton">Monitor</b></span> in
+            the <span class="guitext"><b class="guilabel">Job
+            Manager</b></span> to monitor the progress of the
+            analysis.</p>
+
+            <p>The job monitor dialog box appears. The top half of
+            the dialog box displays the information available in
+            the status (<tt class="filename">.sta</tt>) file that
+            the solver creates for the job. The bottom half of the
+            dialog box displays log file information, error and
+            warning messages, and output information.</p>
+          </li>
+
+          <li>
+            <p>When the job completes successfully, click
+            <span class="guitext"><b class="guilabel">Close</b></span> in the <span class="guitext"><b class="guilabel">Job Monitor</b></span>
+            dialog box, and click <span class="guitext"><b class="guilabel">Attach Results</b></span> in the
+            <span class="guitext"><b class="guilabel">Job
+            Manager</b></span>.</p>
+
+            <p>A link to the output database file containing the
+            results appears in the Links Manager, and a Heat
+            Transfer Step object appears in the specification tree
+            under the Analysis Case Solution objects set for the
+            current analysis case. In addition, the status of the
+            Analysis Case Solution entry is updated to show that
+            the solution is now available and is consistent with
+            the model and history specification; in other words,
+            the <img src="b35doc/english/online/anlug_c2/images/afc-symbolupdate.gif"></img> symbol no
+            longer appears.</p>
+          </li>
+
+          <li>
+            <p>Plot the nodal temperatures.</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Right-click on the Heat Transfer Step object
+                  under the Analysis Case Solution objects set in
+                  the specification tree, and select <span class="guitext"><b class="guilabel">Generate Results
+                  Image</b></span> from the menu that appears.</p>
+
+                  <p>The <span class="guitext"><b class="guititle">Abaqus Image Generation</b></span>
+                  dialog box appears with a list of the results
+                  available from the output database file for the
+                  specified step.</p>
+                </li>
+
+                <li>
+                  <p>To plot contour values of nodal temperature
+                  for your model, select <span class="guitext"><b class="guilabel">Nodal
+                  Temperature</b></span> from the list of
+                  <span class="guitext"><b class="guilabel">Available Images</b></span>, and click
+                  <span class="guitext"><b class="guibutton">OK</b></span>.</p>
+
+                  <p>The <span class="guitext"><b class="guititle">Abaqus Image Generation</b></span>
+                  dialog box disappears, and the nodal temperatures
+                  are plotted on the model, as shown in <a href="page0472.html#afc-gst-nodaltempcontour">Figure 3&#8211;10</a>. A feature
+                  for the generated image appears under the Heat
+                  Transfer Step object in the specification
+                  tree.</p>
+
+                  <div class="figure">
+                    <p><a name="afc-gst-nodaltempcontour"></a><b><span class="gentxt_dkgry">Figure 3&#8211;10</span></b>
+                    Contour plot of nodal temperatures.</p>
+
+                    <div class="graphic" id="d0">
+                      <p><img src="b35doc/english/online/anlug_c2/images/afc-gst-nodaltempcontour.png"></img></p>
+                    </div>
+                  </div>
+
+                  <div style="margin-left: 0.5in; margin-right: 0.5in;" class="tip">
+                    <p> You may need to
+                    hide the nodes and elements and change the
+                    render style to view the contour plot clearly.
+                    Right-click on the Nodes and Elements feature
+                    in the specification tree, and select
+                    <span class="guitext"><b class="guilabel">Hide/Show</b></span> from the menu
+                    that appears. To apply a render style to the
+                    part that reflects the material assignment,
+                    select <b><span class="guitext"><b class="guimenu">View</b></span>&gt;<span class="guitext"><b class="guisubmenu">Render
+                    Style</b></span>&gt;<span class="guitext"><b class="guimenuitem">Customize
+                    View</b></span></b> from the menu bar, and
+                    toggle on <span class="guitext"><b class="guilabel">Materials</b></span> in the
+                    <span class="guitext"><b class="guititle">Custom View Modes</b></span> dialog
+                    box that appears.</p>
+                  </div>
+                </li>
+              </ol></div>
+          </li>
+        </ol></div>
+
+      <p>For information on related topics, click any of the
+      following items:</p><br></br><ul type="disc"><li>
+          <p><a href="page0491.html#ath-gen-res-anlcntrl-createjob">
+          Creating a New Job</a></p>
+        </li>
+
+        <li>
+          <p><a href="page0492.html#ath-gen-res-anlcntrl-submitjob">
+          Submitting Jobs</a></p>
+        </li>
+
+        <li>
+          <p><a href="page0494.html">Postprocessing</a></p>
+        </li>
+      </ul><span id="ath-gen-gst-computeandview"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div>
+
+    <div class="sect2" id="ath-gen-gst-addanalysiscase">
+      <a name="ath-gen-gst-addanalysiscase"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Adding an Analysis Case</h3>
+        </div>
+      </div>
+
+      <p>After completing the thermal analysis, you now have the
+      results of the temperature distribution in the pipe
+      intersection. In this task you will add an Analysis Case to
+      perform a two-step structural analysis using the results from
+      the thermal analysis. To complete this task, you must have a
+      license for Nonlinear Structural Analysis.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>Switch to the Nonlinear Structural Analysis
+            workbench by selecting <b><span class="guitext"><b class="guimenu">Start</b></span>&gt;<span class="guitext"><b class="guisubmenu">Analysis and
+            Simulation</b></span>&gt;<span class="guitext"><b class="guimenuitem">Nonlinear
+            Structural Analysis</b></span></b> from the main menu
+            bar.</p>
+          </li>
+
+          <li>
+            <p>Select <b><span class="guitext"><b class="guimenu">Insert</b></span>&gt;<span class="guitext"><b class="guimenuitem">Nonlinear Structural Case</b></span></b>
+            from the menu bar.</p>
+
+            <p>Nonlinear Structural-Case-1 is created and appended
+            to the specification tree.</p>
+
+            <div style="margin-left: 0.5in; margin-right: 0.5in;" class="note">
+              <p><b class="title"><a name="d0e2647">Note:&nbsp;</a></b> Nonlinear
+              Structural-Case-1 is underlined in the specification
+              tree, which indicates that it is now the current
+              analysis case. This case will be modified when you
+              add or edit step definitions, and it will be used for
+              analysis submission. You can make an analysis case
+              current by right-clicking on it and selecting
+              <span class="guitext"><b class="guilabel">Set As
+              Current Case</b></span> from the menu that
+              appears.</p>
+            </div>
+          </li>
+
+          <li>
+            <p>Click the Pressure Load icon <img src="b35doc/english/online/anlug_c2/images/I_Pressure.gif"></img> to add a pressure load to
+            the current step. Select the six internal surfaces
+            shown in <a href="page0472.html#afc-gst-selectinnerfilm">Figure 3&#8211;8</a>. In the <span class="guitext"><b class="guititle">Pressure</b></span>
+            dialog box, enter a value of 3.5E06 N/m<sup>2</sup> for
+            the pressure, and click <span class="guitext"><b class="guibutton">OK</b></span>.</p>
+
+            <p>Symbols representing the applied pressure are
+            displayed on the geometry, and a Pressure object
+            appears in the specification tree under the Loads
+            objects set for the current step&#8212;the general
+            static step in the new structural case.</p>
+          </li>
+
+          <li>
+            <p>Click the Clamp Boundary Condition icon <img src="b35doc/english/online/anlug_c2/images/I_Clamp.gif"></img>. Select the three flange faces
+            shown in <a href="page0472.html#afc-gst-selectclampbc">Figure 3&#8211;11</a> and click <span class="guitext"><b class="guibutton">OK</b></span> in the
+            <span class="guitext"><b class="guititle">Clamp
+            BC</b></span> dialog box.</p>
+
+            <div class="figure">
+              <p><a name="afc-gst-selectclampbc"></a><b><span class="gentxt_dkgry">Figure
+              3&#8211;11</span></b> Apply a clamp boundary
+              condition to the three flange faces.</p>
+
+              <div class="graphic" id="d0">
+                <p><img src="b35doc/english/online/anlug_c2/images/afc-gst-selectclampbc.png"></img></p>
+              </div>
+            </div>
+
+            <p>A Clamp object appears in the specification tree
+            under the Boundary Conditions objects set for the
+            current step, and symbols appear on the selected faces
+            indicating the constrained degrees of freedom.</p>
+          </li>
+
+          <li>
+            <p>Click the General Static Step icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_GeneralStaticStep.gif"></img> to create a
+            second step. In the <span class="guitext"><b class="guititle">General Static Step</b></span> dialog box,
+            enter a value of 200 seconds for the <span class="guitext"><b class="guilabel">Step time</b></span>, 20
+            seconds for the <span class="guitext"><b class="guilabel">Initial increment size</b></span>, and 200
+            seconds for the <span class="guitext"><b class="guilabel">Maximum increment size</b></span>. Accept
+            the other default values, and click <span class="guitext"><b class="guibutton">OK</b></span>.</p>
+
+            <p>A second Static Step objects set appears in the
+            specification tree under the Simulation History objects
+            set for the current analysis case.</p>
+
+            <div style="margin-left: 0.5in; margin-right: 0.5in;" class="note">
+              <p><b class="title"><a name="d0e2712">Note:&nbsp;</a></b> The Static Step-2
+              object in the specification tree is now underlined,
+              indicating that for the current analysis case, this
+              is the step for which you are now defining loads and
+              boundary conditions.</p>
+            </div>
+          </li>
+
+          <li>
+            <p>Click the Temperature History icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_TempHistory.gif"></img>. Select the entire
+            part by selecting the PartBody feature from the
+            specification tree. In the <span class="guitext"><b class="guititle">Temperature
+            History</b></span> dialog box, select <span class="guitext"><b class="guilabel">From job</b></span> as
+            the <span class="guitext"><b class="guilabel">Distribution Type</b></span>. Then select
+            Job-1 in Thermal-Case-1 from the specification tree to
+            identify the job from which the results should be read,
+            and click <span class="guitext"><b class="guibutton">OK</b></span>.</p>
+
+            <p>Symbols representing the applied field are displayed
+            on the geometry, and a Temperature History object
+            appears in the specification tree under the Fields
+            objects set for the current step.</p>
+          </li>
+
+          <li>
+            <p>Double-click the Job&#8211;2 feature located in the
+            Jobs object set for Nonlinear Structural-Case-1 in the
+            specification tree.</p>
+
+            <p>The <span class="guitext"><b class="guititle">Edit
+            Job</b></span> dialog box appears.</p>
+          </li>
+
+          <li>
+            <p>Enter a name and description for the job, accept the
+            default values for the job data, and click <span class="guitext"><b class="guibutton">OK</b></span>.</p>
+          </li>
+
+          <li>
+            <p>Click the Job Manager icon <img src="b35doc/english/online/anlug_c2/images/ABQ_I_JobManager.gif"></img>, select the new job
+            from the list in the <span class="guitext"><b class="guilabel">Job Manager</b></span>, and click
+            <span class="guitext"><b class="guilabel">Submit</b></span>.</p>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">Continue</b></span> in the <span class="guitext"><b class="guilabel">Job Submission</b></span>
+            dialog box that appears with a list of informational
+            consistency check messages.</p>
+          </li>
+
+          <li>
+            <p>When the analysis completes, click <span class="guitext"><b class="guibutton">Attach
+            Results</b></span> in the <span class="guitext"><b class="guilabel">Job Manager</b></span>,
+            and click <span class="guitext"><b class="guilabel">OK</b></span> in the dialog box that
+            appears.</p>
+
+            <p>A link to the output database file containing the
+            results appears in the Links Manager, and two Static
+            Step objects (one for each step) appear in the
+            specification tree under the Analysis Case Solution
+            feature.</p>
+          </li>
+        </ol></div>
+
+      <p>For information on related topics, click any of the
+      following items:</p><br></br><ul type="disc"><li>
+          <p><a href="page0444.html#ath-gen-env-gen-anl-insertstaticstep-mch">
+          Inserting a New
+          General Static Step</a></p>
+        </li>
+
+        <li>
+          <p><a href="page0437.html#ath-gen-env-gen-bc-createclampbc-mch">
+          Creating Clamp Boundary
+          Conditions</a></p>
+        </li>
+
+        <li>
+          <p><a href="page0441.html#ath-gen-env-gen-load-createpressure-mch">
+          Creating
+          Pressure Loads</a></p>
+        </li>
+
+        <li>
+          <p><a href="page0439.html#ath-gen-env-gen-field-createtemphist-mch">
+          Creating
+          Temperature Histories</a></p>
+        </li>
+      </ul><span id="ath-gen-gst-addanalysiscase"></span>
+    </div>
+
+    <div class="sect2" id="ath-gen-gst-cutplane">
+      <a name="ath-gen-gst-cutplane"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Postprocessing and Cut
+          Plane Analysis</h3>
+        </div>
+      </div>
+
+      <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img>In this task you will postprocess the results of the
+      structural analysis.</p>
+
+      <div class="procedure" id="d0">
+        <ol class="type1"><li>
+            <p>For each step:</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Right-click on the Static Step object under
+                  the Analysis Case Solution objects set in the
+                  specification tree, and select <span class="guitext"><b class="guilabel">Generate Results
+                  Image</b></span> from the menu that appears.</p>
+                </li>
+
+                <li>
+                  <p>Successively select <span class="guitext"><b class="guilabel">Translational and
+                  rotational displacement magnitude</b></span>,
+                  <span class="guitext"><b class="guilabel">Von
+                  Mises Stress</b></span>, and <span class="guitext"><b class="guilabel">Equivalent Plastic
+                  Strain</b></span> from the list of <span class="guitext"><b class="guilabel">Available
+                  Images</b></span> and click <span class="guitext"><b class="guibutton">OK</b></span> to
+                  create the contour plots shown in <a href="page0472.html#afc-gst-thm-displacement">Figure 3&#8211;12</a> <a href="page0472.html#afc-gst-thm-vonmises">Figure 3&#8211;13</a> and <a href="page0472.html#afc-gst-thm-epstrain">Figure 3&#8211;14</a>.</p>
+
+                  <div style="margin-left: 0.5in; margin-right: 0.5in;" class="tip">
+                    <p> By default, the
+                    previous image is deactivated from the display
+                    when you create a new contour plot image. To
+                    view a previously created image, right-click on
+                    the image name in the specification tree, and
+                    select <span class="guitext"><b class="guilabel">Activate/Deactivate</b></span> from
+                    the menu that appears. Use the same procedure
+                    to deactivate the current image if
+                    necessary.</p>
+                  </div>
+
+                  <div class="figure">
+                    <p><a name="afc-gst-thm-displacement"></a><b><span class="gentxt_dkgry">Figure 3&#8211;12</span></b>
+                    Contour plots of displacement for Step 1 (top)
+                    and Step 2 (bottom).</p>
+
+                    <div class="graphic" id="d0">
+                      <p><img src="b35doc/english/online/anlug_c2/images/afc-gst-thm-displacement.png"></img></p>
+                    </div>
+                  </div>
+
+                  <div class="figure">
+                    <p><a name="afc-gst-thm-vonmises"></a><b><span class="gentxt_dkgry">Figure 3&#8211;13</span></b>
+                    Contour plots of von Mises stress for Step 1
+                    (top) and Step 2 (bottom).</p>
+
+                    <div class="graphic" id="d0">
+                      <p><img src="b35doc/english/online/anlug_c2/images/afc-gst-thm-vonmises.png"></img></p>
+                    </div>
+                  </div>
+
+                  <div class="figure">
+                    <p><a name="afc-gst-thm-epstrain"></a><b><span class="gentxt_dkgry">Figure 3&#8211;14</span></b>
+                    Contour plots of equivalent plastic strain for
+                    Step 1 (top) and Step 2 (bottom).</p>
+
+                    <div class="graphic" id="d0">
+                      <p><img src="b35doc/english/online/anlug_c2/images/afc-gst-thm-epstrain.png"></img></p>
+                    </div>
+                  </div>
+                </li>
+              </ol></div>
+          </li>
+
+          <li>
+            <p>Perform a cut plane analysis.</p>
+
+            <div class="substeps" id="d0">
+              <ol type="a"><li>
+                  <p>Click the Cut Plane Analysis icon <img src="b35doc/english/online/anlug_c2/images/I_SPMCuttingPlaneP2.gif"></img>.</p>
+
+                  <p>The cutting plane appears in the main window;
+                  in addition, the <span class="guitext"><b class="guititle">Cut Plane Analysis</b></span> dialog
+                  box appears. The compass is positioned
+                  automatically on the model, and the cutting plane
+                  is positioned normal to the privileged direction
+                  of the compass.</p>
+
+                  <div style="margin-left: 0.5in; margin-right: 0.5in;" class="note">
+                    <p><b class="title"><a name="d0e2893">Note:&nbsp;</a></b> If the compass
+                    is already positioned in the view, the normal
+                    of the compass is considered to be the default
+                    normal of the cutting plane.</p>
+                  </div>
+                </li>
+
+                <li>
+                  <p>Rotate the cutting plane by clicking on the
+                  circular arcs of the compass and dragging the
+                  cursor; translate the cutting plane by clicking
+                  on the straight edges of the compass and dragging
+                  the cursor. Orient the cutting plane so that it
+                  cuts the pipe intersection in a plane parallel to
+                  the pipe axes, as shown in <a href="page0472.html#afc-gst-cutplane-fig">Figure 3&#8211;15</a>.</p>
+
+                  <div class="figure">
+                    <p><a name="afc-gst-cutplane-fig"></a><b><span class="gentxt_dkgry">Figure 3&#8211;15</span></b>
+                    Cut plane view of the pipe model.</p>
+
+                    <div class="graphic" id="d0">
+                      <p><img src="b35doc/english/online/anlug_c2/images/afc-gst-cutplane.png"></img></p>
+                    </div>
+                  </div>
+
+                  <p>As you modify the position of the plane, the
+                  results in the plane are updated
+                  automatically.</p>
+                </li>
+              </ol></div>
+          </li>
+        </ol></div>
+
+      <p>For information on related topics, click the following
+      item:</p><br></br><ul type="disc"><li>
+          <p><a href="page0495.html#ath-gen-res-post-cutplane">Cut Plane
+          Analysis</a></p>
+        </li>
+      </ul><span id="ath-gen-gst-cutplane"></span>
+    <center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div><span id="ath-gen-gst-heattransfer"></span>
+  </div></body></html>
+

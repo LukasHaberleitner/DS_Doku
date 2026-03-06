@@ -1,0 +1,381 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Creating Distributed Forces</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Creating Distributed Forces<a name="ix-loads::distributed force;distributing::forces;distributed::forces;commands::Distributed Force"></a></h1>
+ <table Border="0" CELLSPACING="1" valign="top">
+   <tr valign="top" BORDER="0">
+     <td align="center">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>
+     <p class="task"><a name="CATGPSCommandHeader.CATGPSDistributedForceHdr">
+     </a>This task shows you how to create a distributed force applied to a 
+     virtual part or to a geometry selection.</p>
+     <p class="task">Distributed forces are force systems statically equivalent 
+     to a given pure force resultant at a given point, distributed on a virtual 
+     part or on a geometric selection.&nbsp;</p>
+     <p class="task">The aim of the distributed force load is not to uniformly 
+     distribute the force on the selected supports. To achieve that, the usage 
+     of force densities or pressure is recommended.<br>
+     The exact behavior of the distributed force can be simulated by creating a 
+     smooth virtual part with the same support as the distributed force and 
+     applying a punctual force on its handler.<br>
+     Note that therefore the results depends on the meshing (all nodes are 
+     equally taken into account in the distribution).<br>
+     For more details, refer to the <a href="#hj-example">example</a> at the end 
+     of this task.</p>
+     <p class="task">Units are force units (typically <kbd>N</kbd> in SI).</p>
+     <p class="task">You have to specify three components for the direction of 
+     the resultant force, along with a magnitude information. Upon modification 
+     of any of these four values, the resultant force vector components and 
+     magnitude are updated based on the last data entry. The resultant force 
+     vector remains constant independently of the geometry selection.</p>
+     <p class="task">The point of application of the force resultant is 
+     automatically defined as follows:</p>
+     <ul>
+       <li>For extended geometries, this point is the center of the geometry.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber8">
+         <tr>
+           <td align="center" valign="top">
+           <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+           <td>
+           <p class="task">In the case the geometrical support selected gives 
+           access to several mesh parts (such as transformed mesh parts), the 
+           default handler point is still computed with respect of the geometry.</p>
+           <p class="task">In this case, it is strongly recommended to select a 
+           user-created handler point.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/distributedforce01NLS.gif" width="437" height="424"></td>
+         </tr>
+       </table>
+       </li>
+       <li>For virtual parts, this point is the handler of the virtual part.<br>
+&nbsp;</li>
+     </ul>
+     <p class="task">The given single-force system is processed by the program 
+     as follows:</p>
+     <ul>
+       <li>In the case of extended geometries, it is transformed into an 
+       equivalent force system distributed over the selected support.&nbsp;</li>
+       <li>In the case of virtual parts connected to deformable bodies, it is 
+       transmitted as a force system collectively to the entire connected 
+       geometry.<br>
+&nbsp;</li>
+     </ul>
+     <p class="task">Distributed Force objects belong to <kbd>Loads</kbd> 
+     objects sets.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td>
+     <p class="task">Distributed Forces can be applied to the following types of 
+     supports:</p>
+     <table border="1" cellspacing="0" id="AutoNumber5" bordercolor="#C0C0C0">
+       <tr>
+         <td rowspan="2" align="center" valign="top">
+         <p class="task"><kbd>Geometrical Feature</kbd></td>
+         <td rowspan="2" align="center" valign="top">
+         <p class="task"><kbd>Mechanical Feature</kbd></td>
+         <td align="center" colspan="5">
+         <p class="task"><kbd>Analysis Feature</kbd></td>
+       </tr>
+       <tr>
+         <td align="center">
+         <p class="task"><kbd>Spatial Groups</kbd></td>
+         <td align="center">
+         <p class="task"><kbd>Geometrical Groups</kbd></td>
+         <td align="center">
+         <p class="task"><kbd>Groups by Neighborhood</kbd></td>
+         <td align="center">
+         <p class="task"><kbd>Groups by Boundary</kbd></td>
+         <td align="center">
+         <p class="task"><kbd>Others</kbd></td>
+       </tr>
+       <tr>
+         <td align="center">
+         <p class="task">Point/Vertex<br>
+         Edge<br>
+         Face</p>
+         <p class="task">(homogeneous selection)</td>
+         <td align="center">
+         <p class="task">
+         <img border="0" src="b35doc/english/online/estug_c2/images/symbolanalysis.gif" width="15" height="14"></td>
+         <td align="center">
+         <p class="task">
+         <img border="0" src="b35doc/english/online/estug_c2/images/symbolanalysis.gif" width="15" height="14"></td>
+         <td align="center">
+         <p class="task">
+         <img border="0" src="b35doc/english/online/estug_c2/images/symbolanalysis.gif" width="15" height="14"></td>
+         <td align="center">
+         <p class="task">
+         <img border="0" src="b35doc/english/online/estug_c2/images/symbolanalysis.gif" width="15" height="14"></td>
+         <td align="center">
+         <p class="task">
+         <img border="0" src="b35doc/english/online/estug_c2/images/symbolanalysis.gif" width="15" height="14"></td>
+         <td align="center">
+         <p class="task">Virtual Part</td>
+       </tr>
+     </table>
+     <p class="task">To know more, refer to <a href="page7219.html">Authorized 
+		Supports</a>.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td>
+     <p class="task">Open the <a href="b35doc/english/online/estug_c2/samples/sample00.CATAnalysis">
+     sample00.CATAnalysis </a>document from the samples directory.</p>
+     <ul>
+       <li>
+       <p class="task">Make sure the <kbd>Shading</kbd>, <kbd>Outlines</kbd> and
+       <kbd>Materials</kbd> options are active in the Custom View Modes dialog 
+       box (<kbd> View &gt; Render Style &gt; Customize View</kbd>).</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td align="center">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol class="task">
+       <li>
+       <p class="task">Click <kbd>Distributed Force</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_TractionP2.gif" width="24" height="24"> 
+       in the <kbd>Loads</kbd> toolbar.</p>
+       <table border="0" cellspacing="1" id="AutoNumber3">
+         <tr>
+           <td>
+           <p class="task">The Distributed Force dialog box appears.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/dbdistributedforceNLS.gif" width="231" height="370"></p>
+           <ul>
+             <li><kbd>Name</kbd>: lets you modify the name of the load.</li>
+             <li><kbd>Supports</kbd>: lets you select supports on which you want 
+             to apply a distributed force.<br>
+             Multi-selection of geometries and groups is available. The 
+             multi-selection must be homogeneous.<br>
+             Multi-selection of virtual parts is not available. Moreover, you 
+             cannot select a virtual part and a geometry (or a group).</li>
+             <li><kbd>Axis System</kbd>: fore more details, refer to the
+             <a href="#hj-step3">third step</a>.</li>
+             <li><kbd>Force Vector</kbd>: lets you specify the three components 
+             for the direction of the resultant force, along with a magnitude 
+             information. The resultant force vector remains constant 
+             independently of the geometry selection.</li>
+             <li><kbd>Handler</kbd>: lets you select a point (if you selected 
+             geometries as <kbd>Support</kbd>) or a handler point of a virtual 
+             part (if you selected a virtual part as <kbd>Support</kbd>).</li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">If needed, change the identifier of the distributed force 
+       by editing the <kbd>Name</kbd> field.</li>
+       <li>
+       <p class="task">Set the <kbd>Axis System Type</kbd>.</p>
+       <table border="0" cellspacing="1" id="AutoNumber5">
+         <tr>
+           <td colspan="2">
+           <p class="task"><a name="hj-step3"></a>The <kbd>Axis System Type</kbd> 
+           combo box allows you to choose between <kbd>Global</kbd> and <kbd>
+           User</kbd> Axis systems, for entering components of the resultant 
+           force vector. </p>
+           <ul>
+             <li><kbd>Global</kbd>: if you select the <kbd>Global</kbd> Axis 
+             system, the components of the resultant force vector will be 
+             interpreted as relative to the fixed global rectangular coordinate 
+             system.&nbsp;&nbsp;&nbsp;</li>
+             <li><kbd>User</kbd>: if you select a <kbd>User</kbd> Axis system, 
+             the components of the resultant force vector will be interpreted as 
+             relative to the specified rectangular coordinate system.<br>
+             To select a <kbd>User</kbd> Axis system, you must activate an 
+             existing Axis by clicking it in the specification tree. Its name 
+             will then be automatically displayed in the <kbd>Current Axis</kbd> 
+             field.</li>
+           </ul>
+           </td>
+         </tr>
+         <tr>
+           <td align="center" valign="top">
+           <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+           <td>
+           <ul>
+             <li>You can define the resultant force vector direction by using 
+             the compass.&nbsp;</li>
+             <li>You can modify the compass orientation either with the mouse or 
+             by editing the compass.</li>
+             <li>By applying the compass to any part geometry, you can align the 
+             compass directions with the implicit axis directions of that 
+             geometry: drag the compass by handling the red square and drop it 
+             on the appropriate surface. The normal direction to this surface 
+             defines the new direction. Then, click on the Compass Direction 
+             button to take this new direction into account. You can now invert 
+             the direction if desired, editing the values of the three 
+             components.</li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Enter values for the <kbd>X, Y, Z</kbd> components of the 
+       resultant force vector. </p>
+       <table border="0" cellspacing="1" id="AutoNumber4">
+         <tr>
+           <td>
+           <p class="task">For example, enter <kbd>-50N</kbd> as <kbd>Z</kbd> 
+           value.</p>
+           <p class="task">The remaining three fields are automatically computed 
+           and displayed.<br>
+           The visualized symbols orientation will also reflect the 
+           modification, once the support will be selected.&nbsp; </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Select the support (a virtual part or a geometry) on 
+       which the resultant force vector is applied at the pre-defined point. </p>
+       <table border="0" cellspacing="1" id="AutoNumber6">
+         <tr>
+           <td>
+           <p class="task">Any selectable geometry is highlighted when you pass 
+           the cursor over it.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/distributedforce02.gif" width="276" height="234">
+           </p>
+           <p class="task">You can select several supports in sequence, to apply 
+           the Distributed Force to all supports simultaneously.<br>
+           A symbol representing the resultant force equivalent to the 
+           Distributed Force is displayed at the application point of the 
+           support to visualize the input force system. </p>
+           <p class="task">The Distributed Force dialog box now appears as shown 
+           here:</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/dbdistributedforce02NLS.gif" width="231" height="370"></p>
+           <p class="task">As soon as the support is selected, the <kbd>Select 
+           Mesh Part</kbd> button is available.<br>
+           To know more about the <kbd>Select Mesh Part</kbd> button, refer to
+           <a href="page7245.html">Selecting Mesh Parts</a>.</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Optionally, select a point as <kbd>Handler</kbd>.</li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd>.</p>
+       <table border="0" cellspacing="1" id="AutoNumber7">
+         <tr>
+           <td>
+           <p class="task">A <kbd>Distributed Force.2</kbd> object appears in 
+           the specification tree under the active <kbd>Loads</kbd> objects set.
+           </p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/stdistributedforceNLS.gif" width="195" height="155"></td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="center"><a name="hj-example"></a>
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" title="ainfo.gif (980 bytes)" width="32" height="32"></td>
+     <td>
+     <p class="task">Be aware that the <kbd>Distributed Force</kbd> applies 
+     directly to the nodes of the selected entity, whereas a <kbd>Surface 
+     Density Force</kbd>, or a <kbd>Pressure</kbd>, applies to the element faces 
+     of the selected entity. The latter type of forces is far more accurate and 
+     should be used whenever equivalent to the Distributed Force.</p>
+     <p class="task">As an example, consider a coarsely meshed cylinder whose 
+     top surface has been submitted to a distributed force and whose bottom 
+     surface is clamped. As the nodes on the edges have less neighbors that 
+     inner nodes, they are pulled a lot further than the inner nodes, thus 
+     leading to an erroneous result near the edges. Mesh refinement is needed to 
+     get proper results.<br>
+     On the contrary, the surface density force leads to a smoother and more 
+     accurate displacement.</p>
+     <p class="task">You can open <a href="b35doc/english/online/estug_c2/samples/DistribForce.CATAnalysis">
+     DistribForce.CATAnalysis</a> and compute all the model.</p>
+     <p class="task"><u>Applying a Distributed Force results as shown here</u>: 
+     (first static case)</p>
+     <p class="task">
+     <img border="0" src="b35doc/english/online/estug_c2/images/distributedforce03NLS.gif" width="315" height="276"></p>
+     <p class="task"><u>Applying a Surface Density Force results as shown here</u>: 
+     (second static case)</p>
+     <p class="task">
+     <img border="0" src="b35doc/english/online/estug_c2/images/distributedforce04NLS.gif" width="319" height="270"></td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+       <img border="0" src="b35doc/english/online/estug_c2/images/icon_EST.gif" align="middle" width="32" height="32"></td>
+     <td>
+     <p class="task">The <b>ELFINI Structural Analysis</b> product offers the 
+     following additional functionalities:</p>
+     <ul>
+       <li>
+       Contextual menu on the load object:<ul>
+         <li><kbd>Distributed Force Visualization on Mesh</kbd>: the translation 
+         of the load specifications into solver 
+         specifications can be visualized symbolically at the impacted mesh 
+         nodes, provided the mesh has been previously generated using a mesh 
+         only computation.<br>
+         To know more, refer to <a href="page7112.html#hj-loads">Visualizing 
+         Loads on Mesh</a>.</li>
+       </ul>
+       </li>
+       <li>
+       Contextual menus on the <kbd>Loads</kbd> set:<ul>
+         <li><kbd>Generate Image</kbd>: generates an image of the computed loads (along with translating all user-defined 
+         load specifications into 
+         explicit solver commands on mesh entities), by generating symbols for 
+         the elementary loads imposed by the loads sets. The image can be 
+         edited to include part or all of the options available.<br>
+         To know more, refer 
+             to <a href="page7099.html">Generating Images</a>.</li>
+         <li><kbd>Report</kbd>: the partial status and results of intermediate 
+         pre-processor computations are reported in HTML format. It represents a 
+         subset of the global report capability and generates a partial report 
+         of the loads set computation.<br>
+       To know more, refer to <a href="page7092.html#hj-menu">Generating 
+       Reports</a>.</li>
+       </ul>
+       </li>
+       <li><kbd>Self-balancing</kbd>: you can double-click the <kbd>Loads</kbd> 
+         set to automatically add inertia forces in order to counter balance 
+         external loads.<br>
+       Double-click the <kbd>Loads</kbd> set to display the 
+         Loads dialog box that lets you choose whether you wish to apply 
+         self-balancing to the load. Example of use: if this option is used with iso-static specifications, it will allow you to simulate free-body 
+         loading. If you make the option active, the center of inertia results 
+         null.<br>
+       To know more, refer to <a href="page7053.html#hj-selfbalanc">Creating 
+       Pressures</a>.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,580 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head><meta name="MonocodingType" content="0"></meta>
+	  <meta name="MonocodingFlag" content="C2"></meta>
+	  <meta http-equiv="Content-Language" content="en-us"></meta>
+	  <meta name="GENERATOR" content="Microsoft FrontPage 6.0"></meta>
+	  <meta name="ProgId" content="FrontPage.Editor.Document"></meta>
+  	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	  <title>Requesting Results</title>
+          <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+          
+	 </head><body onload="newPage('pt02ch04s03.html');" ondblclick="newSelection();" bgcolor="#FFFFFF" text="#000000" vlink="#FF5113" alink="#004D48" link="#004D48" class="TEXT"><div class="sect1" id="ath-gen-fem-outputreq">
+    <a name="ath-gen-fem-outputreq"></a>
+
+    <div class="titlepage">
+      
+
+      <div class="title">
+        <h3>Requesting Results</h3>
+      </div>
+    </div>
+
+    <p>You can request two kinds of results from a nonlinear or
+    thermal analysis: field output and history output.</p>
+
+    <ul type="disc"><li>
+        <p>Field output is the output of variables that are written
+        relatively infrequently to the output database file.
+        Typically, you request field output for your entire model
+        or for a large region. When you create the first step in a
+        nonlinear or thermal analysis case, Nonlinear Structural
+        Analysis or Thermal Analysis creates a default field output
+        request that is propagated to subsequent steps. Field
+        output requests generate the data used to produce results
+        images.</p>
+      </li>
+
+      <li>
+        <p>History output is the output of variables that are
+        written relatively frequently to the output
+        database&#8212;as often as every increment. Typically, you
+        request history output for a small area of your model, such
+        as a single integration point or a small region. History
+        output is not requested by default.</p>
+      </li>
+    </ul><p>You can modify both types of output requests in each step to
+    change the output variables or the output frequency. You can
+    deactivate an output request for a step and activate it in a
+    later step. You can delete an output request in the step in
+    which it was created.</p>
+
+    <p>The output requested in a general step is independent of the
+    output requested in a frequency step. Otherwise, the
+    propagation behavior for output requests is the same as the
+    propagation behavior for prescribed conditions described in
+    <a href="page0447.html">Propagation</a>.</p>
+
+    <p>Nonlinear Structural Analysis or Thermal Analysis creates a
+    default field output request for the first step of each type
+    (general or heat transfer) in your model. You can modify or
+    delete the default request, create additional field output
+    requests, or create history output requests. Nonlinear
+    Structural Analysis and Thermal Analysis propagate the output
+    requests created in a step to all subsequent steps of the same
+    type. For example, if you add a history output request to a
+    general step, Nonlinear Structural Analysis propagates your
+    request to all subsequent general steps but not to any
+    frequency steps. Likewise, if you modify an output request,
+    your change is propagated to all subsequent steps of the same
+    type.</p>
+
+    <p>The following sections discuss the use of output requests in
+    Nonlinear Structural Analysis and Thermal Analysis:</p>
+
+    <p class="indent"><b><img src="b35doc/english/online/anlug_c2/images/ABQ_I_FieldOutputRequest.gif"></img><a href="page0454.html#ath-gen-fem-fieldoutputreq">Creating and
+    Modifying Field Output Requests</a></b>:&nbsp;Creates or
+    modifies a field output request in the current analysis
+    step.</p>
+
+    <p class="indent"><b><img src="b35doc/english/online/anlug_c2/images/ABQ_I_HistoryOutputRequest.gif"></img><a href="page0454.html#ath-gen-fem-historyoutputreq">Creating and
+    Modifying History Output Requests</a></b>:&nbsp;Creates or
+    modifies a history output request in the current analysis
+    step.</p>
+
+    <div class="sect2" id="ath-gen-fem-fieldoutputreq">
+      <a name="ath-gen-fem-fieldoutputreq"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Creating and Modifying
+          Field Output Requests</h3>
+        </div>
+      </div>
+
+      <p><a name="CATCommandHeader.ABAQUSFieldOutReqHdr"></a>Field output is the output of variables that are written
+      relatively infrequently to the output database. Typically,
+      you request field output for your entire model or for a large
+      region. Each Nonlinear Structural Analysis and Thermal
+      Analysis analysis case contains a default field output
+      request for each type of step in the analysis. The default
+      request is created in the first step of each step type and
+      writes output to the output database (<tt class="filename">.odb</tt>) file when you run the analysis. The
+      field output requests created in a step are propagated to all
+      subsequent steps of the same step type. Field output requests
+      generate the data used to produce results images (see
+      <a href="page0495.html">Visualizing
+      Results</a>).</p>
+
+      <p>By default, output is requested from every node or
+      integration point and from the default section points for the
+      entire model. The default set of output variables corresponds
+      to the step type (see <a href="page0454.html#afc-table-defaultoutput">Table
+      4&#8211;2</a>); these variables are written by default at
+      every increment.</p>
+
+      <div class="table">
+        <p><a name="afc-table-defaultoutput"></a><b><span class="gentxt_dkgry">Table 4&#8211;2</span></b> Default output
+        variables.</p>
+
+        <table border="1"><thead><tr><th valign="top">Step Type</th>
+
+              <th valign="top">Default Output</th>
+            </tr></thead><tbody><tr><td>General Static</td>
+
+              <td>Stresses, strains, plastic strains, equivalent
+              plastic strains, plastic strain magnitudes,
+              displacements, reaction forces, point loads and
+              concentrated moments, contact pressures and
+              frictional shear stresses, contact openings and
+              relative tangential motions, and the element energy
+              density error</td>
+            </tr><tr><td>Frequency</td>
+
+              <td>Displacements</td>
+            </tr><tr><td>Heat Transfer</td>
+
+              <td>Heat flux per unit area, nodal temperatures, and
+              reaction flux values</td>
+            </tr></tbody></table></div>
+
+      <p>You can use the <img src="b35doc/english/online/anlug_c2/images/ABQ_I_FieldOutputRequest.gif"></img> tool to create new
+      field output requests, and you can use the field output
+      editor to modify new or existing field output
+      requests&#8212;including the default requests&#8212;either
+      in the step in which they were created or a step to which
+      they were propagated. If you modify a propagated field output
+      request, you can modify only the output variables and the
+      output frequency.</p>
+
+      <p>Field output requests are contained in a Field Output
+      Request object under the Field Output Requests objects set
+      for the step.</p>
+
+      <div class="procedure" id="d0">
+        <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img><b>To create or modify a field output request:</b></p>
+
+        <ol class="type1"><li>
+            <p>To create a new field output request, click
+            <img src="b35doc/english/online/anlug_c2/images/ABQ_I_FieldOutputRequest.gif"></img>.</p>
+
+            <p>To edit an existing field output request,
+            double-click on the Field Output object under the Field
+            Output Requests objects set for the analysis step.</p>
+
+            <p>The <span class="guitext"><b class="guititle">Edit
+            Field Output Request</b></span> dialog box is
+            displayed.</p>
+          </li>
+
+          <li>
+            <p>If you edit the output request in the step in which
+            it was created, you can change the name of the output
+            request.</p>
+          </li>
+
+          <li>
+            <p>If you edit the output request in the step in which
+            it was created, you can change the region for which
+            variables will be output.</p>
+
+            <ul type="disc"><li>
+                <p>To request that the solver write field data to
+                the output database for the entire model, toggle on
+                <span class="guitext"><b class="guilabel">Whole
+                model</b></span> from the <span class="guitext"><b class="guilabel">Support</b></span>
+                section at the top of the dialog box.</p>
+              </li>
+
+              <li>
+                <p>To select a smaller region, toggle off
+                <span class="guitext"><b class="guilabel">Whole
+                model</b></span> and select a new model region from
+                the viewport or from the specification tree. You
+                can also select surface groups.</p>
+              </li>
+            </ul></li>
+
+          <li>
+            <p>In the <span class="guitext"><b class="guilabel">Output Variables</b></span> section of the
+            editor, choose one of the following variable selection
+            methods:</p>
+
+            <div class="indent" id="d0">
+              <p><b>Preselected defaults</b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose this method to allow the solver to select
+                a preselected (default) set of output variables
+                appropriate for the step type.</p>
+              </div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b>All</b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose this method to automatically select all
+                of the allowable output variables within each
+                variable category in the list.</p>
+              </div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b>Select from list below</b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose this method to select the output
+                variables of interest from the list of variable
+                categories. Use the following techniques to select
+                particular variables:</p>
+
+                <ul type="disc"><li>
+                    <p>From the list of variables, select the
+                    variables of your choice.</p>
+                  </li>
+
+                  <li>
+                    <p>For categories with multiple selections, you
+                    can select individual variables or toggle the
+                    desired variable category to select or deselect
+                    all variables within that category.</p>
+                  </li>
+                </ul></div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b>Additional variables</b></p>
+
+              <div class="indent" id="d0">
+                <p>When you use <span class="guitext"><b class="guilabel">Select from list below</b></span>, you
+                can type a comma-separated list of variables to be
+                appended to the selection list.</p>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">More</b></span> to edit the section points
+            and frequency of field output or to view the
+            propagation and activation status for the output
+            request.</p>
+          </li>
+
+          <li>
+            <p>If you edit the output request in the step in which
+            it was created, you can change the section points from
+            which variables will be output for shells and beams.
+            The section points that you select can significantly
+            affect the results; for example, a shell with an
+            applied bending load is under tension on one side,
+            compression on the other, and neutral at the center.
+            Choose one of the following:</p>
+
+            <div class="indent" id="d0">
+              <p><b><span class="guitext"><b class="guilabel">Use
+              defaults</b></span></b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose <span class="guitext"><b class="guilabel">Use defaults</b></span> to request that
+                the solver write field data to the output database
+                from the default section points. (The default
+                section points are usually the outer fibers of the
+                section.)</p>
+              </div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b><span class="guitext"><b class="guilabel">All</b></span></b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose <span class="guitext"><b class="guilabel">All</b></span> to request that the
+                solver write field data for all section points to
+                the output database.</p>
+              </div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b><span class="guitext"><b class="guilabel">Specify</b></span></b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose <span class="guitext"><b class="guilabel">Specify</b></span> to manually type the
+                section points for which the solver will write
+                field data to the output database.</p>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <p>Specify the desired output frequency in the
+            <span class="guitext"><b class="guilabel">Save Output
+            At</b></span> area.</p>
+
+            <ul type="disc"><li>
+                <p>For a Nonlinear Structural or Thermal case, you
+                can request output <span class="guitext"><b class="guilabel">Every __ increments</b></span> (the
+                default) and select the number of increments, or
+                you can request output for only the last increment.
+                If you specify the frequency in increments, the
+                solver also writes output for the last increment of
+                the step.</p>
+              </li>
+
+              <li>
+                <p>For a frequency step in a Nonlinear Structural
+                case, you can request output of <span class="guitext"><b class="guilabel">All</b></span> modes
+                (the default), or you can <span class="guitext"><b class="guilabel">Specify individual
+                modes</b></span> and enter the desired modes.</p>
+              </li>
+            </ul></li>
+
+          <li>
+            <p>The propagation and activation status are provided
+            for information only; you cannot edit them from the
+            <span class="guitext"><b class="guititle">Field Output
+            Request</b></span> dialog box. You can edit the
+            activation status from the specification tree.</p>
+
+            <p>See <a href="page0449.html">Status Terms</a> for
+            information on the terms used to describe the
+            propagation and activation status and for instructions
+            on changing the activation status.</p>
+          </li>
+
+          <li>
+            <p>When you have finished defining the output request,
+            click <span class="guitext"><b class="guibutton">OK</b></span> to save your changes.</p>
+          </li>
+        </ol><center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div><span id="ath-gen-fem-fieldoutputreq"></span>
+    </div>
+
+    <div class="sect2" id="ath-gen-fem-historyoutputreq">
+      <a name="ath-gen-fem-historyoutputreq"></a>
+
+      <div class="titlepage">
+        
+
+        <div class="title">
+          <h3><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32" style="vertical-align: middle"></img>Creating and Modifying
+          History Output Requests</h3>
+        </div>
+      </div>
+
+      <p><a name="CATCommandHeader.ABAQUSHistoryOutReqHdr"></a>History output is the output of variables that are written
+      relatively frequently to the output database&#8212;as often
+      as every increment. Typically, you request history output for
+      a small area of your model, such as a single integration
+      point or a small region; however, some history output in a
+      Nonlinear Structural case such as total mass, total volume,
+      and center of gravity requires selection of the whole model.
+      You can use the <img src="b35doc/english/online/anlug_c2/images/ABQ_I_HistoryOutputRequest.gif"></img> tool to create new
+      history output requests; and you can use the history output
+      editor to modify new or existing history output requests,
+      either in the step in which they were created or in a step to
+      which they were propagated. If you modify a propagated
+      history output request, you can modify only the output
+      variables and the output frequency. You cannot request
+      history output from a frequency step.</p>
+
+      <p>History output requests are contained in a History Output
+      Request object under the History Output Requests objects set
+      for the step.</p>
+
+      <div class="procedure" id="d0">
+        <p><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32" style="vertical-align: middle"></img><b>To create or modify a history output request:</b></p>
+
+        <ol class="type1"><li>
+            <p>To create a new history output request, click
+            <img src="b35doc/english/online/anlug_c2/images/ABQ_I_HistoryOutputRequest.gif"></img>.</p>
+
+            <p>To edit an existing history output request,
+            double-click on the History Output Request object under
+            the History Output Requests objects set for the
+            analysis step.</p>
+
+            <p>The <span class="guitext"><b class="guititle">History Output Request</b></span> dialog box
+            is displayed.</p>
+          </li>
+
+          <li>
+            <p>If you edit the output request in the step in which
+            it was created, you can change the name of the output
+            request.</p>
+          </li>
+
+          <li>
+            <p>If you edit the output request in the step in which
+            it was created, you can change the region for which
+            variables will be output.</p>
+
+            <ul type="disc"><li>
+                <p>To request that the solver write history data to
+                the output database for the entire model, toggle on
+                <span class="guitext"><b class="guilabel">Whole
+                model</b></span> from the <span class="guitext"><b class="guilabel">Support</b></span>
+                section at the top of the dialog box.</p>
+              </li>
+
+              <li>
+                <p>To select a smaller region, toggle off
+                <span class="guitext"><b class="guilabel">Whole
+                model</b></span> and select a new model region from
+                the viewport or from the specification tree. You
+                can select point, line, vertex, or edge groups; you
+                cannot select surfaces.</p>
+              </li>
+            </ul><div style="margin-left: 0.5in; margin-right: 0.5in;" class="note">
+              <p><b class="title"><a name="d0e3835">Note:&nbsp;</a></b> Unless the analysis
+              model is relatively small, writing history data for
+              the whole model at a high frequency will produce a
+              very large amount of data for analyses with many
+              increments. Use of a small region of interest is
+              recommended.</p>
+            </div>
+          </li>
+
+          <li>
+            <p>In the <span class="guitext"><b class="guilabel">Output Variables</b></span> section of the
+            editor, choose one of the following variable selection
+            methods:</p>
+
+            <div class="indent" id="d0">
+              <p><b>Preselected defaults</b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose this method to allow the solver to select
+                a preselected (default) set of output variables
+                appropriate for the step type.</p>
+              </div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b>All</b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose this method to automatically select all
+                of the allowable output variables within each
+                variable category in the list.</p>
+              </div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b>Select from list below</b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose this method to select the output
+                variables of interest from the list of variable
+                categories. Use the following techniques to select
+                particular variables:</p>
+
+                <ul type="disc"><li>
+                    <p>From the list of variables, select the
+                    variables of your choice.</p>
+                  </li>
+
+                  <li>
+                    <p>For categories with multiple selections, you
+                    can select individual variables or toggle the
+                    desired variable category to select or deselect
+                    all variables within that category.</p>
+                  </li>
+                </ul></div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b>Additional variables</b></p>
+
+              <div class="indent" id="d0">
+                <p>When you use <span class="guitext"><b class="guilabel">Select from list below</b></span>, you
+                can type a comma-separated list of variables to be
+                appended to the current list.</p>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <p>Click <span class="guitext"><b class="guibutton">More</b></span> to edit the section points
+            and frequency of history output or to view the
+            propagation and activation status for the output
+            request.</p>
+          </li>
+
+          <li>
+            <p>If you edit the output request in the step in which
+            it was created, you can change the section points from
+            which variables will be output for shells and beams.
+            The section points that you select can significantly
+            affect the results; for example, a shell with an
+            applied bending load is under tension on one side,
+            compression on the other, and neutral at the center.
+            Choose one of the following:</p>
+
+            <div class="indent" id="d0">
+              <p><b><span class="guitext"><b class="guilabel">Use
+              defaults</b></span></b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose <span class="guitext"><b class="guilabel">Use defaults</b></span> to request that
+                the solver write history data to the output
+                database from the default section points. (The
+                default section points are usually the outer fibers
+                of the section.)</p>
+              </div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b><span class="guitext"><b class="guilabel">All</b></span></b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose <span class="guitext"><b class="guilabel">All</b></span> to request that the
+                solver write history data for all shell and beam
+                section points to the output database.</p>
+              </div>
+            </div>
+
+            <div class="indent" id="d0">
+              <p><b><span class="guitext"><b class="guilabel">Specify</b></span></b></p>
+
+              <div class="indent" id="d0">
+                <p>Choose <span class="guitext"><b class="guilabel">Specify</b></span> to manually type the
+                section points for which the solver will write
+                history data to the output database.</p>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <p>Specify the desired output frequency in the
+            <span class="guitext"><b class="guilabel">Save Output
+            At</b></span> area.</p>
+
+            <p>For a Nonlinear Structural or Thermal case you can
+            request output <span class="guitext"><b class="guilabel">Every __ increments</b></span> (the default)
+            and select the number of increments, or you can request
+            output for only the last increment. If you specify the
+            frequency in increments, the solver also writes output
+            for the last increment of the step.</p>
+          </li>
+
+          <li>
+            <p>The propagation and activation status are provided
+            for information only; you cannot edit them from the
+            <span class="guitext"><b class="guititle">History
+            Output Request</b></span> dialog box. You can edit the
+            activation status from the specification tree.</p>
+
+            <p>See <a href="page0449.html">Status Terms</a> for
+            information on the terms used to describe the
+            propagation and activation status and for instructions
+            on changing the activation status.</p>
+          </li>
+
+          <li>
+            <p>When you have finished defining the output request,
+            click <span class="guitext"><b class="guibutton">OK</b></span> to save your changes.</p>
+          </li>
+        </ol><center><img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></img></center></div><span id="ath-gen-fem-historyoutputreq"></span>
+    </div><span id="ath-gen-fem-outputreq"></span>
+  </div></body></html>
+

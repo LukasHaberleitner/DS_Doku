@@ -1,0 +1,331 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Creating a Mirror Part</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+</head>
+
+<body>
+
+<h1 align="center">
+<a name="ix-commands::Mirror Part"></a>Creating 
+a Mirror Part</h1>
+<a name="CATCoDefaultCmdHeader.CATCoMirrorPartCmdId"></a>
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1">
+  <tr>
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td>This task shows you how to create a <kbd>Mirror Part</kbd>, from an 
+    <kbd>Engineering</kbd> or a <kbd>Manufacturing Part</kbd>, <br>
+    in a separate or existing .CATPart document, 
+    keeping the link to the original .CATPart.<p>This <kbd>Mirror Part</kbd> is created 
+    copying and hiding the existing Composites features in a new CATPart, <br>
+    and by 
+    adding symmetry features to the existing Composites features (only the 
+    symmetry features are visible). <br>
+    This action is to be used at the end of the 
+    Engineering process or at the end of the Manufacturing process <br>
+    (not in the 
+    course of a designing process, to create a new part by symmetry from an 
+    existing part). </p>
+    <p>This <kbd>Mirror Part</kbd> keeps a link with the original part, so that it can be 
+    synchronized with the original part, if it is modified.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="30" height="32"></td>
+    <td valign="top">
+    <ul>
+      <li>When the mirror part is generated/synchronized, identification 
+		information is added to the original part. <br>This information is 
+		absolutely necessary to allow the composites entities to be recognized 
+		(and therefore not recreated) during future synchronizations. <br>Therefore, 
+		it is mandatory to save the original part if the long warning message 
+		appears. </li>
+		<li>To avoid the long warning message, launch the <kbd>c:prepare for 
+		synchronization</kbd> command from power input. This concerns
+    <ul>
+      <li>The designer before generating the mirror part, </li>
+		<li>Or the designer responsible of the mirrored part before the 
+		synchronizing with original part.</li>
+    </ul>
+    	</li>
+		<li>Do not regenerate a <kbd>3D Multisplice</kbd> feature by editing the 
+      feature and validating the edition with <kbd>OK</kbd>, <br>
+      because this would 
+      regenerate the cut-pieces and delete the Mirror features previously 
+      created from the cut-pieces. <span ><br>Adding a <kbd>3D Multisplice</kbd> feature to 
+		a ply makes synchronization impossible.</span></li>
+      <li>Note that:<ul>
+      <li>Producibility parameters are transferred to the <kbd>Mirror Part</kbd>.</li>
+		  <li><kbd>MultiSplice From Producibility</kbd> features are not 
+		  imported into the <kbd>Mirror Part</kbd>.</li>
+      <li>The following elements are not generated in the <kbd>Mirror Part</kbd>:<ul>
+      <li><kbd>Core Samples</kbd>,</li>
+      <li><kbd>Numerical Analysis</kbd>,</li>
+      <li>Exploded surfaces</li>
+      <li>Preliminary design entities (<kbd>Composites PD</kbd>): they are not 
+      usable in the <kbd>Mirror Part</kbd>. <br>
+      As in the manufacturing preparation document, 
+      they are transferred if they are inputs of plies, <br>
+      but in this case, the
+      <kbd>Composites PD</kbd> node cannot be extended. <br>
+      However, <kbd>Full plies 
+      contour</kbd> and <kbd>ETBS</kbd> features will be transferred (like 
+      construction geometries).</li>
+    </ul>
+      </li>
+    </ul>
+      </li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    &nbsp;</td>
+    <td valign="top">
+    <p>Other elements are transferred as follows:</p>
+    <p>Input elements of the geometrical features describing the <kbd>
+    <a name="ix-creating a mirror part:stacking">Stacking</a></kbd>:</p>
+    <ul>
+      <li>They are imported in the <kbd>Mirror Part</kbd>, </li>
+      <li>They are put in the <kbd>No Show</kbd> via their father <kbd>
+      Geometrical Set</kbd>,</li>
+      <li>Only the mirrored elements are visible.</li>
+    </ul>
+    <p><a name="ix-creating a mirror part:reference surfaces">Reference surfaces</a> corresponding to plies groups, plies, cut-pieces, ...:</p>
+    <ul>
+      <li>They are imported in the <kbd>Mirror Part</kbd> and put in the <kbd>No Show</kbd> 
+      as above,</li>
+      <li>A GSD Symmetry feature is created in a new <kbd>Geometrical Set</kbd> 
+      named <kbd>Symmetry geometries</kbd>,</li>
+      <li>The name of the symmetry feature is <kbd>Symmetry of &quot;Name of the 
+      original surface&quot;</kbd>,</li>
+      <li>Each symmetry feature is assigned to the corresponding stacking 
+      element <br>
+      (plies group, plies without cut-pieces, plies with no associative 
+      cut-pieces, cut-pieces, ...)<table border="0" cellpadding="0" style="border-collapse: collapse" id="table1">
+        <tr>
+          <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+          <td>In the <kbd>Mirror Part</kbd>, symmetry is not applied to a ply with 
+          associative cut-pieces, <br>
+          but is applied to its cut-pieces. As a 
+          consequence:<ul>
+            <li>symmetry will not be applied to the reference surface of the 
+            ply, <br>
+            but will be applied to the reference surface of the cut-pieces.</li>
+            <li>if you want to create a core sampling on a ply with associative 
+            cut-pieces, <br>
+            select the check box <kbd>Take cut-pieces into account </kbd>
+            &nbsp;to generate a correct result.</li>
+          </ul></td>
+        </tr>
+      </table>
+      </li>
+    </ul>
+    <p><a name="ix-creating a mirror part:rosette feature">Rosette feature</a>:</p>
+    <ul>
+      <li>They are imported in the <kbd>Mirror Part</kbd> and put in the <kbd>No Show</kbd> as above,</li>
+      <li>A GSD symmetry feature is created in a new <kbd>Geometrical Set</kbd> 
+      named <kbd>Symmetry geometries</kbd>,</li>
+      <li>The name of the symmetry feature is <kbd>Symmetry of Rosette.x</kbd>,</li>
+      <li>Each symmetry of rosette feature is assigned to the corresponding stacking 
+      element <br>
+      (plies group, plies, cut-pieces, tape, core).<table border="0" cellpadding="0" style="border-collapse: collapse" id="table2">
+        <tr>
+          <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+          <td>
+          <ul>
+            <li>The symmetry of the axis is created, with no orientation 
+            changes,</li>
+            <li>To use another rosette, you must create it and 
+            <br>
+            change the orientations of the plies manually.</li>
+          </ul>
+          </td>
+        </tr>
+      </table></li>
+    </ul>
+    <p><a name="ix-creating a mirror part:composites parameters">Composites Parameters</a>:</p>
+    <ul>
+      <li>They are transferred as is so that the <kbd>Mirror Part</kbd> points to the same 
+      material catalog <br>
+      and uses the same directions.</li>
+    </ul>
+    <p>Stacking:</p>
+    <ul>
+      <li>The mirrored <kbd>Stacking</kbd> elements keeps a link with the original 
+      <kbd>Stacking</kbd> element,<ul>
+        <li>This link is visible using the <kbd>Edit&gt;Links...</kbd> command,</li>
+        <li>You cannot replace this link but you can deactivate it,</li>
+        <li>It is visible through <kbd>Enovia</kbd> for <kbd>Impacted by</kbd> and 
+        <kbd>Impacts on</kbd>.</li>
+      </ul>
+      </li>
+      <li>Each ply geometry receives a new symmetry feature, named <kbd>Mirror</kbd>, 
+      <br>
+      placed after all the composites features (contour, limit contour, skin swapping, 
+      material excess) <br>
+      coming from the original part,<br>
+      <img border="0" src="b35doc/english/online/cpdug_c2/images/mirror02NLS.gif" width="235" height="168"><ul>
+        <li>This <kbd>Mirror</kbd> feature is similar to the symmetry features above, 
+        <br>
+        with 
+        the difference that it lays the result of the symmetry on the symmetry 
+        of the reference surface.</li>
+        <li>It can be edited.<br>
+        <img border="0" src="b35doc/english/online/cpdug_c2/images/dbmirroreditNLS.gif" width="244" height="128"></li>
+      </ul>
+      <table border="0" cellpadding="0" style="border-collapse: collapse" id="table3">
+        <tr>
+          <td valign="top">
+          <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+          <td>The <a name="ix-creating a mirror part:ply direction">ply direction</a> remains the same, as the direction is expressed 
+          in the symmetry of the original rosette.</td>
+        </tr>
+      </table></li>
+      <li><a name="ix-creating a mirror part:associative cut-pieces">Associative cut-pieces</a> (i.e. with <kbd>Limit Contour</kbd> features):<br>
+      <br>
+      <img border="0" src="b35doc/english/online/cpdug_c2/images/mirror04NLS.gif" width="310" height="389"><ul>
+        <li>No symmetry feature is added to the <kbd>Composites Geometry</kbd> of the 
+        father ply (here <kbd>Ply.10</kbd>),</li>
+        <li>A <kbd>Mirror</kbd> feature is added at the end of the <kbd>Composites Geometry</kbd> of 
+        each cut-piece <br>
+        (associativity is kept).<br>
+        <img border="0" src="b35doc/english/online/cpdug_c2/images/mirror05NLS.gif" width="297" height="370"></li>
+      </ul>
+      </li>
+      <li><a name="ix-creating a mirror part:non associative cut-pieces">Non associative cut-pieces</a> (i.e. with datum curves as input to the 
+      cut-piece contour):<ul>
+        <li>A symmetry feature is added to the <kbd>Composites Geometry</kbd> of the father 
+        ply,</li>
+        <li>A <kbd>Mirror</kbd> feature is added at the end of each cut-piece Composites 
+        Geometry.</li>
+      </ul>
+      </li>
+      <li><span >The mirrored 
+	  <kbd>Fiber Mesh Curves</kbd> features are gathered in the 
+	  <kbd>Reverse Symmetry Geometries</kbd> geometrical set, <br>enabling you to find the initial 
+	  <kbd>Fiber Mesh Curves</kbd> features. 
+	  <br>The mirrored <kbd>Fiber Mesh Curves</kbd> features  are updated from new geometries of plies.<br>
+	 The mirrored <kbd>Fiber Mesh Curves</kbd> features are used to create cut-pieces in the 
+	  <kbd>Mirror Part</kbd>.<br>
+	  <kbd>Fiber Mesh Curves</kbd> features created by   
+	  <kbd>MultiSplice From Producibility</kbd> features and used to create cut-pieces
+are also gathered <br>in the  <kbd>Reverse Symmetry Geometries</kbd> geometrical 
+	  set, and isolated (not updated).
+		</span>
+		</li>
+			<li><a name="ix-creating a mirror part:associative flatten geometry">Associative flatten geometry</a> for plies and cut-pieces:<ul>
+        <li>Producibility parameters are modified: a GSD symmetry feature is 
+        created for the <kbd>Seed point</kbd>, <br>
+        the seed curve and each curve of order of 
+        drape. <br>
+        If the <kbd>Seed point</kbd> was given by <kbd>Point indication</kbd>, a symmetry is 
+        applied to the stored <kbd>Point indication</kbd>.</li>
+        <li>The <kbd>Flatten Rosette</kbd> and the <kbd>Flatten Contour</kbd> are updated as they are 
+        computed from the <kbd>Ply Geometry</kbd>, <br>
+        hence from the new symmetry feature in 
+        it.<table border="0" cellpadding="0" style="border-collapse: collapse" id="table4">
+          <tr>
+            <td valign="top">
+            <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+            <td>No symmetry is applied to the location point of the associative 
+            flatten geometry.</td>
+          </tr>
+        </table></li>
+      </ul>
+      </li>
+      <li><a name="ix-creating a mirror part:non associative flatten geometry">Non associative</a> (manually created) flatten geometry for plies and 
+      cut-pieces:<ul>
+        <li>A GSD symmetry feature of the flatten geometry of the original part, 
+        <br>
+        named <kbd>Symmetry of &quot;name of the feature or datum&quot;</kbd>, 
+        <br>
+        is created in the 
+        <kbd>Symmetry geometries Geometrical Set</kbd>.</li>
+        <li>This symmetry feature is assigned to the corresponding ply, 
+        cut-piece or tape.</li>
+      </ul>
+      </li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td>Available in <cite>Composites Engineering 
+    Design (CPE)</cite> and <cite>Composites Design for Manufacturing 
+    (CPM)</cite>.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td valign="top">Open the
+    <a href="b35doc/english/online/cpdug_c2/samples/ManufacturingData1.CATPart">ManufacturingData1.CATPart</a> 
+    document.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td valign="top">
+    <ol class="task">
+      <li>
+      <p class="task">Click <kbd>Mirror Part</kbd>
+            <img border="0" src="b35doc/english/online/icons_C2/images/I_CompositesMirrorP2.gif" width="24" height="24"> 
+      in the <kbd>Mirror</kbd> 
+      <a name="ix-creating a mirror part:in an existing part"></a>toolbar.<a name="ix-creating a mirror part:in a new part"></a><br>
+      The <kbd>Create Mirror Part</kbd> dialog box is displayed.<br>
+      Select the <kbd>Part</kbd> option you require.<br>
+      If you select <kbd>Create mirror in existing part</kbd>, enter the path of 
+      the existing part.<br>
+      <img border="0" src="b35doc/english/online/cpdug_c2/images/dbmirrorNLS.gif" width="194" height="196"></p>
+      </li>
+      <li>
+      <p class="task">Select the <kbd>
+      <a name="ix-creating a mirror part:mirror plane">Mirror plane</a></kbd> as shown below and keep the option
+      <kbd>Create mirror in new part</kbd>.<br>
+      The field <kbd>Plane</kbd> is updated.<br>
+      <img border="0" src="b35doc/english/online/cpdug_c2/images/mirror01NLS.gif" width="455" height="344"></li>
+    </ol>
+    <ol class="task">
+      <li value="3">
+      <p class="task">Click <kbd>OK</kbd>.<br>
+      A message invites you to save the original CATPart at the end of this 
+      process, <br>
+      to ensure synchronization will be possible in the future.<br>
+      Another message warns you of possible changes in the specification tree. 
+      <br>
+      Click <kbd>OK</kbd> to proceed.<br>
+      A new CATPart is created. It contains an image of the original CATPart: 
+      <br>
+      all the elements (features, datum, parameters) necessary to define or 
+      <br>
+      update the stacking elements are instantiated in this new CATPart. 
+      <br>
+      Symmetry features are added for all the composites elements.<br>
+      <img border="0" src="b35doc/english/online/cpdug_c2/images/mirror03NLS.gif" width="375" height="383"></li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+    <p align="center">
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+
+</body>
+
+</html>
+

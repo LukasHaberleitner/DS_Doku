@@ -1,0 +1,493 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+  <head>
+  <meta name="MonocodingType" content="0">
+  <meta name="MonocodingFlag" content="C2D2">
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <title>MfgBatch Utility for Generating NC Data</title>
+  <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+  <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  </head>
+
+  <body>
+
+  <h1>MfgBatch Utility for Generating NC Data</h1>
+  <a name="ix-utility::MfgBatch;MfgBatch utility"></a>
+  <div align="left">
+    <table border="0">
+      <tr>
+        <td width="34" height="38" valign="top">
+        <img src="b35doc/english/online/icons_C2/common/atarget.gif" title="task target" width="32" height="32"></td>
+        <td width="746" height="38" valign="top" colspan="3">MfgBatch is a utility 
+        program that allows you to generate NC data files from a manufacturing program 
+        referenced by a CATProcess.
+        <p>You can run this program using one of the <kbd>Generate NC Data </kbd>commands in 
+        your NC workbench. This is described in the following user tasks:</p>
+        <ul>
+          <li><a href="page11392.html">Generate APT Source Code in Batch Mode</a></li>
+          <li><a href="page11398.html">Generate Clfile Code in Batch Mode</a></li>
+          <li><a href="page11396.html">Generate NC Code in Batch Mode</a></li>
+          <li><a href="page11391.html">Generate APT Source Code in Interactive 
+          Mode</a>.</li>
+        </ul>
+        <p>You can also run MfgBatch as an executable program under Windows or a 
+        shell under UNIX. In this case MfgBatch uses an input text file called FT05 
+        containing a set of keywords similar to the keywords of the equivalent Version 
+        4 utility.</p>
+        <p>This document describes how to define the FT05 input file and run MfgBatch.</p>
+        </td>
+      </tr>
+      <tr>
+        <td width="34" valign="top">
+        <img src="b35doc/english/online/icons_C2/common/ascenari.gif" title="scenario" width="32" height="32"></td>
+        <td width="23" valign="top"><font color="#1C1557"><b>1.</b></font></td>
+        <td width="721" valign="top" colspan="2"><b>Defining the FT05 file</b><p>
+        MfgBatch uses an input text file containing keywords that describe the processing 
+        to be done. It is largely derived from the CATIA Version 4 FT05 file. The
+        <a href="#keywords">available keywords</a> are described below. </p>
+        <p><b>Sample FT05 for generating an APT file:</b></p>
+        <p><code><span style="font-weight: 400">*REA E:\tmp<br>
+        *MOD Processinfra1.CATProcess<br>
+        *PRG Manufacturing Program.1<br>
+        *WRI E:\tmp<br>
+        *MEM aptcub1.aptsource<br>
+        *APT 1<br>
+        *REP Y<br>
+        *PPR 3<br>
+        *RUN</span></code></p>
+        <p><b>Sample FT05 for generating an NC Code file:</b></p>
+        <p><code><span style="font-weight: 400">*REA E:\tmp<br>
+        *MOD Processinfra1.CATProcess<br>
+        *PRG Manufacturing Program.1<br>
+        *WRI E:\<br>
+        *MEM test1.CATNCCode<br>
+        *ISO CNT<br>
+        *REP Y<br>
+        *PPR 3<br>
+        *PPN NUM1060_5X<br>
+        *STX N<br>
+        *RUN</span></code></p>
+        </td>
+      </tr>
+      <tr>
+        <td width="34" valign="top">
+        <img src="b35doc/english/online/icons_C2/common/ainfo.gif" title="scenario" width="32" height="32"></td>
+        <td width="23" valign="top">&nbsp;</td>
+        <td width="721" valign="top" colspan="2">Do not use the character $ in path 
+        names, as this character may be interpreted as an environment variable.</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"><font color="#1C1557"><b>2.</b></font></td>
+        <td width="721" valign="top" colspan="2"><b>Running MfgBatch</b><p>A CATIA 
+        V5 environment is needed in order to run MfgBatch. The entry point is the 
+        MfgBatch.exe executable program (under Windows) or MfgBatchCmd.sh shell 
+        (under UNIX).</p>
+        <p>You should create a RunMfgBatch.bat file under Windows or a RunMfgBatch.sh 
+        file under UNIX. The three arguments required for running the utility are:</p>
+        <blockquote>
+          <p>environment name: -env environment_name<br>
+          environment directory or folder: -direnv environment_location<br>
+          full name of the FT05 file: -ft05 file_name</p>
+        </blockquote>
+        <p><b>Running MfgBatch under Windows</b></p>
+        <p>Here is an example of the RunMfgBatch.bat file you need to create. It 
+        must be accessible in your user path.</p>
+        <blockquote>
+          <p><code><span style="font-weight: 400">&quot;C:\Program Files\Dassault Systemes\B17\intel_a\code\bin\mfgbatch.exe&quot;
+          <br>
+          -env CATIA.V5R17.B17 <br>
+          -direnv &quot;C:\Program Files\Dassault Systemes\B17\CATEnv&quot; <br>
+          -ft05 %1</span></code></p>
+        </blockquote>
+        <p>In this example, CATIA Version 5 is installed at <code>C:\Program Files\Dassault 
+        Systemes\B17</code>.<br>
+        You will find this information in the Properties menu of the icon that is 
+        used to start CATIA. </p>
+        <p>The executable program is run by specifying the required arguments. The 
+        %1 parameter represents the FT05 file name. </p>
+        <p>How to use it:</p>
+        <blockquote>
+          <p><code><span style="font-weight: 400">RunMfgBatch FT05_file_name</span></code></p>
+        </blockquote>
+        <p>Example:</p>
+        <blockquote>
+          <p><code><span style="font-weight: 400">RunMfgBatch e:\users\myself\Drilling_1_ft05.txt</span></code></p>
+        </blockquote>
+        <p><b>Running MfgBatch under UNIX</b></p>
+        <p>Here is an example of the RunMfgBatch.sh file you need to create. It 
+        must be accessible in your user path.</p>
+        <blockquote>
+          <p><code><span style="font-weight: 400">#!/bin/ksh<br>
+          set -x<br>
+          /home/data/TESTR9164/aix_a/code/command/catstart <br>
+          -env CATIA_P1.V5R17.B17 <br>
+          -direnv /CATEnv <br>
+          -run &quot;MfgBatchCmd.sh -ft05 $1&quot;</span></code></p>
+        </blockquote>
+        <p>In this example, CATIA Version 5 is installed at <code>/home/data/TESTR9164</code>. 
+        This is followed by a reference to the operating system, which can be:</p>
+        
+        <ul>
+          <li>aix_a</li>
+          <li>hpux_a</li>
+          <li>irix_a</li>
+          <li>solaris_a.</li>
+        </ul>
+        <p>You will find this information in the /CATEnv directory in the <code>
+        <span style="font-weight: 400">environment_name.txt</span></code> files.</p>
+        <p>The shell is run by specifying the required arguments. The $1 parameter 
+        represents the FT05 file name. </p>
+        <p>How to use it: </p>
+        <blockquote>
+          <p><code><span style="font-weight: 400">RunMfgBatch.sh FT05_file_name</span></code></p>
+        </blockquote>
+        <p>Example: </p>
+        <blockquote>
+          <p><code><span style="font-weight: 400">RunMfgBatch.sh /u/users/myself/Drilling_1_ft05.txt</span></code></p>
+        </blockquote>
+        </td>
+      </tr>
+      <tr>
+        <td width="34" valign="top" style="padding-bottom: 20"></td>
+        <td width="23" valign="top" style="padding-bottom: 20">
+        <font color="#1C1557"><b>3.</b></font></td>
+        <td width="721" valign="top" colspan="2" style="padding-bottom: 20"><b>Results</b><p>
+        For the command:</p>
+        <blockquote>
+          <p><code><span style="font-weight: 400">RunMfgBatch d:\dir\fichierFT05.txt</span></code></p>
+        </blockquote>
+        <p>with:</p>
+        <blockquote>
+          <p><code><span style="font-weight: 400">*WRI E:\tmp<br>
+          *MEM aptcub1.aptsource</span></code></p>
+        </blockquote>
+        <p>results are:</p>
+        <ul>
+          <li>a first LOG file: d:\dir\fichierFT05.txt.LOG</li>
+          <li>a result file: E:\tmp\aptcub1.aptsource</li>
+          <li>a second LOG file: E:\tmp\aptcub1.LOG</li>
+        </ul>
+        <p>If an error occurs, you should first look at the LOG files which give 
+        a diagnostic about the problem encountered (for example, syntax error or 
+        file not found).</p>
+        </td>
+      </tr>
+      <tr>
+        <td width="34" valign="top">
+        <img src="b35doc/english/online/icons_C2/common/ainfo.gif" title="scenario" width="32" height="32"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" colspan="2" width="721"><a name="keywords"></a>The following 
+        keywords can be used in the FT05 file. Note that, compared with a CATIA 
+        Version 4 FT05 file, only 3-letter keywords can be used in Version 5.<p>
+        Please refer to <a href="page11463.html">NC Data Options</a> for more information 
+        about these keywords.</p>
+        <h3>APT output:</h3>
+        </td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*REA</code> </td>
+        <td valign="top" width="646">CATProcess read directory (required keyword).</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*MOD</code> </td>
+        <td valign="top" width="646">CATProcess name (required keyword).</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*PRG</code> </td>
+        <td valign="top" width="646">Manufacturing program to be processed (required 
+        keyword).</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*WRI</code> </td>
+        <td valign="top" width="646">Write directory for the generated file.</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*MEM</code> </td>
+        <td valign="top" width="646">Generated file name.</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*APT 1</code></td>
+        <td valign="top" width="646">Generate APT source. Copy and/or Tracut instructions 
+        will not be processed. In this case there will be Copy or Tracut statements 
+        remaining in the generated APT source.</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*APT 2</code></td>
+        <td valign="top" width="646">Generate APT source. Copy and/or Tracut instructions 
+        will be processed. In this case there will be no Copy or Tracut statements 
+        remaining in the generated APT source.</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*REP</code> </td>
+        <td valign="top" width="646">If output file already exists with same name, 
+        allows replacing it (Y/N)</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*PPR n</code><br>
+        or<br>
+        <code>*PPR nnn</code></td>
+        <td valign="top" width="646">Display mode for general information (such 
+        as tool names), Part operation comments, and Machining operation names (1: 
+        PPRINT, 2: no comments, 3: $$).<p><a name="PPRexample">For example:</a><br>
+        *PPR 1 will give general information, Part operation comments, and Machining 
+        operation names as PPRINT<br>
+        *PPR 121 will give general information, and Machining operation names as 
+        PPRINT and Part operation comments as $$<br>
+        *PPR 333 will give general information, Part operation comments, and Machining 
+        operation names as $$.</p>
+        </td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*RUN</code> </td>
+        <td valign="top" width="646">Command to start processing (required keyword).</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="721" colspan="2">
+        <h3>Clfile, NC code or CATProduct output:</h3>
+        </td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*CLF </code></td>
+        <td valign="top" width="646">Generate Clfile (replaces *APT)</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*ISO</code></td>
+        <td valign="top" width="646">Generate NC code (replaces *APT)</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top">&nbsp;</td>
+        <td width="23" valign="top">&nbsp;</td>
+        <td valign="top" width="73"><code>*CGR</code></td>
+        <td valign="top" width="646">Generate CATProduct in-process model  (replaces 
+        *APT).<br>
+        In previous releases, a CGR in-process model is generated with this keyword.</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top">&nbsp;</td>
+        <td width="23" valign="top">&nbsp;</td>
+        <td valign="top" width="73"><code>*AVR</code></td>
+        <td valign="top" width="646">Associate a Video Result CATProduct 
+		(replaces *APT).</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top">&nbsp;</td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="721" colspan="2">
+        <h3>Possibility to write CATProcess after processing:</h3>
+        </td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*FLW</code></td>
+        <td valign="top" width="646">CATProcess write directory.</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*MDW</code></td>
+        <td valign="top" width="646">CATProcess name.</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*MRP</code></td>
+        <td valign="top" width="646">If CATProcess already exists with same name, 
+        allows replacing it (Y/N).</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top">&nbsp;</td>
+        <td width="23" valign="top">&nbsp;</td>
+        <td valign="top" width="73"><code>*AOF</code></td>
+        <td valign="top" width="646">Associates the NC output file with the CATProcess 
+        after processing (Y/N).</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="721" colspan="2">
+        <h3>Other keywords: </h3>
+        </td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*CIR</code></td>
+        <td valign="top" width="646">Circular interpolation mode (0: no circle, 
+        1: CIRCLE only, 2: CIRCLE or CYLINDR).</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*FGO</code></td>
+        <td valign="top" width="646">3 axis or 5 axis (POINT/AXIS)</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*PPN </code></td>
+        <td valign="top" width="646">Post-processor name</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*STX</code></td>
+        <td valign="top" width="646">Syntax to be used or not for Cycles (Y/N)</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*TPS</code></td>
+        <td valign="top" width="646">Compute only, no generation of APT, NC code 
+        or Clfile.</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*FCP</code></td>
+        <td valign="top" width="646">Force compute.</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*TOM</code></td>
+        <td valign="top" width="646">Tool Output Management (1: Tip, 2:Tool center).</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*FOM</code></td>
+        <td valign="top" width="646">File Operation Management (1: output one file 
+        per program, 2: output one file per operation, 3:&nbsp; output one file 
+        for all programs).</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*HPM</code></td>
+        <td valign="top" width="646">Home Point Management (2: write home point 
+        of the machine in FROM or GOTO according to the machine parameter).</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*LCK</code></td>
+        <td valign="top" width="646">Lock operations.</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top">&nbsp;</td>
+        <td width="23" valign="top">&nbsp;</td>
+        <td valign="top" width="73"><code>*SRP 1</code></td>
+        <td valign="top" width="646">Rapid feedrate at start of each operation.</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top">&nbsp;</td>
+        <td width="23" valign="top">&nbsp;</td>
+        <td valign="top" width="73"><code>*RAP 1</code></td>
+        <td valign="top" width="646">Rapid defined according to the value defined 
+        on the machine feedrate.</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top">&nbsp;</td>
+        <td width="23" valign="top">&nbsp;</td>
+        <td valign="top" width="73"><code>*RMT 1</code></td>
+        <td valign="top" width="646">No GOTO statement is to be included before 
+        each tool change.</td>
+      </tr>
+      <tr>
+        <td width="34" valign="top">&nbsp;</td>
+        <td width="23" valign="top">&nbsp;</td>
+        <td valign="top" width="73"><code>*GBC 1</code></td>
+        <td valign="top" width="646">Remove GOTO statements before axial machining 
+        operations. </td>
+      </tr>
+      <tr>
+        <td width="34" valign="top">&nbsp;</td>
+        <td width="23" valign="top">&nbsp;</td>
+        <td valign="top" width="73"><code>*PAC 1</code></td>
+        <td valign="top" width="646">Remove double points after PP commands.
+        </td>
+      </tr>
+      <tr>
+        <td width="34" valign="top">&nbsp;</td>
+        <td width="23" valign="top">&nbsp;</td>
+        <td valign="top" width="73"><code>*ALP 1</code></td>
+        <td valign="top" width="646">Remove aligned points. </td>
+      </tr>
+      <tr>
+        <td width="34" valign="top"><a name="SPC"></a></td>
+        <td width="23" valign="top"></td>
+        <td valign="top" width="73"><code>*SPC</code></td>
+        <td valign="top" width="646">Split circle into two circular arcs.<p>0: No 
+        split.<br>
+        1: If the circle angle is greater than 179 degrees, it is split into two 
+        equal circular arcs (this is known as the V5 mode).<br>
+        2: If the circle angle between 179 and 181 degrees, or between 359 and 361 
+        degrees, it is split into two circular arcs.<br>
+        The first arc has an angle of 90 degrees, the second has an angle of 
+        'circle angle-90' degrees (this is known as the V4 mode).</p>
+        <p>If this keyword if not used, the circle is not split.</p>
+        <p>See <a href="page11451.html#SplitCIR">Generated APT Output: Split 
+        Circles Behavior</a> for more information about this functionality.</p>
+        </td>
+      </tr>
+      <tr>
+        <td width="34" valign="top">&nbsp;</td>
+        <td width="23" valign="top">&nbsp;</td>
+        <td valign="top" width="73"><code>*NDX N.D</code></td>
+        <td valign="top" width="646">Format for point coordinates<br>
+        N=total number of digits for each point coordinate<br>
+        D=number of digits after the decimal point for each point coordinate.
+        </td>
+      </tr>
+      <tr>
+        <td width="34" valign="top">&nbsp;</td>
+        <td width="23" valign="top">&nbsp;</td>
+        <td valign="top" width="73"><code>*NDI N.D</code></td>
+        <td valign="top" width="646">Format for axial components<br>
+        N=total number of digits for tool axis vector component<br>
+        D=the number of digits after the decimal point for tool axis vector component.
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4" width="782" height="38">
+        <p align="center">
+        <img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="end of task" width="64" height="32"></p>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  </body>
+
+</html>
+

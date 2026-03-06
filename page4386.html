@@ -1,0 +1,214 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2L2">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Client Setup</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+.num         { color: #181557; font-weight: bold }
+.style1 {
+	border-width: 0;
+}
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta content="none, default" name="Microsoft Border">
+</head>
+
+ <body>
+
+ <h1>Client Setup</h1>
+ <table border="0" width="100%" cellspacing="3" cellpadding="3">
+   <tr>
+     <td valign="top"><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top">
+     <p style="margin-bottom: 1em">The Manufacturing Hub client configuration 
+		has specific requirements, including:</p>
+     <ul>
+       <li>The DELMIA Process Engineer Client must be installed on the same 
+		machine from which V5 is run</li>
+		<li>The DELMIA Process Engineer Client must be of the same release level 
+		as the V5 client (i.e., R19, R20, etc.)</li>
+		<li>
+		<span style="font-size:10.0pt;font-family:&quot;Verdana&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;mso-bidi-font-family:
+Calibri;color:black;mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA">The DELMIA Process Engineer Client must be of the same 
+		bitness as the V5 client from R23 onwards.</span></li>
+		<li>Ensuring the installation of the <a href="#Install the correct version of the JRE">correct version of the 
+       Java Runtime Environment</a> (JRE)</li>
+       <li>Creating and setting the <a href="#Set the JAVA_HOME environment variable">JAVA_HOME</a> environment variable</li>
+		<li>Increasing the default <a href="#Recommended_JVM_heap_settings">JVM 
+		heap size</a></li>
+       <li><a href="#Setting PPR Hub Options">Setting the system path</a> so that the E5 utility can be accessed, and 
+       also that the geometry is displayed in the DPM viewer</li>
+     </ul>
+     <p style="margin-bottom: 1em">Additional
+		<a href="#ix-Manufacturing Hub::recommended options">recommended option 
+		settings</a> are also noted below.</p>
+		<p style="margin-bottom: 1em">Any remaining administrative setup is not discussed in this user guide. Prerequisites 
+     which are required at this level of configuration are discussed in detail in the DELMIA Process Engineer 
+     Administrator documentation.</p>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <h2><img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></h2>
+     </td>
+     <td valign="top">
+     <h2>Java requirements</h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top">
+     <h3 style="margin-bottom: 1em"><a name="Install the correct version of the JRE">Install the correct version of the 
+     JRE</a></h3>
+     <p style="margin-bottom: 1em">Please refer to the Quick Prerequisite 
+		Checklist in the DELMIA Installation &amp; Deployment Guide for the current 
+		required version of the Java Runtime Environment (JRE).</p>
+     <h3 style="margin-bottom: 1em"><a name="Set the JAVA_HOME environment variable">Set the JAVA_HOME environment 
+     variable</a></h3>
+     <p style="margin-bottom: 1em">In addition, the environment variable JAVA_HOME must be defined that indicates the 
+     JRE installation directory (for example, C:\apps\jre1.5.0_05) on the client machine:</p>
+     <p style="margin-bottom: 1em" align="center"><img border="1" src="b35doc/english/online/cfyugmfghub_c2/images/dbJdkHomeEnvVariableNLS.gif" width="387" height="219"><h3 style="margin-bottom: 1em" align="left">
+		<a name="Recommended_JVM_heap_settings">Recommended JVM heap settings</a></h3>
+		<p style="margin-bottom: 1em" align="left">By default, the heap size for 
+		the Java Virtual Machine (JVM) is set at 64MB. To accommodate larger 
+		projects and improve performance, it is recommended that the heap size 
+		is set to a minimum of 128MB or higher.&nbsp; 
+		<p style="margin-bottom: 1em" align="left">To accomplish this, set the 
+		environment variable CATJWS_JAVA_OPTION to &quot;-Xmx128M&quot;:<blockquote>
+		<p style="margin-bottom: 1em" align="left"><code>
+		<span style="letter-spacing: 0">CATJWS_JAVA_OPTION=-Xmx128M</span></code></blockquote>
+		<p style="margin-bottom: 1em" align="left">If the maximum heap size is 
+		reached when loading a project from the Manufacturing Hub, the load will 
+		fail and the following error message is displayed:<blockquote>
+		<p style="margin-bottom: 1em" align="left"><code>
+		CATPPRReplica::GetReplicaFromBinary(const CATBinary&amp;, CATBoolean, 
+		CATPPRReplica&amp;) java.lang.OutOfMemoryError &lt;&lt;no stack trace available&gt;&gt;
+		</code>
+		</blockquote>
+		<p style="margin-bottom: 1em" align="left">If this occurs, please close 
+		the V5 session and increase the JVM maximum heap size as explained 
+		above, then restart DPM.<table border="0" width="100%" id="table2" cellspacing="3" cellpadding="4">
+		<tr>
+			<td valign="top">
+			<img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+			<td valign="top">The maximum virtual memory allocated to 
+			any given process on Windows operating systems is 2GB. Because of 
+			this, it is not 
+			recommended to set the heap size value higher than 512MB, as Java 
+			runs inside the DELMIA process and consumes a portion of the total 
+			memory allocated for the DELMIA application. Setting this value too high can cause the 
+			process to fail when the additional required DELMIA-specific code 
+			and data (product data, product visualization, etc.) are loaded at 
+			runtime.<p>
+			<img border="1" src="b35doc/english/online/cfyugmfghub_c2/images/wnJavaHeapNLS.gif" width="269" height="228"></td>
+		</tr>
+		</table>
+		</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <h2>&nbsp;</h2>
+     </td>
+     <td valign="top">
+     <h2><a name="Setting PPR Hub Options">Setting the system path</a></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top"></td>
+     <td valign="top" align="left">
+     <h4>Specify the location of the E5 installation</h4>
+     <p>To support the loading of Work System Components, the E5 utility must included be in the system path. This 
+     includes adding the following directory paths to the system path:</p>
+     <p>&lt;E5 Installation&gt;&#092;Bin;&lt;E5 
+     Installation&gt;&#092;PPRClient&#092;Program&#092;Bin;&lt;E5 
+     Installation&gt;&#092;PPRServer&#092;Program&#092;Bin;</p>
+     <p>where &quot;&lt;E5 Installation&gt;&quot; is the root directory of the E5 installation, and each path is delimited by a 
+     semicolon.</p>
+     <p>The above also sets the path to the executable <i>GraphicExport.exe</i>, which allows for geometry to be seen in 
+     the V5 viewer.&nbsp;This executable is is part of the E5 installation, and is located in &lt;E5 Installation&gt;&#092;PPRClient&#092;Program&#092;Bin.</p>
+     <p style="margin-bottom: 1em">To add these entries to the system path:</p>
+     <ol class="task">
+       <li>
+       <p style="margin-bottom: 1em" class="task">From the Windows taskbar, select 
+		<kbd>Start</kbd>  <kbd>Settings</kbd> <kbd>Control dialog box </kbd>to 
+       open the <kbd>Control dialog box </kbd>window.</li>
+       <li>
+       <p style="margin-bottom: 1em" class="task">In the Control dialog box window, double-click the System icon
+       <img src="b35doc/english/online/cfyugmfghub_c2/images/icWindowsSystem.gif" align="top" width="43" height="36" class="style1">to display the 
+		<kbd>System Properties</kbd> dialog box.</li>
+       <li>
+       <p style="margin-bottom: 1em" class="task">Click the Environment tab to view the current system variables.</li>
+       <li>
+       <p style="margin-bottom: 1em" class="task">In the <kbd>User Variables</kbd> window, highlight the PATH variable. The current 
+       path settings appear in the <kbd>Value</kbd>&nbsp;text field.</li>
+       <li>
+       <p style="margin-bottom: 1em" class="task">Edit the <kbd>Value</kbd> text field to include the paths indicated above. 
+       Separate the&nbsp;paths being added from the existing paths in the list by a semicolon.</p>
+       <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1">
+         <tr>
+           <td width="100%">
+           <p style="margin-bottom: 1em"><img border="1" src="b35doc/english/online/cfyugmfghub_c2/images/dbSetPathNLS.gif" width="412" height="242"></td>
+         </tr>
+       </table>
+       <p style="margin-bottom: 1em" class="task">This example shows &quot;D:&#092;EP5Proto&quot; 
+       as the &lt;E5 Installation&gt; directory.</li>
+       <li>
+       <p style="margin-bottom: 1em" class="task">Click the <kbd>Set</kbd> button to update the system PATH variable with the 
+       edited <kbd>Value</kbd> text field.</li>
+       <li>
+       <p style="margin-bottom: 1em" class="task">Click <kbd>OK</kbd> to close the System Properties dialog box.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;</td>
+     <td valign="top" align="left">
+     <h2><a name="ix-Manufacturing Hub::recommended options">Recommended options</a></h2>
+		<h3>Disable automatic backups</h3>
+		<p>It is recommended that the <kbd>Tools &gt; Options &gt; General &gt; Data Save
+		</kbd>option is set to <kbd>No automatic backup</kbd> for Manufacturing 
+		Hub projects:<br>
+&nbsp;</p>
+		<table border="0" cellspacing="0" cellpadding="0" id="table1">
+			<tr>
+				<td>
+				<img border="1" src="b35doc/english/online/cfyugmfghub_c2/images/dbToolsOptionsDataSaveNLS.gif" width="386" height="86"></td>
+			</tr>
+		</table>
+		<h5 class="style2">DNBIPDMutipleClient--Registration.reg<br>
+		Requirement and Usage</h5>
+		<p>Registry file called <b>DNBIPDMultipleClientRegistration.reg</b> is 
+		delivered in &lt;Installation Directory&gt;/intel_a/code/command&gt; folder. This 
+		file needs to be run once after the fresh installation of DELMIA V5</p>
+		<p>This is required to support remote DPE server-DELMIA V5 client 
+		connection.<o:p> </o:p>In case of DELMIA V5 client, the COM environment 
+		is not initialized explicitly. So CoInitializeSecurity method is not 
+		called explicitly by the User, but implicitly during the COM 
+		initialization process. So to overwrite the default security we need to 
+		overwrite the ACL (Access Control List) in the client&#8217;s registry. This 
+		is achieved through the above file.</p>
+		<p>This file registers the security settings for three applications:-
+		</p>
+		<ul>
+			<li>DELMIA.exe</li>
+			<li>CNEXT.exe </li>
+			<li>DirectLaunch.exe</li>
+		</ul>
+		<p>&nbsp;</td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

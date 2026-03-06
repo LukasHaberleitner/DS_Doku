@@ -1,0 +1,183 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Activating and Deactivating a Component</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1><a name="ix-parameter::activating and deactivating a component"></a>
+ Activating and Deactivating a Component<a name="ix-activating a component"></a>
+ <a name="ix-deactivating a component"></a></h1>
+ <table border="0" valign="top" cellpadding="4" style="border-collapse: collapse" bordercolor="#111111" cellspacing="0">
+   <tr>
+     <td valign="top" height="85" width="32">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td height="85" width="623">This task explains how to activate and 
+     deactivate a component.&nbsp;<p>In the scenario described below, the CATProduct 
+     file contains two CATPart files that you will activate and deactivate 
+     alternatively after creating user parameters and a rule based on these 
+     parameters.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="50" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td height="50" width="623">Note that:<ul>
+       <li>Relations located at the product level are not integrated to the 
+       product update. If your relation drives the parameters of a Part, create 
+       the relation at the Part level. </li>
+       <li>Parameters driven by rules are designed to enable you to&nbsp; 
+       control components activities at assembly level.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="50" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td height="50" width="623">When working in a Japanese environment, 
+     remember to check the <kbd>Surrounded by the Symbol'</kbd> option (<kbd>Tools&gt;Options&gt;General&gt;Parameters 
+     and Measure&gt;Knowledge</kbd> tab).&nbsp;</td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top" height="1162" width="32">
+     <p class="task">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="1162" width="623">
+     <ol class="task">
+       <li>
+       <p class="task">Open the
+       <a href="b35doc/english/online/cfysm_C2/samples/Advisor/KwrSyringe.CATProduct">
+       KwrSyringe.CATProduct</a> file and save the following files in the same 
+       directory (<a href="b35doc/english/online/cfysm_C2/samples/Advisor/SyringePiston.CATPart">SyringePiston.CATPart</a>,
+       <a href="b35doc/english/online/cfysm_C2/samples/Advisor/HollowSyringePiston.CATPart">
+       HollowSyringePiston.CATPart</a>, and
+       <a href="b35doc/english/online/cfysm_C2/samples/Advisor/SyringeContainer.CATPart">
+       SyringeContainer.CATPart</a>): This file contains a syringe made up of 
+       three different parts: A barrel, and two different plungers.</li>
+       <li>
+       <p class="task">Create a multiple value parameter of string type. &nbsp;</li>
+     </ol>
+     <table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+       <tr>
+         <td width="91%">
+         <ul>
+           <li>Click the
+           <img border="0" src="b35doc/english/online/icons_C2/images/I_FormulaP2.gif" width="24" height="24"> 
+           icon. The Formulas Editor opens.</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td width="91%">
+         <ul>
+           <li>Select String from the scrolling list with Multiple Values. Click
+           <kbd>New Parameter of type</kbd>. The <kbd>Value List</kbd> dialog 
+           box opens.</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td width="91%">
+         <ul>
+           <li>Enter two different values, Hollow and Full, and click <kbd>OK</kbd>.&nbsp;</li>
+         </ul>
+         </td>
+       </tr>
+       <tr>
+         <td width="91%">
+         <ul>
+           <li>Edit the name of the new parameter (SyringeType in this scenario) 
+           in the <kbd>Edit Name or value of the current parameter</kbd> and 
+           click <kbd>OK</kbd>. The new parameter is displayed under the <kbd>
+           Parameters</kbd> node of the Specification tree.</li>
+         </ul>
+         </td>
+       </tr>
+     </table>
+     <ol class="task" start="3">
+       <li>
+       <p class="task">Access the Knowledge Advisor workbench and click the Rule 
+       icon to create a rule. The script of this rule will allow you to enable 
+       or disable one of the plungers.</li>
+       <li>
+       <p class="task">Enter the code below in the Rule Editor, and click <kbd>
+       OK</kbd>.</li>
+     </ol>
+     <div align="center">
+       <center>
+       <table border="0" cellpadding="4" cellspacing="0" width="60%" style="border-collapse: collapse" bordercolor="#111111">
+         <tr>
+           <td width="100%" bgcolor="#F0F0F0"><code>if (SyringeType == &quot;Hollow&quot;)<br>
+           {<br>
+           `S3\Component Activation State` = false<br>
+           `S2\Component Activation State` = true<br>
+           }<br>
+           else<br>
+           {<br>
+           `S2\Component Activation State` = false<br>
+           `S3\Component Activation State` = true<br>
+           }</code></td>
+         </tr>
+       </table>
+       </center>
+     </div>
+     <div align="center">
+       <center>
+       <table border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+         <tr>
+           <td width="8%" valign="top" bgcolor="#F2F2F2">
+           <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+           <td width="52%" valign="top" bgcolor="#F2F2F2">Note that Japanese 
+           users must enter the following rule.</td>
+           <td width="40%" bgcolor="#F2F2F2">
+           <img border="0" src="b35doc/english/online/cfyugkwr_c2/images/kwrrule_japanese.gif" width="190" height="120"></td>
+         </tr>
+         <tr>
+           <td width="60%" valign="top" colspan="2">
+           <ol start="5" class="task">
+             <li value="6">
+             <p class="task">Double-click the SyringeType parameter under the 
+             Parameters node and select Hollow in the Edit Parameter window. The 
+             SyringeBarrel CATPart and the HollowSyringePlunger CATPart&nbsp; 
+             are displayed.</li>
+           </ol>
+           </td>
+           <td width="40%">
+           <img border="1" src="b35doc/english/online/cfyugkwr_c2/images/KwrHollowSyringeNLS.gif" align="left" width="242" height="297"></td>
+         </tr>
+         </center>
+         <tr>
+           <td width="60%" valign="top" colspan="2">
+           <ol start="7" class="task">
+             <li>
+             <p class="task">Double-click the SyringeType parameter and select 
+             &quot;Full&quot; in the Edit Parameter window. The SyringeBarrel CATPart and 
+             the SyringePlunger CATPart are displayed.</li>
+           </ol>
+           </td>
+           <center>
+           <td width="40%" valign="top">
+           <img border="1" src="b35doc/english/online/cfyugkwr_c2/images/KwrFullSyringeNLS.gif" width="230" height="293"></td>
+         </tr>
+       </table>
+       </center>
+     </div>
+     </td>
+   </tr>
+ </table>
+ <p align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+ </p>
+
+ </body>
+
+</html>
+

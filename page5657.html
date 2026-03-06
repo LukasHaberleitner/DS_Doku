@@ -1,0 +1,502 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Accessing Data in a PDM Database</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <a name="ix-accessing:PDM data"></a>
+ <h1>Accessing Data in a PDM Database </h1>
+ <p align="center">&nbsp;</p>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" height="3847" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr>
+     <td valign="top" height="134">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top" height="134">The following are the different parameters 
+     you need to define when accessing data in a PDM database using the batch 
+     processes CATDMUUtility, CATDMUUtility2D and CATDMUBuilder.<p align="center">
+     <a href="#hj-1">Common Parameters</a><br>
+     <a href="#hj-2">Accessing an ENOVIA<font size="1">VPM </font>
+     <font size="2">Database in Connect Mode</font></a><br>
+     <a href="#hj-3">Accessing an ENOVIA<font size="1">VPM </font>
+     <font size="2">Database in Server Mode</font></a><br>
+     <a href="#hj-4">Accessing an ENOVIA V5 VPM <font size="1">&nbsp;</font><font size="2">Database</font></a><br>
+     <a href="#hj-5">Accessing a SMARTEAM Database</a></td>
+   </tr>
+   <tr>
+     <td valign="top" height="470">&nbsp;</td>
+     <td valign="top" height="470">
+     <h2><a name="hj-1"></a>Common Parameters</h2>
+     <p><b>-db</b>&nbsp;&nbsp;: Input database type: { VPM | VPMServer | ENOVIAV5 | 
+     TeamPDM } : For processing data stored in a PDM database.</p>
+     <blockquote>
+       <p>The type of the database must follow the -db option:</p>
+       <ul>
+         <li>VPM for ENOVIA<font size="1">VPM</font> database in connect mode</li>
+         <li>VPMServer for ENOVIA<font size="1">VPM</font> database in server 
+         mode</li>
+         <li>ENOVIAV5 for ENOVIA V5 VPM database</li>
+         <li>TeamPDM for SMARTEAM database</li>
+       </ul>
+     </blockquote>
+     <p><b>-user</b>&nbsp;&nbsp;&nbsp;&nbsp; : user name identifier for a 
+     database connection. Only used with the <b>-db</b> option. If no user or a 
+     blanc is required, the option must not be used.</p>
+     <p><b>-pwd</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : password of the user for a 
+     database connection. Only used with the <b>-db</b> option. If no user or a 
+     blank password is required, the option must not be used. Not used with -spwd 
+     option.</p>
+     <p><b>-spwd </b><kbd>cryppwd</kbd> : Enables user to specify an encrypted 
+     password when connecting to a database. Only used with the <b>-db</b> 
+     option.&nbsp;Not used with -pwd option. See
+     <a target="ds_doc2" href="page5656.html">Encrypting a Password for 
+     Accessing Data in a PDM Database</a>. </p>
+     <p><b>-server</b> <kbd>srv</kbd>&nbsp; : logical name of the database 
+     server (defined in settings). Only used with the <b>-db</b> option. Its use 
+     is mandatory to establish the connection with the database. </p>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="267">&nbsp;</td>
+     <td valign="top" height="267">
+     <h2><a name="hj-2"></a>Accessing an ENOVIA<font size="2">VPM</font> 
+     Database in Connect Mode</h2>
+     <p>Connect access mode is applicable for CATDMUUtility, CATDMUUtility2D and 
+     CATDMUBuilder. <br>
+     In connect access mode, you can access documents saved in ENOVIA<font size="1">VPM</font> 
+     , e.g. models and CATParts.</p>
+     <p><b>-db</b> <b>VPM</b> : To define the ENOVIA<font size="1">VPM</font> 
+     database. The value must be VPM.</p>
+     <p>Command line examples:</p>
+     <blockquote>
+       <p><kbd>CATDMUUtility -db VPM -server srv -user usr -spwd *** </kbd></p>
+       <p><kbd>CATDMUUtility -db VPM -user $user_db -pwd $pwd_db -server $server_name<br>-coid $coid_nb -compid $compid_nb -cattab $table_name -catenv $env_name
+       <br>-cgr </kbd>(if you want to tessellate into cgr)<kbd><br>$output_file_path 
+       </kbd>or<kbd> -cache </kbd>(if you want the 
+         outputfile into the cache) </p>
+     </blockquote>
+     <p>&nbsp;</p>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="43">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" height="43">Note: If -server option exists without 
+     corresponding parameter, VPM is assumed.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="267">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" height="267">The following is the form of a VPM UID to be 
+     used for the CATDMUUtility2d batch:<p><kbd>UID/Classic+VPM1/VPMENV/CATCON++#VPMENV++#DOCUMENT++++<br>
+     ++++#414198927EC21390#414198927EC21391.dxf </kbd></p>
+     <p>You can see:</p>
+     <ul>
+       <li>the VPM environment name (VPMENV) </li>
+       <li>the table in which documents are stored (DOCUMENT) </li>
+       <li>the document COID and COMPID </li>
+       <li>the document extension </li>
+     </ul>
+     <p>Windows example for CATDMUUtility2D: </p>
+     <p>catstart -run &quot;CATDMUUtility2D -id UID/Classic+VPM1/VPMENV/CATCON++#VPMENV++#DOCUMENT++++<br>
+     ++++#414198927EC21390#414198927EC21391.dxf <br>
+     -cgm E:\tmp\dxf.cgm -db VPM -user vpmadm15 -pwd vpmadm15 -server bubk1dsy&quot; 
+     -direnv C:\Documents and Settings\ctt\Application Data\DassaultSystemes\CATEnv 
+     -env LocalEnvR13.txt</p>
+     <p>UNIX example for CATDMUUtility: </p>
+     <p>catstart -run &quot;CATDMUUtility -db VPM -coid 414198927EC21390 -compid 
+     414198927EC21391 -cattab CATIA_MODEL -catenv VPMENV -user vpmadm15 -pwd 
+     vpmadm15 -server bubk1dsy -cgr -cache&quot; -direnv /home/data/CATEnv -env 
+     LocalEnvR13</td>
+   </tr>
+   <tr>
+     <td valign="top" height="178"></td>
+     <td valign="top" height="178">
+     <h2><a name="hj-3"></a>Accessing an ENOVIA<font size="2">VPM</font> 
+     Database in Server Mode</h2>
+     <p>Server access mode is applicable for CATDMUBuilder only. <br>
+     In server access mode, you can access meta-data (e.g. Product Structure 
+     data .psn and .CATVpm documents) in addition to documents accessible in 
+     connect access mode.</p>
+     <p><b>-db</b> <b>VPMServer</b> : To define the ENOVIA<font size="1">VPM</font> 
+     database. The value must be VPMServer.</p>
+     <p><b>-role</b> <kbd>role</kbd> : To define the ENOVIA<font size="1">VPM</font> 
+     role. <br>
+     <br>
+     If a VPM organization is needed, it has to be declared with the role using 
+     the following syntax <kbd>-role myrole[myorg]</kbd>. Important: There 
+     should not be any spaces between the role value and the organization value.
+     <br>
+     <br>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="48">&nbsp;</td>
+     <td valign="top" height="48"><b>-host</b> <kbd>host_machine</kbd> : to 
+     define the UNIX server on which a ENOVIA<font size="1">VPM</font> server 
+     will be launched, thereby enabling access to a UNIX ENOVIA<font size="1">VPM</font> 
+     from a Windows machine. This option is only used when the CATDMUBuilder 
+     batch job is launched from a Windows machine.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="105">&nbsp;</td>
+     <td valign="top" height="105">Command line examples:<p><code>-db VPMServer 
+     -server srv -user usr -spwd *** -role xxx<br>
+     -db VPMServer -server srv -user usr -spwd *** -role xxx -host yyy</code></p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="2660">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" height="2660">
+     <h3>Configuring the ENOVIA<font size="2">VPM</font> Server to enable the 
+     Windows client access in Server Mode</h3>
+     <p>It is necessary that your ENOVIA<font size="1">VPM </font>Administrator 
+     do the following in order that you can access the ENOVIA<font size="1">VPM
+     </font>database:<br>
+     </p>
+     <p>&nbsp;</p>
+     <h4>Pre-requisites</h4>
+     <p>The client machine must be configured as if it was a standard machine 
+     used for 3d com / DMU interoperability through either <kbd>db2 client</kbd> 
+     or <kbd>oracle client</kbd>; it means that the user on Windows is able to 
+     load data from ENOVIA<font size="1">VPM</font>&nbsp; into DMU through 3d 
+     com i.e. by using the <kbd>CATIA V5 / Load</kbd> menu from 3d Com. </p>
+     <p>&nbsp;</p>
+     <h4>Environment setup<br>
+     </h4>
+     <h5>On the Windows client </h5>
+     <ol class="task">
+       <li>
+       <p class="task">De-activate the variable <kbd>CATIAV5_PORTALVPM=1</kbd> 
+       (used for interoperability between 3d com / ENOVIA<font size="1">VPM</font> 
+       / DMU) and replace it by: <code><kbd>CV5_VPM_XCONT=1</kbd></code><kbd>
+       </kbd>.</li>
+       <li>
+       <p class="task">The variable <kbd>HTTP_SERVER=the_server_name</kbd> must 
+       be kept. </li>
+       <li>
+       <p class="task">A dedicated communication port must be declared: </li>
+     </ol>
+     <blockquote>
+       <ul>
+         <li>Edit the file : <kbd>C:&#092;WINNT&#092;system32&#092;drivers&#092;etc&#092;services</kbd></li>
+         <li>Add the line : <kbd>catcom 3001/tcp <br>
+         </kbd>Note that the port number can be changed.</li>
+       </ul>
+     </blockquote>
+     <h5>On the UNIX server</h5>
+     <ol class="task">
+       <li>
+       <p class="task">A dedicated communication port must be declared: </li>
+     </ol>
+     <blockquote>
+       <ul>
+         <li>Edit the file /etc/services </li>
+         <li>Add the <b>same</b> previous line (the same line as you added for 
+         the dedicated communication port on the Windows client).<br>
+         Note that the port number <b>must</b> be the same.</li>
+       </ul>
+     </blockquote>
+     <ol class="task" start="2">
+       <li>
+       <p class="task">On the UNIX server, log as ENOVIA<font size="1">VPM</font> 
+       administrator.</li>
+       <li>
+       <p class="task">Find on your ENOVIA<font size="1">VPM</font> installation 
+       the location of the JS0TLN module<br>
+       (it is used for communication between the client and server), e.g. 
+       /V15/cfgPTF15/code/steplib/JS0TLN .</li>
+       <li>
+       <p class="task">Type JS0TLN .</li>
+     </ol>
+     <p>Under the root user account perform the following modifications: </p>
+     <ol class="task" start="5">
+       <li>
+       <p class="task">cp /V15/cfgPTF15/code/steplib/JS0TLN /My_directory/JS0TLN</li>
+       <li>
+       <p class="task">chmod ug+s /My_directory/JS0TLN </li>
+       <li>
+       <p class="task">To check the modification: ls -al /My_directory/JS0TLN&nbsp;&nbsp;&nbsp;&nbsp; 
+       -r-sr-sr-x 1 root system</li>
+     </ol>
+     <p>On the UNIX server:</p>
+     <ol class="task" start="8">
+       <li>
+       <p class="task">Edit the file /etc/inetd.conf </li>
+       <li>
+       <p class="task">Add the line <code>catcom stream tcp nowait nobody /My_directory/JS0TLN 
+       JS0TLN <br>
+       -secured /My_directory/MySecurity.txt </code></li>
+     </ol>
+     <blockquote>
+       <p>where MySecurity.txt is a text file describing the security management 
+       (see the syntax below) </p>
+     </blockquote>
+     <p>Note that the modification inside /etc/inetd.conf file is not 
+     dynamically taken into account; to make it active: </p>
+     <ol class="task" start="10">
+       <li>
+       <p class="task">ps -ef | grep inetd</li>
+       <li>
+       <p class="task">kill -1 xxxx </li>
+     </ol>
+     <p>&nbsp;</p>
+     <h5>Security<b> </b>management on the UNIX server</h5>
+     <p>Access is controlled by the file <kbd>MySecurity.txt </kbd>.</p>
+     <p>Here are the different parameters you can use in this file: </p>
+     <blockquote>
+       <p>Keyword Meanings</p>
+       <ul>
+         <li>LogFile: Log file</li>
+         <li>Log: All Log of all JS0TLN activities</li>
+         <li>HostAddr: IP address of the Windows client</li>
+         <li>RemoteUser: Logon used on the client side</li>
+         <li>Local User: Logon used on the server side (one client per line)
+         </li>
+       </ul>
+     </blockquote>
+     <p>Example 1: </p>
+     <blockquote>
+       <p>HostAddr='128.3.123.123' </p>
+       <p>All users logged on this client will be authorized to launch the 
+       batch.</p>
+     </blockquote>
+     <p>Example 2:<br>
+     </p>
+     <blockquote>
+       <p>HostAddr='128.3.123.123' RemoteUser='HHH' LocalUser ='vpmadm' </p>
+       <p>Access is authorized for user HHH, from only one machine and the user 
+       HHH is mapped as vpmadm on the server<br>
+       <br>
+       </p>
+     </blockquote>
+     <p>Example 3: </p>
+     <blockquote>
+       <p>RemoteUser='HHH' LocalUser ='vpmadm' </p>
+       <p>Access is authorized for user HHH, from any client, mapped as vpmadm 
+       on the server. </p>
+     </blockquote>
+     <p>Tip: since the Windows user will try to execute the ENOVIA<font size="1">VPM</font> 
+     shell <kbd>StartVPMBatchFromV5Batch.sh</kbd>, it is recommended to map the 
+     Windows user as an ENOVIA<font size="1">VPM</font> user.<br>
+     <br>
+     </p>
+     <h4>Final Considerations</h4>
+     <ol class="task">
+       <li>
+       <p class="task">The CATDMUBuilder launched from Windows will try to 
+       execute on the server side an ENOVIA<font size="1">VPM</font> shell 
+       called <kbd>StartVPMBatchFromV5Batch.sh</kbd> (shell name must not be 
+       changed). </li>
+     </ol>
+     <blockquote>
+       <p>This shell <b>must</b> be in the $PATH variable of the ENOVIA<font size="1">VPM</font> 
+       user declared in the mapping (Ex: /V15/vpmadm/code/bin) </p>
+     </blockquote>
+     <ol class="task" start="2">
+       <li>
+       <p class="task">In addition, the client needs to know the location of 
+       this shell on the server. This is done through an environment variable 
+       which has to be declared on the client machine: </li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <p>set CV5VpmStart=/V15/vpmadm/code/bin </p>
+       </blockquote>
+     </blockquote>
+     <ol class="task" start="3">
+       <li>
+       <p class="task">The <kbd>StartVPMBatchFromV5Batch.sh </kbd>shell has to 
+       be created by the ENOVIA<font size="1">VPM</font> administrator and can 
+       look as follows:</li>
+     </ol>
+     <blockquote>
+       <p><code>!# /bin/ksh<br>
+       if [ -f $HOME/.profile ] ; then<br>
+       . $HOME/.profile<br>
+       fi<br>
+       . /V15/vpmadm/env/VPMWsUser.sh &gt;/tmp/traces 2&gt;&amp;1<br>
+       export GlobalVPMServer=1<br>
+       VX0SERV &gt;&gt;/tmp/traces 2&gt;&amp;1</code></p>
+       <p>WARNING: When launching the CATDMUBuilder batch job from a Windows 
+       machine, it is imperative to export the variable <kbd>GlobalVPMServer=1</kbd> 
+       before launching the <kbd>VX0SERV</kbd> process.<br>
+       <br>
+       </p>
+     </blockquote>
+     <ol class="task" start="4">
+       <li>
+       <p class="task">The following are examples of a CATDMUBuilder used in 
+       server mode for treating a CATVpm file: </li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p class="task"><b>Windows</b>:</p>
+           <blockquote>
+             <p><code>catstart -direnv C:&#092;Documents 
+             and Settings&#092;ctt&#092;Application 
+             Data&#092;<br>
+             Dassault Systemes&#092;CATEnv 
+             -env LocalEnvR15.txt -run &quot;CATDMUBuilder <br>
+             E:&#092;tmp&#092;CATVPM 
+             -db VPMServer -user vpmadm -spwd vpmadm -server server_name -role 
+             VPMADMIN -host antonydsy -product E:&#092;tmp&quot;</code></p>
+             <p>where E:&#092;tmp&#092;CATVPM 
+             is a directory containing the CATVpm file to be treated and where
+             <kbd>server_name</kbd> is the name of the server defined in the 
+             ENOVIA<font size="1">VPM</font> interoperability settings (Tools &nbsp;&gt;&nbsp; 
+             Options &nbsp;&gt;&nbsp; Infrastructure &nbsp;&gt;&nbsp; Product Structure &nbsp;&gt;&nbsp; ENOVIA<font size="1">VPM</font> 
+             tab &nbsp;&gt;&nbsp; click Database Administration icon).</p>
+           </blockquote>
+           <p><b>UNIX</b>:</p>
+           <blockquote>
+             <p><code>catstart.sh -direnv /CATEnv -env CATIA.V5R15.B15.txt -run 
+             &quot;CATDMUBuilder <br>
+             /tmp/CATVPM -db VPMServer -user vpmadm -spwd vpmadm -server 
+             server_name -role VPMADMIN&nbsp; -product /tmp&quot;</code></p>
+             <p>where /tmp/CATVPM is a directory containing the CATVpm file to 
+             be treated and where <kbd>server_name</kbd> is the name of the 
+             server defined in the ENOVIA<font size="1">VPM</font> 
+             interoperability settings (Tools &nbsp;&gt;&nbsp; Options &nbsp;&gt;&nbsp; Infrastructure &nbsp;&gt;&nbsp; 
+             Product Structure &nbsp;&gt;&nbsp; ENOVIA<font size="1">VPM</font> tab &nbsp;&gt;&nbsp; click 
+             Database Administration icon).</p>
+           </blockquote>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <ol class="task" start="5">
+       <li>
+       <p class="task">The following are examples of a CATDMUBuilder used in 
+       connected mode for treating a CATProduct: </li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p class="task"><b>Windows</b>:</p>
+           <blockquote>
+             <p><code>catstart -direnv C:&#092;Documents 
+             and Settings&#092;ctt&#092;Application 
+             Data&#092;<br>
+             Dassault Systemes&#092;CATEnv 
+             -env LocalEnvR15.txt -run &quot;CATDMUBuilder <br>
+             E:&#092;tmp&#092;CATProduct_directory 
+             -db VPM -user vpmadm -spwd vpmadm -server server_name -force 
+             -product E:&#092;tmp&quot;</code></p>
+             <p>where E:&#092;tmp&#092;CATProduct_directory 
+             is a directory containing the CATProduct to be treated and where
+             <kbd>server_name</kbd> is the name of the server defined in the 
+             ENOVIA<font size="1">VPM</font> interoperability settings (Tools &nbsp;&gt;&nbsp; 
+             Options &nbsp;&gt;&nbsp; Infrastructure &nbsp;&gt;&nbsp; Product Structure &nbsp;&gt;&nbsp; ENOVIA<font size="1">VPM</font> 
+             tab &nbsp;&gt;&nbsp; click Database Administration icon).</p>
+           </blockquote>
+           <p><b>UNIX</b>:</p>
+           <blockquote>
+             <p><code>catstart.sh -direnv /CATEnv -env CATIA.V5R15.B15.txt -run 
+             &quot;CATDMUBuilder <br>
+             /tmp/CATProduct_directory -db VPM -user vpmadm -spwd vpmadm -server 
+             server_name -force -product /tmp&quot;</code></p>
+             <p>where /tmp/CATProduct_directory<code> </code>is a directory 
+             containing the CATProduct to be treated and where <kbd>server_name</kbd> 
+             is the name of the server defined in the ENOVIA<font size="1">VPM</font> 
+             interoperability settings (Tools &nbsp;&gt;&nbsp; Options &nbsp;&gt;&nbsp; Infrastructure &nbsp;&gt;&nbsp; 
+             Product Structure &nbsp;&gt;&nbsp; ENOVIA<font size="1">VPM</font> tab &nbsp;&gt;&nbsp; click 
+             Database Administration icon).</p>
+           </blockquote>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <blockquote>
+             <p><br>
+             </p>
+           </blockquote>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="172">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top" height="172">When using server mode to access an ENOVIAVPM 
+     database, DMU needs to know the attributes of the ENOVIAVPM objects. This 
+     is done by adding the variable <kbd>GLOBAL_$ATTRIBUTES_TO_LOAD</kbd> in the 
+     VPM profile, e.g.
+     <p>ASSIGN 'SELECT S_PART_NUMBER, S_CHG_NUM, S_TYPE, PART_DESCRIPTION, 
+     C_PART_VERSION, C_MATURITY FROM PART_LIST; SELECT C_NICKNAME, S_TYPE_REP, 
+     MODEL_DESCRIPTION, C_REVISION, C_MATURITY FROM CATIA_MODEL; SELECT 
+     C_NICKNAME, S_TYPE_REP, S_PLOT_NAME FROM CATIA_PLOT; SELECT S_FORMAT, 
+     S_NAME, D_PATH, C_REVISION, C_MATURITY, S_TYPE_REP FROM DOCUMENT' TO &quot;<kbd>GLOBAL_$ATTRIBUTES_TO_LOAD</kbd>&quot;;
+     </p>
+     <p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" height="317"><br>
+&nbsp;</td>
+     <td valign="top" height="317">
+     <h2><a name="hj-4"></a>Accessing an ENOVIA V5 VPM Database</h2>
+     <p><b>-db</b> <kbd>ENOVIAV5</kbd> : To define the ENOVIA V5 VPM database.
+     </p>
+     <p><b>-role</b> <kbd>role</kbd> : To define the ENOVIA V5 VPM user role.
+     </p>
+     <p><b>-serverid </b><kbd>id</kbd><b> </b>: Enables access via an existing 
+     connection, as opposed to launching a server. (This method is faster, as 
+     the time spent waiting for the server to be launched is by-passed.)</p>
+     <p>The access method depends on the existence of a connection to database:</p>
+     <ul>
+       <li>Connection does not exist: you must launch a server. The command line 
+       is:<br>
+       <code>-db ENOVIAV5 -server srv:port -user usr -spwd *** -role xxx</code></li>
+       <li>Connection exists: you can reuse the server. The command line is:<br>
+       <code>-db ENOVIAV5 -server srv -serverid xxx</code></li>
+     </ul>
+     <p>To generate a Universal ID, see <a href="page5658.html">Generating a 
+     Universal ID</a>.<p>Command line example:</p>
+     <blockquote>
+       <p><kbd>CATDMUUtility -db ENOVIAV5 -server srv:port -user username -spwd 
+       password -role role -id UID/ENOVIA/default/Universal_ID_of_the_data </kbd>
+       (generated with UniversalIDGenerator function)<kbd> -cgr </kbd>(if you 
+       want to tessellate into a cgr)<kbd> $output_file_path or -cache </kbd>(if 
+       you want the outputfile to be placed in the cache) </p>
+     </blockquote>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" height="317"><br>
+&nbsp;</td>
+     <td valign="top" height="317">
+     <h2><a name="hj-5"></a>Accessing a SMARTEAM Database</h2>
+     <p><b>db</b> <kbd>TeamPDM</kbd> : To define the SMARTEAM database. </p>
+     <p><b>-serverid </b><kbd>id</kbd><b> </b>: There is no server capability 
+     associated with SMARTEAM, however the utility expects this parameter, so 
+     you must specify <kbd>-server none</kbd>.</p>
+     <p>The command line is: <br>
+&nbsp; <code>-db TeamPDM -server none -user usr -spwd *** </code></p>
+     <p>To generate a Universal ID, see <a href="page5658.html">Generating a 
+     Universal ID</a>.</td>
+   </tr>
+   <tr>
+     <td height="37" colspan="2" valign="top">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+ <p><br>
+ </p>
+
+ </body>
+
+</html>
+

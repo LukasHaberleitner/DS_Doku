@@ -1,0 +1,404 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Design Changes and Associativity Mechanisms</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Design Changes and Associativity Mechanisms</h1>
+ <p align="left">This section deals with design changes and the various 
+ associativity mechanisms provided with Machining products.</p>
+ <table border="1" style="border-collapse: collapse; margin-top: 10; margin-bottom: 10">
+   <tr>
+     <td width="50%" valign="top"><b>For information about...</b></td>
+     <td width="50%" valign="top"><b>Please refer to...</b></td>
+   </tr>
+   <tr>
+     <td width="50%" valign="top">
+     <p align="left">Methodology for Design Changes.</td>
+     <td width="50%" valign="top">
+     <ul>
+       <li>
+       <p align="left"><a href="#Preparation">Preparation</a></li>
+       <li>
+       <p align="left">Design/Manufacturing Reconciliation by:<ul>
+         <li>
+         <p align="left"><a href="#POEditor">direct selection using the Part 
+         Operation editor</a></li>
+         <li>
+         <p align="left"><a href="#WNR9EditLinks">Edit Links capability</a>.</li>
+       </ul>
+       </li>
+       <li>
+       <p align="left"><a href="#WNR12Publication">Associativity and Publication 
+       in Machining Documents</a>.</li>
+       <li>
+       <p align="left"><a href="#AxialMO">Associativity and Publication for 
+       Axial Machining Operations</a>.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td width="50%" valign="top">Status for operation creation and 
+     modification, Geometry not up to date, Geometry not found, tool path 
+     status, and so on.&nbsp;</td>
+     <td width="50%" valign="top">
+     <p align="left"><a href="#ProductBehaviour">Product Behavior for Design 
+     Changes</a></td>
+   </tr>
+ </table>
+ <h2 align="left"><a name="WNR9DesignChange"></a>Methodology for Design Change</h2>
+ <a name="ix-Associativity"></a><a name="ix-Design Changes"></a>
+ <p align="left">The following example illustrates the methodology for 
+ Design/Manufacturing reconciliation after a design change.</p>
+ <p align="left">Consider a Part Operation which references a CATProduct 
+ (Product1), which in turn references a CATPart (Part1).</p>
+ <p align="left">Product.1, which is the component visible to the user in the 
+ interactive session, is stored in the document Product1.CATProduct.</p>
+ <p align="left">Part.1, which is the component visible to the user in the 
+ interactive session, is stored in the document Part1.CATPart.</p>
+ <p align="left">&nbsp;In order to modify the design of the CATPart proceed as 
+ follows.</p>
+ <h3><a name="Preparation"></a>Preparation Before Design/Manufacturing 
+ Reconciliation</h3>
+ <ol>
+   <li>
+   <p align="left">Modify the design in Part1.</li>
+   <li>
+   <p align="left">Save Part1 as Part2 (rename Part1.CATPart as Part2.CATPart).</li>
+   <li>
+   <p align="left">Open Product1.</li>
+   <li>
+   <p align="left">Replace the component Part1 by Part2.</li>
+   <li>
+   <p align="left">Save Product1 as Product2 (rename Product1.CATProduct as 
+   Product2.CATProduct).</li>
+ </ol>
+ <p align="left">Note that component instance names of Product1 should be unique 
+ and they should be identical to the component instance names of Product2. 
+ Product part numbers may be different.</p>
+ <p align="left">Then there are two ways for reconciliation of the design and 
+ manufacturing:</p>
+ <ul>
+   <li>
+   <p align="left">by direct selection using the Part Operation editor</li>
+   <li>
+   <p align="left">by Edit Links.</li>
+ </ul>
+ <h3><a name="POEditor"></a>Design/Manufacturing Reconciliation by Direct 
+ Selection using the Part Operation Editor</h3>
+ <ol>
+   <li>
+   <p align="left">Open the CATProcess.</li>
+   <li>
+   <p align="left">Edit the <kbd>Part Operation</kbd> that references the old design. Click
+   <kbd>Product or Part</kbd>
+   <img border="0" src="b35doc/english/online/icons_C2/images/I_ProductP2.gif" align="middle" width="24" height="24"> 
+   in the <kbd>Part Operation </kbd>dialog box and select the new product.<br>
+   <img border="1" src="b35doc/english/online/mfgug_c2/images/designchanges01NLS.gif" width="598" height="469"></li>
+   <li>
+   <p align="left">Click <kbd>OK</kbd> to quit the <kbd>Part Operation</kbd> dialog box. The various 
+   machining operations are updated.<br>
+   <img border="1" src="b35doc/english/online/mfgug_c2/images/designchanges02NLS.gif" width="514" height="471"></li>
+ </ol>
+ <p align="left"><b>Notes</b></p>
+ <ul>
+   <li>
+   <p align="left">Depending on the document environment setting (<kbd>Tools 
+ &gt; Options &gt; General &gt; Document</kbd> tab), the new product can be selected from a 
+ file, a catalog, and so on.</p></li>
+   <li>
+   <p align="left">The impacts of the reconciliation are global with respect to 
+   the CATProcess and not local to the <kbd>Part Operation</kbd>. This means that all the 
+   Part Operations that referenced the old design will now reference the new 
+   design.</p></li><li>
+   <p align="left">If the design change was performed through the edition of a 
+	part operation, a message informs you that the design change will also 
+	impact other part operation(s). You can choose to continue or refuse the 
+	design change.</p></li>
+ </ul>
+ <h3><a name="WNR9EditLinks"></a>Design/Manufacturing Reconciliation by Edit 
+ Links</h3>
+ <ol>
+   <li>
+   <p align="left">Select <kbd>Edit &gt; Links</kbd>.&nbsp;</li>
+   <li>
+   <p align="left">In the <kbd>Links</kbd> tab, select the line corresponding to the link 
+   of the <kbd>Part Operation</kbd> that references the old design, then click the <kbd>
+   Replace</kbd> button.</p>
+   <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/designchanges03NLS.gif" width="627" height="304"></li>
+ </ol>
+ <p align="left"><b>Notes </b></p>
+ <ul>
+   <li>
+   <p align="left">Depending on the document environment setting (<kbd>Tools 
+ &gt; Options &gt; General &gt; Document</kbd> tab), the new product can be selected from a 
+ file, a catalog, and so on.</li>
+   <li>
+   <p align="left">You must use the <kbd>Links</kbd> tab to replace the old 
+   design. Do not use the <kbd>Pointed Documents</kbd> tab to do this.</li>
+   <li>
+   <p align="left">You must not do a Replace on the line corresponding to the 
+   Product &gt; CATProduct link. This link is not managed by Machining products and 
+   so cannot be used in design/manufacturing reconciliation.</li>
+   <li>
+   <p align="left">The impacts of the reconciliation are global with respect to 
+   the CATProcess and not local to the Part Operation. This means that all the 
+   Part Operations that referenced the old design will now reference the new 
+   design.</li>
+ </ul>
+ <h3 align="left">More About Associativity in Machining Documents</h3>
+ <p align="left">In case of design changes, the designer provides the NC 
+ programmer with one or more new CATParts and CATProducts. The programmer has to 
+ replace the old CATProduct referenced by the CATProcess by a new one including 
+ the new CATParts and CATProducts. As described in the previous chapter, the 
+ programmer can use either the Edit Links capability or the Part Operation 
+ editor for this.</p>
+ <p align="left">A CATProcess can be linked to CATProduct/CATPart in several 
+ ways:</p>
+ <ol>
+   <li>
+   <p align="left">There are links between Part Operation and the CATProduct 
+   containing the geometry to be machined.</li>
+   <li>
+   <p align="left">There are links between operations and the geometry to be 
+   machined contained in the different CATParts/CATProducts included in the 
+   CATProduct linked to the Part Operation.</li>
+   <li>
+   <p align="left">There are links between formulas used by the operations and 
+   CATParts/CATProducts included in the CATProduct linked to the Part Operation 
+   through the formula parameters.</li>
+ </ol>
+ <p align="left">When a design referenced by the CATProcess is modified, the NC 
+ programmer has to reconcile the CATProcess with the new CATProduct using the 
+ Edit Links capability.</p>
+ <p align="left">After reconciliation using the Edit Links capability:</p>
+ <ol>
+   <li>
+   <p align="left">The new CATProduct should appear in the ProductList and be 
+   linked to each Part Operation that was linked to the old one.</li>
+   <li>
+   <p align="left">Each operation that pointed a geometry that was included in 
+   the old CATProduct:<ul>
+     <li>
+     <p align="left">should now be linked to the equivalent geometry in the new 
+     CATProduct if it exists</li>
+     <li>
+     <p align="left">or be in <b>Geometry not found</b> status, if the 
+     equivalent is not found in the new CATProduct.</li>
+   </ul>
+   </li>
+   <li>
+   <p align="left">Each formula that referenced an element of a CATPart of the 
+   old CATProduct, should now reference the equivalent element in the new 
+   CATProduct. </p>
+   <p align="left">That is, if a formula points to parameters that are defined 
+   in the CATProduct you want to replace, after reconciliation the formula will 
+   point to the corresponding parameters in the new CATProduct. </p>
+   <p align="left">If some of these parameters are not found, the behavior will 
+   be the same as when a parameter is deleted. A clone of the parameter will be 
+   aggregated under the formula. It will take the value of the old parameter and 
+   becomes fixed. The formula will be not broken and will continue to be 
+   associative with the other parameters.</p>
+   <p align="left">Note that this rerouting is possible only if the new CATParts 
+   and CATProducts are created by a <b>Save As</b> of the old ones. The instance 
+   names in the new CATProduct must be the same as in the old CATProduct.</li>
+ </ol>
+ <h2 align="left"><a name="WNR12Publication"></a>Associativity and Publication 
+ in Machining Documents</h2>
+ <p align="left">All links on published geometric elements can be retrieved 
+ using the Edit Links capability or the Part Operation editor even when the 
+ replaced part is new compared to the previous one. This means that 
+ associativity is assured in design change scenarios even when CATProduct/CATPart 
+ B is a <b>New From</b> of CATProduct/CATPart A.</p>
+ <p align="left">Consider the following scenario where the NC programmer 
+ receives a CATProduct, in which some geometric elements have been published.</p>
+ <p align="left">The programmer defines the process by selecting either the 
+ published elements in the specification tree or the geometry in the geometry 
+ visualization area. </p>
+ <p align="left">The publication name of the published reference geometry is 
+ displayed in the <kbd>Geometry Analyser </kbd>dialog box. This enables the programmer to 
+ be sure that the selected geometry has been published.</p>
+ <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/dbPublication01NLS.gif" width="574" height="267"></p>
+ <p align="left">The NC programmer receives a new version of this CATProduct. To 
+ reconcile the original CATProcess with this new version, the programmer can use 
+ the Edit Links capability or modify the CATProduct using the Part Operation 
+ editor. </p>
+ <p align="left">To be sure there are no positioning problems in the old and new 
+ CATProducts, each instance corresponding to an old one should have the same 
+ instance name.</p>
+ <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/Publication01NLS.gif" width="422" height="424"></p>
+ <p>Then the NC programmer must select the new CATProduct. </p>
+ <p align="left">For each operation pointing to published geometry, the system 
+ searches for the same publication name in the corresponding product instance 
+ (same instance name). If the corresponding publication is found, the operation 
+ will be rerouted to the new geometry.</p>
+ <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/Publication02NLS.gif" width="390" height="418"></p>
+ <p align="left">Manual rerouting is proposed for publications that have not 
+ been solved automatically in the following dialog box. </p>
+ <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/dbPublication02NLS.gif" width="379" height="252"></p>
+ <p align="left">The NC programmer must select the new publication in the new 
+ CATProduct inserted the ProductList that corresponds to the old publication.
+ </p>
+ <p align="left">In this case, all operations that pointed to the geometry under 
+ the old publication will be rerouted to the geometry under the new one. </p>
+ <p align="left">Publications that are not solved at this time will be lost and 
+ operations that pointed to geometry in this old publication will be in <b>
+ Geometry not found</b> status.</p>
+ <p align="left">The NC programmer obtains a new CATProcess with operations 
+ whose status is <b>Not up to date</b> (or <b>Geometry not found</b> if some 
+ selected geometry was not published or have no corresponding publications in 
+ the new CATProduct). The programmer must then validate the reconciliation by 
+ analyzing geometry and replaying the tool path.</p>
+ <h2 align="left"><a name="AxialMO"></a>Associativity and Publication for Axial 
+ Machining Operations</h2>
+ <p align="left">Geometry in axial operations is defined by a machining pattern 
+ and a geometrical feature. The geometrical feature is automatically linked to a 
+ design geometry when the first position of the machining pattern is selected. 
+ If this position is a design pattern, then the geometrical feature is linked to 
+ the design pattern's reference.</p>
+ <p align="left">An axial operation is geometrically complete when:</p>
+ <ul>
+   <li>
+   <p align="left">its geometrical feature is linked to a design geometry</li>
+   <li>
+   <p align="left">its machining pattern contains at least one point.</li>
+ </ul>
+ <p align="left">In the following example, Drilling.1 contains a machining 
+ pattern whose referenced geometry is RectPattern.1. When RectPattern.1 is 
+ selected, Hole.1 (reference of RectPattern.1) is linked to the geometrical 
+ feature of Drilling.1.</p>
+ <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/Publication03NLS.gif" width="675" height="681"></p>
+ <p align="left">If you want to make a design change by replacing the Part or 
+ Product in the Part Operation, both RectPattern.1 and Hole.1 must be published. 
+ Then all geometrical links in the axial operation can be resolved.</p>
+ <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/Publication04NLS.gif" width="565" height="583"></p>
+ <h2 align="left"><a name="ProductBehaviour"></a>Product Behavior for Design 
+ Changes</h2>
+ <p align="left">The rules described below describe the various status of the 
+ elements referenced by machining operations and how to recognize these status. 
+ It deals with the following:</p>
+ <ul>
+   <li>
+   <p align="left">Elements referenced in a machining operation, which are 
+   colored according to the Color and Highlight settings specified in
+   <a href="page1014.html" target="_blank">
+   Tools &gt; Options &gt; Machining &gt; General</a>.</li>
+ </ul>
+ <blockquote>
+   <p align="left"><img border="1" src="b35doc/english/online/mfgug_c2/images/dbColorandHighlight01NLS.gif" width="374" height="249"></p>
+ </blockquote>
+ <ul>
+   <li>
+   <p align="left">Status lights on machining operation tabs, for example
+   <img border="1" src="b35doc/english/online/mfgug_c2/images/TabGeomG.gif" align="middle" width="36" height="22">.</li>
+   <li>
+   <p align="left">Symbols used on the specification tree icons, for example
+   <img border="0" src="b35doc/english/online/icons_C2/images/I_MaskToUpdate.gif" width="10" height="10">.</li>
+   <li>
+   <p align="left">Texts used in the specification tree, for example <b>Computed</b>.</li>
+ </ul>
+ <p align="left">Useful settings in
+ <a href="page1014.html" target="_blank">
+ Tools &gt; Options &gt; Machining &gt; General</a> for tracking design changes are: </p>
+ <ul>
+   <li>
+   <p align="left">Smart NC mode</li>
+   <li>
+   <p align="left">Optimized detection of design changes</li>
+   <li>
+   <p align="left">Update activity status automatically.</li>
+ </ul>
+ <h3>Operation Creation</h3>
+ <p>Before selection, a required element is colored according to the color 
+ setting for <b>Required parameters</b>. Once selected, it is colored according 
+ to the color setting for <b>Valuated parameters</b>.</p>
+ <p>Before selection, an optional element is colored according to the color 
+ setting for <b>Optional parameters</b>. Once selected, it is colored according 
+ to the color setting for <b>Valuated parameters</b>.</p>
+ <p>The status light on a tab is Red when all the required elements of that tab 
+ have not been selected. Once selected, the status light becomes Green.</p>
+ <p>The Replay is not available when the status light on a tab is Red.&nbsp;</p>
+ <p>After a successful Replay, the status of the operation becomes <b>Computed</b>. 
+ Depending on the Machining product and/or type of operation, a tool path node 
+ may be added to the computed operation in the specification tree.</p>
+ <h3>Operation Modification</h3>
+ <p>Once modified, a selected element is colored according to the color setting 
+ for <b>Geometry not up to date</b>.<br>
+ This allows quick recognition of impacted machining features.</p>
+ <p>The Analysis of the element is then possible: its status becomes <b>Not up 
+ to date</b>. Its Smart Geometry is visible.</p>
+ <p>The status light of the corresponding tab is Orange.&nbsp;</p>
+ <p>In the specification tree, the operation icon has an Update symbol
+ <img border="0" src="b35doc/english/online/icons_C2/images/I_MaskToUpdate.gif" width="10" height="10">. If the operation had <b>
+ Computed</b> status, it remains in this state.&nbsp;</p>
+ <p>The Replay is available.</p>
+ <h3>Selected Element No Longer Present</h3>
+ <p>Once deleted (or no longer present), a selected element is colored according 
+ to the color setting for <b>Geometry not found</b>. This allows quick 
+ recognition of deleted machined geometry.</p>
+ <p>The Analysis of the element is then possible: its status becomes <b>Not 
+ found</b>. Its Smart Geometry is visible.</p>
+ <p>The status light of the corresponding tab is Red.&nbsp;</p>
+ <p>In the specification tree, the operation icon has an Exclamation symbol
+ <img border="0" src="b35doc/english/online/icons_C2/images/I_MaskUnresolved.gif" width="10" height="10">. If the operation had <b>
+ Computed</b> status, it remains in this state.&nbsp;</p>
+ <p>The Replay is not available.</p>
+ <p>The status light of the corresponding tab becomes Green when all the 
+ elements with the <b>Geometry not found</b> or <b>Required parameters</b> color 
+ setting are:</p>
+ <ul>
+   <li>selected (they take the Valuated parameters color setting)&nbsp;</li>
+   <li>or &quot;removed&quot; (they take the Optional parameters color setting).</li>
+ </ul>
+ <p>The Replay is not available when the status light on a tab is Red.&nbsp;</p>
+ <h3>Operation Status</h3>
+ <p>An Update symbol <img border="0" src="b35doc/english/online/icons_C2/images/I_MaskToUpdate.gif" width="10" height="10"> means that 
+ at least one selected element has been modified. In the corresponding tab the 
+ status color is Orange and the color setting is<b> Geometry not up to date</b>.</p>
+ <p>An Exclamation symbol <img border="0" src="b35doc/english/online/icons_C2/images/I_MaskUnresolved.gif" width="10" height="10"> 
+ means one of the following:&nbsp;</p>
+ <ul>
+   <li>At least one selected element is no longer present. In the corresponding 
+   tab the status color is Red and the color setting is <b>Geometry not found.</b></li>
+   <li>At least one required element has not been selected. In the corresponding 
+   tab the status color is Red and the color setting is <b>Required Geometry</b>.</li>
+ </ul>
+ <p><a name="LockedMO"></a>A Locked symbol
+ <img border="0" src="b35doc/english/online/icons_C2/images/I_MaskLocked.gif" width="10" height="11"> means that a computed operation 
+ and its tool path is in a Locked state. The OK button of the operation editor 
+ is not available. This is the result of a deliberate user action and the 
+ operation remains in this state until it is unlocked by the user. <br>
+ Please refer to <a href="page11466.html">Lock/Unlock Mechanisms</a> for more 
+ information.</p>
+ <p>Status are obtained when <b><kbd>Update Activity Status Automatically</kbd></b> 
+ is not set in
+ <a href="page1014.html" target="_blank">
+ Tools &gt; Options &gt; Machining &gt; General</a>. To know the status of one, several 
+ or all operations of a program, you must click <kbd>Status of Selected 
+ Activities</kbd>
+ <img border="0" src="b35doc/english/online/icons_C2/images/I_MfgUpdateStatus.gif" align="middle" width="26" height="26"> 
+ in the Auxiliary Commands toolbar.&nbsp;</p>
+ <p><b>Note:</b> Machining operations that were created just before a system 
+ crash, are regenerated during Warm Start with status <b>Not up to date</b>.</p>
+ <h3>Tool Path Status</h3>
+ <p>The <b>Computed</b> text in the specification tree means that the operation 
+ has been computed (that is, the tool path is present).&nbsp;</p>
+ <p>It does not guarantee the coherence of the operation with respect to the 
+ context. Its coherence is guaranteed by a replay when this available.</p>
+ <p>When there is no text, this means that the operation has not been computed 
+ (that is, the tool path is not present). This status is obtained after creating 
+ an operation without a tool path replay or after removing a tool path.</p>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,429 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Configuring and Customizing the LDAP Repository</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style>
+<!--
+UL.expanded {
+	display:block; 
+}
+
+#root {
+	margin-top:5px;
+	margin-left:5px;
+}
+  
+-->
+</style>
+ </head>
+
+ <body>
+
+ <h1>Configuring and Customizing the LDAP Repository</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" style="border-collapse: collapse" cellpadding="0">
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32">
+     </td>
+     <td valign="top">
+     <h2>What Is an LDAP Repository?</h2>
+     <p>In its most simple expression, an LDAP repository is a list. The list 
+     can contain either all the employees in a company, this is your corporate 
+     LDAP repository, for example, or a list of users on a computer network.</p>
+     <p>There are many mechanisms for implementing lists of users, some in 
+     simple files, others in databases requiring more complex client and server 
+     software, for example:</p>
+     <ul>
+       <li>Active Directory (Microsoft)</li>
+       <li>IBM Tivoli Directory Server</li>
+       <li>etc.</li>
+     </ul>
+     <p>For the purposes of illustration, this scenario is based on the use of IBM Tivoli Directory Server 
+     6.0 on Windows Server 2003, which is used as a sample LDAP server. Note, however, that you can use 
+     any LDAP server supported by WAS 6.0.2.</td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/anew.gif" width="32" height="32"></td>
+     <td>
+     <h2><a name="hj-IBMTivoliDirServer6"></a>Installing and Configuring IBM Tivoli Directory Server 6.0</h2>
+     <h3>Installing and Configuring</h3>
+     <p>You must log onto the machine to host the directory server as any user 
+     in the default Administrators group (Windows) or as root (UNIX).</p>
+     <p>To get you started, this section highlights the main phases of the 
+     installation and pinpoints certain aspects to keep in mind:</p>
+     <ul>
+       <li>IBM Tivoli Directory Server 6.0 must be installed on a server-type 
+       Windows operating system: our scenario is based on Windows Server 2003 
+       Standard Edition</li>
+       <li>there is an installation phase and a directory server instance configuration phase: 
+       the Instance Administration Tool automatically runs at the end of the 
+       installation so that you can create a directory server instance and 
+       complete configuration. Before you can use the server, you must:&nbsp; 
+       <ul>
+         <li>create a directory server instance</li>
+         <li>set the administrator DN and password for the instance</li>
+         <li>configure the database that will store the directory data</li>
+       </ul>
+       </li>
+       <li>in our scenario, we installed all the components except the database 
+       (DB2 was already running on the server machine)</li>
+       <li>for ease of administration, we recommend that you install the Web 
+       Administration Tool and the embedded version of WebSphere Application 
+       Server - Express required for running the Web Administration Tool</li>
+       <li>you need to create a number of user IDs before the installation, 
+       before you can successfully create a directory server instance.</li>
+     </ul>
+     <p>For detailed information, please refer to your <i>IBM Tivoli Directory 
+     Server Installation and Configuration Guide Version 6.0</i> which walks you 
+     through a typical installation and explains how to configure the directory 
+     server.</p>
+     <h3>After You Install and Configure</h3>
+     <p>You then have to:</p>
+     <ul>
+       <li>start the directory server instance</li>
+       <li>start the application server to use the Web Administration Tool</li>
+       <li>start the Web Administration Tool.</li>
+     </ul>
+     <h5>Starting the Directory Server Instance</h5>
+     <p>In our scenario on Windows, we start the directory server instance 
+     through the Services folder. To start the directory server instance, in the 
+     Services folder, click <kbd>IBM Tivoli Directory Server Instance V6.0 - 
+     instancename</kbd>. Then click <kbd>Actions -&nbsp;&gt;&nbsp; Start</kbd>. </p>
+     <h5>Starting the application server to use the Web Administration Tool 
+     </h5>
+     <p>To start the application server if you are using the embedded version of 
+     WebSphere Application Server - Express as your application server, type one 
+     of the following at a command prompt:</p>
+     <p><code>WASPath\bin\startServer.bat server1 (Windows)</code></p>
+     <p><code>WASPath/bin/startServer.sh server1 (AIX)</code></p>
+     <p>where WASPath is the path where you installed the embedded version of 
+     WebSphere Application Server - Express. </p>
+     <p>In our scenario, the full path for the command is:</p>
+     <p>This path is: </p>
+     <p><code>c:\Program Files\IBM\LDAP\V6.0\appsrv\bin\startServer.bat server1</code></p>
+     <h5>Starting the Web Administration Tool</h5>
+     <p>After you have started the application server, type 
+     the following address from a Web browser:</p>
+     <p><code>http://localhost:12100/IDSWebApp/IDSjsp/Login.jsp</code></p>
+     <p>where <code>localhost</code> is the name of the machine hosting the 
+     directory server and Web Administration Tool. For example:</p>
+     <p><code>http://papouvm2dsy:12100/IDSWebApp/IDSjsp/Login.jsp</code></p>
+     <p>The IBM Tivoli Directory Server Web Administration Login Tool page is 
+     displayed:</p>
+     <p>
+     <img border="1" src="b35doc/english/online/basil_c2/images/TivoliDirServer01_NLS.gif" width="665" height="653"></p>
+     <p>Then: </p>
+     <ol>
+       <li>Make sure that Console Admin is displayed in the LDAP Hostname field.</li>
+       <li>In the Username field, type:<br>
+       <br>
+       <code>superadmin</code><br>
+&nbsp;</li>
+       <li>In the Password field, type:<br>
+       <br>
+       <code>secret<br>
+&nbsp;</code></li>
+       <li>Click the Login button.</li>
+     </ol>
+     <p>The IBM Tivoli Directory Server Web Administration Tool console is 
+     displayed:</p>
+     <p>
+     <img border="0" src="b35doc/english/online/basil_c2/images/TivoliDirServer02_NLS.gif" width="708" height="675"></p>
+     <p>Then, refer to the section &quot;Starting the Web Administration Tool&quot; in the
+     <i>IBM Tivoli Directory 
+     Server Installation and Configuration Guide Version 6.0</i> which explains 
+     the rest of the steps needed to add your directory server to the console.</p>
+     <h5>Logging in as the directory server instance administrator</h5>
+     <p>Once your server has been declared, on the IBM Tivoli Directory Server 
+     Web Administration Login Tool page:</p>
+     <ol>
+       <li>Select the LDAP host name or IP address for your computer from the 
+       drop-down menu for the LDAP Hostname field. </li>
+       <li>Type the administrator DN and the password for the directory server 
+       instance. You specified these fields during instance creation. </li>
+       <li>Click Login.<br>
+       <br>
+       <img border="1" src="b35doc/english/online/basil_c2/images/TivoliDirServer03_NLS.gif" width="706" height="359"><br>
+       <br>
+       You now have access to all the functions of the Directory Server Web 
+       Administration Tool:<br>
+       <br>
+       <img border="0" src="b35doc/english/online/basil_c2/images/TivoliDirServer04_NLS.gif" width="708" height="675"></li>
+     </ol>
+     <p>The directory server then has to be <b>customized</b> by importing users into it.</td>
+   </tr>
+   <tr>
+     <td valign="top">&nbsp;<img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top">
+     <h2><font color="#000080">Customizing the LDAP Repository</font></h2>
+     <p>The following scenario is a default implementation and involves editing 
+     your corporate LDAP repository by adding three users: <kbd>wpsadmin</kbd>,
+     <kbd>ServerManager </kbd>and<kbd> Steve Evans</kbd>). However, if you do not want 
+     to edit your corporate LDAP repository, you are not obliged to do so, as 
+     explained later.</p>
+     <p>For the purposes of our scenario, we continue to use IBM Tivoli 
+     Directory Server 6.0 on Windows, and use the IBM Tivoli Directory Server 
+     Configuration Tool (idsxcfg).</p>
+     <p>For detailed information about the tools and techniques described in 
+     this section, refer to the section &quot;Configuration - Using the IBM 
+     Tivoli Directory Server Configuration Tool (idsxcfg) - Importing and 
+     Exporting LDIF data&quot; in your <i>IBM Tivoli Directory 
+     Server Installation and Configuration Guide Version 6.0</i>.</p>
+     <ol>
+       <li>Still logged onto the machine hosting the directory server as any 
+       user in the default Administrators group (Windows) or as root (UNIX), 
+       type the following command at a command prompt:<p>&nbsp;<code>idsxcfg</code></p>
+       <p>to start the
+     IBM Tivoli Directory Server Configuration Tool:</p>
+       <p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/TivoliDirServerConfigTool01_NLS.gif" width="866" height="691"></p>
+&nbsp;</li>
+       <li>Click on Manage Suffixes:<p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/TivoliDirServerConfigTool02_NLS.gif" width="867" height="479"></p>
+       <p>A suffix is a distinguished name (DN) that identifies the top entry in 
+       a locally held directory hierarchy. Because of the relative naming scheme 
+       used in LDAP, this DN is also the suffix of every other entry within that 
+       directory hierarchy. </li>
+       <li>Type an appropriate suffix in the Suffix DN field, for example: 
+       <p><font FACE="Arial" SIZE="2"><code><b>o=mycompany.org</b></code></font></p>
+       <p>and click Add, then OK. The suffix is added to 
+       the list:</p>
+       <p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/TivoliDirServerConfigTool03_NLS.gif" width="866" height="517"><br>&nbsp;</p></li>
+       <li>On the machine hosting the directory server, create an LDIF (LDAP Data Interchange Format) file to be imported 
+       later to create your LDAP directory.<h3>Different LDIF Files for 
+       Different Applications </h3>
+       <p>The types of LDIF files you can import depends on whether you are 
+       deploying Webtop or Wintop applications. </p>
+       <h4>LDIF File for Wintop Applications</h4>
+       <p>If you are deploying Wintop applications, a straightforward LDIF file 
+       like the following will suffice:</p>
+       <p><code>version: 1 </code></p>
+       <p><code>dn: o=mycompany.org<br>
+       objectclass: top<br>
+       objectclass: organization<br>
+       o: mycompany.org </code></p>
+       <p><code>dn: cn=users,o=mycompany.org<br>
+       objectclass: container<br>
+       objectclass: top<br>
+       cn: users </code></p>
+       <p><code>dn: cn=groups,o=mycompany.org<br>
+       objectclass: top<br>
+       objectclass: container<br>
+       cn: groups </code></p>
+       <p><code>dn: uid=wpsadmin,cn=users,o=mycompany.org<br>
+       objectclass: organizationalPerson<br>
+       objectclass: person<br>
+       objectclass: top<br>
+       objectclass: inetOrgPerson<br>
+       uid: wpsadmin<br>
+       sn: admin<br>
+       givenname: wps<br>
+       preferredlanguage: en<br>
+       userpassword: wpsadmin<br>
+       cn: wps admin </code></p>
+       <p><code>dn: CN=ServerManager,cn=users,o=mycompany.org<br>
+       cn: ServerManager<br>
+       uid: ServerManager<br>
+       objectclass: top<br>
+       objectclass: person<br>
+       objectclass: organizationalPerson<br>
+       objectclass: inetOrgPerson<br>
+       userpassword: ServerManager<br>
+       sn: ServerManager<br>
+       givenname: ServerManager<br>
+       title: ServerManager<br>
+       description: ServerManager </code></p>
+       <p><code>dn: CN=Steve EVANS,cn=users,o=mycompany.org<br>
+       cn: Steve EVANS<br>
+       uid: ses<br>
+       mail: ses@ds-fr.com<br>
+       objectclass: top<br>
+       objectclass: person<br>
+       objectclass: organizationalPerson<br>
+       objectclass: inetOrgPerson<br>
+       userpassword: ses<br>
+       sn: EVANS<br>
+       givenname: Steve<br>
+       telephonenumber: 01.55.49.68.27<br>
+       title: ses<br>
+       description: ses</code></p>
+       <p>In this sample, three users are created:<br><br><code>
+       <b>wpsadmin</b></code>, 
+       <code><b>ServerManager</b></code> and <code><b>Steve</b></code> 
+       attached to the hierarchy <code><b>mycompany.org</b></code><b><kbd> </kbd>
+       </b>which is the suffix you created 
+       earlier.</p>
+       <h4><a name="hj-LDIFGroupLicensing"></a>LDIF File for Webtop Applications</h4>
+       <p>If you are deploying Webtop applications, you can:</p>
+       <ul>
+         <li>use a straightforward LDIF file like the one illustrated for Wintop 
+         applications</li>
+         <li>or, <i>optionally</i>, use groups in your LDIF schema to provide 
+         support for group licensing which you manage in Webtop applications 
+         using the <kbd>License Group</kbd> tab.</li>
+       </ul>
+       <p>The following is an example of a typical LDIF file for <b>group licensing</b> 
+       purposes:</p>
+       <p><code>version: 1 </code></p>
+       <p><code>dn: o=mycompany.org<br>
+       objectclass: top<br>
+       objectclass: organization<br>
+       o: mycompany.org </code></p>
+       <p><code>dn: cn=users,o=mycompany.org<br>
+       objectclass: container<br>
+       objectclass: top<br>
+       cn: users </code></p>
+       <p><code>dn: cn=groups,o=mycompany.org<br>
+       objectclass: container<br>
+       objectclass: top<br>
+       cn: groups </code></p>
+       <p><code>dn: cn=<b>Admin</b>,cn=groups,o=mycompany.org<br>
+       objectclass: <b>groupOfUniqueNames</b><br>
+       objectclass: top<br>
+       description: nop<br>
+       cn: Admin<br>
+       IBM-ENTRYUUID: 36b532f6-5bac-46f7-9b46-30b078a3770b<br>
+       <b>uniqueMember: uid=wpsadmin,cn=users,o=mycompany.org </b> </code></p>
+       <p><code>dn: cn=<b>EndUsers</b>,cn=groups,o=mycompany.org<br>
+       objectclass: <b>groupOfNames</b><br>
+       objectclass: top<br>
+       description: nop<br>
+       cn: EndUsers<br>
+       IBM-ENTRYUUID: eaed433b-97f6-4c67-8af1-fcc0cbf0525b<br>
+       <b>member: uid=ServerManager,cn=users,o=mycompany.org<br>
+       member: uid=ses,cn=users,o=mycompany.org </b> </code></p>
+       <p><code>dn: uid=<b>wpsadmin</b>,cn=users,o=mycompany.org<br>
+       objectclass: organizationalPerson<br>
+       objectclass: person<br>
+       objectclass: top<br>
+       objectclass: inetOrgPerson<br>
+       uid: wpsadmin<br>
+       sn: admin<br>
+       givenname: wps<br>
+       preferredlanguage: en<br>
+       userpassword: wpsadmin<br>
+       cn: wps admin </code></p>
+       <p><code>dn: CN=<b>ServerManager</b>,cn=users,o=mycompany.org<br>
+       cn: ServerManager<br>
+       uid: ServerManager<br>
+       objectclass: top<br>
+       objectclass: person<br>
+       objectclass: organizationalPerson<br>
+       objectclass: inetOrgPerson<br>
+       userpassword: ServerManager<br>
+       sn: ServerManager<br>
+       givenname: ServerManager<br>
+       title: ServerManager<br>
+       description: ServerManager </code></p>
+       <p><code>dn: CN=<b>Steve EVANS</b>,cn=users,o=mycompany.org<br>
+       cn: Steve EVANS<br>
+       uid: ses<br>
+       mail: ses@ds-fr.com<br>
+       objectclass: top<br>
+       objectclass: person<br>
+       objectclass: organizationalPerson<br>
+       objectclass: inetOrgPerson<br>
+       userpassword: ses<br>
+       sn: EVANS<br>
+       givenname: Steve<br>
+       telephonenumber: 01.55.49.68.27<br>
+       title: ses<br>
+       description: ses</code></p>
+       <p>In this sample, three users are created and organized into different 
+       groups:<ul>
+         <li><code><b>wpsadmin</b></code>: this user belongs to the group <code>
+         <b>Admin</b></code></li>
+         <li><code><b>ServerManager</b></code> and <code><b>Steve Evans</b></code> 
+         belong to the group <code><b>EndUsers</b></code>.</li>
+         </ul>
+         <p><b>For the purposes of this scenario, we are using a straightforward 
+         LDIF file without groups.</b><br>&nbsp;</li>
+       <li>Stop the directory server, for example using the Directory Server Web 
+       Administration Tool.</li>
+       <li>In the
+       IBM Tivoli Directory Server Configuration Tool,
+       click on Import LDIF data:</li>
+    
+       <p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/TivoliDirServerConfigTool04_NLS.gif" width="867" height="667"><br>&nbsp;</p>
+       <li>Check <kbd>Data validation only</kbd> and click the Import button if you want to check the 
+       validity of the LDIF file to be imported:</li>
+     
+       <p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/TivoliDirServerConfigTool05_NLS.gif" width="865" height="668"><br>&nbsp;</p>
+       </li>
+       <li>Check <kbd>Standard Import </kbd>and click the Import button to import the LDIF file containing 
+       the user data into the <b><kbd>mycompany.org</kbd></b> hierarchy. The 
+       result looks like this:<p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/TivoliDirServerConfigTool06_NLS.gif" width="867" height="667"></p>
+       <h3>What has been created?</h3>
+       <p>The following entries have been made in the LDAP repository:</p>
+       <ul>
+         <li><kbd>wpsadmin</kbd> (with an encrypted userpassword and possessing 
+         special authorizations) is required later on to administer single 
+         sign-on (SSO). This user is a recommended, special Websphere 
+         Application Server administrator user.</li>
+         <li><kbd>ServerManager</kbd> is required to allow communication between 
+         the Server Manager process and the LDAP repository; this is an internal 
+         user and must be created as is.</li>
+         <li>The user <kbd>Steve</kbd> is an end user who will connect to web 
+         applications in a single sign-on context.<br><br><b>Note</b>: as mentioned earlier, you are not obliged to create the
+         <kbd>wpsadmin</kbd> and <kbd>ServerManager</kbd> users, however the 
+         underlying function of each user continues to exist. You can replace 
+         each user by existing users in your corporate LDAP repository, as long 
+         as you follow the instructions described in
+         <a href="page1287.html">Activating Single Sign-On</a>.<br>&nbsp;</li>
+       </ul>
+       <li>Restart the directory server.</li>
+       <li>Using the Directory Server Web Administration Tool, select the <kbd>Directory Management &nbsp;&gt;&nbsp; Manage entries</kbd> command for browsing your 
+         directory hierarchy, expand the hierarchy <b><kbd>mycompany.org</kbd></b><kbd>, 
+         </kbd>then expand <kbd>Users</kbd> to check that the users imported are 
+         visible:<p>
+       <img border="0" src="b35doc/english/online/basil_c2/images/TivoliDirServerConfigTool07_NLS.gif" width="839" height="630"><p>The three users visible in the
+         <kbd>Users</kbd> group are:<ul>
+         <li>ServerManager</li>
+         <li>Steve Evans</li>
+         <li>wpsadmin.</li>
+       </ul></li>
+       </ol>
+       <blockquote>
+         <blockquote>
+           <blockquote>
+             <p>An LDAP password is required by all three users to connect to 
+           LDAP. Importing the LDIF file as explained above sets up this 
+           password, since it is contained in the imported file: you do not have 
+           to set it up yourself interactively.</p>
+           </blockquote>
+         </blockquote>
+       </blockquote>
+       <blockquote>
+         <blockquote>
+           <blockquote>
+             <p><b>This userid and password are the generic userid and password 
+           that will be used for all users to connect to the web application.</b></p>
+           </blockquote>
+         </blockquote>
+       </blockquote>
+       </li>
+       </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td colspan="2">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,288 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Working with Clusters</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>
+     Working 
+ with Clusters&nbsp; </h1>
+ <p align="center">
+ &nbsp;<img border="0" src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32"><img border="0" src="b35doc/english/online/icons_C2/common/ap3_title.gif" width="152" height="32"></p>
+ <table Border="0" CELLSPACING="0" valign="top" height="101" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td valign="top" height="101" width="34">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="top" height="101" width="1360">This task explains how to use a 
+     new computing system known as &quot;clusters&quot;. A cluster is a set of several 
+     computers: one main computers and several client computers.<br>
+     This new hardware support is an alternative to the SGI solution. It is 
+     intended for reality centers and &quot;caves&quot; requiring several projectors to 
+     light up the whole screen surface and thus, a computing system with several 
+     graphics boards. <br>
+     <br>
+     With clusters, you run Version 5 on the main computer running Windows 
+     and, thanks to the support of the &quot;Conduit&quot; Fakespace CAA product, you can 
+     distribute the display of the model on several client computers with a 
+     different viewpoint on each client.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="236" width="34"></td>
+     <td valign="middle" height="236" width="1360">
+     <h2>Overview</h2>
+     <p>The screen definition (i.e. position and size), the name of the client 
+     computers as well as the mapping client/screen are defined using the <kbd>
+     Immersive System Assistant</kbd> workbench. This definition is then used by 
+     each client to compute the viewpoint it is supposed to use to render the 
+     model.</p>
+     <p>This type of display system is used for</p>
+     <ul>
+       <li>collaborative presentations: a trained operator pilots the standard 
+       Version 5 session from a desktop installation. The application is 
+       displayed on a very large stereoscopic wall which makes the collaboration 
+       easier and allows a display of the model with a 1:1 scale.<br>
+       The application is the design visualization: the designers have a 
+       realistic depth perception of the geometric data they are working on.</li>
+       <li>immersive studies: the user gets the impression that the model is 
+       floating in the room and is able to move around and inside it. The model 
+       perception is very close to reality.<br>
+       The application is the subjective impression analysis, e.g. at the end of 
+       the product lifecyle, simulation of the final product's aspect for 
+       textiles, colors, etc.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="208" width="34"></td>
+     <td valign="middle" height="208" width="1360">
+     <h2>Software Architecture</h2>
+     <p>The display on distant client computers by the main Version 5 
+     application is done thanks to the Fakespace &quot;Conduit&quot; CAA product.</p>
+     <p>This product:</p>
+     <ul>
+       <li>ensures the communication between the main node and the client nodes</li>
+       <li>retrieves the OpenGL calls Version 5 sends to the OpenGL driver</li>
+       <li>send these calls to each of the client computers</li>
+       <li>manages the way each client computer modifies the OpenGL stream before sending 
+       it to its own graphics board.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="99" width="34"></td>
+     <td valign="middle" height="99" width="1360">
+     <h2>Configuration Example</h2>
+     <p>Let's suppose we have five computers, one main computer and four 
+	 client (or &quot;secondary&quot;) computers named 
+     &quot;Main&quot;, &quot;S1&quot;, &quot;S2&quot;, &quot;S3&quot; and &quot;S4&quot;, respectively.</p>
+     <p>Our reality center is made of four screens, four projectors, and two 
+     monitors. Three screens are on the same plane facing the user and one is tilted on 
+     the left side:</p>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="338" width="34"></td>
+     <td valign="middle" height="338" width="1360">
+     <blockquote>
+       <img border="0" src="b35doc/english/online/cfyugvr_c2/images/clusters01NLS.gif" width="571" height="373"></blockquote>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="153" width="34"></td>
+     <td valign="middle" height="153" width="1360">
+     <p>The main screen (which is virtual) is made of the image displayed 
+     on the right screen, the center screen and the right half of the left 
+     screen. These images are rendered by &quot;S1&quot;, &quot;S2&quot; and &quot;S3&quot;.</p>
+     <p>&quot;S1&quot; renders two windows for the side and left screens.</p>
+     <p>&quot;Monitor1&quot; is connected to the master computer and displays the Version 
+     5 aplication.</p>
+     <p>&quot;Monitor2&quot; is a control monitor connected to &quot;S4&quot; and displays the 
+     same image as the one displayed on the left screen.</p>
+     <p>All the projectors are supposed to project an active stereo image and 
+     the two monitors display monoscopic images.</p>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="1" width="34"></td>
+     <td valign="middle" height="1" width="1360">
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="1646" width="34"></td>
+     <td valign="middle" height="1646" width="1360">
+     <h2>Start the Cluster</h2>
+     <p>First, you need to setup your rendering configuration via the <kbd>Immersive 
+       System Assistant</kbd> workbench.</p>
+     <ol class="task">
+       <li>
+       <p class="task">Select <kbd>Start</kbd> &gt; <kbd>Infrastructure &gt; 
+       Immersive System Assistant</kbd> <kbd>
+       <img border="0" src="b35doc/english/online/cfyugvr_c2/images/icon_ImmersiveSystemAssistant.gif" width="24" height="24"></kbd>.
+       </p>
+       <div align="left">
+         <table border="0" cellpadding="0" style="border-collapse: collapse" id="table1" height="474">
+           <tr>
+             <td height="31">If we keep the configuration example detailed 
+             above, the rendering configuration to define should be as follows:</td>
+           </tr>
+           <tr>
+             <td height="15">
+             <img border="0" src="b35doc/english/online/cfyugvr_c2/images/clusters02NLS.gif" width="489" height="380"></td>
+           </tr>
+           <tr>
+             <td>The elements to be defined are detailed below. Click the 
+             hyperlinks to be redirected to the corresponding section in the
+             <kbd>Immersive System Assistant</kbd> documentation:</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Create five
+       <a href="page5165.html#hj-IG">IG</a> (i.e. graphics boards) for &quot;Main&quot;, &quot;S1&quot;, &quot;S2&quot;, &quot;S3&quot;, and &quot;S4&quot;. Do not forget that 
+       in our example, &quot;S1&quot; is a dual head machine, which implies that it 
+       has a double frame buffer resolution width. This would give, for 
+       instance:<div align="left">
+         <table border="0" cellpadding="0" style="border-collapse: collapse" id="table3">
+           <tr>
+             <td>
+             <img border="0" src="b35doc/english/online/cfyugvr_c2/images/dbclusters01NLS.gif" width="182" height="128"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Create four
+       <a href="page5165.html#hj-view">views</a> for &quot;Right 
+       screen&quot;, &quot;Center screen&quot;, &quot;Left screen&quot;, and &quot;Side screen&quot;.<div align="left">
+         <table border="0" cellpadding="0" style="border-collapse: collapse" id="table4">
+           <tr>
+             <td height="33">
+             Below is an example for the right screen:</td>
+           </tr>
+           <tr>
+             <td>
+             <img border="0" src="b35doc/english/online/cfyugvr_c2/images/dbclusters02NLS.gif" width="472" height="273"></td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Create the main screen. To do so, run <kbd>New View</kbd> 
+       once again. 
+       <div align="left">
+         <table border="0" cellpadding="0" style="border-collapse: collapse" id="table5" height="56">
+           <tr>
+             <td>Tip: select the right screen you created in step 3 before 
+             running <kbd>New View</kbd>: the dialog box is initialized with the 
+             right screen parameters. Then, select the left screen: the new view 
+             is enlarged to overlap the left screen and you just have to tune 
+             the parameters manually to make the new view overlap only the right 
+             half of the left screen.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Create the six <a href="page5165.html#hj-window">
+       windows</a> that should render the OpenGL stream for the screen views you 
+       defined above.<div align="left">
+         <table border="0" cellpadding="0" style="border-collapse: collapse" id="table6" height="302">
+           <tr>
+             <td height="20">Below is an example for &quot;S4&quot;:</td>
+           </tr>
+           <tr>
+             <td>
+             <img border="0" src="b35doc/english/online/cfyugvr_c2/images/dbclusters03NLS.gif" width="394" height="220"></td>
+           </tr>
+           <tr>
+             <td>
+             <ul>
+               <li>Do not forget to specify whether the window should render in 
+               Mono or in Active Stereo.</li>
+               <li>The window hosted by the main IG should be set as the Main 
+               window.</li>
+             </ul>
+             </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">If you want to use
+       <a href="page5165.html#hj-threaded drivers">trackers</a> or
+       <a href="page5165.html#hj-button device">button devices</a>, some 
+       additional steps are necessary.</li>
+       <li>
+       <p class="task">Select <kbd>File &gt; Save</kbd> or <kbd>File &gt; Save As</kbd> 
+       to save your document.</li>
+       <li>
+       <p class="task">Generate the XML
+       <a href="page5165.html#hj-configuration files">configuration file</a>.<div align="left">
+         <table border="0" cellpadding="0" style="border-collapse: collapse" id="table7" height="31">
+           <tr>
+             <td>A warning is displayed after clicking OK in the <kbd>Generate 
+             VR Configuration</kbd> dialog box since no MPK configuration will 
+             be used. Just click <kbd>OK</kbd> to ignore the message. </td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">Select <kbd>View &gt; Full Screen</kbd> to activate the 
+       cluster.<div align="left">
+         <table border="0" cellpadding="0" style="border-collapse: collapse" id="table8" height="90">
+           <tr>
+             <td height="21">The images are displayed on the secondary computers 
+             according to the configuration you defined.</td>
+           </tr>
+           <tr>
+             <td><a name="ix-commands:startCluster;startCluster command"></a>Another method to start the cluster is to enter <code>
+             c:startCluster</code> again in the power input box. With this 
+             method, toolbars and menus are displayed (which is not the case 
+             with the <kbd>Full Screen</kbd> command).<br>
+             If you use this method, note that the window is resized according 
+             to the configuration.</td>
+           </tr>
+         </table>
+       </div>
+       </li>
+       <li>
+       <p class="task">To stop the cluster, right-click anywhere in the geometry 
+       area then clear <kbd>Full Screen</kbd> or enter <code>c:startCluster</code> 
+       again in the power input box.</li>
+     </ol>
+     <p class="task">&nbsp;</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td valign="middle" height="90" width="34"></td>
+     <td valign="middle" height="90" width="1360">
+     <h2>Define Cluster Options</h2>
+     <p>Some cluster parameters can be edited in the Cluster Options area 
+     available in <kbd>Tools &gt; Options &gt; General 
+     &gt; Devices and Virtual Reality &gt; Devices</kbd>.</p>
+     <p>For detailed information, refer to
+     &quot;Customizing Settings &gt; General &gt; Devices and Virtual Reality&quot; in the <cite>
+     Version 5 - Infrastructure User's Guide</cite>.<p>&nbsp;</td>
+   </tr>
+   <tr>
+     <td colspan="2" valign="top" height="39" width="100%">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

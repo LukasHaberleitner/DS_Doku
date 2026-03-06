@@ -1,0 +1,231 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2E2L2O2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Defining Support Geometry</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Defining Support Geometry</h1>
+ <table border="0" cellpadding="0" cellspacing="0">
+   <tr>
+     <td valign="top" width="35" height="48">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td colspan="2" valign="top">This task explains how to define a small 
+		assembly by first defining the support geometry as a user defined 
+		feature. You need to create geometry that can be used as support 
+		geometry for Ship Structure Detail Design.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="35" height="63">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td colspan="2" valign="top"><p>A user defined 
+		feature (UDF) is an object that is used to 
+		group a set of features so that they are seen as only one feature. This 
+		new feature can then be reused in new contexts.</p>
+		<p>As an example, if you create a new type of object such as a cylinder 
+		between two points, the start point and end point serve as inputs to the 
+		UDF. The construction geometry and the resulting volume are grouped 
+		together as a UDF.</p>
+		<p>
+		<img border="0" src="b35doc/english/online/ucfug_c2/images/BT7201B_NLS.gif" width="432" height="215">
+		<img border="0" src="b35doc/english/online/ucfug_c2/images/BT7201C_NLS.gif" width="425" height="270"></p>
+		<p>Inputs of a UDF are deduced from its content.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="35" height="233">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="35" valign="top" height="233">&nbsp;</td>
+     <td valign="top">
+     <h2><font color="#282187">UDF </font>Characteristics</h2>
+     <p>UDFs for support geometry must have the following characteristics:</p>
+		<ul>
+			<li>The result of the UDF must be a surface.</li>
+			<li>The inputs of the UDF (characteristic edges/faces of a profile) 
+			must follow a particular naming convention to be automatically 
+			retrieved when placing the small assembly. </li>
+		</ul>
+		<dl>
+			<dd>NOTE: If this naming convention is not used, you will have to 
+			manually select all the inputs (faces and edges) to place the small 
+			assembly. </dd>
+		</dl>
+		<ul>
+			<li>The geometry must be built using the <kbd>Wireframe</kbd> <kbd>
+			and</kbd> <kbd>Surface Design</kbd> or <kbd>Generative Shape 
+			Design</kbd> workbenches. The <kbd>Part Design</kbd> workbench should 
+			not be used.</li>
+		</ul>
+	</td>
+   </tr>
+	<tr>
+     <td valign="top" width="35" height="233">
+     &nbsp;</td>
+     <td width="35" valign="top" height="233">&nbsp;</td>
+     <td valign="top">
+     <h2><font color="#282187">Guidelines for Creating Support Geometry</font></h2>
+     <p>The orientation must be controlled.</p>
+		<ul>
+			<li>The faces provided in the templates are all oriented toward the 
+			material to match the orientation of the plate and stiffener faces.
+			<p>These templates are located in the following folder:</p>
+     <blockquote>
+       <p> <kbd>../OS/startup/EquipmentAndSystems/Structure/DetailingFeatures/UDFTemplates</kbd></p>
+     </blockquote>
+     		</li>
+			<li>When using intersections between planes and/or surfaces, do not 
+			assume the orientation of the curves/lines because these 
+			orientations may change from one context to another. This is 
+			particularly true when using the Rotate feature because the 
+			orientation of the feature used as the Axis drives the orientation 
+			of the angle.</li>
+		</ul>
+		<p>Do not assume surfaces are planar. Always design assuming a shell 
+		(twisted) stiffener and/or canted bulkhead. (If needed, generate planes tangent to 
+		the surface at a point near where you are creating geometry.) </p>
+		<p>Do not use a sub element as an input of another feature. Create explicit endpoints, or use one of the UDFs in the 
+		<kbd>UtilityUDFs</kbd> folder to orient the line or curve to provide consistent 
+		points that can be used to create additional geometry.</p>
+		<p>Use only <kbd>Positioned</kbd> <kbd>Sketch</kbd> so there is no doubt 
+		to which direction the U and V axis points. </p>
+		<p>Do not use offset constraints or distance dimensions because the 
+		orientation is not explicitly defined.</p>
+		<p>When using <kbd>Sketcher</kbd>, do not use 3-D objects directly. 
+		Intersect or project the geometry into the sketch plane. It is 
+		recommended you select these 3-D objects from the tree to avoid the 
+		possibility of selecting a sub element.<p>Try not to use input geometry 
+		in knowledgeware rules or formulas [F(x)]. If you must to do so, 
+		duplicate the geometry using the <kbd>Offset</kbd>
+		<img border="0" src="b35doc/english/online/ucfug_c2/images/buttonoffset.gif" width="22" height="22"> 
+		command or the <kbd>Join</kbd>
+		<img border="0" src="b35doc/english/online/ucfug_c2/images/buttonjoin.gif" width="22" height="22"> 
+		command, and reference the duplicated geometry in the rule or formula.</td>
+   </tr>
+   <tr>
+     <td valign="top" width="35" height="233">
+     &nbsp;</td>
+     <td width="35" valign="top" height="233">&nbsp;</td>
+     <td valign="top">
+     <h2><font color="#282187">Using a Template to Get Started </font></h2>
+		<p>To get started, use a template. To create the support geometry, the functional object(s) and 
+		the small assembly must be in the same CATPart.</p>
+		<p>Create contextual geometry (for example, a plate and a stiffener) in part 
+		bodies.</p>
+		<p>Use geometrical sets to organize the GSD data. The following sets are 
+		recommended:</p>
+		<ul>
+			<li>Inputs - Contain the extracted surfaces that are replaced 
+			when the UDF is instantiated </li>
+			<li>UDF Definition - Contains all geometric elements to be included 
+			in the UDF.</li>
+		</ul>
+		<p>Use geometrical sets within the UDF Definition to group similar 
+		activities and provide structure to the UDF. </td>
+   </tr>
+   <tr>
+     <td valign="top" width="35" height="233">
+     &nbsp;</td>
+     <td width="35" valign="top" height="233">&nbsp;</td>
+     <td valign="top">
+		<h2><font color="#282187">Naming Conventions for Inputs</font></h2>
+		<p>The following naming conventions must be followed so that the software 
+		can 
+		substitute the actual surfaces when the small assembly is placed.</p>
+		<ul>
+			<li>The first part of the name must be Plate or Shape 
+			followed by a number. </li>
+			<li>The second part of the name must be Face or Edge. </li>
+			<li>The third part of the name follows the convention shown below if 
+			the object is a stiffener. The third part will be either Standard or 
+			Reverse if the object is a plate.</li>
+			<li>Edges will have a fourth part because the edge is defined by two 
+			faces.</li>
+			<li>Each part of this name must be separated using an underscore. 
+			For example:</li>
+		</ul>
+		<dl>
+			<dd><kbd>Shape1_Face_MoldedFlange1<br>
+			Shape2_Edge_Start_MoldedFlange2<br>
+			Plate1_Standard</kbd></dd>
+		</dl>
+	</td>
+   </tr>
+	<tr>
+      <td width="46" height="1" valign="top">
+      <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+      <td width="929" valign="top" colspan="2">For stiffeners, because a section 
+		may or may not include fillets, the fillet faces, the edges bounding the 
+		fillet faces, and any edge that might be replaced by a fillet should not 
+		be used. </td>
+    	</tr>
+   <tr>
+     <td valign="top" width="35" height="40"></td>
+     <td width="35" valign="top" height="40">&nbsp;</td>
+     <td>
+			<p>The following illustrates the naming conventions:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/ucfug_c2/images/BT7201D_NLS.gif" width="316" height="206"></p>
+				<p>The current release introduces the keyword <kbd>Support</kbd>. This 
+				keyword allows the  
+		<kbd>Small Assemblies</kbd> command to enable multi-select for this 
+				particular input.<h4>
+		Naming Conventions for Typical I, L, T and U Shapes</h4>
+		<p>
+				<img border="0" src="b35doc/english/online/ucfug_c2/images/BT7201E_NLS.gif" width="423" height="299"><p>
+				<img border="0" src="b35doc/english/online/ucfug_c2/images/BT7201F_NLS.gif" width="369" height="270"><p>
+				<img border="0" src="b35doc/english/online/ucfug_c2/images/BT7201G_NLS.gif" width="408" height="241"><p>
+				<img border="0" src="b35doc/english/online/ucfug_c2/images/BT7201H_NLS.gif" width="428" height="306"></td>
+   </tr>
+   <tr>
+     <td valign="top" width="35" height="39">&nbsp;</td>
+     <td width="35" valign="top" height="39">&nbsp;</td>
+     <td>
+		<p>
+				The parameters used to drive the geometry of the structural 
+				sections are also available for use in formulae when creating 
+				small assemblies.<p>The name of the parameter in the UDF has two parts. The 
+				first part identifies the plate or shape, while the second part 
+				is the name of the parameter in the parametric part used to 
+				create the section. 
+				<p>In the example below, Shape1_D is the height of the first 
+				shape selected. Shape2_Tw is the width of the web of the second 
+				shape selected. 
+				<p>
+				<img border="0" src="b35doc/english/online/ucfug_c2/images/BT7201A_NLS.gif" width="196" height="267"><p>
+				Typical parameters include:<p><kbd>D</kbd> - Depth of the 
+				stiffener.<p><kbd>B - </kbd>Flange width.<p><kbd>Tf </kbd>- 
+				Flange thickness.<p><kbd>Tw - </kbd>Web thickness.<p><kbd>R1
+				</kbd>- Typically the radius between the FlangeInner face and 
+				the FlangeToe face.<p><kbd>R2 - </kbd>Typically the radius 
+				between the WebInner face and the FlangeInner face.<p><kbd>Slope</kbd>
+				<kbd>- </kbd>Typically the angle on the inside of the flange.<dl>
+					<dd>NOTE: These parameters do not get updated when the 
+					section of a stiffener is modified. </dd>
+					</dl>
+				</td>
+   </tr>
+   <tr>
+     <td valign="top" width="35" height="20"></td>
+     <td width="35" valign="top" height="20"></td>
+     <td valign="top">
+     &nbsp;</td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="3">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

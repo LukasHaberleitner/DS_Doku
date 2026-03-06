@@ -1,0 +1,207 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+<title>Replacing a Plate in a Mold</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+<body>
+
+<h1>
+<a name="CATMoldModelHeader.ReplacePlateHeaderHdr"></a>Replacing a Plate 
+in a Mold<a name="ix-commands::Replace Plate"></a> 
+&nbsp;</h1>
+<p align="center">
+<img border="0" src="b35doc/english/online/icons_C2/common/ap2_title.gif" width="152" height="32"></p>
+<table border="0" style="border-collapse: collapse" cellpadding="0" cellspacing="0">
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td valign="top">This task shows you how to replace 
+    a plate in a mold.<p>A mold is an assembly composed of a pile of plates. 
+    <br>
+    Those plates can be split by a surface and drilled by some components. <br>
+    The 
+    coherence of the dimensions and positions of the different plates within the 
+    mold is maintained by some relations and some constraints. </p>
+    <p>In some cases, you will need to replace one plate by another. <br>
+    A typical 
+    example is a process of iterative design where a simplified version of a 
+    plate is replaced by a more advanced version. <br>
+    Since the plates are linked to 
+    the other parts of the assembly by many objects such as constraints, 
+    relations, contextual imports, etc, replacing a plate by another is a very 
+    complicated operation. <br>
+    Moreover the Tooling Feature extensions of tooling 
+    components add some links in the products structure that can be corrupted if 
+    you try to replace a plate &#8220;by hand&#8221;.</p>
+    <p>The <kbd>Replace Plate</kbd> command:</p>
+    <ul>
+      <li>Keeps the same feature extension on the new plate, meaning a plate can 
+      be replaced with a plate of the same type only (a core plate is replaced 
+      by a core plate only).</li>
+      <li>Re-creates the relations that define the dimensions of the plate 
+      (Width (W), Length (L), Height (H)): <br>
+      the replacing plate size is adjusted to the mold 
+      dimensions,</li>
+      <li>In the case of a standard Mold Base, the replacing plate must be a 
+      plate of the same Mold Base catalog: <br>
+      the <kbd>Replace Plate</kbd> command 
+      will set the value of the <kbd>Ref</kbd> parameter of the replacing plate to that of 
+      the replaced plate.</li>
+      <li>Reconnects the constraints: constraints with the other plates, 
+      constraints with the components, </li>
+      <li>Reconnects automatically the link to the splitting surface of the 
+      replaced plate if any,</li>
+      <li>Proposes a manual reconnection for the external references of the 
+      replacing plate that have not been automatically reconnected </li>
+      <li>Re-creates the drillings of the replaced plate inside the replacing 
+      plate (Standard drillings, detailed drillings and Coolant Channel),</li>
+      <li>Re-creates the simplified drillings,</li>
+      <li>Propagates the machining attribute, colors and Technological Results 
+      from the drilling components to the drillings in the replacing plate,</li>
+      <li>Reroutes the links of the feature extensions of all the Tooling 
+      Components that drills the plate.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+    <td valign="top">
+    Please note that:<ul>
+      <li>The <kbd>Replace Plate</kbd> command only applies to a Mold Tooling 
+      Design plate (CATPart that has a Mold Tooling Design Plate icon).</li>
+      <li>This command can only be used to replace a CATPart by another CATPart. 
+      You are not allowed to select a CATProduct as the replacing plate. </li>
+      <li>The replaced plate and the replacing plate must have the same Part 
+      Number.</li>
+      <li>The replacing plate must contain the <kbd>PlRef</kbd> plane and the<kbd> ZRef</kbd>, 
+      <kbd>L, W</kbd> 
+      and <kbd>H</kbd> parameters.</li>
+      <li>If some features such as fillets or chamfers have been added on the 
+      top of drillings made by tooling components in the plate, those features 
+      will not be re-created in the replacing plate. </li>
+      <li>Drillings performed without using Mold Tooling Design dedicated 
+      commands will not be automatically re-created in the replacing plate. </li>
+      <li>If the replaced plate is split and if the replacing plate is not 
+      split, the split of the replacing plate is not re-created.</li>
+    </ul>
+&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td valign="top">
+    Open the <a href="b35doc/english/online/mtdug_c2/samples/ReplacePlate/MLDwithPlateToReplace.CATProduct">MLDwithPlateToReplace.CATProduct
+    </a>from the <kbd>samples\ReplacePlate</kbd> 
+    directory.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+    <td valign="top">
+    <ol class="task">
+      <li>
+      <p class="task">You are going to replace the top plate. <br>
+      <img border="0" src="b35doc/english/online/mtdug_c2/images/ReplacePlate03NLS.gif" width="345" height="247"><br>
+      Pick it in the 3D 
+      Viewer and select <kbd>Replace Plate</kbd> in the contextual menu. <br>
+      This 
+      menu is also available from the specification tree. <br>
+      <img border="0" src="b35doc/english/online/mtdug_c2/images/ReplacePlate01NLS.gif" width="493" height="465"><br>
+      The <kbd>Replace Plate</kbd> dialog box is displayed. <br>
+      The name of the 
+      plate to replace is displayed in the title.<br>
+&nbsp;<img border="0" src="b35doc/english/online/mtdug_c2/images/dbReplacePlate01NLS.gif" width="315" height="171"></li>
+      <li>
+      <p class="task">Click
+      <img border="0" src="b35doc/english/online/icons_C2/images/I_OpenP2.gif" width="24" height="24"> 
+      to browse your directories and select <kbd>ReplacingCorePlate.CATPart</kbd> in the 
+      <kbd>samples\ReplacePlate</kbd> directory. <br>
+      The dialog box is updated with information about the replacing plate. They 
+      are not editable.<br>
+      <img border="0" src="b35doc/english/online/mtdug_c2/images/dbReplacePlate02NLS.gif" width="315" height="171"><br>
+      A preview of the replacing plate is displayed. <br>
+      Its <kbd>H, L, W</kbd> parameters are 
+      set to the values of the corresponding parameters of the replaced plate. 
+      <br>
+      If the MoldBase is a standard Mold Base, the <kbd>Ref</kbd> parameter of the 
+      replacing plate is set to the value of the <kbd>Ref</kbd> parameter in the replaced 
+      plate (same line in the Design Table). This way the overall consistency of 
+      the mold base is preserved.<br>
+      <img border="0" src="b35doc/english/online/mtdug_c2/images/ReplacePlate02NLS.gif" width="337" height="240"></li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+    <td valign="top">
+    <ul>
+      <li>
+      If the <kbd>PlRef</kbd> plane or the <kbd>ZRef</kbd> parameter, or the 
+      <kbd>L, W</kbd> or <kbd>H</kbd> 
+      parameter are missing in the replacing plate, an error message is 
+      displayed asking you to select another plate or to define the missing 
+      parameter.</li>
+      <li>
+      If the Mold Base is a standard Mold Base, the command searches the matching configuration (<kbd>RefMold</kbd>, 
+      <kbd>Ref</kbd>) in the design table of 
+      the replacing plate. If no matching configuration is found an error 
+      message is displayed asking you to select another plate.</li>
+      <li>
+     The dialog box is updated and the preview performed once a 
+      valid replacing plate has been selected.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+    &nbsp;</td>
+    <td valign="top">
+    <ol class="task" start="3">
+      <li>
+      <p class="task">Click <kbd>OK</kbd>. <br>
+      If some external references could not be 
+      reconnected automatically, the following dialog box is displayed to let 
+      you reconnect them manually:
+      <br>
+      <img border="2" src="b35doc/english/online/mtdug_c2/images/dbReplacePlate03NLS_s.gif" title="Click to enlarge this image" width="378" height="117"><script language="Javascript" src="b35doc/english/online/icons_C2/ResizeImage.js">
+</script><br>
+      Select a line, the buttons on the right becomes available. <br>
+      According to 
+      your need, click <kbd>Isolate</kbd>, <kbd>Reconnect</kbd> or <kbd>Delete</kbd>. 
+      <br>
+      Click <kbd>OK</kbd> when you are done.</li>
+      <li>
+      <p class="task">The original plate is replaced by the new one, as 
+      described in the introduction above. <br>
+      Its length, width and height are those of the replaced plate.<br>
+      In the case of a standard Mold Base, the <kbd>Ref</kbd> parameter (and thus the 
+      active line of the Design Table) takes the value of that of the replaced 
+      plate.<br>
+      The part number of the replacing plate is that of the replaced plate.<br>
+      <img border="0" src="b35doc/english/online/mtdug_c2/images/ReplacePlate04NLS.gif" width="333" height="231"></li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+    <p align="center">
+    <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

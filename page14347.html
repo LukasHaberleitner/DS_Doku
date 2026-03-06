@@ -1,0 +1,149 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Generating Resolved Parts from Parametric Parts</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Generating Resolved Parts from Parametric Parts</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" height="181">
+   <tr>
+     <td width="46" height="32" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td width="929" valign="top" colspan="2" height="32">This task shows you 
+     how to generate resolved parts from parametric parts.<a name="ix-resolve parts/sections"></a> </td>
+   </tr>
+   <tr>
+     <td width="46" height="32" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td width="929" valign="top" colspan="2" height="32">Each parametric part 
+     that you use to generate resolved parts must refer to a design table. The 
+     design table must have a column called &quot;PartNumber&quot;, which should have a 
+     value. This value is used to name the generated resolved part.<p>A project 
+		resource is used to control the naming convention for the generated 
+		part. For the resource <kbd>PartiallyResolvedReferencePartNumberOptions</kbd>, 
+		if the value of the <kbd>Location</kbd> field is 1, then the Part Number 
+		used in the design table is used for the name.</p>
+		<p>If the value is 2 then the object naming rules are used for naming.</p>
+		<p>You must 
+		be in design mode to generate parts. If you are in cache mode then you 
+		will not be able to generate CATShapes. </td>
+   </tr>
+   <tr>
+     <td width="46" valign="top" height="37">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32">
+     </td>
+     <td width="35" valign="top" height="37"><font color="#1C1557"><b>1.</b></font></td>
+     <td valign="top" height="37">Create a directory and place in it the 
+     parametric CATPart documents, associated design table documents and 
+     CATShape documents, if any.<p>Create a second directory to hold the 
+     resolved parts when they are created.</td>
+   </tr>
+   <tr>
+     <td width="46" height="16" valign="top">
+     <a name="ix-parts::parametric to resolved"></a>
+     <a name="ix-generate resolved parts/sections"></a>
+     <a name="ix-sections::parametric to resolved"></a></td>
+     <td width="35" valign="top" height="16"><font color="#1C1557"><b>2.</b></font></td>
+     <td width="883" height="16" valign="top">Open a command prompt window and 
+     change to the directory <kbd>...intel_a&#092;code&#092;command</kbd>. 
+     Type the following and press Enter: <kbd>CATCloGenerateResolvedParts.bat -env 
+		EEE 
+     XXX YYY</kbd> where <kbd>EEE </kbd>is the name of the CATIA environment 
+		file.<kbd> </kbd>Ask your system administrator if you do not know its 
+		name. <kbd>&nbsp;XXX </kbd>is the full path name of the directory 
+     you created in Step 1 to hold parametric parts; and <kbd>YYY</kbd> is the 
+     directory created to hold the resolved parts.<p>For UNIX enter <kbd>
+     CATCloGenerateResolvedParts.sh /XXX /YYY</kbd> (replace XXX with the full 
+     path name of the directory you created in Step 1 to hold parametric parts; 
+     and YYY is the directory created to hold the resolved parts).</p>
+     <p>You can add certain <b>options</b> to the command line. These are:</p>
+     <p><kbd>-replace</kbd>&nbsp;&nbsp; Existing parts in your YYY directory 
+     will be replaced. However, if the UUID (unique universal IDentifier) of the 
+		parametric part is not the same as the resolved part, then the resolved 
+		part will not be replaced - it will be updated. To be precise, the 
+		technological parameters and the geometric parameters of the resolved 
+		part will be updated.</p>
+     <p><kbd>-strip</kbd>&nbsp;&nbsp; The generated resolved parts will be 
+     stripped of sketch constraints. Do not use this option for Structure 
+		applications. </p>
+		<p><kbd>-direnv</kbd>&nbsp; If the environment file is not in the 
+		default location, then use this option, followed by the full directory 
+		path of the environment file location. (The option <kbd>-env EEE</kbd> 
+		mentioned above is also required.)</p>
+		<p><kbd>-installdir&nbsp; </kbd>Use this option followed by the CATIA 
+		installation directory path. For example, -installdir C:\Program 
+		Files\Dassault Systemes\B19.</p>
+		<p><b>Note</b>: If OSDS is not defined, intel_a is assumed and is 
+		appended to the specified install directory. For example, the install 
+		directory is set to C:\Program Files\Dassault Systemes\B19\intel_a.</p>
+		<p>If OSDS is defined, %OSDS% is appended to the specified install 
+		directory. For example, the install directory is set to C:\Program 
+		Files\Dassault Systemes\B19\%OSDS%.</p>
+		<p>OSDS is a system parameter, which is defined when CATIA environment 
+		is set up. Its value can be intel_a or WIN_64 depending on the operating 
+		system.</p>
+     <p><i><b>For Structures Applications Only:</b> If you are using this task 
+     to resolve sections for structures applications like Structure Functional 
+     Design, you must add the following at the end of the command lines listed 
+     above: <kbd><br>
+     -appl Structure. </kbd></i>This should be entered <i>before</i> you enter 
+     the <kbd>-replace</kbd> option explained above. So a command line would look: <kbd>
+     CATCloGenerateResolvedParts.bat -env EEE XXX YYY -appl Structure </kbd>
+		<p>Structure parts must have a parameter called &quot;ProfileType&quot;. New or 
+		existing parameters &quot;PartNumber&quot; and &quot;SectionName&quot; will be valuated with 
+		the part number from the design table. New parameters called &quot;FamilyName&quot; 
+		and &quot;CatalogName&quot; will be created unless they exist already (the name of 
+		the parametric part will be used to valuate these parameters if they do 
+		not exist, using the following naming convention: 
+		catalogname_familyname.CATPart). The &quot;FamilyName&quot; parameter is used by 
+		the automatic catalog creation function (Create/Modify Catalog) to place 
+		parts under different catalog families. See also
+		<a href="page14738.html">Creating a Specifications 
+     Catalog.</a></td>
+   </tr>
+   <tr>
+     <td width="46" height="16" valign="top"></td>
+     <td width="35" valign="top" height="16"><font color="#1C1557"><b>3.</b></font></td>
+     <td width="883" height="16" valign="top">After the program finishes 
+     executing, the parts are placed in <kbd>YYY</kbd> - the directory you 
+     created to hold the resolved parts. Each part has as its name the entry 
+     from the part number column of the design table. The design table 
+     association is removed from the generated resolved part.</td>
+   </tr>
+   <tr>
+     <td width="46" height="16" valign="top"></td>
+     <td width="35" valign="top" height="16"><font color="#1C1557"><b>4.</b></font></td>
+     <td width="883" height="16" valign="top">Add the parts to a catalog. To add 
+     the parts to an existing catalog, see <a href="page14735.html">Modifying a 
+     Catalog</a>. To create a new catalog see <a href="page14733.html">Creating 
+     a Catalog</a>. 
+		<p><b><i>For Structure Applications Only:</i></b> To add parts to an 
+		existing catalog, see <a href="page14745.html">Adding Resolved Sections 
+		to Profile Families</a>. To create a new catalog, see <a href="page14738.html">Creating a Specifications 
+     Catalog</a>.</td>
+   </tr>
+   <tr>
+     <td width="46" height="16" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td width="918" valign="top" height="16" colspan="2">If a part does not get 
+     added to the catalog it may not have a part type (component object type) 
+     defined. In that case you may need to add the part to a catalog 
+     individually.</td>
+   </tr>
+ </table>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,346 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Saving a CATPart as a model in associative mode (V5/V4 
+	Synchronization)
+ </title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <style>
+<!--
+ li.MsoNormal
+	{mso-style-parent:"";
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:Arial;
+	letter-spacing:-.25pt}
+-->
+ </style>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1><a name="ix-Save As Model:non-synchronized elements"></a>&nbsp;<a name="ix-Save As Model:associative mode;support of non-synchronized Elements"></a>Saving 
+ a CATPart as a model in associative mode (V5/V4 Synchronization)</h1>
+ <table border="0" cellspacing="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" Width="0">
+   <tr valign="top" border="0">
+     <td valign="top" height="116">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td height="116">This task shows you that you can create a model in 
+     associative mode:<ul>
+       <li><a href="#hj-batchmigration">during the Batch migration</a></li>
+       <li><a href="#hj-interactively">interactively</a></li>
+     </ul>
+     <p>Applying a Save As Model operation on a Volume or a Surface means that 
+     the model keeps in memory the path of the Part and you can resynchronize 
+     the model after modifying the Part.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="54">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td height="54">For Batch migration, you can choose either the Associative 
+     Mode or the Non-Associative Mode. For more information about it, please 
+     refer to <a href="page10627.html">V5/V4 File-based Migration Batch (from 
+     the Command Line)</a>.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="145">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td height="145">Previously, associativity could be maintained only on the 
+     PartBody (on volumic components). A message was displayed whenever the 
+     migration could not take place for non-volumic elements (lines, points, 
+     curves).<p>Now, you can launch the associative mode whatever the CATIA 
+     components' nature is (volumic or not). Therefore, a non-associative Save 
+     as Model can be applied on non-volumic or non-surfacic elements. These 
+     elements are migrated but there is no link between the migrated components 
+     and the CATPart. In fact, they are recreated in the V4 model.</td>
+   </tr>
+   <tr>
+     <td valign="top" height="38">&nbsp;</td>
+     <td height="38">
+     <h2><font color="#282187"><a name="hj-batchmigration"></a>How to create a 
+     model in associative mode with the Batch migration</font></h2>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" rowspan="2" height="497">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td height="162">On Windows and UNIX, you can launch the migration by 
+     entering the command:
+     <blockquote>
+       <p><b>CATV5ToV4 -if</b> input Part <b>-of</b> output model&nbsp; <b>-mod 
+       ASSO</b> </p>
+     </blockquote>
+     <p>&nbsp;<b>-if</b> : specify the CATPart to be processed</p>
+     <p><b>-of</b> : output directory in non-associative mode or explicit model</td>
+   </tr>
+   <tr>
+     <td valign="top" align="left" height="335">
+     <ol class="task">
+       <li>
+       <p class="task">Creation of the model in associative mode:</p>
+       <p class="task"><span style="font-weight: 400">Both types of elements (associative and 
+     non-associative) are created into the geometrical set:</span><ul>
+       <li>
+       <p class="task"><span style="font-weight: 400">migration in associative mode for Solids, Wireframes and Surfaces.<br>
+       These V4 elements, which are migrated in the Associative mode, keep a 
+       link with the CATPart.<br>
+       For the two dimension elements (Surface elements), this link leads to 
+       restrictions in CATIA V4. To erase them in V4, it is necessary to destroy 
+       this link.</span></li>
+       <li>
+       <p class="task"><span style="font-weight: 400">non-associative migration for all the other types of geometrical 
+       elements (called non-associative elements): pints, lines, curves, faces.</span></li>
+     </ul>
+       </li>
+       <li>
+       <p class="task">Synchronization of the model:</p>
+     <p class="task">The Following actions are operated:</p>
+     <ul>
+       <li>
+       <p class="task">migration of the non-associative elements of the current CATPart 
+       document into the geometrical Set</li>
+       <li>
+       <p class="task">moving of the previous non-associative elements into a layer called 
+       &quot;&nbsp;bin&nbsp;&quot;&nbsp; layer</li>
+       <li>
+       <p class="task">synchronization of the associative elements (2D: Surfaces; 
+       3D:Volumes) on the current geometry of the CATPart.</li>
+     </ul>
+     <p class="task">At each stage of synchronization, the non-associative elements created 
+     during the previous migration are added in the &quot;bin&quot; layer. The 
+     non-associative elements of the current CATPart's geometry are entirely 
+     re-created.</p>
+     <p class="task">In this way, the user, if he wants, can delete all the old 
+     non-associative geometry by selecting&nbsp; the &quot;bin&quot; layer in CATIA V4.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top">The non-synchronized elements are supported 
+     during the V5 to V4 migration because despite the selection of the 
+     Associative Mode, a non-associative Save As Model is applied to the non-volumic 
+     elements in order to allow their migration into V4.<p>The Associative Mode 
+     offers better <b>performances</b> because only the last modifications are 
+     recalculated, which is not the case with the Non-Associative Mode.</p>
+     <p>The <b>size</b> of the generated models is different if you choose one 
+     mode or the other:</p>
+     <ul>
+       <li>with the Associative mode, the sub-elements are not migrated because 
+       a link is kept with the CATPart. Therefore, the size of the model is less 
+       important.</li>
+       <li>with the Non-Associative mode, the resulting model is bigger because 
+       the historical data (building elements) are recreated in V5.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top" height="651">&nbsp;</td>
+     <td valign="top" height="651">
+     <ol class="task" start="3">
+       <li>
+       <p class="task">Number of the layer for 
+       non-associative data:</p></li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p class="task">The number of layer can be specified by the user&nbsp;thanks to the <kbd>
+     Tools &gt; Option &gt; Compatibility</kbd> Settings. Note that in V4 model, a 
+     number of layer can have a value between 0 and 254. If this setting is not 
+     informed, a default layer number is used: layer number 254. If you enter 
+     255 for instance, a warning is displayed.</p>
+           <table border="0" cellpadding="0" style="border-collapse: collapse" width="100%" id="table3">
+             <tr>
+               <td>
+				<img border="0" src="b35doc/english/online/intug_c2/images/bt330NLS.gif" width="312" height="338"></td>
+             </tr>
+           </table>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p>The layer is visible in the model. The user can put it in the No Show 
+     space or delete it if he wants.</p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <ol class="task" start="4">
+       <li>
+       <p class="task"><span style="font-weight: 400"><font color="#000000">Identifiers of the 
+       non-associative elements:</font></span></li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p class="task">During <span lang="EN-GB">the stage of synchronization, non-associative 
+     elements issued from the previous migration are moved into the &quot;bin&quot; layer 
+     and their identifiers are modified in order to know which migration number 
+     they come from. Each identifier is modified in that way: RxxxIDENT, where 
+     xxx is the migration number.</span></p>
+           <p class="task"><span lang="en-gb">For instance, </span>
+           <span lang="EN-GB">the 
+     identifier LINE.1 becomes R001LINE.1 at the first synchronization of the 
+     model. If we make two synchronizations, the model contains LINE.1 and the 
+     following identifiers R001LINE.1 and R002LINE.1.</span></blockquote>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td valign="top">For more information about V4/V5 Compatibility 
+     Settings, please refer to
+     <a href="page0966.html">Saving As 
+     V4 Data in <i>CATIA - Infrastructure User's Guide</i>.</a></td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top" height="38">&nbsp;</td>
+     <td valign="top" height="38">
+     <h2><font color="#282187"><a name="hj-interactively"></a>How to create a 
+     model in associative mode interactively</font></h2>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top" height="464">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td valign="top" height="464">Open the
+     <a href="b35doc/english/online/intug_c2/samples/SaveAsModel.CATPart">SaveAsModel.CATPart</a> document.<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber4">
+       <tr>
+         <td width="50%" align="center">
+			<img border="0" src="b35doc/english/online/intug_c2/images/bt331NLS.gif" width="564" height="474"></td>
+         <td width="50%" valign="top">
+     <p><font color="#000000">This CATPart contains:</font></p>
+     <ul>
+       <li><font color="#000000">3D components: volume,</font></li>
+       <li><font color="#000000">2D: surface,</font></li>
+       <li><font color="#000000">1D: line, curve,</font></li>
+       <li><font color="#000000">0D: point.</font></li>
+     </ul>
+         </td>
+       </tr>
+     </table>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="bottom">&nbsp;</td>
+     <td valign="top">
+     <ol class="task">
+       <li>
+       <p class="task">Select 
+       the Associative mode in the <kbd>Tools &gt; Options &gt; Compatibility</kbd> 
+       Settings.</p>
+       <table border="0" cellpadding="0" style="border-collapse: collapse" width="100%" id="table8">
+         <tr>
+           <td width="27">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+           <td><font color="#000000">This option is kept in 
+     memory; if you reopen CATIA V5, the Associative Mode will be the active 
+     mode.</font></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Save the CATPart As a Model:</p>
+       <table border="0" cellpadding="0" style="border-collapse: collapse" width="100%" id="table7">
+         <tr>
+           <td>
+         <img border="0" src="b35doc/english/online/intug_c2/images/bt332NLS.gif" width="676" height="540"></td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top" height="35"></td>
+     <td valign="top" height="35">
+     <blockquote>
+       <blockquote>
+         <blockquote>
+     <p><font color="#000000">After the V5 to V4 migration, the non-volumic or 
+       non-surfacic elements are re-created (point, line, curve and face). In 
+		the Specification Tree, indicates the name of the newly created 
+       component in V5 and its container: GEOMETRICSET.1_POINT.1 for instance.</font></p>
+     <p><font color="#000000">However, the volumic or surfacic components 
+       appear differently in the Specification Tree: you only have the container 
+       information of the migrated Solid because a link is kept with the CATPart.</font></p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+     <ol class="task" start="3">
+       <li>
+       <p class="task"><font color="#000000">In the CATPart, modify the Solid for instance. 
+       Then save the CATPart as model with the same name (SaveAsModel.model) in 
+       order to update the model.</font></p>
+       <table border="0" cellpadding="0" style="border-collapse: collapse" width="100%" id="table5">
+         <tr>
+           <td>
+           <img border="0" src="b35doc/english/online/intug_c2/images/bt333NLS.gif" width="558" height="473"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task"><font color="#000000">Close the Solid and re-open it. Associativity 
+       is kept between the CATPart and the model: The modifications made in V5 
+       are reported in the model.</font></p>
+       <table border="0" cellpadding="0" style="border-collapse: collapse" width="100%" id="table6">
+         <tr>
+           <td>
+           <img border="0" src="b35doc/english/online/intug_c2/images/bt334NLS.gif" width="704" height="594"></td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     <blockquote>
+       <blockquote>
+         <blockquote>
+           <p class="task">For instance, the Point identifier becomes 
+           <span lang="EN-GB">R00....1</span> (R001GEOMETRIC SET.1_POINT.1)<span lang="EN-GB"> 
+			at the first synchronization of the </span>model, 
+     this is the &quot;old&quot; version before the synchronization. The new one is 
+     symbolized by GEOMETRIC SET.1_POINT.1.</p>
+           <p class="task">The Surface contains 4 Curves (or Edges) and a Face. This is why the 
+     CRVs container has 4 Curves which are the building elements for the *SUR1. 
+     But GEOMETRIC SET.1_POINT.1 in CRVs corresponds to Curve.1 (non-volumic element), a feature 
+     belonging to Geometric Set.1.</p>
+           <p class="task">In spite of the fact that Curve.1 has not been modified, you can see 
+     that it has been recreated because the &quot;old&quot; version is represented by 
+     R00....1 (R001GEOMETRIC SET.1_POINT.1) and the new one by GEOMETRIC 
+			SET.1_POINT.1.</p>
+           <p class="task">The non-associative data (R00....1 
+     elements) is referenced in a bin layer which the user can delete if he 
+     wants.</p>
+           <p class="task">In our example, only Solid.1 has been synchronized because it is an 
+     associative element and its geometry and specifications have been 
+     recalculated.</blockquote>
+       </blockquote>
+     </blockquote>
+     </td>
+   </tr>
+   <tr valign="top" border="0">
+     <td colspan="2" valign="top" height="35">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

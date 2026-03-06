@@ -1,0 +1,255 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Computing Object Sets</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Computing Object Sets<a name="ix-computing::object sets;commands::Compute"></a></h1>
+ <table Border="0" CELLSPACING="1" valign="top">
+   <tr>
+     <td align="center" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>
+     <p class="task"><a name="CATGPSCommandHeader.CATGPSComputeHdr"></a>This 
+     task will show you how to compute object sets.</p>
+     <p class="task">In this particular example, you will see how to compute a 
+     mesh.<br>
+     Computing a mesh will enable the analysis of any object of Restraints, 
+     Loads and Masses type, without requiring the computation of a solution.</p>
+     <p class="task">A finite element computation is a succession of data 
+     manipulation processes in which input data resulting from a previous 
+     process (or directly input by the user) is converted into output data ready 
+     to be used by a subsequent process. Such ready-to-use data is stored in 
+     program objects sets such as those appearing in the analysis features tree 
+     under Analysis Cases (Restraints, Loads, Masses, Solutions) objects sets.&nbsp;</p>
+     <p class="task">When data contained in such an objects set is ready for use 
+     in the subsequent finite element computation process, the object has been 
+     computed and can be analyzed. Thus, computing an objects set consists in 
+     generating finite elements results for all objects and objects sets 
+     necessary to analyze the specified objects set.&nbsp;</p>
+     <p class="task">The computation of an objects set requires two distinct 
+     actions:</p>
+     <ul>
+		<li>First, the user-defined specifications attached to each 
+       object belonging to the objects set in the specification tree must be 
+       translated by the pre-processor into solver-interpretable commands.&nbsp;<br>Since solvers can only interpret data applied on mesh entities (nodes and 
+       elements), this first translation step requires the existence of a mesh 
+       support for converting user input specifications on the geometry into 
+       explicit solver commands on nodes and elements.&nbsp;&nbsp;</li>
+		<li>Next, the solver translates the solver commands into data 
+       ready for algorithmic treatment as required by the numeric procedure 
+       invoked.&nbsp;<br>Since algorithms deal only with operators dimensioned by the problem size 
+       (number of degrees of freedom (degree of freedom)), this second 
+       translation step requires the exact knowledge of the behavioral 
+       hypotheses of the finite elements (properties), which contain the 
+       required degree of freedom information.&nbsp;</li>
+		</ul>
+     <p class="task">As a result of such action, the program translates the 
+     user-defined specifications into solver-interpretable commands applied on 
+     mesh entities, and you can visualize on the mesh the result of this 
+     translation. This analysis capability, used especially for displaying 
+     program feedback on applied Restraints, Loads or Masses objects in the case 
+     of large size models (when you do not wish the entire computation to be 
+     performed), is available with a contextual menu:</p>
+     <ul>
+       <li>
+       <p class="task">Restraint, Load and Mass type objects, in the form of the 
+       object Visualization on Mesh action</li>
+       <li>
+       <p class="task">Restraints, Loads, Masses and Solutions objects sets, in 
+       the form of the&nbsp;following objects set actions:
+       <ul>
+         <li>
+         <p class="task">objects set Image Generation</li>
+         <li>
+         <p class="task">objects set Reporting</li>
+       </ul>
+       </li>
+     </ul>
+     <p class="task">A prerequisite to these actions is the existence of a mesh 
+     part.</td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"><a name="hj-warning"></a></td>
+     <td valign="top">
+     <p class="task">Avoid having CATAnalysis documents automatically saved. 
+     Otherwise, on some models, each computation will be followed by a <kbd>Save</kbd> 
+     operation, thus making temporary data become persistent data.<br>
+     To do this:</p>
+     <ol class="task">
+       <li>
+       <p class="task">Select <kbd>Tools &gt; Options &gt; General</kbd>.</li>
+       <li>
+       <p class="task">Select <kbd>No automatic backup</kbd>.</p>
+       <table border="0" cellspacing="1" id="AutoNumber8">
+         <tr>
+           <td>
+           <p class="task">A warning message appears to inform you that you have 
+           to restart your CATIA session after selecting this option.</td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd> in the Options dialog box.</li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" align="center">
+     <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+     <td>
+     <p class="task">Open the <a href="b35doc/english/online/estug_c2/samples/sample56.CATAnalysis">
+     sample56.CATAnalysis </a>document from the samples directory.</p>
+     <p class="task">
+     <img border="0" src="b35doc/english/online/estug_c2/images/stcompute02NLS.gif" width="175" height="202"></td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td align="center">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td>
+     <ol class="task">
+       <li>
+       <p class="task">Edit the mesh part specifications.</p>
+       <table border="0" cellspacing="1" id="AutoNumber7">
+         <tr>
+           <td>
+           <p class="task">To do this:</p>
+           <ol class="task" type="a">
+             <li>
+             <p class="task">Double-click <kbd>OCTREE Tetrahedron Mesh.1</kbd> 
+             in the specification tree.</li>
+             <li>
+             <p class="task">Enter <kbd>11mm</kbd> as <kbd>Mesh size</kbd> 
+             value.</li>
+             <li>
+             <p class="task">Click <kbd>OK</kbd>.</li>
+           </ol>
+           <p class="task">Note that the following sets are now non up-to-date:
+           <kbd>Nodes and Elements</kbd>, <kbd>Properties</kbd>, <kbd>Restraints</kbd>,
+           <kbd>Loads</kbd>.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/stcompute01NLS.gif" width="175" height="204"></td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task"><a name="hj-compute"></a>Click <kbd>Compute</kbd>
+       <img border="0" src="b35doc/english/online/icons_C2/images/I_CalculatorP2.gif" width="24" height="24">.</p>
+       <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber1">
+         <tr>
+           <td>
+           <p class="task"><a name="hj-computedb"></a>The Compute dialog box 
+           appears.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/dbcompute02NLS.gif" width="207" height="176"></p>
+           <ul>
+             <li>
+             <p class="task"><kbd>All</kbd>: all objects defined in the analysis 
+             features tree will be computed.<ul>
+               <li>
+               <p class="task"><kbd>Preview</kbd>: this option allows you to 
+               obtain an estimate of the time and memory required to perform the 
+               computation.<br>
+               This option is available only if the <kbd>All</kbd> option is 
+               selected.</li>
+             </ul>
+             </li>
+             <li>
+             <p class="task"><kbd>Mesh Only</kbd>: only the mesh, property, 
+             material, restraints, loads, masses specifications will be updated 
+             without requiring the computation of a solution.<table border="0" cellspacing="1" id="table2">
+				<tr>
+					<td align="center" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+					<td>
+					<p class="task">For dynamic analysis cases, the referenced 
+					solutions will also be computed.</td>
+				</tr>
+				</table>
+				</li>
+             <li>
+             <p class="task"><kbd>Analysis Case Solution Selection</kbd>: only a 
+				selection of user-specified analysis solutions will be computed, 
+				with an optimal parallel computation strategy.</li>
+             <li>
+             <p class="task"><kbd>Selection by Restraint</kbd>: all the cases 
+             that share the same <kbd>Restraints</kbd> set will be computed.</p>
+             <table border="0" cellpadding="0" cellspacing="0" id="table1">
+               <tr>
+                 <td align="center" valign="top">
+     <img src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+                 <td>
+                 Do not use this option if you want to compute cases that 
+					reference a multi-load set.</td>
+               </tr>
+               <tr>
+                 <td>
+                 <img border="0" src="b35doc/english/online/estug_c2/images/icon_EST.gif" align="middle" width="32" height="32"></td>
+                 <td>
+                 <p class="task">This option is only available with the <b>
+                 ELFINI Structural Analysis (EST)</b> product.</td>
+               </tr>
+             </table>
+             </li>
+           </ul>
+           </td>
+         </tr>
+       </table>
+       </li>
+       <li>
+       <p class="task">Select <kbd>Mesh Only</kbd> from the list.</li>
+       <li>
+       <p class="task">Click <kbd>OK</kbd>.</p>
+       <table border="0" cellpadding="0" cellspacing="0" id="AutoNumber4">
+         <tr>
+           <td>
+           <p class="task">Both the Computation Status dialog box and the 
+           Computing... progress bar appear.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/pbcompute01NLS.gif" width="661" height="182"></p>
+           <p class="task">The progress bar provides a series of status messages 
+           (<kbd>Meshing</kbd>, <kbd>Factorization</kbd>, <kbd>Solution</kbd>) 
+           that inform you of the degree of advancement of the computation 
+           process.</p>
+           <p class="task">At any time, you can decide to interrupt the 
+           computation process in order to modify parameters if you are not 
+           satisfied of the current calculation or if you have forgotten 
+           something. <br>
+           All the entities that have been already updated hold their update 
+           status.</p>
+           <p class="task">To do this, click <kbd>Cancel</kbd> in the 
+           Computing... progress bar.</p>
+           <p class="task">The status of the <kbd>Nodes and Elements</kbd> set,
+           <kbd>Properties</kbd> set, <kbd>Restraints</kbd> set, <kbd>Loads</kbd> 
+           set is changed to valid in the specification tree.</p>
+           <p class="task">
+           <img border="0" src="b35doc/english/online/estug_c2/images/stcompute02NLS.gif" width="175" height="202"></td>
+         </tr>
+       </table>
+       </li>
+     </ol>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top" colspan="2">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+     </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

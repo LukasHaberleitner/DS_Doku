@@ -1,0 +1,138 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+<head>
+<meta name="MonocodingType" content="0">
+<meta name="MonocodingFlag" content="C2D2E2L2O2">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Optimizing Meshes</title>
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+<meta name="docCompliance" content="v0.5; Thu Jul  7 11:32:00 2005">
+</head>
+
+<body>
+
+<h1><a name="ix-commands::Optimize"></a>
+<a name="CATCloudEditorHeaderCmd.CATCldMeshOptimizeHdr"></a>Optimizing Meshes<a name="CATCloudStlHeaderCmd.CATStlMeshOptimizeHdr"></a></h1>
+<table Border="0" CELLSPACING="0" valign="top" bordercolor="#111111" cellpadding="0">
+  <tr valign="top" BORDER="0">
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+    <td rowspan="1">This task will show you how to optimize an existing mesh, 
+    i.e. redistribute and reshape the triangles within the mesh. <br>
+    This way you will obtain a more homogeneous mesh, e.g. for analysis purpose.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+    <td>
+    <ul>
+      <li>Be aware that this optimization tends to modify the shape of the 
+      model!</li>
+      <li><span lang="en-us">The mesh must be exempt of Non Manifold problems, 
+      even on non-active areas. <br>
+      </span>You should use the <a href="page4781.html">Mesh Cleaner</a>.</li>
+      <li>Mesh Optimize is an iterative operator using edge splits and edge 
+      collapses. If an edge is too long, it is split in two. <br>
+      If an edge is too short it is collapsed. Consequently, there is a minimum 
+      ratio between the minimum and <br>
+      maximum edge length; otherwise an edge that has just been split could be 
+      collapsed at the next step and <br>
+      then split again and so on.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/aprereq.gif" width="32" height="32"></td>
+    <td>Open the
+    <a href="b35doc/english/online/cfysm_C2/samples/SmoothMesh01.CATPart">
+    SmoothMesh01.CATPart </a>from the samples directory. <br>
+    You may want to display the triangles of the mesh, using the <kbd>
+    <a href="page4761.html">Cloud Display</a></kbd> command.</td>
+  </tr>
+  <tr>
+    <td valign="top">
+    <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32">
+    </td>
+    <td valign="top">
+    <ol class="task">
+      <li>
+      <p class="task">Click <kbd>Optimize</kbd>
+      <img border="0" src="b35doc/english/online/icons_C2/images/I_StyOptimizeCmdP2.gif" width="24" height="24"> 
+      and select the mesh.<br>
+          <img border="0" src="b35doc/english/online/cfyugrvs_c2/images/Optimize02NLS.gif" width="247" height="380"></p>
+      </li>
+   <li>
+      <p class="task">Set the <kbd><a name="ix-optimize:minimum length">Minimum 
+      Length</a></kbd>, <kbd><a name="ix-optimize:maximum length">Maximum Length</a></kbd> 
+      and <kbd><a name="ix-optimize:dihedral angle">Dihedral Angle</a></kbd> 
+      according to your needs.</p>
+      <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber2">
+        <tr>
+          <td valign="top">
+          <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+          <td>
+          <ul>
+            <li><kbd>Minimum Length</kbd> and <kbd>Maximum Length</kbd> refer to 
+            the length of the edges of the triangles.</li>
+            <li>The <kbd>Minimum Length</kbd> must be less than or equal to the 
+            half of the <kbd>Maximum Length</kbd>.</li>
+            <li><kbd>Dihedral Angle:</kbd> The dihedral angle between 2 
+            triangles sharing an edge is the angle <br>
+            between their normals (note that this is different from the angle 
+            across the common edge). <br>
+            A greater dihedral angle indicates a sharp feature across that edge 
+            - <br>
+            for example if the dihedral angle is 0 it means that the 2 triangles 
+            are on the same plane. </li>
+            <li>All the triangles with edges shorter than the <kbd>Minimum 
+            Length</kbd> will be collapsed so that <br>
+            their edges reach this <kbd>Minimum Length</kbd>.</li>
+            <li>All the triangles with edges larger than the <kbd>Maximum Length</kbd> 
+            will be refined so that <br>
+            their edges reach this <kbd>Maximum Length</kbd>.</li>
+            <li>Al the triangles with an <kbd>Dihedral Angle</kbd> lower than 
+            the value given will be flipped.</li>
+            <li>Make sure the chosen values are coherent with your model.</li>
+          </ul>
+          </td>
+        </tr>
+      </table>
+      </li>
+   <li>
+      <p class="task">Select the <kbd><a name="ix-optimize:analysis">Analysis</a></kbd> 
+      check box to display the maximum and the mean deviations <br>
+      (distances between a vertex and its initial position) in the dialog box.
+      </li>
+      <li>
+      <p class="task">Click <kbd>Apply</kbd>.<br>
+          <img border="0" src="b35doc/english/online/cfyugrvs_c2/images/Optimize03NLS.gif" width="250" height="453"></p>
+      </li>
+   <li>
+      <p class="task">Click <kbd>OK</kbd> to validate the optimization and 
+      modify the initial mesh, <br>
+      or <kbd>Cancel</kbd> to exit the action without any modification.</li>
+    </ol>
+    </td>
+  </tr>
+  <tr valign="top" BORDER="0">
+    <td colspan="2" valign="top">
+    <p align="center">
+    <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+    </td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+

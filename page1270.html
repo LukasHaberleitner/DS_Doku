@@ -1,0 +1,413 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="1">
+ <meta name="MonocodingFlag" content="L2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta HTTP-EQUIV="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Setting Up the PLM Database</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <style type="text/css">
+.style1 {
+	border: 1px solid #000000;
+}
+.style2 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
+ </head>
+
+ <body>
+
+ <h1>Setting Up the PLM Database</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%">
+   <tr>
+     <td valign="top">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td>
+		<h3>A Few Definitions</h3>
+		<h4>Database objects</h4>
+		<p>Data structures implemented to support the PLM database. Generating 
+		database objects:</p>
+		<ul>
+			<li>creates (or uses existing) tablespace (Oracle and DB2) and 
+			bufferpool (DB2 only)</li>
+			<li>creates data structures (application tables, indexes and views) 
+			using the DDL files installed with the code; the role of these data 
+			structures is to manage data persistency and object mapping</li>
+			<li>sets up privileges for accessing the data structures</li>
+			<li>in all database domains, sets up (inserts) CDM STEP data 
+			required for domain management (mapping of domain objects)</li>
+			<li>creates (if necessary), alters and grants the Database table 
+			owner 
+			and the database connection user in the database.</li>
+		</ul>
+		<h4>Startup data</h4>
+		<p>Once the data structures have been created, the installation inserts 
+		startup data into certain database application domains. Generating 
+		startup data:</p>
+		<ul>
+			<li>sets up domain administration</li>
+			<li>sets up a default people and organization (P&amp;O) implementation 
+			comprising a root organization (ADMIN), a default role used for 
+			logging on (VPMADMIN), and an administrator</li>
+			<li>creates default security management: privileges (functional 
+			access control), masks (data entity &amp; attribute access control) and 
+			processes.</li>
+		</ul>
+		<h4>Settings</h4>
+		<p>Setting files: CATDbServers.CATSettings, CATRdbServers.CATSettings, 
+		VPMAdmin.CATSettings, TransactionRepos.CATSettings.</p>
+     </td>
+   </tr>
+   <tr>
+     <td valign="top">
+     <img title="" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td>
+     When using DB2, the administrator of the 
+		instance may not have sufficient DB2 security privileges to perform the 
+		V5 setup, if the database got created using a different DB2 userid. &nbsp;It 
+		is advisable to use this latest userid &nbsp;when running the installation 
+		procedures.</td>
+   </tr>
+   <tr>
+     <td valign="top" style="height: 28px">
+     </td>
+     <td style="height: 28px">
+		<h3>Starting the PLM Database Setup Program</h3>
+		<p><blink>ENOVIA V5 Server 64-bit installation is supported on Windows Server 
+		64-bit.</blink> </p>
+		<p> When the installation procedure initializes the PLM database setup 
+		process, the <kbd>Authentication</kbd> dialog box appears along with the 
+		PLM Database Setup dialog box.</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/PLMDBSetupAuthentication_NLS.gif" width="306" height="181"></p>
+		<p>The ENOVIA Administrator:</p>
+		<ul>
+			<li>has administrative privileges</li>
+			<li>creates users </li>
+			<li>grants privileges for users </li>
+			<li>grants roles to users </li>
+			<li>grants process access to users</li>
+			<li>must already exist as a system user.</li>
+		</ul>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/PLMDBSetup_NLS.gif" width="665" height="441"></p>
+		<p><strong>Note: </strong>Administrator<strong> </strong>can also launch <kbd>PLM Database Setup</kbd> 
+		using the <code>PLMDBSetup.exe</code> file from <code>../../win_b64/code/bin</code> directory of 
+		ENOVIA V5 media.</p>
+		<h3>Description of Operations to Execute</h3>
+		<p>The operations to execute using the PLM database setup dialog box 
+		are:</p>
+		<h4>Install database objects and startup data (and generate settings)</h4>
+		<p>Generates data objects, startup data and settings. This is the 
+		default option.</p>
+		<h4>Install database objects (and generate settings)</h4>
+		<p>Generates only the bufferpool (DB2 only) and/or tablespace to be 
+		created (if required), the Database table owner and the database 
+		connection user to be created in the database (if necessary), altered 
+		and granted, and the DDL files SQL orders to be executed, creating the 
+		tables, indexes, views, inserting values and doing grants. The startup 
+		data will not be installed: their installation needs the database 
+		objects to be installed before.</p>
+		<h4>Generate the database objects installation SQL orders in a file (and 
+		generate settings)</h4>
+		<p>If you don&#8217;t want to install the database objects during the PLM 
+		database setup, but want only to generate a file containing the SQL 
+		orders to execute later in order to install the database objects, use 
+		this option. Startup data will not be installed.</p>
+		<h4>Install the startup data</h4>
+		<p>Generates the Project startup data (LoadAdmin), the People and 
+		Security startup data and the Graphs import startup data. This should 
+		only be done when the database objects already exist.</p>
+		<h4>Regenerate settings</h4>
+		<p>If you have already installed the database objects and the startup 
+		data, this option regenerates and updates the environment file and the 
+		settings (CATDbServers.CATSettings, CATRdbServers.CATSettings, 
+		TransactionRepos.CATSettings, VPMAdmin.CATSettings, and VPMAdmin.adm).</p>
+		<h2>Install database objects and startup data (and generate settings)</h2>
+     <ol>
+       <li>Enter the user name and password of the ENOVIA Administrator, and the 
+		Domain name, then click OK. 
+		<p>The ENOVIA Administrator name is added to the top of the <kbd>PLM 
+		Database Setup</kbd> dialog box:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/PLMDBSetup02_NLS.gif" width="665" height="441"></p>
+           <p>The choices are:</p>
+           <ul>
+             <li>Install the database objects and the startup data (and generate 
+				settings)</li>
+             <li>Install database objects (and generate settings)</li>
+             <li>Generate database objects installation SQL orders in a file 
+				(and generate settings)</li>
+             <li>Install startup data</li>
+             <li>Regenerate settings </li>
+           </ul>
+           <p>The default option when installing the database from scratch is 
+           <kbd>Install database objects and startup data (and generate 
+			settings)</kbd></p>
+           <p>Note: in the context of migration, you will use the PLM database 
+			setup tool to process already existing databases created using
+           <strong>ENOVIA LCA</strong>. </p>
+           </li>
+		<li>You are going to create the database objects and startup data, so 
+		use the default option and click the <kbd>Database...</kbd> button.<p>A 
+		dialog box prompts you to indicate the database type:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/PLMDBSetupDBType_NLS.gif" width="524" height="375"><br>
+		&nbsp;</p></li>
+		<li>Select the check button for the database you are using, then click 
+		<kbd>OK</kbd>.<p>For example, check the DB2 option to access the DB2 
+		options.</p>
+		<h4>Options Specific to DB2</h4>
+		<p>
+		<img title="" src="b35doc/english/online/basil_c2/images/PLMDBSetupDB2Options_NLS.gif" width="523" height="385">&nbsp;<br>
+		</p>
+           <table style="width: 100%" class="style2">
+			<tr bordercolor="black">
+				<td style="width: 166px" class="style2"><strong>Options</strong></td>
+				<td class="style2"><strong>Description</strong></td>
+			</tr>
+			<tr>
+				<td style="width: 166px" class="style1">DB2 install path</td>
+				<td class="style1">
+           <p>Click the <kbd>Browse...</kbd> button to select the DB2 install 
+			path.&nbsp; Usually, the DB2 install path is the same as the DB2 
+			instance path on Windows (unless it is specified at the instance 
+			creation). For example: </p>
+		<p><code>C:\Program Files\IBM\SQLLIB </code></p>
+		<p>It must contain: <code>bin\db2ilist.exe</code>.</p>
+		<p>Selecting the install path automatically detects the DB2 instance, 
+		Database alias name and Database directory.</p>
+           		</td>
+			</tr>
+			<tr>
+				<td style="width: 166px" class="style1">DB2 instance</td>
+				<td class="style1">
+           <p>Click on the selection button to select the DB2 instance. </p>
+           		</td>
+			</tr>
+			<tr>
+				<td style="width: 166px" class="style1">Database alias name</td>
+				<td class="style1">
+           <p>Select the database alias name for the chosen DB2 instance.</p>
+           <p><b>Note</b>: All available DB2 instances, remote as well as local, 
+			will appear in the selection list.</p>
+           		</td>
+			</tr>
+			<tr>
+				<td style="width: 166px" class="style1">Database directory</td>
+				<td class="style1">If the database directory of the chosen database alias is LOCAL, 
+			then the database directory field will contain its path. If the 
+			database directory of the chosen database alias is REMOTE, then the 
+			database directory field will simply specify the text REMOTE.</td>
+			</tr>
+			<tr>
+				<td style="width: 166px" class="style1">Database table owner</td>
+				<td class="style1">The Database table owner is known in the database, but is not 
+			known in 
+           <strong>ENOVIAV5VPM</strong>.</td>
+			</tr>
+			<tr>
+				<td style="width: 166px" class="style1">Database connection user</td>
+				<td class="style1">This is a system userid used to connect to the database. All 
+			connections to the database will be performed under this id (the 
+			main interest of this specific user being for remote database 
+			connectivity, since server authentication is being used). With a 
+			local database, it might be identical to be the database 
+			administrator. This user creates the data structures in the 
+			database.</td>
+			</tr>
+			<tr>
+				<td style="width: 166px" class="style1">Password</td>
+				<td class="style1">Enter the database connection password.</td>
+			</tr>
+			<tr>
+				<td style="width: 166px" class="style1">Database administrator</td>
+				<td class="style1">Specify the user name for the database administrator.<p>The database administrator:</p>
+           <ul>
+             <li>has the privileges to administrate the database</li>
+             <li>creates tablespaces (spaces for the data structures that will 
+				contain the data).</li>
+           </ul>
+           		</td>
+			</tr>
+			<tr>
+				<td style="width: 166px" class="style1">Password</td>
+				<td class="style1">Enter the database administrator password.</td>
+			</tr>
+		</table>
+		<p>Create tablespaces for both 8K and 32K. 32k 
+		tablespace is used for specific customized attributes but it is 
+		recommended to use 8K table space for performance reasons.</p>
+		<h3>Options Specific to Oracle</h3>
+        <p>
+        <img border="0" src="b35doc/english/online/basil_c2/images/PLMDBSetupOracleOptions_NLS.gif" width="524" height="375"><br>
+		</p>
+           <table style="width: 100%">
+			<tr>
+				<td style="width: 134px" class="style1"><strong>Options</strong></td>
+				<td class="style1"><strong>Description</strong></td>
+			</tr>
+			<tr>
+				<td style="width: 134px" class="style1">Oracle home directory</td>
+				<td class="style1">Click the <kbd>Browse...</kbd> button to select the Oracle home 
+			directory.</td>
+			</tr>
+			<tr>
+				<td style="width: 134px" class="style1">Database service name</td>
+				<td class="style1">
+        <p>Enter the Database service name.</p>
+     <p>Oracle clients communicate with Oracle servers through service names, 
+		which are easy-to-remember aliases for database addresses. Service names 
+		can be resolved using various methods:</p>
+     <ul>
+       <li><b>Local Naming method</b>: resolves service names using a local 
+		configuration file (TNSNAMES.ORA, SQLNET.ORA, LISTENER.ORA).</li>
+       <li><b>Centralized Naming method</b>: resolves service names using Oracle 
+		Names (highly recommended to centrally administer large Oracle 
+		networks).</li>
+     </ul>
+     <p>To use the Local Naming method check the TNS_ADMIN check box (this is 
+		the default).</p>
+        <p>The path of the default <code>tnsnames.ora</code> file containing the 
+		list of database service names is highlighted, but you can click the 
+		browse button and choose the file at a different location.</p>
+           		</td>
+			</tr>
+			<tr>
+				<td style="width: 134px" class="style1">Database table owner</td>
+				<td class="style1">The Database table owner is known in the database, but is not 
+			known in 
+           <strong>ENOVIAV5VPM</strong>.</td>
+			</tr>
+			<tr>
+				<td style="width: 134px" class="style1">Password</td>
+				<td class="style1">
+        <p>Enter the Database table owner password.</p>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 134px" class="style1">Database connection user</td>
+				<td class="style1">This is a user database. All connections to the database will be 
+			performed under this user (the main interest of this specific user 
+			being for remote database connectivity, since server authentication 
+			is being used). With a local database, it might be identical to be 
+			the database administrator. This user creates the data structures in 
+			the database.<br>
+				<br>
+				<strong>Note:</strong> For Oracle, do not choose userids starting with a numeric 
+				character, an error may occur. If you do, a warning message will 
+				prompt you to correct the problem.</td>
+			</tr>
+			<tr>
+				<td style="width: 134px" class="style1">Password</td>
+				<td class="style1">Enter the database connection password.</td>
+			</tr>
+			<tr>
+				<td style="width: 134px" class="style1">Database administrator</td>
+				<td class="style1">Specify the user name and password for the database administrator.<p>The database administrator:</p>
+           <ul>
+             <li>has the privileges to administrate the database</li>
+             <li>creates tablespaces (spaces for the data structures that will 
+				contain the data).</li>
+           </ul>
+           		</td>
+			</tr>
+			<tr>
+				<td style="width: 134px" class="style1">Password</td>
+				<td class="style1">Enter the database administrator password.</td>
+			</tr>
+		</table>
+     <h4>Selecting the Tablespace in DB2<br>
+		</h4>
+				
+       <li>Click the <kbd>Tablespace...</kbd> button.<p>The <kbd>Tablespace</kbd> 
+		dialog box is displayed:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/PLMDBSetupDB2Tablespace_NLS.gif" width="472" height="249"><br>
+		&nbsp;</p>
+		</li>
+		<li>Check either the <kbd>Select an existing tablespace</kbd> or 
+       <kbd>Create a new tablespace</kbd> option.<p>To create a new tablespace, 
+		enter its name and the directory where it is to be stored, then select 
+		an exiting bufferpool or create a new one and name it:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/PLMDBSetupDB2Tablespace02_NLS.gif" width="472" height="249"></p>
+		<p>Note: the tablespace is a physical container used for storing the 
+		tables in the database.</p>
+		<h4>Selecting the Tablespace in Oracle</h4>
+		<p>
+        <img border="0" src="b35doc/english/online/basil_c2/images/PLMDBSetupOracleTablespace_NLS.gif" width="384" height="228"></p>
+		<p>You can select from the following two existing tablespaces:</p>
+        <ul>
+          <li>SYSAUX</li>
+          <li>USERS.</li>
+        </ul>
+        <p>Separate options exist allowing you to create a new tablespace on 
+		either a local or a remote database.</p></li>
+		<li>Click <kbd>OK</kbd>.<p>This returns you to the <kbd>Database</kbd> 
+		dialog box which now contains the name of the tablespace.</p></li>
+		<li>Click <kbd>OK</kbd> again.<p>This returns you to the <kbd>PLM 
+		Database Setup</kbd> dialog box containing all the information you 
+		entered, for example for <b>DB2</b>:</p>
+		<p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/PLMDBSetup06_NLS.gif" width="665" height="441"></p>
+        <p>
+		and for <b>Oracle</b>:</p>
+        <p>
+		<img border="0" src="b35doc/english/online/basil_c2/images/PLMDBSetup08_NLS.gif" width="665" height="441"><br>
+		&nbsp;</p>
+		</li>
+		<li>Click the <kbd>Execute Database Setup</kbd> button to set up the PLM 
+		database.<p>The setup process starts:</p>
+        <p>
+        <img border="0" src="b35doc/english/online/basil_c2/images/PLMDBSetup04_NLS.gif" width="434" height="263"></p>
+        <p>then comes to an end when you see the following dialog box:</p>
+        <p>
+        <img border="0" src="b35doc/english/online/basil_c2/images/PLMDBSetup07_NLS.gif" width="434" height="263"></p>
+        <p>displaying the message:</p>
+        <p><code>PLM Database Setup successful<br>&nbsp;</code></p></li>
+       <li>Click the <kbd>Finish</kbd> button to finish setting up the PLM 
+		database.<p><b>Warning:</b> A default installation creates the Tools 
+		menu. However, there may be certain cases later in which you installed 
+		an 
+       	<strong>ENOVIAV5VPM</strong> environment 
+		without creating the Tools menu containing the
+       	<code>PLM Database Setup&nbsp;
+       	<strong>VersionNumber</strong></code> 
+		command. If this is the case, go the 
+       	<code>install_dir\code\bin</code> directory and run the following 
+		command to start the ENOVIA database setup operation with the correct 
+		environment:</p>
+       <p><code>catstart -run plmdbsetup -env myenvironment -direnv 
+		-myenvironment_path</code></p>
+		<h3>Log File</h3>
+		<p>The log file is located in the installation directory and is named:</p>
+		<p><code>SetupPLMDB.log</code></li>
+     </ol>
+       <p class="MsoNormal">&nbsp;</p>
+			
+     </td>
+   </tr>
+   <tr>
+     <td colspan="2" width="885">
+     <p align="center">
+     <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+ <p align="center">&nbsp;</p>
+ <table>
+ </table>
+ <table>
+ </table>
+ <table>
+ </table>
+
+ </body>
+
+</html>
+

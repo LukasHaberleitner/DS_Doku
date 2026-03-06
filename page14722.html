@@ -1,0 +1,195 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Comparing Feature Dictionaries</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Comparing Feature Dictionaries</h1>
+ <table cellspacing="0" width="736" border="0" valign="top" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr valign="top" border="0">
+     <td align="center" width="32">
+     <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td valign="center" colspan="2" width="921">This task shows how to compare 
+     the classes and attributes in two feature dictionaries. A separate task 
+     allows you to import classes and attributes from one feature dictionary 
+     into another.</td>
+   </tr>
+   <tr>
+     <td align="center" width="32" valign="top">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"><p>
+     <a name="ix-feature dictionary::comparing"></a></td>
+     <td valign="center" colspan="2" width="921">This task allows you to compare 
+     the classes and attributes in one feature dictionary to those in a second 
+     one. There can be several uses for this function, one of them being 
+     importing the classes and attributes that a subcontractor has added to a 
+     feature dictionary into the feature dictionary maintained by the main 
+     contractor.
+     <p>Your goal is to have a mapping table that shows the classes and 
+     attributes in the feature dictionary you want to import and the classes and 
+     attributes in the feature dictionary you are comparing against. This is 
+     done by a tool developed for the purpose. Before you run this tool you must 
+     &quot;export&quot; both feature dictionaries, explained elsewhere. Exporting them 
+     converts them into XML format, which is needed to compare the two. Once you 
+     have exported them and run the comparing tool (called comparator) you will 
+     get three files which tell you: which classes have problems (do not exist 
+     in the mapping table or the XML file of your&nbsp; feature dictionary), 
+     which classes need to be added to your feature dictionary and an overall 
+     report of what the tool has performed.</p>
+     <p>Before you begin this process you must set the directory path - this 
+     tells the tool the directory path in your installation.</p>
+     <ul>
+       <li>In Windows, open a command prompt and press Enter after typing: set
+       <kbd>AECMIGR_DIRECTORYPATH= XXX&#092;MigrationDirectory</kbd> 
+       where XXX is the directory path to your installation.</li>
+       <li>In Unix: <kbd>export</kbd> <kbd>AECMIGR_DIRECTORYPATH= XXX/MigrationDirectory
+       </kbd><font face="Arial">where XXX is the directory path to your 
+       installation.</font></li>
+       <li>The user can check the current path by executing the comparator, or 
+       executing CATAecDictionaryComparator -h. The comparator will show the 
+       path as the first line of output.</li>
+     </ul>
+     <p>&nbsp;</td>
+   </tr>
+   <tr valign="top" border="0">
+     <td valign="top" width="32" align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32">
+     <p>&nbsp;</p>
+     <p>&nbsp;</td>
+     <td valign="top" width="14"><font color="#1c1557"><strong>1.</strong></font></td>
+     <td width="907"><font face="Arial">Export your own feature dictionary (Dictionary_B) 
+     and the feature dictionary you want to compare against (Dictionary_A). The 
+     process is explained in <a href="page14371.html">Exporting the V5 Feature 
+     Dictionaries</a>.</font><p>To run the tool enter the following at a DOS prompt: <kbd>
+     CATAecDictionaryComparator -i (Dictionary_A) (Dictionary_B) -m (name of 
+     mapping table) -o (name for output) -V5</kbd>
+     </p>
+     <p>Where:</p>
+     <ul>
+       <li>(Dictionary_A) is the XML file which contains the classes and 
+       attributes from the feature dictionary you are comparing against. It must 
+       include the XML extension.</li>
+       <li>(Dictionary_B) is the XML file which contains classes and attributes 
+       from <i>your</i> feature dictionary. It must include the XML extension.</li>
+       <li>(name of <a name="mapping table">mapping table</a>) is the name of 
+       the mapping table against which you want to compare. If you do not have a 
+       mapping table create an empty workbook using MS Excel, <i>with a .csv 
+       extension</i>. Enter the file name in this field - include the .csv 
+       extension.&nbsp; The mapping table should be in the following directory:
+       <kbd>intel_a&#092;startup&#092;EquipmentAndSystems&#092;MigrationDirectory&#092;Dictionary&#092;Mapping 
+       Table</kbd>.&nbsp;</li>
+     </ul>
+     <ul>
+       <li>(name for output) is the name for the three output files. If you 
+       enter the name MAR, for instance, then three files will be produced: 
+       MAR.html, MAR.xml and MAR.csv.</li>
+     </ul>
+     <p>An entry may look like this: <kbd>CATAecDictionaryComparator -i 
+     Dictionary_A.xml Dictionary_B.xml -m V5toV5ObjectMapping.csv -o MAR</kbd></td>
+   </tr>
+   <tr valign="top" border="0">
+     <td align="center" width="32"></td>
+     <td valign="top" width="14"><font color="#1c1557"><strong>2.</strong></font></td>
+     <td width="907">When the tool (called Comparator) has finished running it 
+     will produce three reports and place them in the following directories: XML 
+     and CSV files in&nbsp; <kbd>intel_a&#092;startup&#092;EquipmentandSystems&#092;MigrationDirectory&#092;Dictionary&#092;DDL_Files
+     </kbd>and the HTML file in <kbd>...&#092;Reports.</kbd>
+     <p>Open the HTML file in a Web browser to see a full report.&nbsp; The 
+     report begins with a table of contents that is hyperlinked to the entries. 
+     (The names in parentheses are internal names.) The entries in the report 
+     are color coded as follows:</p>
+     <ul>
+       <li>Green: No action was taken. The class appears in the mapping table 
+       and the XML file of V5 classes.</li>
+       <li>Blue: The class appears in the mapping table, but not in the XML file 
+       of <i>your</i> feature dictionary (Dictionary_B.</li>
+       <li>Red: The class was not found in the mapping table or XML file of your 
+       feature dictionary (Dictionary_B).</li>
+       <li>Orange: Mapping does not exist in the mapping table (&quot;no mapping&quot;), 
+       or is badly mapped.</li>
+     </ul>
+     <p><img border="0" src="b35doc/english/online/ucfug_c2/images/CU0110C_NLS.gif" width="663" height="535"></td>
+   </tr>
+   <tr>
+     <td align="center" width="32"></td>
+     <td valign="top" width="14"><font color="#1c1557"><strong>3.</strong></font></td>
+     <td width="907">Open the XML file (using a text editor like Wordpad) to see 
+     a list of the classes that do not exist in your feature dictionary and can 
+     be imported.<font face="Times New Roman" color="#0000ff">
+     <p>&lt;Class</p>
+     <p>Name=&quot;PipingPartFunc&quot;</p>
+     <p>DisplayName=&quot;Piping Part Function&quot;</p>
+     <p>Superclass=&quot;Component_Function&quot;</p>
+     <p>Creator=&quot;System&quot;</p>
+     <p>Domain=&quot;PIP&quot;</p>
+     <p>UUID=&quot;b7acacd1_83_3a707981_10&quot;&gt;</font></td>
+   </tr>
+   <tr>
+     <td align="center" width="32"></td>
+     <td valign="top" width="14"><font color="#1c1557"><strong>4.</strong></font></td>
+     <td width="907">Open the CSV file using Microsoft Excel. It will look 
+     similar to the image below.
+     <p><img border="0" src="b35doc/english/online/ucfug_c2/images/CU0110C_NLS.gif" width="663" height="535"></p>
+     <p>In the first three columns this table displays classes in the feature 
+     dictionary you are comparing against - Dictionary_B. You should fill in the 
+     4th, 5th and 6th columns with&nbsp; whatever you want the corresponding 
+     entry to be in your feature dictionary - Dictionary_A. In column 7 you 
+     should enter the domain, or application. (PIP=Piping Design, PID= Piping 
+     and Instrumentation Diagrams, EQT= Equipment Design, HVA=HVAC Design, etc.)</p>
+     <p>An asterisk in the Attribute column indicates that the entry is a class. 
+     If it has attributes then the lines that follow it will list the attributes 
+     under the same class name. In the example above, Line 2 shows a class. 
+     Lines 3, 4 and 5 show that the entries are attributes of the class Piping 
+     Line and are called Size, Part Description and Design Speed.</p>
+     <p>NOTE: Entries should refer to the <i>internal</i> name of the class or 
+     parent. The internal name is the name within the application and is not the 
+     one the user sees. Frequently it is similar, though, and the class name 
+     Piping Line may have the internal name PipingLine. You can find the 
+     internal name by looking at the XML file, where it's referred to as Name 
+     and Superclass.</td>
+   </tr>
+   <tr>
+     <td align="center" width="32"></td>
+     <td valign="top" width="14"><font color="#1c1557"><strong>5.</strong></font></td>
+     <td width="907">Once you have entered the information you need to copy and 
+     paste it into the mapping table - in the current example it is 
+     V5ToV5ObjectMapping.csv.
+     <p><img border="0" src="b35doc/english/online/ucfug_c2/images/CU0110B_NLS.gif" width="907" height="322"></td>
+   </tr>
+   <tr>
+     <td align="center" width="32"></td>
+     <td valign="top" width="14"><font color="#1c1557"><strong>6.</strong></font></td>
+     <td width="907">If Dictionary_A has classes and attributes that do not have 
+     equivalent classes and attributes in Dictionary_B then you must repeat the 
+     steps explained in <a href="page14374.html">Importing the XML Output</a>.
+     <p>You can repeat these steps as many times as you want - until you are 
+     satisfied that your mapping table shows all the classes and attributes you 
+     want from Dictionary_A and their corresponding Dictionary_B classes and 
+     attributes.</td>
+   </tr>
+   <tr>
+     <td align="center" width="32">&nbsp;</td>
+     <td valign="top" width="14"><font color="#1c1557"><strong>7.</strong></font></td>
+     <td width="907">Import the classes and attributes that do not exist in your 
+     feature dictionary (Dictionary_B) by using the process explained in
+     <a href="page14374.html">Importing the XML Output</a>.</td>
+   </tr>
+   <tr valign="top" border="0">
+     <td colspan="3" align="center" width="953">
+     <p align="center">
+     <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

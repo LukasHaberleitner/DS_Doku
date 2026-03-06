@@ -1,0 +1,411 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+
+ <head>
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Placing Parts</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Theme" content="none">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1><a name="CATPipCommandHeader.CATPipCatalogBrowserHdr">
+ Placing</a> Parts</h1>
+ <table cellSpacing="0" width="100%" border="0" valign="top">
+   <tr>
+     <td vAlign="top" width="46" height="1">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" border="0" width="32" height="32"></td>
+     <td vAlign="top" width="929" colSpan="2">This task shows you how to place a 
+     part on a run. This function allows you to filter (or search) a catalog for 
+     parts that meet the criteria that you specify. You are presented with a 
+     list of parts that meet these criteria so that you can select the part that 
+     you want to place.
+		<p>See <a href="page12119.html#Efficient_Part_Placement">Efficient 
+		Parts Placement</a> to learn about ways in which you speed up the parts 
+		placement process.</td>
+   </tr>
+   <font face="Arial, Arial, Helvetica" color="#282187">
+   <tr>
+     <td vAlign="top" width="46" height="1">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"><p>
+     <a name="ix-command::Place Piping Part"></a></td>
+     </font>
+     <td vAlign="top" width="929" colSpan="2">The same procedure is used for 
+     placing parts at a location other than a run. Also, while piping parts are 
+     used in this example, the procedure is the same for other types of parts.
+     <p>See also <a href="page14594.html">
+     Detecting Clash in Parts Placement</a> and
+     <a href="page14381.html">Placing Parts 
+     Using a Schematic</a>.</p>
+     <p>Note that this application incorporates intelligent design functions. 
+     This means that the application ensures your design meets a selection of 
+     criteria. These criteria are established by
+     <a href="page14748.html">Design Rules</a>. 
+     For instance, the design rules will match the threaded end of a pipe to the 
+     threaded end of a part. (You can override the rules if necessary.) There 
+     are certain <i>general</i> design rules that apply to all parts you place. 
+     Other rules apply to parts you place from a
+     <a href="page14734.html">specifications 
+     catalog</a> or a standard.&nbsp; Theoretically you can create a new
+     <a href="page14747.html">standard</a> 
+     and not incorporate any design rules. However, your parts will not place 
+     correctly if you do so.</p>
+     <p>A set of sample design rules is included with this application. But most 
+     users (administrators, not individual users) will create or add to these. 
+     See<a href="page14784.html"> Rules 
+     Overview</a> to find out which rules affect parts placement.</p>
+     <p>The standard and specifications catalog that you use for parts placement 
+     is defined in the setup data. See<a href="page12147.html"> Understanding 
+     Project Resource Management</a>.</td>
+   </tr>
+   <font face="Arial, Arial, Helvetica" color="#282187">
+   <tr>
+     <td vAlign="top" width="46" height="1">
+     <img border="0" src="b35doc/english/online/icons_C2/common/awarning.gif" width="32" height="32"></td>
+     <td vAlign="top" width="929" colSpan="2">
+		<ul>
+			<li><a name="ix-place object from catalog, warning">There is a command</a> in the menubar -
+			<kbd>Insert &gt; Place Object from Catalog</kbd>, that can also be used to 
+		place parts. However, the command works differently from the normal<kbd> Place Part</kbd> command described in this task. The command
+   
+   			<kbd>Place Object from Catalog</kbd> is meant to be used with parts that 
+		are not typed, and is normally used in spatial products like <kbd>Plant 
+		Layout</kbd>. If you use this command to place a part, it will not have 
+		the technology associated with a normal typed part, such as automatic 
+		object naming or resizing capability. A typed part is one that has been assigned a class and sub-class in the 
+	feature dictionary.</li>
+			<li>When you place a partially resolved part - a part that is 
+			associated to a design table - and the resolved reference is 
+			created, the sketch constraints are removed from the resolved 
+			reference part when it is placed. This is done for performance 
+			reasons, and to decrease data size. If you do not want the sketch 
+			constraints removed, then you must first generate the resolved part 
+			using the process described in
+			<a href="page14347.html">
+			Generating Resolved Parts from Parametric Parts</a> <i>without using 
+			the <kbd>-strip</kbd> option</i>.</li>
+			<li>When you place an object using the normal <kbd>Place Part</kbd> command, 
+		a unique reference will be created and placed in the CATTemp directory.
+			<i>The instance will not point to the catalog.</i> If you want the instance 
+		to point to the catalog reference then you need to add a keyword to the 
+		family to which the part belongs. Add the following to the family, using 
+		the Catalog Editor: 
+   
+			<kbd>Name</kbd> - LoadType; <kbd>Type</kbd> - String;
+		<kbd>Default</kbd> <kbd>Value</kbd> - SameReference. </li>
+		</ul>
+		<p>
+
+   		To learn how to add a keyword see <kbd>Creating a Catalog</kbd> in 
+		the Component Catalog Editor user guide.</p>
+		<ul>
+			<li>
+   
+   			
+   
+   			If you are placing partially resolved parts, where the value of the 
+		<kbd>ReferenceStatus*</kbd> keyword is <kbd>PartiallyResolved</kbd> in 
+		the parts catalog, you should make sure that 
+		the following setting in the 
+   		<kbd>Catalog</kbd> <kbd>Options</kbd> tab is 
+		selected.
+   
+   		Without this setting, you will not be able to place partially resolved 
+		parts. Go to <kbd>Tools &gt; Options</kbd>, then <kbd>Infrastructure &gt; Catalog Editor</kbd> and the 
+		<kbd>Catalogs</kbd> tab. Make sure that the following option is checked: 
+			<kbd>Standard Behavior</kbd>. This is checked by default and you 
+		will not need to do anything unless you have previously selected one of 
+		the other options.</li>
+			<li>
+   
+   			Parts that are placed in free space inherit some property values 
+			from the Line ID menubar. See
+			<a href="page14450.html">Using 
+			the Line ID Menubar</a>.</li>
+		</ul>
+		</td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="46" height="1">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" border="0" width="32" height="32">
+     <p><a name="ix-parts::placing"></a></td>
+     <td vAlign="top" width="35">
+     <p style="margin-top: 14"><font color="#1c1557"><b>1.</b></font></td>
+     </font>
+     <td vAlign="top" width="883" height="1">With the run displayed, click on 
+     the <kbd>Place Piping Part</kbd> button
+     <img border="0" src="b35doc/english/online/pipug_c2/images/buttonplacepart.gif" width="30" height="30">. The Place Piping Part 
+     dialog box displays. (In the image below the user has already made some 
+     selections.)<p>
+		<img border="0" src="b35doc/english/online/pipug_c2/images/BT0906A_NLS.gif" width="484" height="182"></p>
+     The first row of buttons provides you with placement 
+     options. This can aid you in selecting a placement location in a busy 
+     document. Move the cursor over the button to see its name.<ul>
+       <li><font face="Arial, Arial, Helvetica" color="#282187"><kbd>Select</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>or</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Indicate</kbd></font>: This is the default selection and allows you to 
+       select or indicate a placement location<font face="Arial, Arial, Helvetica" color="#282187"><kbd>.</kbd></font></li>
+       <li><font face="Arial, Arial, Helvetica" color="#282187"><kbd>Select</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Run</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Only</kbd></font>: You can only select a run.</li>
+       <li><font face="Arial, Arial, Helvetica" color="#282187"><kbd>Select</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Connector</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Only</kbd></font>: Allows you to select a part connector only. 
+       First select a part - all connectors display - then select the connector.</li>
+       <li><font face="Arial, Arial, Helvetica" color="#282187"><kbd>Indicate</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>On</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Local</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>XY</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Plane</kbd></font>: You can select a location that is on the XY plane of the local axis of the document.</li>
+       <li><font face="Arial, Arial, Helvetica" color="#282187"><kbd>Indicate</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>on</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Compass</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Plane</kbd></font>: You can select a location that is on the 
+       compass plane. If the compass is inactive then the local plane will be 
+       used.</li>
+       <li><font face="Arial, Arial, Helvetica" color="#282187"><kbd>Select</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Surface</kbd></font>: Select a surface and then select a location.</li>
+		<li><font face="Arial, Arial, Helvetica" color="#282187"><kbd>Select</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>part</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>to</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>display</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>connector</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>list</kbd></font>: 
+		This button allows you to use a dialog box to select the connector on 
+		which to place a part, and is useful in busy documents. Click this 
+		button if you want to select the connector on which to place your part 
+		by using a dialog box, instead of selecting the connector in the viewer. 
+		With your document open, select the part you want to place, click the
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Select</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>part</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>to display</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>connector</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>list</kbd></font> 
+		button and choose the part on which you want to place your part. A
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Selected</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Part</kbd></font> 
+		dialog box will display, showing all the connectors on your selected 
+		part. The selected connector will be highlighted, and will be orange in 
+		the viewer. Select the connector on which you want to place your part 
+		and click <font face="Arial, Arial, Helvetica" color="#282187"><kbd>OK</kbd></font>.</li>
+       <li><font face="Arial, Arial, Helvetica" color="#282187"><kbd>Use</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Compass</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Z</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>for</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Placement</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Up</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Orientation</kbd></font>: The part will align 
+       itself with the compass Z direction, and not the default 'up' direction 
+       of the part. In the image below the valve on the left shows the default 
+       up direction, the valve on the right aligns to the compass Z direction.</li>
+     </ul>
+     <p><img border="0" src="b35doc/english/online/pipug_c2/images/BT0906F.gif" width="324" height="166"></p>
+     <ul>
+       <li><font face="Arial, Arial, Helvetica" color="#282187"><kbd>Place</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>at</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>the</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Current</kbd></font>
+		<font face="Arial, Arial, Helvetica" color="#282187"><kbd>Compass</kbd></font>: This allows you to place the part at 
+       the compass location. The button is available only after you have moved 
+       the compass. To use, select your part, move the compass to the location 
+       where you want to place the part, and click the Place at Current Compass 
+       button. The part will place at that location.</li>
+       <li><kbd>Ignore</kbd> <kbd>Compatibility</kbd> <kbd>Check</kbd> <kbd>with</kbd>
+		<kbd>Neighbors</kbd>: When you click this button you can place bendables 
+		and stretchables without invoking compatibility rules. NOTE: This button 
+		changes a <kbd>Tools &gt; Options</kbd> setting (under <kbd>Equipment &amp; 
+		Systems &gt; Design Criteria</kbd>). However, this function depends upon a
+		<a href="page14765.html">project 
+		resource management</a> entry &quot;<kbd>Ignore Neighbor Compatibility</kbd>&quot;, 
+		which takes precedence. Certain options (e.g. Options 0 &amp; 1) you define 
+		for this resource in the PRM file will result in the button being grayed 
+		out.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="46" height="1"></td>
+     <td vAlign="top" width="44"><b>
+     <font face="Arial, Arial, Helvetica" color="#1C1557">2</font></b><font color="#1c1557" face="Arial, Arial, Helvetica"><b>.</b></font></td>
+     <td vAlign="top">Select a location for the part - you have to do this 
+     before you can display the&nbsp; Class Browser.&nbsp;See below if you want to 
+     multi-place parts.</td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="46" height="1">
+     <font face="Arial, Arial, Helvetica" color="#282187">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></font></td>
+     <td vAlign="top" colspan="2"><a name="ix-parts::multi-place">You may </a>
+     want to place the same part in more than one location - for instance you 
+     have a run with several bends and you want to place an elbow at each bend. 
+     You can <i>multi-place</i> parts in one of two ways. Before you select a 
+     location (Step 3) click the Multi-Place Parts button. Or do a Shift-Click 
+     when you select the location. Now when you select a part it will be placed 
+     at all compatible locations. This works with elbows and pipes.<p>The 
+     multi-place function applies to one run. If your run is broken, and you use 
+     the multi-place function, it will apply to a single run. If the <kbd>Break 
+     Run at every placed part</kbd> option is checked then the multi-place 
+     function may not work. To check or uncheck the option go to Tools - Options 
+     - Equipment and Systems and select/unselect the Design Criteria tab.</td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="46" height="1"></td>
+     <td vAlign="top" width="44"><b>
+     <font face="Arial, Arial, Helvetica" color="#1C1557">3</font></b><font color="#1c1557" face="Arial, Arial, Helvetica"><b>.</b></font></td>
+     <td vAlign="top">If the Clear Filter button is enabled it means that values 
+     from a previous part placement exist in the Filter Definition dialog box. 
+     (See Step 5.) Click the button if you want to clear these values.</td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="46" height="1"></td>
+     <td vAlign="top" width="44"><b>
+     <font face="Arial, Arial, Helvetica" color="#1C1557">4</font></b><font color="#1c1557" face="Arial, Arial, Helvetica"><b>.</b></font></td>
+     <td vAlign="top" width="883" height="1">If you want to change the values of 
+     one or more properties of the part you want to filter for, then click the
+     <kbd>Filter Definition</kbd> button to display the Filter Definition dialog 
+     box. Select the property whose value you want to change and then select the 
+     new value from the drop down box in the Value field. (The Value field will 
+     display after you select a property.) This new value will appear in the
+     <kbd>Override value</kbd> column. The values in the Override value column 
+     will be used when searching for parts in the catalog.
+     <p><img border="0" src="b35doc/english/online/pipug_c2/images/BT0906B_NLS.gif" width="506" height="290"></p>
+     <ul>
+       <li>The Override button brings up the Manage Override Parameters dialog 
+       box, allowing you to <a href="page12084.html">change attribute values</a>.</li>
+       <li>The Flip Part button allows you to flip parts that can be flipped, 
+       such as a reducer.</li>
+       <li>The Move/Rotate button displays the Move/Rotate dialog box, allowing 
+       you to manipulate the part.</li>
+       <li>The Pipe Selection and Pipe Segment Shortcut buttons are shortcuts 
+       that let you select part type.</li>
+       <li>Click the Spec Driven button if you want part placement to be 
+       specifications driven.</li>
+       <li>The Change to Schematic Mode button lets you toggle between schematic 
+       and non-schematic mode. You will exit the command when you click this 
+       button and need to click the Place Part command again.</li>
+       <li>The Close button exits you from the command.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="46" height="1"></td>
+     <td vAlign="top" width="44"><b>
+     <font face="Arial, Arial, Helvetica" color="#1C1557">5</font></b><font color="#1c1557" face="Arial, Arial, Helvetica"><b>.</b></font></td>
+     <td vAlign="top" width="883" height="1">Click the Class Browser button to 
+     display the Class Browser. Double click on Piping Part Function to expand 
+     the list.
+     <p><img border="0" src="b35doc/english/online/pipug_c2/images/BT0906C_NLS.gif" width="348" height="426"></p>
+     <p><a name="ix-class browser::expand">Note:</a> You can choose to display 
+     the class browser expanded, as shown above, or collapsed, by using a 
+     setting. To display it expanded, go to <kbd>Tools - Options - Equipment &amp; 
+     Systems</kbd>, click the <kbd>Design Criteria</kbd> tab, and check the 
+     option <kbd>Expand Class Browser</kbd>. Uncheck it to display it collapsed.</td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="46" height="1"></td>
+     <td vAlign="top" width="44"><b>
+     <font face="Arial, Arial, Helvetica" color="#1C1557">6</font></b><font color="#1c1557" face="Arial, Arial, Helvetica"><b>.</b></font></td>
+     <td vAlign="top" width="883" height="1">Select a function and click <kbd>OK</kbd>. 
+     The function will display in the Place Piping Part dialog box.</td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="46" height="1"></td>
+     <td vAlign="top" width="44"><b>
+     <font face="Arial, Arial, Helvetica" color="#1C1557">7</font></b><font color="#1c1557" face="Arial, Arial, Helvetica"><b>.</b></font></td>
+     <td vAlign="top" width="883" height="1">In the Place Piping Part dialog 
+     box, click on the down arrow in the Part Type field to display a list of 
+     part types (if there is more than one) and select the part type you want. 
+     If there is only one part type it will be preselected. If the Part Type 
+     field is grayed out then click again on the location where you want to 
+     place the part.</td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="46" height="1"></td>
+     <td vAlign="top" width="44"><b>
+     <font face="Arial, Arial, Helvetica" color="#1C1557">8</font></b><font color="#1c1557" face="Arial, Arial, Helvetica"><b>.</b></font></td>
+     <td vAlign="top" width="100%"><a name="hj-PartSelection"></a>The Part Selection box will display after you 
+     select a part type - if there is more than one selection. It will not 
+     display if there is only one selection available to you.
+     <p><img border="0" src="b35doc/english/online/pipug_c2/images/BT0906D_NLS.gif" width="303" height="141"><br>
+	 <br><span class="blink">You can display attributes of the parts in the <kbd>Part Selection</kbd> 
+	 dialog box. To do so, you need to make the following changes before 
+	 starting the session:<br>
+	 </span>
+	 <table style="width: 100%" class="blink">
+		 <tr>
+			 <td>
+			 <ol>
+				 <li>Modify the Project Resource Management (PRM) file to 
+				 edit the <kbd>PhysicalPartAttributeFilter</kbd> 
+				 resource for the required discipline. Set the value of its <kbd>Visible</kbd> 
+				 attribute to <kbd>Yes</kbd>.<br></li>
+				 <li>Modify the corresponding attribute filter file to include 
+				 the attributes (catalog keywords) to be displayed in the <kbd>
+				 Part Selection</kbd> dialog box. The sample file 
+				 (XXXPartAttributeFilter.txt) is available at 
+				 ..\..\startup\EquipmentAndSystems\XXX\SampleData.</li>
+			 </ol>
+			 <p>In the <kbd>Part Selection</kbd> dialog box, you can click <kbd>
+			 Filter Attributes</kbd> to filter the parts using these attributes.</p>
+			 </td>
+		 </tr>
+	 </table>
+	   </p>
+     <p>If the part you want to place can be created as a
+     <a href="page14346.html">light object</a>, 
+     you will be able to differentiate between heavy and light sample parts. 
+     Heavy parts are identified by the letters HV in the part name. Light parts 
+     do not have any designation.</td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="46" height="1"></td>
+     <td vAlign="top" width="44"><b>
+     <font face="Arial, Arial, Helvetica" color="#1C1557">9</font></b><font color="#1c1557" face="Arial, Arial, Helvetica"><b>.</b></font></td>
+     <td vAlign="top" width="883" height="1">Select the part you want to place 
+     and click where you want to place it. The part will be placed. In the image 
+     below it is a straight pipe. If there is only one selection available to 
+     you then click after Step 7.
+     <p><img border="0" src="b35doc/english/online/pipug_c2/images/BT0906E.gif" width="559" height="160"></td>
+   </tr>
+   <tr>
+     <td vAlign="top" width="46" height="1">
+     <img border="0" src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32">
+     <p>&nbsp;</td>
+     <td vAlign="top" width="927" colspan="2">To ensure correct placement of 
+     pipes in a run you should first place all the in-line components and then 
+     place the pipes.
+     <p><a name="ix-preview parts">You can </a>choose to display or hide a 
+     &quot;preview&quot; of the part you are placing. To do this click on <kbd>Tools - 
+     Options</kbd> and select <kbd>Equipment &amp; Systems</kbd> and the <kbd>
+     General</kbd> tab. Check or uncheck the box <kbd>Display image while 
+     placing catalog object in 3D viewer</kbd> to obtain the effect you want.</p>
+     <p>By default, when you click (in free space) to place a part the center of 
+     that part will be placed at that location. The center is determined by the 
+     application by drawing a box around the part and selecting the center of 
+     the <i>base</i> of the box. You can also choose to place the <i>origin</i> 
+     of the part at the point where you click. To do this click on <kbd>Tools - 
+     Options</kbd> and select <kbd>Equipment &amp; Systems</kbd> and the <kbd>
+     General</kbd> tab. Check the box <kbd>Place at component's origin when 
+     placing in free space. </kbd></p>
+     <p><a name="ix-command::Update Part">After you move</a> or modify a run or 
+     part, <a name="ix-update part button">click</a> the Update Part button
+     <img border="0" src="b35doc/english/online/pipug_c2/images/buttonupdatepart.gif" width="28" height="28"> 
+     and select a part to update that part, or select the run to update the run. 
+     You only need to do this if the application does not update the object. See 
+		also <a href="page14811.html">Updating 
+		Documents</a>.</td>
+   </tr>
+ </table>
+ <p align="center">
+ <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32">
+ </p>
+
+ </body>
+
+</html>
+

@@ -1,0 +1,185 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="D2L2">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta http-equiv="Content-Language" content="en-us">
+ <title>Assigning a Process ID Using VB Script Processes</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ 
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+  <meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>
+	Assigning a Process ID Using VB Script Processes</h1>
+ <div align="left">
+   <table border="0" cellspacing="3" cellpadding="3" width="100%">
+     <tr>
+       <td valign="top"><img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+       <td valign="top">With the help 
+		<a name="ix-VB script:process identifier;process identifier:assigning">
+		</a>of a Process ID (Process Identifier), 
+		processes can be uniquely identified. This function is optional. The 
+		assigned Process ID must be unique, and can only be assigned once in a 
+		process.
+		<p>In this chapter you will find out which settings must be executed, in 
+		order to assign a process a Process ID using a VB-Script. Structuring 
+		and content of the VB-Script is not the subject of this description. The 
+		VB-Script is created by the user according to company guidelines. </p>
+		<p>A Process ID can be assigned to a process using VB-Script, if the 
+		following functions are executed in the DPM - Process &amp; Resource Definition 
+		workbench: </p>
+		<ul>
+			<li>Insert Activity
+     <img border="0" src="b35doc/english/online/icons_C2/images/I_DNBAddActivityP2.gif" width="24" height="24"></li>
+			<li>Reparent Activity
+     <img border="0" src="b35doc/english/online/icons_C2/images/I_DNBReparentActivityP2.gif" width="24" height="24"></li>
+			<li>Cut/Copy/Paste &amp; Drag/Drop of activities</li>
+		</ul>
+		<p>You need to make the following settings: </p>
+		<ol class="task">
+			<li>
+			<p class="task">Select <kbd>Tools &gt; Options &gt; Digital Process for 
+			Manufacturing &gt; Libraries.</kbd> </li>
+			<li>
+			<p class="task">To assign the VB-Script click on the Browse button.
+			</li>
+			<li>
+			<p class="task">Click on Ensure unique ID among siblings.<br>
+			<br>
+&nbsp;<img border="1" src="b35doc/english/online/cfyugactmgmt_c2/images/cuDpmLibraryProcIDNLS.gif" width="470" height="83"></li>
+			<li>
+			<p class="task">Click OK. After you have set the options, the 
+			process is assigned a unique Process ID, when the previously 
+			mentioned functions are executed</li>
+		</ol>
+		<ul>
+			<li>In the example it is Process ID Act10.1.</li>
+		</ul>
+		<p>
+		<img border="1" src="b35doc/english/online/cfyugactmgmt_c2/images/dbpropertiesprocessNLS.gif" width="520" height="173"></p>
+		</td>
+     </tr>
+     <tr>
+       <td valign="top">
+       <h4>&nbsp;</h4>
+       </td>
+       <td valign="top">
+       <h4>Important note for structuring of VB Scripts</h4>
+		<p>Customer site administrator can choose a VB script<a name="ix-VB script:structure"></a>, which implements 
+		the site-specific process ID generation algorithm based on the 
+		respective business processes/conventions. The input to the script will 
+		be as follows. </p>
+		<ul>
+			<li>Handle to the Activity impacted ( For ex: Activity that is being 
+			created or being moved ) </li>
+		</ul>
+		<p>The script will contain following functions that are invoked 
+		appropriately based on the context in which they are called. Note that 
+		the Function name(s) are &#8220;Keywords&#8221; and should not be changed at the 
+		customer site. This essentially means that the customer should simply 
+		implement the following functions in a VB script, which will be defined 
+		in the Tools&gt;Options as mentioned above. <br>
+&nbsp;</p>
+		<table border="1" width="63%" id="table1">
+			<tr>
+				<td><code>Function OnActivityCreate (iActImpacted)
+				</code>
+				<p><code>Dim iAct As Activity </code></p>
+				<p><code>Set iAct = iActImpacted </code></p>
+				<p><code>... </code></p>
+				<p><code>... </code></p>
+				<p><code>End Function Function OnActivityMove (iActImpacted)
+				</code></p>
+				<p><code>Dim iAct As Activity </code></p>
+				<p><code>Set iAct = iActImpacted </code></p>
+				<p><code>... </code></p>
+				<p><code>... </code></p>
+				<p><code>End Function </code></td>
+			</tr>
+		</table>
+       </td>
+     </tr>
+     <tr>
+       <td valign="top"></td>
+       <td valign="top">
+       <h4>Example <a name="ix-VB script:example"></a>for VB-Script</h4>
+		<p>&nbsp;</p>
+		<table border="3" width="100%" id="table2">
+			<tr>
+				<td height="1431">
+				<code>'=================================================================================</code><p>
+				<code>'COPYRIGHT DASSAULT SYSTEMES 2006 </code> </p>
+				<p><code>' </code> </p>
+				<p><code>'Jan 2006 User Exit for Process ID Generation - Sample VB 
+				script GNY ' 
+				'====================================================================================</code></p>
+				<p><code>'Usage Notes: This is a sample script provided with the 
+				Software. Customers can modify body </code> </p>
+				<p><code>'of the functions in this script in order to implement their 
+				site specific algorithm to generate </code> </p>
+				<p><code>'process identifier. Also customers can choose to create 
+				another script file with the function 'names(OnActivityCreate, 
+				OnActivityMove) to implement their naming convention for process 
+				identifer </code> </p>
+				<p><code>' </code> </p>
+				<p><code>'NOTE THAT THE FUNCTION NAMES ARE KEYWORDS AND SHOULD NOT BE 
+				CHANGED IN THE IMPLEMENTATION AT </code> </p>
+				<p><code>'THE CUSTOMER SITE. </code> </p>
+				<p>'<code> </code> </p>
+				<p><code>'The absolute path of the script file needs to be defined at 
+				Tools&gt;Options&gt;Library tab page. </code> </p>
+				<p><code>'Note that this can be done only by the site 
+				administrator. 
+				'====================================================================================== 
+				'======================================================================================
+				</code></p>
+				<p><code>'OnActivityCreate() implementation will be called at the time 
+				of activity creation. Thus, it will get </code> </p>
+				<p><code>'called as a post action to the following operations 
+				</code> </p>
+				<p><code>'Insert Activity command </code> </p>
+				<p><code>'Insert Assembly Activity or BIW Activity command 
+				</code> </p>
+				<p><code>'Cut/Copy/Paste &amp; Drag/Drop of one activity to another 
+				'=====================================================================================</code></p>
+				<p><code>Function OnActivityCreate( iAct ) </code> </p>
+				<p><code>Dim impAct As Activity </code> </p>
+				<p><code>Set impAct = iAct </code> </p>
+				<p><code>'Catia.SystemService.Print &quot;Activity Label-OnActivityCreate - 
+				iAct: &quot; &amp; iAct.Name </code> </p>
+				<p><code>OnActivityCreate = iAct.Name End Function 
+				'=======================================================================================</code></p>
+				<p><code>'OnActivityMove() implementation will be called only at the 
+				time of reparenting an existing activity. </code> </p>
+				<p><code>'Thus, it will get called as a post action to the execution 
+				of Reparent activity command. 
+				'========================================================================================</code></p>
+				<p><code>Function OnActivityMove( iAct ) </code> </p>
+				<p><code>Dim impAct As Activity </code> </p>
+				<p><code>Set impAct = iAct </code> </p>
+				<p><code>'Catia.SystemService.Print &quot;Activity Label-OnActivityMove - 
+				iAct: &quot; &amp; iAct.Name </code> </p>
+				<p><code>OnActivityMove= iAct.Name </code> </p>
+				<p><code>End Function </code> </td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+		</table>
+       </td>
+     </tr>
+     </table>
+ </div>
+ <p align="center">&nbsp;<img src="b35doc/english/online/icons_C2/common/aendtask.gif" title="aendtask.gif (1477 bytes)" width="64" height="32"></p>
+
+ </body>
+
+</html>
+
+

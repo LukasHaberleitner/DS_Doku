@@ -1,0 +1,166 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2">
+ <meta HTTP-EQUIV="Content-Language" CONTENT="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Updating the Database to Use 3D Live Functionalities</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+<link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Theme" content="none, default">
+<meta name="Microsoft Border" content="none, default">
+</head>
+
+ <body>
+
+ <h1>Updating the Database to Use 3D Live Functionalities</h1>
+ <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="117%" id="AutoNumber2" height="103">
+   <tr>
+     <td width="5%" height="43" valign="top">
+       <img border="0" src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td width="95%" height="43">
+		<h2>Concept</h2>
+		</td>
+   </tr>
+   <tr>
+     <td width="5%" height="43" valign="top">
+     &nbsp;</td>
+     <td width="95%" height="43">
+		<p>Using the <kbd>SmarTeam 3D Live Open In Catia</kbd> functionality, a 3D Live user can load specific parts/products from an assembly in a CATIA session. In order to work, the instances information of the assembly must be stored in the SmarTeam 
+		database.
+		After the information is stored, CATIA can provide SmarTeam with this information when saving an assembly. However, the 
+		instances information of assemblies that were already saved in SmarTeam 
+		with previous releases is not stored.
+This functionality provides a tool to save the instances information of several CATIA products selected in SmarTeam by the user. 
+		The tool may be automated to run on the entire database.
+</p>
+<p>For each CATIA Product selected by the user in SmarTeam, the links between the corresponding <kbd>CATDocument</kbd> file and its children are updated with the instances information (instance name + positioning matrix + instance activity). The pre-existing information already stored in SmarTeam before the operation on this item remains unchanged.</p><p>The process eventually goes on through the item&#8217;s children if 
+		this operation is specified when the operation is launched.</p><p>Before 
+		the implementation of this 
+		functionality, the user had to manually check out the assembly from 
+		SmarTeam, open it in CATIA, make a modification and save it again to 
+		store the instances information. This functionality allows: <ul><li>Automation of this process</li><li>
+			Process of several assemblies in one loop</li></ul></p></td>
+   </tr>
+   <tr>
+     <td width="5%" height="44" valign="top">
+       <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="95%" height="44">
+     <h2>Procedure</h2>
+     <p>In order to implement this functionality the following steps must be performed:</p>
+     <ul><li><a href="#Add_the_function_to_the_contextual_menu">Add the function to the contextual menu</a></li>
+     <li><a href="#Set_the_environment">Set the environment</a></li>
+     <li><a href="#Run_the_script">Run the script</a></li>
+     </ul>
+     
+				
+		
+		
+				
+			
+				
+				</tr>
+   <tr>
+     <td width="5%" height="44" valign="top">
+   <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="95%" height="44">
+     <h2><a name="Add_the_function_to_the_contextual_menu">Add the function to the contextual menu</a></h2>
+     <p>To run the batch, add the script to the SmarTeam User Defined Tools Menu 
+		as described below. This operation has to be done 
+		only the first time the script is run:</p>
+     <ol><li>In the SmarTeam Script Maintenance tool, select <kbd>CATIA Product</kbd> from the <kbd>Documents</kbd> class. In the right pane, open the <kbd>User Defined</kbd> tab.</li>
+     <li>In the Operation column add a key: <kbd>Save Instances</kbd>.<br>
+     <img src="b35doc/english/online/td1ug_c2/images/script_maintenance2.gif" width="617" height="491"></li>
+     <li>Double-click in the <kbd>Function Name</kbd> cell of the <kbd>Save Instances</kbd> operation. The Script Browser window opens.</li>
+     <li>In the <kbd>File Name</kbd> column, select <kbd>SaveInstances.bs</kbd>.</li><li>In the <kbd>Functions</kbd> column, select <kbd>SaveInstances</kbd>.<br>
+     <img border="0" src="b35doc/english/online/td1ug_c2/images/script_browser.gif" width="611" height="448"></li>
+     <li>After clicking OK, the <kbd>SaveInstance</kbd> script is hooked to the database.</li>
+     	</ol>
+     	<tr>
+     <td width="5%" height="44" valign="top">
+  <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="95%" height="44">
+     <h2><a name="Set_the_environment">Set the environment</a></h2><tr>
+     <td width="5%" height="44" valign="top">
+      &nbsp;</td>
+     <td width="95%" height="44">
+     To allow the storing of the <b>instance information</b> (name + position matrix) in SmarTeam:
+     <ol><li>Launch the SmarTeam System Configuration Editor (see the SmarTeam - 
+		Foundation Administration Guide for details).</li>
+		<li>Search for the CATIA application.</li>
+		<li>Set the key <b>
+		<a href="page14018.html#ix-setting:CATIA.SaveInstanceData">CATIA.SaveInstanceData</a></b> to <b>TRUE</b>.</li>
+		<li>Click the <kbd>Save Changes</kbd> button to confirm the changes.</li>
+		
+		</ol>
+	<tr>
+     <td width="5%" height="44" valign="top">
+      <img border="0" src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="95%" height="44">
+     <h2><a name="Run_the_script">Run the script</a></h2>
+	</tr>
+	<tr>
+     <td width="5%" height="44" valign="top">
+      &nbsp;</td>
+     <td width="95%" height="44">
+     <p><b>Prerequisites</b></p><ul><li>CATIA must be running. 
+		If CATIA is not started, the following error message appear and the 
+		script will exit:<br><img border="0" src="b35doc/english/online/td1ug_c2/images/save_instances.gif" width="267" height="116"></li>
+		 <li>The CATIA version must be V5R19 SP2 or above. If this is not the 
+			case, the following error message appear and the script will exit:<br>
+			<img border="0" src="b35doc/english/online/td1ug_c2/images/save_instances2.gif" width="399" height="112"></li>
+			<li>If CATIA is not connected to SmarTeam, the batch will handle this (using the currently running SmarTeam session).<br>
+			&nbsp;</li></ul>
+			<p>To run the script:</p><ol>
+			<li>Select the checked in CATIA Products whose instances information you want to save.</li>
+			<li>Right-click to open the contextual menu, and then select <kbd>User Defined Tools> Save Instances</kbd>.<br>
+			<img src="b35doc/english/online/td1ug_c2/images/catia_product.gif" width="615" height="575"><br>
+			A prompt appears asking whether or not to propagate the operation on to the items children.<br><img src="b35doc/english/online/td1ug_c2/images/save_instances3.gif" width="243" height="111"></li>
+			<li>Click <kbd>Yes</kbd> to propagate or <kbd>No</kbd> to save the instances of the selected CATIA Product only.<br>
+			&nbsp;</li>
+			<li>
+			If CATIA is not connected to SmarTeam, the batch connects CATIA to 
+			SmarTeam.<br>
+			<img src="b35doc/english/online/td1ug_c2/images/connect_catia.gif" width="196" height="40"></li>
+			<li> The batch then creates a temporary directory named
+			<kbd>BatchTemp</kbd> inside the user's temporary directory (the 
+			directory is deleted if it already exists). <br>This is where the CATIA products will be 
+			copied from the vault.<br>
+			<li>The process browses each selected CATIA Product and adds it to 
+			the list of items to process. During processing, the following 
+			message appears:<br><img border="0" src="b35doc/english/online/td1ug_c2/images/progress_bar.gif" width="258" height="108"></li>
+			<li>During the next stage in the process, the following message appears:<br><img src="b35doc/english/online/td1ug_c2/images/progress_bar2.gif" width="263" height="106">
+			<p><b>Note:</b> Clicking <kbd>Cancel</kbd> at this point stops the process, 
+			but the process cannot be undone for all items that have already 
+			been processed.</p>
+			<p>After the operation has finished, the following message appears:</p><br>
+			<img src="b35doc/english/online/td1ug_c2/images/save_instances4.gif" width="169" height="97"></ol>
+	</table>
+		
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <p align="center">
+  <img border="0" src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+ 
+
+</html>
+

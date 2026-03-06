@@ -1,0 +1,127 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <meta NAME="GENERATOR" CONTENT="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <title>Collision-Free Multi-Axis Helix Machining</title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ </head>
+
+ <body>
+
+ <h1>Collision-Free Multi-Axis Helix Machining</h1>
+ <p>The following procedure explains how to produce a collision-free tool path 
+ when you use Multi-Axis Helix Machining in Interpolation mode. In this example, 
+ it describes an iterative process for machining a <a href="page0379.html#glblisk">
+ blisk</a> blade while avoiding collisions with neighboring blades.</p>
+ <p>The stages of this procedure are:</p>
+ <ul>
+   <li><a href="#s1">Initial selections and settings</a></li>
+   <li><a href="#s2">Selecting the interpolation axes and first replay</a></li>
+   <li><a href="#s3">Collision checking with the part</a></li>
+   <li><a href="#s4">Collision checking with the neighboring blades</a>.</li>
+ </ul>
+ <p><img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelixPart01.gif" width="555" height="384"></p>
+ <p>A user scenario of this procedure is provided in the section
+ <a href="page0373.html">Create a Multi-Axis Helix Machining Operation in 
+ Interpolation Mode</a>. More information about Multi-Axis Helix Machining is 
+ provided in the <a href="page0392.html">Reference</a> section.</p>
+ <h2><a name="s1"></a>Initial Selections and Settings </h2>
+ <h5><b>Geometry</b></h5>
+ <p>In the <kbd>Geometry</kbd> tab of the machining operation editor, define the necessary 
+ geometry: </p>
+ <ul>
+   <li>Part elements: the front face, the back face, the leading face, and the 
+   trailing face.<br>
+   The selected faces must be continuous in tangency in order to ensure good 
+   quality tool paths. </li>
+   <li>Four limiting curves: upper closed contour, lower closed contour, leading 
+   edge, and trailing edge.<br>
+   Selected curves must lie on faces.</li>
+   <li>Entry or exit point of the helix. </li>
+ </ul>
+ <p>However, at this stage<b> </b>do not select any check elements and make sure 
+ that the collision checking option is deactivated in the <kbd>Part</kbd> tab.</p>
+ <h5><b>Tool</b></h5>
+ <p>In the <kbd>Tool</kbd>&nbsp; tab of the machining operation editor, select an 
+ appropriate tool for the geometry to be machined (for example, a conical 
+ ball-ended mill tool).</p>
+ <h5><b>Machining Parameters</b></h5>
+ <p>In the <kbd>Strategy</kbd> tab of the machining operation editor, set the tool axis 
+ mode to Interpolation and set the other parameters (number of turns, and so 
+ on). </p>
+ <h2><a name="s2"></a>Selecting the Interpolation Axes and First Replay</h2>
+ <p>Four interpolation axes are proposed by default at the following 
+ intersection points:</p>
+ <ul>
+   <li>between the upper contour and the leading edge</li>
+   <li>between the lower contour and the leading edge</li>
+   <li>between the upper contour and the trailing edge</li>
+   <li>between the lower contour and the trailing edge.</li>
+ </ul>
+ <p>You can adjust the orientation of each of the default axes.</p>
+ <p><img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelix18NLS.gif" width="202" height="264"></p>
+ <p>Replay the tool path to verify that the tool can be positioned at each point 
+ on the trajectory. If the tool cannot be positioned at each point on the 
+ trajectory, you may need to adjust the default axes and/or insert additional 
+ interpolation axes. You can insert any number additional axes on the faces of 
+ the blade.</p>
+ <p>Note that interpolation axes are applied at contact points on the 
+ trajectory. The application point of an interpolation axis must be on a 
+ selected face. If the point is not on a selected face, it will be projected 
+ onto the part. This may give undesirable results. Remember also that points 
+ created on the fly are not associative, so it is best to avoid creating points 
+ in this way.</p>
+ <p>You may need to adjust the orientation of the additional axes.</p>
+ <p>Replay the tool path to verify that the tool can be positioned at each point 
+ on the trajectory. <br>
+ The collision checking options are deactivated in the <kbd>Geometry</kbd> tab of the 
+ machining operation editor, so this replay is done with no collision check.</p>
+ <p>If the tool cannot be positioned at each point on the trajectory, adjust the 
+ interpolation axes until this criteria is satisfied.<br>
+ If the tool can be positioned at each point on the trajectory, you can move 
+ onto the next stage: collision checking with the part. </p>
+ <h2><a name="s3"></a>Collision Checking with the Part</h2>
+ <p>Activate <kbd>collision checking</kbd> between the part and the tool assembly in the 
+ <kbd>Geometry</kbd> tab of the <kbd>machining operation</kbd> editor.</p>
+ <p><img border="1" src="b35doc/english/online/amgug_c2/images/dbCollCheck01NLS.gif" width="318" height="160"></p>
+ <p>Replay the tool path to check for collisions. At this stage, since there are 
+ no selected check elements, collision checking is on the part elements only.</p>
+ <p>If there are collisions detected with the part, adjust the interpolation 
+ axes until the tool path is collision free.<br>
+ If there are no collisions, you can move onto the next stage: collision 
+ checking with neighboring blades.</p>
+ <h2><a name="s4"></a>Collision Checking with the Neighboring Blades</h2>
+ <p>In the <kbd>Geometry</kbd> tab of the machining operation editor select check elements 
+ as follows:</p>
+ <ul>
+   <li>select the back face of the blade just in front of the blisk blade being 
+   machined</li>
+   <li>select the front face of the blade just behind the blisk blade being 
+   machined.</li>
+ </ul>
+ <p>Replay the tool path to check for collisions. Now, the program checks for 
+ collisions between the tool assembly and the part and check elements.</p>
+ <p>If there are collisions detected, adjust the interpolation axes until the 
+ tool path is collision free.<br>
+ If there are no collisions, you can save the <kbd>Multi-Axis Helix Machining</kbd> 
+ operation.</p>
+ <p>The left-hand figure below show an example of the default and additional 
+ interpolation axes necessary to obtain the collision-free trajectory 
+ illustrated in the right-hand figure.</p>
+ <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber1">
+   <tr>
+     <td width="50%"><img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelix17NLS.gif" width="413" height="545"></td>
+     <td width="50%">&nbsp;</td>
+     <td width="50%"><img border="1" src="b35doc/english/online/amgug_c2/images/AmgHelix16NLS.gif" width="340" height="509"></td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

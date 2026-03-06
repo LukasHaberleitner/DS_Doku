@@ -1,0 +1,260 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2D2">
+ <meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Analyzing and Resolving Over-Constrained or Inconsistent Sketches
+ </title>
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="docCompliance" content="v 0.95; Fri Nov 18 12:50:21 2005">
+ </head>
+
+ <body>
+
+ <h1>Analyzing and Resolving Over-Constrained or Inconsistent Sketches
+ <a name="ix-over-constrained sketches, analyzing"></a>
+ <a name="ix-inconsistent, sketch;sketch::inconsistent"></a>
+ <a name="hj-overview"></a>&nbsp;</h1>
+ <table border="0" cellpadding="5" cellspacing="0" id="AutoNumber1" width="783">
+   <tr>
+     <td colspan="2" width="0" valign="top" align="Default">In evaluating geometry, the system considers the degree of freedom that 
+     it has. In two dimensions, points and lines have two degrees of freedom, 
+     circles have three and ellipses have five degrees of freedom. Fixed 
+     geometry will never be moved by the system, and has no degree of freedom.<p>
+     If all of the degrees of freedom of a geometry have been taken up by a 
+     consistent combination of dimensions and fixed geometry, that geometry is 
+     said to be iso-constrained (also known as well-defined). Geometry that 
+     still has some degrees of freedom is said to be under-constrained (also 
+     known as under-defined).</p>
+     <p>Status codes are given through a graphical way (colors) during the 
+     Sketch edition. The update error dialog box when returning in 3D explicitly 
+     gives them (check visualization of diagnosis in <kbd>Tools &gt; Options &gt; 
+     Sketcher &gt; Colors</kbd>). </p>
+     <p>Note that:</p>
+     <ul>
+       <li>The system will mark all entities that are relevant to a problem 
+       rather than just the first item encountered. So, for instance, in the 
+       case of an inconsistent triangle with sides 10, 10 and 50, all three 
+       dimensions would be marked as INCONSISTENT.</li>
+       <li>The order in which the codes are listed below is significant. The status of the first OVER-CONSTRAINED or INCONSISTENT geometry encountered defines the solving status of the sketch.</li>
+     </ul>
+     <p>This chapter describes the over-constrained and inconsistent status 
+     codes calculated by the system and explain methods for solving any 
+     underlying problems with a Sketch.</td>
+   </tr>
+   <tr>
+     <td colspan="2" width="0" valign="top" align="Default">You will find the following information:<ul>
+       <li><a href="#hj-Over-constrained">Over-constrained</a></li>
+       <li><a href="#hj-Resolving Over-constrained Cases">Resolving 
+       Over-constrained Cases</a></li>
+       <li><a href="#hj-Inconsistent">Inconsistent</a></li>
+       <li><a href="#hj-Resolving Inconsistent Cases">Resolving Inconsistent 
+       Cases</a></li>
+       <li><a href="#hj-Not Changed">Not Changed</a></li>
+       <li><a href="#hj-Parametric Curves">Parametric Curves</a></li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td colspan="2" width="0" valign="top" align="Default">
+     <h2>Over-constrained<a name="hj-Over-constrained"></a></h2>
+     <p>In many sketches, the user will specify more than the minimum required 
+     number of dimensions or constraints. In certain cases the system will 
+     ignore redundant constraints and solve the Sketch. In other cases it will 
+     mark parts of the Sketch as over-constrained.</p>
+     <p>The descriptions below refer to consistent constraints and dimensions. 
+     Dimensions are said to be consistent if their values are satisfied by the 
+     position of the geometries.</p>
+     <p>Geometry will be marked as over-constrained when it cannot be solved 
+     because there are too many dimensions acting on it for the degrees of 
+     freedom available.</p>
+     <p>A dimension will be marked as over-dimensioned if it conflicts with one 
+     or more other dimensions and it is not possible to vary the value of the 
+     dimension and still find a consistent solution. For example, the geometry 
+     and dimensions in the figure below will be over-constrained because the 
+     dimension values cannot be varied independently, even though they can all 
+     be satisfied by appropriate geometry positions. </td>
+   </tr>
+   <tr>
+     <td colspan="2" width="0" valign="top" align="Default"><img border="0" src="b35doc/english/online/dysug_c2/images/solving01.gif" width="674" height="275"></td>
+   </tr>
+   <tr>
+     <td colspan="2" width="0" valign="top" align="Default">However, the system is able to cope with certain over-constrained 
+     situations involving logical constraints. This is important because logical 
+     constraints such as parallelism are likely to be over-specified when a 
+     design is being built up interactively. For example, if two lines are 
+     defined to be parallel and then a distance is subsequently given between 
+     them the parallelism is then specified twice.<p>The following is a list of 
+     some of the over-constrained configurations that can be solved:</p>
+     <ul>
+       <li>Multiple constraints between the same geometries.<br>
+       For instance, two circles can have several tangent constraints between 
+       them.</li>
+       <li>Multiple coincident constraints between geometries of the same type.<br>
+       For instance, three points can each be made coincident to the other two.</li>
+       <li>Multiple coincident constraints between lines and points.<br>
+       For instance, two lines can be made coincident, and their endpoints can 
+       be made coincident with the other line.</li>
+     </ul>
+     <p>Parallel and perpendicular constraints. Any combination of parallel and 
+     perpendicular constraints will be reduced to the minimum set required, and 
+     any excess ones will be ignored. Note that a distance dimension between two 
+     lines is treated as a parallel constraint, except that it will never be one 
+     of the constraints that is ignored.</p>
+     <p>Symmetric constraints . There are many configurations where symmetric 
+     constraints will make other constraints redundant. These are recognized by 
+     the system. For example, if two lines are made symmetric two of the 
+     coincidence constraints between the points and the lines are redundant.</td>
+   </tr>
+   <tr>
+     <td colspan="2" width="0" valign="top" align="Default">
+     <h2>Resolving Over-constrained Cases<a name="hj-Resolving Over-constrained Cases"></a></h2>
+     <p>Over-constrained entities occur in loops where all of the entities in a 
+     loop conflict with each other.</p>
+     <p>Over-constrained entities can also occur when there are too many fixed 
+     geometries.</p>
+     <p>To resolve over-constrained problems, the user will need to:</p>
+     <ul>
+       <li>Set as references dimensions</li>
+       <li>Deactivate or remove constraints</li>
+       <li>Unfix geometry</li>
+     </ul>
+     <p>Note that the system will evaluate as much of the geometry as possible. 
+     It determines exactly which dimensions are contributing to the situation.</td>
+   </tr>
+   <tr>
+     <td colspan="2" width="0" valign="top" align="Default">
+     <h2>Inconsistent<a name="hj-Inconsistent"></a></h2>
+     <p>This section describes when the inconsistent status codes can occur and 
+     how you can modify the Sketch to avoid them.</p>
+     <p>In general, the inconsistent status shows that the user is attempting to 
+     make a change to the Sketch that is too large. In this context, &quot;large&quot; is 
+     relative to the size of the Sketch.</p>
+     <p>Parts of a Sketch may become inconsistent as a result of a number of 
+     different operations.</p>
+     <p>The most common of these are as follows:</p>
+     <ul>
+       <li>The user changes the value of a dimension. This will normally occur 
+       for cases where there would be large changes to one or more geometries.</li>
+       <li>The user adds a dimension or constraint to a Sketch, in order to move 
+       geometry.</li>
+       <li>When dragging geometries, the user attempts to input a large 
+       transformation.</li>
+       <li>When the geometric type of a use-edge is changed (geometry coming 
+       from the projection or intersection of a 3D geometry)</li>
+       <li>When there are use-edge large positions or orientations changes.</li>
+		<li>When an element of a geometry is deleted (especially in conic 
+		curves, connecting curves, spline offsets).<br>
+&nbsp;</li>
+     </ul>
+     <p>The geometry has not been solved because:</p>
+     <ul>
+       <li>No solution exists for the current values of dimensions.</li>
+       <li>The system cannot find a solution, even though a solution may exist 
+       with the current values of dimensions. This occurs when trying to make 
+       large changes to under-constrained sketches or to parametric curves (See 
+       section Over-constrained and Inconsistent on Parametric Curves below for 
+       further details).</li>
+       <li>The system has not find a solution that respects the previous 
+       chirality.</li>
+     </ul>
+     <p>Chirality determines the way that geometry is positioned relative to the 
+     geometries to which it is dimensioned. A dimensioning scheme can often be 
+     satisfied by a number of different configurations. The system will always 
+     evaluate a new configuration that has the same chirality as the original 
+     geometry. It is important to realize that geometry in the system always has 
+     an original configuration, which is used for deciding the chirality.</td>
+   </tr>
+   <tr>
+     <td width="32" valign="top" align="Default">
+     <img src="b35doc/english/online/icons_C2/common/ainfo.gif" width="32" height="32"></td>
+     <td width="731">
+     <ul>
+		<li>If a sketch contains inconsistent geometry, you cannot drag the 
+		geometry, nor change it in any way.</li>
+		<li>When a sketch is inconsistent, it may contain unresolved constraints 
+		(non-verified geometrical constraints). Make sure all the 
+		inconsistencies in the sketch are resolved before going any further.</li>
+		</ul>
+		</td>
+   </tr>
+   <tr>
+     <td colspan="2" width="0" valign="top" align="Default">
+     <h2>Resolving Inconsistent Cases<a name="hj-Resolving Inconsistent Cases"></a></h2>
+     <p>If the inconsistent status code was a result of changing a dimension 
+     value, the problem will be resolved by changing the dimension back to its 
+     old value. However, in some cases the user may want to modify other parts 
+     of the Sketch to allow the change to be made. The following sections 
+     describe different ways that can be tried.</p>
+     <p>When attempting to solve a problem, the user should focus on the 
+     geometries and dimensions in the Sketch with the inconsistent status code.</p>
+     <p>In order to decide how to avoid the status code it is useful to check 
+     first if the problem comes from inconsistent dimensions.</p>
+     <p>An example of this is a triangle with sides of length 50, 50 and 120.</td>
+   </tr>
+   <tr>
+     <td colspan="2" width="0" valign="top" align="Default"><img border="0" src="b35doc/english/online/dysug_c2/images/solving02.gif" width="424" height="164"></td>
+   </tr>
+   <tr>
+     <td colspan="2" width="0" valign="top" align="Default">
+     <h2>Not Changed<a name="hj-Not Changed"></a></h2>
+     </td>
+   </tr>
+   <tr>
+     <td colspan="2" width="0" valign="top" align="Default">The not changed status is used in the following cases:<ul>
+       <li>When geometry becomes over-constrained or inconsistent, the system 
+       will not be able to position any other geometries that depend on it. 
+       These dependent geometries and their associated dimensions (and any 
+       others that depend on them) will be marked not changed.</li>
+       <li>Dimensions between two fixed geometry will be given the status code 
+       not changed.</li>
+       <li>Dimension between two free or one free and one fixed geometry in the 
+       same set will be given the status code not changed.</li>
+     </ul>
+     </td>
+   </tr>
+   <tr>
+     <td colspan="2" width="0" valign="top" align="Default">
+     <h2>Parametric Curves<a name="hj-Parametric Curves"></a></h2>
+     <p>This section is an overview of specific over-constrained and 
+     inconsistent problems on parametric curves. The Sketcher can manipulate 
+     points, lines, circles and ellipses but can also manage splines and nurbs.</p>
+     <p>These parametric curves can be created:</p>
+     <ul>
+       <li>Through an Intersection or Projection of a 3D geometry in the Sketch. 
+       After isolating it, constraint can be used to change the position of the 
+       curve. The system is unable to directly modify the shape because the 
+       curve, which have no internal freedoms that the system can control, have 
+       only three degrees of freedom.</li>
+       <li>By the Spline command. The curve is defined from other geometries. 
+       The parametric curve is said dependent. It is constructed so it passes 
+       through a series of control points.</li>
+     </ul>
+     <p>Constraints and dimensions can be added between a dependent parametric 
+     curve and other geometries in the sketch.</p>
+     <p>Solving problems will occur:</p>
+     <ul>
+       <li>If the position of the defining geometry depends upon the position of 
+       the parametric curve, either directly or indirectly.</li>
+       <li>When the other geometry of the constraint or dimension is an other 
+       parametric curve or dependent parametric curve.</li>
+     </ul>
+     <p>Always use the Constraint command without dialog box to specify where 
+     the constraint must be created on the curve . Through the <kbd>Constraint 
+     Defines in Dialog Box</kbd> command, the selection points are not taken 
+     into account.</p>
+     <p>On fully under-constrained sketches, the system can have difficulty 
+     choosing between changing the shape and/or moving its defining geometry 
+     especially when it supposes to make large changes. Moving the geometry will 
+     help the system find a consistent solution in that case. </td>
+   </tr>
+ </table>
+
+ </body>
+
+</html>
+

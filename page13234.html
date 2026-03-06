@@ -1,0 +1,1927 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en"><html>
+
+ <head>
+ <meta name="MonocodingType" content="0">
+ <meta name="MonocodingFlag" content="C2E2">
+ <meta http-equiv="Content-Language" content="en-us">
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <title>Automating Reconcilications Using the CATStiReconcileBatch Tool</title>
+ <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+ <meta name="ProgId" content="FrontPage.Editor.Document">
+ <link rel="stylesheet" type="text/css" href="b35doc/english/online/icons_C2/dsdoc.css">
+ <meta name="Microsoft Border" content="none">
+	
+</head>
+
+ <body>
+
+ <h1>
+ Automating 
+	Reconciliations Using 
+ the CATPDMReconcileSTBatch Tool</h1>
+ <table Border="0" CELLSPACING="0" valign="top" width="100%" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0">
+   <tr valign="top" BORDER="0">
+     <td width="32">
+     <img src="b35doc/english/online/icons_C2/common/atarget.gif" width="32" height="32"></td>
+     <td width="100%">In this page, you will find information about how to automate 
+     the reconciliation process. The method described here is particularly 
+     recommended for large assemblies. It allows you to gain a considerable 
+     amount of time.<p>Two scenarios are described:</p>
+     <ul>
+       <li><a href="#hj-running">Running CATPDMReconcileSTBatch </a></li>
+       <li><a href="#hj-reusing">Reusing the Same Reconciliation Batch Process</a></li>
+     </ul>
+     <p class="MsoNormal">You can launch a reconciliation process via <b><kbd>
+     CATPDMReconcileSTBatch</kbd>.</b> The entire process will be automatic. It 
+     uses a particular syntax. The basic syntax must include:</p>
+     <ul>
+       <li>List of file names of the root documents (giving a list a file names 
+       is equivalent to launch interactively the reconciliation command from
+       <kbd>File &gt; Desk</kbd>). </li>
+       <li>Rules to be applied on each document.&nbsp; </li>
+       <li>SmarTeam user name and password for connection.</li>
+     </ul>
+     <p></p>
+     <p>The batch process uses as input the root of the assembly on which the 
+     reconciliation will be done.</td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td width="32">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="100%">
+     <h2><a name="hj-running"></a>Running CATPDMReconcileSTBatch</h2>
+     <p>As a reminder, when running batches, you must always use the
+     <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+     catstart </kbd>command
+     <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+     </kbd>to set the global environment (for more details, see the <i>
+     Infrastructure Guide, Basic Tasks, Starting a Session on Windows</i>). </p>
+     <p class="MsoNormal">e.g. in a MS-DOS window: </p>
+     <ol class="task">
+       <li>
+       <p class="task">Change to the default folder in which the product is 
+       installed. The default folder is: <br>
+       <code style="font-family: Courier New; color: #976970">C:\Program 
+       Files\Dassault Systemes\B17\intel_a\code\bin </code></li>
+       <li>
+       <p class="task">Set the global environment. <br>
+       <code style="font-family: Courier New; color: #976970">catstart -env 
+       CATIAR17 -direnv D:\CATIAEnv </code></li>
+       <li>
+       <p class="task">Start the reconcile batch <br>
+       <code style="font-family: Courier New; color: #976970">
+       CATPDMReconcileSTBatch -user -joe -file &quot;E:\BatchReconile\RootProduct.CATProduct&quot; 
+       -simul Rule </code></li>
+     </ol>
+     <h3>Syntax</h3>
+     <p>The syntax to be used is the following:</p>
+     <p><code>CATPDMReconcileSTBatch -user xxx [-pwd xxx] <blink>[-spwd xxx]</blink> -file filename [-simul 
+     (Execute|Rule|NoRule)] [-reload docname] [-keepExternal docname] [-newFrom 
+		object] [-inxml 
+     filename] [-completeWithDefaultMapping] [-epexml fileName] [-queryName 
+     queryname][-autoPreselect] [-noCheckout] [-xml filename] [-checkDoc 
+     numberOfDocs] [-outputFileList filename]</code></p>
+     <p><b>Note:</b> &quot;filename&quot; stands for the document path and &quot;docname&quot; for the 
+		document name.</p>
+		<p>As described in the following table, all parameters are not required. 
+     The parameters can be written in any order. In case of missing, wrong of 
+     conflicting parameters, an error message is contained in the trace file 
+     (see <a href="#hj-diagnostics">Diagnostics</a>).</p>
+     <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber4" width="702" height="304">
+       <tr>
+         <td width="214" bgcolor="#E0E0E0" height="38" align="center"><b>
+         Parameter</b></td>
+         <td width="325" bgcolor="#E0E0E0" height="38" align="center"><b>
+         Description </b></td>
+         <td width="160" bgcolor="#E0E0E0" height="38" align="center"><b>
+         Mandatory/Optional</b></td>
+       </tr>
+       <tr>
+         <td width="214" height="37" valign="top">-<b>help</b></td>
+         <td width="325" height="37">Help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         </td>
+         <td width="160" height="37">optional </td>
+       </tr>
+       <tr>
+         <td width="214" height="52" bgcolor="#F2F2F2" valign="top">-<b>user</b> 
+         xxx</td>
+         <td width="325" height="52" bgcolor="#F2F2F2">User for SmarTeam 
+         connection. </td>
+         <td width="160" height="52" bgcolor="#F2F2F2">mandatory </td>
+       </tr>
+       <tr>
+         <td width="214" height="16" valign="top">-<b>pwd</b>
+         <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+         xxx </kbd></td>
+         <td width="325" height="16">User password for SmarTeam connection. </td>
+         <td width="160" height="16">Optional if no password is required for the 
+         connection; mandatory otherwise. </td>
+       </tr>
+       <tr>
+          <td width="214" height="16" valign="top" bgcolor="#F2F2F2"><blink>-<b>spwd</b>
+         <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+         xxx </kbd></blink></td>
+         <td width="325" height="17" bgcolor="#F2F2F2"><blink>Secured password for SmarTeam connection.<br>To be able to use this keyword an implementation of 
+			<b>CATIUExitCrypt</b> must be implemented and declared through the late type 
+			<b>CATUExitCrypt</b>.</blink>
+</td>
+         <td width="160" height="17" bgcolor="#F2F2F2"><blink>Optional if no password is required for the connection; 
+			<b>-pwd</b> or <br>
+			<b>&#8211;spwd</b> are mandatory otherwise.</blink></td>
+       </tr>
+       <tr>
+         <td width="214" height="17"  valign="top">-<b>file </b>
+         <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+         filename </kbd></td>
+         <td width="325" height="17">Name of the CATIA file to 
+         be loaded and reconciled. Several file statements are possible (-<b>file</b> 
+         c:\supplier\Part1.CATPart -<b>file</b> 
+         c:\supplier\Part2.CATPart).However only one root product could be 
+         reconciled (see <a href="#hj-restrictions">Restrictions</a>) </td>
+         <td width="160" height="17">mandatory </td>
+       </tr>
+       <tr>
+         <td width="214" height="16" valign="top" bgcolor="#F2F2F2">-<b>simul</b>
+         <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+         Execute|Rule|NoRule </kbd></td>
+         <td width="325" height="16" bgcolor="#F2F2F2">
+         <p class="MsoNormal" style="margin-left:0in">Enable not to execute Save 
+         or Apply in SmarTeam database.<br>
+         <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+         Execute</kbd> means that reconciliation is applied, but the save is not 
+         done. Performs automatic CO/NewRelease if overwrite rule is set.</p>
+         <p class="MsoNormal" style="margin-left:0in">
+         <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+         Rule</kbd> means that the mapping and rules are set but neither the 
+         reconciliation is applied nor the save is done</p>
+         <p class="MsoNormal" style="margin-left:0in">
+         <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+         NoRule</kbd> means that only reconciliation session creation is done. 
+         This is equivalent to run the interactive reconcile command without 
+         doing anything else.</p>
+         <p>If the <b>-simul</b> option is not set, the reconciliation will be 
+         applied and if the reconciliation is successful, a save will be done in 
+         the SmarTeam database. If the reconciliation is not successful, data 
+         are not saved in SmarTeam but checked-out documents are kept ; a report 
+         explaining the failure is also generated (see <a href="#hj-diagnostics">
+         Diagnostics</a>). </td>
+         <td width="160" height="16" bgcolor="#F2F2F2">
+         <p class="MsoNormal" style="margin-left:0in">optional </p>
+         <p>&nbsp;</td>
+       </tr>
+       <tr>
+         <td width="214" height="16" valign="top">-<b>reload</b>
+         <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+         docname </kbd></td>
+         <td width="325" height="16">Enable to set rule to 
+         Reload instead of Overwrite for an object with a specified name. 
+         Several reload statements are possible <br>
+			(<b>-reload </b>Part1.CATPart <b>-reload&nbsp; </b>Part2.CATPart) </td>
+         <td width="160" height="16">
+         <p class="MsoNormal" style="margin-left:0in">optional </p>
+         <p>&nbsp;</td>
+       </tr>
+       <tr>
+         <td width="214" height="16" valign="top" bgcolor="#F2F2F2">-<b>keepExternal</b>
+         <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+         docname </kbd></td>
+         <td width="325" height="16" bgcolor="#F2F2F2">Enable to set rule to Keep as External 
+         reference for an unloaded document. Several keepExternal statements are 
+         possible (<b>-keepExternal&nbsp; </b>Part1.CATPart <b>-keepExternal&nbsp; </b>
+			Part2.CATPart)&nbsp; </td>
+         <td width="160" height="16" bgcolor="#F2F2F2">optional </td>
+       </tr>
+       <tr>
+         <td width="214" height="16" valign="top">-<b>newFrom</b><span style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold"><strong>
+			</strong><kbd>
+			<span style="font-family: Courier New; letter-spacing: -0.6pt">
+			object</span></kbd></span></td>
+         <td width="325" height="16">>Enable to declare that one document 
+			will be saved as a new document in the database and a link will be 
+			created between this new document and the one which has been 
+			identified (by <kbd>object</kbd>).</td>
+         <td width="160" height="16">optional</td>
+       </tr>
+       <tr>
+         <td width="214" height="16" bgcolor="#F2F2F2" valign="top">-<b>autoPreselect</b>
+         </td>
+         <td width="325" height="16" bgcolor="#F2F2F2">Execute Automatic 
+         Preselection on the assembly to be reconciled. Not to be used with any 
+         of the following options: <i>reload and keepExternal.</i> </td>
+         <td width="160" height="16" bgcolor="#F2F2F2">optional </td>
+       </tr>
+       <tr>
+         <td width="214" height="16" valign="top">-<b>queryName</b>
+         <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+         queryname </kbd></td>
+         <td width="325" height="16">Name of the criterion to be searched 
+         (Default is Query By Latest Available Revision). This is required when 
+         we have multiple queries and want to execute the non default query.
+         </td>
+         <td width="160" height="16">optional
+         <p>The default query is -<b>Latest Available Revision</b>- </td>
+       </tr>
+       <tr>
+         <td width="214" height="16" bgcolor="#F2F2F2" valign="top"><b>-epexml
+         <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+         filename </kbd></b></td>
+         <td width="325" height="16" bgcolor="#F2F2F2">Enables to generate an 
+         EpeXML file that will be used with option -<b>inxml</b> </td>
+         <td width="160" height="16" bgcolor="#F2F2F2">optional </td>
+       </tr>
+       <tr>
+         <td width="214" height="16" valign="top"><b>-inxml
+         <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+         filename</kbd></b></td>
+         <td width="325" height="16">Enables to specify an input EpeXML file to 
+         restart the batch from a previous reconcilation session; this option 
+         should be used with -completeWithDefaultMapping if the XML file does 
+         not specify the mapping for all objects. (Format same as epexml file 
+         generated) </td>
+         <td width="160" height="16">optional </td>
+       </tr>
+       <tr>
+         <td width="214" height="16" bgcolor="#F2F2F2" valign="top">-<b>xml</b>
+         <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+         filename </kbd></td>
+         <td width="325" height="16" bgcolor="#F2F2F2">Stream Reconciliation 
+         session in an XML file for reporting purpose. </td>
+         <td width="160" height="16" bgcolor="#F2F2F2">optional </td>
+       </tr>
+       <tr>
+         <td width="214" height="16" valign="top">-<b>completeWithDefaultMapping</b>
+         </td>
+         <td width="325" height="16">In some cases (more than one query result), 
+         the mapping is not automatically done by the reconcile batch. Setting 
+         this parameter enable to map the CATIA document on the first query 
+         result if no other mapping is performed. </td>
+         <td width="160" height="16">optional </td>
+       </tr>
+       <tr>
+         <td width="214" height="16" bgcolor="#F2F2F2" valign="top">-<b>noCheckOut</b>
+         </td>
+         <td width="325" height="16" bgcolor="#F2F2F2">
+         <p class="MsoNormal" style="margin-left:0in">Does not Checkout/New 
+         Release a document in case of Overwrite rule on a document. </p>
+         <p class="MsoNormal" style="margin-left:0in">This option has a real 
+         added value when <b>-simul</b> <b>Execute</b> option is set with some 
+         overwrite rules.</p>
+         <p>When running the batch without <b>-simul</b> option, overwritten 
+         documents should be checked-out, otherwise the save will fail. The 
+         documents can be manually checked-out before running the reconcile 
+         batch or they can be automatically checked-out by the reconcile batch. 
+         In this case the <b>-noCheckOut</b> option should not be set otherwise 
+         the save will fail. </td>
+         <td width="160" height="16" bgcolor="#F2F2F2">optional </td>
+       </tr>
+       <tr>
+         <td width="214" height="16" valign="top"><b>-checkDoc
+         <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+         number </kbd></b></td>
+         <td width="325" height="16">Provide number of expected documents in the 
+         Reconcile session. The number of documents loaded in the reconcile 
+         session should be the same than the number provided through the -<b>checkDoc</b> 
+         parameter otherwise the reconcile batch stops and fails. </td>
+         <td width="160" height="16">optional </td>
+       </tr>
+       <tr>
+         <td width="214" height="16" bgcolor="#F2F2F2" valign="top"><b>-outputFileList
+         <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+         filename </kbd></b></td>
+         <td width="325" height="16" bgcolor="#F2F2F2">Enables to define the 
+         path of an output file containing the CATIA file names that will be 
+         reconciled. The Output File generated is text file (.txt) </td>
+         <td width="160" height="16" bgcolor="#F2F2F2">optional</td>
+       </tr>
+     </table>
+     <p class="MsoNormal">Building the reconciliation session from information 
+     given in an input XML file enables the user to explicitly indicate which 
+     rule and mapping will be applied to each object to be reconciled. </p>
+     <p class="MsoNormal">The basic scenario is as follows:</p>
+     <ol class="task">
+       <li>
+       <p class="task">First the batch user runs reconciliation in simulation 
+       mode (simulation mode is specified using the <br>
+       option
+       <span style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+       <code>-simul</code></span> on the batch command line) and using the command line 
+       parameter
+       <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+       -</kbd><kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold"><code>epexml</code></kbd> so that the batch will generate an XML file (called EpeXML 
+       file) of the reconciliation session state. This XML file will be used as 
+       a pre-valuated template in the ensuing steps.&nbsp; </li>
+       <li>
+       <p class="task">The user will eventually have to complete the generated 
+       EpeXML file to resolve those ambiguities that were not resolved by the 
+       simulation (e.g. if the query returned several results, the mapping must 
+       be completed by hand). The user can also modify the EpeXML file to 
+       explicitly indicate the rule and mapping to be applied to a given object.
+       </li>
+       <li>
+       <p class="task">Then using the completed EpeXML file, the user reruns the 
+       reconciliation batch with the command line parameter
+       <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+       -</kbd><kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold"><code>inxml</code></kbd>.&nbsp; </li>
+       <li>
+       <p class="task">The batch can be rerun multiple times using the same 
+       EpeXML file with
+       <kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold">
+       -</kbd><kbd style="font-family: Courier New; color: #666666; letter-spacing: -.6pt; font-weight: bold"><code>inxml</code></kbd> command line parameter.</li>
+     </ol>
+     <p class="MsoNormal">The reconcile batch sets the rules according to the 
+     following priorities:</p>
+     <ol class="task">
+		<li>
+		<p class="task">If the options <code>- reload
+		</code>, -<code>keepExternal</code>, -<code>autoPreselect</code>, are 
+		not set in the command line, the overwrite rule is applied on each 
+		mapped object, the new rule is applied on each object having no query 
+		result. </p></li>
+		<li>
+		<p class="task">The 
+     -<code>reload</code>, -<code>keepExternal</code> options overwrite the previous rules 
+     on the specified document.&nbsp; </p></li>
+		<li>
+		<p class="task">The -<code>autoPreselect</code><b> </b>option sets the rules according to the 
+     specifications set in the Automatic Preselection. In such a case 
+     -<code>reload</code>, <code>-keepExternal</code><b><code>
+		</code> </b>options are forbidden.</p></li>
+		</ol>
+     <p class="MsoNormal">Rules can also be set through the epexml file:</p>
+     <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber5" width="445" height="156">
+       <tr>
+         <td width="212" height="39" bgcolor="#E0E0E0">
+         <p align="center"><b>Rule Name </b></td>
+         <td width="233" height="39" bgcolor="#E0E0E0">
+         <p align="center"><b>Description </b></td>
+       </tr>
+       <tr>
+         <td width="212" height="29">PUBEXP_OVERWRITEINPDM </td>
+         <td width="233" height="29"><b><i>Overwrite </i></b>in SmarTeam 
+         repository </td>
+       </tr>
+       <tr>
+         <td width="212" height="29">PUBEXP_RELOADFRMPDM </td>
+         <td width="233" height="29"><b><i>Reload </i></b>from SmarTeam 
+         repository </td>
+       </tr>
+       <tr>
+         <td width="212" height="26">PUBEXP_NEWOBJECT </td>
+         <td width="233" height="26"><b><i>New </i></b>Object in SmarTeam 
+         repository </td>
+       </tr>
+       <tr>
+         <td width="212" height="33">PUBEXP_EXTERNALREFERENCE </td>
+         <td width="233" height="33"><b><i>Keep External </i></b></td>
+       </tr>
+     </table>
+     <h3><a name="hj-diagnostics"></a>Diagnostics</h3>
+     <p class="MsoNormal">A summary of actions and a global status of the 
+     reconcile batch execution is written in the standard output file (the 
+     standard output file is controlled through the CNEXTOUTPUT environment 
+     variable).&nbsp; Possible exit status values are: </p>
+     <ul>
+       <li>
+       <p class="MsoNormal">0: successful completion</li>
+       <li>
+       <p class="MsoNormal">4: failure due to one or more of the standalone 
+       documents<br>
+       This diagnostic could be returned when the reconciliation is ran on 
+       several standalone documents (<code>-</code><b><code>file </code> </b>Part1.CATPart <b>
+		<code>-file</code></b> 
+       Part2.CATPart) and when the reconciliation is failing on one document but 
+       successful on other documents. </li>
+       <li>
+       <p class="MsoNormal">8: Failure due to any of the 
+       following:
+       <ul>
+         <li>
+         <p class="MsoNormal">Query failed </li>
+         <li>
+         <p class="MsoNormal">Load of SmarTeam data failed
+         </li>
+         <li>
+         <p class="MsoNormal">Save of loaded data failed </li>
+       </ul>
+       </li>
+       <li>
+       <p class="MsoNormal">202: Connection failed</li>
+     </ul>
+     </td>
+   </tr>
+   <tr valign="top" BORDER="0">
+     <td width="32">
+     <img src="b35doc/english/online/icons_C2/common/ascenari.gif" width="32" height="32"></td>
+     <td width="100%">
+     <h2><a name="hj-reusing"></a>Reusing the Same Reconciliation Batch Process</h2>
+     <p class="MsoNormal">To re-run the reconciliation using the same mapping 
+     and rules, proceed as follows:</p>
+     <ol class="task">
+       <li>
+       <p class="task">Run a reconciliation in simulation mode: the simulation 
+       mode is specified using <b><code>-simul</code></b><code> </code>on the batch command line.</li>
+       <li>
+       <p class="task">Ask the batch to dump the reconcile session using the <b>
+       <code>-epexml</code></b><code> </code>command line parameter.<br>
+       This generates a pre-valuated template of the EpeXML fil<br>
+       <br>
+       You may need to complete the generated EpeXML file when some ambiguities 
+       were not resolved by the simulation (for example when the query returned 
+       several results, the mapping must be completed by hand). </li>
+       <li>
+       <p class="task">Then use the completed EpeXML file to re-run the 
+       reconciliator batch with the<code> </code> <b><code>-inxml </code></b>command line parameter.</li>
+       <li>
+       <p class="task">Re-run the script several times using the same EpeXML 
+       file with the <b><code>-inxml</code></b><code> </code>command line parameter.<br>
+       This EpeXML file will thus be generated by a reconciliation simulation. 
+       It is an xml file located in the directory specified thru the <b><code>-epexml</code></b><code>
+		</code>parameter.</li>
+     </ol>
+     <h2>XML File Description</h2>
+     <p>XML files can be generated for two purposes:</p>
+     <ul>
+       <li>for Reporting purpose (<b><code>-xml</code> </b>option)</li>
+       <li>for Stop/Restart purpose (<b><code>-epexml </code> </b>option).</li>
+     </ul>
+     <p class="MsoNormal">The table below compares the content of both files:</p>
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber1" width="662">
+       <tr>
+         <td width="647">
+         <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="636" style="width: 477.0pt; border-collapse: collapse; border: medium none; margin-left: .45in">
+           <tr style="height: 20.85pt">
+             <td width="120" valign="top" style="width: 1.25in; height: 20.85pt; border: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+             <p class="MsoNormal" style="margin-left:0in">&nbsp;</td>
+             <td width="264" valign="top" style="width: 2.75in; height: 20.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+             <p class="MsoNormal" style="margin-left:0in"><b>XML for Report 
+             (-xml) </b></td>
+             <td width="252" valign="top" style="width: 189.0pt; height: 20.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: 1.0pt solid windowtext; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+             <p class="MsoNormal" style="margin-left:0in"><b>EpeXML for 
+             Stop/Restart (-epexml)</b></td>
+           </tr>
+           <tr style="height: 20.85pt">
+             <td width="120" valign="top" style="width: 1.25in; height: 20.85pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+             <p class="MsoNormal" style="margin-left:0in"><b>Description</b></td>
+             <td width="264" valign="top" style="width: 2.75in; height: 20.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+             <p class="MsoNormal" style="margin-left:0in">Light dump of the 
+             Reconcile Session: it sums up for each object to reconcile its 
+             characteristics (Name, PDM environment, storage mode, 
+             reconciliation rule, Identifier) and comparison status**. </td>
+             <td width="252" valign="top" style="width: 189.0pt; height: 20.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+             <p class="MsoNormal" style="margin-left:0in">All information needed 
+             to rebuild the Reconcile Session is dumped. That is for all 
+             documents the exposition mode, the mapping and rule to apply. The 
+             list of Query result is also diumped.</td>
+           </tr>
+           <tr style="height: 20.85pt">
+             <td width="120" valign="top" style="width: 1.25in; height: 20.85pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+             <p class="MsoNormal" style="margin-left:0in"><b>Usage</b></td>
+             <td width="264" valign="top" style="width: 2.75in; height: 20.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+             <p class="MsoNormal" style="margin-left:0in">To have a report of 
+             what will be done in the reconciliation session at execution. The 
+             layout of the report could be customized through definition of a 
+             xsl document. </td>
+             <td width="252" valign="top" style="width: 189.0pt; height: 20.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+             <p class="MsoNormal" style="margin-left:0in">To be able to rebuild 
+             a reconciliation session several times using same mapping and 
+             rules.</td>
+           </tr>
+           <tr style="height: 20.85pt">
+             <td width="120" valign="top" style="width: 1.25in; height: 20.85pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+             <p class="MsoNormal" style="margin-left:0in"><b>Content under 
+             document and proxy-document tags</b></td>
+             <td width="264" valign="top" style="width: 2.75in; height: 20.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+             <p class="MsoNormal" style="margin-left:0in">FileName + Path + 
+             DocType</p>
+             <p class="MsoNormal" style="margin-left:0in">Rule + PersistencyMode</p>
+             <p class="MsoNormal" style="margin-left:0in">Mapping: the selected 
+             PdmObject+its attributes*</p>
+             <p class="MsoNormal" style="margin-left:0in">&lt;Query result not 
+             present&gt;</td>
+             <td width="252" valign="top" style="width: 189.0pt; height: 20.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+             <p class="MsoNormal" style="margin-left:0in">FileName + Path + 
+             DocType</p>
+             <p class="MsoNormal" style="margin-left:0in">Rule + PersistencyMode</p>
+             <p class="MsoNormal" style="margin-left:0in">Mapping: the 
+             PdmObject+its attributes*</p>
+             <p class="MsoNormal" style="margin-left:0in">List of query result (PdmObjects), 
+             the one used for mapping is differentiated using an attribute 
+             selected=-yes-.</td>
+           </tr>
+           <tr style="height: 20.85pt">
+             <td width="120" valign="top" style="width: 1.25in; height: 20.85pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+             <p class="MsoNormal" style="margin-left:0in"><b>Content under Part 
+             tags</b></td>
+             <td width="264" valign="top" style="width: 2.75in; height: 20.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+             <p class="MsoNormal" style="margin-left:0in">PartName + isRoot</p>
+             <p class="MsoNormal" style="margin-left:0in">Rule + PersistencyMode</p>
+             <p class="MsoNormal" style="margin-left:0in">Mapping: the selected 
+             PdmObject+its attributes*</p>
+             <p class="MsoNormal" style="margin-left:0in">&lt; Query result not 
+             present &gt;</p>
+             <p class="MsoNormal" style="margin-left:0in">&nbsp;</p>
+             <p class="MsoNormal" style="margin-left:0in">Comparison status**
+             </p>
+             <p class="MsoNormal" style="margin-left:0in">&nbsp;</td>
+             <td width="252" valign="top" style="width: 189.0pt; height: 20.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+             <p class="MsoNormal" style="margin-left:0in">PartName + isRoot</p>
+             <p class="MsoNormal" style="margin-left:0in">Rule + PersistencyMode</p>
+             <p class="MsoNormal" style="margin-left:0in">Mapping: the PdmObject 
+             + its attributes*</p>
+             <p class="MsoNormal" style="margin-left:0in">List of query result, 
+             the one used for mapping is differentiated using an attribute 
+             selected=-yes-.</p>
+             <p class="MsoNormal" style="margin-left:0in">&lt;Comparison status not 
+             present&gt;</td>
+           </tr>
+           <tr style="height: 20.85pt">
+             <td width="120" valign="top" style="width: 1.25in; height: 20.85pt; border-left: 1.0pt solid windowtext; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in" bgcolor="#F2F2F2">
+             <p class="MsoNormal" style="margin-left:0in"><b>Content under AR 
+             tags</b></td>
+             <td width="264" valign="top" style="width: 2.75in; height: 20.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+             <p class="MsoNormal" style="margin-left:0in">Name</p>
+             <p class="MsoNormal" style="margin-left:0in">Comparison status**</td>
+             <td width="252" valign="top" style="width: 189.0pt; height: 20.85pt; border-left: medium none; border-right: 1.0pt solid windowtext; border-top: medium none; border-bottom: 1.0pt solid windowtext; padding-left: 5.4pt; padding-right: 5.4pt; padding-top: 0in; padding-bottom: 0in">
+             <p class="MsoNormal" style="margin-left:0in">Name</p>
+             <p class="MsoNormal" style="margin-left:0in">&lt;Comparison status not 
+             present&gt;</td>
+           </tr>
+         </table>
+         </td>
+         <td width="1"></td>
+       </tr>
+     </table>
+     <h3>Notes</h3>
+     <p class="MsoNormal">*The Number of PdmObject Attributes will vary as per 
+     the configuration used for query in Integration Tools Setup.</p>
+     <p class="MsoNormal">**SmarTeam does not set any comparison status: default 
+     value of the status is -New-. </p>
+     <h3>Samples of the Different Versions of the XML File:</h3>
+     <p class="MsoNormal">The samples provided were generated using the 
+     following assembly structure: </p>
+     <p class="MsoNormal">
+		<img border="1" src="b35doc/english/online/seeug_c2/images/bt32NLS.gif" width="249" height="272"></p>
+     <h3>Sample of an EPXML File for StopRestart</h3>
+     <p class="MsoNormal">This file has been generated by the reconcile batch 
+     process.&nbsp; It could be used without any modification to re-run the 
+     reconcile batch process with the <b><code>-inxml</code></b><code> </code>parameter because all 
+     documents are mapped and a rule is also set for all objects. In this 
+     example it is possible to modify the Rule value.</p>
+     <p><code>CATPDMReconcileSTBatch -user joe -file 
+		E:\Data\Skateboard\supplier\Skateboard.CATProduct -simul Rule -epexml&nbsp; 
+		e:\Data\Skateboard\epexml.xml</code></p>
+		<p>&nbsp;</p>
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="AutoNumber3" width="731" height="60">
+       <tr>
+         <td width="731" bgcolor="#F2F2F2" height="60">
+         <div class="e">
+			<span class="m">&lt;?</span><span class="pi">xml version=&quot;1.0&quot; 
+			encoding=&quot;UTF-8&quot; </span><span class="m">?&gt;</span> </div>
+			<div class="k">
+				<a class="b" style="VISIBILITY: hidden" onfocus="h()" onclick="return false">
+				-</a> <span class="m">&lt;!--</span> <span class="ci" id>
+				<pre style="display: inline; margin: 0px">COPYRIGHT DASSAULT SYSTEMES 2005</pre>
+				</span><span class="b">&nbsp;</span> <span class="m">-&nbsp;&gt;&nbsp;</span>
+f(clean);
+ 		</div>
+			<div class="e">
+				<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+					<a class="b" onfocus="h()" onclick="return false" href="#">-</a>
+					<span class="m">&lt;</span><span class="t">Session Name</span><span class="m">=&quot;</span><b>Reconcile 
+					Session</b><span class="m">&quot;</span><span class="t"> Env</span><span class="m">=&quot;</span><b>TeamPDM</b><span class="m">&quot;</span><span class="t"> 
+					Status</span><span class="m">=&quot;</span><b>None</b><span class="m">&quot;&gt;</span></div>
+				<div>
+					<div class="e">
+						<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+							<a class="b" onfocus="h()" onclick="return false" href="#">
+							-</a> <span class="m">&lt;</span><span class="t">Document 
+							Name</span><span class="m">=&quot;</span><b>Skateboard.CATProduct</b><span class="m">&quot;</span><span class="t"> 
+							Type</span><span class="m">=&quot;</span><b>CATProduct</b><span class="m">&quot;</span><span class="t"> 
+							File</span><span class="m">=&quot;</span><b>E:\Data\Skateboard\supplier\Skateboard.CATProduct</b><span class="m">&quot;</span><span class="t"> 
+							Mode</span><span class="m">=&quot;</span><b>PUBLICATION_EXPOSED</b><span class="m">&quot;</span><span class="t"> 
+							Rule</span><span class="m">=&quot;</span><b>PUBEXP_OVERWRITEINPDM</b><span class="m">&quot;&gt;</span></div>
+						<div>
+							<div class="e">
+								<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+									<a class="b" onfocus="h()" onclick="return false" href="#">
+									-</a> <span class="m">&lt;</span><span class="t">PdmObject 
+									selected</span><span class="m">=&quot;</span><b>true</b><span class="m">&quot;</span><span class="t"> 
+									PdmId</span><span class="m">=&quot;</span><b>0_764_412b30e3_827</b><span class="m">&quot;</span><span class="t"> 
+									PdmName</span><span class="m">=&quot;</span><b>688_1187</b><span class="m">&quot;</span><span class="t"> 
+									PdmType</span><span class="m">=&quot;</span><b>CATProduct</b><span class="m">&quot;</span><span class="t"> 
+									PdmProvider</span><span class="m">=&quot;</span><b>TeamPDM_Provider</b><span class="m">&quot;&gt;</span></div>
+								<div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Description</b><span class="m">&quot;&gt;</span><span class="tx">Skateboard</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Part 
+											Number</b><span class="m">&quot;&gt;</span><span class="tx">Skateboard</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>ID</b><span class="m">&quot;&gt;</span><span class="tx">CATPRD-0060</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Application 
+											Reference File Name</b><span class="m">&quot;&gt;</span><span class="tx">Skateboard.CATProduct</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr</span>
+											<span class="t">name</span><span class="m">=&quot;</span><b>Revision</b><span class="m">&quot; 
+											/&gt;</span> </div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>State</b><span class="m">&quot;&gt;</span><span class="tx">Checked 
+											In</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div>
+										<span class="b">&nbsp;</span> <span class="m">
+										&lt;/</span><span class="t">PdmObject</span><span class="m">&gt;</span></div>
+								</div>
+							</div>
+							<div>
+								<span class="b">&nbsp;</span> <span class="m">&lt;/</span><span class="t">Document</span><span class="m">&gt;</span></div>
+						</div>
+					</div>
+					<div class="e">
+						<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+							<a class="b" onfocus="h()" onclick="return false" href="#">
+							-</a> <span class="m">&lt;</span><span class="t">Document 
+							Name</span><span class="m">=&quot;</span><b>Board.CATProduct</b><span class="m">&quot;</span><span class="t"> 
+							Type</span><span class="m">=&quot;</span><b>CATProduct</b><span class="m">&quot;</span><span class="t"> 
+							File</span><span class="m">=&quot;</span><b>E:\Data\Skateboard\supplier\Board.CATProduct</b><span class="m">&quot;</span><span class="t"> 
+							Mode</span><span class="m">=&quot;</span><b>PUBLICATION_EXPOSED</b><span class="m">&quot;</span><span class="t"> 
+							Rule</span><span class="m">=&quot;</span><b>PUBEXP_OVERWRITEINPDM</b><span class="m">&quot;&gt;</span></div>
+						<div>
+							<div class="e">
+								<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+									<a class="b" onfocus="h()" onclick="return false" href="#">
+									-</a> <span class="m">&lt;</span><span class="t">PdmObject 
+									selected</span><span class="m">=&quot;</span><b>true</b><span class="m">&quot;</span><span class="t"> 
+									PdmId</span><span class="m">=&quot;</span><b>f1b3f3f3_7a0_42dcc5e3_809</b><span class="m">&quot;</span><span class="t"> 
+									PdmName</span><span class="m">=&quot;</span><b>688_1188</b><span class="m">&quot;</span><span class="t"> 
+									PdmType</span><span class="m">=&quot;</span><b>CATProduct</b><span class="m">&quot;</span><span class="t"> 
+									PdmProvider</span><span class="m">=&quot;</span><b>TeamPDM_Provider</b><span class="m">&quot;&gt;</span></div>
+								<div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Description</b><span class="m">&quot;&gt;</span><span class="tx">Board</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Part 
+											Number</b><span class="m">&quot;&gt;</span><span class="tx">Board</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>ID</b><span class="m">&quot;&gt;</span><span class="tx">CATPRD-0061</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Application 
+											Reference File Name</b><span class="m">&quot;&gt;</span><span class="tx">Board.CATProduct</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr</span>
+											<span class="t">name</span><span class="m">=&quot;</span><b>Revision</b><span class="m">&quot; 
+											/&gt;</span> </div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>State</b><span class="m">&quot;&gt;</span><span class="tx">Checked 
+											In</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div>
+										<span class="b">&nbsp;</span> <span class="m">
+										&lt;/</span><span class="t">PdmObject</span><span class="m">&gt;</span></div>
+								</div>
+							</div>
+							<div>
+								<span class="b">&nbsp;</span> <span class="m">&lt;/</span><span class="t">Document</span><span class="m">&gt;</span></div>
+						</div>
+					</div>
+					<div class="e">
+						<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+							<a class="b" onfocus="h()" onclick="return false" href="#">
+							-</a> <span class="m">&lt;</span><span class="t">Document 
+							Name</span><span class="m">=&quot;</span><b>Main_board.CATPart</b><span class="m">&quot;</span><span class="t"> 
+							Type</span><span class="m">=&quot;</span><b>CATPart</b><span class="m">&quot;</span><span class="t"> 
+							File</span><span class="m">=&quot;</span><b>E:\Data\Skateboard\supplier\Main_board.CATPart</b><span class="m">&quot;</span><span class="t"> 
+							Mode</span><span class="m">=&quot;</span><b>PUBLICATION_EXPOSED</b><span class="m">&quot;</span><span class="t"> 
+							Rule</span><span class="m">=&quot;</span><b>PUBEXP_OVERWRITEINPDM</b><span class="m">&quot;&gt;</span></div>
+						<div>
+							<div class="e">
+								<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+									<a class="b" onfocus="h()" onclick="return false" href="#">
+									-</a> <span class="m">&lt;</span><span class="t">PdmObject 
+									selected</span><span class="m">=&quot;</span><b>true</b><span class="m">&quot;</span><span class="t"> 
+									PdmId</span><span class="m">=&quot;</span><b>0_1064_40d80b7e_3da</b><span class="m">&quot;</span><span class="t"> 
+									PdmName</span><span class="m">=&quot;</span><b>687_1189</b><span class="m">&quot;</span><span class="t"> 
+									PdmType</span><span class="m">=&quot;</span><b>CATPart</b><span class="m">&quot;</span><span class="t"> 
+									PdmProvider</span><span class="m">=&quot;</span><b>TeamPDM_Provider</b><span class="m">&quot;&gt;</span></div>
+								<div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Description</b><span class="m">&quot;&gt;</span><span class="tx">Main_board</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Part 
+											Number</b><span class="m">&quot;&gt;</span><span class="tx">Main 
+											board</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>ID</b><span class="m">&quot;&gt;</span><span class="tx">CATPRT-0243</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Application 
+											Reference File Name</b><span class="m">&quot;&gt;</span><span class="tx">Main_board.CATPart</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr</span>
+											<span class="t">name</span><span class="m">=&quot;</span><b>Revision</b><span class="m">&quot; 
+											/&gt;</span> </div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>State</b><span class="m">&quot;&gt;</span><span class="tx">Checked 
+											In</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div>
+										<span class="b">&nbsp;</span> <span class="m">
+										&lt;/</span><span class="t">PdmObject</span><span class="m">&gt;</span></div>
+								</div>
+							</div>
+							<div>
+								<span class="b">&nbsp;</span> <span class="m">&lt;/</span><span class="t">Document</span><span class="m">&gt;</span></div>
+						</div>
+					</div>
+					<div class="e">
+						<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+							<a class="b" onfocus="h()" onclick="return false" href="#">
+							-</a> <span class="m">&lt;</span><span class="t">Document 
+							Name</span><span class="m">=&quot;</span><b>Front_axle.CATProduct</b><span class="m">&quot;</span><span class="t"> 
+							Type</span><span class="m">=&quot;</span><b>CATProduct</b><span class="m">&quot;</span><span class="t"> 
+							File</span><span class="m">=&quot;</span><b>E:\Data\Skateboard\supplier\Front_axle.CATProduct</b><span class="m">&quot;</span><span class="t"> 
+							Mode</span><span class="m">=&quot;</span><b>PUBLICATION_EXPOSED</b><span class="m">&quot;</span><span class="t"> 
+							Rule</span><span class="m">=&quot;</span><b>PUBEXP_OVERWRITEINPDM</b><span class="m">&quot;&gt;</span></div>
+						<div>
+							<div class="e">
+								<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+									<a class="b" onfocus="h()" onclick="return false" href="#">
+									-</a> <span class="m">&lt;</span><span class="t">PdmObject 
+									selected</span><span class="m">=&quot;</span><b>true</b><span class="m">&quot;</span><span class="t"> 
+									PdmId</span><span class="m">=&quot;</span><b>f1b3f3f3_7a0_42dcc5e6_81d</b><span class="m">&quot;</span><span class="t"> 
+									PdmName</span><span class="m">=&quot;</span><b>688_1190</b><span class="m">&quot;</span><span class="t"> 
+									PdmType</span><span class="m">=&quot;</span><b>CATProduct</b><span class="m">&quot;</span><span class="t"> 
+									PdmProvider</span><span class="m">=&quot;</span><b>TeamPDM_Provider</b><span class="m">&quot;&gt;</span></div>
+								<div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Description</b><span class="m">&quot;&gt;</span><span class="tx">Front_axle</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Part 
+											Number</b><span class="m">&quot;&gt;</span><span class="tx">Front 
+											axle</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>ID</b><span class="m">&quot;&gt;</span><span class="tx">CATPRD-0062</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Application 
+											Reference File Name</b><span class="m">&quot;&gt;</span><span class="tx">Front_axle.CATProduct</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr</span>
+											<span class="t">name</span><span class="m">=&quot;</span><b>Revision</b><span class="m">&quot; 
+											/&gt;</span> </div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>State</b><span class="m">&quot;&gt;</span><span class="tx">Checked 
+											In</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div>
+										<span class="b">&nbsp;</span> <span class="m">
+										&lt;/</span><span class="t">PdmObject</span><span class="m">&gt;</span></div>
+								</div>
+							</div>
+							<div>
+								<span class="b">&nbsp;</span> <span class="m">&lt;/</span><span class="t">Document</span><span class="m">&gt;</span></div>
+						</div>
+					</div>
+					<div class="e">
+						<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+							<a class="b" onfocus="h()" onclick="return false" href="#">
+							-</a> <span class="m">&lt;</span><span class="t">Document 
+							Name</span><span class="m">=&quot;</span><b>Truck.CATPart</b><span class="m">&quot;</span><span class="t"> 
+							Type</span><span class="m">=&quot;</span><b>CATPart</b><span class="m">&quot;</span><span class="t"> 
+							File</span><span class="m">=&quot;</span><b>E:\Data\Skateboard\supplier\Truck.CATPart</b><span class="m">&quot;</span><span class="t"> 
+							Mode</span><span class="m">=&quot;</span><b>PUBLICATION_EXPOSED</b><span class="m">&quot;</span><span class="t"> 
+							Rule</span><span class="m">=&quot;</span><b>PUBEXP_OVERWRITEINPDM</b><span class="m">&quot;&gt;</span></div>
+						<div>
+							<div class="e">
+								<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+									<a class="b" onfocus="h()" onclick="return false" href="#">
+									-</a> <span class="m">&lt;</span><span class="t">PdmObject 
+									selected</span><span class="m">=&quot;</span><b>true</b><span class="m">&quot;</span><span class="t"> 
+									PdmId</span><span class="m">=&quot;</span><b>0_1064_40d80c50_679</b><span class="m">&quot;</span><span class="t"> 
+									PdmName</span><span class="m">=&quot;</span><b>687_1191</b><span class="m">&quot;</span><span class="t"> 
+									PdmType</span><span class="m">=&quot;</span><b>CATPart</b><span class="m">&quot;</span><span class="t"> 
+									PdmProvider</span><span class="m">=&quot;</span><b>TeamPDM_Provider</b><span class="m">&quot;&gt;</span></div>
+								<div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Description</b><span class="m">&quot;&gt;</span><span class="tx">Truck</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Part 
+											Number</b><span class="m">&quot;&gt;</span><span class="tx">Truck</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>ID</b><span class="m">&quot;&gt;</span><span class="tx">CATPRT-0244</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Application 
+											Reference File Name</b><span class="m">&quot;&gt;</span><span class="tx">Truck.CATPart</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr</span>
+											<span class="t">name</span><span class="m">=&quot;</span><b>Revision</b><span class="m">&quot; 
+											/&gt;</span> </div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>State</b><span class="m">&quot;&gt;</span><span class="tx">Checked 
+											In</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div>
+										<span class="b">&nbsp;</span> <span class="m">
+										&lt;/</span><span class="t">PdmObject</span><span class="m">&gt;</span></div>
+								</div>
+							</div>
+							<div>
+								<span class="b">&nbsp;</span> <span class="m">&lt;/</span><span class="t">Document</span><span class="m">&gt;</span></div>
+						</div>
+					</div>
+					<div class="e">
+						<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+							<a class="b" onfocus="h()" onclick="return false" href="#">
+							-</a> <span class="m">&lt;</span><span class="t">Document 
+							Name</span><span class="m">=&quot;</span><b>wheel.CATPart</b><span class="m">&quot;</span><span class="t"> 
+							Type</span><span class="m">=&quot;</span><b>CATPart</b><span class="m">&quot;</span><span class="t"> 
+							File</span><span class="m">=&quot;</span><b>E:\Data\Skateboard\supplier\wheel.CATPart</b><span class="m">&quot;</span><span class="t"> 
+							Mode</span><span class="m">=&quot;</span><b>PUBLICATION_EXPOSED</b><span class="m">&quot;</span><span class="t"> 
+							Rule</span><span class="m">=&quot;</span><b>PUBEXP_OVERWRITEINPDM</b><span class="m">&quot;&gt;</span></div>
+						<div>
+							<div class="e">
+								<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+									<a class="b" onfocus="h()" onclick="return false" href="#">
+									-</a> <span class="m">&lt;</span><span class="t">PdmObject 
+									selected</span><span class="m">=&quot;</span><b>true</b><span class="m">&quot;</span><span class="t"> 
+									PdmId</span><span class="m">=&quot;</span><b>0_1064_40d80d78_743</b><span class="m">&quot;</span><span class="t"> 
+									PdmName</span><span class="m">=&quot;</span><b>687_1192</b><span class="m">&quot;</span><span class="t"> 
+									PdmType</span><span class="m">=&quot;</span><b>CATPart</b><span class="m">&quot;</span><span class="t"> 
+									PdmProvider</span><span class="m">=&quot;</span><b>TeamPDM_Provider</b><span class="m">&quot;&gt;</span></div>
+								<div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Description</b><span class="m">&quot;&gt;</span><span class="tx">wheel</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Part 
+											Number</b><span class="m">&quot;&gt;</span><span class="tx">wheel</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>ID</b><span class="m">&quot;&gt;</span><span class="tx">CATPRT-0245</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Application 
+											Reference File Name</b><span class="m">&quot;&gt;</span><span class="tx">wheel.CATPart</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr</span>
+											<span class="t">name</span><span class="m">=&quot;</span><b>Revision</b><span class="m">&quot; 
+											/&gt;</span> </div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>State</b><span class="m">&quot;&gt;</span><span class="tx">Checked 
+											In</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div>
+										<span class="b">&nbsp;</span> <span class="m">
+										&lt;/</span><span class="t">PdmObject</span><span class="m">&gt;</span></div>
+								</div>
+							</div>
+							<div>
+								<span class="b">&nbsp;</span> <span class="m">&lt;/</span><span class="t">Document</span><span class="m">&gt;</span></div>
+						</div>
+					</div>
+					<div class="e">
+						<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+							<a class="b" onfocus="h()" onclick="return false" href="#">
+							-</a> <span class="m">&lt;</span><span class="t">Document 
+							Name</span><span class="m">=&quot;</span><b>Rear_axle.CATProduct</b><span class="m">&quot;</span><span class="t"> 
+							Type</span><span class="m">=&quot;</span><b>CATProduct</b><span class="m">&quot;</span><span class="t"> 
+							File</span><span class="m">=&quot;</span><b>E:\Data\Skateboard\supplier\Rear_axle.CATProduct</b><span class="m">&quot;</span><span class="t"> 
+							Mode</span><span class="m">=&quot;</span><b>PUBLICATION_EXPOSED</b><span class="m">&quot;</span><span class="t"> 
+							Rule</span><span class="m">=&quot;</span><b>PUBEXP_OVERWRITEINPDM</b><span class="m">&quot;&gt;</span></div>
+						<div>
+							<div class="e">
+								<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+									<a class="b" onfocus="h()" onclick="return false" href="#">
+									-</a> <span class="m">&lt;</span><span class="t">PdmObject 
+									selected</span><span class="m">=&quot;</span><b>true</b><span class="m">&quot;</span><span class="t"> 
+									PdmId</span><span class="m">=&quot;</span><b>f1b3f3f3_7a0_42dcc5e8_831</b><span class="m">&quot;</span><span class="t"> 
+									PdmName</span><span class="m">=&quot;</span><b>688_1193</b><span class="m">&quot;</span><span class="t"> 
+									PdmType</span><span class="m">=&quot;</span><b>CATProduct</b><span class="m">&quot;</span><span class="t"> 
+									PdmProvider</span><span class="m">=&quot;</span><b>TeamPDM_Provider</b><span class="m">&quot;&gt;</span></div>
+								<div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Description</b><span class="m">&quot;&gt;</span><span class="tx">Rear_axle</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Part 
+											Number</b><span class="m">&quot;&gt;</span><span class="tx">Rear 
+											axle</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>ID</b><span class="m">&quot;&gt;</span><span class="tx">CATPRD-0063</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>Application 
+											Reference File Name</b><span class="m">&quot;&gt;</span><span class="tx">Rear_axle.CATProduct</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr</span>
+											<span class="t">name</span><span class="m">=&quot;</span><b>Revision</b><span class="m">&quot; 
+											/&gt;</span> </div>
+									</div>
+									<div class="e">
+										<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+											<span class="b">&nbsp;</span>
+											<span class="m">&lt;</span><span class="t">PdmObjectAttr 
+											name</span><span class="m">=&quot;</span><b>State</b><span class="m">&quot;&gt;</span><span class="tx">Checked 
+											In</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+										</div>
+									</div>
+									<div>
+										<span class="b">&nbsp;</span> <span class="m">
+										&lt;/</span><span class="t">PdmObject</span><span class="m">&gt;</span></div>
+								</div>
+							</div>
+							<div>
+								<span class="b">&nbsp;</span> <span class="m">&lt;/</span><span class="t">Document</span><span class="m">&gt;</span></div>
+						</div>
+					</div>
+					<div class="e">
+						<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+							<span class="b">&nbsp;</span> <span class="m">&lt;</span><span class="t">Document</span>
+							<span class="t">Name</span><span class="m">=&quot;</span><b>Brake.CATPart</b><span class="m">&quot;</span><span class="t"> 
+							Type</span><span class="m">=&quot;</span><b>CATPart</b><span class="m">&quot;</span><span class="t"> 
+							File</span><span class="m">=&quot;</span><b>E:\Data\Skateboard\supplier\Brake.CATPart</b><span class="m">&quot;</span><span class="t"> 
+							Mode</span><span class="m">=&quot;</span><b>PUBLICATION_EXPOSED</b><span class="m">&quot;</span><span class="t"> 
+							Rule</span><span class="m">=&quot;</span><b>PUBEXP_NEWOBJECT</b><span class="m">&quot; 
+							/&gt;</span> </div>
+					</div>
+					<div>
+						<span class="b">&nbsp;</span> <span class="m">&lt;/</span><span class="t">Session</span><span class="m">&gt;</span></div>
+				</div>
+			</div>
+			</td>
+       </tr>
+     </table>
+     <h2>Sample of Batch Reconcile Command</h2>
+		<p>Two methods are available:</p>
+		<ul>
+			<li><a href="#hj-from">From an xml input file</a></li>
+			<li><a href="#hj-command">Run the batch reconciliation using the 
+			command </a></li>
+		</ul>
+		<h3><a name="hj-from"></a>From an xml input file </h3>
+		<ol class="task">
+			<li>
+			<p class="task">Open the epexml.xml file previously generated.</li>
+			<li>
+			<p class="task">Change the rules from PUBEXP_OVERWRITEINPDM to 
+		PUBEXP_RELOADFRMPDM on the following documents: 
+		Front_axle.CATProduct,Rear_axle.CATProduct,Truck.CATPart, Wheel.CATPart</li>
+			<li>
+			<p class="task">Save the file under inxml.xml. </p>
+     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" id="table1" width="731" height="60">
+       <tr>
+         <td width="731" bgcolor="#F2F2F2" height="60">
+         <div class="e">
+				<div>
+					<div class="e">
+						<div>
+							<div class="e">
+								<div>
+									<div>
+										<div class="e">
+											<span class="m">&lt;?</span><span class="pi">xml 
+											version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;
+											</span><span class="m">?&gt;</span> 
+										</div>
+										<div class="k">
+											<a class="b" style="VISIBILITY: hidden" onfocus="h()" onclick="return false">
+											-</a> <span class="m">&lt;!--</span>
+											<span class="ci" id>
+											<pre style="display: inline; margin: 0px">COPYRIGHT DASSAULT SYSTEMES 2005</pre>
+											</span><span class="b">&nbsp;</span>
+											<span class="m">-&nbsp;&gt;&nbsp;</span>
+f(clean);
+ 										</div>
+										<div class="e">
+											<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+												<a class="b" onfocus="h()" onclick="return false" href="#">
+												-</a> <span class="m">&lt;</span><span class="t">Session 
+												Name</span><span class="m">=&quot;</span><b>Reconcile 
+												Session</b><span class="m">&quot;</span><span class="t"> 
+												Env</span><span class="m">=&quot;</span><b>TeamPDM</b><span class="m">&quot;</span><span class="t"> 
+												Status</span><span class="m">=&quot;</span><b>None</b><span class="m">&quot;&gt;</span></div>
+											<div>
+												<div class="e">
+													<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+														<a class="b" onfocus="h()" onclick="return false" href="#">
+														-</a> <span class="m">&lt;</span><span class="t">Document 
+														Name</span><span class="m">=&quot;</span><b>Skateboard.CATProduct</b><span class="m">&quot;</span><span class="t"> 
+														Type</span><span class="m">=&quot;</span><b>CATProduct</b><span class="m">&quot;</span><span class="t"> 
+														File</span><span class="m">=&quot;</span><b>E:\Data\Skateboard\supplier\Skateboard.CATProduct</b><span class="m">&quot;</span><span class="t"> 
+														Mode</span><span class="m">=&quot;</span><b>PUBLICATION_EXPOSED</b><span class="m">&quot;</span><span class="t"> 
+														Rule</span><span class="m">=&quot;</span><b>PUBEXP_OVERWRITEINPDM</b><span class="m">&quot;&gt;</span></div>
+													<div>
+														<div class="e">
+															<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																<a class="b" onfocus="h()" onclick="return false" href="#">
+																-</a>
+																<span class="m">
+																&lt;</span><span class="t">PdmObject 
+																selected</span><span class="m">=&quot;</span><b>true</b><span class="m">&quot;</span><span class="t"> 
+																PdmId</span><span class="m">=&quot;</span><b>0_764_412b30e3_827</b><span class="m">&quot;</span><span class="t"> 
+																PdmName</span><span class="m">=&quot;</span><b>688_1187</b><span class="m">&quot;</span><span class="t"> 
+																PdmType</span><span class="m">=&quot;</span><b>CATProduct</b><span class="m">&quot;</span><span class="t"> 
+																PdmProvider</span><span class="m">=&quot;</span><b>TeamPDM_Provider</b><span class="m">&quot;&gt;</span></div>
+															<div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Description</b><span class="m">&quot;&gt;</span><span class="tx">Skateboard</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Part 
+																		Number</b><span class="m">&quot;&gt;</span><span class="tx">Skateboard</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>ID</b><span class="m">&quot;&gt;</span><span class="tx">CATPRD-0060</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Application 
+																		Reference 
+																		File 
+																		Name</b><span class="m">&quot;&gt;</span><span class="tx">Skateboard.CATProduct</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr</span>
+																		<span class="t">
+																		name</span><span class="m">=&quot;</span><b>Revision</b><span class="m">&quot; 
+																		/&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>State</b><span class="m">&quot;&gt;</span><span class="tx">Checked 
+																		In</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div>
+																	<span class="b">
+																	&nbsp;</span>
+																	<span class="m">
+																	&lt;/</span><span class="t">PdmObject</span><span class="m">&gt;</span></div>
+															</div>
+														</div>
+														<div>
+															<span class="b">&nbsp;</span>
+															<span class="m">&lt;/</span><span class="t">Document</span><span class="m">&gt;</span></div>
+													</div>
+												</div>
+												<div class="e">
+													<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+														<a class="b" onfocus="h()" onclick="return false" href="#">
+														-</a> <span class="m">&lt;</span><span class="t">Document 
+														Name</span><span class="m">=&quot;</span><b>Board.CATProduct</b><span class="m">&quot;</span><span class="t"> 
+														Type</span><span class="m">=&quot;</span><b>CATProduct</b><span class="m">&quot;</span><span class="t"> 
+														File</span><span class="m">=&quot;</span><b>E:\Data\Skateboard\supplier\Board.CATProduct</b><span class="m">&quot;</span><span class="t"> 
+														Mode</span><span class="m">=&quot;</span><b>PUBLICATION_EXPOSED</b><span class="m">&quot;</span><span class="t"> 
+														Rule</span><span class="m">=&quot;</span><b>PUBEXP_OVERWRITEINPDM</b><span class="m">&quot;&gt;</span></div>
+													<div>
+														<div class="e">
+															<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																<a class="b" onfocus="h()" onclick="return false" href="#">
+																-</a>
+																<span class="m">
+																&lt;</span><span class="t">PdmObject 
+																selected</span><span class="m">=&quot;</span><b>true</b><span class="m">&quot;</span><span class="t"> 
+																PdmId</span><span class="m">=&quot;</span><b>f1b3f3f3_7a0_42dcc5e3_809</b><span class="m">&quot;</span><span class="t"> 
+																PdmName</span><span class="m">=&quot;</span><b>688_1188</b><span class="m">&quot;</span><span class="t"> 
+																PdmType</span><span class="m">=&quot;</span><b>CATProduct</b><span class="m">&quot;</span><span class="t"> 
+																PdmProvider</span><span class="m">=&quot;</span><b>TeamPDM_Provider</b><span class="m">&quot;&gt;</span></div>
+															<div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Description</b><span class="m">&quot;&gt;</span><span class="tx">Board</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Part 
+																		Number</b><span class="m">&quot;&gt;</span><span class="tx">Board</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>ID</b><span class="m">&quot;&gt;</span><span class="tx">CATPRD-0061</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Application 
+																		Reference 
+																		File 
+																		Name</b><span class="m">&quot;&gt;</span><span class="tx">Board.CATProduct</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr</span>
+																		<span class="t">
+																		name</span><span class="m">=&quot;</span><b>Revision</b><span class="m">&quot; 
+																		/&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>State</b><span class="m">&quot;&gt;</span><span class="tx">Checked 
+																		In</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div>
+																	<span class="b">
+																	&nbsp;</span>
+																	<span class="m">
+																	&lt;/</span><span class="t">PdmObject</span><span class="m">&gt;</span></div>
+															</div>
+														</div>
+														<div>
+															<span class="b">&nbsp;</span>
+															<span class="m">&lt;/</span><span class="t">Document</span><span class="m">&gt;</span></div>
+													</div>
+												</div>
+												<div class="e">
+													<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+														<a class="b" onfocus="h()" onclick="return false" href="#">
+														-</a> <span class="m">&lt;</span><span class="t">Document 
+														Name</span><span class="m">=&quot;</span><b>Main_board.CATPart</b><span class="m">&quot;</span><span class="t"> 
+														Type</span><span class="m">=&quot;</span><b>CATPart</b><span class="m">&quot;</span><span class="t"> 
+														File</span><span class="m">=&quot;</span><b>E:\Data\Skateboard\supplier\Main_board.CATPart</b><span class="m">&quot;</span><span class="t"> 
+														Mode</span><span class="m">=&quot;</span><b>PUBLICATION_EXPOSED</b><span class="m">&quot;</span><span class="t"> 
+														Rule</span><span class="m">=&quot;</span><b>PUBEXP_OVERWRITEINPDM</b><span class="m">&quot;&gt;</span></div>
+													<div>
+														<div class="e">
+															<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																<a class="b" onfocus="h()" onclick="return false" href="#">
+																-</a>
+																<span class="m">
+																&lt;</span><span class="t">PdmObject 
+																selected</span><span class="m">=&quot;</span><b>true</b><span class="m">&quot;</span><span class="t"> 
+																PdmId</span><span class="m">=&quot;</span><b>0_1064_40d80b7e_3da</b><span class="m">&quot;</span><span class="t"> 
+																PdmName</span><span class="m">=&quot;</span><b>687_1189</b><span class="m">&quot;</span><span class="t"> 
+																PdmType</span><span class="m">=&quot;</span><b>CATPart</b><span class="m">&quot;</span><span class="t"> 
+																PdmProvider</span><span class="m">=&quot;</span><b>TeamPDM_Provider</b><span class="m">&quot;&gt;</span></div>
+															<div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Description</b><span class="m">&quot;&gt;</span><span class="tx">Main_board</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Part 
+																		Number</b><span class="m">&quot;&gt;</span><span class="tx">Main 
+																		board</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>ID</b><span class="m">&quot;&gt;</span><span class="tx">CATPRT-0243</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Application 
+																		Reference 
+																		File 
+																		Name</b><span class="m">&quot;&gt;</span><span class="tx">Main_board.CATPart</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr</span>
+																		<span class="t">
+																		name</span><span class="m">=&quot;</span><b>Revision</b><span class="m">&quot; 
+																		/&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>State</b><span class="m">&quot;&gt;</span><span class="tx">Checked 
+																		In</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div>
+																	<span class="b">
+																	&nbsp;</span>
+																	<span class="m">
+																	&lt;/</span><span class="t">PdmObject</span><span class="m">&gt;</span></div>
+															</div>
+														</div>
+														<div>
+															<span class="b">&nbsp;</span>
+															<span class="m">&lt;/</span><span class="t">Document</span><span class="m">&gt;</span></div>
+													</div>
+												</div>
+												<div class="e">
+													<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+														<a class="b" onfocus="h()" onclick="return false" href="#">
+														-</a> <span class="m">&lt;</span><span class="t">Document 
+														Name</span><span class="m">=&quot;</span><b>Front_axle.CATProduct</b><span class="m">&quot;</span><span class="t"> 
+														Type</span><span class="m">=&quot;</span><b>CATProduct</b><span class="m">&quot;</span><span class="t"> 
+														File</span><span class="m">=&quot;</span><b>E:\Data\Skateboard\supplier\Front_axle.CATProduct</b><span class="m">&quot;</span><span class="t"> 
+														Mode</span><span class="m">=&quot;</span><b>PUBLICATION_EXPOSED</b><span class="m">&quot;</span><span class="t"> 
+														Rule</span><span class="m">=&quot;</span><b>PUBEXP_RELOADFRMPDM</b><span class="m">&quot;&gt;</span></div>
+													<div>
+														<div class="e">
+															<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																<a class="b" onfocus="h()" onclick="return false" href="#">
+																-</a>
+																<span class="m">
+																&lt;</span><span class="t">PdmObject 
+																selected</span><span class="m">=&quot;</span><b>true</b><span class="m">&quot;</span><span class="t"> 
+																PdmId</span><span class="m">=&quot;</span><b>f1b3f3f3_7a0_42dcc5e6_81d</b><span class="m">&quot;</span><span class="t"> 
+																PdmName</span><span class="m">=&quot;</span><b>688_1190</b><span class="m">&quot;</span><span class="t"> 
+																PdmType</span><span class="m">=&quot;</span><b>CATProduct</b><span class="m">&quot;</span><span class="t"> 
+																PdmProvider</span><span class="m">=&quot;</span><b>TeamPDM_Provider</b><span class="m">&quot;&gt;</span></div>
+															<div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Description</b><span class="m">&quot;&gt;</span><span class="tx">Front_axle</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Part 
+																		Number</b><span class="m">&quot;&gt;</span><span class="tx">Front 
+																		axle</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>ID</b><span class="m">&quot;&gt;</span><span class="tx">CATPRD-0062</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Application 
+																		Reference 
+																		File 
+																		Name</b><span class="m">&quot;&gt;</span><span class="tx">Front_axle.CATProduct</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr</span>
+																		<span class="t">
+																		name</span><span class="m">=&quot;</span><b>Revision</b><span class="m">&quot; 
+																		/&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>State</b><span class="m">&quot;&gt;</span><span class="tx">Checked 
+																		In</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div>
+																	<span class="b">
+																	&nbsp;</span>
+																	<span class="m">
+																	&lt;/</span><span class="t">PdmObject</span><span class="m">&gt;</span></div>
+															</div>
+														</div>
+														<div>
+															<span class="b">&nbsp;</span>
+															<span class="m">&lt;/</span><span class="t">Document</span><span class="m">&gt;</span></div>
+													</div>
+												</div>
+												<div class="e">
+													<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+														<a class="b" onfocus="h()" onclick="return false" href="#">
+														-</a> <span class="m">&lt;</span><span class="t">Document 
+														Name</span><span class="m">=&quot;</span><b>Truck.CATPart</b><span class="m">&quot;</span><span class="t"> 
+														Type</span><span class="m">=&quot;</span><b>CATPart</b><span class="m">&quot;</span><span class="t"> 
+														File</span><span class="m">=&quot;</span><b>E:\Data\Skateboard\supplier\Truck.CATPart</b><span class="m">&quot;</span><span class="t"> 
+														Mode</span><span class="m">=&quot;</span><b>PUBLICATION_EXPOSED</b><span class="m">&quot;</span><span class="t"> 
+														Rule</span><span class="m">=&quot;</span><b>PUBEXP_RELOADFRMPDM</b><span class="m">&quot;&gt;</span></div>
+													<div>
+														<div class="e">
+															<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																<a class="b" onfocus="h()" onclick="return false" href="#">
+																-</a>
+																<span class="m">
+																&lt;</span><span class="t">PdmObject 
+																selected</span><span class="m">=&quot;</span><b>true</b><span class="m">&quot;</span><span class="t"> 
+																PdmId</span><span class="m">=&quot;</span><b>0_1064_40d80c50_679</b><span class="m">&quot;</span><span class="t"> 
+																PdmName</span><span class="m">=&quot;</span><b>687_1191</b><span class="m">&quot;</span><span class="t"> 
+																PdmType</span><span class="m">=&quot;</span><b>CATPart</b><span class="m">&quot;</span><span class="t"> 
+																PdmProvider</span><span class="m">=&quot;</span><b>TeamPDM_Provider</b><span class="m">&quot;&gt;</span></div>
+															<div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Description</b><span class="m">&quot;&gt;</span><span class="tx">Truck</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Part 
+																		Number</b><span class="m">&quot;&gt;</span><span class="tx">Truck</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>ID</b><span class="m">&quot;&gt;</span><span class="tx">CATPRT-0244</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Application 
+																		Reference 
+																		File 
+																		Name</b><span class="m">&quot;&gt;</span><span class="tx">Truck.CATPart</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr</span>
+																		<span class="t">
+																		name</span><span class="m">=&quot;</span><b>Revision</b><span class="m">&quot; 
+																		/&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>State</b><span class="m">&quot;&gt;</span><span class="tx">Checked 
+																		In</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div>
+																	<span class="b">
+																	&nbsp;</span>
+																	<span class="m">
+																	&lt;/</span><span class="t">PdmObject</span><span class="m">&gt;</span></div>
+															</div>
+														</div>
+														<div>
+															<span class="b">&nbsp;</span>
+															<span class="m">&lt;/</span><span class="t">Document</span><span class="m">&gt;</span></div>
+													</div>
+												</div>
+												<div class="e">
+													<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+														<a class="b" onfocus="h()" onclick="return false" href="#">
+														-</a> <span class="m">&lt;</span><span class="t">Document 
+														Name</span><span class="m">=&quot;</span><b>wheel.CATPart</b><span class="m">&quot;</span><span class="t"> 
+														Type</span><span class="m">=&quot;</span><b>CATPart</b><span class="m">&quot;</span><span class="t"> 
+														File</span><span class="m">=&quot;</span><b>E:\Data\Skateboard\supplier\wheel.CATPart</b><span class="m">&quot;</span><span class="t"> 
+														Mode</span><span class="m">=&quot;</span><b>PUBLICATION_EXPOSED</b><span class="m">&quot;</span><span class="t"> 
+														Rule</span><span class="m">=&quot;</span><b>PUBEXP_RELOADFRMPDM</b><span class="m">&quot;&gt;</span></div>
+													<div>
+														<div class="e">
+															<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																<a class="b" onfocus="h()" onclick="return false" href="#">
+																-</a>
+																<span class="m">
+																&lt;</span><span class="t">PdmObject 
+																selected</span><span class="m">=&quot;</span><b>true</b><span class="m">&quot;</span><span class="t"> 
+																PdmId</span><span class="m">=&quot;</span><b>0_1064_40d80d78_743</b><span class="m">&quot;</span><span class="t"> 
+																PdmName</span><span class="m">=&quot;</span><b>687_1192</b><span class="m">&quot;</span><span class="t"> 
+																PdmType</span><span class="m">=&quot;</span><b>CATPart</b><span class="m">&quot;</span><span class="t"> 
+																PdmProvider</span><span class="m">=&quot;</span><b>TeamPDM_Provider</b><span class="m">&quot;&gt;</span></div>
+															<div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Description</b><span class="m">&quot;&gt;</span><span class="tx">wheel</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Part 
+																		Number</b><span class="m">&quot;&gt;</span><span class="tx">wheel</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>ID</b><span class="m">&quot;&gt;</span><span class="tx">CATPRT-0245</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Application 
+																		Reference 
+																		File 
+																		Name</b><span class="m">&quot;&gt;</span><span class="tx">wheel.CATPart</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr</span>
+																		<span class="t">
+																		name</span><span class="m">=&quot;</span><b>Revision</b><span class="m">&quot; 
+																		/&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>State</b><span class="m">&quot;&gt;</span><span class="tx">Checked 
+																		In</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div>
+																	<span class="b">
+																	&nbsp;</span>
+																	<span class="m">
+																	&lt;/</span><span class="t">PdmObject</span><span class="m">&gt;</span></div>
+															</div>
+														</div>
+														<div>
+															<span class="b">&nbsp;</span>
+															<span class="m">&lt;/</span><span class="t">Document</span><span class="m">&gt;</span></div>
+													</div>
+												</div>
+												<div class="e">
+													<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+														<a class="b" onfocus="h()" onclick="return false" href="#">
+														-</a> <span class="m">&lt;</span><span class="t">Document 
+														Name</span><span class="m">=&quot;</span><b>Rear_axle.CATProduct</b><span class="m">&quot;</span><span class="t"> 
+														Type</span><span class="m">=&quot;</span><b>CATProduct</b><span class="m">&quot;</span><span class="t"> 
+														File</span><span class="m">=&quot;</span><b>E:\Data\Skateboard\supplier\Rear_axle.CATProduct</b><span class="m">&quot;</span><span class="t"> 
+														Mode</span><span class="m">=&quot;</span><b>PUBLICATION_EXPOSED</b><span class="m">&quot;</span><span class="t"> 
+														Rule</span><span class="m">=&quot;</span><b>PUBEXP_RELOADFRMPDM</b><span class="m">&quot;&gt;</span></div>
+													<div>
+														<div class="e">
+															<div class="c" style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																<a class="b" onfocus="h()" onclick="return false" href="#">
+																-</a>
+																<span class="m">
+																&lt;</span><span class="t">PdmObject 
+																selected</span><span class="m">=&quot;</span><b>true</b><span class="m">&quot;</span><span class="t"> 
+																PdmId</span><span class="m">=&quot;</span><b>f1b3f3f3_7a0_42dcc5e8_831</b><span class="m">&quot;</span><span class="t"> 
+																PdmName</span><span class="m">=&quot;</span><b>688_1193</b><span class="m">&quot;</span><span class="t"> 
+																PdmType</span><span class="m">=&quot;</span><b>CATProduct</b><span class="m">&quot;</span><span class="t"> 
+																PdmProvider</span><span class="m">=&quot;</span><b>TeamPDM_Provider</b><span class="m">&quot;&gt;</span></div>
+															<div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Description</b><span class="m">&quot;&gt;</span><span class="tx">Rear_axle</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Part 
+																		Number</b><span class="m">&quot;&gt;</span><span class="tx">Rear 
+																		axle</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>ID</b><span class="m">&quot;&gt;</span><span class="tx">CATPRD-0063</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>Application 
+																		Reference 
+																		File 
+																		Name</b><span class="m">&quot;&gt;</span><span class="tx">Rear_axle.CATProduct</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr</span>
+																		<span class="t">
+																		name</span><span class="m">=&quot;</span><b>Revision</b><span class="m">&quot; 
+																		/&gt;</span> 
+																	</div>
+																</div>
+																<div class="e">
+																	<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+																		<span class="b">
+																		&nbsp;</span>
+																		<span class="m">
+																		&lt;</span><span class="t">PdmObjectAttr 
+																		name</span><span class="m">=&quot;</span><b>State</b><span class="m">&quot;&gt;</span><span class="tx">Checked 
+																		In</span><span class="m">&lt;/</span><span class="t">PdmObjectAttr</span><span class="m">&gt;</span> 
+																	</div>
+																</div>
+																<div>
+																	<span class="b">
+																	&nbsp;</span>
+																	<span class="m">
+																	&lt;/</span><span class="t">PdmObject</span><span class="m">&gt;</span></div>
+															</div>
+														</div>
+														<div>
+															<span class="b">&nbsp;</span>
+															<span class="m">&lt;/</span><span class="t">Document</span><span class="m">&gt;</span></div>
+													</div>
+												</div>
+												<div class="e">
+													<div style="MARGIN-LEFT: 1em; TEXT-INDENT: -2em">
+														<span class="b">&nbsp;</span>
+														<span class="m">&lt;</span><span class="t">Document</span>
+														<span class="t">Name</span><span class="m">=&quot;</span><b>Brake.CATPart</b><span class="m">&quot;</span><span class="t"> 
+														Type</span><span class="m">=&quot;</span><b>CATPart</b><span class="m">&quot;</span><span class="t"> 
+														File</span><span class="m">=&quot;</span><b>E:\Data\Skateboard\supplier\Brake.CATPart</b><span class="m">&quot;</span><span class="t"> 
+														Mode</span><span class="m">=&quot;</span><b>PUBLICATION_EXPOSED</b><span class="m">&quot;</span><span class="t"> 
+														Rule</span><span class="m">=&quot;</span><b>PUBEXP_NEWOBJECT</b><span class="m">&quot; 
+														/&gt;</span> </div>
+												</div>
+												<div>
+													<span class="b">&nbsp;</span>
+													<span class="m">&lt;/</span><span class="t">Session</span><span class="m">&gt;</span></div>
+											</div>
+										</div>
+&nbsp;</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</td>
+       </tr>
+     </table>
+     		</li>
+			<li>
+			<p class="task">Run the batch reconciliation using the command:<br>
+			<code>CATPDMReconcileSTBatch -user joe -file 
+			E:\Data\Skateboard\supplier\Skateboard.CATProduct -inxml 
+			e:\data\Skateboard\inxml.xml</code></li>
+		</ol>
+	<h3><a name="hj-command"></a>Run the batch reconciliation using the command
+		</h3>
+		<ol class="task">
+			<li>
+			<p class="task">Run the batch reconciliation using the command:<br>
+			<code>CATPDMReconcileSTBatch -user joe -file 
+			E:\Data\Skateboard\supplier\Skateboard.CATProduct -reload 
+			Front_axle.CATProduct -reload Rear_axle.CATProduct -reload 
+			Truck.CATPart -reload Wheel.CATPart</code></li>
+		</ol>
+		<h2><a name="hj-restrictions"></a>Restrictions</h2>
+     <p>The following restrictions apply to the <b><kbd>
+     CATPDMReconcileSTBatch</kbd> </b>tool:</p>
+     <ul>
+       <li>
+       <p class="MsoNormal">Only one assembly structure<br>
+       The <code>-file </code>option can be used to reconcile several 
+       CATProducts, but the reconciliation will succeed <br>
+       only if all the listed CATProducts compose the same assembly structure: only one assembly <br>
+       root per reconciliation is accepted.</li>
+       <li>
+       <p class="MsoNormal">Batch reconciliation does not call CheckOut on the 
+       link-dirty documents due to Checkout performed on the objects with 
+       Overwrite rule. This can be resolved by opening the final assembly in 
+       CATIA and when you connect to SmarTeam, all the Check Out messages will 
+       be displayed.</p>
+       <p class="MsoNormal">NB: The final assembly is saved (SmarTeam save) if 
+       the <code>-</code><b><code>simul </code> </b>option is not set and if the reconciliation is 
+       successful. The checked-out and new documents will be saved in the work 
+       directory.</li>
+<li><b>-spwd </b>option:<ul><li>This information cannot be hidden if running processes are listed using the <b>ps -ef | grep pwd</b> command.</li><li>The <b>-spwd</b> and <b>-pwd</b> options are incompatible, i.e., cannot be used at the same time.</li></ul></li>
+     </ul>
+     <h2>Accessing the Help Information</h2>
+     <p>To retrieve the help information about <b><kbd>CATPDMReconcileStBatch</kbd></b>, 
+     just enter:<br>
+		<code>CATPDMReconcileSTBatch -help </code>&nbsp;</p></td>
+   </tr>
+ </table>
+ <p class="task" align="center">
+ <img src="b35doc/english/online/icons_C2/common/aendtask.gif" width="64" height="32"></p>
+
+ </body>
+
+</html>
+
