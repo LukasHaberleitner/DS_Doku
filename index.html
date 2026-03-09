@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DS_Doku</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+      line-height: 1.5;
+    }
+    h1, h2 {
+      margin-bottom: 8px;
+    }
+    .muted {
+      color: #666;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin: 12px 0 20px 0;
+      box-sizing: border-box;
+    }
+    .results a, .quicklinks a {
+      display: block;
+      padding: 8px 0;
+      text-decoration: none;
+      color: #0366d6;
+    }
+    .results a:hover, .quicklinks a:hover {
+      text-decoration: underline;
+    }
+    .result-item {
+      border-bottom: 1px solid #eee;
+      padding: 10px 0;
+    }
+    .result-file {
+      font-size: 13px;
+      color: #666;
+    }
+    .topbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .button {
+      display: inline-block;
+      padding: 10px 14px;
+      background: #f3f4f6;
+      color: #111;
+      text-decoration: none;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+    }
+    .button:hover {
+      background: #e9eaec;
+    }
+  </style>
+</head>
+<body>
+  <h1>DS_Doku</h1>
+  <p class="muted">Startseite für deine exportierte Dokumentation</p>
+
+  <div class="topbar">
+    <a class="button" href="page0001.html">Erste Seite öffnen</a>
+    <a class="button" href="page0002.html">Nächste Seite</a>
+  </div>
+
+  <h2>Suche</h2>
+  <input type="text" id="searchBox" placeholder="Suchbegriff eingeben, z. B. CATIA, license, assembly ...">
+
+  <div id="searchInfo" class="muted">Lade Suchindex ...</div>
+  <div id="results" class="results"></div>
+
+  <h2>Schnellzugriff</h2>
+  <div class="quicklinks">
+    <a href="page0001.html">page0001.html</a>
+    <a href="page0002.html">page0002.html</a>
+    <a href="page0003.html">page0003.html</a>
+    <a href="page0004.html">page0004.html</a>
+    <a href="page0005.html">page0005.html</a>
+  </div>
+
+  <script>
+    let searchData = [];
+
+    async function loadIndex() {
+      try {
+        const response = await fetch('search-index.json');
+        searchData = await response.json();
+        document.getElementById('searchInfo').textContent =
+          `Suchindex geladen: ${searchData.length} Einträge`;
+      } catch (e) {
+        document.getElementById('searchInfo').textContent =
+          'Suchindex konnte nicht geladen werden. Prüfe, ob search-index.json im Repo liegt.';
+      }
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function search(term) {
+      const resultsEl = document.getElementById('results');
+      resultsEl.innerHTML = '';
+
+      if (!term || term.trim().length < 2) {
+        return;
+      }
+
+      const q = term.toLowerCase();
+
+      const results = searchData
+        .filter(item =>
+          item.title.toLowerCase().includes(q) ||
+          item.content.toLowerCase().includes(q) ||
+          item.file.toLowerCase().includes(q)
+        )
+        .slice(0, 100);
+
+      if (results.length === 0) {
+        resultsEl.innerHTML = '<p>Keine Treffer gefunden.</p>';
+        return;
+      }
+
+      resultsEl.innerHTML = results.map(item => {
+        const snippet = item.content.substring(0, 250).replace(/\s+/g, ' ');
+        return `
+          <div class="result-item">
+            <a href="${item.file}"><strong>${escapeHtml(item.title || item.file)}</strong></a>
+            <div class="result-file">${escapeHtml(item.file)}</div>
+            <div>${escapeHtml(snippet)}...</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    document.getElementById('searchBox').addEventListener('input', function() {
+      search(this.value);
+    });
+
+    loadIndex();
+  </script>
+</body>
+</html>
